@@ -540,14 +540,15 @@
                                         }
 
                                         echo '<div class="quanto-blog-content">';
+
+                                            // Blog Post Meta
+                                            do_action( 'quanto_blog_post_meta' );
+
                                             if( get_the_title() ){
                                                 echo '<!-- Post Title -->';
                                                 echo '<h5 class="line-clamp-2"><a href="'.esc_url( get_permalink() ).'">'.esc_html( wp_trim_words( get_the_title(), '12', '' ) ).'</a></h5>';
                                                 echo '<!-- End Post Title -->';
                                             }
-
-                                            // Blog Post Meta
-                                            do_action( 'quanto_blog_post_meta' );
 
                                             // Excerpt And Read More Button
                                             do_action( 'quanto_blog_postexcerpt_read_content' );
