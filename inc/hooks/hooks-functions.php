@@ -841,12 +841,12 @@
                     $quanto_blog_style = quanto_opt('quanto_blog_style');
 
                     if('blog_style_one' == $quanto_blog_style ){
+                        // Blog Post Meta
+                        do_action( 'quanto_blog_post_meta' );
+
                         if( ! is_single() ){
                             echo '<h5 class="line-clamp-2"><a href="'.esc_url( get_permalink() ).'">'.wp_kses( get_the_title(), $allowhtml ).'</a></h5>';
                         }
-
-                        // Blog Post Meta
-                        do_action( 'quanto_blog_post_meta' );
                     }elseif('blog_style_two' == $quanto_blog_style ){
                         // Blog Post Meta
                         do_action( 'quanto_blog_post_meta' );
@@ -856,12 +856,12 @@
                         }
                     }
                 }else{
+                    // Blog Post Meta
+                    do_action( 'quanto_blog_post_meta' );
+
                     if( ! is_single() ){
                         echo '<h5 class="line-clamp-2"><a href="'.esc_url( get_permalink() ).'">'.wp_kses( get_the_title(), $allowhtml ).'</a></h5>';
                     }
-
-                    // Blog Post Meta
-                    do_action( 'quanto_blog_post_meta' );
                 }
 
                 // Excerpt And Read More Button
