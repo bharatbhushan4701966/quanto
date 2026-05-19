@@ -520,7 +520,7 @@
                         echo '<div class="row">';
                             echo '<div class="col-12">';
                                 echo '<div class="quanto__header text-center text-md-start row-padding-bottom">';
-                                    echo '<h3 class="title fade-anim" data-delay="0.30" data-direction="left">'.esc_html__( 'More articles', 'quanto' ).'</h3>';
+                                    echo '<h3 class="title fade-anim" data-delay="0.30" data-direction="left">'.esc_html__( 'Related Articles', 'quanto' ).'</h3>';
                                 echo '</div>';
                             echo '</div>';
                         echo '</div>';
