@@ -7814,7 +7814,8 @@ p.nof-desc {
 }
 
 .quanto-blog-content h5 a {
-  word-break: break-all;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 .quanto-page-section {
