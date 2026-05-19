@@ -534,7 +534,7 @@
                                         if( has_post_thumbnail(  ) ){
                                             echo '<div class="quanto-blog-thumb">';
                                                 echo '<a href="'.esc_url( get_permalink() ).'" class="post-thumbnail">';
-                                                    the_post_thumbnail();
+                                                    the_post_thumbnail( 'quanto-more-detail' );
                                                 echo '</a>';
                                             echo '</div>';
                                         }

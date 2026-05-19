@@ -30,6 +30,7 @@ if ( ! function_exists( 'quanto_setup' ) ){
 
 		// post thumbnails
 		add_theme_support( 'post-thumbnails' );
+		add_image_size( 'quanto-more-detail', 472, 362, true );
 
 		// This theme uses wp_nav_menu() in three locations.
         register_nav_menus( array(
