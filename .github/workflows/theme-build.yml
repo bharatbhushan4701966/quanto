@@ -1,0 +1,49 @@
+name: Build and Release Theme
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        # tools: phpcs # Uncomment if you want to run PHP CodeSniffer
+
+    # - name: Run PHPCS
+    #   run: phpcs --standard=WordPress .
+
+    - name: Package Theme
+      run: |
+        mkdir -p dist/quanto
+        rsync -a --exclude='dist' --exclude='.git' --exclude='.github' . dist/quanto/
+        cd dist
+        zip -r quanto.zip quanto/
+      
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: quanto-theme
+        path: dist/quanto.zip
+        
+    - name: Upload to Release
+      if: github.event_name == 'release'
+      uses: softprops/action-gh-release@v1
+      with:
+        files: dist/quanto.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

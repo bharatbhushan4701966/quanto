@@ -1,0 +1,70 @@
+.select2-drop,
+.select2-chosen,
+.seticon{
+  font-family: FontAwesome, sans-serif;
+}
+
+.showicon{
+	background-color: #008ec2;
+    color: #fff;
+    padding: 4px;
+    border-radius: 3px;
+    margin: 10px 0px;
+    display: inline-block;
+	cursor: pointer;
+}
+
+.iconbox {
+	overflow-y: scroll;
+    height: 300px;
+	display: none;
+	border: 1px solid #eee;
+    margin-bottom: 12px;
+}
+
+.seticon{
+    margin: 5px 2px;
+    float: left;
+    width: 23%;
+    border: 1px solid #eee;
+    height: 40px;
+    text-align: center;
+	padding: 2px;
+	cursor: pointer;
+}
+
+.searchfield {
+	max-width: 532px !important;
+	margin: 10px 0px;
+}
+
+
+
+fieldset#bizdrone_opt-bizdrone_header_version {
+    height: 400px;
+    overflow-y: scroll;
+    margin-bottom: 50px;
+}
+
+
+
+fieldset#bizdrone_opt-bizdrone_header_version ul li label {
+    border: none !important;
+    margin: 5px 0;
+    padding: 0;
+    opacity: .65;
+}
+
+
+
+fieldset#bizdrone_opt-bizdrone_header_version ul li label.redux-image-select-selected{
+    opacity: 1;
+}
+
+
+
+fieldset#bizdrone_opt-bizdrone_header_version img {box-sizing: border-box;}
+
+#redux-header img {
+    display: none;
+}

@@ -1,0 +1,25 @@
+.admin-bar .offcanvas {
+    margin-top: 32px;
+} 
+.admin-bar .quanto-menu-wrapper .quanto-menu-area {
+    margin-top: 32px;
+} 
+@media (max-width: 782px) {
+    .admin-bar .offcanvas {
+        margin-top: 46px;
+    }
+    .admin-bar .quanto-menu-wrapper .quanto-menu-area {
+        margin-top: 46px;
+    } 
+}
+@media (max-width: 600px) {
+    .admin-bar .site-header.sticky-menu {
+        margin-top: 0;
+    }
+    .admin-bar .quanto-menu-wrapper .quanto-menu-area.sticky {
+        margin-top: 0;
+    } 
+}
+
+
+
