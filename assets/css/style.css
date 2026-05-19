@@ -5047,7 +5047,9 @@ a.quanto-default-btn.sm-size {
 }
 
 .quanto-blog-section .quanto-blog-box .quanto-blog-thumb img {
-  height: 362px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 472 / 362;
   object-fit: cover;
 }
 
@@ -5057,19 +5059,19 @@ a.quanto-default-btn.sm-size {
 
 @media (min-width: 1200px) and (max-width: 1399px) {
   .quanto-blog-section .quanto-blog-box .quanto-blog-thumb img {
-    height: 308px;
+    height: auto;
   }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
   .quanto-blog-section .quanto-blog-box .quanto-blog-thumb img {
-    height: 271px;
+    height: auto;
   }
 }
 
 @media only screen and (max-width: 991px) {
   .quanto-blog-section .quanto-blog-box .quanto-blog-thumb img {
-    height: 253px;
+    height: auto;
   }
 }
 
