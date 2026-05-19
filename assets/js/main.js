@@ -256,18 +256,23 @@
         }
     });
 
-    //  sticky of Blog Details
-    gsap.to('.social-links-scroll', {
-        scrollTrigger: {
-            trigger: '.blog-item-details .social-links',
-            start: 'top-=120 top',
-            end: '80% top',
-            pin: true,
-            pinSpacing: false,
-            scrub: true,
-            markers: false,
-        },
-    });
+    //  sticky of Blog Details
+
+    ScrollTrigger.create({
+
+        trigger: '.social-links-scroll',
+
+        start: 'top 120px',
+
+        end: 'bottom 470px',
+
+        pin: '.blog-item-details .social-links',
+
+        pinSpacing: false,
+
+        markers: false,
+
+    });
 
     // Section Jump start
     const links = document.querySelectorAll('.section-link');
