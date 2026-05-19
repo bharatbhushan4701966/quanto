@@ -39,6 +39,16 @@ jobs:
       with:
         name: quanto-theme
         path: dist/quanto.zip
+
+    - name: FTP Deploy to Staging
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./dist/quanto/
+        # Adjust server-dir if the wp-content directory is located elsewhere inside the staging folder
+        server-dir: /qai8358l95-staging.onrocket.site/wp-content/themes/quanto/
         
     - name: Upload to Release
       if: github.event_name == 'release'
