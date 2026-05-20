@@ -907,7 +907,6 @@ ul.wp-block-page-list li,
   margin-bottom: 50px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 15px 35px rgba(75, 16, 180, 0.15);
 }
 
 /* Subtle modern background glow */
@@ -955,7 +954,7 @@ ul.wp-block-page-list li,
   color: #4B10B4 !important;
   font-size: 16px;
   font-weight: 600;
-  padding: 16px 32px;
+  padding: 12px 32px;
   border-radius: 50px;
   display: inline-flex;
   align-items: center;
