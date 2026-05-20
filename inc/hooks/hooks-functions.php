@@ -266,6 +266,9 @@
     // footer content Function
     if( !function_exists('quanto_footer_content_cb') ) {
         function quanto_footer_content_cb( ) {
+            if ( is_singular( 'post' ) ) {
+                return;
+            }
 
             if ( class_exists('ReduxFramework') && did_action( 'elementor/loaded' ) ) {
                 if ( is_page() || is_page_template('template-builder.php') ) {
