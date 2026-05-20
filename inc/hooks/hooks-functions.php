@@ -452,11 +452,9 @@
                         quanto_blog_category();
                     }
 
-                    if( $quanto_display_post_author ){
-                        echo '<li><span><a href="' . esc_url( get_author_posts_url( get_the_author_meta('ID') ) ) . '">';
-                            echo 'by ' . esc_html( ucwords( get_the_author() ) );
-                        echo '</a></span></li>';
-                    }
+                    echo '<li><span><a href="' . esc_url( get_author_posts_url( get_the_author_meta('ID') ) ) . '">';
+                        echo 'by ' . esc_html( ucwords( get_the_author() ) );
+                    echo '</a></span></li>';
 
                 echo '</ul>';
             echo '</div>';
