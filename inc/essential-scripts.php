@@ -53,6 +53,16 @@ function quanto_essential_scripts() {
     wp_enqueue_style( 'quanto-main-style', get_theme_file_uri('/assets/css/style.css') ,array(), time() );
     wp_enqueue_style( 'quanto-blog-style', get_theme_file_uri('/assets/css/blog-default.css') ,array(), time() );
 
+    // Enqueue homepage Elementor CSS on blog pages to make sure container styles load correctly in the head
+    if ( ( is_single() || is_home() || is_archive() ) && class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+        $homepage_id = get_option( 'page_on_front' );
+        if ( ! $homepage_id ) {
+            $homepage_id = 14; // Fallback
+        }
+        $css_file = new \Elementor\Core\Files\CSS\Post( $homepage_id );
+        $css_file->enqueue();
+    }
+
 
 
     // Load Js
