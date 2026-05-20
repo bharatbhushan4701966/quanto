@@ -119,6 +119,10 @@
     echo ' | Homepage ID: ' . $homepage_id;
     $meta = get_post_meta( $homepage_id, '_elementor_data', true );
     echo ' | Meta exists: ' . ($meta ? 'YES (' . strlen($meta) . ' bytes)' : 'NO');
+    $upload_dir = wp_upload_dir();
+    echo ' | wp_upload_dir basedir: ' . $upload_dir['basedir'];
+    echo ' | file_exists post-14.css: ' . (file_exists( trailingslashit( $upload_dir['basedir'] ) . 'elementor/css/post-14.css' ) ? 'YES' : 'NO');
+    echo ' | file_exists local-14-frontend-desktop.css: ' . (file_exists( trailingslashit( $upload_dir['basedir'] ) . 'elementor/css/local-14-frontend-desktop.css' ) ? 'YES' : 'NO');
     if ($meta) {
         $data = json_decode( $meta, true );
         echo ' | Data is array: ' . (is_array($data) ? 'YES' : 'NO');
