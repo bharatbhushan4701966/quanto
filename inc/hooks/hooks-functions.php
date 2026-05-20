@@ -1001,7 +1001,9 @@
             if ( $element_data ) {
                 $element_instance = \Elementor\Plugin::instance()->elements_manager->create_element_instance( $element_data );
                 if ( $element_instance ) {
+                    echo '<div data-elementor-type="wp-page" data-elementor-id="' . esc_attr( $homepage_id ) . '" class="elementor elementor-' . esc_attr( $homepage_id ) . '">';
                     $element_instance->print_element();
+                    echo '</div>';
                 }
             }
         }

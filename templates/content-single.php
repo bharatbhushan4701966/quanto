@@ -152,10 +152,7 @@
         echo '</div>';
     echo '</div>';
 
-    // WHO WE SERVE section from homepage
-    if ( function_exists( 'quanto_render_homepage_who_we_serve_section' ) ) {
-        quanto_render_homepage_who_we_serve_section();
-    }
+
 
 
    
