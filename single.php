@@ -14,7 +14,6 @@
 
     //header
     get_header();
-    echo '<!-- SINGLE PHP WORKED -->';
 
     /**
     * 

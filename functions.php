@@ -64,8 +64,3 @@ require_once QUANTO_DIR_PATH_HOOKS . 'hooks.php';
 
 // hooks funtion
 require_once QUANTO_DIR_PATH_HOOKS . 'hooks-functions.php';
-
-add_action('wp_head', function() {
-    global $template;
-    echo '<!-- ACTIVE TEMPLATE: ' . basename($template) . ' -->';
-});
