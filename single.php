@@ -74,12 +74,7 @@
     * @Hooked quanto_blog_details_wrapper_end_cb 10
     *  
     */
-    do_action( 'quanto_blog_details_wrapper_end' );
-    
-    // WHO WE SERVE section from homepage
-    if ( function_exists( 'quanto_render_homepage_who_we_serve_section' ) ) {
-        quanto_render_homepage_who_we_serve_section();
-    }
+    do_action( 'quanto_blog_details_wrapper_end' );
     
     /**
     *
@@ -90,7 +85,12 @@
     * @Hooked quanto_blog_details_related_post_cb 10
     *
     */
-    do_action( 'quanto_blog_details_related_post' );
+    do_action( 'quanto_blog_details_related_post' );
+    
+    // WHO WE SERVE section from homepage
+    if ( function_exists( 'quanto_render_homepage_who_we_serve_section' ) ) {
+        quanto_render_homepage_who_we_serve_section();
+    }
 
     //footer
     get_footer();
