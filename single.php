@@ -15,6 +15,27 @@
     //header
     get_header();
 
+    // Temp debug:
+    $homepage_id = get_option( 'page_on_front' );
+    if ( ! $homepage_id ) { $homepage_id = 14; }
+    $meta = get_post_meta( $homepage_id, '_elementor_data', true );
+    $data = json_decode( $meta, true );
+    $list_elements = null;
+    $list_elements = function( $elements ) use ( &$list_elements ) {
+        $result = array();
+        foreach ( $elements as $element ) {
+            $info = array( 'id' => isset($element['id']) ? $element['id'] : '', 'elType' => isset($element['elType']) ? $element['elType'] : '' );
+            if ( isset( $element['elements'] ) && ! empty( $element['elements'] ) ) {
+                $info['children'] = $list_elements( $element['elements'] );
+            }
+            $result[] = $info;
+        }
+        return $result;
+    };
+    if ( $data ) {
+        echo '<!-- ELEMENTOR DEBUG DUMP: ' . json_encode( $list_elements($data) ) . ' -->';
+    }
+
     /**
     * 
     * Hook for Blog Details Wrapper
