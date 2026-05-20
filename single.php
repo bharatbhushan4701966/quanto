@@ -97,5 +97,10 @@
         quanto_render_homepage_client_testimonials_section();
     }
 
+    // WE WORKED WITH LARGEST GLOBAL BRANDS section from homepage
+    if ( function_exists( 'quanto_render_homepage_global_brands_section' ) ) {
+        quanto_render_homepage_global_brands_section();
+    }
+
     //footer
     get_footer();
