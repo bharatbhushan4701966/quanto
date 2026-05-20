@@ -59,8 +59,44 @@ function quanto_essential_scripts() {
         if ( ! $homepage_id ) {
             $homepage_id = 14; // Fallback
         }
+
+        // 1. Enqueue active kit CSS
+        $active_kit_id = get_option( 'elementor_active_kit' );
+        if ( $active_kit_id ) {
+            $kit_css_file = new \Elementor\Core\Files\CSS\Post( $active_kit_id );
+            $kit_css_file->enqueue();
+        }
+
+        // 2. Enqueue homepage post CSS
         $css_file = new \Elementor\Core\Files\CSS\Post( $homepage_id );
         $css_file->enqueue();
+
+        // 3. Enqueue responsive/optimized styles if present
+        $upload_dir = wp_upload_dir();
+        if ( ! empty( $upload_dir['basedir'] ) ) {
+            $css_path = trailingslashit( $upload_dir['basedir'] ) . 'elementor/css/';
+            $css_url  = trailingslashit( $upload_dir['baseurl'] ) . 'elementor/css/';
+
+            // base-*.css (responsive layout defaults)
+            $base_files = glob( $css_path . 'base-*.css' );
+            if ( $base_files ) {
+                foreach ( $base_files as $file ) {
+                    $filename = basename( $file );
+                    $handle = str_replace( '.css', '', $filename );
+                    wp_enqueue_style( 'elementor-' . $handle, $css_url . $filename, array(), null );
+                }
+            }
+
+            // local-[homepage_id]-frontend-*.css (homepage responsive overrides)
+            $local_files = glob( $css_path . 'local-' . $homepage_id . '-frontend-*.css' );
+            if ( $local_files ) {
+                foreach ( $local_files as $file ) {
+                    $filename = basename( $file );
+                    $handle = str_replace( '.css', '', $filename );
+                    wp_enqueue_style( 'elementor-' . $handle, $css_url . $filename, array(), null );
+                }
+            }
+        }
     }
 
 
