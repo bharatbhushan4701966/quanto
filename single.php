@@ -102,5 +102,10 @@
         quanto_render_homepage_global_brands_section();
     }
 
+    // CHALLENGE & RESEARCH section from homepage
+    if ( function_exists( 'quanto_render_homepage_challenge_research_section' ) ) {
+        quanto_render_homepage_challenge_research_section();
+    }
+
     //footer
     get_footer();
