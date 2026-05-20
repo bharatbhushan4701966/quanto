@@ -7673,8 +7673,13 @@ a.quanto-default-btn.sm-size {
   gap: 10px;
 }
 
+.breadcumb-menu-wrap .breadcumb-menu ul li,
+.breadcumb-menu-wrap .breadcumb-menu ul li a {
+  font-size: 14px;
+}
+
 .breadcumb-menu-wrap .breadcumb-menu ul .arrow i {
-  font-size: 17px;
+  font-size: 14px;
 }
 
 .quanto-hero-blog__content h1 {
