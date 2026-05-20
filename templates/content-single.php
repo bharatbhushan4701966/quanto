@@ -133,6 +133,24 @@
                                 echo '</div>';
                             }
 
+                            ?>
+                            <!-- Need Deeper Insights CTA Banner -->
+                            <div class="insights-cta-banner">
+                                <div class="insights-cta-content">
+                                    <h3 class="insights-cta-title"><?php esc_html_e( 'Need deeper insights?', 'quanto' ); ?></h3>
+                                    <p class="insights-cta-text"><?php esc_html_e( 'Talk to our analysts for tailored recommendations across your sector.', 'quanto' ); ?></p>
+                                </div>
+                                <div class="insights-cta-action">
+                                    <a href="#" class="insights-cta-button">
+                                        <span><?php esc_html_e( 'Get Industry Insights', 'quanto' ); ?></span>
+                                        <svg class="insights-cta-arrow" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                                            <polyline points="7 7 17 7 17 17"></polyline>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <?php
                             /**
                             *
                             * Hook for Blog Details Comments
