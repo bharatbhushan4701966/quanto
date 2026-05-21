@@ -1250,19 +1250,28 @@
             }
 
             $homepage_id = null;
-            quanto_get_homepage_elementor_data( $homepage_id );
+            $data        = quanto_get_homepage_elementor_data( $homepage_id );
 
-            if ( ! $homepage_id ) {
+            if ( ! $homepage_id || empty( $data ) ) {
                 return false;
             }
 
-            $frontend = \Elementor\Plugin::instance()->frontend;
-            if ( ! $frontend || ! method_exists( $frontend, 'get_builder_content_for_display' ) ) {
+            $elements = array_slice( $data, - absint( $count ) );
+            if ( empty( $elements ) ) {
                 return false;
             }
 
             echo '<div class="quanto-homepage-tail-sections" style="--quanto-homepage-tail-count:' . esc_attr( absint( $count ) ) . ';">';
-            echo $frontend->get_builder_content_for_display( $homepage_id, true );
+            echo '<div data-elementor-type="wp-page" data-elementor-id="' . esc_attr( $homepage_id ) . '" class="elementor elementor-' . esc_attr( $homepage_id ) . '">';
+
+            foreach ( $elements as $element_data ) {
+                $element_instance = \Elementor\Plugin::instance()->elements_manager->create_element_instance( $element_data );
+                if ( $element_instance ) {
+                    $element_instance->print_element();
+                }
+            }
+
+            echo '</div>';
             echo '</div>';
 
             $rendered = true;
