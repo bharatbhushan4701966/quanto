@@ -293,3 +293,8 @@ button.button.alt.single_add_to_cart_button:hover::after {
     width: auto !important;
     display: block !important;
 }
+
+.quanto-homepage-tail-sections > :not(.elementor):not(:nth-last-child(-n+3)),
+.quanto-homepage-tail-sections > .elementor > :not(:nth-last-child(-n+3)) {
+    display: none !important;
+}

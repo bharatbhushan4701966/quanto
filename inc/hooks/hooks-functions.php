@@ -1241,6 +1241,35 @@
         }
     }
 
+    if ( ! function_exists( 'quanto_render_homepage_tail_sections' ) ) {
+        function quanto_render_homepage_tail_sections( $count = 3 ) {
+            static $rendered = false;
+
+            if ( $rendered || ! class_exists( '\\Elementor\\Plugin' ) ) {
+                return $rendered;
+            }
+
+            $homepage_id = null;
+            quanto_get_homepage_elementor_data( $homepage_id );
+
+            if ( ! $homepage_id ) {
+                return false;
+            }
+
+            $frontend = \Elementor\Plugin::instance()->frontend;
+            if ( ! $frontend || ! method_exists( $frontend, 'get_builder_content_for_display' ) ) {
+                return false;
+            }
+
+            echo '<div class="quanto-homepage-tail-sections" style="--quanto-homepage-tail-count:' . esc_attr( absint( $count ) ) . ';">';
+            echo $frontend->get_builder_content_for_display( $homepage_id, true );
+            echo '</div>';
+
+            $rendered = true;
+            return true;
+        }
+    }
+
     if ( ! function_exists( 'quanto_render_homepage_who_we_serve_section' ) ) {
         function quanto_render_homepage_who_we_serve_section() {
             if ( ! class_exists( '\\Elementor\\Plugin' ) ) {
@@ -1422,7 +1451,7 @@
                 return;
             }
 
-            if ( quanto_render_homepage_section_from_end( 3 ) ) {
+            if ( quanto_render_homepage_tail_sections( 3 ) ) {
                 return;
             }
 
@@ -1483,7 +1512,7 @@
                 return;
             }
 
-            if ( quanto_render_homepage_section_from_end( 2 ) ) {
+            if ( quanto_render_homepage_tail_sections( 3 ) ) {
                 return;
             }
 
@@ -1544,7 +1573,7 @@
                 return;
             }
 
-            if ( quanto_render_homepage_section_from_end( 1 ) ) {
+            if ( quanto_render_homepage_tail_sections( 3 ) ) {
                 return;
             }
 
