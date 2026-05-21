@@ -64,3 +64,17 @@ require_once QUANTO_DIR_PATH_HOOKS . 'hooks.php';
 
 // hooks funtion
 require_once QUANTO_DIR_PATH_HOOKS . 'hooks-functions.php';
+
+// Force enable WooCommerce product reviews and ratings
+add_action( 'init', 'quanto_force_enable_woocommerce_reviews' );
+function quanto_force_enable_woocommerce_reviews() {
+    if ( class_exists( 'WooCommerce' ) ) {
+        if ( get_option( 'woocommerce_enable_reviews' ) !== 'yes' ) {
+            update_option( 'woocommerce_enable_reviews', 'yes' );
+        }
+        if ( get_option( 'woocommerce_enable_review_rating' ) !== 'yes' ) {
+            update_option( 'woocommerce_enable_review_rating', 'yes' );
+        }
+    }
+}
+

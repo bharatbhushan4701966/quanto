@@ -16,3 +16,109 @@ Copyright (C) 2024 Mirrortheme
 This theme, like WordPress itself, is licensed under the GNU General Public License.
 All rights reserved.s
 */
+
+
+/* ==========================================================================
+   WooCommerce Star Rating & Review Styles
+   ========================================================================== */
+
+/* FontAwesome icon styling for product cards, single product, and widget lists */
+.woocommerce .star-rating,
+.star-rating {
+    overflow: hidden;
+    position: relative;
+    height: 1.2em;
+    line-height: 1.2;
+    font-size: 14px;
+    width: 6em; /* Adjust to display 5 stars cleanly */
+    font-family: 'Font Awesome 6 Free', 'Font Awesome 5 Free', sans-serif;
+    font-weight: 900;
+    display: inline-block;
+    letter-spacing: 0.1em;
+}
+
+.woocommerce .star-rating::before,
+.star-rating::before {
+    content: '\f005\f005\f005\f005\f005';
+    color: #e2e8f0; /* Soft grey for empty stars */
+    float: left;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+.woocommerce .star-rating span,
+.star-rating span {
+    overflow: hidden;
+    float: left;
+    top: 0;
+    left: 0;
+    position: absolute;
+    padding-top: 1.5em;
+}
+
+.woocommerce .star-rating span::before,
+.star-rating span::before {
+    content: '\f005\f005\f005\f005\f005';
+    color: #f59e0b; /* Beautiful premium Gold/Amber color */
+    top: 0;
+    position: absolute;
+    left: 0;
+}
+
+/* Style the interactive star rating selector inside the review form */
+.woocommerce p.stars,
+p.stars {
+    display: inline-block;
+    margin: 0;
+    vertical-align: middle;
+}
+
+.woocommerce p.stars a,
+p.stars a {
+    position: relative;
+    height: 1.5em;
+    width: 1.5em;
+    text-indent: -999em;
+    display: inline-block;
+    text-decoration: none;
+    letter-spacing: normal;
+}
+
+.woocommerce p.stars a::before,
+p.stars a::before {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1.5em;
+    height: 1.5em;
+    line-height: 1.5;
+    font-family: 'Font Awesome 6 Free', 'Font Awesome 5 Free', sans-serif;
+    font-weight: 900;
+    content: '\f005';
+    text-indent: 0;
+    color: #e2e8f0;
+    font-size: 16px;
+    transition: color 0.2s ease-in-out;
+}
+
+/* Maintain rating highlight status on hover/active */
+.woocommerce p.stars a:hover::before,
+.woocommerce p.stars a:focus::before,
+.woocommerce p.stars a.active::before {
+    color: #f59e0b;
+}
+
+.woocommerce p.stars:hover a::before,
+p.stars:hover a::before {
+    color: #f59e0b;
+}
+
+.woocommerce p.stars a:hover ~ a::before,
+.woocommerce p.stars a:focus ~ a::before,
+p.stars a:hover ~ a::before,
+p.stars a:focus ~ a::before {
+    color: #e2e8f0;
+}
+
