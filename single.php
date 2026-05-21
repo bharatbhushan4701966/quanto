@@ -87,10 +87,7 @@
     */
     do_action( 'quanto_blog_details_related_post' );
 
-    // Render the last 3 sections dynamically from the homepage
-    if ( function_exists( 'quanto_render_homepage_tail_sections' ) ) {
-        quanto_render_homepage_tail_sections( 3 );
-    }
+
 
     //footer
     get_footer();

@@ -51,9 +51,6 @@ do_action( 'quanto_page_sidebar' );
  */
 do_action( 'quanto_page_end_wrap' );
 
-// Render the last 3 sections dynamically from the homepage
-if ( function_exists( 'quanto_render_homepage_tail_sections' ) ) {
-    quanto_render_homepage_tail_sections( 3 );
-}
+
 
 get_footer();
