@@ -8237,7 +8237,6 @@ button.button.alt.single_add_to_cart_button:hover::after {
 .custom-product-main-image {
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
     border: 1px solid #f1f5f9;
     background: #ffffff;
     transition: transform 0.3s ease;
