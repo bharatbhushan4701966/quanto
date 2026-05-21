@@ -293,7 +293,8 @@ function quanto_body_class( $classes ) {
 }
 
 
-function quanto_footer_global_option(){
+function quanto_footer_global_option(){
+    return;
 
     // Quanto Footer Bottom Enable Disable
     if( class_exists( 'ReduxFramework' ) ){
