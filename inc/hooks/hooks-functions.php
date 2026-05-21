@@ -263,22 +263,73 @@
         }
     }
 
-    // Helper: enqueue Elementor CSS for a post and render it inside a footer tag
+    // Early footer CSS enqueue: runs during wp_enqueue_scripts so CSS lands in <head>
+    if ( ! function_exists( 'quanto_enqueue_footer_css_early' ) ) {
+        function quanto_enqueue_footer_css_early() {
+            if ( ! class_exists( '\\Elementor\\Plugin' ) ) {
+                return;
+            }
+
+            $footer_id = false;
+
+            // 1. Try slug-based quanto_footer posts first
+            foreach ( array( 'main-footer', 'main-fotter' ) as $slug ) {
+                $posts = get_posts( array(
+                    'name'        => $slug,
+                    'post_type'   => 'quanto_footer',
+                    'post_status' => 'publish',
+                    'numberposts' => 1,
+                ) );
+                if ( ! empty( $posts ) ) {
+                    $footer_id = $posts[0]->ID;
+                    break;
+                }
+            }
+
+            // 2. Fall back to Redux/Elementor global footer setting
+            if ( ! $footer_id && class_exists( 'ReduxFramework' ) ) {
+                $trigger = quanto_opt( 'quanto_footer_builder_trigger' );
+                if ( $trigger === 'footer_builder' ) {
+                    $global = get_post( quanto_opt( 'quanto_footer_builder_select' ) );
+                    if ( $global ) {
+                        $footer_id = $global->ID;
+                    }
+                }
+                // Archive/singular-specific footer
+                if ( ! $footer_id && ( is_archive() || is_home() || is_search() || is_singular() ) ) {
+                    $archive_id = quanto_opt( 'quanto_archive_footer_select_options' );
+                    if ( ! empty( $archive_id ) ) {
+                        $footer_id = $archive_id;
+                    }
+                }
+            }
+
+            if ( $footer_id ) {
+                // Enqueue the post-specific Elementor CSS into <head>
+                if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+                    $css_file = new \Elementor\Core\Files\CSS\Post( $footer_id );
+                    $css_file->enqueue();
+                }
+                // Enqueue Elementor global frontend styles
+                $frontend = \Elementor\Plugin::instance()->frontend;
+                if ( $frontend && method_exists( $frontend, 'enqueue_styles' ) ) {
+                    $frontend->enqueue_styles();
+                }
+            }
+        }
+    }
+
+    // Helper: render an Elementor footer post inside a <footer> tag
     if ( ! function_exists( 'quanto_render_elementor_footer' ) ) {
         function quanto_render_elementor_footer( $post_id, $class = 'footer' ) {
-            if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
-                $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
-                $css_file->enqueue();
-            }
-            // Also ensure Elementor frontend scripts/styles are enqueued
-            if ( class_exists( '\\Elementor\\Plugin' ) ) {
-                \Elementor\Plugin::instance()->frontend->enqueue_styles();
-            }
+            // CSS is enqueued early via quanto_enqueue_footer_css_early() during wp_enqueue_scripts.
+            // Just render the builder content here.
             echo '<footer class="' . esc_attr( $class ) . '">';
             echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id );
             echo '</footer>';
         }
     }
+
 
     // footer content Function
     if( !function_exists('quanto_footer_content_cb') ) {
