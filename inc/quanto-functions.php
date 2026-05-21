@@ -345,8 +345,13 @@ function quanto_footer_global_option(){
                             if( ! empty( quanto_opt( 'quanto_copyright_text' ) ) ){
                                 $copyright_text = quanto_opt( 'quanto_copyright_text' );
                                 if ( strpos( $copyright_text, 'Mirrortheme' ) !== false || strpos( $copyright_text, 'Quanto' ) !== false ) {
-                                    $copyright_text = sprintf( 'Copyright &copy; %s <a href="%s">%s</a>. All Rights Reserved.', date('Y'), esc_url( home_url( '/' ) ), esc_html( get_bloginfo( 'name' ) ) );
+                                    $copyright_text = 'Copyright &copy; {year} <a href="{site_url}">{site_name}</a>. All Rights Reserved.';
                                 }
+                                $copyright_text = str_replace(
+                                    array( '{year}', '{site_url}', '{site_name}' ),
+                                    array( date('Y'), esc_url( home_url( '/' ) ), esc_html( get_bloginfo( 'name' ) ) ),
+                                    $copyright_text
+                                );
                                 echo '<p class="copyright-text">'.wp_kses( $copyright_text, $allowhtml ).'</p>';
                             }
                         echo '</div>';

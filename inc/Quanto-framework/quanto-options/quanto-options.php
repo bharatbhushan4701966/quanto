@@ -1357,7 +1357,7 @@
                'type'     => 'text',
                'title'    => esc_html__( 'Copyright Text', 'quanto' ),
                'subtitle' => esc_html__( 'Add Copyright Text', 'quanto' ),
-               'default'  => sprintf( 'Copyright &copy; %s <a href="%s">%s</a>. All Rights Reserved.', date('Y'), esc_url( home_url( '/' ) ), esc_html( get_bloginfo( 'name' ) ) ),
+               'default'  => 'Copyright &copy; {year} <a href="{site_url}">{site_name}</a>. All Rights Reserved.',
                'required' => array( 'quanto_disable_footer_bottom','equals','1' ),
             ),
             array(
