@@ -53,6 +53,11 @@ do_action( 'quanto_page_end_wrap' );
 
 
 if ( class_exists( '\\Elementor\\Plugin' ) ) {
+    if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+        $css_file = new \Elementor\Core\Files\CSS\Post( 9011 );
+        $css_file->enqueue();
+        $css_file->print_css();
+    }
     echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( 9011, true );
 } else {
     echo do_shortcode( '[elementor-template id="9011"]' );
