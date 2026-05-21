@@ -1714,3 +1714,13 @@
             }
         }
     }
+
+    add_action( 'wp_enqueue_scripts', 'quanto_enqueue_product_footer_template_css', 20 );
+    if ( ! function_exists( 'quanto_enqueue_product_footer_template_css' ) ) {
+        function quanto_enqueue_product_footer_template_css() {
+            if ( is_singular( 'product' ) && class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+                $css_file = new \Elementor\Core\Files\CSS\Post( 9011 );
+                $css_file->enqueue();
+            }
+        }
+    }
