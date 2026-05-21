@@ -405,6 +405,16 @@
             if ( $footer_id ) {
                 quanto_enqueue_elementor_post_assets( $footer_id );
             }
+
+            // Also enqueue homepage CSS early on single posts and products 
+            // so the pulled tail sections have their CSS loaded in <head>
+            if ( is_single() || is_singular( 'product' ) || is_singular( 'post' ) ) {
+                $homepage_id = get_option( 'page_on_front' );
+                if ( ! $homepage_id ) {
+                    $homepage_id = 14;
+                }
+                quanto_enqueue_elementor_post_assets( $homepage_id );
+            }
         }
     }
 
