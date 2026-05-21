@@ -283,3 +283,7 @@ button.button.alt.single_add_to_cart_button:hover::after {
 .custom-talk-analyst-btn:hover .arrow-up-right {
     transform: translate(2px, -2px);
 }
+
+.woocommerce #review_form #respond p {
+    margin: 0 0 0 !important;
+}
