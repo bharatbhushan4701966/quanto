@@ -8134,19 +8134,20 @@ a.button.product_type_simple.add_to_cart_button,
 button.button.alt.single_add_to_cart_button {
     background-color: #000000 !important;
     color: #ffffff !important;
-    font-weight: 600;
+    font-weight: 600 !important;
     display: inline-flex !important;
-    align-items: center;
-    justify-content: center;
-    gap: 8px; /* space between text and icon */
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
     padding: 12px 24px !important;
-    border-radius: 4px; /* subtle modern rounding */
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    border-radius: 4px !important;
+    transition: background-color 0.3s ease, transform 0.2s ease !important;
     border: none !important;
-    text-transform: uppercase;
-    font-size: 14px;
-    letter-spacing: 0.05em;
-    cursor: pointer;
+    text-transform: uppercase !important;
+    font-size: 14px !important;
+    letter-spacing: 0.05em !important;
+    cursor: pointer !important;
+    overflow: visible !important;
 }
 
 .woocommerce a.button.add_to_cart_button:hover,
@@ -8170,15 +8171,19 @@ a.button.add_to_cart_button::after,
 button.button.single_add_to_cart_button::after,
 a.button.product_type_simple.add_to_cart_button::after,
 button.button.alt.single_add_to_cart_button::after {
-    content: "";
-    display: inline-block;
-    width: 16px;
-    height: 16px;
+    content: "" !important;
+    display: inline-block !important;
+    width: 14px !important;
+    height: 14px !important;
     background-image: url('https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/down-arrow.svg') !important;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    filter: brightness(0) invert(1) !important; /* Forces SVG to white color if it's black/dark */
-    margin-left: 8px;
-    vertical-align: middle;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    background-position: center !important;
+    filter: none !important; /* The SVG is already white, no filter needed */
+    margin-left: 8px !important;
+    vertical-align: middle !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: static !important;
+    transform: none !important;
 }
