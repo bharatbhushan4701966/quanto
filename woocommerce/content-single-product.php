@@ -212,7 +212,7 @@ if ( post_password_required() ) {
 				} else {
 					echo '<p>' . esc_html__( 'Reviews are closed.', 'quanto' ) . '</p>';
 				}
-				}
+	
 				?>
 			</div>
 
