@@ -205,4 +205,76 @@ button.button.alt.single_add_to_cart_button:hover::after {
     filter: invert(0) !important; /* Back to white on hover */
 }
 
+/* Single Product Details Page Action Buttons Styling Overrides */
+.custom-download-button-wrapper form.cart button.single_add_to_cart_button {
+    background-color: #5e42d1 !important;
+    color: #ffffff !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    width: 220px !important;
+    height: 56px !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    border-radius: 40px !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+}
 
+.custom-download-button-wrapper form.cart button.single_add_to_cart_button:hover {
+    background-color: #4b32b3 !important;
+    color: #ffffff !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(94, 66, 209, 0.25) !important;
+}
+
+.custom-download-button-wrapper form.cart button.single_add_to_cart_button::after {
+    display: none !important;
+}
+
+/* Talk to Analyst Button */
+.custom-talk-analyst-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background-color: #ffffff !important;
+    color: #1a1c1e !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    width: 220px !important;
+    height: 56px !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    border-radius: 40px !important;
+    border: 1px solid #1a1c1e !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    gap: 8px !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.custom-talk-analyst-btn:hover {
+    background-color: #f8fafc !important;
+    border-color: #1a1c1e !important;
+    color: #1a1c1e !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+}
+
+.custom-talk-analyst-btn .arrow-up-right {
+    font-size: 15px;
+    font-weight: 700;
+    transition: transform 0.25s ease;
+}
+
+.custom-talk-analyst-btn:hover .arrow-up-right {
+    transform: translate(2px, -2px);
+}

@@ -8404,8 +8404,8 @@ h1.custom-product-title {
 }
 
 .custom-download-button-wrapper form.cart button.single_add_to_cart_button {
-    background-color: #ffffff !important;
-    color: #000000 !important;
+    background-color: #5e42d1 !important;
+    color: #ffffff !important;
     font-size: 15px !important;
     font-weight: 600 !important;
     width: 220px !important;
@@ -8413,7 +8413,7 @@ h1.custom-product-title {
     padding: 0 !important;
     box-sizing: border-box !important;
     border-radius: 40px !important;
-    border: 1px solid #000000 !important;
+    border: none !important;
     cursor: pointer !important;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
@@ -8426,34 +8426,14 @@ h1.custom-product-title {
 }
 
 .custom-download-button-wrapper form.cart button.single_add_to_cart_button:hover {
-    background-color: #000000 !important;
+    background-color: #4b32b3 !important;
     color: #ffffff !important;
-    border-color: #000000 !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    box-shadow: 0 4px 12px rgba(94, 66, 209, 0.25) !important;
 }
 
 .custom-download-button-wrapper form.cart button.single_add_to_cart_button::after {
-    content: "" !important;
-    display: inline-block !important;
-    width: 14px !important;
-    height: 14px !important;
-    background-image: url('https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/down-arrow.svg') !important;
-    background-repeat: no-repeat !important;
-    background-size: contain !important;
-    background-position: center !important;
-    filter: invert(1) !important; /* Turns white SVG to black */
-    margin-left: 8px !important;
-    vertical-align: middle !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    position: static !important;
-    transform: none !important;
-    transition: filter 0.25s ease !important;
-}
-
-.custom-download-button-wrapper form.cart button.single_add_to_cart_button:hover::after {
-    filter: invert(0) !important; /* Back to white on hover */
+    display: none !important;
 }
 
 /* Talk to Analyst Button */
@@ -8462,7 +8442,7 @@ h1.custom-product-title {
     align-items: center !important;
     justify-content: center !important;
     background-color: #ffffff !important;
-    color: #0f172a !important;
+    color: #1a1c1e !important;
     font-size: 15px !important;
     font-weight: 600 !important;
     width: 220px !important;
@@ -8470,7 +8450,7 @@ h1.custom-product-title {
     padding: 0 !important;
     box-sizing: border-box !important;
     border-radius: 40px !important;
-    border: 1px solid #cbd5e1 !important;
+    border: 1px solid #1a1c1e !important;
     cursor: pointer !important;
     text-decoration: none !important;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
@@ -8480,8 +8460,8 @@ h1.custom-product-title {
 
 .custom-talk-analyst-btn:hover {
     background-color: #f8fafc !important;
-    border-color: #94a3b8 !important;
-    color: #0f172a !important;
+    border-color: #1a1c1e !important;
+    color: #1a1c1e !important;
     transform: translateY(-2px) !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
 }
