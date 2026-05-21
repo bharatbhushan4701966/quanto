@@ -263,16 +263,8 @@
         }
     }
 
-    // Early footer CSS enqueue: runs during wp_enqueue_scripts so CSS lands in <head>
-    if ( ! function_exists( 'quanto_enqueue_footer_css_early' ) ) {
-        function quanto_enqueue_footer_css_early() {
-            if ( ! class_exists( '\\Elementor\\Plugin' ) ) {
-                return;
-            }
-
-            $footer_id = false;
-
-            // 1. Try slug-based quanto_footer posts first
+    if ( ! function_exists( 'quanto_find_footer_post_by_slug' ) ) {
+        function quanto_find_footer_post_by_slug() {
             foreach ( array( 'main-footer', 'main-fotter' ) as $slug ) {
                 $posts = get_posts( array(
                     'name'        => $slug,
@@ -280,41 +272,138 @@
                     'post_status' => 'publish',
                     'numberposts' => 1,
                 ) );
+
                 if ( ! empty( $posts ) ) {
-                    $footer_id = $posts[0]->ID;
-                    break;
+                    return (int) $posts[0]->ID;
                 }
             }
 
-            // 2. Fall back to Redux/Elementor global footer setting
-            if ( ! $footer_id && class_exists( 'ReduxFramework' ) ) {
-                $trigger = quanto_opt( 'quanto_footer_builder_trigger' );
-                if ( $trigger === 'footer_builder' ) {
-                    $global = get_post( quanto_opt( 'quanto_footer_builder_select' ) );
-                    if ( $global ) {
-                        $footer_id = $global->ID;
-                    }
-                }
-                // Archive/singular-specific footer
-                if ( ! $footer_id && ( is_archive() || is_home() || is_search() || is_singular() ) ) {
-                    $archive_id = quanto_opt( 'quanto_archive_footer_select_options' );
-                    if ( ! empty( $archive_id ) ) {
-                        $footer_id = $archive_id;
-                    }
-                }
+            return false;
+        }
+    }
+
+    if ( ! function_exists( 'quanto_get_resolved_footer_id' ) ) {
+        function quanto_get_resolved_footer_id() {
+            if ( ! class_exists( '\\Elementor\\Plugin' ) ) {
+                return false;
             }
 
+            $footer_id = quanto_find_footer_post_by_slug();
             if ( $footer_id ) {
-                // Enqueue the post-specific Elementor CSS into <head>
-                if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
-                    $css_file = new \Elementor\Core\Files\CSS\Post( $footer_id );
-                    $css_file->enqueue();
+                return $footer_id;
+            }
+
+            if ( ! class_exists( 'ReduxFramework' ) ) {
+                return false;
+            }
+
+            if ( is_page() || is_page_template( 'template-builder.php' ) ) {
+                $post_id               = get_queried_object_id();
+                $footer_enable_disable = '';
+                $footer_settings       = '';
+                $footer_local          = '';
+
+                if (
+                    class_exists( '\\Elementor\\Core\\Settings\\Manager' ) &&
+                    method_exists( '\\Elementor\\Core\\Settings\\Manager', 'get_settings_managers' )
+                ) {
+                    try {
+                        $page_settings_manager = \Elementor\Core\Settings\Manager::get_settings_managers( 'page' );
+                        if ( $page_settings_manager && method_exists( $page_settings_manager, 'get_model' ) ) {
+                            $page_settings_model = $page_settings_manager->get_model( $post_id );
+                            if ( $page_settings_model ) {
+                                $footer_settings       = $page_settings_model->get_settings( 'quanto_footer_style' );
+                                $footer_local          = $page_settings_model->get_settings( 'quanto_footer_builder_option' );
+                                $footer_enable_disable = $page_settings_model->get_settings( 'quanto_footer_choice' );
+                            }
+                        }
+                    } catch ( Exception $e ) {
+                        return false;
+                    }
                 }
-                // Enqueue Elementor global frontend styles
-                $frontend = \Elementor\Plugin::instance()->frontend;
-                if ( $frontend && method_exists( $frontend, 'enqueue_styles' ) ) {
-                    $frontend->enqueue_styles();
+
+                if ( $footer_enable_disable === 'yes' ) {
+                    if ( $footer_settings === 'footer_builder' && ! empty( $footer_local ) ) {
+                        return (int) $footer_local;
+                    }
+
+                    if ( quanto_opt( 'quanto_footer_builder_trigger' ) === 'footer_builder' ) {
+                        return (int) quanto_opt( 'quanto_footer_builder_select' );
+                    }
                 }
+
+                return false;
+            }
+
+            if ( is_archive() || is_home() || is_search() || is_singular() ) {
+                $archive_id = quanto_opt( 'quanto_archive_footer_select_options' );
+                if ( ! empty( $archive_id ) ) {
+                    return (int) $archive_id;
+                }
+            }
+
+            if ( quanto_opt( 'quanto_footer_builder_trigger' ) === 'footer_builder' ) {
+                return (int) quanto_opt( 'quanto_footer_builder_select' );
+            }
+
+            return false;
+        }
+    }
+
+    if ( ! function_exists( 'quanto_enqueue_elementor_post_assets' ) ) {
+        function quanto_enqueue_elementor_post_assets( $post_id ) {
+            $post_id = (int) $post_id;
+            if ( ! $post_id || ! class_exists( '\\Elementor\\Plugin' ) ) {
+                return;
+            }
+
+            $frontend = \Elementor\Plugin::instance()->frontend;
+            if ( $frontend && method_exists( $frontend, 'enqueue_styles' ) ) {
+                $frontend->enqueue_styles();
+            }
+
+            $upload_dir = wp_upload_dir();
+            if ( ! empty( $upload_dir['basedir'] ) && ! empty( $upload_dir['baseurl'] ) ) {
+                $css_path = trailingslashit( $upload_dir['basedir'] ) . 'elementor/css/';
+                $css_url  = trailingslashit( $upload_dir['baseurl'] ) . 'elementor/css/';
+                $devices  = array( 'desktop', 'laptop', 'tablet', 'mobile' );
+
+                $active_kit_id = (int) get_option( 'elementor_active_kit' );
+                if ( $active_kit_id ) {
+                    $kit_file = 'post-' . $active_kit_id . '.css';
+                    if ( file_exists( $css_path . $kit_file ) ) {
+                        wp_enqueue_style( 'elementor-post-' . $active_kit_id, $css_url . $kit_file, array(), null );
+                    }
+                }
+
+                foreach ( $devices as $device ) {
+                    $base_file = 'base-' . $device . '.css';
+                    if ( file_exists( $css_path . $base_file ) ) {
+                        wp_enqueue_style( 'base-' . $device, $css_url . $base_file, array(), null );
+                    }
+                }
+
+                foreach ( $devices as $device ) {
+                    $local_file = 'local-' . $post_id . '-frontend-' . $device . '.css';
+                    if ( file_exists( $css_path . $local_file ) ) {
+                        wp_enqueue_style( 'local-' . $post_id . '-frontend-' . $device, $css_url . $local_file, array(), null );
+                    }
+                }
+            }
+
+            if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+                $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
+                $css_file->enqueue();
+            }
+        }
+    }
+
+    // Early footer CSS enqueue: runs during wp_enqueue_scripts so CSS lands in <head>
+    if ( ! function_exists( 'quanto_enqueue_footer_css_early' ) ) {
+        function quanto_enqueue_footer_css_early() {
+            $footer_id = quanto_get_resolved_footer_id();
+            if ( $footer_id ) {
+                quanto_enqueue_elementor_post_assets( $footer_id );
             }
         }
     }
@@ -324,6 +413,7 @@
     // which works regardless of when wp_head() has fired.
     if ( ! function_exists( 'quanto_render_elementor_footer' ) ) {
         function quanto_render_elementor_footer( $post_id, $class = 'footer' ) {
+            quanto_enqueue_elementor_post_assets( $post_id );
             echo '<footer class="' . esc_attr( $class ) . '">';
             echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
             echo '</footer>';
@@ -1396,4 +1486,3 @@
             }
         }
     }
-
