@@ -8015,3 +8015,170 @@ h3.inner-title {
 .textwidget img {
   margin: 10px 0;
 }
+
+/* ==========================================================================
+   WooCommerce Star Rating & Review Styles (Migrated for cache-busting)
+   ========================================================================== */
+
+/* FontAwesome icon styling for product cards, single product, and widget lists */
+.woocommerce .star-rating,
+.star-rating {
+    overflow: hidden;
+    position: relative;
+    height: 1.2em;
+    line-height: 1.2;
+    font-size: 14px;
+    width: 6em; /* Adjust to display 5 stars cleanly */
+    font-family: 'Font Awesome 6 Free', 'Font Awesome 5 Free', sans-serif;
+    font-weight: 900;
+    display: inline-block;
+    letter-spacing: 0.1em;
+}
+
+.woocommerce .star-rating::before,
+.star-rating::before {
+    content: '\f005\f005\f005\f005\f005';
+    color: #e2e8f0; /* Soft grey for empty stars */
+    float: left;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+.woocommerce .star-rating span,
+.star-rating span {
+    overflow: hidden;
+    float: left;
+    top: 0;
+    left: 0;
+    position: absolute;
+    padding-top: 1.5em;
+}
+
+.woocommerce .star-rating span::before,
+.star-rating span::before {
+    content: '\f005\f005\f005\f005\f005';
+    color: #f59e0b; /* Beautiful premium Gold/Amber color */
+    top: 0;
+    position: absolute;
+    left: 0;
+}
+
+/* Style the interactive star rating selector inside the review form */
+.woocommerce p.stars,
+p.stars {
+    display: inline-block;
+    margin: 0;
+    vertical-align: middle;
+}
+
+.woocommerce p.stars a,
+p.stars a {
+    position: relative;
+    height: 1.5em;
+    width: 1.5em;
+    text-indent: -999em;
+    display: inline-block;
+    text-decoration: none;
+    letter-spacing: normal;
+}
+
+.woocommerce p.stars a::before,
+p.stars a::before {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1.5em;
+    height: 1.5em;
+    line-height: 1.5;
+    font-family: 'Font Awesome 6 Free', 'Font Awesome 5 Free', sans-serif;
+    font-weight: 900;
+    content: '\f005';
+    text-indent: 0;
+    color: #e2e8f0;
+    font-size: 16px;
+    transition: color 0.2s ease-in-out;
+}
+
+/* Maintain rating highlight status on hover/active */
+.woocommerce p.stars a:hover::before,
+.woocommerce p.stars a:focus::before,
+.woocommerce p.stars a.active::before {
+    color: #f59e0b;
+}
+
+.woocommerce p.stars:hover a::before,
+p.stars:hover a::before {
+    color: #f59e0b;
+}
+
+.woocommerce p.stars a:hover ~ a::before,
+.woocommerce p.stars a:focus ~ a::before,
+p.stars a:hover ~ a::before,
+p.stars a:focus ~ a::before {
+    color: #e2e8f0;
+}
+
+/* ==========================================================================
+   WooCommerce Add to Cart / Download Report Buttons
+   ========================================================================== */
+
+.woocommerce a.button.add_to_cart_button,
+.woocommerce button.button.single_add_to_cart_button,
+.woocommerce a.button.product_type_simple.add_to_cart_button,
+.woocommerce button.button.alt.single_add_to_cart_button,
+a.button.add_to_cart_button,
+button.button.single_add_to_cart_button,
+a.button.product_type_simple.add_to_cart_button,
+button.button.alt.single_add_to_cart_button {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* space between text and icon */
+    padding: 12px 24px !important;
+    border-radius: 4px; /* subtle modern rounding */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none !important;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+}
+
+.woocommerce a.button.add_to_cart_button:hover,
+.woocommerce button.button.single_add_to_cart_button:hover,
+.woocommerce a.button.product_type_simple.add_to_cart_button:hover,
+.woocommerce button.button.alt.single_add_to_cart_button:hover,
+a.button.add_to_cart_button:hover,
+button.button.single_add_to_cart_button:hover,
+a.button.product_type_simple.add_to_cart_button:hover,
+button.button.alt.single_add_to_cart_button:hover {
+    background-color: #1a1a1a !important; /* Slightly lighter black on hover */
+    color: #ffffff !important;
+}
+
+/* Insert the SVG icon using ::after */
+.woocommerce a.button.add_to_cart_button::after,
+.woocommerce button.button.single_add_to_cart_button::after,
+.woocommerce a.button.product_type_simple.add_to_cart_button::after,
+.woocommerce button.button.alt.single_add_to_cart_button::after,
+a.button.add_to_cart_button::after,
+button.button.single_add_to_cart_button::after,
+a.button.product_type_simple.add_to_cart_button::after,
+button.button.alt.single_add_to_cart_button::after {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url('https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/down-arrow.svg') !important;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    filter: brightness(0) invert(1) !important; /* Forces SVG to white color if it's black/dark */
+    margin-left: 8px;
+    vertical-align: middle;
+}
