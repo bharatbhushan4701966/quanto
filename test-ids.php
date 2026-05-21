@@ -1,0 +1,1 @@
+<?php require_once('wp-load.php'); $data = get_post_meta(14, '_elementor_data', true); $json = json_decode($data, true); foreach($json as $element) { echo $element['id'] . PHP_EOL; }

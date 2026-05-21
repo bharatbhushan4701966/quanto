@@ -1408,7 +1408,7 @@
                 return null;
             };
 
-            $element_data = quanto_find_elementor_top_level_element( $data, '5e656d6' );
+            $element_data = $find_element( $data, '5e656d6' );
             if ( $element_data ) {
                 $element_instance = \Elementor\Plugin::instance()->elements_manager->create_element_instance( $element_data );
                 if ( $element_instance ) {
@@ -1468,7 +1468,7 @@
                 return null;
             };
 
-            $element_data = quanto_find_elementor_top_level_element( $data, '82ef444' );
+            $element_data = $find_element( $data, '82ef444' );
             if ( $element_data ) {
                 $element_instance = \Elementor\Plugin::instance()->elements_manager->create_element_instance( $element_data );
                 if ( $element_instance ) {
@@ -1527,7 +1527,7 @@
                 return null;
             };
 
-            $element_data = quanto_find_elementor_top_level_element( $data, 'c9502e0' );
+            $element_data = $find_element( $data, 'c9502e0' );
             if ( $element_data ) {
                 $element_instance = \Elementor\Plugin::instance()->elements_manager->create_element_instance( $element_data );
                 if ( $element_instance ) {
@@ -1586,7 +1586,7 @@
                 return null;
             };
 
-            $element_data = quanto_find_elementor_top_level_element( $data, 'ac412d3' );
+            $element_data = $find_element( $data, 'ac412d3' );
             if ( $element_data ) {
                 $element_instance = \Elementor\Plugin::instance()->elements_manager->create_element_instance( $element_data );
                 if ( $element_instance ) {
@@ -1644,7 +1644,7 @@
                 return null;
             };
 
-            $element_data = quanto_find_elementor_top_level_element( $data, '7c312a9' );
+            $element_data = $find_element( $data, '7c312a9' );
             if ( $element_data ) {
                 $element_instance = \Elementor\Plugin::instance()->elements_manager->create_element_instance( $element_data );
                 if ( $element_instance ) {
@@ -1702,7 +1702,7 @@
                 return null;
             };
 
-            $element_data = quanto_find_elementor_top_level_element( $data, '2f45980' );
+            $element_data = $find_element( $data, '2f45980' );
             if ( $element_data ) {
                 $element_instance = \Elementor\Plugin::instance()->elements_manager->create_element_instance( $element_data );
                 if ( $element_instance ) {
