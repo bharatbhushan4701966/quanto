@@ -1158,8 +1158,9 @@
                 $homepage_id = 14; // Fallback
             }
 
-            // Enqueue homepage CSS to make sure container styles load properly
-            if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+            if ( function_exists( 'quanto_enqueue_elementor_post_assets' ) ) {
+                quanto_enqueue_elementor_post_assets( $homepage_id );
+            } elseif ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
                 $css_file = new \Elementor\Core\Files\CSS\Post( $homepage_id );
                 $css_file->enqueue();
             }
@@ -1216,8 +1217,9 @@
                 $homepage_id = 14; // Fallback
             }
 
-            // Enqueue homepage CSS to make sure container styles load properly
-            if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+            if ( function_exists( 'quanto_enqueue_elementor_post_assets' ) ) {
+                quanto_enqueue_elementor_post_assets( $homepage_id );
+            } elseif ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
                 $css_file = new \Elementor\Core\Files\CSS\Post( $homepage_id );
                 $css_file->enqueue();
             }
@@ -1273,8 +1275,9 @@
                 $homepage_id = 14; // Fallback
             }
 
-            // Enqueue homepage CSS to make sure container styles load properly
-            if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+            if ( function_exists( 'quanto_enqueue_elementor_post_assets' ) ) {
+                quanto_enqueue_elementor_post_assets( $homepage_id );
+            } elseif ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
                 $css_file = new \Elementor\Core\Files\CSS\Post( $homepage_id );
                 $css_file->enqueue();
             }
@@ -1330,8 +1333,9 @@
                 $homepage_id = 14; // Fallback
             }
 
-            // Enqueue homepage CSS to make sure container styles load properly
-            if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+            if ( function_exists( 'quanto_enqueue_elementor_post_assets' ) ) {
+                quanto_enqueue_elementor_post_assets( $homepage_id );
+            } elseif ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
                 $css_file = new \Elementor\Core\Files\CSS\Post( $homepage_id );
                 $css_file->enqueue();
             }
@@ -1386,8 +1390,9 @@
                 $homepage_id = 14; // Fallback
             }
 
-            // Enqueue homepage CSS to make sure container styles load properly
-            if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+            if ( function_exists( 'quanto_enqueue_elementor_post_assets' ) ) {
+                quanto_enqueue_elementor_post_assets( $homepage_id );
+            } elseif ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
                 $css_file = new \Elementor\Core\Files\CSS\Post( $homepage_id );
                 $css_file->enqueue();
             }
@@ -1442,8 +1447,9 @@
                 $homepage_id = 14; // Fallback
             }
 
-            // Enqueue homepage CSS to make sure container styles load properly
-            if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+            if ( function_exists( 'quanto_enqueue_elementor_post_assets' ) ) {
+                quanto_enqueue_elementor_post_assets( $homepage_id );
+            } elseif ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
                 $css_file = new \Elementor\Core\Files\CSS\Post( $homepage_id );
                 $css_file->enqueue();
             }
