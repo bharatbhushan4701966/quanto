@@ -61,4 +61,4 @@ if ( function_exists( 'quanto_render_homepage_connect_trends_section' ) ) {
 	quanto_render_homepage_connect_trends_section();
 }
 
-get_footer( 'shop' );
+get_footer();

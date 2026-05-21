@@ -266,21 +266,29 @@
     // footer content Function
     if( !function_exists('quanto_footer_content_cb') ) {
         function quanto_footer_content_cb( ) {
-            // Render the main-fotter post if it exists
+            // Render the main footer post if it exists.
+            // Attempt both the correct slug ('main-footer') and the legacy typo ('main-fotter') for backward compatibility.
             if ( class_exists( '\\Elementor\\Plugin' ) ) {
-                $plugin_instance = \Elementor\Plugin::instance();
+                $plugin_instance = \\Elementor\\Plugin::instance();
                 if ( ! empty( $plugin_instance->frontend ) && method_exists( $plugin_instance->frontend, 'get_builder_content_for_display' ) ) {
-                    $args = array(
-                        'name'        => 'main-fotter',
-                        'post_type'   => 'quanto_footer',
-                        'post_status' => 'publish',
-                        'numberposts' => 1
-                    );
-                    $posts = get_posts( $args );
-                    if ( ! empty( $posts ) ) {
-                        $footer_id = $posts[0]->ID;
+                    $footer_slugs = array( 'main-footer', 'main-fotter' );
+                    $footer_id    = false;
+                    foreach ( $footer_slugs as $slug ) {
+                        $args  = array(
+                            'name'        => $slug,
+                            'post_type'   => 'quanto_footer',
+                            'post_status' => 'publish',
+                            'numberposts' => 1,
+                        );
+                        $posts = get_posts( $args );
+                        if ( ! empty( $posts ) ) {
+                            $footer_id = $posts[0]->ID;
+                            break;
+                        }
+                    }
+                    if ( $footer_id ) {
                         if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
-                            $css_file = new \Elementor\Core\Files\CSS\Post( $footer_id );
+                            $css_file = new \\Elementor\\Core\\Files\\CSS\\Post( $footer_id );
                             $css_file->enqueue();
                         }
                         echo '<footer class="footer">';
