@@ -1241,6 +1241,72 @@
         }
     }
 
+    if ( ! function_exists( 'quanto_filter_elementor_section_siblings' ) ) {
+        function quanto_filter_elementor_section_siblings( $elements ) {
+            if ( ! is_array( $elements ) ) {
+                return array();
+            }
+
+            return array_values( array_filter( $elements, function( $element ) {
+                return is_array( $element )
+                    && ! empty( $element['elType'] )
+                    && in_array( $element['elType'], array( 'section', 'container' ), true );
+            } ) );
+        }
+    }
+
+    if ( ! function_exists( 'quanto_find_elementor_section_group' ) ) {
+        function quanto_find_elementor_section_group( $elements, $minimum_count = 3 ) {
+            $section_siblings = quanto_filter_elementor_section_siblings( $elements );
+            if ( count( $section_siblings ) >= $minimum_count ) {
+                return $section_siblings;
+            }
+
+            if ( ! is_array( $elements ) ) {
+                return array();
+            }
+
+            foreach ( $elements as $element ) {
+                if ( empty( $element['elements'] ) || ! is_array( $element['elements'] ) ) {
+                    continue;
+                }
+
+                $found = quanto_find_elementor_section_group( $element['elements'], $minimum_count );
+                if ( ! empty( $found ) ) {
+                    return $found;
+                }
+            }
+
+            return array();
+        }
+    }
+
+    if ( ! function_exists( 'quanto_print_homepage_tail_inline_styles' ) ) {
+        function quanto_print_homepage_tail_inline_styles() {
+            static $printed = false;
+
+            if ( $printed ) {
+                return;
+            }
+
+            echo '<style id="quanto-homepage-tail-inline-css">
+                .quanto-homepage-tail-sections{width:100%;overflow:hidden}
+                .quanto-homepage-tail-sections>.elementor{width:100%}
+                .quanto-homepage-tail-sections .e-con{box-sizing:border-box;display:var(--display,flex)!important;flex-direction:var(--flex-direction,row);flex-wrap:var(--flex-wrap,nowrap);align-content:var(--align-content,normal);align-items:var(--align-items,stretch);justify-content:var(--justify-content,normal);gap:var(--gap,0);max-width:min(100%,var(--width,100%));min-height:var(--min-height,initial);padding-block-start:var(--padding-block-start,0);padding-block-end:var(--padding-block-end,0);padding-inline-start:var(--padding-inline-start,0);padding-inline-end:var(--padding-inline-end,0);position:relative}
+                .quanto-homepage-tail-sections .e-con.e-parent,.quanto-homepage-tail-sections .e-con.e-con-full{width:100%}
+                .quanto-homepage-tail-sections .e-con>.e-con-inner{box-sizing:border-box;display:flex;flex-direction:var(--flex-direction,row);flex-wrap:var(--flex-wrap,nowrap);align-items:var(--align-items,stretch);justify-content:var(--justify-content,normal);gap:var(--gap,0);margin-left:auto;margin-right:auto;max-width:min(100%,var(--content-width,1320px));width:100%}
+                .quanto-homepage-tail-sections .elementor-section .elementor-container{display:flex;margin-left:auto;margin-right:auto;max-width:min(100%,var(--content-width,1320px));width:100%}
+                .quanto-homepage-tail-sections .elementor-column{display:flex;min-height:1px;position:relative}
+                .quanto-homepage-tail-sections .elementor-column-wrap,.quanto-homepage-tail-sections .elementor-widget-wrap{align-content:flex-start;display:flex;flex-wrap:wrap;position:relative;width:100%}
+                .quanto-homepage-tail-sections .elementor-widget,.quanto-homepage-tail-sections .elementor-widget-container{max-width:100%}
+                .quanto-homepage-tail-sections .elementor-heading-title{margin:0}
+                @media (max-width:767px){.quanto-homepage-tail-sections .e-con,.quanto-homepage-tail-sections .e-con>.e-con-inner{flex-direction:var(--mobile-flex-direction,column)}}
+            </style>';
+
+            $printed = true;
+        }
+    }
+
     if ( ! function_exists( 'quanto_render_homepage_tail_sections' ) ) {
         function quanto_render_homepage_tail_sections( $count = 3 ) {
             static $rendered = false;
@@ -1256,10 +1322,13 @@
                 return false;
             }
 
-            $elements = array_slice( $data, - absint( $count ) );
+            $section_group = quanto_find_elementor_section_group( $data, absint( $count ) );
+            $elements      = array_slice( $section_group, - absint( $count ) );
             if ( empty( $elements ) ) {
                 return false;
             }
+
+            quanto_print_homepage_tail_inline_styles();
 
             echo '<div class="quanto-homepage-tail-sections" style="--quanto-homepage-tail-count:' . esc_attr( absint( $count ) ) . ';">';
             echo '<div data-elementor-type="wp-page" data-elementor-id="' . esc_attr( $homepage_id ) . '" class="elementor elementor-' . esc_attr( $homepage_id ) . '">';

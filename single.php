@@ -87,21 +87,6 @@
     */
     do_action( 'quanto_blog_details_related_post' );
 
-    // WHO WE SERVE section from homepage
-    if ( function_exists( 'quanto_render_homepage_who_we_serve_section' ) ) {
-        quanto_render_homepage_who_we_serve_section();
-    }
-
-    // CLIENT TESTIMONIALS section from homepage
-    if ( function_exists( 'quanto_render_homepage_client_testimonials_section' ) ) {
-        quanto_render_homepage_client_testimonials_section();
-    }
-
-    // WE WORKED WITH LARGEST GLOBAL BRANDS section from homepage
-    if ( function_exists( 'quanto_render_homepage_global_brands_section' ) ) {
-        quanto_render_homepage_global_brands_section();
-    }
-
     // CHALLENGE & RESEARCH section from homepage
     if ( function_exists( 'quanto_render_homepage_challenge_research_section' ) ) {
         quanto_render_homepage_challenge_research_section();
