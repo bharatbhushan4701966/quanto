@@ -376,6 +376,11 @@
                     }
                 }
 
+                $post_css_file = 'post-' . $post_id . '.css';
+                if ( file_exists( $css_path . $post_css_file ) ) {
+                    wp_enqueue_style( 'elementor-post-' . $post_id, $css_url . $post_css_file, array(), null );
+                }
+
                 foreach ( $devices as $device ) {
                     $base_file = 'base-' . $device . '.css';
                     if ( file_exists( $css_path . $base_file ) ) {
