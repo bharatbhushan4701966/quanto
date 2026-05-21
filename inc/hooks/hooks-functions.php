@@ -1265,7 +1265,7 @@
             return array_values( array_filter( $elements, function( $element ) {
                 return is_array( $element )
                     && ! empty( $element['elType'] )
-                    && in_array( $element['elType'], array( 'section', 'container' ), true );
+                    && in_array( $element['elType'], array( 'section', 'container', 'e-flexbox' ), true );
             } ) );
         }
     }
