@@ -8404,7 +8404,7 @@ h1.custom-product-title {
 }
 
 .custom-download-button-wrapper form.cart button.single_add_to_cart_button {
-    background-color: #5e42d1 !important;
+    background-color: #6241CA !important;
     color: #ffffff !important;
     font-size: 15px !important;
     font-weight: 600 !important;
@@ -8426,10 +8426,10 @@ h1.custom-product-title {
 }
 
 .custom-download-button-wrapper form.cart button.single_add_to_cart_button:hover {
-    background-color: #4b32b3 !important;
+    background-color: #5132b8 !important;
     color: #ffffff !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 4px 12px rgba(94, 66, 209, 0.25) !important;
+    box-shadow: 0 4px 12px rgba(98, 65, 202, 0.25) !important;
 }
 
 .custom-download-button-wrapper form.cart button.single_add_to_cart_button::after {
