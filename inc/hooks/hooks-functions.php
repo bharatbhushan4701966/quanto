@@ -320,15 +320,16 @@
     }
 
     // Helper: render an Elementor footer post inside a <footer> tag
+    // Passing `true` as 2nd arg to get_builder_content_for_display forces inline CSS output,
+    // which works regardless of when wp_head() has fired.
     if ( ! function_exists( 'quanto_render_elementor_footer' ) ) {
         function quanto_render_elementor_footer( $post_id, $class = 'footer' ) {
-            // CSS is enqueued early via quanto_enqueue_footer_css_early() during wp_enqueue_scripts.
-            // Just render the builder content here.
             echo '<footer class="' . esc_attr( $class ) . '">';
-            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id );
+            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
             echo '</footer>';
         }
     }
+
 
 
     // footer content Function
