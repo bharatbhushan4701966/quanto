@@ -1544,10 +1544,6 @@
                 return;
             }
 
-            if ( quanto_render_homepage_tail_sections( 3 ) ) {
-                return;
-            }
-
             $homepage_id = get_option( 'page_on_front' );
             if ( ! $homepage_id ) {
                 $homepage_id = 14; // Fallback
@@ -1605,10 +1601,6 @@
                 return;
             }
 
-            if ( quanto_render_homepage_tail_sections( 3 ) ) {
-                return;
-            }
-
             $homepage_id = get_option( 'page_on_front' );
             if ( ! $homepage_id ) {
                 $homepage_id = 14; // Fallback
@@ -1663,10 +1655,6 @@
     if ( ! function_exists( 'quanto_render_homepage_connect_footer_section' ) ) {
         function quanto_render_homepage_connect_footer_section() {
             if ( ! class_exists( '\\Elementor\\Plugin' ) ) {
-                return;
-            }
-
-            if ( quanto_render_homepage_tail_sections( 3 ) ) {
                 return;
             }
 
