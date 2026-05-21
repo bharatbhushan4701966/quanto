@@ -8132,20 +8132,20 @@ a.button.add_to_cart_button,
 button.button.single_add_to_cart_button,
 a.button.product_type_simple.add_to_cart_button,
 button.button.alt.single_add_to_cart_button {
-    background-color: #000000 !important;
-    color: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
     font-weight: 600 !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     gap: 8px !important;
-    padding: 12px 24px !important;
-    border-radius: 4px !important;
+    padding: 12px 28px !important;
+    border-radius: 50px !important;
     transition: background-color 0.3s ease, transform 0.2s ease !important;
-    border: none !important;
-    text-transform: uppercase !important;
+    border: 1.5px solid #000000 !important;
+    text-transform: none !important;
     font-size: 14px !important;
-    letter-spacing: 0.05em !important;
+    letter-spacing: normal !important;
     cursor: pointer !important;
     overflow: visible !important;
 }
@@ -8158,8 +8158,9 @@ a.button.add_to_cart_button:hover,
 button.button.single_add_to_cart_button:hover,
 a.button.product_type_simple.add_to_cart_button:hover,
 button.button.alt.single_add_to_cart_button:hover {
-    background-color: #1a1a1a !important; /* Slightly lighter black on hover */
+    background-color: #000000 !important;
     color: #ffffff !important;
+    border-color: #000000 !important;
 }
 
 /* Insert the SVG icon using ::after */
@@ -8179,13 +8180,24 @@ button.button.alt.single_add_to_cart_button::after {
     background-repeat: no-repeat !important;
     background-size: contain !important;
     background-position: center !important;
-    filter: none !important; /* The SVG is already white, no filter needed */
+    filter: invert(1) !important; /* Turns white SVG to black */
     margin-left: 8px !important;
     vertical-align: middle !important;
     opacity: 1 !important;
     visibility: visible !important;
     position: static !important;
     transform: none !important;
+}
+
+.woocommerce a.button.add_to_cart_button:hover::after,
+.woocommerce button.button.single_add_to_cart_button:hover::after,
+.woocommerce a.button.product_type_simple.add_to_cart_button:hover::after,
+.woocommerce button.button.alt.single_add_to_cart_button:hover::after,
+a.button.add_to_cart_button:hover::after,
+button.button.single_add_to_cart_button:hover::after,
+a.button.product_type_simple.add_to_cart_button:hover::after,
+button.button.alt.single_add_to_cart_button:hover::after {
+    filter: invert(0) !important; /* Back to white on hover */
 }
 
 /* ==========================================================================
@@ -8389,16 +8401,16 @@ h1.custom-product-title {
 }
 
 .custom-download-button-wrapper form.cart button.single_add_to_cart_button {
-    background-color: #5e42d1 !important;
-    color: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
     font-size: 16px !important;
-    font-weight: 700 !important;
-    padding: 16px 44px !important;
+    font-weight: 600 !important;
+    padding: 15px 36px !important; /* Aligned with custom-talk-analyst-btn */
     border-radius: 50px !important;
-    border: none !important;
+    border: 1.5px solid #000000 !important;
     cursor: pointer !important;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    box-shadow: 0 4px 20px rgba(94, 66, 209, 0.25) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
     text-transform: none !important;
     letter-spacing: normal !important;
     display: inline-flex !important;
@@ -8408,13 +8420,34 @@ h1.custom-product-title {
 }
 
 .custom-download-button-wrapper form.cart button.single_add_to_cart_button:hover {
-    background-color: #4b32b3 !important;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border-color: #000000 !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 6px 24px rgba(94, 66, 209, 0.35) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
 }
 
 .custom-download-button-wrapper form.cart button.single_add_to_cart_button::after {
-    display: none !important; /* Hide old arrow on detail template */
+    content: "" !important;
+    display: inline-block !important;
+    width: 14px !important;
+    height: 14px !important;
+    background-image: url('https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/down-arrow.svg') !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    background-position: center !important;
+    filter: invert(1) !important; /* Turns white SVG to black */
+    margin-left: 8px !important;
+    vertical-align: middle !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: static !important;
+    transform: none !important;
+    transition: filter 0.25s ease !important;
+}
+
+.custom-download-button-wrapper form.cart button.single_add_to_cart_button:hover::after {
+    filter: invert(0) !important; /* Back to white on hover */
 }
 
 /* Talk to Analyst Button */
