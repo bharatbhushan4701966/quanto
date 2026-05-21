@@ -8665,3 +8665,9 @@ h1.custom-product-title {
     margin: 0 0 0 !important;
 }
 
+.payment-icon img {
+    height: 24px !important;
+    width: auto !important;
+    display: block !important;
+}
+
