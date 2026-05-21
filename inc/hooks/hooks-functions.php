@@ -374,11 +374,11 @@
 
             } else {
                 // Elementor or Redux not active, fallback footer
-                echo '<div class="footer-copyright text-center bg-black py-3 link-inherit z-index-common">';
-                    echo '<div class="container">';
-                        echo '<p class="mb-0 text-white">Copyright &copy; ' . date('Y') . ' <a href="' . esc_url( home_url( '/' ) ) . '">' . esc_html( get_bloginfo( 'name' ) ) . '</a>. All Rights Reserved.</p>';
-                    echo '</div>';
+                echo '<footer class="footer custom-footer bg-dark text-white py-4">';
+                echo '<div class="container text-center">';
+                echo '<p class="mb-0">© ' . date('Y') . ' My Company. All rights reserved.</p>';
                 echo '</div>';
+                echo '</footer>';
             }
 
         }
