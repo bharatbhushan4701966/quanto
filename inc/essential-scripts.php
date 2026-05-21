@@ -17,7 +17,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function quanto_essential_scripts() {
 
-	wp_enqueue_style( 'quanto-style', get_stylesheet_uri() ,array(), wp_get_theme()->get( 'Version' ) );
+	$quanto_style_path    = get_stylesheet_directory() . '/style.css';
+	$quanto_style_version = file_exists( $quanto_style_path ) ? filemtime( $quanto_style_path ) : wp_get_theme()->get( 'Version' );
+	wp_enqueue_style( 'quanto-style', get_stylesheet_uri(), array(), $quanto_style_version );
 
     // google font
     wp_enqueue_style( 'quanto-fonts', quanto_google_fonts() ,array(), wp_get_theme()->get( 'Version' ) );
