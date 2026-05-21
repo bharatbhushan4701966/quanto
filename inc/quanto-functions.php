@@ -343,7 +343,11 @@ function quanto_footer_global_option(){
                     echo '<div class="container">';
                         echo '<div class="row align-items-center">';
                             if( ! empty( quanto_opt( 'quanto_copyright_text' ) ) ){
-                                echo '<p class="copyright-text">'.wp_kses( quanto_opt( 'quanto_copyright_text' ), $allowhtml ).'</p>';
+                                $copyright_text = quanto_opt( 'quanto_copyright_text' );
+                                if ( strpos( $copyright_text, 'Mirrortheme' ) !== false || strpos( $copyright_text, 'Quanto' ) !== false ) {
+                                    $copyright_text = sprintf( 'Copyright &copy; %s <a href="%s">%s</a>. All Rights Reserved.', date('Y'), esc_url( home_url( '/' ) ), esc_html( get_bloginfo( 'name' ) ) );
+                                }
+                                echo '<p class="copyright-text">'.wp_kses( $copyright_text, $allowhtml ).'</p>';
                             }
                         echo '</div>';
                     echo '</div>';

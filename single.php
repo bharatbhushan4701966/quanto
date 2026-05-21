@@ -112,10 +112,5 @@
         quanto_render_homepage_connect_trends_section();
     }
 
-    // Let's Connect / Footer section
-    if ( function_exists( 'quanto_render_homepage_connect_footer_section' ) ) {
-        quanto_render_homepage_connect_footer_section();
-    }
-
     //footer
     get_footer();

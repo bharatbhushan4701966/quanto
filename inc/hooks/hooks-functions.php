@@ -266,8 +266,26 @@
     // footer content Function
     if( !function_exists('quanto_footer_content_cb') ) {
         function quanto_footer_content_cb( ) {
-            if ( is_singular( 'post' ) ) {
-                return;
+            // Render the main-fotter post if it exists
+            if ( class_exists( '\\Elementor\\Plugin' ) ) {
+                $args = array(
+                    'name'        => 'main-fotter',
+                    'post_type'   => 'quanto_footer',
+                    'post_status' => 'publish',
+                    'numberposts' => 1
+                );
+                $posts = get_posts( $args );
+                if ( ! empty( $posts ) ) {
+                    $footer_id = $posts[0]->ID;
+                    if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+                        $css_file = new \Elementor\Core\Files\CSS\Post( $footer_id );
+                        $css_file->enqueue();
+                    }
+                    echo '<footer class="footer">';
+                    echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $footer_id );
+                    echo '</footer>';
+                    return;
+                }
             }
 
             if ( class_exists('ReduxFramework') && did_action( 'elementor/loaded' ) ) {
@@ -302,7 +320,7 @@
 
                 } 
                 // Archive, Blog, Search, Single post footer
-                elseif ( is_archive() || is_home() || is_search() || is_singular( ['post', 'cmr_news', 'cmr_media_release', 'cmr_quarterly'] ) ) {
+                else {
 
                     $archive_footer_id = quanto_opt('quanto_archive_footer_select_options');
 
@@ -347,7 +365,7 @@
                 // Elementor or Redux not active, fallback footer
                 echo '<div class="footer-copyright text-center bg-black py-3 link-inherit z-index-common">';
                     echo '<div class="container">';
-                        echo '<p class="mb-0 text-white">'.sprintf( 'Copyright © %s <a href="%s">%s</a> All Rights Reserved by <a href="%s">%s</a>',date('Y'),esc_url('#'),__( 'Quanto.','quanto' ),esc_url('#'),__( 'Mirrortheme', 'quanto' ) ).'</p>';
+                        echo '<p class="mb-0 text-white">Copyright &copy; ' . date('Y') . ' <a href="' . esc_url( home_url( '/' ) ) . '">' . esc_html( get_bloginfo( 'name' ) ) . '</a>. All Rights Reserved.</p>';
                     echo '</div>';
                 echo '</div>';
             }

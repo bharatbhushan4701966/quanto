@@ -109,3 +109,12 @@ add_filter( 'woocommerce_product_add_to_cart_text', 'quanto_custom_loop_add_to_c
 function quanto_custom_loop_add_to_cart_text() {
 	return __( 'Download Report', 'quanto' );
 }
+
+/**
+ * Change WooCommerce Loop Product Title from h2 to h5
+ */
+remove_action( 'woocommerce_shop_loop_item_title', 'woocommerce_template_loop_product_title', 10 );
+add_action( 'woocommerce_shop_loop_item_title', 'quanto_woocommerce_template_loop_product_title', 10 );
+function quanto_woocommerce_template_loop_product_title() {
+	echo '<h5 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</h5>';
+}
