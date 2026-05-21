@@ -263,56 +263,67 @@
         }
     }
 
+    // Helper: enqueue Elementor CSS for a post and render it inside a footer tag
+    if ( ! function_exists( 'quanto_render_elementor_footer' ) ) {
+        function quanto_render_elementor_footer( $post_id, $class = 'footer' ) {
+            if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+                $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
+                $css_file->enqueue();
+            }
+            // Also ensure Elementor frontend scripts/styles are enqueued
+            if ( class_exists( '\\Elementor\\Plugin' ) ) {
+                \Elementor\Plugin::instance()->frontend->enqueue_styles();
+            }
+            echo '<footer class="' . esc_attr( $class ) . '">';
+            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id );
+            echo '</footer>';
+        }
+    }
+
     // footer content Function
     if( !function_exists('quanto_footer_content_cb') ) {
         function quanto_footer_content_cb( ) {
-            if ( class_exists( '\Elementor\Plugin' ) ) {
+            // Try to find and render a quanto_footer post by slug first
+            if ( class_exists( '\\Elementor\\Plugin' ) ) {
                 $plugin_instance = \Elementor\Plugin::instance();
                 if ( ! empty( $plugin_instance->frontend ) && method_exists( $plugin_instance->frontend, 'get_builder_content_for_display' ) ) {
                     $footer_slugs = array( 'main-footer', 'main-fotter' );
                     $footer_id    = false;
                     foreach ( $footer_slugs as $slug ) {
-                        $args  = array(
+                        $posts = get_posts( array(
                             'name'        => $slug,
                             'post_type'   => 'quanto_footer',
                             'post_status' => 'publish',
                             'numberposts' => 1,
-                        );
-                        $posts = get_posts( $args );
+                        ) );
                         if ( ! empty( $posts ) ) {
                             $footer_id = $posts[0]->ID;
                             break;
                         }
                     }
                     if ( $footer_id ) {
-                        if ( class_exists( '\Elementor\Core\Files\CSS\Post' ) ) {
-                            $css_file = new \Elementor\Core\Files\CSS\Post( $footer_id );
-                            $css_file->enqueue();
-                        }
-                        echo '<footer class="footer">';
-                        echo $plugin_instance->frontend->get_builder_content_for_display( $footer_id );
-                        echo '</footer>';
+                        quanto_render_elementor_footer( $footer_id );
                         return;
                     }
                 }
             }
 
-            if ( class_exists( 'ReduxFramework' ) && did_action( 'elementor/loaded' ) && class_exists( '\Elementor\Plugin' ) ) {
+            if ( class_exists( 'ReduxFramework' ) && did_action( 'elementor/loaded' ) && class_exists( '\\Elementor\\Plugin' ) ) {
 
                 if ( is_page() || is_page_template( 'template-builder.php' ) ) {
-                    $post_id = get_the_ID();
+                    $post_id               = get_the_ID();
                     $footer_enable_disable = '';
                     $footer_settings       = '';
                     $footer_local          = '';
 
                     if (
-                        class_exists( '\Elementor\Core\Settings\Manager' ) &&
-                        method_exists( '\Elementor\Core\Settings\Manager', 'get_settings_managers' )
+                        class_exists( '\\Elementor\\Core\\Settings\\Manager' ) &&
+                        method_exists( '\\Elementor\\Core\\Settings\\Manager', 'get_settings_managers' )
                     ) {
                         try {
                             $page_settings_manager = \Elementor\Core\Settings\Manager::get_settings_managers( 'page' );
                             if ( $page_settings_manager && method_exists( $page_settings_manager, 'get_model' ) ) {
-                                $page_settings_model   = $page_settings_manager->get_model( $post_id );
+                                $page_settings_model = $page_settings_manager->get_model( $post_id );
                                 if ( $page_settings_model ) {
                                     $footer_settings       = $page_settings_model->get_settings( 'quanto_footer_style' );
                                     $footer_local          = $page_settings_model->get_settings( 'quanto_footer_builder_option' );
@@ -320,6 +331,7 @@
                                 }
                             }
                         } catch ( Exception $e ) {
+                            // fall through
                         }
                     }
 
@@ -327,18 +339,14 @@
                         if ( $footer_settings === 'footer_builder' && ! empty( $footer_local ) ) {
                             $quanto_local_footer = get_post( $footer_local );
                             if ( $quanto_local_footer ) {
-                                echo '<footer>';
-                                echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $quanto_local_footer->ID );
-                                echo '</footer>';
+                                quanto_render_elementor_footer( $quanto_local_footer->ID );
                             }
                         } else {
-                            $quanto_footer_builder_trigger = quanto_opt( 'quanto_footer_builder_trigger' );
-                            if ( $quanto_footer_builder_trigger === 'footer_builder' ) {
-                                $quanto_global_footer_select = get_post( quanto_opt( 'quanto_footer_builder_select' ) );
-                                if ( $quanto_global_footer_select ) {
-                                    echo '<footer>';
-                                    echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $quanto_global_footer_select->ID );
-                                    echo '</footer>';
+                            $trigger = quanto_opt( 'quanto_footer_builder_trigger' );
+                            if ( $trigger === 'footer_builder' ) {
+                                $global = get_post( quanto_opt( 'quanto_footer_builder_select' ) );
+                                if ( $global ) {
+                                    quanto_render_elementor_footer( $global->ID );
                                 } else {
                                     quanto_footer_global_option();
                                 }
@@ -350,28 +358,23 @@
                         quanto_footer_global_option();
                     }
 
-                }
-                elseif ( is_archive() || is_home() || is_search() || is_singular() ) {
+                } elseif ( is_archive() || is_home() || is_search() || is_singular() ) {
 
                     $archive_footer_id = quanto_opt( 'quanto_archive_footer_select_options' );
 
                     if ( ! empty( $archive_footer_id ) ) {
                         $footer_post = get_post( $archive_footer_id );
                         if ( $footer_post ) {
-                            echo '<footer class="footer">';
-                            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $footer_post->ID );
-                            echo '</footer>';
+                            quanto_render_elementor_footer( $footer_post->ID );
                         } else {
                             quanto_footer_global_option();
                         }
                     } else {
-                        $quanto_footer_builder_trigger = quanto_opt( 'quanto_footer_builder_trigger' );
-                        if ( $quanto_footer_builder_trigger === 'footer_builder' ) {
-                            $quanto_global_footer_select = get_post( quanto_opt( 'quanto_footer_builder_select' ) );
-                            if ( $quanto_global_footer_select ) {
-                                echo '<footer class="footer">';
-                                echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $quanto_global_footer_select->ID );
-                                echo '</footer>';
+                        $trigger = quanto_opt( 'quanto_footer_builder_trigger' );
+                        if ( $trigger === 'footer_builder' ) {
+                            $global = get_post( quanto_opt( 'quanto_footer_builder_select' ) );
+                            if ( $global ) {
+                                quanto_render_elementor_footer( $global->ID );
                             } else {
                                 quanto_footer_global_option();
                             }
@@ -379,23 +382,20 @@
                             quanto_footer_global_option();
                         }
                     }
-                }
-                else {
-                    $quanto_footer_builder_trigger = quanto_opt( 'quanto_footer_builder_trigger' );
 
-                    if ( $quanto_footer_builder_trigger === 'footer_builder' ) {
-                        $quanto_global_footer_select = get_post( quanto_opt( 'quanto_footer_builder_select' ) );
-                        if ( $quanto_global_footer_select ) {
-                            echo '<footer class="footer">';
-                            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $quanto_global_footer_select->ID );
-                            echo '</footer>';
+                } else {
+
+                    $trigger = quanto_opt( 'quanto_footer_builder_trigger' );
+                    if ( $trigger === 'footer_builder' ) {
+                        $global = get_post( quanto_opt( 'quanto_footer_builder_select' ) );
+                        if ( $global ) {
+                            quanto_render_elementor_footer( $global->ID );
                         } else {
                             quanto_footer_global_option();
                         }
                     } else {
                         quanto_footer_global_option();
                     }
-
                 }
 
             } else {
