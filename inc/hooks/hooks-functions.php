@@ -1187,6 +1187,60 @@
         }
     }
 
+    if ( ! function_exists( 'quanto_get_homepage_elementor_data' ) ) {
+        function quanto_get_homepage_elementor_data( &$homepage_id = null ) {
+            $homepage_id = get_option( 'page_on_front' );
+            if ( ! $homepage_id ) {
+                $homepage_id = 14; // Fallback
+            }
+
+            if ( function_exists( 'quanto_enqueue_elementor_post_assets' ) ) {
+                quanto_enqueue_elementor_post_assets( $homepage_id );
+            } elseif ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+                $css_file = new \Elementor\Core\Files\CSS\Post( $homepage_id );
+                $css_file->enqueue();
+            }
+
+            $meta = get_post_meta( $homepage_id, '_elementor_data', true );
+            if ( ! $meta ) {
+                return null;
+            }
+
+            $data = json_decode( $meta, true );
+            return is_array( $data ) ? array_values( $data ) : null;
+        }
+    }
+
+    if ( ! function_exists( 'quanto_render_homepage_section_from_end' ) ) {
+        function quanto_render_homepage_section_from_end( $offset_from_end ) {
+            if ( ! class_exists( '\\Elementor\\Plugin' ) ) {
+                return false;
+            }
+
+            $homepage_id = null;
+            $data        = quanto_get_homepage_elementor_data( $homepage_id );
+            if ( empty( $data ) ) {
+                return false;
+            }
+
+            $index = count( $data ) - absint( $offset_from_end );
+            if ( ! isset( $data[ $index ] ) ) {
+                return false;
+            }
+
+            $element_instance = \Elementor\Plugin::instance()->elements_manager->create_element_instance( $data[ $index ] );
+            if ( ! $element_instance ) {
+                return false;
+            }
+
+            echo '<div data-elementor-type="wp-page" data-elementor-id="' . esc_attr( $homepage_id ) . '" class="elementor elementor-' . esc_attr( $homepage_id ) . '">';
+            $element_instance->print_element();
+            echo '</div>';
+
+            return true;
+        }
+    }
+
     if ( ! function_exists( 'quanto_render_homepage_who_we_serve_section' ) ) {
         function quanto_render_homepage_who_we_serve_section() {
             if ( ! class_exists( '\\Elementor\\Plugin' ) ) {
@@ -1368,6 +1422,10 @@
                 return;
             }
 
+            if ( quanto_render_homepage_section_from_end( 3 ) ) {
+                return;
+            }
+
             $homepage_id = get_option( 'page_on_front' );
             if ( ! $homepage_id ) {
                 $homepage_id = 14; // Fallback
@@ -1425,6 +1483,10 @@
                 return;
             }
 
+            if ( quanto_render_homepage_section_from_end( 2 ) ) {
+                return;
+            }
+
             $homepage_id = get_option( 'page_on_front' );
             if ( ! $homepage_id ) {
                 $homepage_id = 14; // Fallback
@@ -1479,6 +1541,10 @@
     if ( ! function_exists( 'quanto_render_homepage_connect_footer_section' ) ) {
         function quanto_render_homepage_connect_footer_section() {
             if ( ! class_exists( '\\Elementor\\Plugin' ) ) {
+                return;
+            }
+
+            if ( quanto_render_homepage_section_from_end( 1 ) ) {
                 return;
             }
 
