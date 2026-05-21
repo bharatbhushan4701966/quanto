@@ -52,5 +52,6 @@ do_action( 'quanto_page_sidebar' );
 do_action( 'quanto_page_end_wrap' );
 
 
+echo do_shortcode( '[elementor-template id="9011"]' );
 
 get_footer();
