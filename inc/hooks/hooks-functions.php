@@ -1147,6 +1147,46 @@
         echo '</div></div>';
     } );
 
+    if ( ! function_exists( 'quanto_elementor_tree_contains_id' ) ) {
+        function quanto_elementor_tree_contains_id( $element, $target_id ) {
+            if ( ! is_array( $element ) ) {
+                return false;
+            }
+
+            if ( isset( $element['id'] ) && $element['id'] === $target_id ) {
+                return true;
+            }
+
+            if ( empty( $element['elements'] ) || ! is_array( $element['elements'] ) ) {
+                return false;
+            }
+
+            foreach ( $element['elements'] as $child_element ) {
+                if ( quanto_elementor_tree_contains_id( $child_element, $target_id ) ) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
+
+    if ( ! function_exists( 'quanto_find_elementor_top_level_element' ) ) {
+        function quanto_find_elementor_top_level_element( $elements, $target_id ) {
+            if ( ! is_array( $elements ) ) {
+                return null;
+            }
+
+            foreach ( $elements as $element ) {
+                if ( quanto_elementor_tree_contains_id( $element, $target_id ) ) {
+                    return $element;
+                }
+            }
+
+            return null;
+        }
+    }
+
     if ( ! function_exists( 'quanto_render_homepage_who_we_serve_section' ) ) {
         function quanto_render_homepage_who_we_serve_section() {
             if ( ! class_exists( '\\Elementor\\Plugin' ) ) {
@@ -1192,7 +1232,7 @@
                 return null;
             };
 
-            $element_data = $find_element( $data, '5e656d6' );
+            $element_data = quanto_find_elementor_top_level_element( $data, '5e656d6' );
             if ( $element_data ) {
                 $element_instance = \Elementor\Plugin::instance()->elements_manager->create_element_instance( $element_data );
                 if ( $element_instance ) {
@@ -1251,7 +1291,7 @@
                 return null;
             };
 
-            $element_data = $find_element( $data, '82ef444' );
+            $element_data = quanto_find_elementor_top_level_element( $data, '82ef444' );
             if ( $element_data ) {
                 $element_instance = \Elementor\Plugin::instance()->elements_manager->create_element_instance( $element_data );
                 if ( $element_instance ) {
@@ -1309,7 +1349,7 @@
                 return null;
             };
 
-            $element_data = $find_element( $data, 'c9502e0' );
+            $element_data = quanto_find_elementor_top_level_element( $data, 'c9502e0' );
             if ( $element_data ) {
                 $element_instance = \Elementor\Plugin::instance()->elements_manager->create_element_instance( $element_data );
                 if ( $element_instance ) {
@@ -1367,7 +1407,7 @@
                 return null;
             };
 
-            $element_data = $find_element( $data, 'ac412d3' );
+            $element_data = quanto_find_elementor_top_level_element( $data, 'ac412d3' );
             if ( $element_data ) {
                 $element_instance = \Elementor\Plugin::instance()->elements_manager->create_element_instance( $element_data );
                 if ( $element_instance ) {
@@ -1424,7 +1464,7 @@
                 return null;
             };
 
-            $element_data = $find_element( $data, '7c312a9' );
+            $element_data = quanto_find_elementor_top_level_element( $data, '7c312a9' );
             if ( $element_data ) {
                 $element_instance = \Elementor\Plugin::instance()->elements_manager->create_element_instance( $element_data );
                 if ( $element_instance ) {
@@ -1481,7 +1521,7 @@
                 return null;
             };
 
-            $element_data = $find_element( $data, '2f45980' );
+            $element_data = quanto_find_elementor_top_level_element( $data, '2f45980' );
             if ( $element_data ) {
                 $element_instance = \Elementor\Plugin::instance()->elements_manager->create_element_instance( $element_data );
                 if ( $element_instance ) {
