@@ -255,7 +255,7 @@ button.button.alt.single_add_to_cart_button:hover::after {
     color: #1a1c1e !important;
     font-size: 15px !important;
     font-weight: 600 !important;
-    padding: 15px 10px !important;
+    padding: 11px 50px !important;
     box-sizing: border-box !important;
     border-radius: 40px !important;
     border: 1px solid #1a1c1e !important;
