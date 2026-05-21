@@ -268,23 +268,26 @@
         function quanto_footer_content_cb( ) {
             // Render the main-fotter post if it exists
             if ( class_exists( '\\Elementor\\Plugin' ) ) {
-                $args = array(
-                    'name'        => 'main-fotter',
-                    'post_type'   => 'quanto_footer',
-                    'post_status' => 'publish',
-                    'numberposts' => 1
-                );
-                $posts = get_posts( $args );
-                if ( ! empty( $posts ) ) {
-                    $footer_id = $posts[0]->ID;
-                    if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
-                        $css_file = new \Elementor\Core\Files\CSS\Post( $footer_id );
-                        $css_file->enqueue();
+                $plugin_instance = \Elementor\Plugin::instance();
+                if ( ! empty( $plugin_instance->frontend ) && method_exists( $plugin_instance->frontend, 'get_builder_content_for_display' ) ) {
+                    $args = array(
+                        'name'        => 'main-fotter',
+                        'post_type'   => 'quanto_footer',
+                        'post_status' => 'publish',
+                        'numberposts' => 1
+                    );
+                    $posts = get_posts( $args );
+                    if ( ! empty( $posts ) ) {
+                        $footer_id = $posts[0]->ID;
+                        if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+                            $css_file = new \Elementor\Core\Files\CSS\Post( $footer_id );
+                            $css_file->enqueue();
+                        }
+                        echo '<footer class="footer">';
+                        echo $plugin_instance->frontend->get_builder_content_for_display( $footer_id );
+                        echo '</footer>';
+                        return;
                     }
-                    echo '<footer class="footer">';
-                    echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $footer_id );
-                    echo '</footer>';
-                    return;
                 }
             }
 
@@ -320,7 +323,7 @@
 
                 } 
                 // Archive, Blog, Search, Single post footer
-                else {
+                elseif ( is_archive() || is_home() || is_search() || is_singular() ) {
 
                     $archive_footer_id = quanto_opt('quanto_archive_footer_select_options');
 
