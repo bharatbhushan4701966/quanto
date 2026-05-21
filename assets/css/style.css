@@ -8411,8 +8411,10 @@ h1.custom-product-title {
     color: #ffffff !important;
     font-size: 15px !important;
     font-weight: 600 !important;
-    width: 379px !important;
-    height: 56px !important;
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+    padding-left: 147px !important;
+    padding-right: 147px !important;
     padding: 0 !important;
     box-sizing: border-box !important;
     border-radius: 40px !important;
@@ -8454,8 +8456,10 @@ h1.custom-product-title {
     color: #1a1c1e !important;
     font-size: 15px !important;
     font-weight: 600 !important;
-    width: 379px !important;
-    height: 56px !important;
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+    padding-left: 147px !important;
+    padding-right: 147px !important;
     padding: 0 !important;
     box-sizing: border-box !important;
     border-radius: 40px !important;
