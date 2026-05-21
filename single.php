@@ -87,9 +87,19 @@
     */
     do_action( 'quanto_blog_details_related_post' );
 
-    // Render the last 3 sections dynamically from the homepage
-    if ( function_exists( 'quanto_render_homepage_tail_sections' ) ) {
-        quanto_render_homepage_tail_sections( 3 );
+    // CHALLENGE & RESEARCH section from homepage
+    if ( function_exists( 'quanto_render_homepage_challenge_research_section' ) ) {
+        quanto_render_homepage_challenge_research_section();
+    }
+
+    // CMR Connect: Monthly Digest & Weekly Trends
+    if ( function_exists( 'quanto_render_homepage_connect_trends_section' ) ) {
+        quanto_render_homepage_connect_trends_section();
+    }
+
+    // Homepage footer section
+    if ( function_exists( 'quanto_render_homepage_connect_footer_section' ) ) {
+        quanto_render_homepage_connect_footer_section();
     }
 
     //footer
