@@ -96,3 +96,12 @@ function quanto_show_empty_stars_when_no_reviews( $html, $rating, $count ) {
 	return $html;
 }
 add_filter( 'woocommerce_product_get_rating_html', 'quanto_show_empty_stars_when_no_reviews', 10, 3 );
+
+/**
+ * Change WooCommerce Add to Cart button text to "Download Report"
+ */
+add_filter( 'woocommerce_product_single_add_to_cart_text', 'quanto_custom_add_to_cart_text' );
+add_filter( 'woocommerce_product_add_to_cart_text', 'quanto_custom_add_to_cart_text' );
+function quanto_custom_add_to_cart_text() {
+	return __( 'Download Report', 'quanto' );
+}

@@ -122,3 +122,55 @@ p.stars a:focus ~ a::before {
     color: #e2e8f0;
 }
 
+/* ==========================================================================
+   WooCommerce Add to Cart / Download Report Buttons
+   ========================================================================== */
+
+.woocommerce a.button.add_to_cart_button,
+.woocommerce button.button.single_add_to_cart_button,
+.woocommerce a.button.product_type_simple.add_to_cart_button,
+.woocommerce button.button.alt.single_add_to_cart_button {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* space between text and icon */
+    padding: 12px 24px !important;
+    border-radius: 4px; /* subtle modern rounding */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none !important;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+}
+
+.woocommerce a.button.add_to_cart_button:hover,
+.woocommerce button.button.single_add_to_cart_button:hover,
+.woocommerce a.button.product_type_simple.add_to_cart_button:hover,
+.woocommerce button.button.alt.single_add_to_cart_button:hover {
+    background-color: #1a1a1a !important; /* Slightly lighter black on hover */
+    color: #ffffff !important;
+}
+
+/* Insert the SVG icon using ::after */
+.woocommerce a.button.add_to_cart_button::after,
+.woocommerce button.button.single_add_to_cart_button::after,
+.woocommerce a.button.product_type_simple.add_to_cart_button::after,
+.woocommerce button.button.alt.single_add_to_cart_button::after {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url('https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/down-arrow.svg') !important;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    filter: brightness(0) invert(1); /* Forces SVG to white color if it's black/dark */
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+
