@@ -52,6 +52,10 @@ do_action( 'quanto_page_sidebar' );
 do_action( 'quanto_page_end_wrap' );
 
 
-echo do_shortcode( '[elementor-template id="9011"]' );
+if ( class_exists( '\\Elementor\\Plugin' ) ) {
+    echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( 9011, true );
+} else {
+    echo do_shortcode( '[elementor-template id="9011"]' );
+}
 
 get_footer();
