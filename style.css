@@ -129,7 +129,11 @@ p.stars a:focus ~ a::before {
 .woocommerce a.button.add_to_cart_button,
 .woocommerce button.button.single_add_to_cart_button,
 .woocommerce a.button.product_type_simple.add_to_cart_button,
-.woocommerce button.button.alt.single_add_to_cart_button {
+.woocommerce button.button.alt.single_add_to_cart_button,
+a.button.add_to_cart_button,
+button.button.single_add_to_cart_button,
+a.button.product_type_simple.add_to_cart_button,
+button.button.alt.single_add_to_cart_button {
     background-color: #000000 !important;
     color: #ffffff !important;
     font-weight: 600;
@@ -150,7 +154,11 @@ p.stars a:focus ~ a::before {
 .woocommerce a.button.add_to_cart_button:hover,
 .woocommerce button.button.single_add_to_cart_button:hover,
 .woocommerce a.button.product_type_simple.add_to_cart_button:hover,
-.woocommerce button.button.alt.single_add_to_cart_button:hover {
+.woocommerce button.button.alt.single_add_to_cart_button:hover,
+a.button.add_to_cart_button:hover,
+button.button.single_add_to_cart_button:hover,
+a.button.product_type_simple.add_to_cart_button:hover,
+button.button.alt.single_add_to_cart_button:hover {
     background-color: #1a1a1a !important; /* Slightly lighter black on hover */
     color: #ffffff !important;
 }
@@ -159,7 +167,11 @@ p.stars a:focus ~ a::before {
 .woocommerce a.button.add_to_cart_button::after,
 .woocommerce button.button.single_add_to_cart_button::after,
 .woocommerce a.button.product_type_simple.add_to_cart_button::after,
-.woocommerce button.button.alt.single_add_to_cart_button::after {
+.woocommerce button.button.alt.single_add_to_cart_button::after,
+a.button.add_to_cart_button::after,
+button.button.single_add_to_cart_button::after,
+a.button.product_type_simple.add_to_cart_button::after,
+button.button.alt.single_add_to_cart_button::after {
     content: "";
     display: inline-block;
     width: 16px;
