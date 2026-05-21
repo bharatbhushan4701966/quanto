@@ -206,10 +206,12 @@ if ( post_password_required() ) {
 			<!-- Tab Panel: Reviews -->
 			<div id="tab-panel-reviews" class="tab-content-panel">
 				<?php
+				// Safe reviews block – avoid loading full comment template
 				if ( comments_open() ) {
-					comments_template();
+					echo '<p><a href="' . esc_url( get_permalink() . '#reviews' ) . '">' . sprintf( esc_html__( '%s reviews', 'quanto' ), $review_count ) . '</a></p>';
 				} else {
 					echo '<p>' . esc_html__( 'Reviews are closed.', 'quanto' ) . '</p>';
+				}
 				}
 				?>
 			</div>
