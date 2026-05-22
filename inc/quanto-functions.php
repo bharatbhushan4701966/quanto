@@ -106,14 +106,9 @@ function quanto_elementor_template_shortcode( $atts ) {
         return '';
     }
     
-    ob_start();
-    if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
-        $css_file = new \Elementor\Core\Files\CSS\Post( $id );
-        // Force the link tag so it works even inside Elementor Shortcode widgets
-        echo '<link rel="stylesheet" id="elementor-post-' . $id . '-css" href="' . esc_url( $css_file->get_url() ) . '" type="text/css" media="all">';
-    }
-    echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id );
-    return ob_get_clean();
+    // The second parameter 'true' forces Elementor to output inline CSS for the template.
+    // This is much safer than echoing a raw <link> tag which can break layout.
+    return \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id, true );
 }
 add_shortcode( 'quanto-template', 'quanto_elementor_template_shortcode' );
 
