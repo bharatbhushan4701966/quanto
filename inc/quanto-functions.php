@@ -100,7 +100,7 @@ function quanto_meta( $id = '' ){
 
 
 // Robust Elementor Template Shortcode with forced CSS
-add_shortcode( 'quanto-template', function( $atts ) {
+function quanto_elementor_template_shortcode( $atts ) {
     $id = isset( $atts['id'] ) ? intval( $atts['id'] ) : 0;
     if ( ! $id || ! class_exists( '\\Elementor\\Plugin' ) ) {
         return '';
@@ -114,7 +114,13 @@ add_shortcode( 'quanto-template', function( $atts ) {
     }
     echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id );
     return ob_get_clean();
-});
+}
+add_shortcode( 'quanto-template', 'quanto_elementor_template_shortcode' );
+
+// Register the same handler for 'elementor-template' (used by Elementor Pro or copied by users)
+add_action( 'init', function() {
+    add_shortcode( 'elementor-template', 'quanto_elementor_template_shortcode' );
+}, 99 );
 
 // Blog Date Permalink
 function quanto_blog_date_permalink() {
