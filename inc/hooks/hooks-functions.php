@@ -1317,7 +1317,18 @@
                 .quanto-homepage-tail-sections .elementor-heading-title{margin:0}
                 @media (max-width:767px){.quanto-homepage-tail-sections .e-con,.quanto-homepage-tail-sections .e-con>.e-con-inner{flex-direction:var(--mobile-flex-direction,column)}}
             </style>';
-
+            
+            // Explicitly print the Elementor CSS for the homepage, otherwise the sections will lose their styling when rendered late on other pages.
+            $homepage_id = get_option( 'page_on_front' );
+            if ( ! $homepage_id ) {
+                $homepage_id = 14; // Fallback
+            }
+            if ( class_exists( '\Elementor\Core\Files\CSS\Post' ) ) {
+                $css_file = new \Elementor\Core\Files\CSS\Post( $homepage_id );
+                $css_file->enqueue();
+                $css_file->print_css();
+            }
+            
             $printed = true;
         }
     }
@@ -1346,6 +1357,7 @@
             quanto_print_homepage_tail_inline_styles();
 
             echo '<div class="quanto-homepage-tail-sections" style="--quanto-homepage-tail-count:' . esc_attr( absint( $count ) ) . ';">';
+
             echo '<div data-elementor-type="wp-page" data-elementor-id="' . esc_attr( $homepage_id ) . '" class="elementor elementor-' . esc_attr( $homepage_id ) . '">';
 
             foreach ( $elements as $element_data ) {
