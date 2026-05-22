@@ -399,3 +399,14 @@ button.button.alt.single_add_to_cart_button:hover::after {
         flex-direction: var(--mobile-flex-direction, column);
     }
 }
+
+/* Fix for hero arrow wrapping */
+.hero-title .inline-wrap {
+    display: inline-flex !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+}
+.hero-title .hero-arrow-inline {
+    display: inline-block !important;
+    margin-bottom: 0 !important;
+}
