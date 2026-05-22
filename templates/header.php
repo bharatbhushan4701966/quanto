@@ -28,7 +28,7 @@
 
             if ( ! empty( $header_post ) ) {
                 echo '<header class="header">';
-                echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $header_post->ID );
+                echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $header_post->ID, true );
                 echo '</header>';
             } else {
                 $header_post = get_page_by_path( 'main', OBJECT, 'quanto_header' );
@@ -41,7 +41,7 @@
                 
                 if ( $header_post ) {
                     echo '<header class="header">';
-                    echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $header_post->ID );
+                    echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $header_post->ID, true );
                     echo '</header>';
                 } else {
                     quanto_global_header_option(); // fallback
@@ -61,7 +61,7 @@
             if ( $header_style == 'header_builder' && ! empty( $builder_option ) ) {
                 $header_post = get_post( $builder_option );
                 echo '<header class="header">';
-                echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $header_post->ID );
+                echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $header_post->ID, true );
                 echo '</header>';
             } else {
                 $header_post = get_page_by_path( 'main', OBJECT, 'quanto_header' );
@@ -71,7 +71,7 @@
                 
                 if ( $header_post ) {
                     echo '<header>';
-                    echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $header_post->ID );
+                    echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $header_post->ID, true );
                     echo '</header>';
                 } else {
                     quanto_global_header_option();
@@ -88,7 +88,7 @@
 
             if ( $header_post ) {
                 echo '<header class="header">';
-                echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $header_post->ID );
+                echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $header_post->ID, true );
                 echo '</header>';
             } else {
                 quanto_global_header_option();
