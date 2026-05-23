@@ -112,10 +112,6 @@ function quanto_elementor_template_shortcode( $atts ) {
 }
 add_shortcode( 'quanto-template', 'quanto_elementor_template_shortcode' );
 
-// Override 'wpr-template' to force inline CSS rendering, which fixes the issue when shortcodes are used inside other templates
-add_action( 'init', function() {
-    add_shortcode( 'wpr-template', 'quanto_elementor_template_shortcode' );
-}, 99 );
 
 // Blog Date Permalink
 function quanto_blog_date_permalink() {
