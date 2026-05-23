@@ -105,7 +105,20 @@ function quanto_essential_scripts() {
             }
         }
         
-        // Removed Elementor enqueue hack here. It is now properly handled in hooks-functions.php
+        // Aggressively force Elementor to load all core layout styles so the footer doesn't break
+        if ( class_exists( '\Elementor\Plugin' ) ) {
+            wp_enqueue_style( 'elementor-frontend' );
+            wp_enqueue_style( 'elementor-icons' );
+            wp_enqueue_style( 'e-flexbox' );
+            wp_enqueue_style( 'e-container' );
+            wp_enqueue_style( 'elementor-widget-heading' );
+            wp_enqueue_style( 'elementor-widget-text-editor' );
+            wp_enqueue_style( 'elementor-widget-icon-list' );
+            wp_enqueue_style( 'elementor-widget-image' );
+            wp_enqueue_style( 'elementor-widget-button' );
+            wp_enqueue_style( 'elementor-widget-divider' );
+            wp_enqueue_style( 'elementor-widget-spacer' );
+        }
     }
 
 
