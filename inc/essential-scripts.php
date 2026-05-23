@@ -113,6 +113,7 @@ function quanto_essential_scripts() {
             
             // Manually enqueue common Elementor and widget styles that might be missed
             wp_enqueue_style( 'e-flexbox' );
+            wp_enqueue_style( 'e-container' );
             wp_enqueue_style( 'elementor-widget-heading' );
             wp_enqueue_style( 'elementor-widget-text-editor' );
             wp_enqueue_style( 'elementor-widget-icon-list' );
