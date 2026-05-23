@@ -409,3 +409,9 @@ button.button.alt.single_add_to_cart_button:hover::after {
     display: inline-block !important;
     margin-bottom: 0 !important;
 }
+
+/* Override Elementor specific container width as requested */
+.elementor .e-2b7354c-abf27e5,
+.elementor .elementor-element-2b7354c {
+    width: 100% !important;
+}
