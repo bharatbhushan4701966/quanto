@@ -104,6 +104,18 @@ function quanto_essential_scripts() {
                 }
             }
         }
+        
+        // Ensure Elementor's core styles and scripts are enqueued
+        wp_enqueue_style( 'elementor-icons' );
+        wp_enqueue_style( 'elementor-frontend' );
+        wp_enqueue_style( 'elementor-post-' . $homepage_id );
+        wp_enqueue_style( 'elementor-global' );
+        
+        // Let Elementor know it's needed
+        if ( class_exists( '\Elementor\Plugin' ) ) {
+            \Elementor\Plugin::$instance->frontend->enqueue_styles();
+            \Elementor\Plugin::$instance->frontend->enqueue_scripts();
+        }
     }
 
 
