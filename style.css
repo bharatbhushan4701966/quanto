@@ -416,4 +416,7 @@ button.button.alt.single_add_to_cart_button:hover::after {
     width: 100% !important;
 }
 
-
+/* Make background color black for the #slide element */
+#slide {
+    background-color: #000000 !important;
+}
