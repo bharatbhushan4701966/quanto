@@ -1313,6 +1313,11 @@
                 .quanto-homepage-tail-sections .elementor-widget,.quanto-homepage-tail-sections .elementor-widget-container{max-width:100%}
                 .quanto-homepage-tail-sections .elementor-heading-title{margin:0}
                 @media (max-width:767px){.quanto-homepage-tail-sections .e-con,.quanto-homepage-tail-sections .e-con>.e-con-inner{flex-direction:var(--mobile-flex-direction,column)}}
+                .elementor .e-flexbox-base {
+                    padding: 10px;
+                    display: flex;
+                    flex-direction: row;
+                }
             </style>';
             
             // Explicitly print the Elementor CSS for the homepage, otherwise the sections will lose their styling when rendered late on other pages.
