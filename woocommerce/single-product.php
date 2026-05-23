@@ -59,17 +59,20 @@ if ( function_exists( 'quanto_render_homepage_tail_sections' ) ) {
 }
 
 // Trick Elementor into enqueueing and printing all the necessary global CSS and flexbox assets.
-// We use the exact same template (9011) that was originally here, which perfectly triggered the CSS.
-// We capture its output with ob_start() so the unwanted HTML (contact form) doesn't display, 
+// We use the homepage ID because the footer sections are pulled from the homepage.
+// We capture its output with ob_start() so the unwanted HTML doesn't display, 
 // but Elementor still prints the <link> tags directly to the page.
+$homepage_id = get_option( 'page_on_front' );
+if ( ! $homepage_id ) $homepage_id = 14;
+
 if ( class_exists( '\Elementor\Plugin' ) ) {
     ob_start();
     if ( class_exists( '\Elementor\Core\Files\CSS\Post' ) ) {
-        $css_file = new \Elementor\Core\Files\CSS\Post( 9011 );
+        $css_file = new \Elementor\Core\Files\CSS\Post( $homepage_id );
         $css_file->enqueue();
         $css_file->print_css();
     }
-    \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( 9011, true );
+    \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $homepage_id, true );
     $html = ob_get_clean();
     
     // The CSS is printed via wp_print_styles during the ob_start block, or prepended to $html.
@@ -79,11 +82,6 @@ if ( class_exists( '\Elementor\Plugin' ) ) {
             echo $tag . "\n";
         }
     }
-} else {
-    // Fallback if Elementor is not active
-    ob_start();
-    do_shortcode( '[elementor-template id="9011"]' );
-    ob_end_clean();
 }
 
 get_footer();
