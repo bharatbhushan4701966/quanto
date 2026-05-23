@@ -1372,6 +1372,63 @@
         }
     }
 
+    if ( ! function_exists( 'quanto_render_homepage_sections_by_keyword' ) ) {
+        function quanto_render_homepage_sections_by_keyword( $keywords, $skip_last = 0 ) {
+            if ( ! class_exists( '\\Elementor\\Plugin' ) ) {
+                return false;
+            }
+
+            $homepage_id = null;
+            $data        = quanto_get_homepage_elementor_data( $homepage_id );
+
+            if ( ! $homepage_id || empty( $data ) ) {
+                return false;
+            }
+
+            $section_group = quanto_find_elementor_section_group( $data, 1 );
+            if ( empty( $section_group ) ) {
+                return false;
+            }
+
+            // Exclude sections from the end if requested (e.g., to avoid duplicating the footer)
+            if ( $skip_last > 0 ) {
+                $section_group = array_slice( $section_group, 0, - absint( $skip_last ) );
+            }
+
+            $to_render = array();
+            foreach ( $section_group as $section ) {
+                $json = json_encode( $section );
+                foreach ( (array) $keywords as $keyword ) {
+                    if ( stripos( $json, $keyword ) !== false ) {
+                        $to_render[] = $section;
+                        break; // Move to next section once a keyword matches
+                    }
+                }
+            }
+
+            if ( empty( $to_render ) ) {
+                return false;
+            }
+
+            quanto_print_homepage_tail_inline_styles();
+
+            echo '<div class="quanto-homepage-tail-sections quanto-keyword-sections">';
+            echo '<div data-elementor-type="wp-page" data-elementor-id="' . esc_attr( $homepage_id ) . '" class="elementor elementor-' . esc_attr( $homepage_id ) . '">';
+
+            foreach ( $to_render as $element_data ) {
+                $element_instance = \Elementor\Plugin::instance()->elements_manager->create_element_instance( $element_data );
+                if ( $element_instance ) {
+                    $element_instance->print_element();
+                }
+            }
+
+            echo '</div>';
+            echo '</div>';
+
+            return true;
+        }
+    }
+
     if ( ! function_exists( 'quanto_render_homepage_who_we_serve_section' ) ) {
         function quanto_render_homepage_who_we_serve_section() {
             if ( ! class_exists( '\\Elementor\\Plugin' ) ) {

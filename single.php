@@ -89,7 +89,16 @@
 
 
 
-    // Render the last 4 sections from the homepage as requested
+    // Render specific homepage sections as requested
+    if ( function_exists( 'quanto_render_homepage_client_testimonials_section' ) ) {
+        quanto_render_homepage_client_testimonials_section();
+    }
+
+    if ( function_exists( 'quanto_render_homepage_who_we_serve_section' ) ) {
+        quanto_render_homepage_who_we_serve_section();
+    }
+
+    // Render the last 4 sections from the homepage
     if ( function_exists( 'quanto_render_homepage_tail_sections' ) ) {
         quanto_render_homepage_tail_sections( 4 );
     }
