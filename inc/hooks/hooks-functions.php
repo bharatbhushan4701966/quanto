@@ -1312,15 +1312,7 @@
                 .quanto-homepage-tail-sections .elementor-column-wrap,.quanto-homepage-tail-sections .elementor-widget-wrap{align-content:flex-start;display:flex;flex-wrap:wrap;position:relative;width:100%}
                 .quanto-homepage-tail-sections .elementor-widget,.quanto-homepage-tail-sections .elementor-widget-container{max-width:100%}
                 .quanto-homepage-tail-sections .elementor-heading-title{margin:0}
-                .quanto-homepage-tail-sections .e-con { display: flex; position: relative; width: 100%; flex-wrap: wrap; align-content: flex-start; }
-                .quanto-homepage-tail-sections .e-con-inner { display: flex; flex-wrap: wrap; width: 100%; }
-                .quanto-homepage-tail-sections .e-con-boxed > .e-con-inner { max-width: var(--content-width, 1320px); margin: 0 auto; }
-                .quanto-homepage-tail-sections .e-con.e-flexbox-base { flex-direction: column; }
-                .quanto-homepage-tail-sections .elementor-element-661021d > .e-con-inner { flex-direction: row; justify-content: space-between; gap: 20px; }
-                @media (max-width:767px){
-                    .quanto-homepage-tail-sections .e-con,.quanto-homepage-tail-sections .e-con>.e-con-inner{flex-direction:var(--mobile-flex-direction,column)}
-                    .quanto-homepage-tail-sections .elementor-element-661021d > .e-con-inner { flex-direction: column; }
-                }
+                @media (max-width:767px){.quanto-homepage-tail-sections .e-con,.quanto-homepage-tail-sections .e-con>.e-con-inner{flex-direction:var(--mobile-flex-direction,column)}}
             </style>';
             
             // Explicitly print the Elementor CSS for the homepage, otherwise the sections will lose their styling when rendered late on other pages.
@@ -1332,6 +1324,22 @@
                 $css_file = new \Elementor\Core\Files\CSS\Post( $homepage_id );
                 $css_file->enqueue();
                 $css_file->print_css();
+            }
+            
+            // Print core Elementor styles to ensure flexbox and widget layouts are correct
+            if ( class_exists( '\Elementor\Plugin' ) && function_exists( 'wp_print_styles' ) ) {
+                wp_print_styles( array(
+                    'elementor-frontend',
+                    'e-flexbox',
+                    'e-container',
+                    'elementor-widget-heading',
+                    'elementor-widget-icon-list',
+                    'elementor-widget-image',
+                    'elementor-widget-text-editor',
+                    'elementor-widget-button',
+                    'elementor-widget-divider',
+                    'elementor-widget-spacer'
+                ) );
             }
             
             $printed = true;
