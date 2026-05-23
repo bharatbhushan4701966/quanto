@@ -58,4 +58,11 @@ if ( function_exists( 'quanto_render_homepage_tail_sections' ) ) {
     quanto_render_homepage_tail_sections( 3 );
 }
 
+// Trick Elementor into enqueueing all the necessary CSS for the homepage widgets
+// by processing the template but discarding its HTML output.
+// Since this happens before get_footer(), all enqueued styles will be printed correctly in the footer.
+$homepage_id = get_option( 'page_on_front' );
+if ( ! $homepage_id ) $homepage_id = 14;
+do_shortcode( '[elementor-template id="' . $homepage_id . '"]' );
+
 get_footer();

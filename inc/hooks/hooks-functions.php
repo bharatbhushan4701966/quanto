@@ -1331,20 +1331,6 @@
                 $css_file->print_css();
             }
             
-            // Set elementor in page to true so that print_element() properly enqueues widget CSS
-            if ( class_exists( '\Elementor\Plugin' ) ) {
-                \Elementor\Plugin::$instance->frontend->has_elementor_in_page( true );
-                
-                // Print core Elementor styles to ensure flexbox and widget layouts are correct
-                if ( function_exists( 'wp_print_styles' ) ) {
-                    wp_print_styles( array(
-                        'elementor-frontend',
-                        'e-flexbox',
-                        'e-container'
-                    ) );
-                }
-            }
-            
             $printed = true;
         }
     }
