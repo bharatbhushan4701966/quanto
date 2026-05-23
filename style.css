@@ -349,7 +349,6 @@ button.button.alt.single_add_to_cart_button:hover::after {
 
 .quanto-homepage-tail-sections .e-con {
     box-sizing: border-box;
-    display: var(--display, flex) !important;
     flex-direction: var(--flex-direction, row);
     flex-wrap: var(--flex-wrap, nowrap);
     align-content: var(--align-content, normal);
