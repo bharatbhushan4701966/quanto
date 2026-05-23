@@ -105,23 +105,7 @@ function quanto_essential_scripts() {
             }
         }
         
-        // Let Elementor know it's needed and trigger widget CSS enqueueing for the homepage elements
-        if ( class_exists( '\Elementor\Plugin' ) ) {
-            \Elementor\Plugin::$instance->frontend->has_elementor_in_page( true );
-            \Elementor\Plugin::$instance->frontend->enqueue_styles();
-            \Elementor\Plugin::$instance->frontend->enqueue_scripts();
-            
-            // Manually enqueue common Elementor and widget styles that might be missed
-            wp_enqueue_style( 'e-flexbox' );
-            wp_enqueue_style( 'e-container' );
-            wp_enqueue_style( 'elementor-widget-heading' );
-            wp_enqueue_style( 'elementor-widget-text-editor' );
-            wp_enqueue_style( 'elementor-widget-icon-list' );
-            wp_enqueue_style( 'elementor-widget-image' );
-            wp_enqueue_style( 'elementor-widget-button' );
-            wp_enqueue_style( 'elementor-widget-divider' );
-            wp_enqueue_style( 'elementor-widget-spacer' );
-        }
+        // Removed Elementor enqueue hack here. It is now properly handled in hooks-functions.php
     }
 
 

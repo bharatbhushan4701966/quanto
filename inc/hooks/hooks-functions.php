@@ -1331,20 +1331,18 @@
                 $css_file->print_css();
             }
             
-            // Print core Elementor styles to ensure flexbox and widget layouts are correct
-            if ( class_exists( '\Elementor\Plugin' ) && function_exists( 'wp_print_styles' ) ) {
-                wp_print_styles( array(
-                    'elementor-frontend',
-                    'e-flexbox',
-                    'e-container',
-                    'elementor-widget-heading',
-                    'elementor-widget-icon-list',
-                    'elementor-widget-image',
-                    'elementor-widget-text-editor',
-                    'elementor-widget-button',
-                    'elementor-widget-divider',
-                    'elementor-widget-spacer'
-                ) );
+            // Set elementor in page to true so that print_element() properly enqueues widget CSS
+            if ( class_exists( '\Elementor\Plugin' ) ) {
+                \Elementor\Plugin::$instance->frontend->has_elementor_in_page( true );
+                
+                // Print core Elementor styles to ensure flexbox and widget layouts are correct
+                if ( function_exists( 'wp_print_styles' ) ) {
+                    wp_print_styles( array(
+                        'elementor-frontend',
+                        'e-flexbox',
+                        'e-container'
+                    ) );
+                }
             }
             
             $printed = true;
