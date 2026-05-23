@@ -77,7 +77,8 @@ if ( class_exists( '\Elementor\Plugin' ) ) {
     
     // The CSS is printed via wp_print_styles during the ob_start block, or prepended to $html.
     // We can extract any <link> or <style> tags from $html and print them, discarding the rest.
-    if ( preg_match_all( '/<(link|style)[^>]*>.*?(?:<\/\1>)?/is', $html, $matches ) ) {
+    // Fixed regex to correctly capture the entire <style> block and <link> tags.
+    if ( preg_match_all( '/<link[^>]*>|<style[^>]*>.*?<\/style>/is', $html, $matches ) ) {
         foreach ( $matches[0] as $tag ) {
             echo $tag . "\n";
         }
