@@ -89,5 +89,10 @@
 
 
 
+    // Render the last 4 sections from the homepage as requested
+    if ( function_exists( 'quanto_render_homepage_tail_sections' ) ) {
+        quanto_render_homepage_tail_sections( 4 );
+    }
+
     //footer
     get_footer();
