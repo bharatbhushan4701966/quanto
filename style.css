@@ -417,3 +417,26 @@ button.button.alt.single_add_to_cart_button:hover::after {
 }
 
 /* Make background color black for the #slide element */
+#slide {
+    background-color: #000000 !important;
+}
+
+/* Custom related article button style */
+.related-article-more-details {
+    margin-top: 20px;
+}
+.custom-related-details-btn {
+    display: inline-block;
+    color: #000000;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 2px solid #000000;
+    padding-bottom: 2px;
+    line-height: 1.2;
+    transition: opacity 0.3s ease;
+}
+.custom-related-details-btn:hover {
+    color: #000000;
+    opacity: 0.7;
+}
