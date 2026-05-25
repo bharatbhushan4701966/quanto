@@ -475,3 +475,8 @@ button.button.alt.single_add_to_cart_button:hover::after {
 .woocommerce ul.products li.product .woocommerce-loop-product__title {
     min-height: 130px; 
 }
+
+/* Fix spacing above WHO WE SERVE section on blog detail pages */
+.single-post .elementor-element-5e656d6 {
+    padding-top: 30px !important;
+}
