@@ -463,28 +463,15 @@ button.button.alt.single_add_to_cart_button:hover::after {
     font-weight: 300;
 }
 
-/* Convert WooCommerce float grid to Flexbox for equal heights */
-.woocommerce ul.products {
-    display: flex !important;
-    flex-wrap: wrap;
-}
-.woocommerce ul.products::before,
-.woocommerce ul.products::after {
-    display: none !important; /* Remove float clearfixes that break flexbox */
-}
-
-/* Base Card Styling */
+/* Base Card Styling - Safe */
 .woocommerce ul.products li.product {
     background: #ffffff !important;
     border: 1px solid #f0f0f0 !important;
-    float: none !important;
-    display: flex !important;
-    flex-direction: column;
     box-sizing: border-box;
-    margin-bottom: 40px !important; /* Space between rows */
+    padding-bottom: 30px;
 }
 
-/* Image flush with card */
+/* Image flush with card top */
 .woocommerce ul.products li.product .woocommerce-loop-product__link img {
     width: 100% !important;
     height: 406px !important;
@@ -493,7 +480,7 @@ button.button.alt.single_add_to_cart_button:hover::after {
     display: block;
 }
 
-/* Add 30px padding only to text elements */
+/* Add 30px horizontal padding to text elements */
 .woocommerce ul.products li.product .product-category-breadcrumb,
 .woocommerce ul.products li.product .woocommerce-loop-product__title,
 .woocommerce ul.products li.product .star-rating,
@@ -507,27 +494,26 @@ button.button.alt.single_add_to_cart_button:hover::after {
 .woocommerce ul.products li.product .product-category-breadcrumb {
     margin-top: 25px;
 }
+
+/* Align buttons safely by enforcing a fixed height for titles (enough for 4 lines) */
 .woocommerce ul.products li.product .woocommerce-loop-product__title {
     font-size: 24px;
     line-height: 1.3;
     margin-bottom: 20px;
     font-weight: 700;
     color: #000;
+    min-height: 130px; /* Forces equal height across all cards */
+    display: block;
 }
+
 .woocommerce ul.products li.product .star-rating {
     margin-bottom: 20px;
 }
+
 .woocommerce ul.products li.product .price {
     font-size: 22px;
     font-weight: 700;
     color: #000;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     display: block;
-}
-
-/* Push button to absolute bottom */
-.woocommerce ul.products li.product .button {
-    margin-top: auto !important;
-    margin-bottom: 30px !important;
-    align-self: flex-start;
 }
