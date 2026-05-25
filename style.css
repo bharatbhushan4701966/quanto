@@ -475,8 +475,13 @@ button.button.alt.single_add_to_cart_button:hover::after {
 
 /* Align buttons safely by enforcing a fixed height for titles */
 
-/* Fix spacing for injected homepage sections on blog detail pages */
-.single-post .elementor-element-5e656d6,
+/* Fix spacing for WHO WE SERVE section on blog detail pages */
+.single-post .elementor-element-5e656d6 {
+    padding-top: 80px !important;
+    padding-bottom: 80px !important;
+}
+
+/* Fix spacing for Client Testimonials on blog detail pages */
 .single-post .elementor-element-82ef444 {
     padding-top: 30px !important;
 }
@@ -508,6 +513,13 @@ button.button.alt.single_add_to_cart_button:hover::after {
 .meta-box .meta-info,
 .meta-box .meta-info a,
 .meta-box .meta-info span {
+    font-size: 14px !important;
+}
+
+/* Force 14px font size for paragraph text on single blog posts */
+.single-post .wp-block-paragraph,
+.single-post .entry-content p,
+.single-post .post-content p {
     font-size: 14px !important;
 }
 
