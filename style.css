@@ -464,3 +464,9 @@ button.button.alt.single_add_to_cart_button:hover::after {
     font-weight: 300;
 }
 
+/* Align buttons safely by giving titles a fixed min-height for 3 lines */
+.woocommerce ul.products li.product .woocommerce-loop-product__title {
+    min-height: 85px;
+    display: flex;
+    align-items: flex-start;
+}
