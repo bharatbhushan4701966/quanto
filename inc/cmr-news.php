@@ -417,7 +417,7 @@ function cmr_news_tabs_shortcode( $atts ) {
         </div>
         
         <div class="cmr-news-footer">
-            <a href="#" class="cmr-explore-all">Explore All ↗</a>
+            <a href="#" class="cmr-explore-all">Explore All <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg" class="cmr-arrow-icon" alt="Arrow"></a>
         </div>
     </div>
     <?php
