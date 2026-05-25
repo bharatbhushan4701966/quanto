@@ -478,8 +478,8 @@ button.button.alt.single_add_to_cart_button:hover::after {
 /* Fix spacing for WHO WE SERVE section on blog detail pages */
 body.single-post .elementor-element.elementor-element-5e656d6,
 body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
-    padding-top: 80px !important;
-    padding-bottom: 80px !important;
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
 }
 
 /* Fix spacing for Client Testimonials on blog detail pages */
