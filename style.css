@@ -463,9 +463,18 @@ button.button.alt.single_add_to_cart_button:hover::after {
     color: #a0a0a0;
     font-weight: 300;
 }
-
-/* Align buttons safely by giving titles a fixed min-height for up to 4 lines */
+/* Safely convert product cards to flex columns to push buttons to the bottom */
+.woocommerce ul.products {
+    display: flex;
+    flex-wrap: wrap;
+}
+.woocommerce ul.products li.product {
+    display: flex;
+    flex-direction: column;
+}
 .woocommerce ul.products li.product .woocommerce-loop-product__title {
-    min-height: 110px;
     display: block;
+}
+.woocommerce ul.products li.product .button {
+    margin-top: auto !important;
 }
