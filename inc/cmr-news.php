@@ -104,6 +104,7 @@ function cmr_news_render_meta_box( $post ) {
     
     $reading_time = get_post_meta( $post->ID, '_cmr_news_reading_time', true );
     $publisher_name = get_post_meta( $post->ID, '_cmr_news_publisher_name', true );
+    $is_featured = get_post_meta( $post->ID, '_cmr_news_is_featured', true );
     
     ?>
     <style>
@@ -113,6 +114,13 @@ function cmr_news_render_meta_box( $post ) {
         .cmr-logo-preview { max-width: 150px; margin-top: 10px; display: block; }
     </style>
     
+    <div class="cmr-meta-row">
+        <label for="cmr_news_is_featured" style="font-weight: normal; cursor: pointer;">
+            <input type="checkbox" id="cmr_news_is_featured" name="cmr_news_is_featured" value="1" <?php checked( $is_featured, '1' ); ?> />
+            <strong>Pin this to the top</strong> (Show this item first in its tab, regardless of date)
+        </label>
+    </div>
+
     <div class="cmr-meta-row">
         <label for="cmr_news_publisher_name">Publisher Name (e.g., CNN, Times of India)</label>
         <input type="text" id="cmr_news_publisher_name" name="cmr_news_publisher_name" value="<?php echo esc_attr( $publisher_name ); ?>" />
@@ -184,6 +192,8 @@ function cmr_news_save_meta_box_data( $post_id ) {
     if ( isset( $_POST['cmr_news_publisher_name'] ) ) {
         update_post_meta( $post_id, '_cmr_news_publisher_name', sanitize_text_field( $_POST['cmr_news_publisher_name'] ) );
     }
+    
+    update_post_meta( $post_id, '_cmr_news_is_featured', isset( $_POST['cmr_news_is_featured'] ) ? '1' : '0' );
 }
 
 // 3. Enqueue Admin Scripts for Media Uploader
@@ -252,6 +262,22 @@ function cmr_news_tabs_shortcode( $atts ) {
                                     'field'    => 'term_id',
                                     'terms'    => $term->term_id,
                                 )
+                            ),
+                            'meta_query' => array(
+                                'relation' => 'OR',
+                                'featured_clause' => array(
+                                    'key'     => '_cmr_news_is_featured',
+                                    'type'    => 'NUMERIC',
+                                    'compare' => 'EXISTS',
+                                ),
+                                array(
+                                    'key'     => '_cmr_news_is_featured',
+                                    'compare' => 'NOT EXISTS',
+                                )
+                            ),
+                            'orderby' => array(
+                                'featured_clause' => 'DESC',
+                                'date'            => 'DESC',
                             ),
                             'posts_per_page' => $is_media_releases ? 4 : 5,
                         ) );
