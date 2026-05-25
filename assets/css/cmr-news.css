@@ -1,0 +1,228 @@
+/* Tab Buttons Container */
+.cmr-news-tabs {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.cmr-news-tab-btn {
+    background: transparent;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    padding: 10px 25px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #333;
+}
+
+.cmr-news-tab-btn.active, .cmr-news-tab-btn:hover {
+    border-color: #6C5CE7; /* Adjust to match brand purple */
+    color: #6C5CE7;
+    background: rgba(108, 92, 231, 0.05);
+}
+
+/* Tab Panes */
+.cmr-news-tab-pane {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.cmr-news-tab-pane.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Grid Layout */
+.cmr-news-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
+}
+
+/* Cards Base */
+.cmr-card {
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.cmr-card-link-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none !important;
+    color: inherit;
+}
+
+.cmr-card-image-wrap {
+    position: relative;
+    width: 100%;
+    background: #f0f0f0; /* fallback */
+    overflow: hidden;
+}
+
+.cmr-card-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.cmr-card:hover .cmr-card-bg {
+    transform: scale(1.05);
+}
+
+.cmr-card-logo {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+/* Featured Card (Top Row, spans 12 cols, image on top, text overlay or side text depending on design)
+   Based on the screenshot, the featured card has a large image with overlay text */
+.cmr-card-featured {
+    grid-column: span 12;
+    height: 500px;
+}
+
+.cmr-card-featured .cmr-card-link-wrapper {
+    position: relative;
+}
+
+.cmr-card-featured .cmr-card-image-wrap {
+    height: 100%;
+}
+
+.cmr-card-featured .cmr-card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 40px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+    color: #fff;
+}
+
+.cmr-card-featured .cmr-card-logo {
+    top: auto;
+    bottom: 180px; /* Adjust based on content height */
+    left: 40px;
+}
+
+.cmr-card-featured .cmr-card-meta {
+    color: #ddd;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.cmr-card-featured .cmr-card-title {
+    font-size: 28px;
+    color: #fff;
+    margin: 0 0 15px 0;
+    font-weight: 600;
+}
+
+.cmr-card-featured .cmr-read-coverage {
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    display: inline-block;
+    padding-bottom: 2px;
+    font-weight: 500;
+}
+
+/* Standard Card (Bottom Row, spans 4 cols) */
+.cmr-card-standard {
+    grid-column: span 4;
+}
+
+.cmr-card-standard .cmr-card-image-wrap {
+    height: 250px;
+}
+
+.cmr-card-standard .cmr-card-content {
+    padding: 20px 0;
+}
+
+.cmr-card-standard .cmr-card-meta {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cmr-card-standard .cmr-card-title {
+    font-size: 18px;
+    margin: 0 0 15px 0;
+    color: #111;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.cmr-card-standard .cmr-read-coverage {
+    color: #111;
+    font-weight: 600;
+    border-bottom: 1px solid #111;
+    display: inline-block;
+    padding-bottom: 2px;
+    margin-top: auto;
+}
+
+/* Explore All Button */
+.cmr-news-footer {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.cmr-explore-all {
+    display: inline-block;
+    background: #111;
+    color: #fff;
+    padding: 12px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+.cmr-explore-all:hover {
+    background: #333;
+    color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .cmr-card-standard {
+        grid-column: span 6;
+    }
+}
+
+@media (max-width: 768px) {
+    .cmr-card-featured {
+        height: 400px;
+    }
+    .cmr-card-featured .cmr-card-content {
+        padding: 20px;
+    }
+    .cmr-card-featured .cmr-card-logo {
+        left: 20px;
+        bottom: 160px;
+    }
+    .cmr-card-standard {
+        grid-column: span 12;
+    }
+}
