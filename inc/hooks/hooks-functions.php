@@ -1828,7 +1828,7 @@
                 $element_instance = \Elementor\Plugin::instance()->elements_manager->create_element_instance( $target_section );
                 if ( $element_instance ) {
                     quanto_print_homepage_tail_inline_styles();
-                    echo '<div data-elementor-type="wp-page" data-elementor-id="' . esc_attr( $test_page_id ) . '" class="elementor quanto-homepage-tail-sections elementor-' . esc_attr( $test_page_id ) . '">';
+                    echo '<div data-elementor-type="wp-page" data-elementor-id="' . esc_attr( $test_page_id ) . '" class="elementor quanto-similar-reports-section elementor-' . esc_attr( $test_page_id ) . '">';
                     $element_instance->print_element();
                     echo '</div>';
                 }
