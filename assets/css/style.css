@@ -8038,7 +8038,7 @@ h3.inner-title {
 .woocommerce .star-rating::before,
 .star-rating::before {
     content: '\f005\f005\f005\f005\f005' !important;
-    color: #a0a0a0 !important; /* Grey color for empty stars */
+    color: #F59E0B !important; /* Gold color for empty stars */
     font-weight: 400 !important; /* OUTLINED empty stars */
     float: left;
     top: 0;
