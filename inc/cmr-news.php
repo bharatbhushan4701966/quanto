@@ -254,7 +254,9 @@ function cmr_news_tabs_shortcode( $atts ) {
                     ?>
                     <div class="<?php echo esc_attr( $grid_class ); ?>">
                         <?php
-                        $query = new WP_Query( array(
+                        $target_count = $is_media_releases ? 4 : 5;
+                        
+                        $pinned_query = new WP_Query( array(
                             'post_type' => 'cmr_news',
                             'tax_query' => array(
                                 array(
@@ -264,28 +266,48 @@ function cmr_news_tabs_shortcode( $atts ) {
                                 )
                             ),
                             'meta_query' => array(
-                                'relation' => 'OR',
-                                'featured_clause' => array(
-                                    'key'     => '_cmr_news_is_featured',
-                                    'type'    => 'NUMERIC',
-                                    'compare' => 'EXISTS',
-                                ),
                                 array(
                                     'key'     => '_cmr_news_is_featured',
-                                    'compare' => 'NOT EXISTS',
+                                    'value'   => '1',
+                                    'compare' => '='
                                 )
                             ),
-                            'orderby' => array(
-                                'featured_clause' => 'DESC',
-                                'date'            => 'DESC',
-                            ),
-                            'posts_per_page' => $is_media_releases ? 4 : 5,
+                            'orderby' => 'date',
+                            'order'   => 'DESC',
+                            'posts_per_page' => $target_count,
                         ) );
+                        
+                        $all_posts = $pinned_query->posts;
+                        $remaining = $target_count - count($all_posts);
+                        
+                        if ( $remaining > 0 ) {
+                            $pinned_ids = wp_list_pluck( $all_posts, 'ID' );
+                            $normal_args = array(
+                                'post_type' => 'cmr_news',
+                                'tax_query' => array(
+                                    array(
+                                        'taxonomy' => 'cmr_news_category',
+                                        'field'    => 'term_id',
+                                        'terms'    => $term->term_id,
+                                    )
+                                ),
+                                'orderby' => 'date',
+                                'order'   => 'DESC',
+                                'posts_per_page' => $remaining,
+                            );
+                            if ( ! empty( $pinned_ids ) ) {
+                                $normal_args['post__not_in'] = $pinned_ids;
+                            }
+                            $normal_query = new WP_Query( $normal_args );
+                            $all_posts = array_merge( $all_posts, $normal_query->posts );
+                        }
 
-                        if ( $query->have_posts() ) {
+                        if ( ! empty( $all_posts ) ) {
                             $count = 0;
-                            while ( $query->have_posts() ) {
-                                $query->the_post();
+                            $total_posts = count( $all_posts );
+                            global $post;
+                            foreach ( $all_posts as $post ) {
+                                setup_postdata( $post );
                                 $post_id = get_the_ID();
                                 $bg_image = get_the_post_thumbnail_url( $post_id, 'large' );
                                 $logo_id = get_post_meta( $post_id, '_cmr_news_source_logo_id', true );
@@ -338,9 +360,9 @@ function cmr_news_tabs_shortcode( $atts ) {
                                         </div>
                                         <?php
                                     }
-                                    if ( $count === $query->post_count - 1 && $count > 0 ) {
+                                    if ( $count === $total_posts - 1 && $count > 0 ) {
                                         echo '</div>'; // Close cmr-media-right
-                                    } elseif ( $count === 0 && $query->post_count === 1 ) {
+                                    } elseif ( $count === 0 && $total_posts === 1 ) {
                                         echo '<div class="cmr-media-right"></div>'; // Empty right column if only 1 post
                                     }
                                 } else {
