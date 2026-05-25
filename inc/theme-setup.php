@@ -118,3 +118,15 @@ add_action( 'woocommerce_shop_loop_item_title', 'quanto_woocommerce_template_loo
 function quanto_woocommerce_template_loop_product_title() {
 	echo '<h5 class="' . esc_attr( apply_filters( 'woocommerce_product_loop_title_classes', 'woocommerce-loop-product__title' ) ) . '">' . get_the_title() . '</h5>';
 }
+
+/**
+ * Display category breadcrumb above product title
+ */
+add_action( 'woocommerce_shop_loop_item_title', 'quanto_woocommerce_template_loop_product_category', 5 );
+function quanto_woocommerce_template_loop_product_category() {
+    global $product;
+    $categories = wc_get_product_category_list( $product->get_id(), ', ' );
+    if ( $categories ) {
+        echo '<div class="product-category-breadcrumb"><span class="breadcrumb-dash">&mdash;</span> ' . wp_strip_all_tags( $categories ) . '</div>';
+    }
+}
