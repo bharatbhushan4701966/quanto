@@ -463,3 +463,20 @@ button.button.alt.single_add_to_cart_button:hover::after {
     color: #a0a0a0;
     font-weight: 300;
 }
+
+/* Align buttons and content in WooCommerce product loop */
+.woocommerce ul.products li.product {
+    display: flex !important;
+    flex-direction: column;
+}
+.woocommerce ul.products li.product .woocommerce-loop-product__link {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.woocommerce ul.products li.product .woocommerce-loop-product__title {
+    flex-grow: 1;
+}
+.woocommerce ul.products li.product .button {
+    margin-top: auto !important;
+}
