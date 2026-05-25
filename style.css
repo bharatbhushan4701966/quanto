@@ -482,3 +482,15 @@ button.button.alt.single_add_to_cart_button:hover::after {
     padding-top: 30px !important;
     padding-bottom: 30px !important;
 }
+
+/* Add horizontal padding to text elements in WooCommerce product cards, but not the image */
+.woocommerce ul.products li.product .product-category-breadcrumb,
+.woocommerce ul.products li.product .woocommerce-loop-product__title,
+.woocommerce ul.products li.product .star-rating,
+.woocommerce ul.products li.product .price,
+.woocommerce ul.products li.product .woocommerce-loop-product__buttons {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    padding-bottom: 15px !important;
+    box-sizing: border-box;
+}
