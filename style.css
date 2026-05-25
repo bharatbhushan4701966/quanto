@@ -452,8 +452,7 @@ button.button.alt.single_add_to_cart_button:hover::after {
 .product-category-breadcrumb {
     font-size: 13px;
     color: #777777;
-    margin-top: 15px;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -463,18 +462,63 @@ button.button.alt.single_add_to_cart_button:hover::after {
     color: #a0a0a0;
     font-weight: 300;
 }
-/* Safely convert product cards to flex columns to push buttons to the bottom */
+
+/* WooCommerce Product Cards - Exact Match to Design */
 .woocommerce ul.products {
     display: flex;
     flex-wrap: wrap;
 }
+
 .woocommerce ul.products li.product {
+    background: #ffffff;
+    border: 1px solid #f0f0f0;
+    padding: 30px;
     display: flex;
     flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
 }
-.woocommerce ul.products li.product .woocommerce-loop-product__title {
+
+/* Negative margin trick to make the image flush with the edges while text is padded */
+.woocommerce ul.products li.product .woocommerce-loop-product__link img {
+    margin: -30px -30px 25px -30px;
+    width: calc(100% + 60px) !important;
+    max-width: none !important;
+    height: 406px !important;
+    object-fit: cover !important;
     display: block;
 }
+
+/* Ensure the link wraps properly */
+.woocommerce ul.products li.product .woocommerce-loop-product__link {
+    display: block;
+}
+
+/* Style the title */
+.woocommerce ul.products li.product .woocommerce-loop-product__title {
+    font-size: 24px;
+    line-height: 1.3;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #000;
+}
+
+/* Rating spacing */
+.woocommerce ul.products li.product .star-rating {
+    margin-bottom: 20px;
+}
+
+/* Price spacing and size */
+.woocommerce ul.products li.product .price {
+    font-size: 22px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 20px;
+    display: block;
+}
+
+/* Push the button to the absolute bottom! */
 .woocommerce ul.products li.product .button {
     margin-top: auto !important;
+    align-self: flex-start;
 }
