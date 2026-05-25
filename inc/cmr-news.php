@@ -267,7 +267,7 @@ function cmr_news_tabs_shortcode( $atts ) {
                                 $ext_link = get_post_meta( $post_id, '_cmr_news_external_link', true );
                                 $reading_time = get_post_meta( $post_id, '_cmr_news_reading_time', true );
                                 $publisher = get_post_meta( $post_id, '_cmr_news_publisher_name', true );
-                                $date = get_the_date( 'M j Y' );
+                                $date = get_the_date( 'M j, Y' );
                                 
                                 if ( $is_media_releases ) {
                                     if ( $count === 0 ) {
