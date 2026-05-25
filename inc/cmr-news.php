@@ -333,7 +333,7 @@ function cmr_news_tabs_shortcode( $atts ) {
                                                         <span class="cmr-category-tag">&mdash; Media Releases</span>
                                                     </div>
                                                     <h3 class="cmr-card-title"><?php the_title(); ?></h3>
-                                                    <span class="cmr-read-coverage">More Details ↗</span>
+                                                    <span class="cmr-read-coverage">More Details <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg" class="cmr-arrow-icon" alt="Arrow"></span>
                                                 </div>
                                             </a>
                                         </div>
@@ -354,7 +354,7 @@ function cmr_news_tabs_shortcode( $atts ) {
                                                         <span class="cmr-category-tag">&mdash; Media Releases</span>
                                                     </div>
                                                     <h3 class="cmr-card-title"><?php the_title(); ?></h3>
-                                                    <span class="cmr-read-coverage">More Details ↗</span>
+                                                    <span class="cmr-read-coverage">More Details <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg" class="cmr-arrow-icon" alt="Arrow"></span>
                                                 </div>
                                             </a>
                                         </div>
@@ -394,7 +394,10 @@ function cmr_news_tabs_shortcode( $atts ) {
                                                     <?php endif; ?>
                                                 </div>
                                                 <h3 class="cmr-card-title"><?php the_title(); ?></h3>
-                                                <span class="cmr-read-coverage">Read Coverage ↗</span>
+                                                <?php
+                                                $arrow_url = ( $count === 0 ) ? 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg' : 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg';
+                                                ?>
+                                                <span class="cmr-read-coverage">Read Coverage <img src="<?php echo esc_url($arrow_url); ?>" class="cmr-arrow-icon" alt="Arrow"></span>
                                             </div>
                                         </a>
                                     </div>
