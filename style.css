@@ -39,8 +39,9 @@ All rights reserved.s
 
 .woocommerce .star-rating::before,
 .star-rating::before {
-    content: '\f005\f005\f005\f005\f005';
-    color: #e2e8f0; /* Soft grey for empty stars */
+    content: '\f005\f005\f005\f005\f005' !important;
+    color: #a0a0a0 !important; /* Grey color for empty stars */
+    font-weight: 400 !important; /* OUTLINED empty stars */
     float: left;
     top: 0;
     left: 0;
@@ -49,7 +50,7 @@ All rights reserved.s
 
 .woocommerce .star-rating span,
 .star-rating span {
-    overflow: hidden;
+    overflow: hidden !important;
     float: left;
     top: 0;
     left: 0;
@@ -59,8 +60,12 @@ All rights reserved.s
 
 .woocommerce .star-rating span::before,
 .star-rating span::before {
-    content: '\f005\f005\f005\f005\f005';
-    color: #f59e0b; /* Beautiful premium Gold/Amber color */
+    content: '\f005\f005\f005\f005\f005' !important;
+    color: #f59e0b !important; /* Gold color for filled stars */
+    font-weight: 900 !important; /* SOLID filled stars */
+    top: 0;
+    position: absolute;
+    left: 0;
 }
 
 /* Style the interactive star rating selector inside the review form */
