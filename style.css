@@ -476,7 +476,8 @@ button.button.alt.single_add_to_cart_button:hover::after {
 /* Align buttons safely by enforcing a fixed height for titles */
 
 /* Fix spacing for WHO WE SERVE section on blog detail pages */
-.single-post .elementor-element-5e656d6 {
+body.single-post .elementor-element.elementor-element-5e656d6,
+body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
     padding-top: 80px !important;
     padding-bottom: 80px !important;
 }
