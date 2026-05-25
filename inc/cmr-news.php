@@ -333,10 +333,16 @@ function cmr_news_tabs_shortcode( $atts ) {
                                             </div>
                                             <div class="cmr-card-content">
                                                 <div class="cmr-card-meta">
-                                                    <span class="cmr-publisher"><?php echo esc_html( $publisher ); ?></span> | 
-                                                    <span class="cmr-date">Published <?php echo esc_html( $date ); ?></span>
+                                                    <div class="cmr-meta-left">
+                                                        <?php if ( $publisher ) : ?>
+                                                            <span class="cmr-publisher"><?php echo esc_html( $publisher ); ?></span> <span class="cmr-separator">|</span> 
+                                                        <?php endif; ?>
+                                                        <span class="cmr-date">Published <?php echo esc_html( $date ); ?></span>
+                                                    </div>
                                                     <?php if ( $reading_time ) : ?>
-                                                        <span class="cmr-read-time"><?php echo esc_html( $reading_time ); ?></span>
+                                                        <div class="cmr-meta-right">
+                                                            <span class="cmr-read-time"><?php echo esc_html( $reading_time ); ?></span>
+                                                        </div>
                                                     <?php endif; ?>
                                                 </div>
                                                 <h3 class="cmr-card-title"><?php the_title(); ?></h3>
