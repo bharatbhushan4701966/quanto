@@ -510,3 +510,16 @@ button.button.alt.single_add_to_cart_button:hover::after {
 .meta-box .meta-info span {
     font-size: 14px !important;
 }
+
+/* Hide picture and force 100% width on content for Testimonial 2 widget */
+.wcf__testimonial-2 .slide .picture {
+    display: none !important;
+}
+
+.wcf__testimonial-2 .slide .content {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+}
