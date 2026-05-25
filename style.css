@@ -516,10 +516,16 @@ button.button.alt.single_add_to_cart_button:hover::after {
     display: none !important;
 }
 
+.wcf__testimonial-2 .slide {
+    display: block !important;
+    width: 100% !important;
+}
+
 .wcf__testimonial-2 .slide .content {
+    display: block !important;
     width: 100% !important;
     max-width: 100% !important;
-    flex: 0 0 100% !important;
+    flex: none !important;
     padding-left: 0 !important;
     margin-left: 0 !important;
 }
