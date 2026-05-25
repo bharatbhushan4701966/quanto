@@ -476,8 +476,9 @@ button.button.alt.single_add_to_cart_button:hover::after {
     min-height: 130px; 
 }
 
-/* Fix spacing above WHO WE SERVE section on blog detail pages */
-.single-post .elementor-element-5e656d6 {
+/* Fix spacing for injected homepage sections on blog detail pages */
+.single-post .elementor-element-5e656d6,
+.single-post .elementor-element-82ef444 {
     padding-top: 30px !important;
-    padding-bottom: 30px!important;
+    padding-bottom: 30px !important;
 }
