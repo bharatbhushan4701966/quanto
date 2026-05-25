@@ -8059,9 +8059,6 @@ h3.inner-title {
 .star-rating span::before {
     content: '\f005\f005\f005\f005\f005';
     color: #f59e0b; /* Beautiful premium Gold/Amber color */
-    top: 0;
-    position: absolute;
-    left: 0;
 }
 
 /* Style the interactive star rating selector inside the review form */
