@@ -5372,8 +5372,8 @@ a.quanto-default-btn.sm-size {
   display: grid;
   place-content: center;
   border-radius: 100%;
-  width: 60px;
-  height: 60px;
+  width: 48px;
+  height: 48px;
   border: 1px solid var(--color-1);
   transition: all 0.5s ease;
 }
