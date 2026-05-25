@@ -12,5 +12,15 @@ jQuery(document).ready(function($) {
         // Show target tab pane
         var targetId = $(this).data('target');
         container.find('#' + targetId).addClass('active');
+        
+        // Update "Explore All" text
+        var tabText = $(this).text().trim();
+        container.find('.cmr-explore-all').text('Explore All ' + tabText + ' ↗');
     });
+    
+    // Initialize the first tab's button text
+    var firstTabText = $('.cmr-news-tab-btn.active').text().trim();
+    if(firstTabText) {
+        $('.cmr-explore-all').text('Explore All ' + firstTabText + ' ↗');
+    }
 });

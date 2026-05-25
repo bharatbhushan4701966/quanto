@@ -238,7 +238,11 @@ function cmr_news_tabs_shortcode( $atts ) {
                 $active_class = $first ? 'active' : '';
             ?>
                 <div class="cmr-news-tab-pane <?php echo esc_attr( $active_class ); ?>" id="cmr-tab-<?php echo esc_attr( $term->term_id ); ?>">
-                    <div class="cmr-news-grid">
+                    <?php
+                    $is_media_releases = ( $term->slug === 'media-releases' );
+                    $grid_class = $is_media_releases ? 'cmr-media-grid' : 'cmr-news-grid';
+                    ?>
+                    <div class="<?php echo esc_attr( $grid_class ); ?>">
                         <?php
                         $query = new WP_Query( array(
                             'post_type' => 'cmr_news',
@@ -249,7 +253,7 @@ function cmr_news_tabs_shortcode( $atts ) {
                                     'terms'    => $term->term_id,
                                 )
                             ),
-                            'posts_per_page' => 5,
+                            'posts_per_page' => $is_media_releases ? 4 : 5,
                         ) );
 
                         if ( $query->have_posts() ) {
@@ -265,32 +269,83 @@ function cmr_news_tabs_shortcode( $atts ) {
                                 $publisher = get_post_meta( $post_id, '_cmr_news_publisher_name', true );
                                 $date = get_the_date( 'M j Y' );
                                 
-                                $card_class = ( $count === 0 ) ? 'cmr-card cmr-card-featured' : 'cmr-card cmr-card-standard';
-                                ?>
-                                <div class="<?php echo esc_attr( $card_class ); ?>">
-                                    <a href="<?php echo esc_url( $ext_link ); ?>" target="_blank" class="cmr-card-link-wrapper">
-                                        <div class="cmr-card-image-wrap">
-                                            <?php if ( $bg_image ) : ?>
-                                                <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
-                                            <?php endif; ?>
-                                            <?php if ( $logo_url ) : ?>
-                                                <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo" alt="Source Logo">
-                                            <?php endif; ?>
+                                if ( $is_media_releases ) {
+                                    if ( $count === 0 ) {
+                                        // Left Featured
+                                        ?>
+                                        <div class="cmr-media-left">
+                                            <a href="<?php echo esc_url( $ext_link ); ?>" target="_blank" class="cmr-card-link-wrapper">
+                                                <div class="cmr-card-image-wrap">
+                                                    <?php if ( $bg_image ) : ?>
+                                                        <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="cmr-card-content">
+                                                    <div class="cmr-card-meta">
+                                                        <span class="cmr-category-tag">&mdash; Media Releases</span>
+                                                    </div>
+                                                    <h3 class="cmr-card-title"><?php the_title(); ?></h3>
+                                                    <span class="cmr-read-coverage">More Details ↗</span>
+                                                </div>
+                                            </a>
                                         </div>
-                                        <div class="cmr-card-content">
-                                            <div class="cmr-card-meta">
-                                                <span class="cmr-publisher"><?php echo esc_html( $publisher ); ?></span> | 
-                                                <span class="cmr-date">Published <?php echo esc_html( $date ); ?></span>
-                                                <?php if ( $reading_time ) : ?>
-                                                    <span class="cmr-read-time"><?php echo esc_html( $reading_time ); ?></span>
+                                        <div class="cmr-media-right">
+                                        <?php
+                                    } else {
+                                        // Right List Items
+                                        ?>
+                                        <div class="cmr-media-horizontal-card">
+                                            <a href="<?php echo esc_url( $ext_link ); ?>" target="_blank" class="cmr-card-link-wrapper">
+                                                <div class="cmr-card-image-wrap">
+                                                    <?php if ( $bg_image ) : ?>
+                                                        <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="cmr-card-content">
+                                                    <div class="cmr-card-meta">
+                                                        <span class="cmr-category-tag">&mdash; Media Releases</span>
+                                                    </div>
+                                                    <h3 class="cmr-card-title"><?php the_title(); ?></h3>
+                                                    <span class="cmr-read-coverage">More Details ↗</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <?php
+                                    }
+                                    if ( $count === $query->post_count - 1 && $count > 0 ) {
+                                        echo '</div>'; // Close cmr-media-right
+                                    } elseif ( $count === 0 && $query->post_count === 1 ) {
+                                        echo '<div class="cmr-media-right"></div>'; // Empty right column if only 1 post
+                                    }
+                                } else {
+                                    // Original CMR In News Layout
+                                    $card_class = ( $count === 0 ) ? 'cmr-card cmr-card-featured' : 'cmr-card cmr-card-standard';
+                                    ?>
+                                    <div class="<?php echo esc_attr( $card_class ); ?>">
+                                        <a href="<?php echo esc_url( $ext_link ); ?>" target="_blank" class="cmr-card-link-wrapper">
+                                            <div class="cmr-card-image-wrap">
+                                                <?php if ( $bg_image ) : ?>
+                                                    <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
+                                                <?php endif; ?>
+                                                <?php if ( $logo_url ) : ?>
+                                                    <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo" alt="Source Logo">
                                                 <?php endif; ?>
                                             </div>
-                                            <h3 class="cmr-card-title"><?php the_title(); ?></h3>
-                                            <span class="cmr-read-coverage">Read Coverage ↗</span>
-                                        </div>
-                                    </a>
-                                </div>
-                                <?php
+                                            <div class="cmr-card-content">
+                                                <div class="cmr-card-meta">
+                                                    <span class="cmr-publisher"><?php echo esc_html( $publisher ); ?></span> | 
+                                                    <span class="cmr-date">Published <?php echo esc_html( $date ); ?></span>
+                                                    <?php if ( $reading_time ) : ?>
+                                                        <span class="cmr-read-time"><?php echo esc_html( $reading_time ); ?></span>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <h3 class="cmr-card-title"><?php the_title(); ?></h3>
+                                                <span class="cmr-read-coverage">Read Coverage ↗</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <?php
+                                }
                                 $count++;
                             }
                             wp_reset_postdata();
