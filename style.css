@@ -469,9 +469,6 @@ button.button.alt.single_add_to_cart_button:hover::after {
 }
 
 /* Align buttons safely by enforcing a fixed height for titles */
-.woocommerce ul.products li.product .woocommerce-loop-product__title {
-    min-height: 130px; 
-}
 
 /* Fix spacing for injected homepage sections on blog detail pages */
 .single-post .elementor-element-5e656d6,
