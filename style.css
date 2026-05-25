@@ -463,38 +463,50 @@ button.button.alt.single_add_to_cart_button:hover::after {
     font-weight: 300;
 }
 
-/* WooCommerce Product Cards - Exact Match to Design */
+/* Convert WooCommerce float grid to Flexbox for equal heights */
 .woocommerce ul.products {
-    display: flex;
+    display: flex !important;
     flex-wrap: wrap;
 }
-
-.woocommerce ul.products li.product {
-    background: #ffffff;
-    border: 1px solid #f0f0f0;
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    box-sizing: border-box;
+.woocommerce ul.products::before,
+.woocommerce ul.products::after {
+    display: none !important; /* Remove float clearfixes that break flexbox */
 }
 
-/* Negative margin trick to make the image flush with the edges while text is padded */
+/* Base Card Styling */
+.woocommerce ul.products li.product {
+    background: #ffffff !important;
+    border: 1px solid #f0f0f0 !important;
+    float: none !important;
+    display: flex !important;
+    flex-direction: column;
+    box-sizing: border-box;
+    margin-bottom: 40px !important; /* Space between rows */
+}
+
+/* Image flush with card */
 .woocommerce ul.products li.product .woocommerce-loop-product__link img {
-    margin: -30px -30px 25px -30px;
-    width: calc(100% + 60px) !important;
-    max-width: none !important;
+    width: 100% !important;
     height: 406px !important;
     object-fit: cover !important;
+    margin: 0 !important;
     display: block;
 }
 
-/* Ensure the link wraps properly */
-.woocommerce ul.products li.product .woocommerce-loop-product__link {
-    display: block;
+/* Add 30px padding only to text elements */
+.woocommerce ul.products li.product .product-category-breadcrumb,
+.woocommerce ul.products li.product .woocommerce-loop-product__title,
+.woocommerce ul.products li.product .star-rating,
+.woocommerce ul.products li.product .price,
+.woocommerce ul.products li.product .button {
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
-/* Style the title */
+/* Specific spacing for text */
+.woocommerce ul.products li.product .product-category-breadcrumb {
+    margin-top: 25px;
+}
 .woocommerce ul.products li.product .woocommerce-loop-product__title {
     font-size: 24px;
     line-height: 1.3;
@@ -502,13 +514,9 @@ button.button.alt.single_add_to_cart_button:hover::after {
     font-weight: 700;
     color: #000;
 }
-
-/* Rating spacing */
 .woocommerce ul.products li.product .star-rating {
     margin-bottom: 20px;
 }
-
-/* Price spacing and size */
 .woocommerce ul.products li.product .price {
     font-size: 22px;
     font-weight: 700;
@@ -517,8 +525,9 @@ button.button.alt.single_add_to_cart_button:hover::after {
     display: block;
 }
 
-/* Push the button to the absolute bottom! */
+/* Push button to absolute bottom */
 .woocommerce ul.products li.product .button {
     margin-top: auto !important;
+    margin-bottom: 30px !important;
     align-self: flex-start;
 }
