@@ -542,3 +542,24 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
     padding-left: 0 !important;
     margin-left: 0 !important;
 }
+
+/* Update font size for 'Leave a reply' title */
+.comment-respond h4, 
+#reply-title,
+.comments-area h4 {
+    font-size: 48px !important;
+}
+
+/* Constrain comment box width and adjust height for large screens */
+@media screen and (min-width: 1024px) {
+    .comment-respond form,
+    #commentform {
+        max-width: 800px;
+    }
+    
+    #commentform textarea,
+    .comment-respond textarea {
+        height: 150px !important;
+        width: 100% !important;
+    }
+}
