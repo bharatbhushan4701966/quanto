@@ -105,6 +105,8 @@ function cmr_news_render_meta_box( $post ) {
     $reading_time = get_post_meta( $post->ID, '_cmr_news_reading_time', true );
     $publisher_name = get_post_meta( $post->ID, '_cmr_news_publisher_name', true );
     $is_featured = get_post_meta( $post->ID, '_cmr_news_is_featured', true );
+    $document_id = get_post_meta( $post->ID, '_cmr_news_document_id', true );
+    $document_url = $document_id ? wp_get_attachment_url( $document_id ) : '';
     
     ?>
     <style>
@@ -129,6 +131,17 @@ function cmr_news_render_meta_box( $post ) {
     <div class="cmr-meta-row">
         <label for="cmr_news_external_link">External Link URL</label>
         <input type="text" id="cmr_news_external_link" name="cmr_news_external_link" value="<?php echo esc_attr( $external_link ); ?>" placeholder="https://" />
+        <p class="description">Provide a link to the external article OR upload a document below.</p>
+    </div>
+
+    <div class="cmr-meta-row">
+        <label for="cmr_news_document">Or Upload a Document (PDF, etc.)</label>
+        <input type="hidden" id="cmr_news_document_id" name="cmr_news_document_id" value="<?php echo esc_attr( $document_id ); ?>" />
+        <button type="button" class="button cmr_upload_doc_btn">Upload/Select Document</button>
+        <button type="button" class="button cmr_remove_doc_btn" <?php echo ! $document_id ? 'style="display:none;"' : ''; ?>>Remove Document</button>
+        <div class="cmr-doc-preview" style="margin-top: 10px; <?php echo ! $document_id ? 'display:none;' : ''; ?>">
+            <a href="<?php echo esc_url( $document_url ); ?>" target="_blank">View Current Document</a>
+        </div>
     </div>
     
     <div class="cmr-meta-row">
@@ -168,6 +181,32 @@ function cmr_news_render_meta_box( $post ) {
             $('.cmr-logo-preview').attr('src', '').hide();
             $(this).hide();
         });
+
+        // Document Uploader
+        var docUploader;
+        $('.cmr_upload_doc_btn').click(function(e) {
+            e.preventDefault();
+            if (docUploader) { docUploader.open(); return; }
+            docUploader = wp.media.frames.file_frame = wp.media({
+                title: 'Choose Document',
+                button: { text: 'Choose Document' }, multiple: false
+            });
+            docUploader.on('select', function() {
+                var attachment = docUploader.state().get('selection').first().toJSON();
+                $('#cmr_news_document_id').val(attachment.id);
+                $('.cmr-doc-preview a').attr('href', attachment.url);
+                $('.cmr-doc-preview').show();
+                $('.cmr_remove_doc_btn').show();
+            });
+            docUploader.open();
+        });
+        $('.cmr_remove_doc_btn').click(function(e){
+            e.preventDefault();
+            $('#cmr_news_document_id').val('');
+            $('.cmr-doc-preview a').attr('href', '#');
+            $('.cmr-doc-preview').hide();
+            $(this).hide();
+        });
     });
     </script>
     <?php
@@ -191,6 +230,9 @@ function cmr_news_save_meta_box_data( $post_id ) {
     }
     if ( isset( $_POST['cmr_news_publisher_name'] ) ) {
         update_post_meta( $post_id, '_cmr_news_publisher_name', sanitize_text_field( $_POST['cmr_news_publisher_name'] ) );
+    }
+    if ( isset( $_POST['cmr_news_document_id'] ) ) {
+        update_post_meta( $post_id, '_cmr_news_document_id', sanitize_text_field( $_POST['cmr_news_document_id'] ) );
     }
     
     update_post_meta( $post_id, '_cmr_news_is_featured', isset( $_POST['cmr_news_is_featured'] ) ? '1' : '0' );
@@ -325,6 +367,18 @@ function cmr_news_tabs_shortcode( $atts ) {
                                 $ext_link = get_post_meta( $post_id, '_cmr_news_external_link', true );
                                 $reading_time = get_post_meta( $post_id, '_cmr_news_reading_time', true );
                                 $publisher = get_post_meta( $post_id, '_cmr_news_publisher_name', true );
+                                $document_id = get_post_meta( $post_id, '_cmr_news_document_id', true );
+                                $ext_url = get_post_meta( $post_id, '_cmr_news_external_link', true );
+                                if ( $document_id ) {
+                                    $link = wp_get_attachment_url( $document_id );
+                                    $target = '_blank';
+                                } elseif ( $ext_url ) {
+                                    $link = $ext_url;
+                                    $target = '_blank';
+                                } else {
+                                    $link = get_permalink( $post_id );
+                                    $target = '_self';
+                                }
                                 $date = get_the_date( 'M j, Y' );
                                 
                                 if ( $is_media_releases ) {
@@ -332,7 +386,7 @@ function cmr_news_tabs_shortcode( $atts ) {
                                         // Left Featured
                                         ?>
                                         <div class="cmr-media-left">
-                                            <a href="<?php echo esc_url( $ext_link ); ?>" target="_blank" class="cmr-card-link-wrapper">
+                                            <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-card-link-wrapper">
                                                 <div class="cmr-card-image-wrap">
                                                     <?php if ( $bg_image ) : ?>
                                                         <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
@@ -353,7 +407,7 @@ function cmr_news_tabs_shortcode( $atts ) {
                                         // Right List Items
                                         ?>
                                         <div class="cmr-media-horizontal-card">
-                                            <a href="<?php echo esc_url( $ext_link ); ?>" target="_blank" class="cmr-card-link-wrapper">
+                                            <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-card-link-wrapper">
                                                 <div class="cmr-card-image-wrap">
                                                     <?php if ( $bg_image ) : ?>
                                                         <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
@@ -380,7 +434,7 @@ function cmr_news_tabs_shortcode( $atts ) {
                                     $card_class = ( $count === 0 ) ? 'cmr-card cmr-card-featured' : 'cmr-card cmr-card-standard';
                                     ?>
                                     <div class="<?php echo esc_attr( $card_class ); ?>">
-                                        <a href="<?php echo esc_url( $ext_link ); ?>" target="_blank" class="cmr-card-link-wrapper">
+                                        <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-card-link-wrapper">
                                             <div class="cmr-card-image-wrap">
                                                 <?php if ( $bg_image ) : ?>
                                                     <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">

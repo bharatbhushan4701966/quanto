@@ -135,7 +135,18 @@ function cmr_ajax_filter_media_coverage() {
             $bg_image = get_the_post_thumbnail_url( $post_id, 'large' );
             $logo_id = get_post_meta( $post_id, '_cmr_news_source_logo_id', true );
             $logo_url = $logo_id ? wp_get_attachment_url( $logo_id ) : '';
-            $ext_link = get_post_meta( $post_id, '_cmr_news_external_link', true );
+            $document_id = get_post_meta( $post_id, '_cmr_news_document_id', true );
+            $ext_url = get_post_meta( $post_id, '_cmr_news_external_link', true );
+            if ( $document_id ) {
+                $link = wp_get_attachment_url( $document_id );
+                $target = '_blank';
+            } elseif ( $ext_url ) {
+                $link = $ext_url;
+                $target = '_blank';
+            } else {
+                $link = get_permalink( $post_id );
+                $target = '_self';
+            }
             $reading_time = get_post_meta( $post_id, '_cmr_news_reading_time', true );
             $publisher_name = get_post_meta( $post_id, '_cmr_news_publisher_name', true );
             $date = get_the_date( 'M j, Y' );
@@ -144,7 +155,7 @@ function cmr_ajax_filter_media_coverage() {
             if ( $paged === 1 && $count === 0 ) {
                 ?>
                 <div class="cmr-mc-card cmr-mc-featured">
-                    <a href="<?php echo esc_url( $ext_link ); ?>" target="_blank" class="cmr-mc-link-wrapper">
+                    <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-mc-link-wrapper">
                         <div class="cmr-mc-image-wrap">
                             <?php if ( $bg_image ) : ?>
                                 <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-mc-bg" alt="<?php the_title_attribute(); ?>">
@@ -174,7 +185,7 @@ function cmr_ajax_filter_media_coverage() {
                 // Render standard card
                 ?>
                 <div class="cmr-mc-card cmr-mc-standard">
-                    <a href="<?php echo esc_url( $ext_link ); ?>" target="_blank" class="cmr-mc-link-wrapper">
+                    <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-mc-link-wrapper">
                         <div class="cmr-mc-image-wrap">
                             <?php if ( $bg_image ) : ?>
                                 <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-mc-bg" alt="<?php the_title_attribute(); ?>">
