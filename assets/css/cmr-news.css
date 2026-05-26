@@ -286,6 +286,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    height: auto !important;
 }
 
 .cmr-media-left .cmr-card-image-wrap {
