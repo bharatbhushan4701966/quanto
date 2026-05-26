@@ -160,10 +160,11 @@
 }
 
 .cmr-card-featured .cmr-card-title {
-    font-size: 28px;
+    font-size: 18px;
     color: #fff;
     margin: 0 0 15px 0;
     font-weight: 600;
+    letter-spacing: 0.2px;
 }
 
 .cmr-card-featured .cmr-read-coverage {
