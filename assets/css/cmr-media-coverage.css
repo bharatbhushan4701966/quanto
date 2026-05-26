@@ -1,0 +1,359 @@
+/* Media Coverage Main Wrapper */
+.cmr-mc-wrapper {
+    font-family: inherit;
+    color: #111;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Header */
+.cmr-mc-header {
+    margin-bottom: 40px;
+}
+
+.cmr-mc-title {
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+}
+
+.cmr-mc-subtitle {
+    font-size: 16px;
+    color: #666;
+    margin: 0;
+}
+
+/* Filters & Search Row */
+.cmr-mc-filters-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.cmr-mc-pills {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.cmr-mc-pill {
+    background: transparent;
+    border: 1px solid #E0E0E0;
+    border-radius: 30px;
+    padding: 8px 20px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cmr-mc-pill.active,
+.cmr-mc-pill:hover {
+    border-color: #6C5CE7;
+    color: #6C5CE7;
+    background: rgba(108, 92, 231, 0.05);
+}
+
+.cmr-mc-pill-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.cmr-mc-more-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.cmr-mc-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+    z-index: 10;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    top: 110%;
+    left: 0;
+}
+
+.cmr-mc-pill-dropdown:hover .cmr-mc-dropdown-content {
+    display: block;
+}
+
+.cmr-mc-dropdown-item {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+}
+
+.cmr-mc-dropdown-item:hover,
+.cmr-mc-dropdown-item.active {
+    background-color: rgba(108, 92, 231, 0.05);
+    color: #6C5CE7;
+}
+
+.cmr-mc-search {
+    position: relative;
+    width: 250px;
+}
+
+.cmr-mc-search input {
+    width: 100%;
+    padding: 10px 40px 10px 15px;
+    border: 1px solid #E0E0E0;
+    border-radius: 30px;
+    font-size: 14px;
+    outline: none;
+}
+
+.cmr-mc-search input:focus {
+    border-color: #6C5CE7;
+}
+
+.cmr-mc-search-icon {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #6C5CE7;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+/* Grid */
+.cmr-mc-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 30px;
+}
+
+/* Base Card Styles */
+.cmr-mc-card {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.cmr-mc-link-wrapper {
+    text-decoration: none !important;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.cmr-mc-image-wrap {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.cmr-mc-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.cmr-mc-card:hover .cmr-mc-bg {
+    transform: scale(1.05);
+}
+
+.cmr-mc-logo {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.cmr-mc-trending-tag {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #fff;
+    color: #00B894; /* Teal color from screenshot */
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+}
+
+.cmr-mc-meta {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cmr-mc-publisher {
+    font-weight: 600;
+    color: #333;
+}
+
+.cmr-mc-read-coverage {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111;
+    border-bottom: 1px solid #111;
+    display: inline-block;
+    padding-bottom: 2px;
+    margin-top: auto;
+}
+
+.cmr-mc-arrow {
+    width: 12px;
+    height: auto;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+/* Featured Card */
+.cmr-mc-featured {
+    grid-column: span 12;
+    margin-bottom: 10px;
+}
+
+.cmr-mc-featured .cmr-mc-link-wrapper {
+    flex-direction: row;
+    gap: 30px;
+}
+
+.cmr-mc-featured .cmr-mc-image-wrap {
+    flex: 0 0 65%;
+    height: 400px;
+}
+
+.cmr-mc-featured .cmr-mc-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.cmr-mc-featured .cmr-mc-title {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0 0 15px 0;
+}
+
+.cmr-mc-featured .cmr-mc-excerpt {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.6;
+    margin: 0 0 30px 0;
+}
+
+.cmr-mc-featured .cmr-mc-read-coverage {
+    margin-top: 0;
+}
+
+/* Standard Card */
+.cmr-mc-standard {
+    grid-column: span 4;
+}
+
+.cmr-mc-standard .cmr-mc-image-wrap {
+    height: 220px;
+    margin-bottom: 15px;
+}
+
+.cmr-mc-standard .cmr-mc-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.cmr-mc-standard .cmr-mc-title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+    margin: 0 0 20px 0;
+}
+
+/* Footer / Load More */
+.cmr-mc-footer {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.cmr-mc-load-more {
+    background: transparent;
+    border: 1px solid #ccc;
+    color: #111;
+    padding: 12px 40px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cmr-mc-load-more:hover {
+    background: #f5f5f5;
+}
+
+.cmr-mc-loading {
+    grid-column: span 12;
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-size: 16px;
+}
+
+.cmr-mc-no-results {
+    grid-column: span 12;
+    text-align: center;
+    color: #666;
+    font-size: 16px;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .cmr-mc-featured .cmr-mc-link-wrapper {
+        flex-direction: column;
+    }
+    .cmr-mc-featured .cmr-mc-image-wrap {
+        width: 100%;
+        height: 300px;
+    }
+    .cmr-mc-standard {
+        grid-column: span 6;
+    }
+}
+
+@media (max-width: 768px) {
+    .cmr-mc-standard {
+        grid-column: span 12;
+    }
+    .cmr-mc-filters-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .cmr-mc-search {
+        width: 100%;
+    }
+}
