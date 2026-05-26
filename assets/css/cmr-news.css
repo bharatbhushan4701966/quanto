@@ -55,7 +55,6 @@
 
 /* Cards Base */
 .cmr-card {
-    border-radius: 8px;
     overflow: hidden;
     position: relative;
     display: flex;
@@ -246,7 +245,6 @@
 
 .cmr-media-left .cmr-card-image-wrap {
     height: 400px;
-    border-radius: 8px;
     margin-bottom: 20px;
 }
 
@@ -286,7 +284,6 @@
 .cmr-media-horizontal-card .cmr-card-image-wrap {
     flex: 0 0 150px;
     height: 100px;
-    border-radius: 8px;
 }
 
 .cmr-media-horizontal-card .cmr-card-content {
