@@ -279,7 +279,8 @@
 }
 
 .cmr-media-left .cmr-card-image-wrap {
-    height: 520px;
+    height: auto;
+    aspect-ratio: 1 / 1;
     margin-bottom: 20px;
 }
 
