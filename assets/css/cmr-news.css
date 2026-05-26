@@ -127,6 +127,8 @@
 
 .cmr-card-featured .cmr-card-link-wrapper {
     position: relative;
+    display: block;
+    height: 100%;
 }
 
 .cmr-card-featured .cmr-card-image-wrap {
