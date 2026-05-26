@@ -331,4 +331,15 @@
     initTeamAnimations();
 
 
+    // Remove dash from service titles dynamically
+    if ($('.service-title').length > 0) {
+        $('.service-title').each(function() {
+            var content = $(this).html();
+            content = content.replace(' ─ ', ' ');
+            content = content.replace(' &mdash; ', ' ');
+            content = content.replace(' — ', ' ');
+            $(this).html(content);
+        });
+    }
 })(jQuery);
+
