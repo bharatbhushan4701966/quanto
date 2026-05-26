@@ -1,7 +1,7 @@
 .cmr-news-container {
     background-color: #F5F5F5;
     padding: 40px; /* Optional, adding some padding so content isn't flush against the background edge */
-    border-radius: 8px; /* Optional, makes the background look like a nice card */
+/* Optional, makes the background look like a nice card */
     max-width: 1280px;
     margin: 0 auto;
 }
