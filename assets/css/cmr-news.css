@@ -156,6 +156,14 @@
 /* Standard Card (Bottom Row, spans 4 cols) */
 .cmr-card-standard {
     grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+}
+
+.cmr-card-standard .cmr-card-link-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .cmr-card-standard .cmr-card-image-wrap {
@@ -164,6 +172,10 @@
 
 .cmr-card-standard .cmr-card-content {
     padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: flex-start;
 }
 
 .cmr-card-standard .cmr-card-meta {
@@ -173,6 +185,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 .cmr-card-standard .cmr-card-title {
@@ -182,6 +195,7 @@
     font-weight: 600;
     line-height: 1.4;
     letter-spacing: 0.2px;
+    width: 100%;
 }
 
 .cmr-card-standard .cmr-read-coverage {
