@@ -14,15 +14,11 @@ jQuery(document).ready(function($) {
         container.find('#' + targetId).addClass('active');
         
         // Update "Explore All" text
-        var tabText = $(this).text().trim();
         var arrowHtml = '<img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg" class="cmr-arrow-icon" alt="Arrow">';
-        container.find('.cmr-explore-all').html('Explore All ' + tabText + ' ' + arrowHtml);
+        container.find('.cmr-explore-all').html('Explore All ' + arrowHtml);
     });
     
     // Initialize the first tab's button text
-    var firstTabText = $('.cmr-news-tab-btn.active').text().trim();
-    if(firstTabText) {
-        var arrowHtml = '<img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg" class="cmr-arrow-icon" alt="Arrow">';
-        $('.cmr-explore-all').html('Explore All ' + firstTabText + ' ' + arrowHtml);
-    }
+    var arrowHtml = '<img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg" class="cmr-arrow-icon" alt="Arrow">';
+    $('.cmr-explore-all').html('Explore All ' + arrowHtml);
 });
