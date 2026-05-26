@@ -331,14 +331,15 @@
     initTeamAnimations();
 
 
-    // Remove dash from service titles dynamically
+    // Remove number and dash from service titles dynamically
     if ($('.service-title').length > 0) {
         $('.service-title').each(function() {
+            $(this).find('span').remove();
             var content = $(this).html();
-            content = content.replace(' ─ ', ' ');
-            content = content.replace(' &mdash; ', ' ');
-            content = content.replace(' — ', ' ');
-            $(this).html(content);
+            // Remove leading dashes, spaces, and special dash characters
+            content = content.replace(/^\s*[─—\-–•·\s|~]+\s*/, '');
+            content = content.replace(/\s*[─—\-–]\s*/g, ' ');
+            $(this).html(content.trim());
         });
     }
 })(jQuery);
