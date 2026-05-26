@@ -290,10 +290,11 @@
 }
 
 .cmr-media-left .cmr-card-title {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 600;
     margin: 10px 0 15px 0;
     color: #111;
+    letter-spacing: 0.2px;
 }
 
 .cmr-media-left .cmr-read-coverage {
