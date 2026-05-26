@@ -127,12 +127,17 @@
 
 .cmr-card-featured .cmr-card-link-wrapper {
     position: relative;
-    display: block;
+    flex: 1;
     height: 100%;
 }
 
 .cmr-card-featured .cmr-card-image-wrap {
-    height: 100%;
+    height: 100% !important;
+    flex: 1;
+}
+
+.cmr-card-featured .cmr-card-bg {
+    height: 100% !important;
 }
 
 .cmr-card-featured .cmr-card-content {
