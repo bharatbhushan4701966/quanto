@@ -274,7 +274,7 @@
 /* Media Releases Layout (60/40 Split) */
 .cmr-media-grid {
     display: grid;
-    grid-template-columns: 60% 40%;
+    grid-template-columns: 6fr 4fr;
     gap: 30px;
 }
 
