@@ -232,7 +232,17 @@ function cmr_news_tabs_shortcode( $atts ) {
                 $active_class = $first ? 'active' : '';
             ?>
                 <button class="cmr-news-tab-btn <?php echo esc_attr( $active_class ); ?>" data-target="cmr-tab-<?php echo esc_attr( $term->term_id ); ?>">
-                    <?php echo esc_html( $term->name ); ?>
+                    <?php 
+                    $icon_html = '';
+                    if ( $term->name == 'CMR In News' ) {
+                        $icon_html = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 0-10 10"/><path d="M12 6a6 6 0 0 0-6 6"/><circle cx="12" cy="18" r="2"/></svg>';
+                    } elseif ( $term->name == 'Media Releases' ) {
+                        $icon_html = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="4" y="4" width="4" height="16"/><line x1="12" y1="8" x2="16" y2="8"/><line x1="12" y1="12" x2="16" y2="12"/><line x1="12" y1="16" x2="16" y2="16"/></svg>';
+                    } elseif ( $term->name == 'Quarterly Results' ) {
+                        $icon_html = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="8" y1="18" x2="8" y2="11"/><line x1="12" y1="18" x2="12" y2="7"/><line x1="16" y1="18" x2="16" y2="14"/></svg>';
+                    }
+                    echo $icon_html . ' <span>' . esc_html( $term->name ) . '</span>'; 
+                    ?>
                 </button>
             <?php 
                 $first = false;

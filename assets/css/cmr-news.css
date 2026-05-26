@@ -28,9 +28,9 @@
 }
 
 .cmr-news-tab-btn.active, .cmr-news-tab-btn:hover {
-    border-color: #6C5CE7; /* Adjust to match brand purple */
-    color: #6C5CE7;
-    background: rgba(108, 92, 231, 0.05);
+    border-color: #4820B0;
+    color: #4820B0;
+    background: rgba(72, 32, 176, 0.05);
 }
 
 /* Tab Panes */
