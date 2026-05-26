@@ -33,6 +33,25 @@
     background: rgba(72, 32, 176, 0.05);
 }
 
+.cmr-tab-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: #333;
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    transition: background-color 0.3s ease;
+}
+
+.cmr-news-tab-btn.active .cmr-tab-icon, 
+.cmr-news-tab-btn:hover .cmr-tab-icon {
+    background-color: #4820B0;
+}
+
 /* Tab Panes */
 .cmr-news-tab-pane {
     display: none;
