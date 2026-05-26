@@ -54,6 +54,9 @@ function quanto_essential_scripts() {
     // quanto app style
     wp_enqueue_style( 'quanto-main-style', get_theme_file_uri('/assets/css/style.css') ,array(), time() );
     wp_enqueue_style( 'quanto-blog-style', get_theme_file_uri('/assets/css/blog-default.css') ,array(), time() );
+    
+    // CMR News Style (loaded globally so footer overrides in it reflect on all pages)
+    wp_enqueue_style( 'cmr-news-style', get_theme_file_uri('/assets/css/cmr-news.css') ,array(), time() );
 
     // Enqueue homepage Elementor CSS anywhere we inject homepage Elementor sections,
     // including WooCommerce product pages rendered via custom template helpers.
