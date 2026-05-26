@@ -36,7 +36,7 @@ function cmr_news_register_post_type() {
         'hierarchical'       => false,
         'menu_position'      => 5,
         'menu_icon'          => 'dashicons-media-document',
-        'supports'           => array( 'title', 'thumbnail', 'excerpt' ),
+        'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
         'show_in_rest'       => true,
     );
 
