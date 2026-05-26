@@ -279,7 +279,8 @@
 }
 
 .cmr-media-left .cmr-card-image-wrap {
-    height: 520px;
+    width: 433px;
+    height: 528px;
     margin-bottom: 20px;
 }
 
@@ -318,8 +319,9 @@
 }
 
 .cmr-media-horizontal-card .cmr-card-image-wrap {
-    flex: 0 0 160px;
-    height: 160px;
+    flex: 0 0 261px;
+    width: 261px;
+    height: 204px;
 }
 
 .cmr-media-horizontal-card .cmr-card-content {
