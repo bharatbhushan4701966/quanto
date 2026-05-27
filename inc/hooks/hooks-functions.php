@@ -783,12 +783,43 @@
                 $quanto_excerpt_length = '4';
                 $quanto_post_details_related_post = false;
             }
-            $relatedpost = new WP_Query( array(
-                "post_type"         => "post",
-                "posts_per_page"    => "3",
-                "category__in"      => wp_get_post_categories(get_the_ID()),
-                "post__not_in"      =>  array( get_the_ID() )
-            ) );
+            $post_type = get_post_type();
+            $posts_per_page = '3';
+            $post_not_in = array( get_the_ID() );
+            
+            if ( $post_type === 'cmr_news' ) {
+                $terms = wp_get_post_terms( get_the_ID(), 'cmr_news_category', array( 'fields' => 'ids' ) );
+                $tax_query = array();
+                if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+                    $tax_query = array(
+                        array(
+                            'taxonomy' => 'cmr_news_category',
+                            'field'    => 'term_id',
+                            'terms'    => $terms,
+                        )
+                    );
+                }
+                $args = array(
+                    'post_type'      => 'cmr_news',
+                    'posts_per_page' => $posts_per_page,
+                    'post__not_in'   => $post_not_in,
+                );
+                if ( ! empty( $tax_query ) ) {
+                    $args['tax_query'] = $tax_query;
+                }
+                $relatedpost = new WP_Query( $args );
+                $section_title = esc_html__( 'Related Media Releases', 'quanto' );
+                $quanto_post_details_related_post = true; // Always show for news items
+            } else {
+                $relatedpost = new WP_Query( array(
+                    "post_type"         => "post",
+                    "posts_per_page"    => $posts_per_page,
+                    "category__in"      => wp_get_post_categories(get_the_ID()),
+                    "post__not_in"      => $post_not_in
+                ) );
+                $section_title = esc_html__( 'Related Articles', 'quanto' );
+            }
+
             if( $relatedpost->have_posts() && $quanto_post_details_related_post ) {
                 echo '<!-- Related Post -->';
                 echo '<div class="quanto-blog-section section-padding-bottom overflow-hidden">';
@@ -796,7 +827,7 @@
                         echo '<div class="row">';
                             echo '<div class="col-12">';
                                 echo '<div class="quanto__header text-center text-md-start row-padding-bottom">';
-                                    echo '<h3 class="title fade-anim" data-delay="0.30" data-direction="left">'.esc_html__( 'Related Articles', 'quanto' ).'</h3>';
+                                    echo '<h3 class="title fade-anim" data-delay="0.30" data-direction="left">' . $section_title . '</h3>';
                                 echo '</div>';
                             echo '</div>';
                         echo '</div>';
