@@ -634,6 +634,72 @@
     // blog details post meta hook function
     if( !function_exists('quanto_blog_details_post_meta_cb') ) {
         function quanto_blog_details_post_meta_cb( ) {
+            if ( get_post_type() === 'cmr_news' ) {
+                $post_id = get_the_ID();
+                $reading_time = get_post_meta( $post_id, '_cmr_news_reading_time', true );
+                
+                // Get taxonomy terms
+                $terms = get_the_terms( $post_id, 'cmr_news_category' );
+                $term_names = ! empty( $terms ) && ! is_wp_error( $terms ) ? wp_list_pluck( $terms, 'name' ) : array();
+                $tags_list = ! empty( $term_names ) ? implode( ', ', $term_names ) : esc_html__( 'General', 'quanto' );
+                
+                // Get document/external URL for download button
+                $document_id = get_post_meta( $post_id, '_cmr_news_document_id', true );
+                $download_url = $document_id ? wp_get_attachment_url( $document_id ) : '';
+                if ( ! $download_url ) {
+                    $download_url = get_post_meta( $post_id, '_cmr_news_external_link', true );
+                }
+                
+                // Render the new layout
+                echo '<!-- CMR News Custom Meta Box -->';
+                echo '<div class="cmr-media-meta-box d-flex align-items-center justify-content-between flex-wrap">';
+                    echo '<div class="cmr-meta-items d-flex align-items-center flex-wrap">';
+                        
+                        echo '<div class="cmr-meta-item">';
+                            echo '<span class="cmr-meta-label">' . esc_html__( 'PUBLISHED', 'quanto' ) . '</span>';
+                            echo '<span class="cmr-meta-value">' . esc_html( get_the_date( 'M d, Y' ) ) . '</span>';
+                        echo '</div>';
+                        
+                        echo '<div class="cmr-meta-item">';
+                            echo '<span class="cmr-meta-label">' . esc_html__( 'READING TIME', 'quanto' ) . '</span>';
+                            echo '<span class="cmr-meta-value">' . esc_html( $reading_time ? $reading_time : '3 min read' ) . '</span>';
+                        echo '</div>';
+                        
+                        echo '<div class="cmr-meta-item">';
+                            echo '<span class="cmr-meta-label">' . esc_html__( 'INDUSTRY TAGS', 'quanto' ) . '</span>';
+                            echo '<span class="cmr-meta-value">' . esc_html( $tags_list ) . '</span>';
+                        echo '</div>';
+                        
+                        echo '<div class="cmr-meta-item">';
+                            echo '<span class="cmr-meta-label">' . esc_html__( 'VIEWS', 'quanto' ) . '</span>';
+                            echo '<span class="cmr-meta-value">' . esc_html( function_exists( 'quanto_getPostViews' ) ? quanto_getPostViews( $post_id ) : '0' ) . '</span>';
+                        echo '</div>';
+                        
+                    echo '</div>';
+                    
+                    echo '<div class="cmr-meta-actions d-flex align-items-center">';
+                        if ( $download_url ) {
+                            echo '<a href="' . esc_url( $download_url ) . '" class="cmr-btn-download" target="_blank">';
+                                echo '<svg class="cmr-icon-pdf" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="margin-right: 8px; vertical-align: middle;">';
+                                    echo '<path d="M12 16L16 12H13V4H11V12H8L12 16ZM20 18H4V20H20V18Z" />';
+                                echo '</svg>';
+                                echo esc_html__( 'Download Press Release', 'quanto' );
+                            echo '</a>';
+                        }
+                        echo '<button class="cmr-btn-share" onclick="if(navigator.share){navigator.share({title:document.title,url:window.location.href})}else{alert(\'Link copied to clipboard!\'); navigator.clipboard.writeText(window.location.href);}">';
+                            echo '<svg class="cmr-icon-share" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">';
+                                echo '<circle cx="18" cy="5" r="3"></circle>';
+                                echo '<circle cx="6" cy="12" r="3"></circle>';
+                                echo '<circle cx="18" cy="19" r="3"></circle>';
+                                echo '<line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>';
+                                echo '<line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>';
+                            echo '</svg>';
+                        echo '</button>';
+                    echo '</div>';
+                echo '</div>';
+                return;
+            }
+
             if( class_exists('ReduxFramework') ) {
                 $quanto_display_post_details_date      =  quanto_opt('quanto_display_post_details_date');
                 $quanto_display_post_details_category   =  quanto_opt('quanto_display_post_details_category');

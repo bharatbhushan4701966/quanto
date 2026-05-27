@@ -8677,3 +8677,134 @@ h1.custom-product-title {
     display: block !important;
 }
 
+/* CMR News Custom Meta Box Details Page */
+.cmr-media-meta-box {
+  border-top: 1px solid #EAEAEA;
+  border-bottom: 1px solid #EAEAEA;
+  padding: 24px 0;
+  margin: 30px 0;
+  gap: 20px;
+}
+
+.cmr-meta-items {
+  gap: 0;
+}
+
+.cmr-meta-item {
+  display: flex;
+  flex-direction: column;
+  padding: 0 40px;
+  border-right: 1px solid #EAEAEA;
+}
+
+.cmr-meta-item:first-child {
+  padding-left: 0;
+}
+
+.cmr-meta-item:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.cmr-meta-label {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #7E8B9B;
+  letter-spacing: 0.8px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.cmr-meta-value {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #0F0F0F;
+}
+
+.cmr-meta-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cmr-btn-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #635AD9;
+  color: #FFFFFF !important;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 40px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+.cmr-btn-download:hover {
+  background-color: #4f46c7;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 90, 217, 0.2);
+}
+
+.cmr-btn-share {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: #0F0F0F;
+  border: 1px solid #C5C5C5;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.cmr-btn-share:hover {
+  border-color: #0F0F0F;
+  background-color: #F8F9FA;
+  color: #000000;
+}
+
+/* Responsive adjustments */
+@media only screen and (max-width: 991px) {
+  .cmr-meta-item {
+    padding: 0 20px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .cmr-media-meta-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .cmr-meta-items {
+    width: 100%;
+    justify-content: space-between;
+    gap: 15px 0;
+  }
+  .cmr-meta-item {
+    width: 50%;
+    border-right: none;
+    padding: 0;
+    margin-bottom: 10px;
+  }
+  .cmr-meta-item:nth-child(even) {
+    padding-left: 15px;
+  }
+  .cmr-meta-actions {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .cmr-btn-download {
+    flex: 1;
+  }
+}
+
