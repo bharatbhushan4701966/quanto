@@ -649,6 +649,9 @@
                 if ( ! $download_url ) {
                     $download_url = get_post_meta( $post_id, '_cmr_news_external_link', true );
                 }
+                if ( ! $download_url ) {
+                    $download_url = '#';
+                }
                 
                 // Render the new layout
                 echo '<!-- CMR News Custom Meta Box -->';
@@ -678,14 +681,12 @@
                     echo '</div>';
                     
                     echo '<div class="cmr-meta-actions d-flex align-items-center">';
-                        if ( $download_url ) {
-                            echo '<a href="' . esc_url( $download_url ) . '" class="cmr-btn-download" target="_blank">';
-                                echo '<svg class="cmr-icon-pdf" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="margin-right: 8px; vertical-align: middle;">';
-                                    echo '<path d="M12 16L16 12H13V4H11V12H8L12 16ZM20 18H4V20H20V18Z" />';
-                                echo '</svg>';
+                        echo '<a href="' . esc_url( $download_url ) . '" class="cmr-btn-download" target="_blank">';
+                            echo '<svg class="cmr-icon-pdf" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="margin-right: 8px; vertical-align: middle;">';
+                                echo '<path d="M12 16L16 12H13V4H11V12H8L12 16ZM20 18H4V20H20V18Z" />';
+                            echo '</svg>';
                                 echo esc_html__( 'Download Press Release', 'quanto' );
                             echo '</a>';
-                        }
                         echo '<button class="cmr-btn-share" onclick="if(navigator.share){navigator.share({title:document.title,url:window.location.href})}else{alert(\'Link copied to clipboard!\'); navigator.clipboard.writeText(window.location.href);}">';
                             echo '<svg class="cmr-icon-share" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">';
                                 echo '<circle cx="18" cy="5" r="3"></circle>';
