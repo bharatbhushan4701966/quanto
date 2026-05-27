@@ -1859,21 +1859,24 @@
                 return;
             }
 
-            $test_page = get_page_by_path( 'test' );
-            if ( ! $test_page ) {
+            $target_page = get_page_by_path( 'similar-reports-by-industry' );
+            if ( ! $target_page ) {
+                $target_page = get_page_by_path( 'test' );
+            }
+            if ( ! $target_page ) {
                 return;
             }
 
-            $test_page_id = $test_page->ID;
+            $target_page_id = $target_page->ID;
 
             if ( function_exists( 'quanto_enqueue_elementor_post_assets' ) ) {
-                quanto_enqueue_elementor_post_assets( $test_page_id );
+                quanto_enqueue_elementor_post_assets( $target_page_id );
             } elseif ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
-                $css_file = new \Elementor\Core\Files\CSS\Post( $test_page_id );
+                $css_file = new \Elementor\Core\Files\CSS\Post( $target_page_id );
                 $css_file->enqueue();
             }
 
-            $meta = get_post_meta( $test_page_id, '_elementor_data', true );
+            $meta = get_post_meta( $target_page_id, '_elementor_data', true );
             if ( ! $meta ) {
                 return;
             }
@@ -1895,7 +1898,7 @@
                 $element_instance = \Elementor\Plugin::instance()->elements_manager->create_element_instance( $target_section );
                 if ( $element_instance ) {
                     quanto_print_homepage_tail_inline_styles();
-                    echo '<div data-elementor-type="wp-page" data-elementor-id="' . esc_attr( $test_page_id ) . '" class="elementor quanto-similar-reports-section elementor-' . esc_attr( $test_page_id ) . '">';
+                    echo '<div data-elementor-type="wp-page" data-elementor-id="' . esc_attr( $target_page_id ) . '" class="elementor quanto-similar-reports-section elementor-' . esc_attr( $target_page_id ) . '">';
                     $element_instance->print_element();
                     echo '</div>';
                 }
