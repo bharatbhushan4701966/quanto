@@ -1938,6 +1938,13 @@
                 $element_instance = \Elementor\Plugin::instance()->elements_manager->create_element_instance( $target_section );
                 if ( $element_instance ) {
                     quanto_print_homepage_tail_inline_styles();
+                    if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+                        $css_file = new \Elementor\Core\Files\CSS\Post( $target_page_id );
+                        $css_content = $css_file->get_content();
+                        if ( ! empty( $css_content ) ) {
+                            echo '<style>' . $css_content . '</style>';
+                        }
+                    }
                     echo '<div data-elementor-type="wp-page" data-elementor-id="' . esc_attr( $target_page_id ) . '" class="elementor quanto-similar-reports-section elementor-' . esc_attr( $target_page_id ) . '">';
                     $element_instance->print_element();
                     echo '</div>';
