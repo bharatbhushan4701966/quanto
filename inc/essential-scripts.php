@@ -68,6 +68,15 @@ function quanto_essential_scripts() {
 
         if ( function_exists( 'quanto_enqueue_elementor_post_assets' ) ) {
             quanto_enqueue_elementor_post_assets( $homepage_id );
+            
+            // Enqueue Similar Reports page assets so they are loaded in <head>
+            $target_page = get_page_by_path( 'similar-reports-by-industry' );
+            if ( ! $target_page ) {
+                $target_page = get_page_by_path( 'test' );
+            }
+            if ( $target_page ) {
+                quanto_enqueue_elementor_post_assets( $target_page->ID );
+            }
         } else {
             $upload_dir = wp_upload_dir();
             if ( ! empty( $upload_dir['basedir'] ) ) {

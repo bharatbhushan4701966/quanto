@@ -419,6 +419,15 @@
                     $homepage_id = 14;
                 }
                 quanto_enqueue_elementor_post_assets( $homepage_id );
+
+                // Enqueue Similar Reports page assets early
+                $target_page = get_page_by_path( 'similar-reports-by-industry' );
+                if ( ! $target_page ) {
+                    $target_page = get_page_by_path( 'test' );
+                }
+                if ( $target_page ) {
+                    quanto_enqueue_elementor_post_assets( $target_page->ID );
+                }
             }
         }
     }
