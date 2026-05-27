@@ -340,6 +340,7 @@
             content = content.replace(/^\s*[─—\-–•·\s|~]+\s*/, '');
             content = content.replace(/\s*[─—\-–]\s*/g, ' ');
             $(this).html(content.trim());
+            $(this).css('visibility', 'visible');
         });
     }
 })(jQuery);

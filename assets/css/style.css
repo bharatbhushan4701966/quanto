@@ -3890,6 +3890,10 @@ a.quanto-default-btn.sm-size {
   }
 }
 
+.service-title {
+  visibility: hidden;
+}
+
 .quanto-service-box4 .service-title {
   max-width: 306px;
   width: 100%;
