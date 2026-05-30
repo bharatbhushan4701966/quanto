@@ -105,6 +105,15 @@ function cmr_ajax_filter_media_coverage() {
         'orderby'        => 'date',
         'order'          => 'DESC',
         'post_status'    => 'publish',
+        'tax_query'      => array(
+            'relation' => 'AND',
+            array(
+                'taxonomy' => 'cmr_news_category',
+                'field'    => 'slug',
+                'terms'    => array('media-releases', 'media-release', 'media_releases', 'media_release'),
+                'operator' => 'NOT IN'
+            ),
+        ),
     );
 
     // Apply publisher filter
