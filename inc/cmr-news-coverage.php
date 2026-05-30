@@ -14,6 +14,9 @@ function cmr_media_coverage_enqueue_assets() {
 }
 
 function cmr_media_coverage_shortcode( $atts ) {
+    // Force CSS load directly in shortcode for Elementor and other page builders
+    echo '<link rel="stylesheet" href="' . esc_url( get_template_directory_uri() . '/assets/css/cmr-news.css?ver=' . time() ) . '">';
+
     // Get publishers for the filter
     $publishers = cmr_get_unique_publishers();
     
@@ -56,10 +59,7 @@ function cmr_media_coverage_shortcode( $atts ) {
             <div class="cmr-mc-search">
                 <input type="text" id="cmr-mc-search-input" placeholder="Search by name">
                 <button class="cmr-mc-search-btn" id="cmr-mc-search-btn">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M14 14L11.1 11.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 </button>
             </div>
         </div>
@@ -128,8 +128,8 @@ function cmr_get_media_coverage_query_args( $page = 1, $publisher = 'all', $sear
             ),
             array(
                 'taxonomy' => 'cmr_news_category',
-                'field'    => 'name',
-                'terms'    => 'Media Releases',
+                'field'    => 'slug',
+                'terms'    => array('media-releases', 'media-release', 'media_releases', 'media_release'),
                 'operator' => 'NOT IN'
             ),
         ),
