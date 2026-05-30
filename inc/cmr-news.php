@@ -41,6 +41,12 @@ function cmr_news_register_post_type() {
     );
 
     register_post_type( 'cmr_news', $args );
+    
+    // TEMPORARY: Flush rewrite rules to fix the /cmr-news/ page collision automatically
+    if ( get_option('cmr_news_rewrite_flushed_v2') !== 'yes' ) {
+        flush_rewrite_rules();
+        update_option('cmr_news_rewrite_flushed_v2', 'yes');
+    }
 
     $tax_labels = array(
         'name'              => 'News Categories',
