@@ -30,7 +30,7 @@ function cmr_news_register_post_type() {
         'show_ui'            => true,
         'show_in_menu'       => true,
         'query_var'          => true,
-        'rewrite'            => array( 'slug' => 'cmr-news' ),
+        'rewrite'            => array( 'slug' => 'cmr-news-item' ),
         'capability_type'    => 'post',
         'has_archive'        => false,
         'hierarchical'       => false,
