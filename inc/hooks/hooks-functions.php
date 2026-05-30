@@ -690,7 +690,16 @@
                     echo '</div>';
                     
                     echo '<div class="cmr-meta-actions d-flex align-items-center">';
-                        echo '<a href="' . esc_url( $download_url ) . '" class="cmr-btn-download" target="_blank">';
+                        $download_attr = 'target="_blank"';
+                        if ( $document_id ) {
+                            $file_path = get_attached_file( $document_id );
+                            if ( $file_path ) {
+                                $download_attr = 'download="' . esc_attr( basename( $file_path ) ) . '"';
+                            } else {
+                                $download_attr = 'download';
+                            }
+                        }
+                        echo '<a href="' . esc_url( $download_url ) . '" class="cmr-btn-download" ' . $download_attr . '>';
                             echo '<svg class="cmr-icon-pdf" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="margin-right: 8px; vertical-align: middle;">';
                                 echo '<path d="M12 16L16 12H13V4H11V12H8L12 16ZM20 18H4V20H20V18Z" />';
                             echo '</svg>';
