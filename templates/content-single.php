@@ -129,7 +129,7 @@
                                     if ( $document_url ) {
                                         ?>
                                         <div class="cmr-media-download-action" style="margin-top: 30px; margin-bottom: 30px;">
-                                            <a href="<?php echo esc_url( $document_url ); ?>" target="_blank" download class="insights-cta-button" style="display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 24px; background: var(--quanto-primary-color, #000); color: #fff; border-radius: 4px; text-decoration: none; font-weight: 600;">
+                                            <a href="<?php echo esc_url( $document_url ); ?>" download class="insights-cta-button" style="display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 24px; background: var(--quanto-primary-color, #000); color: #fff; border-radius: 4px; text-decoration: none; font-weight: 600;">
                                                 <span><?php esc_html_e( 'Download Media Release', 'quanto' ); ?></span>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
