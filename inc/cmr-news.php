@@ -504,7 +504,6 @@ function cmr_force_document_download() {
                 $mime_type = 'application/pdf';
             }
             
-            // Clean output buffer if any
             if (ob_get_length()) {
                 ob_end_clean();
             }
@@ -522,5 +521,38 @@ function cmr_force_document_download() {
         } else {
             wp_die('Document file not found on the server.', 'Download Error', array('response' => 404));
         }
+    } elseif ( isset($_GET['cmr_download_url']) && !empty($_GET['cmr_download_url']) ) {
+        $download_url = esc_url_raw(urldecode($_GET['cmr_download_url']));
+        
+        $response = wp_remote_get($download_url, array('timeout' => 15));
+        if ( is_wp_error($response) ) {
+            wp_die('Failed to fetch the document from the provided URL.', 'Download Error', array('response' => 404));
+        }
+        
+        $body = wp_remote_retrieve_body($response);
+        $content_type = wp_remote_retrieve_header($response, 'content-type');
+        if ( empty($content_type) ) {
+            $content_type = 'application/pdf';
+        }
+        
+        $filename = basename(parse_url($download_url, PHP_URL_PATH));
+        if ( empty($filename) ) {
+            $filename = 'downloaded-document.pdf';
+        }
+        
+        if (ob_get_length()) {
+            ob_end_clean();
+        }
+        
+        header('Content-Description: File Transfer');
+        header('Content-Type: ' . $content_type);
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . strlen($body));
+        
+        echo $body;
+        exit;
     }
 }

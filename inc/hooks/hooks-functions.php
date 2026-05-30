@@ -690,12 +690,19 @@
                     echo '</div>';
                     
                     echo '<div class="cmr-meta-actions d-flex align-items-center">';
+                        if ( ! $document_id && $download_url && function_exists('attachment_url_to_postid') ) {
+                            $extracted_id = attachment_url_to_postid( $download_url );
+                            if ( $extracted_id ) {
+                                $document_id = $extracted_id;
+                            }
+                        }
+
                         if ( $document_id ) {
                             $action_url = site_url( '?cmr_download_id=' . $document_id );
-                            $target_attr = '';
+                            $target_attr = 'download';
                         } else {
-                            $action_url = $download_url;
-                            $target_attr = 'target="_blank"';
+                            $action_url = site_url( '?cmr_download_url=' . urlencode( $download_url ) );
+                            $target_attr = 'download';
                         }
 
                         echo '<a href="' . esc_url( $action_url ) . '" class="cmr-btn-download" ' . $target_attr . '>';
