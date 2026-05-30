@@ -519,14 +519,24 @@ function cmr_force_document_download() {
             readfile($file_path);
             exit;
         } else {
-            wp_die('Document file not found on the server.', 'Download Error', array('response' => 404));
+            // File doesn't exist locally, might be offloaded to cloud storage. Fetch via URL.
+            $fallback_url = wp_get_attachment_url($document_id);
+            if ($fallback_url) {
+                $_GET['cmr_download_url'] = $fallback_url;
+            } else {
+                wp_die('Document file not found on the server.', 'Download Error', array('response' => 404));
+            }
         }
-    } elseif ( isset($_GET['cmr_download_url']) && !empty($_GET['cmr_download_url']) ) {
+    }
+    
+    if ( isset($_GET['cmr_download_url']) && !empty($_GET['cmr_download_url']) ) {
         $download_url = esc_url_raw(urldecode($_GET['cmr_download_url']));
         
         $response = wp_remote_get($download_url, array('timeout' => 15));
-        if ( is_wp_error($response) ) {
-            wp_die('Failed to fetch the document from the provided URL.', 'Download Error', array('response' => 404));
+        if ( is_wp_error($response) || wp_remote_retrieve_response_code($response) >= 400 ) {
+            // If fetch fails, fallback to redirecting directly to the URL
+            wp_redirect($download_url);
+            exit;
         }
         
         $body = wp_remote_retrieve_body($response);
@@ -536,8 +546,8 @@ function cmr_force_document_download() {
         }
         
         $filename = basename(parse_url($download_url, PHP_URL_PATH));
-        if ( empty($filename) ) {
-            $filename = 'downloaded-document.pdf';
+        if ( empty($filename) || strpos($filename, '.') === false ) {
+            $filename = 'press-release.pdf';
         }
         
         if (ob_get_length()) {
