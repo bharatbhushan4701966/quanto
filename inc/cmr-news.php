@@ -32,7 +32,7 @@ function cmr_news_register_post_type() {
         'query_var'          => true,
         'rewrite'            => array( 'slug' => 'cmr-news' ),
         'capability_type'    => 'post',
-        'has_archive'        => true,
+        'has_archive'        => false,
         'hierarchical'       => false,
         'menu_position'      => 5,
         'menu_icon'          => 'dashicons-media-document',
@@ -250,14 +250,31 @@ function cmr_news_admin_scripts() {
 // 4. Register Shortcode
 add_shortcode( 'cmr_news_tabs', 'cmr_news_tabs_shortcode' );
 function cmr_news_tabs_shortcode( $atts ) {
+    $atts = shortcode_atts( array(
+        'category' => '', // Comma separated slugs to include (e.g. 'cmr-in-news')
+        'exclude'  => '', // Comma separated slugs to exclude (e.g. 'media-releases')
+    ), $atts, 'cmr_news_tabs' );
+
     // Enqueue frontend assets using get_template_directory_uri()
     wp_enqueue_style( 'cmr-news-style', get_template_directory_uri() . '/assets/css/cmr-news.css', array(), time() );
     wp_enqueue_script( 'cmr-news-script', get_template_directory_uri() . '/assets/js/cmr-news.js', array('jquery'), time(), true );
 
-    $terms = get_terms( array(
+    $all_terms = get_terms( array(
         'taxonomy'   => 'cmr_news_category',
         'hide_empty' => true,
     ) );
+    
+    $terms = array();
+    if ( ! empty( $all_terms ) && ! is_wp_error( $all_terms ) ) {
+        $include_slugs = !empty($atts['category']) ? array_map('trim', explode(',', $atts['category'])) : array();
+        $exclude_slugs = !empty($atts['exclude']) ? array_map('trim', explode(',', $atts['exclude'])) : array();
+        
+        foreach ( $all_terms as $term ) {
+            if ( !empty($include_slugs) && !in_array($term->slug, $include_slugs) ) continue;
+            if ( !empty($exclude_slugs) && in_array($term->slug, $exclude_slugs) ) continue;
+            $terms[] = $term;
+        }
+    }
 
     if ( empty( $terms ) || is_wp_error( $terms ) ) {
         return '<p>No news content available.</p>';
