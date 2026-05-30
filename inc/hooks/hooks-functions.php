@@ -690,20 +690,18 @@
                     echo '</div>';
                     
                     echo '<div class="cmr-meta-actions d-flex align-items-center">';
+                        // If the document ID isn't found but there's a valid URL, use it directly.
                         if ( ! $document_id && $download_url && function_exists('attachment_url_to_postid') ) {
                             $extracted_id = attachment_url_to_postid( $download_url );
                             if ( $extracted_id ) {
                                 $document_id = $extracted_id;
+                                // Refresh the download URL just in case
+                                $download_url = wp_get_attachment_url( $document_id );
                             }
                         }
 
-                        if ( $document_id ) {
-                            $action_url = site_url( '?cmr_download_id=' . $document_id );
-                            $target_attr = 'download';
-                        } else {
-                            $action_url = site_url( '?cmr_download_url=' . urlencode( $download_url ) );
-                            $target_attr = 'download';
-                        }
+                        $action_url = $download_url;
+                        $target_attr = 'target="_blank" download';
 
                         echo '<a href="' . esc_url( $action_url ) . '" class="cmr-btn-download" ' . $target_attr . '>';
                             echo '<svg class="cmr-icon-pdf" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="margin-right: 8px; vertical-align: middle;">';
