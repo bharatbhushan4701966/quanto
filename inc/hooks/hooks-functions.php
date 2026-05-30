@@ -690,16 +690,40 @@
                     echo '</div>';
                     
                     echo '<div class="cmr-meta-actions d-flex align-items-center">';
-                        $download_attr = 'target="_blank"';
+                        $file_name = 'press-release.pdf';
                         if ( $document_id ) {
                             $file_path = get_attached_file( $document_id );
                             if ( $file_path ) {
-                                $download_attr = 'download="' . esc_attr( basename( $file_path ) ) . '"';
-                            } else {
-                                $download_attr = 'download';
+                                $file_name = basename( $file_path );
                             }
                         }
-                        echo '<a href="' . esc_url( $download_url ) . '" class="cmr-btn-download" ' . $download_attr . '>';
+                        
+                        static $force_download_script_added = false;
+                        if ( ! $force_download_script_added ) {
+                            echo '<script>
+                            function cmrForceDownload(url, filename) {
+                                fetch(url)
+                                    .then(response => response.blob())
+                                    .then(blob => {
+                                        const blobUrl = window.URL.createObjectURL(blob);
+                                        const a = document.createElement("a");
+                                        a.style.display = "none";
+                                        a.href = blobUrl;
+                                        a.download = filename || "download";
+                                        document.body.appendChild(a);
+                                        a.click();
+                                        window.URL.revokeObjectURL(blobUrl);
+                                        a.remove();
+                                    })
+                                    .catch(e => {
+                                        window.open(url, "_blank");
+                                    });
+                            }
+                            </script>';
+                            $force_download_script_added = true;
+                        }
+
+                        echo '<a href="' . esc_url( $download_url ) . '" class="cmr-btn-download" onclick="event.preventDefault(); cmrForceDownload(\'' . esc_url( $download_url ) . '\', \'' . esc_attr( $file_name ) . '\');">';
                             echo '<svg class="cmr-icon-pdf" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="margin-right: 8px; vertical-align: middle;">';
                                 echo '<path d="M12 16L16 12H13V4H11V12H8L12 16ZM20 18H4V20H20V18Z" />';
                             echo '</svg>';
