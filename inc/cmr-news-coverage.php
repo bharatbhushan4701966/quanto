@@ -1,6 +1,6 @@
 <?php
 // 5. Media Coverage Shortcode
-add_shortcode( 'cmr_media_coverage', 'cmr_media_coverage_shortcode' );
+add_shortcode( 'cmr_news_tabs', 'cmr_media_coverage_shortcode' );
 function cmr_media_coverage_shortcode( $atts ) {
     wp_enqueue_style( 'cmr-news-style', get_template_directory_uri() . '/assets/css/cmr-news.css', array(), time() );
     wp_enqueue_script( 'cmr-news-script', get_template_directory_uri() . '/assets/js/cmr-news.js', array('jquery'), time(), true );
@@ -115,10 +115,17 @@ function cmr_get_media_coverage_query_args( $page = 1, $publisher = 'all', $sear
         'posts_per_page' => 7, // 1 featured + 6 grid items
         'paged'          => $page,
         'tax_query'      => array(
+            'relation' => 'AND',
             array(
                 'taxonomy' => 'cmr_news_category',
                 'field'    => 'slug',
                 'terms'    => 'cmr-in-news',
+            ),
+            array(
+                'taxonomy' => 'cmr_news_category',
+                'field'    => 'slug',
+                'terms'    => 'media-releases',
+                'operator' => 'NOT IN'
             ),
         ),
     );
