@@ -1,4 +1,4 @@
-
+<?php
 // 5. Media Coverage Shortcode
 add_shortcode( 'cmr_media_coverage', 'cmr_media_coverage_shortcode' );
 function cmr_media_coverage_shortcode( $atts ) {
