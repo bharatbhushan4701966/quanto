@@ -508,3 +508,4 @@ function cmr_news_tabs_shortcode( $atts ) {
     return ob_get_clean();
 }
 
+require_once get_template_directory() . '/inc/cmr-news-coverage.php';
