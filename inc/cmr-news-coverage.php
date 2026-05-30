@@ -1,14 +1,19 @@
 <?php
 // 5. Media Coverage Shortcode
+add_shortcode( 'cmr_media_coverage', 'cmr_media_coverage_shortcode' );
+add_shortcode( 'cmr_news', 'cmr_media_coverage_shortcode' );
 add_shortcode( 'cmr_news_tabs', 'cmr_media_coverage_shortcode' );
-function cmr_media_coverage_shortcode( $atts ) {
+add_action( 'wp_enqueue_scripts', 'cmr_media_coverage_enqueue_assets' );
+function cmr_media_coverage_enqueue_assets() {
     wp_enqueue_style( 'cmr-news-style', get_template_directory_uri() . '/assets/css/cmr-news.css', array(), time() );
     wp_enqueue_script( 'cmr-news-script', get_template_directory_uri() . '/assets/js/cmr-news.js', array('jquery'), time(), true );
     wp_localize_script( 'cmr-news-script', 'cmr_news_ajax', array(
         'ajax_url' => admin_url( 'admin-ajax.php' ),
         'nonce'    => wp_create_nonce( 'cmr_media_coverage_nonce' )
     ) );
+}
 
+function cmr_media_coverage_shortcode( $atts ) {
     // Get publishers for the filter
     $publishers = cmr_get_unique_publishers();
     
@@ -123,8 +128,8 @@ function cmr_get_media_coverage_query_args( $page = 1, $publisher = 'all', $sear
             ),
             array(
                 'taxonomy' => 'cmr_news_category',
-                'field'    => 'slug',
-                'terms'    => 'media-releases',
+                'field'    => 'name',
+                'terms'    => 'Media Releases',
                 'operator' => 'NOT IN'
             ),
         ),
