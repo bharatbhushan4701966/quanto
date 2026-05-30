@@ -514,7 +514,6 @@ function cmr_force_document_download() {
             header('Expires: 0');
             header('Cache-Control: must-revalidate');
             header('Pragma: public');
-            header('Content-Length: ' . filesize($file_path));
             
             readfile($file_path);
             exit;
@@ -560,7 +559,6 @@ function cmr_force_document_download() {
         header('Expires: 0');
         header('Cache-Control: must-revalidate');
         header('Pragma: public');
-        header('Content-Length: ' . strlen($body));
         
         echo $body;
         exit;
