@@ -490,3 +490,37 @@ function cmr_news_tabs_shortcode( $atts ) {
     <?php
     return ob_get_clean();
 }
+
+// 5. Force Download Handler
+add_action('init', 'cmr_force_document_download');
+function cmr_force_document_download() {
+    if ( isset($_GET['cmr_download_id']) && is_numeric($_GET['cmr_download_id']) ) {
+        $document_id = intval($_GET['cmr_download_id']);
+        $file_path = get_attached_file($document_id);
+        
+        if ( $file_path && file_exists($file_path) ) {
+            $mime_type = get_post_mime_type($document_id);
+            if ( ! $mime_type ) {
+                $mime_type = 'application/pdf';
+            }
+            
+            // Clean output buffer if any
+            if (ob_get_length()) {
+                ob_end_clean();
+            }
+            
+            header('Content-Description: File Transfer');
+            header('Content-Type: ' . $mime_type);
+            header('Content-Disposition: attachment; filename="' . basename($file_path) . '"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file_path));
+            
+            readfile($file_path);
+            exit;
+        } else {
+            wp_die('Document file not found on the server.', 'Download Error', array('response' => 404));
+        }
+    }
+}
