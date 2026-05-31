@@ -188,13 +188,13 @@ function cmr_render_press_releases_shortcode( $atts ) {
             array(
                 'taxonomy' => 'cmr_news_category',
                 'field'    => 'slug',
-                'terms'    => 'media-releases',
+                'terms'    => 'cmr-in-news',
             ),
         ),
     );
     $query = new WP_Query( $args );
     
-    // Fallback if 'media-releases' term is incorrect, just fetch all cmr_news for demonstration
+    // Fallback if 'cmr-in-news' term is incorrect, just fetch all cmr_news for demonstration
     if ( !$query->have_posts() ) {
         $args['tax_query'] = array();
         $query = new WP_Query( $args );
