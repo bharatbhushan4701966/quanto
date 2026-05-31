@@ -25,7 +25,7 @@ function cmr_render_spotlight_shortcode( $atts ) {
 
             <!-- Row 1 Logos -->
             <div class="cmr-spotlight-cell r1-c4">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/The_times_of_india.svg" alt="TOI" style="max-height:40px;">
+                <img src="https://www.google.com/s2/favicons?domain=timesofindia.indiatimes.com&sz=128" alt="TOI" style="max-height:60px;">
             </div>
             <div class="cmr-spotlight-cell r1-c5">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/CNBC_logo.svg" alt="CNBC" style="max-height:50px;">
@@ -33,30 +33,30 @@ function cmr_render_spotlight_shortcode( $atts ) {
 
             <!-- Row 2 Logos -->
             <div class="cmr-spotlight-cell r2-c1">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/6/62/NDTV_logo.svg" alt="NDTV" style="max-height:50px;">
+                <img src="https://www.google.com/s2/favicons?domain=ndtv.com&sz=128" alt="NDTV" style="max-height:60px;">
             </div>
             <div class="cmr-spotlight-cell r2-c2">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/ABP_News_logo.svg" alt="ABP News" style="max-height:35px;">
+                <img src="https://www.google.com/s2/favicons?domain=news.abplive.com&sz=128" alt="ABP News" style="max-height:60px;">
             </div>
             <div class="cmr-spotlight-cell r2-c3">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/6/62/BBC_News_2019.svg" alt="BBC News" style="max-height:40px;">
             </div>
             <div class="cmr-spotlight-cell r2-c4">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Aaj_tak_logo.png" alt="Aaj Tak" style="max-height:50px;">
+                <img src="https://www.google.com/s2/favicons?domain=aajtak.in&sz=128" alt="Aaj Tak" style="max-height:60px;">
             </div>
             <div class="cmr-spotlight-cell r2-c5">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/CNN.svg" alt="CNN" style="max-height:45px;">
             </div>
             <div class="cmr-spotlight-cell r2-c6">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/India_Today_logo.svg" alt="India Today" style="max-height:45px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/India_Today_logo.png" alt="India Today" style="max-height:45px;">
             </div>
 
             <!-- Row 3 Logos -->
             <div class="cmr-spotlight-cell r3-c2">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Zee_News_logo.svg" alt="Zee News" style="max-height:45px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Zee_News_Logo_2025.svg/330px-Zee_News_Logo_2025.svg.png" alt="Zee News" style="max-height:45px;">
             </div>
             <div class="cmr-spotlight-cell r3-c3">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Republic_Bharat_Logo.svg" alt="Republic Bharat" style="max-height:40px;">
+                <img src="https://www.google.com/s2/favicons?domain=republicbharat.com&sz=128" alt="Republic Bharat" style="max-height:60px;">
             </div>
 
         </div>
