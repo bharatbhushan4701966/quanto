@@ -25,7 +25,7 @@ function cmr_render_spotlight_shortcode( $atts ) {
 
             <!-- Row 1 Logos -->
             <div class="cmr-spotlight-cell r1-c4">
-                <img src="https://en.wikipedia.org/wiki/Special:FilePath/The_Times_of_India_logo.png?width=320" alt="TOI" style="max-height:60px;">
+                <img src="https://en.wikipedia.org/wiki/Special:FilePath/The_times_of_india.svg?width=320" alt="TOI" style="max-height:60px;">
             </div>
             <div class="cmr-spotlight-cell r1-c5">
                 <img src="https://en.wikipedia.org/wiki/Special:FilePath/CNBC_logo.svg?width=320" alt="CNBC" style="max-height:50px;">
@@ -56,7 +56,7 @@ function cmr_render_spotlight_shortcode( $atts ) {
                 <img src="https://en.wikipedia.org/wiki/Special:FilePath/Zee_News_Logo_2025.svg?width=320" alt="Zee News" style="max-height:45px;">
             </div>
             <div class="cmr-spotlight-cell r3-c3">
-                <img src="https://en.wikipedia.org/wiki/Special:FilePath/Republic_Bharat_Logo.svg?width=320" alt="Republic Bharat" style="max-height:60px;">
+                <img src="https://en.wikipedia.org/wiki/Special:FilePath/Republic_Bharat_Logo.jpg?width=320" alt="Republic Bharat" style="max-height:60px;">
             </div>
 
         </div>
