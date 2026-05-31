@@ -81,3 +81,4 @@ function quanto_force_enable_woocommerce_reviews() {
 // CMR News & Media Releases Feature
 require_once QUANTO_DIR_PATH_INC . 'cmr-news.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-media-coverage.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-news-carousel.php';

@@ -1,4 +1,4 @@
-/* Media Coverage Main Wrapper */
+﻿/* Media Coverage Main Wrapper */
 .cmr-mc-wrapper {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     max-width: 1200px;
@@ -397,3 +397,143 @@
         width: 100%;
     }
 }
+
+/* --- CMR News Carousel --- */
+.cmr-nc-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.cmr-nc-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.cmr-nc-title {
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    margin-bottom: 15px;
+    color: #111;
+}
+
+.cmr-nc-subtitle {
+    font-size: 16px;
+    color: #555;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.cmr-nc-carousel {
+    padding-bottom: 50px !important;
+}
+
+.cmr-nc-card {
+    position: relative;
+    height: 450px;
+    border-radius: 12px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.cmr-nc-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0) 100%);
+    z-index: 1;
+}
+
+.cmr-nc-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: #fff;
+    color: #333;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 4px;
+    z-index: 2;
+}
+
+.cmr-nc-card-content {
+    position: relative;
+    z-index: 2;
+    padding: 30px;
+    color: #fff;
+}
+
+.cmr-nc-logo {
+    height: 40px;
+    width: auto;
+    margin-bottom: 15px;
+    background: #cc0000;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+.cmr-nc-meta-info {
+    font-size: 13px;
+    color: #ddd;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.cmr-nc-post-title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0 0 10px 0;
+    color: #fff;
+}
+
+.cmr-nc-excerpt {
+    font-size: 14px;
+    color: #bbb;
+    margin-bottom: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.cmr-nc-read-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 2px;
+    transition: opacity 0.3s;
+}
+
+.cmr-nc-read-btn:hover {
+    opacity: 0.8;
+}
+
+.swiper-pagination-bullet {
+    width: 30px !important;
+    height: 4px !important;
+    border-radius: 2px !important;
+    background: #ccc !important;
+    opacity: 0.5 !important;
+}
+
+.swiper-pagination-bullet-active {
+    background: #6C5CE7 !important;
+    opacity: 1 !important;
+}
+
+
+
