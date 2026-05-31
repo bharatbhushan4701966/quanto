@@ -18,6 +18,13 @@ function cmr_render_news_carousel_shortcode( $atts ) {
         'orderby'        => 'date',
         'order'          => 'DESC',
         'post_status'    => 'publish',
+        'tax_query'      => array(
+            array(
+                'taxonomy' => 'cmr_news_category',
+                'field'    => 'slug',
+                'terms'    => 'cmr-in-news',
+            ),
+        ),
     );
     $query = new WP_Query( $args );
 
@@ -50,11 +57,11 @@ function cmr_render_news_carousel_shortcode( $atts ) {
                 ?>
                 <div class="swiper-slide">
                     <div class="cmr-nc-card" style="background-image: url('<?php echo esc_url( $bg_image ); ?>');">
+                        <?php if ( $query->current_post === 0 ) : ?>
+                            <span class="cmr-nc-badge"><i class="fas fa-bookmark"></i> FEATURED</span>
+                        <?php endif; ?>
                         <div class="cmr-nc-overlay"></div>
                         <div class="cmr-nc-card-content">
-                            <?php if ( $query->current_post === 0 ) : ?>
-                                <span class="cmr-nc-badge"><i class="fas fa-bookmark"></i> FEATURED</span>
-                            <?php endif; ?>
                             
                             <div class="cmr-nc-meta-top">
                                 <?php if ( $logo_url ) : ?>
@@ -103,12 +110,12 @@ function cmr_render_news_carousel_shortcode( $atts ) {
                         768: {
                             slidesPerView: 1.6,
                             centeredSlides: true,
-                            spaceBetween: -15,
+                            spaceBetween: -40,
                         },
                         1024: {
-                            slidesPerView: 1.4,
+                            slidesPerView: 1.2,
                             centeredSlides: true,
-                            spaceBetween: -30,
+                            spaceBetween: -80,
                         }
                     }
                 });
