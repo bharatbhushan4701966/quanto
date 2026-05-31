@@ -1,8 +1,6 @@
 <?php
 // 5. Media Coverage Shortcode
 add_shortcode( 'cmr_media_coverage', 'cmr_media_coverage_shortcode' );
-add_shortcode( 'cmr_news', 'cmr_media_coverage_shortcode' );
-add_shortcode( 'cmr_news_tabs', 'cmr_media_coverage_shortcode' );
 add_action( 'wp_enqueue_scripts', 'cmr_media_coverage_enqueue_assets' );
 function cmr_media_coverage_enqueue_assets() {
     wp_enqueue_style( 'cmr-news-style', get_template_directory_uri() . '/assets/css/cmr-news.css', array(), time() );

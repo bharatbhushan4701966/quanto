@@ -254,7 +254,7 @@ function cmr_news_admin_scripts() {
 }
 
 // 4. Register Shortcode
-add_shortcode( 'cmr_news_tabs_old', 'cmr_news_tabs_shortcode' );
+add_shortcode( 'cmr_news_tabs', 'cmr_news_tabs_shortcode' );
 function cmr_news_tabs_shortcode( $atts ) {
     $atts = shortcode_atts( array(
         'category' => '', // Comma separated slugs to include (e.g. 'cmr-in-news')
