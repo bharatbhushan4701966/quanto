@@ -25,7 +25,7 @@ function cmr_render_spotlight_shortcode( $atts ) {
 
             <!-- Row 1 Logos -->
             <div class="cmr-spotlight-cell r1-c4">
-                <img src="https://en.wikipedia.org/wiki/Special:FilePath/The_times_of_india.svg?width=320" alt="TOI" style="max-height:50px;">
+                <img src="https://timesofindia.indiatimes.com/top-headlines/toi-logo/articleshow/95253803.cms" alt="TOI" style="max-height:50px;">
             </div>
             <div class="cmr-spotlight-cell r1-c5">
                 <img src="https://en.wikipedia.org/wiki/Special:FilePath/CNBC_logo.svg?width=320" alt="CNBC" style="max-height:50px;">
