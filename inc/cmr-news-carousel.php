@@ -105,7 +105,7 @@ function cmr_render_news_carousel_shortcode( $atts ) {
                             centeredSlides: false,
                         },
                         1024: {
-                            slidesPerView: 2.5,
+                            slidesPerView: 1.8,
                             centeredSlides: true,
                         }
                     }
