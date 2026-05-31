@@ -31,8 +31,7 @@
 }
 
 .cmr-media-contact-card {
-    flex: 1;
-    min-width: 300px;
+    flex: 0 0 320px;
     background: #fff;
     border: 1px solid #EAEAEA;
     border-radius: 4px;
