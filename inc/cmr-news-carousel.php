@@ -54,6 +54,19 @@ function cmr_render_news_carousel_shortcode( $atts ) {
                     // Word count for read time
                     $word_count = str_word_count( strip_tags( get_post_field( 'post_content', $post_id ) ) );
                     $reading_time = max( 1, ceil( $word_count / 200 ) );
+                    
+                    $document_id = get_post_meta( $post_id, '_cmr_news_document_id', true );
+                    $ext_url = get_post_meta( $post_id, '_cmr_news_external_link', true );
+                    if ( $document_id ) {
+                        $link = wp_get_attachment_url( $document_id );
+                        $target = '_blank';
+                    } elseif ( $ext_url ) {
+                        $link = $ext_url;
+                        $target = '_blank';
+                    } else {
+                        $link = get_permalink( $post_id );
+                        $target = '_self';
+                    }
                 ?>
                 <div class="swiper-slide">
                     <div class="cmr-nc-card" style="background-image: url('<?php echo esc_url( $bg_image ); ?>');">
@@ -79,7 +92,7 @@ function cmr_render_news_carousel_shortcode( $atts ) {
                                 <h3 class="cmr-nc-post-title"><?php the_title(); ?></h3>
                                 <div class="cmr-nc-excerpt"><?php echo wp_trim_words( get_the_excerpt(), 15 ); ?></div>
                                 
-                                <a href="<?php the_permalink(); ?>" class="cmr-nc-read-btn">
+                                <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-nc-read-btn">
                                     Read Coverage 
                                     <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M4 12L12 4M12 4H5.5M12 4V10.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
