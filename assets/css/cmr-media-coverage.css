@@ -1,10 +1,45 @@
 /* Media Coverage Main Wrapper */
 .cmr-mc-wrapper {
-    font-family: inherit;
-    color: #111;
-    max-width: 1280px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 20px;
+}
+
+/* Top Banner */
+.cmr-mc-top-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #EAEAEA;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.cmr-mc-top-banner-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111;
+}
+
+.cmr-mc-top-banner-links {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.cmr-mc-top-banner-links a {
+    text-decoration: none;
+    color: #333;
+    font-size: 15px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.cmr-mc-top-banner-links a:hover {
+    color: #6C5CE7;
 }
 
 /* Header */
@@ -46,7 +81,7 @@
     background: transparent;
     border: 1px solid #E0E0E0;
     border-radius: 30px;
-    padding: 8px 20px;
+    padding: 5px 30px;
     font-size: 14px;
     color: #333;
     cursor: pointer;
@@ -112,7 +147,7 @@
 
 .cmr-mc-search input {
     width: 100%;
-    padding: 10px 40px 10px 15px;
+    padding: 5px 40px 5px 15px;
     border: 1px solid #E0E0E0;
     border-radius: 30px;
     font-size: 14px;

@@ -33,6 +33,18 @@ function cmr_render_media_coverage_shortcode( $atts ) {
     ob_start();
     ?>
     <div class="cmr-mc-wrapper">
+        <div class="cmr-mc-top-banner">
+            <div class="cmr-mc-top-banner-title">CMR in News</div>
+            <div class="cmr-mc-top-banner-links">
+                <a href="#">Featured</a>
+                <a href="#">Latest Updates</a>
+                <a href="#">Press Release</a>
+                <a href="#">CMR Live</a>
+                <a href="#">Reports</a>
+                <a href="#">Media Contacts</a>
+            </div>
+        </div>
+
         <div class="cmr-mc-header">
             <h1 class="cmr-mc-title">CMR Media Coverage</h1>
             <p class="cmr-mc-subtitle">Track emerging shifts, growth signals, and market movements in real time.</p>
