@@ -28,7 +28,7 @@ function cmr_render_media_contacts_shortcode( $atts ) {
 
         <div class="cmr-media-contacts-grid">
             <div class="cmr-media-contact-card">
-                <div class="cmr-media-contact-img" style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');"></div>
+                <div class="cmr-media-contact-img" style="background-image: url('https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/Avatar-Image.svg');"></div>
                 <div class="cmr-media-contact-info">
                     <h4>Rose Hines</h4>
                     <p>CMR Services</p>
