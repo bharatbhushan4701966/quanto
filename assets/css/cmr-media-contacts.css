@@ -1,0 +1,143 @@
+.cmr-media-contacts-wrapper {
+    font-family: 'Inter', -apple-system, sans-serif;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.cmr-media-contacts-header {
+    margin-bottom: 30px;
+}
+
+.cmr-media-contacts-header h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 10px 0;
+    letter-spacing: -0.5px;
+}
+
+.cmr-media-contacts-header p {
+    font-size: 14px;
+    color: #444;
+    margin: 0;
+}
+
+.cmr-media-contacts-grid {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.cmr-media-contact-card {
+    flex: 1;
+    min-width: 300px;
+    background: #fff;
+    border: 1px solid #EAEAEA;
+    border-radius: 4px;
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.cmr-media-contact-img {
+    width: 80px;
+    height: 80px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 4px;
+}
+
+.cmr-media-contact-info {
+    flex: 1;
+}
+
+.cmr-media-contact-info h4 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 5px 0;
+    color: #111;
+}
+
+.cmr-media-contact-info p {
+    font-size: 13px;
+    color: #555;
+    margin: 0 0 10px 0;
+}
+
+.cmr-media-contact-email {
+    color: #111;
+    transition: color 0.3s;
+}
+
+.cmr-media-contact-email:hover {
+    color: #6C5CE7;
+}
+
+.cmr-media-testimonial-card {
+    background: #fff;
+    border: 1px solid #EAEAEA;
+    border-radius: 4px;
+    padding: 50px;
+    text-align: center;
+}
+
+.cmr-media-testimonial-card blockquote {
+    font-size: 22px;
+    line-height: 1.6;
+    color: #111;
+    font-style: italic;
+    font-weight: 500;
+    margin: 0 0 40px 0;
+    padding: 0;
+    border: none;
+}
+
+.cmr-media-testimonial-divider {
+    height: 1px;
+    background: #EAEAEA;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.cmr-media-testimonial-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.cmr-media-author-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cmr-media-author-info {
+    text-align: left;
+}
+
+.cmr-media-author-info h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111;
+    margin: 0 0 3px 0;
+}
+
+.cmr-media-author-info p {
+    font-size: 12px;
+    color: #6C5CE7;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .cmr-media-testimonial-card {
+        padding: 30px 20px;
+    }
+    
+    .cmr-media-testimonial-card blockquote {
+        font-size: 18px;
+    }
+}

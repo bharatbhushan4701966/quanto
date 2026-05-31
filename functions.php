@@ -83,3 +83,6 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-news.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-media-coverage.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-news-carousel.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-press-releases.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-spotlight.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-media-contacts.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-press-releases.php';
