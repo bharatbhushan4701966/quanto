@@ -139,7 +139,8 @@ function cmr_render_press_releases_shortcode( $atts ) {
         }
 
         .cmr-pr-card-title {
-            font-size: 24px;
+            font-size: 18px;
+            letter-spacing: 0px;
             font-weight: 700;
             color: #fff;
             margin: 0 0 15px 0;

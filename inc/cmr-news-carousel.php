@@ -91,8 +91,8 @@ function cmr_render_news_carousel_shortcode( $atts ) {
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof Swiper !== 'undefined') {
                 new Swiper('.cmr-nc-carousel', {
-                    slidesPerView: 1.5,
-                    spaceBetween: 20,
+                    slidesPerView: 1.3,
+                    spaceBetween: 0,
                     centeredSlides: true,
                     loop: true,
                     pagination: {
@@ -101,12 +101,14 @@ function cmr_render_news_carousel_shortcode( $atts ) {
                     },
                     breakpoints: {
                         768: {
-                            slidesPerView: 2,
-                            centeredSlides: false,
+                            slidesPerView: 1.6,
+                            centeredSlides: true,
+                            spaceBetween: -15,
                         },
                         1024: {
-                            slidesPerView: 1.8,
+                            slidesPerView: 1.4,
                             centeredSlides: true,
+                            spaceBetween: -30,
                         }
                     }
                 });
