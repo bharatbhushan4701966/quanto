@@ -25,38 +25,38 @@ function cmr_render_spotlight_shortcode( $atts ) {
 
             <!-- Row 1 Logos -->
             <div class="cmr-spotlight-cell r1-c4">
-                <img src="https://placehold.co/150x80/ffffff/000000?text=TOI" alt="TOI">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/The_times_of_india.svg" alt="TOI" style="max-height:40px;">
             </div>
             <div class="cmr-spotlight-cell r1-c5">
-                <img src="https://placehold.co/150x80/ffffff/000000?text=CNBC" alt="CNBC">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/CNBC_logo.svg" alt="CNBC" style="max-height:50px;">
             </div>
 
             <!-- Row 2 Logos -->
             <div class="cmr-spotlight-cell r2-c1">
-                <img src="https://placehold.co/150x80/ffffff/000000?text=NDTV" alt="NDTV">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/62/NDTV_logo.svg" alt="NDTV" style="max-height:50px;">
             </div>
             <div class="cmr-spotlight-cell r2-c2">
-                <img src="https://placehold.co/150x80/ffffff/000000?text=abp" alt="ABP News">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/ABP_News_logo.svg" alt="ABP News" style="max-height:35px;">
             </div>
             <div class="cmr-spotlight-cell r2-c3">
-                <img src="https://placehold.co/150x80/ffffff/000000?text=BBC" alt="BBC News">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/62/BBC_News_2019.svg" alt="BBC News" style="max-height:40px;">
             </div>
             <div class="cmr-spotlight-cell r2-c4">
-                <img src="https://placehold.co/150x80/ffffff/000000?text=Aaj+Tak" alt="Aaj Tak">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Aaj_tak_logo.png" alt="Aaj Tak" style="max-height:50px;">
             </div>
             <div class="cmr-spotlight-cell r2-c5">
-                <img src="https://placehold.co/150x80/ffffff/000000?text=CNN" alt="CNN">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/CNN.svg" alt="CNN" style="max-height:45px;">
             </div>
             <div class="cmr-spotlight-cell r2-c6">
-                <img src="https://placehold.co/150x80/ffffff/000000?text=India+Today" alt="India Today">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/India_Today_logo.svg" alt="India Today" style="max-height:45px;">
             </div>
 
             <!-- Row 3 Logos -->
             <div class="cmr-spotlight-cell r3-c2">
-                <img src="https://placehold.co/150x80/ffffff/000000?text=Zee+News" alt="Zee News">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Zee_News_logo.svg" alt="Zee News" style="max-height:45px;">
             </div>
             <div class="cmr-spotlight-cell r3-c3">
-                <img src="https://placehold.co/150x80/ffffff/000000?text=R.Bharat" alt="Republic Bharat">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Republic_Bharat_Logo.svg" alt="Republic Bharat" style="max-height:40px;">
             </div>
 
         </div>
