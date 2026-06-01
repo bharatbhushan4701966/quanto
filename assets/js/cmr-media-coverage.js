@@ -95,9 +95,20 @@ jQuery(document).ready(function($) {
     // Sticky Header Banner with Shadow
     var banner = $('.cmr-mc-top-banner');
     if (banner.length) {
-        // We use a tiny offset to ensure it triggers immediately as it touches top
+        var bannerOffset = banner.offset().top;
+        
+        // Recalculate on resize in case layout changes
+        $(window).on('resize', function() {
+            // Only recalculate if it's not currently sticky to get true original position
+            if (!banner.hasClass('is-sticky')) {
+                bannerOffset = banner.offset().top;
+            }
+        });
+
         $(window).on('scroll', function() {
-            if ($(window).scrollTop() > 10) {
+            var scrollPos = $(window).scrollTop();
+            // Trigger when the scroll position passes the banner's top position
+            if (scrollPos >= bannerOffset) {
                 banner.addClass('is-sticky');
             } else {
                 banner.removeClass('is-sticky');
