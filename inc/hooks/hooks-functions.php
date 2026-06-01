@@ -709,7 +709,8 @@
                             echo '</svg>';
                                 echo esc_html__( 'Download Press Release', 'quanto' );
                             echo '</a>';
-                        echo '<button class="cmr-btn-share" onclick="if(navigator.share){navigator.share({title:document.title,url:window.location.href})}else{alert(\'Link copied to clipboard!\'); navigator.clipboard.writeText(window.location.href);}">';
+                        echo '<div class="share-dropdown-wrapper" style="position: relative; display: inline-block;">';
+                        echo '<button class="cmr-btn-share share-toggle-btn">';
                             echo '<svg class="cmr-icon-share" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">';
                                 echo '<circle cx="18" cy="5" r="3"></circle>';
                                 echo '<circle cx="6" cy="12" r="3"></circle>';
@@ -718,6 +719,39 @@
                                 echo '<line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>';
                             echo '</svg>';
                         echo '</button>';
+                        echo '<div class="share-dropdown-menu" style="display: none; position: absolute; top: calc(100% + 10px); right: 0; background: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 15px; border-radius: 8px; z-index: 99; white-space: nowrap; border: 1px solid #eee;">';
+                            echo '<ul class="custom-ul" style="display: flex; gap: 15px; margin: 0; padding: 0; list-style: none; align-items: center;">';
+                                if( function_exists( 'quanto_social_sharing_buttons' ) ) {
+                                    echo quanto_social_sharing_buttons();
+                                }
+                            echo '</ul>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '<script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                if(window.shareDropdownBound) return;
+                                window.shareDropdownBound = true;
+                                const shareWrappers = document.querySelectorAll(".share-dropdown-wrapper");
+                                shareWrappers.forEach(wrapper => {
+                                    const btn = wrapper.querySelector(".share-toggle-btn");
+                                    const menu = wrapper.querySelector(".share-dropdown-menu");
+                                    if(btn && menu) {
+                                        btn.addEventListener("click", function(e) {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            const isVisible = menu.style.display === "block";
+                                            document.querySelectorAll(".share-dropdown-menu").forEach(m => m.style.display = "none");
+                                            menu.style.display = isVisible ? "none" : "block";
+                                        });
+                                        document.addEventListener("click", function(e) {
+                                            if (!wrapper.contains(e.target)) {
+                                                menu.style.display = "none";
+                                            }
+                                        });
+                                    }
+                                });
+                            });
+                        </script>';
                     echo '</div>';
                 echo '</div>';
                 return;
@@ -781,31 +815,26 @@
                 </div>
                 <script>
                     document.addEventListener("DOMContentLoaded", function() {
-                        const shareWrappers = document.querySelectorAll('.share-dropdown-wrapper');
+                        if(window.shareDropdownBound) return;
+                        window.shareDropdownBound = true;
+                        const shareWrappers = document.querySelectorAll(".share-dropdown-wrapper");
                         shareWrappers.forEach(wrapper => {
-                            const btn = wrapper.querySelector('.share-toggle-btn');
-                            const menu = wrapper.querySelector('.share-dropdown-menu');
-                            
-                            btn.addEventListener('click', function(e) {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                const isVisible = menu.style.display === 'block';
-                                
-                                // Close all other menus first
-                                document.querySelectorAll('.share-dropdown-menu').forEach(m => {
-                                    m.style.display = 'none';
+                            const btn = wrapper.querySelector(".share-toggle-btn");
+                            const menu = wrapper.querySelector(".share-dropdown-menu");
+                            if(btn && menu) {
+                                btn.addEventListener("click", function(e) {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    const isVisible = menu.style.display === "block";
+                                    document.querySelectorAll(".share-dropdown-menu").forEach(m => m.style.display = "none");
+                                    menu.style.display = isVisible ? "none" : "block";
                                 });
-                                
-                                // Toggle this one
-                                menu.style.display = isVisible ? 'none' : 'block';
-                            });
-                            
-                            // Close when clicking outside
-                            document.addEventListener('click', function(e) {
-                                if (!wrapper.contains(e.target)) {
-                                    menu.style.display = 'none';
-                                }
-                            });
+                                document.addEventListener("click", function(e) {
+                                    if (!wrapper.contains(e.target)) {
+                                        menu.style.display = "none";
+                                    }
+                                });
+                            }
                         });
                     });
                 </script>
