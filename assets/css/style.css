@@ -8720,8 +8720,8 @@ h1.custom-product-title {
 
 .cmr-meta-value {
   font-family: 'Instrument Sans', sans-serif;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 500;
   color: #0F0F0F;
 }
 
@@ -8735,7 +8735,7 @@ h1.custom-product-title {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #635AD9;
+  background-color: #6241CA;
   color: #FFFFFF !important;
   font-family: 'Instrument Sans', sans-serif;
   font-size: 14px;
@@ -8750,7 +8750,7 @@ h1.custom-product-title {
 }
 
 .cmr-btn-download:hover {
-  background-color: #4f46c7;
+  background-color: #6241CA;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(99, 90, 217, 0.2);
 }
