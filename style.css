@@ -138,6 +138,7 @@ a.button.product_type_simple.add_to_cart_button,
 button.button.alt.single_add_to_cart_button {
     background-color: #ffffff !important;
     color: #000000 !important;
+    letter-spacing: 0px !important;
     font-weight: 500 !important;
     display: inline-flex !important;
     align-items: center !important;
@@ -167,8 +168,10 @@ button.button.single_add_to_cart_button:hover,
 a.button.product_type_simple.add_to_cart_button:hover,
 button.button.alt.single_add_to_cart_button:hover {
     background-color: #000000 !important;
+    letter-spacing: 0px !important;
     color: #ffffff !important;
     border-color: #000000 !important;
+    letter-spacing: 0px !important;
 }
 
 /* Insert the SVG icon using ::after */
@@ -422,6 +425,7 @@ button.button.alt.single_add_to_cart_button:hover::after {
 /* Make background color black for the #slide element */
 #slide {
     background-color: #000000 !important;
+    letter-spacing: 0px !important;
 }
 
 /* Custom related article button style */
@@ -646,6 +650,7 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
     font-weight: 600 !important;
     font-family: 'Instrument Sans', sans-serif !important;
     color: #000000 !important;
+    letter-spacing: 0px !important;
 }
 
 .quanto-similar-reports-section .e-con > .e-con-inner > .e-con:nth-child(2) h1,
@@ -655,6 +660,7 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
     font-weight: 600 !important;
     font-family: 'Instrument Sans', sans-serif !important;
     color: #000000 !important;
+    letter-spacing: 0px !important;
 }
 
 .quanto-similar-reports-section .elementor-widget-button .elementor-button {
@@ -664,3 +670,4 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
     color: #ffffff !important;
     border-radius: 40px !important;
 }
+
