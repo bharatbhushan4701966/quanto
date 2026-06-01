@@ -1,762 +1,830 @@
-/*
-Theme Name: Quanto
-Theme URI:  https://wp.framerpeak.com/quanto/
-Author: Mirrortheme
-Author URI: https://themeforest.net/user/mirrortheme
-Description: Quanto - Creative Agency & Portfolio WordPress Theme
-Version: 1.0.1
-Tested up to: 5.8
-Requires at least: 5.6
-Requires PHP: 7.4
-License: GNU General Public License version 3.0
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
-Text Domain: quanto
-Tags: one-column, flexible-header, accessibility-ready, custom-colors, custom-menu, custom-logo, editor-style, featured-images, footer-widgets, sticky-post, threaded-comments, translation-ready
-Copyright (C) 2024 Mirrortheme
-This theme, like WordPress itself, is licensed under the GNU General Public License.
-All rights reserved.s
-*/
-
-
-/* ==========================================================================
-   WooCommerce Star Rating & Review Styles
-   ========================================================================== */
-
-/* FontAwesome icon styling for product cards, single product, and widget lists */
-.woocommerce .star-rating,
-.star-rating {
-    overflow: hidden;
-    position: relative;
-    height: 1.2em;
-    line-height: 1.2;
-    font-size: 14px;
-    width: 6em; /* Adjust to display 5 stars cleanly */
-    font-family: 'Font Awesome 6 Free', 'Font Awesome 5 Free', sans-serif;
-    font-weight: 900;
-    display: inline-block;
-    letter-spacing: 0.1em;
-}
-
-.woocommerce .star-rating::before,
-.star-rating::before {
-    content: '\f005\f005\f005\f005\f005' !important;
-    color: #F59E0B !important; /* Gold color for empty stars */
-    font-weight: 400 !important; /* OUTLINED empty stars */
-    float: left;
-    top: 0;
-    left: 0;
-    position: absolute;
-}
-
-.woocommerce .star-rating span,
-.star-rating span {
-    overflow: hidden !important;
-    float: left;
-    top: 0;
-    left: 0;
-    position: absolute;
-    padding-top: 1.5em;
-}
-
-.woocommerce .star-rating span::before,
-.star-rating span::before {
-    content: '\f005\f005\f005\f005\f005' !important;
-    color: #f59e0b !important; /* Gold color for filled stars */
-    font-weight: 900 !important; /* SOLID filled stars */
-    top: 0;
-    position: absolute;
-    left: 0;
-}
-
-/* Style the interactive star rating selector inside the review form */
-.woocommerce p.stars,
-p.stars {
-    display: inline-block;
-    margin: 0;
-    vertical-align: middle;
-}
-
-.woocommerce p.stars a,
-p.stars a {
-    position: relative;
-    height: 1.5em;
-    width: 1.5em;
-    text-indent: -999em;
-    display: inline-block;
-    text-decoration: none;
-    letter-spacing: normal;
-}
-
-.woocommerce p.stars a::before,
-p.stars a::before {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1.5em;
-    height: 1.5em;
-    line-height: 1.5;
-    font-family: 'Font Awesome 6 Free', 'Font Awesome 5 Free', sans-serif;
-    font-weight: 900;
-    content: '\f005';
-    text-indent: 0;
-    color: #e2e8f0;
-    font-size: 16px;
-    transition: color 0.2s ease-in-out;
-}
-
-/* Maintain rating highlight status on hover/active */
-.woocommerce p.stars a:hover::before,
-.woocommerce p.stars a:focus::before,
-.woocommerce p.stars a.active::before {
-    color: #f59e0b;
-}
-
-.woocommerce p.stars:hover a::before,
-p.stars:hover a::before {
-    color: #f59e0b;
-}
-
-.woocommerce p.stars a:hover ~ a::before,
-.woocommerce p.stars a:focus ~ a::before,
-p.stars a:hover ~ a::before,
-p.stars a:focus ~ a::before {
-    color: #e2e8f0;
-}
-
-/* ==========================================================================
-   WooCommerce Add to Cart / Download Report Buttons
-   ========================================================================== */
-
-.woocommerce a.button.add_to_cart_button,
-.woocommerce button.button.single_add_to_cart_button,
-.woocommerce a.button.product_type_simple.add_to_cart_button,
-.woocommerce button.button.alt.single_add_to_cart_button,
-a.button.add_to_cart_button,
-button.button.single_add_to_cart_button,
-a.button.product_type_simple.add_to_cart_button,
-button.button.alt.single_add_to_cart_button {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    letter-spacing: 0px !important;
-    font-weight: 500 !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 8px !important;
-    width: auto !important;
-    min-height: 48px !important;
-    height: auto !important;
-    padding: 12px 24px !important;
-    box-sizing: border-box !important;
-    border-radius: 40px !important;
-    transition: background-color 0.3s ease, transform 0.2s ease !important;
-    border: 1px solid #000000 !important;
-    text-transform: none !important;
-    font-size: 15px !important;
-    letter-spacing: normal !important;
-    cursor: pointer !important;
-    overflow: visible !important;
-}
-
-.woocommerce a.button.add_to_cart_button:hover,
-.woocommerce button.button.single_add_to_cart_button:hover,
-.woocommerce a.button.product_type_simple.add_to_cart_button:hover,
-.woocommerce button.button.alt.single_add_to_cart_button:hover,
-a.button.add_to_cart_button:hover,
-button.button.single_add_to_cart_button:hover,
-a.button.product_type_simple.add_to_cart_button:hover,
-button.button.alt.single_add_to_cart_button:hover {
-    background-color: #000000 !important;
-    letter-spacing: 0px !important;
-    color: #ffffff !important;
-    border-color: #000000 !important;
-    letter-spacing: 0px !important;
-}
-
-/* Insert the SVG icon using ::after */
-.woocommerce a.button.add_to_cart_button::after,
-.woocommerce button.button.single_add_to_cart_button::after,
-.woocommerce a.button.product_type_simple.add_to_cart_button::after,
-.woocommerce button.button.alt.single_add_to_cart_button::after,
-a.button.add_to_cart_button::after,
-button.button.single_add_to_cart_button::after,
-a.button.product_type_simple.add_to_cart_button::after,
-button.button.alt.single_add_to_cart_button::after {
-    content: "" !important;
-    display: inline-block !important;
-    width: 14px !important;
-    height: 14px !important;
-    background-image: url('https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/down-arrow.svg') !important;
-    background-repeat: no-repeat !important;
-    background-size: contain !important;
-    background-position: center !important;
-    filter: invert(1) !important; /* Turns white SVG to black */
-    margin-left: 8px !important;
-    vertical-align: middle !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    position: static !important;
-    transform: none !important;
-}
-
-.woocommerce a.button.add_to_cart_button:hover::after,
-.woocommerce button.button.single_add_to_cart_button:hover::after,
-.woocommerce a.button.product_type_simple.add_to_cart_button:hover::after,
-.woocommerce button.button.alt.single_add_to_cart_button:hover::after,
-a.button.add_to_cart_button:hover::after,
-button.button.single_add_to_cart_button:hover::after,
-a.button.product_type_simple.add_to_cart_button:hover::after,
-button.button.alt.single_add_to_cart_button:hover::after {
-    filter: invert(0) !important; /* Back to white on hover */
-}
-
-/* Single Product Details Page Action Buttons Styling Overrides */
-.single-product .custom-download-button-wrapper form.cart button.button.alt.single_add_to_cart_button,
-.single-product .custom-download-button-wrapper form.cart button.button.single_add_to_cart_button,
-.single-product .custom-download-button-wrapper form.cart button.single_add_to_cart_button,
-.custom-download-button-wrapper form.cart button.single_add_to_cart_button {
-    background-color: #6241CA !important;
-    color: #ffffff !important;
-    font-size: 15px !important;
-    font-weight: 600 !important;
-    padding: 15px 147px !important;
-    box-sizing: border-box !important;
-    border-radius: 40px !important;
-    border: none !important;
-    cursor: pointer !important;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
-    text-transform: none !important;
-    letter-spacing: normal !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 8px !important;
-}
-
-.single-product .custom-download-button-wrapper form.cart button.button.alt.single_add_to_cart_button:hover,
-.single-product .custom-download-button-wrapper form.cart button.button.single_add_to_cart_button:hover,
-.single-product .custom-download-button-wrapper form.cart button.single_add_to_cart_button:hover,
-.custom-download-button-wrapper form.cart button.single_add_to_cart_button:hover {
-    background-color: #5132b8 !important;
-    color: #ffffff !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 4px 12px rgba(98, 65, 202, 0.25) !important;
-}
-
-.single-product .custom-download-button-wrapper form.cart button.button.alt.single_add_to_cart_button::after,
-.single-product .custom-download-button-wrapper form.cart button.button.single_add_to_cart_button::after,
-.single-product .custom-download-button-wrapper form.cart button.single_add_to_cart_button::after,
-.custom-download-button-wrapper form.cart button.single_add_to_cart_button::after {
-    display: none !important;
-}
-
-/* Talk to Analyst Button */
-.custom-talk-analyst-btn {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background-color: #ffffff !important;
-    color: #1a1c1e !important;
-    font-size: 15px !important;
-    font-weight: 600 !important;
-    padding: 11px 50px !important;
-    box-sizing: border-box !important;
-    border-radius: 40px !important;
-    border: 1px solid #1a1c1e !important;
-    cursor: pointer !important;
-    text-decoration: none !important;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    gap: 8px !important;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
-}
-
-.custom-talk-analyst-btn:hover {
-    background-color: #f8fafc !important;
-    border-color: #1a1c1e !important;
-    color: #1a1c1e !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
-}
-
-.custom-talk-analyst-btn .arrow-up-right {
-    font-size: 15px;
-    font-weight: 700;
-    transition: transform 0.25s ease;
-}
-
-.custom-talk-analyst-btn:hover .arrow-up-right {
-    transform: translate(2px, -2px);
-}
-
-.woocommerce #review_form #respond p {
-    margin: 0 0 0 !important;
-}
-
-.payment-icon img {
-    height: 24px !important;
-    width: auto !important;
-    display: block !important;
-}
-
-.quanto-homepage-tail-sections > :not(.elementor):not(:nth-last-child(-n+3)),
-.quanto-homepage-tail-sections > .elementor > :not(:nth-last-child(-n+3)) {
-    display: none !important;
-}
-
-.quanto-homepage-tail-sections {
-    width: 100%;
-    overflow: hidden;
-}
-
-.quanto-homepage-tail-sections > .elementor {
-    width: 100%;
-}
-
-.quanto-homepage-tail-sections > .elementor > .elementor-element {
-    display: none !important;
-}
-
-.quanto-homepage-tail-sections > .elementor > .elementor-element:nth-last-of-type(-n+3) {
-    display: var(--display, block) !important;
-}
-
-.quanto-homepage-tail-sections > .elementor > .elementor-section-wrap > .elementor-section {
-    display: none !important;
-}
-
-.quanto-homepage-tail-sections > .elementor > .elementor-section-wrap > .elementor-section:nth-last-of-type(-n+3) {
-    display: block !important;
-}
-
-.quanto-homepage-tail-sections .elementor-section .elementor-container {
-    display: flex;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: min(100%, var(--content-width, 1320px));
-    width: 100%;
-}
-
-.quanto-homepage-tail-sections .elementor-column {
-    display: flex;
-    min-height: 1px;
-    position: relative;
-}
-
-.quanto-homepage-tail-sections .elementor-column-wrap,
-.quanto-homepage-tail-sections .elementor-widget-wrap {
-    align-content: flex-start;
-    display: flex;
-    flex-wrap: wrap;
-    position: relative;
-    width: 100%;
-}
-
-.quanto-homepage-tail-sections .e-con {
-    box-sizing: border-box;
-    flex-direction: var(--flex-direction, row);
-    flex-wrap: var(--flex-wrap, nowrap);
-    align-content: var(--align-content, normal);
-    align-items: var(--align-items, stretch);
-    justify-content: var(--justify-content, normal);
-    gap: var(--gap, 0);
-    max-width: min(100%, var(--width, 100%));
-    min-height: var(--min-height, initial);
-    padding-block-start: var(--padding-block-start, 0);
-    padding-block-end: var(--padding-block-end, 0);
-    padding-inline-start: var(--padding-inline-start, 0);
-    padding-inline-end: var(--padding-inline-end, 0);
-    position: relative;
-}
-
-.quanto-homepage-tail-sections .e-con.e-parent,
-.quanto-homepage-tail-sections .e-con.e-con-full {
-    width: 100%;
-}
-
-.quanto-homepage-tail-sections .e-con > .e-con-inner {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: var(--flex-direction, row);
-    flex-wrap: var(--flex-wrap, nowrap);
-    align-items: var(--align-items, stretch);
-    justify-content: var(--justify-content, normal);
-    gap: var(--gap, 0);
-    margin-left: auto;
-    margin-right: auto;
-    max-width: min(100%, var(--content-width, 1320px));
-    width: 100%;
-}
-
-.quanto-homepage-tail-sections .elementor-widget,
-.quanto-homepage-tail-sections .elementor-widget-container {
-    max-width: 100%;
-}
-
-.quanto-homepage-tail-sections .elementor-heading-title {
-    margin: 0;
-}
-
-@media (max-width: 767px) {
-    .quanto-homepage-tail-sections .e-con,
-    .quanto-homepage-tail-sections .e-con > .e-con-inner {
-        flex-direction: var(--mobile-flex-direction, column);
-    }
-}
-
-/* Fix for hero arrow wrapping */
-.hero-title .inline-wrap {
-    display: inline-flex !important;
-    align-items: center !important;
-    white-space: nowrap !important;
-}
-.hero-title .hero-arrow-inline {
-    display: inline-block !important;
-    margin-bottom: 0 !important;
-}
-
-/* Override Elementor specific container width as requested */
-.elementor .e-2b7354c-abf27e5,
-.elementor .elementor-element-2b7354c {
-    width: 100% !important;
-}
-
-/* Make background color black for the #slide element */
-#slide {
-    background-color: #000000 !important;
-    letter-spacing: 0px !important;
-}
-
-/* Custom related article button style */
-.related-article-more-details {
-    margin-top: 20px;
-}
-.custom-related-details-btn {
-    display: inline-block;
-    color: #000000;
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-    border-bottom: 2px solid #000000;
-    padding-bottom: 2px;
-    line-height: 1.2;
-    transition: opacity 0.3s ease;
-}
-.custom-related-details-btn:hover {
-    color: #000000;
-    opacity: 0.7;
-}
-
-/* WooCommerce Product Loop Image Resizing */
-.woocommerce ul.products li.product .woocommerce-loop-product__link img {
-    width: 100% !important;
-    height: 406px !important;
-    object-fit: cover !important;
-}
-
-/* Product Category Breadcrumb */
-.product-category-breadcrumb {
-    font-size: 13px;
-    color: #777777;
-    margin-top: 15px;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-weight: 500;
-}
-.product-category-breadcrumb .breadcrumb-dash {
-    color: #a0a0a0;
-    font-weight: 300;
-}
-
-/* WooCommerce Product Loop Image Resizing */
-.woocommerce ul.products li.product .woocommerce-loop-product__link img {
-    height: 406px !important;
-    width: 100% !important;
-    object-fit: cover !important;
-}
-
-/* Align buttons safely by enforcing a fixed height for titles */
-
-/* Fix spacing for WHO WE SERVE section on blog detail pages */
-body.single-post .elementor-element.elementor-element-5e656d6,
-body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
-    padding-top: 40px !important;
-    padding-bottom: 40px !important;
-}
-
-/* Fix spacing for Client Testimonials on blog detail pages */
-.single-post .elementor-element-82ef444 {
-    padding-top: 30px !important;
-}
-
-/* Make padding-top 80px for the Similar Reports section on blog detail pages */
-.single-post .quanto-similar-reports-section > .elementor-element {
-    padding-top: 80px !important;
-}
-
-/* Add horizontal padding to text elements in WooCommerce product cards, but not the image */
-.woocommerce ul.products li.product .product-category-breadcrumb,
-.woocommerce ul.products li.product .woocommerce-loop-product__title,
-.woocommerce ul.products li.product .price {
-    padding-left: 30px !important;
-    padding-right: 30px !important;
-    padding-bottom: 15px !important;
-    box-sizing: border-box;
-}
-
-.woocommerce ul.products li.product .star-rating {
-    margin-left: 30px !important;
-    margin-right: 30px !important;
-    margin-bottom: 15px !important;
-}
-
-.woocommerce ul.products li.product .woocommerce-loop-product__buttons {
-    padding-left: 30px !important;
-    padding-right: 30px !important;
-    padding-bottom: 30px !important;
-    margin: 0 !important;
-    box-sizing: border-box;
-}
-
-.cmr-read-coverage {
-    font-size: 13px !important;
-}
-
-/* Adjust font size for meta info on blog posts */
-.meta-box .meta-info,
-.meta-box .meta-info a,
-.meta-box .meta-info span {
-    font-size: 14px !important;
-}
-
-/* Force 16px font size for paragraph text on single blog posts */
-.single-post .wp-block-paragraph,
-.single-post .entry-content p,
-.single-post .post-content p,
-.single-post .blog-body p,
-.single-post .blog-body li,
-.single-post .blog-body span,
-.single-post .blog-body ul,
-.single-post .blog-body ol,
-.blog-body p,
-.blog-body li {
-    font-size: 16px !important;
-}
-
-/* Breadcrumb font size */
-.breadcumb-menu ul li,
-.breadcumb-menu ul li a,
-.breadcumb-menu ul .arrow,
-.breadcumb-menu ul .arrow i {
-    font-size: 12px !important;
-}
-
-/* Hide picture and force 100% width on content for Testimonial 2 widget */
-.wcf__testimonial-2 .slide .picture {
-    display: none !important;
-}
-
-.wcf__testimonial-2 .slide {
-    display: block !important;
-    width: 100% !important;
-}
-
-.wcf__testimonial-2 .slide .content {
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    flex: none !important;
-    padding-left: 0 !important;
-    margin-left: 0 !important;
-}
-
-/* Update font size for 'Leave a reply' title */
-.comment-respond h4, 
-#reply-title,
-.comments-area h4 {
-    font-size: 48px !important;
-}
-
-/* Constrain comment box width and adjust height for large screens */
-@media screen and (min-width: 1024px) {
-    .comment-respond form,
-    #commentform {
-        max-width: 800px;
-    }
-    
-    #commentform textarea,
-    .comment-respond textarea {
-        height: 150px !important;
-        width: 100% !important;
-    }
-}
-
-/* Override padding for elementor section */
-.quanto-similar-reports-section > .elementor-element {
+/*
+Theme Name: Quanto
+Theme URI:  https://wp.framerpeak.com/quanto/
+Author: Mirrortheme
+Author URI: https://themeforest.net/user/mirrortheme
+Description: Quanto - Creative Agency & Portfolio WordPress Theme
+Version: 1.0.1
+Tested up to: 5.8
+Requires at least: 5.6
+Requires PHP: 7.4
+License: GNU General Public License version 3.0
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
+Text Domain: quanto
+Tags: one-column, flexible-header, accessibility-ready, custom-colors, custom-menu, custom-logo, editor-style, featured-images, footer-widgets, sticky-post, threaded-comments, translation-ready
+Copyright (C) 2024 Mirrortheme
+This theme, like WordPress itself, is licensed under the GNU General Public License.
+All rights reserved.s
+*/
+
+
+/* ==========================================================================
+   WooCommerce Star Rating & Review Styles
+   ========================================================================== */
+
+/* FontAwesome icon styling for product cards, single product, and widget lists */
+.woocommerce .star-rating,
+.star-rating {
+    overflow: hidden;
+    position: relative;
+    height: 1.2em;
+    line-height: 1.2;
+    font-size: 14px;
+    width: 6em; /* Adjust to display 5 stars cleanly */
+    font-family: 'Font Awesome 6 Free', 'Font Awesome 5 Free', sans-serif;
+    font-weight: 900;
+    display: inline-block;
+    letter-spacing: 0.1em;
+}
+
+.woocommerce .star-rating::before,
+.star-rating::before {
+    content: '\f005\f005\f005\f005\f005' !important;
+    color: #F59E0B !important; /* Gold color for empty stars */
+    font-weight: 400 !important; /* OUTLINED empty stars */
+    float: left;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+.woocommerce .star-rating span,
+.star-rating span {
+    overflow: hidden !important;
+    float: left;
+    top: 0;
+    left: 0;
+    position: absolute;
+    padding-top: 1.5em;
+}
+
+.woocommerce .star-rating span::before,
+.star-rating span::before {
+    content: '\f005\f005\f005\f005\f005' !important;
+    color: #f59e0b !important; /* Gold color for filled stars */
+    font-weight: 900 !important; /* SOLID filled stars */
+    top: 0;
+    position: absolute;
+    left: 0;
+}
+
+/* Style the interactive star rating selector inside the review form */
+.woocommerce p.stars,
+p.stars {
+    display: inline-block;
+    margin: 0;
+    vertical-align: middle;
+}
+
+.woocommerce p.stars a,
+p.stars a {
+    position: relative;
+    height: 1.5em;
+    width: 1.5em;
+    text-indent: -999em;
+    display: inline-block;
+    text-decoration: none;
+    letter-spacing: normal;
+}
+
+.woocommerce p.stars a::before,
+p.stars a::before {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1.5em;
+    height: 1.5em;
+    line-height: 1.5;
+    font-family: 'Font Awesome 6 Free', 'Font Awesome 5 Free', sans-serif;
+    font-weight: 900;
+    content: '\f005';
+    text-indent: 0;
+    color: #e2e8f0;
+    font-size: 16px;
+    transition: color 0.2s ease-in-out;
+}
+
+/* Maintain rating highlight status on hover/active */
+.woocommerce p.stars a:hover::before,
+.woocommerce p.stars a:focus::before,
+.woocommerce p.stars a.active::before {
+    color: #f59e0b;
+}
+
+.woocommerce p.stars:hover a::before,
+p.stars:hover a::before {
+    color: #f59e0b;
+}
+
+.woocommerce p.stars a:hover ~ a::before,
+.woocommerce p.stars a:focus ~ a::before,
+p.stars a:hover ~ a::before,
+p.stars a:focus ~ a::before {
+    color: #e2e8f0;
+}
+
+/* ==========================================================================
+   WooCommerce Add to Cart / Download Report Buttons
+   ========================================================================== */
+
+.woocommerce a.button.add_to_cart_button,
+.woocommerce button.button.single_add_to_cart_button,
+.woocommerce a.button.product_type_simple.add_to_cart_button,
+.woocommerce button.button.alt.single_add_to_cart_button,
+a.button.add_to_cart_button,
+button.button.single_add_to_cart_button,
+a.button.product_type_simple.add_to_cart_button,
+button.button.alt.single_add_to_cart_button {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    letter-spacing: 0px !important;
+    font-weight: 500 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    width: auto !important;
+    min-height: 48px !important;
+    height: auto !important;
+    padding: 12px 24px !important;
+    box-sizing: border-box !important;
+    border-radius: 40px !important;
+    transition: background-color 0.3s ease, transform 0.2s ease !important;
+    border: 1px solid #000000 !important;
+    text-transform: none !important;
+    font-size: 15px !important;
+    letter-spacing: normal !important;
+    cursor: pointer !important;
+    overflow: visible !important;
+}
+
+.woocommerce a.button.add_to_cart_button:hover,
+.woocommerce button.button.single_add_to_cart_button:hover,
+.woocommerce a.button.product_type_simple.add_to_cart_button:hover,
+.woocommerce button.button.alt.single_add_to_cart_button:hover,
+a.button.add_to_cart_button:hover,
+button.button.single_add_to_cart_button:hover,
+a.button.product_type_simple.add_to_cart_button:hover,
+button.button.alt.single_add_to_cart_button:hover {
+    background-color: #000000 !important;
+    letter-spacing: 0px !important;
+    color: #ffffff !important;
+    border-color: #000000 !important;
+    letter-spacing: 0px !important;
+}
+
+/* Insert the SVG icon using ::after */
+.woocommerce a.button.add_to_cart_button::after,
+.woocommerce button.button.single_add_to_cart_button::after,
+.woocommerce a.button.product_type_simple.add_to_cart_button::after,
+.woocommerce button.button.alt.single_add_to_cart_button::after,
+a.button.add_to_cart_button::after,
+button.button.single_add_to_cart_button::after,
+a.button.product_type_simple.add_to_cart_button::after,
+button.button.alt.single_add_to_cart_button::after {
+    content: "" !important;
+    display: inline-block !important;
+    width: 14px !important;
+    height: 14px !important;
+    background-image: url('https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/down-arrow.svg') !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    background-position: center !important;
+    filter: invert(1) !important; /* Turns white SVG to black */
+    margin-left: 8px !important;
+    vertical-align: middle !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: static !important;
+    transform: none !important;
+}
+
+.woocommerce a.button.add_to_cart_button:hover::after,
+.woocommerce button.button.single_add_to_cart_button:hover::after,
+.woocommerce a.button.product_type_simple.add_to_cart_button:hover::after,
+.woocommerce button.button.alt.single_add_to_cart_button:hover::after,
+a.button.add_to_cart_button:hover::after,
+button.button.single_add_to_cart_button:hover::after,
+a.button.product_type_simple.add_to_cart_button:hover::after,
+button.button.alt.single_add_to_cart_button:hover::after {
+    filter: invert(0) !important; /* Back to white on hover */
+}
+
+/* Single Product Details Page Action Buttons Styling Overrides */
+.single-product .custom-download-button-wrapper form.cart button.button.alt.single_add_to_cart_button,
+.single-product .custom-download-button-wrapper form.cart button.button.single_add_to_cart_button,
+.single-product .custom-download-button-wrapper form.cart button.single_add_to_cart_button,
+.custom-download-button-wrapper form.cart button.single_add_to_cart_button {
+    background-color: #6241CA !important;
+    color: #ffffff !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    padding: 15px 147px !important;
+    box-sizing: border-box !important;
+    border-radius: 40px !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+}
+
+.single-product .custom-download-button-wrapper form.cart button.button.alt.single_add_to_cart_button:hover,
+.single-product .custom-download-button-wrapper form.cart button.button.single_add_to_cart_button:hover,
+.single-product .custom-download-button-wrapper form.cart button.single_add_to_cart_button:hover,
+.custom-download-button-wrapper form.cart button.single_add_to_cart_button:hover {
+    background-color: #5132b8 !important;
+    color: #ffffff !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(98, 65, 202, 0.25) !important;
+}
+
+.single-product .custom-download-button-wrapper form.cart button.button.alt.single_add_to_cart_button::after,
+.single-product .custom-download-button-wrapper form.cart button.button.single_add_to_cart_button::after,
+.single-product .custom-download-button-wrapper form.cart button.single_add_to_cart_button::after,
+.custom-download-button-wrapper form.cart button.single_add_to_cart_button::after {
+    display: none !important;
+}
+
+/* Talk to Analyst Button */
+.custom-talk-analyst-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background-color: #ffffff !important;
+    color: #1a1c1e !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    padding: 11px 50px !important;
+    box-sizing: border-box !important;
+    border-radius: 40px !important;
+    border: 1px solid #1a1c1e !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    gap: 8px !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.custom-talk-analyst-btn:hover {
+    background-color: #f8fafc !important;
+    border-color: #1a1c1e !important;
+    color: #1a1c1e !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+}
+
+.custom-talk-analyst-btn .arrow-up-right {
+    font-size: 15px;
+    font-weight: 700;
+    transition: transform 0.25s ease;
+}
+
+.custom-talk-analyst-btn:hover .arrow-up-right {
+    transform: translate(2px, -2px);
+}
+
+.woocommerce #review_form #respond p {
+    margin: 0 0 0 !important;
+}
+
+.payment-icon img {
+    height: 24px !important;
+    width: auto !important;
+    display: block !important;
+}
+
+.quanto-homepage-tail-sections > :not(.elementor):not(:nth-last-child(-n+3)),
+.quanto-homepage-tail-sections > .elementor > :not(:nth-last-child(-n+3)) {
+    display: none !important;
+}
+
+.quanto-homepage-tail-sections {
+    width: 100%;
+    overflow: hidden;
+}
+
+.quanto-homepage-tail-sections > .elementor {
+    width: 100%;
+}
+
+.quanto-homepage-tail-sections > .elementor > .elementor-element {
+    display: none !important;
+}
+
+.quanto-homepage-tail-sections > .elementor > .elementor-element:nth-last-of-type(-n+3) {
+    display: var(--display, block) !important;
+}
+
+.quanto-homepage-tail-sections > .elementor > .elementor-section-wrap > .elementor-section {
+    display: none !important;
+}
+
+.quanto-homepage-tail-sections > .elementor > .elementor-section-wrap > .elementor-section:nth-last-of-type(-n+3) {
+    display: block !important;
+}
+
+.quanto-homepage-tail-sections .elementor-section .elementor-container {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: min(100%, var(--content-width, 1320px));
+    width: 100%;
+}
+
+.quanto-homepage-tail-sections .elementor-column {
+    display: flex;
+    min-height: 1px;
+    position: relative;
+}
+
+.quanto-homepage-tail-sections .elementor-column-wrap,
+.quanto-homepage-tail-sections .elementor-widget-wrap {
+    align-content: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    width: 100%;
+}
+
+.quanto-homepage-tail-sections .e-con {
+    box-sizing: border-box;
+    flex-direction: var(--flex-direction, row);
+    flex-wrap: var(--flex-wrap, nowrap);
+    align-content: var(--align-content, normal);
+    align-items: var(--align-items, stretch);
+    justify-content: var(--justify-content, normal);
+    gap: var(--gap, 0);
+    max-width: min(100%, var(--width, 100%));
+    min-height: var(--min-height, initial);
+    padding-block-start: var(--padding-block-start, 0);
+    padding-block-end: var(--padding-block-end, 0);
+    padding-inline-start: var(--padding-inline-start, 0);
+    padding-inline-end: var(--padding-inline-end, 0);
+    position: relative;
+}
+
+.quanto-homepage-tail-sections .e-con.e-parent,
+.quanto-homepage-tail-sections .e-con.e-con-full {
+    width: 100%;
+}
+
+.quanto-homepage-tail-sections .e-con > .e-con-inner {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: var(--flex-direction, row);
+    flex-wrap: var(--flex-wrap, nowrap);
+    align-items: var(--align-items, stretch);
+    justify-content: var(--justify-content, normal);
+    gap: var(--gap, 0);
+    margin-left: auto;
+    margin-right: auto;
+    max-width: min(100%, var(--content-width, 1320px));
+    width: 100%;
+}
+
+.quanto-homepage-tail-sections .elementor-widget,
+.quanto-homepage-tail-sections .elementor-widget-container {
+    max-width: 100%;
+}
+
+.quanto-homepage-tail-sections .elementor-heading-title {
+    margin: 0;
+}
+
+@media (max-width: 767px) {
+    .quanto-homepage-tail-sections .e-con,
+    .quanto-homepage-tail-sections .e-con > .e-con-inner {
+        flex-direction: var(--mobile-flex-direction, column);
+    }
+}
+
+/* Fix for hero arrow wrapping */
+.hero-title .inline-wrap {
+    display: inline-flex !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+}
+.hero-title .hero-arrow-inline {
+    display: inline-block !important;
+    margin-bottom: 0 !important;
+}
+
+/* Override Elementor specific container width as requested */
+.elementor .e-2b7354c-abf27e5,
+.elementor .elementor-element-2b7354c {
+    width: 100% !important;
+}
+
+/* Make background color black for the #slide element */
+#slide {
+    background-color: #000000 !important;
+    letter-spacing: 0px !important;
+}
+
+/* Custom related article button style */
+.related-article-more-details {
+    margin-top: 20px;
+}
+.custom-related-details-btn {
+    display: inline-block;
+    color: #000000;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 2px solid #000000;
+    padding-bottom: 2px;
+    line-height: 1.2;
+    transition: opacity 0.3s ease;
+}
+.custom-related-details-btn:hover {
+    color: #000000;
+    opacity: 0.7;
+}
+
+/* WooCommerce Product Loop Image Resizing */
+.woocommerce ul.products li.product .woocommerce-loop-product__link img {
+    width: 100% !important;
+    height: 406px !important;
+    object-fit: cover !important;
+}
+
+/* Product Category Breadcrumb */
+.product-category-breadcrumb {
+    font-size: 13px;
+    color: #777777;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+}
+.product-category-breadcrumb .breadcrumb-dash {
+    color: #a0a0a0;
+    font-weight: 300;
+}
+
+/* WooCommerce Product Loop Image Resizing */
+.woocommerce ul.products li.product .woocommerce-loop-product__link img {
+    height: 406px !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+
+/* Align buttons safely by enforcing a fixed height for titles */
+
+/* Fix spacing for WHO WE SERVE section on blog detail pages */
+body.single-post .elementor-element.elementor-element-5e656d6,
+body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+}
+
+/* Fix spacing for Client Testimonials on blog detail pages */
+.single-post .elementor-element-82ef444 {
+    padding-top: 30px !important;
+}
+
+/* Make padding-top 80px for the Similar Reports section on blog detail pages */
+.single-post .quanto-similar-reports-section > .elementor-element {
+    padding-top: 80px !important;
+}
+
+/* Add horizontal padding to text elements in WooCommerce product cards, but not the image */
+.woocommerce ul.products li.product .product-category-breadcrumb,
+.woocommerce ul.products li.product .woocommerce-loop-product__title,
+.woocommerce ul.products li.product .price {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+    padding-bottom: 15px !important;
+    box-sizing: border-box;
+}
+
+.woocommerce ul.products li.product .star-rating {
+    margin-left: 30px !important;
+    margin-right: 30px !important;
+    margin-bottom: 15px !important;
+}
+
+.woocommerce ul.products li.product .woocommerce-loop-product__buttons {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+    padding-bottom: 30px !important;
+    margin: 0 !important;
+    box-sizing: border-box;
+}
+
+.cmr-read-coverage {
+    font-size: 13px !important;
+}
+
+/* Adjust font size for meta info on blog posts */
+.meta-box .meta-info,
+.meta-box .meta-info a,
+.meta-box .meta-info span {
+    font-size: 14px !important;
+}
+
+/* Force 16px font size for paragraph text on single blog posts */
+.single-post .wp-block-paragraph,
+.single-post .entry-content p,
+.single-post .post-content p,
+.single-post .blog-body p,
+.single-post .blog-body li,
+.single-post .blog-body span,
+.single-post .blog-body ul,
+.single-post .blog-body ol,
+.blog-body p,
+.blog-body li {
+    font-size: 16px !important;
+}
+
+/* Breadcrumb font size */
+.breadcumb-menu ul li,
+.breadcumb-menu ul li a,
+.breadcumb-menu ul .arrow,
+.breadcumb-menu ul .arrow i {
+    font-size: 12px !important;
+}
+
+/* Hide picture and force 100% width on content for Testimonial 2 widget */
+.wcf__testimonial-2 .slide .picture {
+    display: none !important;
+}
+
+.wcf__testimonial-2 .slide {
+    display: block !important;
+    width: 100% !important;
+}
+
+.wcf__testimonial-2 .slide .content {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: none !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+}
+
+/* Update font size for 'Leave a reply' title */
+.comment-respond h4, 
+#reply-title,
+.comments-area h4 {
+    font-size: 48px !important;
+}
+
+/* Constrain comment box width and adjust height for large screens */
+@media screen and (min-width: 1024px) {
+    .comment-respond form,
+    #commentform {
+        max-width: 800px;
+    }
+    
+    #commentform textarea,
+    .comment-respond textarea {
+        height: 150px !important;
+        width: 100% !important;
+    }
+}
+
+/* Override padding for elementor section */
+.quanto-similar-reports-section > .elementor-element {
+    --padding-top: 40px !important;
+    --padding-bottom: 40px !important;
+}
+
+/* Vertical Social Share Dropdown Icons */
+.share-vertical-list li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+.share-vertical-list li a:hover {
+    background-color: #333;
+    color: #fff;
+    border-color: #333;
+}
+
+/* WooCommerce Button matching Elementor Talk to Analyst Button */
+.woocommerce a.button, 
+.woocommerce button.button, 
+.woocommerce input.button, 
+.woocommerce #respond input#submit {
+    padding: 12px 24px !important;
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+    min-height: 48px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 40px !important;
+}
+
+/* Override padding for elementor section 82ef444 */
+.elementor-14 .elementor-element.elementor-element-82ef444 {
+    --padding-top: 40px !important;
+}
+
+/* Update padding for cmr-btn-download to match Elementor buttons */
+
+
+/* Robust structural styles for Similar Reports section (independent of Elementor hashes) */
+.quanto-similar-reports-section .e-con > .e-con-inner > .e-con:first-child h1,
+.quanto-similar-reports-section .e-con > .e-con-inner > .e-con:first-child .elementor-heading-title,
+.quanto-similar-reports-section .e-con > .e-con-inner > .e-con:first-child .e-heading-base {
+    font-size: 48px !important;
+    font-weight: 600 !important;
+    font-family: 'Instrument Sans', sans-serif !important;
+    color: #000000 !important;
+    letter-spacing: 0px !important;
+}
+
+.quanto-similar-reports-section .e-con > .e-con-inner > .e-con:nth-child(2) h1,
+.quanto-similar-reports-section .e-con > .e-con-inner > .e-con:nth-child(2) .elementor-heading-title,
+.quanto-similar-reports-section .e-con > .e-con-inner > .e-con:nth-child(2) .e-heading-base {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    font-family: 'Instrument Sans', sans-serif !important;
+    color: #000000 !important;
+    letter-spacing: 0px !important;
+    margin-top: -30px !important;
+}
+
+.quanto-similar-reports-section .elementor-widget-button .elementor-button {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    background-color: #6241CA !important;
+    color: #ffffff !important;
+    border-radius: 40px !important;
+}
+
+
+/* Global override for quanto link button */
+html body .quanto-link-btn {
+    font-weight: 600;
+    font-size: 14px !important;
+    line-height: 144.444%;
+    letter-spacing: -0.18px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--color-primary);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.5s ease;
+    width: max-content;
+}
+
+
+
+/* Override padding for elementor section 5e656d6 */
+.elementor-14 .elementor-element.elementor-element-5e656d6 {
     --padding-top: 40px !important;
     --padding-bottom: 40px !important;
+}
+/* Custom Author Box */
+.cmr-custom-author-box {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 30px;
+}
+.cmr-custom-author-avatar img {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+.cmr-custom-author-info h4 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'Instrument Sans', sans-serif;
+}
+.cmr-custom-author-info p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #666;
+    font-family: 'Instrument Sans', sans-serif;
+}
+.cmr-custom-author-social a {
+    color: #000;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+.cmr-custom-author-social a:hover {
+    color: var(--color-primary);
+}
+/* Ratings Summary */
+.cmr-ratings-summary {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 30px;
+}
+.cmr-ratings-summary h2 {
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 700;
+    margin-bottom: 20px;
+    font-size: 32px;
+    color: #111;
+}
+.cmr-ratings-summary .rating-stars i {
+    color: #fbbf24; /* gold */
+}
+.cmr-ratings-summary .progress {
+    background-color: #f0f0f0;
+}
+.cmr-ratings-summary .progress-bar {
+    background-color: #22c55e; /* default green */
+}
+.comment-rating-stars i {
+    color: #fbbf24;
+    margin-right: 2px;
 }
 
-/* Vertical Social Share Dropdown Icons */
-.share-vertical-list li a {
+.insights-cta-banner {
+    background: #4625A9;
+    border-radius: 8px;
+    padding: 40px 50px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.insights-cta-content {
+    flex-grow: 1;
+}
+.insights-cta-title {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+}
+.insights-cta-text {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0;
+    line-height: 1.6;
+}
+.insights-cta-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 240px;
+}
+.insights-cta-button {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 1px solid #ccc;
-    color: #333;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
     text-decoration: none;
     transition: all 0.3s ease;
 }
-.share-vertical-list li a:hover {
-    background-color: #333;
+.insights-cta-button.primary {
+    background: #fff;
+    color: #000;
+}
+.insights-cta-button.primary:hover {
+    background: #f3f4f6;
+    color: #000;
+    transform: translateY(-2px);
+}
+.insights-cta-button.secondary {
+    background: transparent;
     color: #fff;
-    border-color: #333;
+    border: 1px solid rgba(255, 255, 255, 0.5);
 }
-
-/* WooCommerce Button matching Elementor Talk to Analyst Button */
-.woocommerce a.button, 
-.woocommerce button.button, 
-.woocommerce input.button, 
-.woocommerce #respond input#submit {
-    padding: 12px 24px !important;
-    font-size: 16px !important;
-    line-height: 1.5 !important;
-    min-height: 48px !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    border-radius: 40px !important;
+.insights-cta-button.secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: #fff;
 }
-
-/* Override padding for elementor section 82ef444 */
-.elementor-14 .elementor-element.elementor-element-82ef444 {
-    --padding-top: 40px !important;
-}
-
-/* Update padding for cmr-btn-download to match Elementor buttons */
-
-
-/* Robust structural styles for Similar Reports section (independent of Elementor hashes) */
-.quanto-similar-reports-section .e-con > .e-con-inner > .e-con:first-child h1,
-.quanto-similar-reports-section .e-con > .e-con-inner > .e-con:first-child .elementor-heading-title,
-.quanto-similar-reports-section .e-con > .e-con-inner > .e-con:first-child .e-heading-base {
-    font-size: 48px !important;
-    font-weight: 600 !important;
-    font-family: 'Instrument Sans', sans-serif !important;
-    color: #000000 !important;
-    letter-spacing: 0px !important;
-}
-
-.quanto-similar-reports-section .e-con > .e-con-inner > .e-con:nth-child(2) h1,
-.quanto-similar-reports-section .e-con > .e-con-inner > .e-con:nth-child(2) .elementor-heading-title,
-.quanto-similar-reports-section .e-con > .e-con-inner > .e-con:nth-child(2) .e-heading-base {
-    font-size: 16px !important;
-    font-weight: 400 !important;
-    font-family: 'Instrument Sans', sans-serif !important;
-    color: #000000 !important;
-    letter-spacing: 0px !important;
-    margin-top: -30px !important;
-}
-
-.quanto-similar-reports-section .elementor-widget-button .elementor-button {
-    font-size: 15px !important;
-    font-weight: 600 !important;
-    background-color: #6241CA !important;
-    color: #ffffff !important;
-    border-radius: 40px !important;
-}
-
-
-/* Global override for quanto link button */
-html body .quanto-link-btn {
-    font-weight: 600;
-    font-size: 14px !important;
-    line-height: 144.444%;
-    letter-spacing: -0.18px;
-    padding-bottom: 4px;
-    border-bottom: 1px solid var(--color-primary);
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.5s ease;
-    width: max-content;
-}
-
-
-
-/* Override padding for elementor section 5e656d6 */
-.elementor-14 .elementor-element.elementor-element-5e656d6 {
-    --padding-top: 40px !important;
-    --padding-bottom: 40px !important;
-}
-/* Custom Author Box */
-.cmr-custom-author-box {
-    background: #fff;
-    border-radius: 8px;
-    padding: 20px;
-    margin-top: 30px;
-}
-.cmr-custom-author-avatar img {
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-}
-.cmr-custom-author-info h4 {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 700;
-    font-family: 'Instrument Sans', sans-serif;
-}
-.cmr-custom-author-info p {
-    margin: 5px 0 0;
-    font-size: 14px;
-    color: #666;
-    font-family: 'Instrument Sans', sans-serif;
-}
-.cmr-custom-author-social a {
-    color: #000;
-    font-size: 18px;
-    transition: color 0.3s;
-}
-.cmr-custom-author-social a:hover {
-    color: var(--color-primary);
-}
-/* Ratings Summary */
-.cmr-ratings-summary {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    padding: 30px;
-}
-.cmr-ratings-summary h2 {
-    font-family: 'Instrument Sans', sans-serif;
-    font-weight: 700;
-    margin-bottom: 20px;
-    font-size: 32px;
-    color: #111;
-}
-.cmr-ratings-summary .rating-stars i {
-    color: #fbbf24; /* gold */
-}
-.cmr-ratings-summary .progress {
-    background-color: #f0f0f0;
-}
-.cmr-ratings-summary .progress-bar {
-    background-color: #22c55e; /* default green */
-}
-.comment-rating-stars i {
-    color: #fbbf24;
-    margin-right: 2px;
-}
-
-.insights-cta-banner {
+@media (max-width: 768px) {
+    .insights-cta-banner {
     background: #4625A9;
     border-radius: 8px;
     padding: 40px 50px;
@@ -793,35 +861,35 @@ html body .quanto-link-btn {
     min-width: 240px;
 }
 .insights-cta-button {
-    display: flex;
+    background-color: var(--color-white) !important;
+    color: #4B10B4 !important;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 28px;
+    border-radius: 50px;
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    padding: 14px 28px;
-    border-radius: 30px;
-    font-family: 'Instrument Sans', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
+    gap: 10px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     text-decoration: none;
-    transition: all 0.3s ease;
+    justify-content: center;
 }
 .insights-cta-button.primary {
-    background: #fff;
-    color: #000;
+    /* Uses default white bg and purple text from above */
 }
 .insights-cta-button.primary:hover {
-    background: #f3f4f6;
-    color: #000;
+    background: #f3f4f6 !important;
     transform: translateY(-2px);
 }
 .insights-cta-button.secondary {
-    background: transparent;
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    background-color: #4625A9 !important;
+    color: #fff !important;
+    border: 1px solid #fff !important;
 }
 .insights-cta-button.secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    border-color: #fff;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+    border-color: #fff !important;
 }
 @media (max-width: 768px) {
     .insights-cta-banner {
