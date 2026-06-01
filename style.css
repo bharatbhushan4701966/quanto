@@ -590,24 +590,26 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
     }
 }
 
-/* Override padding for elementor section 5e656d6 */
-.elementor-14 .elementor-element.elementor-element-5e656d6 {
+/* Override padding for elementor section */
+.quanto-similar-reports-section .e-con,
+.quanto-similar-reports-section .elementor-container,
+.quanto-similar-reports-section .elementor-element {
     --padding-top: 40px !important;
     --padding-bottom: 40px !important;
 }
 
 /* Vertical Social Share Dropdown Icons */
 .share-vertical-list li a {
-    display: flex !important;
+    display: flex;
     align-items: center;
     justify-content: center;
     width: 36px;
     height: 36px;
-    border: 1px solid #ccc;
     border-radius: 50%;
+    border: 1px solid #ccc;
     color: #333;
-    transition: all 0.3s ease;
     text-decoration: none;
+    transition: all 0.3s ease;
 }
 .share-vertical-list li a:hover {
     background-color: #333;
