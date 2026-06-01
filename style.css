@@ -638,19 +638,19 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
 /* Update padding for cmr-btn-download to match Elementor buttons */
 
 
-/* Elementor custom styling for Similar Reports (using fetched class names) */
-.e-heading-base[data-id="413af60"], .elementor-element.elementor-element-413af60 .e-heading-base,
-.elementor-heading-title[data-id="413af60"], .elementor-element.elementor-element-413af60 .elementor-heading-title,
-.elementor-element.elementor-element-517c6f8 .elementor-heading-title {
+/* Robust structural styles for Similar Reports section (independent of Elementor hashes) */
+.quanto-similar-reports-section .e-con > .e-con-inner > .e-con:first-child h1,
+.quanto-similar-reports-section .e-con > .e-con-inner > .e-con:first-child .elementor-heading-title,
+.quanto-similar-reports-section .e-con > .e-con-inner > .e-con:first-child .e-heading-base {
     font-size: 48px !important;
     font-weight: 600 !important;
     font-family: 'Instrument Sans', sans-serif !important;
     color: #000000 !important;
 }
 
-.e-heading-base[data-id="e68a4c5"], .elementor-element.elementor-element-e68a4c5 .e-heading-base,
-.elementor-heading-title[data-id="e68a4c5"], .elementor-element.elementor-element-e68a4c5 .elementor-heading-title,
-.elementor-element.elementor-element-a8b38a8 .elementor-heading-title {
+.quanto-similar-reports-section .e-con > .e-con-inner > .e-con:nth-child(2) h1,
+.quanto-similar-reports-section .e-con > .e-con-inner > .e-con:nth-child(2) .elementor-heading-title,
+.quanto-similar-reports-section .e-con > .e-con-inner > .e-con:nth-child(2) .e-heading-base {
     font-size: 14px !important;
     font-weight: 600 !important;
     font-family: 'Instrument Sans', sans-serif !important;
@@ -664,5 +664,3 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
     color: #ffffff !important;
     border-radius: 40px !important;
 }
-
-
