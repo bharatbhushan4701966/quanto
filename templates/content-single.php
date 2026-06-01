@@ -136,6 +136,7 @@
                             }
 
                             ?>
+                            <?php
                             // Custom Author Box for Media Releases
                             if ( get_post_type() === 'cmr_news' ) {
                                 $custom_author_id = get_post_meta( get_the_ID(), '_cmr_news_custom_author', true );
