@@ -1,78 +1,19 @@
-<?php
-/**
- * @Packge     : Quanto
- * @Version    : 1.0
- * @Author     : Mirrortheme
- * @Author URI : https://mirrortheme.com/
- *
- */
+with open('comments.php', 'r', encoding='utf-8') as f:
+    lines = f.readlines()
 
-    // Block direct access
-    if( ! defined( 'ABSPATH' ) ){
-        exit();
-    }
+new_lines = []
+skip = False
 
-    if ( post_password_required() ) {
-        return;
-    }
+# We want to replace the whole blog-comments container and the comment form container.
+# It's safer to just replace from "<!-- Comments -->" to the end of the file.
 
+in_comments_block = False
 
-    if ( get_post_type() === 'cmr_news' ) {
-        // Compute ratings
-        $all_comments = get_comments( array( 'post_id' => get_the_ID(), 'status' => 'approve', 'type' => 'comment' ) );
-        $rating_counts = array( 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0 );
-        $total_rating = 0;
-        $rating_count = 0;
-        foreach ( $all_comments as $c ) {
-            $r = get_comment_meta( $c->comment_ID, 'rating', true );
-            if ( $r && $r >= 1 && $r <= 5 ) {
-                $rating_counts[$r]++;
-                $total_rating += $r;
-                $rating_count++;
-            }
-        }
-        $avg_rating = $rating_count > 0 ? number_format( $total_rating / $rating_count, 1 ) : '0.0';
+for i, line in enumerate(lines):
+    if line.strip() == "<!-- Comments -->":
+        in_comments_block = True
         
-        ?>
-        <div class="cmr-ratings-summary mt-5 mb-5" style="background: transparent; box-shadow: none; padding: 0;">
-            <h2 style="font-size: 28px; font-weight: 700; margin-bottom: 25px; color: #000; font-family: 'Instrument Sans', sans-serif;">Rating</h2>
-            <div class="d-flex align-items-start">
-                <div class="rating-left me-5" style="min-width: 100px;">
-                    <div style="font-size: 48px; font-weight: 700; line-height: 1; color: #222; font-family: 'Instrument Sans', sans-serif;"><?php echo esc_html($avg_rating); ?></div>
-                    <div class="rating-stars my-2" style="font-size: 14px; color: #fbbf24;">
-                        <?php
-                        $full_stars = floor($avg_rating);
-                        $half_star = ($avg_rating - $full_stars) >= 0.5 ? 1 : 0;
-                        $empty_stars = 5 - $full_stars - $half_star;
-                        echo str_repeat('<i class="fa-solid fa-star"></i>', $full_stars);
-                        if ($half_star) echo '<i class="fa-solid fa-star-half-stroke"></i>';
-                        echo str_repeat('<i class="fa-regular fa-star" style="color: #e5e7eb;"></i>', $empty_stars);
-                        ?>
-                    </div>
-                    <div style="font-size: 13px; color: #6b7280; font-family: 'Instrument Sans', sans-serif;"><?php echo esc_html($rating_count); ?> Reviews</div>
-                </div>
-                <div class="rating-right flex-grow-1" style="max-width: 250px; padding-top: 5px;">
-                    <?php 
-                    $colors = array( 5 => '#22c55e', 4 => '#22c55e', 3 => '#facc15', 2 => '#fbbf24', 1 => '#ea580c' );
-                    for ($i = 5; $i >= 1; $i--): 
-                        $pct = $rating_count > 0 ? ($rating_counts[$i] / $rating_count) * 100 : 0;
-                    ?>
-                    <div class="d-flex align-items-center mb-2" style="gap: 10px;">
-                        <span class="fw-bold" style="font-size: 13px; color: #222; width: 10px; font-family: 'Instrument Sans', sans-serif;"><?php echo $i; ?></span>
-                        <div class="progress flex-grow-1" style="height: 6px; border-radius: 3px; background-color: #f3f4f6; overflow: hidden;">
-                            <div class="progress-bar" role="progressbar" style="width: <?php echo esc_attr($pct); ?>%; border-radius: 3px; background-color: <?php echo esc_attr($colors[$i]); ?>;" aria-valuenow="<?php echo esc_attr($pct); ?>" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                    </div>
-                    <?php endfor; ?>
-                </div>
-            </div>
-        </div>
-        <?php
-    }
-
-    if( have_comments() ) :
-?>
-<!-- Comments -->
+        replacement = """<!-- Comments -->
 <div class="blog-comments row-margin-top" style="border-top: 1px solid #f3f4f6; padding-top: 40px;">
     <ul class="custom-ul m-0 p-0">
         <?php
@@ -186,3 +127,15 @@
         <?php
         echo '<!-- End of Comment Form Modal -->';
     }
+"""
+        new_lines.append(replacement)
+        
+    if in_comments_block:
+        # We just skip everything until the end of the file since we are replacing all of it.
+        pass
+    else:
+        new_lines.append(line)
+
+with open('comments.php', 'w', encoding='utf-8') as f:
+    f.writelines(new_lines)
+print("Done comment footer and modal replace")
