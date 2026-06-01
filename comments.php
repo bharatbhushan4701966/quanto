@@ -164,7 +164,7 @@
     if ( comments_open() ) {
         echo '<!-- Comment Form Modal -->';
         ?>
-        <div id="cmr-review-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(243, 244, 246, 0.95); z-index: 9999; align-items: center; justify-content: center;">
+        <div id="cmr-review-modal" style="display: none; position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: rgba(243, 244, 246, 0.95); z-index: 999999 !important; align-items: center; justify-content: center; margin: 0; padding: 0; box-sizing: border-box;">
             <div class="cmr-review-modal-content" style="background: #fff; padding: 40px; width: 90%; max-width: 650px; position: relative; max-height: 95vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.05);">
                 <button id="cmr-close-review-modal" style="position: absolute; top: 30px; right: 30px; background: none; border: none; font-size: 16px; color: #6b7280; font-family: 'Instrument Sans', sans-serif; cursor: pointer; display: flex; align-items: center; gap: 8px;">Close <i class="fa-solid fa-xmark"></i></button>
                 
@@ -189,6 +189,9 @@
         <script>
         document.addEventListener('DOMContentLoaded', function() {
             var modal = document.getElementById('cmr-review-modal');
+            if (modal) {
+                document.body.appendChild(modal); // Move to body to prevent position:fixed confinement by CSS transforms
+            }
             var btn = document.getElementById('cmr-open-review-modal');
             var span = document.getElementById('cmr-close-review-modal');
             var stars = document.querySelectorAll('.cmr-star');
