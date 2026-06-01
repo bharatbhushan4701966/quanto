@@ -628,3 +628,8 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
     justify-content: center !important;
     border-radius: 40px !important;
 }
+
+/* Override padding for elementor section 82ef444 */
+.elementor-14 .elementor-element.elementor-element-82ef444 {
+    --padding-top: 40px !important;
+}
