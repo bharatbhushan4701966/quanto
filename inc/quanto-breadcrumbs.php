@@ -102,7 +102,7 @@ if ( ! function_exists( 'quanto_breadcrumbs' ) ) {
             $html .= '<span class="arrow">
                     <i class="fa-solid fa-angle-right"></i>
                     </span>'; 
-            $html .= '<li class="item-cat item-custom-post-type-' . esc_attr( $post_type ) . '"><a class="bread-cat bread-custom-post-type-' . esc_attr( $post_type ) . '" href="' . esc_url( $post_type_archive ) . '" title="' . esc_attr( $post_type === 'cmr-news-item' ? 'Media Releases' : $post_type_object->labels->name ) . '">' . esc_attr( $post_type === 'cmr-news-item' ? 'Media Releases' : $post_type_object->labels->name ) . '</a></li>';
+            $html .= '<li class="item-cat item-custom-post-type-' . esc_attr( $post_type ) . '"><a class="bread-cat bread-custom-post-type-' . esc_attr( $post_type ) . '" href="' . esc_url( $post_type_archive ) . '" title="' . esc_attr( $post_type === 'cmr_news' ? 'Media Releases' : $post_type_object->labels->name ) . '">' . esc_attr( $post_type === 'cmr_news' ? 'Media Releases' : $post_type_object->labels->name ) . '</a></li>';
             $html .= '<span class="arrow">
                     <i class="fa-solid fa-angle-right"></i>
                     </span>'; 
