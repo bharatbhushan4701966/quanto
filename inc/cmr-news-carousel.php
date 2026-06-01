@@ -123,12 +123,12 @@ function cmr_render_news_carousel_shortcode( $atts ) {
                         768: {
                             slidesPerView: 1.6,
                             centeredSlides: true,
-                            spaceBetween: -40,
+                            spaceBetween: 20,
                         },
                         1024: {
                             slidesPerView: 1.2,
                             centeredSlides: true,
-                            spaceBetween: -80,
+                            spaceBetween: 30,
                         }
                     }
                 });
