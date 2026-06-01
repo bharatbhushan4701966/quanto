@@ -438,6 +438,16 @@
     if ( ! function_exists( 'quanto_render_elementor_footer' ) ) {
         function quanto_render_elementor_footer( $post_id, $class = 'footer' ) {
             quanto_enqueue_elementor_post_assets( $post_id );
+            
+            // Manually print CSS to ensure it renders correctly after multiple Elementor template injections
+            if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+                $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
+                $css_content = $css_file->get_content();
+                if ( ! empty( $css_content ) ) {
+                    echo '<style>' . $css_content . '</style>';
+                }
+            }
+
             echo '<footer class="' . esc_attr( $class ) . '">';
             echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
             echo '</footer>';
