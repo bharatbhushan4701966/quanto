@@ -503,6 +503,10 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
     box-sizing: border-box;
 }
 
+.cmr-read-coverage {
+    font-size: 13px !important;
+}
+
 /* Adjust font size for meta info on blog posts */
 .meta-box .meta-info,
 .meta-box .meta-info a,

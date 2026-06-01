@@ -178,6 +178,7 @@
     display: inline-block;
     padding-bottom: 2px;
     font-weight: 500;
+    font-size: 13px;
 }
 
 /* Standard Card (Bottom Row, spans 4 cols) */
@@ -232,6 +233,7 @@
     display: inline-block;
     padding-bottom: 2px;
     margin-top: auto;
+    font-size: 13px;
 }
 
 /* Explore All Button */
@@ -320,6 +322,7 @@
     border-bottom: 1px solid #111;
     display: inline-block;
     padding-bottom: 2px;
+    font-size: 13px;
 }
 
 .cmr-media-right {
