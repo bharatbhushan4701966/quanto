@@ -496,19 +496,21 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
 .woocommerce ul.products li.product .product-category-breadcrumb,
 .woocommerce ul.products li.product .woocommerce-loop-product__title,
 .woocommerce ul.products li.product .price {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
+    padding-left: 30px !important;
+    padding-right: 30px !important;
     padding-bottom: 15px !important;
     box-sizing: border-box;
 }
 
 .woocommerce ul.products li.product .star-rating {
-    margin-left: 15px !important;
-    margin-right: 15px !important;
+    margin-left: 30px !important;
+    margin-right: 30px !important;
     margin-bottom: 15px !important;
 }
 
 .woocommerce ul.products li.product .woocommerce-loop-product__buttons {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
     padding-bottom: 30px !important;
     margin: 0 !important;
     box-sizing: border-box;
