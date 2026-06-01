@@ -639,8 +639,8 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
 
 
 /* Elementor custom styling for Similar Reports (using fetched class names) */
-.elementor-element.elementor-element-413af60 .e-heading-base,
-.elementor-element.elementor-element-413af60 .elementor-heading-title,
+.e-heading-base[data-id="413af60"], .elementor-element.elementor-element-413af60 .e-heading-base,
+.elementor-heading-title[data-id="413af60"], .elementor-element.elementor-element-413af60 .elementor-heading-title,
 .elementor-element.elementor-element-517c6f8 .elementor-heading-title {
     font-size: 48px !important;
     font-weight: 600 !important;
@@ -648,8 +648,8 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
     color: #000000 !important;
 }
 
-.elementor-element.elementor-element-e68a4c5 .e-heading-base,
-.elementor-element.elementor-element-e68a4c5 .elementor-heading-title,
+.e-heading-base[data-id="e68a4c5"], .elementor-element.elementor-element-e68a4c5 .e-heading-base,
+.elementor-heading-title[data-id="e68a4c5"], .elementor-element.elementor-element-e68a4c5 .elementor-heading-title,
 .elementor-element.elementor-element-a8b38a8 .elementor-heading-title {
     font-size: 14px !important;
     font-weight: 600 !important;
@@ -664,3 +664,5 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
     color: #ffffff !important;
     border-radius: 40px !important;
 }
+
+
