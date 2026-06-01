@@ -207,6 +207,25 @@
                             */
                             do_action( 'quanto_blog_details_comments' );
 
+                            if ( get_post_type() === 'cmr_news' ) {
+                                ?>
+                                <div class="insights-cta-banner">
+                                    <div class="insights-cta-content">
+                                        <h3 class="insights-cta-title">Want deeper insights?</h3>
+                                        <p class="insights-cta-text">Connect with our analysts to understand how these<br>trends impact your specific vertical.</p>
+                                    </div>
+                                    <div class="insights-cta-actions">
+                                        <a href="#" class="insights-cta-button primary">
+                                            Talk to an Analyst <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 12px; margin-left: 4px;"></i>
+                                        </a>
+                                        <a href="#" class="insights-cta-button secondary">
+                                            Explore Press Release <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 12px; margin-left: 4px;"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+
                         echo '</div>';
                     echo '</div>';
 
