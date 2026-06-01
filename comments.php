@@ -94,9 +94,9 @@
 ?>
 <div class="blog-comments-footer d-flex align-items-center mt-4">
     <?php if (have_comments()): ?>
-    <span class="me-4" style="font-weight: 700; font-size: 14px; font-family: 'Instrument Sans', sans-serif; color: #111;">View all <?php echo esc_html(get_comments_number()); ?> reviews</span>
+    <span class="me-4" style="font-weight: 500; font-size: 14px; font-family: 'Instrument Sans', sans-serif; color: #111;">View all <?php echo esc_html(get_comments_number()); ?> reviews</span>
     <?php endif; ?>
-    <button id="cmr-open-review-modal" class="btn btn-link p-0 text-decoration-none" style="color: #6366f1; font-weight: 600; font-size: 14px; font-family: 'Instrument Sans', sans-serif;">Add a Review <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 12px; margin-left: 4px;"></i></button>
+    <button id="cmr-open-review-modal" class="btn btn-link p-0 text-decoration-none" style="color: #6366f1; font-weight: 500; font-size: 14px; font-family: 'Instrument Sans', sans-serif;">Add a Review <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 12px; margin-left: 4px;"></i></button>
 </div>
 
 
