@@ -91,4 +91,17 @@ jQuery(document).ready(function($) {
         currentPage++;
         loadMediaCoverage(true);
     });
+
+    // Sticky Header Banner with Shadow
+    var banner = $('.cmr-mc-top-banner');
+    if (banner.length) {
+        // We use a tiny offset to ensure it triggers immediately as it touches top
+        $(window).on('scroll', function() {
+            if ($(window).scrollTop() > 10) {
+                banner.addClass('is-sticky');
+            } else {
+                banner.removeClass('is-sticky');
+            }
+        });
+    }
 });
