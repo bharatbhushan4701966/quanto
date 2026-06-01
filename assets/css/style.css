@@ -8740,7 +8740,8 @@ h1.custom-product-title {
   font-family: 'Instrument Sans', sans-serif;
   font-size: 14px;
   font-weight: 600;
-  padding: 12px 28px;
+  padding: 10px 24px ;
+  min-height: 48px ;
   border-radius: 40px;
   transition: all 0.3s ease;
   text-decoration: none;
