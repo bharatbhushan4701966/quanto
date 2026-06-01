@@ -289,13 +289,14 @@ function cmr_news_tabs_shortcode( $atts ) {
     ob_start();
     ?>
     <div class="cmr-news-container">
-        <?php 
-        if ( function_exists('quanto_breadcrumbs') ) { 
-            echo '<div style="margin-bottom: 20px;">';
-            quanto_breadcrumbs(array('breadcrumbs_classes' => 'nav')); 
-            echo '</div>';
-        } 
-        ?>
+        <!-- Breadcrumb specifically for the shortcode page -->
+        <div class="breadcumb-menu" style="margin-bottom: 30px;">
+            <ul class="justify-content-start">
+                <li><a href="<?php echo esc_url( home_url('/') ); ?>" title="Home">Home</a></li>
+                <span class="arrow"><i class="fa-solid fa-angle-right"></i></span>
+                <li class="active" title="Media Releases">Media Releases</li>
+            </ul>
+        </div>
         <!-- Tabs -->
         <div class="cmr-news-tabs">
             <?php 
