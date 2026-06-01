@@ -153,6 +153,49 @@
                                 </div>
                             </div>
                             <?php
+                            // Custom Author Box for Media Releases
+                            if ( get_post_type() === 'cmr_news' ) {
+                                $custom_author_id = get_post_meta( get_the_ID(), '_cmr_news_custom_author', true );
+                                if ( $custom_author_id ) {
+                                    $author_data = get_userdata( $custom_author_id );
+                                    if ( $author_data ) {
+                                        $designation = get_user_meta( $custom_author_id, 'designation', true );
+                                        $linkedin = get_user_meta( $custom_author_id, 'linkedin_url', true );
+                                        $x_url = get_user_meta( $custom_author_id, 'x_url', true );
+                                        $bio = get_user_meta( $custom_author_id, 'description', true );
+                                        ?>
+                                        <div class="cmr-custom-author-box mt-5 mb-5 p-4 border rounded bg-white">
+                                            <div class="d-flex align-items-center mb-3">
+                                                <div class="cmr-custom-author-avatar me-4">
+                                                    <?php echo get_avatar( $custom_author_id, 80, '', '', array( 'class' => 'rounded-circle' ) ); ?>
+                                                </div>
+                                                <div class="cmr-custom-author-info">
+                                                    <h4 class="mb-1" style="font-weight: 700; font-size: 20px; font-family: 'Instrument Sans', sans-serif;"><?php echo esc_html( $author_data->display_name ); ?></h4>
+                                                    <?php if ( $designation ) : ?>
+                                                        <p class="mb-2 text-muted" style="font-size: 14px; font-family: 'Instrument Sans', sans-serif;"><?php echo esc_html( $designation ); ?></p>
+                                                    <?php endif; ?>
+                                                    <div class="cmr-custom-author-social d-flex gap-2">
+                                                        <?php if ( $linkedin ) : ?>
+                                                            <a href="<?php echo esc_url( $linkedin ); ?>" target="_blank" rel="noopener noreferrer" style="color: #000; font-size: 18px;"><i class="fa-brands fa-linkedin"></i></a>
+                                                        <?php endif; ?>
+                                                        <?php if ( $x_url ) : ?>
+                                                            <a href="<?php echo esc_url( $x_url ); ?>" target="_blank" rel="noopener noreferrer" style="color: #000; font-size: 18px;"><i class="fa-brands fa-square-x-twitter"></i></a>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <?php if ( $bio ) : ?>
+                                                <div class="cmr-custom-author-bio mt-3">
+                                                    <p style="font-size: 14px; line-height: 1.6; color: #555;"><?php echo wp_kses_post( $bio ); ?></p>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                        <?php
+                                    }
+                                }
+                            }
+                            ?>
+                            <?php
                             /**
                             *
                             * Hook for Blog Details Comments

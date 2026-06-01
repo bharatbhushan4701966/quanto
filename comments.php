@@ -17,6 +17,59 @@
     }
 
 
+    if ( get_post_type() === 'cmr_news' ) {
+        // Compute ratings
+        $all_comments = get_comments( array( 'post_id' => get_the_ID(), 'status' => 'approve', 'type' => 'comment' ) );
+        $rating_counts = array( 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0 );
+        $total_rating = 0;
+        $rating_count = 0;
+        foreach ( $all_comments as $c ) {
+            $r = get_comment_meta( $c->comment_ID, 'rating', true );
+            if ( $r && $r >= 1 && $r <= 5 ) {
+                $rating_counts[$r]++;
+                $total_rating += $r;
+                $rating_count++;
+            }
+        }
+        $avg_rating = $rating_count > 0 ? number_format( $total_rating / $rating_count, 1 ) : '0.0';
+        
+        ?>
+        <div class="cmr-ratings-summary mt-5 mb-5">
+            <h2 style="font-size: 32px; font-weight: 700; margin-bottom: 30px;">Rating</h2>
+            <div class="d-flex align-items-center">
+                <div class="rating-left me-5" style="min-width: 120px;">
+                    <div style="font-size: 64px; font-weight: 700; line-height: 1;"><?php echo esc_html($avg_rating); ?></div>
+                    <div class="rating-stars text-warning my-2" style="font-size: 16px;">
+                        <?php
+                        $full_stars = floor($avg_rating);
+                        $half_star = ($avg_rating - $full_stars) >= 0.5 ? 1 : 0;
+                        $empty_stars = 5 - $full_stars - $half_star;
+                        echo str_repeat('<i class="fa-solid fa-star"></i>', $full_stars);
+                        if ($half_star) echo '<i class="fa-solid fa-star-half-stroke"></i>';
+                        echo str_repeat('<i class="fa-regular fa-star"></i>', $empty_stars);
+                        ?>
+                    </div>
+                    <div class="text-muted" style="font-size: 14px;"><?php echo esc_html($rating_count); ?> Reviews</div>
+                </div>
+                <div class="rating-right flex-grow-1" style="max-width: 300px;">
+                    <?php 
+                    $colors = array( 5 => '#22c55e', 4 => '#22c55e', 3 => '#facc15', 2 => '#fbbf24', 1 => '#ea580c' );
+                    for ($i = 5; $i >= 1; $i--): 
+                        $pct = $rating_count > 0 ? ($rating_counts[$i] / $rating_count) * 100 : 0;
+                    ?>
+                    <div class="d-flex align-items-center mb-2">
+                        <span class="me-3 fw-bold" style="width: 15px; font-size: 14px;"><?php echo $i; ?></span>
+                        <div class="progress flex-grow-1" style="height: 8px; border-radius: 4px; background-color: #f8f9fa;">
+                            <div class="progress-bar" role="progressbar" style="width: <?php echo esc_attr($pct); ?>%; border-radius: 4px; background-color: <?php echo esc_attr($colors[$i]); ?>;" aria-valuenow="<?php echo esc_attr($pct); ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <?php endfor; ?>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+
     if( have_comments() ) :
 ?>
 <!-- Comments -->
@@ -60,7 +113,7 @@
     $comment_field = '<div class="row g-3"><div class="col-12"><div class="mb-2"><textarea class="form-control" name="comment" placeholder="'. esc_attr__( 'Write your comment...', 'quanto' ) .'" '.esc_attr( $aria_req ).'></textarea></div></div></div>';
     $title_reply = esc_html__( 'Leave a reply', 'quanto' );
 
-    if ( get_post_type() === 'product' && class_exists( 'WooCommerce' ) && wc_review_ratings_enabled() ) {
+    if ( ( get_post_type() === 'product' && class_exists( 'WooCommerce' ) && wc_review_ratings_enabled() ) || get_post_type() === 'cmr_news' ) {
         $comment_field = '<div class="comment-form-rating mb-3">
             <label for="rating" class="form-label">' . esc_html__( 'Your rating', 'quanto' ) . ( wc_review_ratings_required() ? ' <span class="required">*</span>' : '' ) . '</label>
             <select name="rating" id="rating" required class="form-select">

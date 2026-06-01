@@ -251,7 +251,18 @@ function quanto_comment_callback( $comment, $args, $depth ) {
             ?>
             <!-- Comment Content -->
             <div class="comment-content">
-                <h6 class="name"><?php echo esc_html( ucwords( get_comment_author() ) ); ?></h6>
+                <h6 class="name d-inline-block me-3"><?php echo esc_html( ucwords( get_comment_author() ) ); ?></h6>
+                <?php
+                if ( get_post_type() === 'cmr_news' ) {
+                    $r = get_comment_meta( get_comment_ID(), 'rating', true );
+                    if ( $r && $r >= 1 && $r <= 5 ) {
+                        echo '<span class="comment-rating-stars text-warning" style="font-size: 14px;">';
+                        echo str_repeat('<i class="fa-solid fa-star"></i>', $r);
+                        echo str_repeat('<i class="fa-regular fa-star"></i>', 5 - $r);
+                        echo '</span>';
+                    }
+                }
+                ?>
 
                 <span class="commented-on"> 
                     <?php printf( esc_html__('%1$s | %2$s', 'quanto'), get_comment_date(), get_comment_time() ); ?> 

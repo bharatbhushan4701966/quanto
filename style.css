@@ -695,3 +695,64 @@ html body .quanto-link-btn {
     --padding-top: 40px !important;
     --padding-bottom: 40px !important;
 }
+/* Custom Author Box */
+.cmr-custom-author-box {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 20px;
+    margin-top: 30px;
+}
+.cmr-custom-author-avatar img {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+.cmr-custom-author-info h4 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'Instrument Sans', sans-serif;
+}
+.cmr-custom-author-info p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #666;
+    font-family: 'Instrument Sans', sans-serif;
+}
+.cmr-custom-author-social a {
+    color: #000;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+.cmr-custom-author-social a:hover {
+    color: var(--color-primary);
+}
+/* Ratings Summary */
+.cmr-ratings-summary {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 30px;
+}
+.cmr-ratings-summary h2 {
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 700;
+    margin-bottom: 20px;
+    font-size: 32px;
+    color: #111;
+}
+.cmr-ratings-summary .rating-stars i {
+    color: #fbbf24; /* gold */
+}
+.cmr-ratings-summary .progress {
+    background-color: #f0f0f0;
+}
+.cmr-ratings-summary .progress-bar {
+    background-color: #22c55e; /* default green */
+}
+.comment-rating-stars i {
+    color: #fbbf24;
+    margin-right: 2px;
+}
