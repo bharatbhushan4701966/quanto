@@ -289,16 +289,6 @@ function cmr_news_tabs_shortcode( $atts ) {
     ob_start();
     ?>
     <div class="cmr-news-container">
-        <!-- Breadcrumb specifically for the shortcode page -->
-        <div class="breadcumb-menu-wrap" style="margin-bottom: 30px; padding: 0;">
-            <div class="breadcumb-menu">
-                <ul class="justify-content-start" style="margin:0; padding:0;">
-                    <li><a href="<?php echo esc_url( home_url('/') ); ?>" title="Home" style="color: #666; font-weight: 500;">Home</a></li>
-                    <span class="arrow" style="margin: 0 10px; color: #666;"><i class="fa-solid fa-angle-right"></i></span>
-                    <li class="active" title="Media Releases" style="color: #111; font-weight: 600;">Media Releases</li>
-                </ul>
-            </div>
-        </div>
         <!-- Tabs -->
         <div class="cmr-news-tabs">
             <?php 

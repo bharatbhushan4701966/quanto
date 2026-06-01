@@ -78,6 +78,24 @@ function quanto_force_enable_woocommerce_reviews() {
     }
 }
 
+// Custom Breadcrumb Shortcode
+add_shortcode('cmr_breadcrumb', 'cmr_breadcrumb_shortcode');
+function cmr_breadcrumb_shortcode() {
+    ob_start();
+    ?>
+    <div class="breadcumb-menu-wrap" style="margin-bottom: 20px; padding: 0;">
+        <div class="breadcumb-menu">
+            <ul class="justify-content-start" style="margin:0; padding:0; display:flex; align-items:center; list-style:none;">
+                <li><a href="<?php echo esc_url( home_url('/') ); ?>" title="Home" style="color: #666; font-weight: 500; font-size: 14px; text-decoration:none;">Home</a></li>
+                <span class="arrow" style="margin: 0 10px; color: #666; font-size:12px;"><i class="fa-solid fa-angle-right"></i></span>
+                <li class="active" title="Media Releases" style="color: #111; font-weight: 600; font-size: 14px;">Media Releases</li>
+            </ul>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+
 // CMR News & Media Releases Feature
 require_once QUANTO_DIR_PATH_INC . 'cmr-news.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-media-coverage.php';
