@@ -15,6 +15,18 @@
     //header
     get_header();
 
+add_filter('body_class', function($classes) {
+    if ( get_post_type() === 'cmr_news' ) {
+        $classes[] = 'elementor-page';
+        // Add the homepage ID so any global styles linked to it also apply
+        $home_id = get_option('page_on_front');
+        if ( $home_id ) {
+            $classes[] = 'elementor-page-' . $home_id;
+        }
+    }
+    return $classes;
+});
+
     /**
     * 
     * Hook for Blog Details Wrapper
