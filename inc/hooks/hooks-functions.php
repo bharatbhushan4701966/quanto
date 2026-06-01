@@ -802,43 +802,9 @@
                 $quanto_post_details_share_options = false;
             }
             if( function_exists( 'quanto_social_sharing_buttons' ) && $quanto_post_details_share_options ) {
-                ?>
-                <div class="share-dropdown-wrapper" style="position: relative; display: inline-block;">
-                    <button class="share-toggle-btn" style="background: transparent; border: 1px solid #eee; padding: 8px 16px; border-radius: 30px; cursor: pointer; font-size: 14px; color: #333; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease;">
-                        <i class="fas fa-share-alt"></i> Share
-                    </button>
-                    <div class="share-dropdown-menu" style="display: none; position: absolute; top: calc(100% + 10px); left: 0; background: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 15px; border-radius: 8px; z-index: 99; white-space: nowrap; border: 1px solid #eee;">
-                        <ul class="custom-ul" style="display: flex; gap: 15px; margin: 0; padding: 0; list-style: none; align-items: center;">
-                            <?php echo quanto_social_sharing_buttons(); ?>
-                        </ul>
-                    </div>
-                </div>
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        if(window.shareDropdownBound) return;
-                        window.shareDropdownBound = true;
-                        const shareWrappers = document.querySelectorAll(".share-dropdown-wrapper");
-                        shareWrappers.forEach(wrapper => {
-                            const btn = wrapper.querySelector(".share-toggle-btn");
-                            const menu = wrapper.querySelector(".share-dropdown-menu");
-                            if(btn && menu) {
-                                btn.addEventListener("click", function(e) {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    const isVisible = menu.style.display === "block";
-                                    document.querySelectorAll(".share-dropdown-menu").forEach(m => m.style.display = "none");
-                                    menu.style.display = isVisible ? "none" : "block";
-                                });
-                                document.addEventListener("click", function(e) {
-                                    if (!wrapper.contains(e.target)) {
-                                        menu.style.display = "none";
-                                    }
-                                });
-                            }
-                        });
-                    });
-                </script>
-                <?php
+                    echo '<ul class="custom-ul">';
+                        echo quanto_social_sharing_buttons();
+                    echo '</ul>';
             }
         }
     }
