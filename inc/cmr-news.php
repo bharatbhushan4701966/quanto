@@ -289,6 +289,13 @@ function cmr_news_tabs_shortcode( $atts ) {
     ob_start();
     ?>
     <div class="cmr-news-container">
+        <?php 
+        if ( function_exists('quanto_breadcrumbs') ) { 
+            echo '<div style="margin-bottom: 20px;">';
+            quanto_breadcrumbs(array('breadcrumbs_classes' => 'nav')); 
+            echo '</div>';
+        } 
+        ?>
         <!-- Tabs -->
         <div class="cmr-news-tabs">
             <?php 
