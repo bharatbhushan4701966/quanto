@@ -720,7 +720,7 @@
                             echo '</svg>';
                         echo '</button>';
                         echo '<div class="share-dropdown-menu" style="display: none; position: absolute; top: calc(100% + 10px); right: 0; background: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 15px; border-radius: 8px; z-index: 99; white-space: nowrap; border: 1px solid #eee;">';
-                            echo '<ul class="custom-ul" style="display: flex; gap: 15px; margin: 0; padding: 0; list-style: none; align-items: center;">';
+                            echo '<ul class="custom-ul share-vertical-list" style="display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; list-style: none; align-items: center;">';
                                 if( function_exists( 'quanto_social_sharing_buttons' ) ) {
                                     echo quanto_social_sharing_buttons();
                                 }
