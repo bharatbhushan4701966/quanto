@@ -591,9 +591,7 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
 }
 
 /* Override padding for elementor section */
-.quanto-similar-reports-section .e-con,
-.quanto-similar-reports-section .elementor-container,
-.quanto-similar-reports-section .elementor-element {
+.quanto-similar-reports-section > .elementor-element {
     --padding-top: 40px !important;
     --padding-bottom: 40px !important;
 }
@@ -638,3 +636,21 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
 }
 
 /* Update padding for cmr-btn-download to match Elementor buttons */
+
+/* Robust styles for Similar Reports section */
+.quanto-similar-reports-section h1.elementor-heading-title,
+.quanto-similar-reports-section h1.e-heading-base,
+.quanto-similar-reports-section > .elementor-element > .elementor-widget-heading .elementor-heading-title {
+    font-size: 48px !important;
+    font-weight: 600 !important;
+    font-family: 'Instrument Sans', sans-serif !important;
+    color: #000000 !important;
+}
+
+.quanto-similar-reports-section .elementor-widget-button .elementor-button {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    background-color: #6241CA !important;
+    color: #ffffff !important;
+    border-radius: 40px !important;
+}
