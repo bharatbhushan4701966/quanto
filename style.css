@@ -509,7 +509,7 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
 }
 
 .woocommerce ul.products li.product .woocommerce-loop-product__buttons {
-    padding: 30px !important;
+    padding-bottom: 30px !important;
     margin: 0 !important;
     box-sizing: border-box;
 }
