@@ -85,7 +85,7 @@ function cmr_breadcrumb_shortcode() {
     ?>
     <div class="breadcumb-menu-wrap" style="margin-bottom: 20px; padding: 0;">
         <div class="breadcumb-menu">
-            <ul class="justify-content-start" style="margin:0; padding:0; display:flex; align-items:center; list-style:none;">
+            <ul class="justify-content-center" style="margin:0; padding:0; display:flex; align-items:center; list-style:none; justify-content: center;">
                 <li><a href="<?php echo esc_url( home_url('/') ); ?>" title="Home" style="color: #666; font-weight: 500; font-size: 14px; text-decoration:none;">Home</a></li>
                 <span class="arrow" style="margin: 0 10px; color: #666; font-size:12px;"><i class="fa-solid fa-angle-right"></i></span>
                 <li class="active" title="Media Releases" style="color: #111; font-weight: 600; font-size: 14px;">Media Releases</li>
