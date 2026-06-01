@@ -528,8 +528,23 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
 /* Force 16px font size for paragraph text on single blog posts */
 .single-post .wp-block-paragraph,
 .single-post .entry-content p,
-.single-post .post-content p {
+.single-post .post-content p,
+.single-post .blog-body p,
+.single-post .blog-body li,
+.single-post .blog-body span,
+.single-post .blog-body ul,
+.single-post .blog-body ol,
+.blog-body p,
+.blog-body li {
     font-size: 16px !important;
+}
+
+/* Breadcrumb font size */
+.breadcumb-menu ul li,
+.breadcumb-menu ul li a,
+.breadcumb-menu ul .arrow,
+.breadcumb-menu ul .arrow i {
+    font-size: 12px !important;
 }
 
 /* Hide picture and force 100% width on content for Testimonial 2 widget */
