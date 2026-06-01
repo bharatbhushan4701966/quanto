@@ -716,8 +716,12 @@
                                 echo '<line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>';
                                 echo '<line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>';
                             echo '</svg>';
+                            echo '<svg class="cmr-icon-cross" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; display: none;">';
+                                echo '<line x1="18" y1="6" x2="6" y2="18"></line>';
+                                echo '<line x1="6" y1="6" x2="18" y2="18"></line>';
+                            echo '</svg>';
                         echo '</button>';
-                        echo '<div class="share-dropdown-menu" style="display: none; position: absolute; top: calc(100% + 10px); right: 0; background: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 15px; border-radius: 8px; z-index: 99; white-space: nowrap; border: 1px solid #eee;">';
+                        echo '<div class="share-dropdown-menu" style="display: none; position: absolute; top: calc(100% + 10px); right: -10px; background: #fff; padding: 15px; border-radius: 8px; z-index: 99; white-space: nowrap;">';
                             echo '<ul class="custom-ul share-vertical-list" style="display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; list-style: none; align-items: center;">';
                                 if( function_exists( 'quanto_social_sharing_buttons' ) ) {
                                     echo quanto_social_sharing_buttons();
@@ -733,17 +737,38 @@
                                 shareWrappers.forEach(wrapper => {
                                     const btn = wrapper.querySelector(".share-toggle-btn");
                                     const menu = wrapper.querySelector(".share-dropdown-menu");
+                                    const shareIcon = btn ? btn.querySelector(".cmr-icon-share") : null;
+                                    const crossIcon = btn ? btn.querySelector(".cmr-icon-cross") : null;
+                                    
+                                    function closeAllMenus() {
+                                        document.querySelectorAll(".share-dropdown-wrapper").forEach(w => {
+                                            const m = w.querySelector(".share-dropdown-menu");
+                                            const sIcon = w.querySelector(".cmr-icon-share");
+                                            const cIcon = w.querySelector(".cmr-icon-cross");
+                                            if(m) m.style.display = "none";
+                                            if(sIcon) sIcon.style.display = "inline-block";
+                                            if(cIcon) cIcon.style.display = "none";
+                                        });
+                                    }
+
                                     if(btn && menu) {
                                         btn.addEventListener("click", function(e) {
                                             e.preventDefault();
                                             e.stopPropagation();
                                             const isVisible = menu.style.display === "block";
-                                            document.querySelectorAll(".share-dropdown-menu").forEach(m => m.style.display = "none");
-                                            menu.style.display = isVisible ? "none" : "block";
+                                            closeAllMenus();
+                                            
+                                            if (!isVisible) {
+                                                menu.style.display = "block";
+                                                if(shareIcon) shareIcon.style.display = "none";
+                                                if(crossIcon) crossIcon.style.display = "inline-block";
+                                            }
                                         });
                                         document.addEventListener("click", function(e) {
                                             if (!wrapper.contains(e.target)) {
                                                 menu.style.display = "none";
+                                                if(shareIcon) shareIcon.style.display = "inline-block";
+                                                if(crossIcon) crossIcon.style.display = "none";
                                             }
                                         });
                                     }

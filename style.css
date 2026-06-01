@@ -138,7 +138,7 @@ a.button.product_type_simple.add_to_cart_button,
 button.button.alt.single_add_to_cart_button {
     background-color: #ffffff !important;
     color: #000000 !important;
-    font-weight: 600 !important;
+    font-weight: 500 !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -152,7 +152,7 @@ button.button.alt.single_add_to_cart_button {
     transition: background-color 0.3s ease, transform 0.2s ease !important;
     border: 1px solid #000000 !important;
     text-transform: none !important;
-    font-size: 16px !important;
+    font-size: 15px !important;
     letter-spacing: normal !important;
     cursor: pointer !important;
     overflow: visible !important;
