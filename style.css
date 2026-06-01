@@ -674,7 +674,7 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
 
 
 /* Global override for quanto link button */
-.quanto-link-btn {
+html body .quanto-link-btn {
     font-weight: 600;
     font-size: 14px !important;
     line-height: 144.444%;
@@ -687,4 +687,5 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
     transition: all 0.5s ease;
     width: max-content;
 }
+
 
