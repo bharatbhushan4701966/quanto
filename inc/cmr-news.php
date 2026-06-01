@@ -514,4 +514,13 @@ function cmr_news_tabs_shortcode( $atts ) {
     return ob_get_clean();
 }
 
+// Force comments open for cmr_news
+add_filter( 'comments_open', 'cmr_news_force_comments_open', 10, 2 );
+function cmr_news_force_comments_open( $open, $post_id ) {
+    if ( get_post_type( $post_id ) === 'cmr_news' ) {
+        return true;
+    }
+    return $open;
+}
+
 require_once get_template_directory() . '/inc/cmr-news-coverage.php';

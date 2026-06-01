@@ -71,13 +71,19 @@ function cmr_extra_user_profile_fields( $user ) {
         <tr>
             <th><label for="linkedin_url"><?php esc_html_e( 'LinkedIn URL', 'quanto' ); ?></label></th>
             <td>
-                <input type="url" name="linkedin_url" id="linkedin_url" value="<?php echo esc_attr( get_the_author_meta( 'linkedin_url', $user->ID ) ); ?>" class="regular-text" /><br />
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 24px; color: #0077b5;" class="dashicons dashicons-linkedin"></span>
+                    <input type="url" name="linkedin_url" id="linkedin_url" value="<?php echo esc_attr( get_the_author_meta( 'linkedin_url', $user->ID ) ); ?>" class="regular-text" />
+                </div>
             </td>
         </tr>
         <tr>
             <th><label for="x_url"><?php esc_html_e( 'X (Twitter) URL', 'quanto' ); ?></label></th>
             <td>
-                <input type="url" name="x_url" id="x_url" value="<?php echo esc_attr( get_the_author_meta( 'x_url', $user->ID ) ); ?>" class="regular-text" /><br />
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 24px; color: #1da1f2;" class="dashicons dashicons-twitter"></span>
+                    <input type="url" name="x_url" id="x_url" value="<?php echo esc_attr( get_the_author_meta( 'x_url', $user->ID ) ); ?>" class="regular-text" />
+                </div>
             </td>
         </tr>
     </table>
