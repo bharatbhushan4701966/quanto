@@ -174,10 +174,10 @@
                             <?php the_post_thumbnail('thumbnail', array('class' => 'img-fluid', 'style' => 'border: 1px solid #e5e7eb; padding: 2px;')); ?>
                         </div>
                     <?php endif; ?>
-                    <div>
-                        <h3 style="font-family: 'Instrument Sans', sans-serif; font-size: 20px; font-weight: 700; color: #111; margin-bottom: 10px; line-height: 1.4;"><?php the_title(); ?></h3>
-                        <p style="font-family: 'Instrument Sans', sans-serif; font-size: 16px; color: #6b7280; margin-bottom: 10px;">CyberMedia Research (CMR)</p>
-                        <p style="font-family: 'Instrument Sans', sans-serif; font-size: 14px; color: #6b7280; margin-bottom: 0;">SKU: <span style="font-weight: 700; color: #111;">CMR-ADAS-<?php the_ID(); ?></span></p>
+                    <div style="padding-right: 70px;">
+                        <h3 style="font-family: 'Instrument Sans', sans-serif; font-size: 20px; font-weight: 700; color: #111; margin-bottom: 10px; line-height: 1.4; letter-spacing: 0.5px; word-spacing: 1px;"><?php the_title(); ?></h3>
+                        <p style="font-family: 'Instrument Sans', sans-serif; font-size: 16px; color: #6b7280; margin-bottom: 10px; letter-spacing: 0px;">CyberMedia Research (CMR)</p>
+                        <p style="font-family: 'Instrument Sans', sans-serif; font-size: 14px; color: #6b7280; margin-bottom: 0; letter-spacing: 0px;">SKU: <span style="font-weight: 700; color: #111;">CMR-ADAS-<?php the_ID(); ?></span></p>
                     </div>
                 </div>
 
