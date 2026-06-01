@@ -704,9 +704,7 @@
                         $target_attr = 'target="_blank" download';
 
                         echo '<a href="' . esc_url( $action_url ) . '" class="cmr-btn-download" ' . $target_attr . '>';
-                            echo '<svg class="cmr-icon-pdf" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="margin-right: 8px; vertical-align: middle;">';
-                                echo '<path d="M12 16L16 12H13V4H11V12H8L12 16ZM20 18H4V20H20V18Z" />';
-                            echo '</svg>';
+                            echo '<img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/download.svg" class="cmr-icon-pdf" width="16" height="16" style="margin-right: 8px; vertical-align: middle;" alt="Download" />';
                                 echo esc_html__( 'Download Press Release', 'quanto' );
                             echo '</a>';
                         echo '<div class="share-dropdown-wrapper" style="position: relative; display: inline-block;">';
