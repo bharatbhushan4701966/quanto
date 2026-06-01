@@ -588,3 +588,9 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
         width: 100% !important;
     }
 }
+
+/* Override padding for elementor section 5e656d6 */
+.elementor-14 .elementor-element.elementor-element-5e656d6 {
+    --padding-top: 40px !important;
+    --padding-bottom: 40px !important;
+}
