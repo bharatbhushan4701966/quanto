@@ -795,14 +795,13 @@ html body .quanto-link-btn {
 }
 .insights-cta-button {
     background-color: var(--color-white) !important;
-    color: #4625A9 !important;
-    font-size: 16px;
-    font-weight: 500;
-    padding: 12px 28px;
-    border-radius: 50px;
+    color: #4B10B4 !important;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 8px;
+    border-radius: 43px;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
     gap: 10px;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     text-decoration: none;

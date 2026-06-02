@@ -115,11 +115,13 @@ jQuery(document).ready(function($) {
                 if (!banner.hasClass('is-sticky')) {
                     placeholder.height(banner.outerHeight(true)).show();
                     banner.addClass('is-sticky');
+                    $('body').append(banner); // Detach and move to body to avoid transform clipping!
                 }
             } else {
                 if (banner.hasClass('is-sticky')) {
                     placeholder.hide();
                     banner.removeClass('is-sticky');
+                    placeholder.after(banner); // Put it back to its original location
                 }
             }
         });
