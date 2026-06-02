@@ -88,7 +88,7 @@ function cmr_breadcrumb_shortcode() {
             <ul class="justify-content-center" style="margin:0; padding:0; display:flex; align-items:center; list-style:none; justify-content: center;">
                 <li><a href="<?php echo esc_url( home_url('/') ); ?>" title="Home" style="color: #666; font-weight: 500; font-size: 12px; text-decoration:none;">Home</a></li>
                 <span class="arrow" style="margin: 0 10px; color: #666; font-size:12px;"><i class="fa-solid fa-angle-right"></i></span>
-                <li class="active" title="Media Releases" style="color: #111; font-weight: 600; font-size: 12px;">Media Releases</li>
+                <li class="active" title="Media Releases" style="color: #111; font-weight: 500; font-size: 12px;">Media Releases</li>
             </ul>
         </div>
     </div>
