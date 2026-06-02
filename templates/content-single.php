@@ -199,10 +199,16 @@
                                         <p class="insights-cta-text">Connect with our analysts to understand how these<br>trends impact your specific vertical.</p>
                                     </div>
                                     <div class="insights-cta-actions">
-                                        <a href="#" class="insights-cta-button primary" style="justify-content: center;">
-                                            Talk to Analyst
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14" fill="none"><path d="M2.04895 4.52205V3.54978C2.07104 3.12993 2.4025 2.79848 2.80025 2.79848L11.396 2.77638C11.8159 2.79848 12.1473 3.12993 12.1473 3.52768V12.1455C12.1473 12.5433 11.8159 12.8747 11.396 12.8968H10.4237C10.0039 12.8747 9.67244 12.5433 9.65035 12.1234L9.78293 6.90853L3.44106 13.2504C3.1317 13.5598 2.68976 13.5598 2.3804 13.2504L1.6733 12.5433C1.38603 12.256 1.36394 11.792 1.6733 11.4826L8.01516 5.14077L2.82234 5.29545C2.4025 5.27335 2.04895 4.96399 2.04895 4.52205Z" fill="currentColor"></path></svg>
-                                        </a>
+                                        <div class="elementor-element elementor-element-b3cba9e download-btn animejs-disable elementor-widget elementor-widget-button" style="width: 100%;" data-id="b3cba9e" data-element_type="widget" data-e-type="widget" data-settings="{&quot;mas-animation&quot;:&quot;none&quot;}" data-widget_type="button.default">
+                                            <a class="elementor-button elementor-button-link elementor-size-sm insights-cta-button primary" href="#" style="width: 100%; justify-content: center; color: #111 !important;">
+                                                <span class="elementor-button-content-wrapper">
+                                                    <span class="elementor-button-text" style="margin-right: 6px; color: #111 !important;">Talk to Analyst</span>
+                                                    <span class="elementor-button-icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14" fill="none"><path d="M2.04895 4.52205V3.54978C2.07104 3.12993 2.4025 2.79848 2.80025 2.79848L11.396 2.77638C11.8159 2.79848 12.1473 3.12993 12.1473 3.52768V12.1455C12.1473 12.5433 11.8159 12.8747 11.396 12.8968H10.4237C10.0039 12.8747 9.67244 12.5433 9.65035 12.1234L9.78293 6.90853L3.44106 13.2504C3.1317 13.5598 2.68976 13.5598 2.3804 13.2504L1.6733 12.5433C1.38603 12.256 1.36394 11.792 1.6733 11.4826L8.01516 5.14077L2.82234 5.29545C2.4025 5.27335 2.04895 4.96399 2.04895 4.52205Z" fill="#111"></path></svg>
+                                                    </span>
+                                                </span>
+                                            </a>
+                                        </div>
                                         <a href="#" class="insights-cta-button secondary">
                                             Explore Press Release <i class="fa-solid fa-arrow-right" style="font-size: 14px; margin-left: 6px; transform: rotate(-45deg);"></i>
                                         </a>
