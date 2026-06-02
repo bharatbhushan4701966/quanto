@@ -16,12 +16,12 @@
     flex-wrap: wrap;
     gap: 20px;
     position: sticky;
-    top: 0;
-    z-index: 999999;
+    top: 90px; /* Offset for main header */
+    z-index: 999; /* Below the main header if necessary, but above content */
 }
 
 .admin-bar .cmr-mc-wrapper .cmr-mc-top-banner {
-    top: 32px;
+    top: 122px; /* 90px + 32px admin bar */
 }
 
 .cmr-mc-wrapper .cmr-mc-top-banner::before {
@@ -72,6 +72,7 @@
 }
 
 .cmr-mc-wrapper .cmr-mc-title {
+    font-family: 'Instrument Sans', sans-serif;
     font-size: 36px;
     font-weight: 700;
     margin: 0 0 10px 0;
@@ -79,6 +80,7 @@
 }
 
 .cmr-mc-wrapper .cmr-mc-subtitle {
+    font-family: 'Instrument Sans', sans-serif;
     font-size: 16px;
     color: #666;
     margin: 0;
@@ -449,6 +451,7 @@
 }
 
 .cmr-nc-title {
+    font-family: 'Instrument Sans', sans-serif;
     font-size: 48px;
     font-weight: 700;
     letter-spacing: -1.5px;
@@ -457,6 +460,7 @@
 }
 
 .cmr-nc-subtitle {
+    font-family: 'Instrument Sans', sans-serif;
     font-size: 16px;
     color: #555;
     max-width: 600px;
@@ -525,6 +529,7 @@
 }
 
 .cmr-nc-post-title {
+    font-family: 'Instrument Sans', sans-serif;
     font-size: 24px;
     font-weight: 700;
     line-height: 1.3;

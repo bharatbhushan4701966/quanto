@@ -107,8 +107,10 @@ jQuery(document).ready(function($) {
 
         $(window).on('scroll', function() {
             var scrollPos = $(window).scrollTop();
-            // Trigger when the scroll position passes the banner's top position
-            if (scrollPos >= bannerOffset) {
+            // Trigger when the scroll position passes the banner's original position minus the header offset
+            // Assuming ~90px main header height (122px with admin bar)
+            var offset = $('body').hasClass('admin-bar') ? 122 : 90;
+            if (scrollPos >= bannerOffset - offset) {
                 banner.addClass('is-sticky');
             } else {
                 banner.removeClass('is-sticky');
