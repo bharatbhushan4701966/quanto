@@ -201,7 +201,7 @@
 
     if ( get_post_type() === 'cmr_news' ) {
         ?>
-        <div class="insights-cta-banner">
+        <div class="insights-cta-banner" style="margin-bottom: 80px;">
             <div class="insights-cta-content">
                 <h3 class="insights-cta-title">Want deeper insights?</h3>
                 <p class="insights-cta-text">Connect with our analysts to understand how these<br>trends impact your specific vertical.</p>
