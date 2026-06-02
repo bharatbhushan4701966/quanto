@@ -16,12 +16,12 @@
     flex-wrap: wrap;
     gap: 20px;
     position: sticky;
-    top: 90px; /* Offset for main header */
-    z-index: 999; /* Below the main header if necessary, but above content */
+    top: 0; 
+    z-index: 999999; /* Cover the main header */
 }
 
 .admin-bar .cmr-mc-wrapper .cmr-mc-top-banner {
-    top: 122px; /* 90px + 32px admin bar */
+    top: 32px; 
 }
 
 .cmr-mc-wrapper .cmr-mc-top-banner::before {

@@ -95,29 +95,10 @@ jQuery(document).ready(function($) {
     // Sticky Header Banner with Shadow
     var banner = $('.cmr-mc-top-banner');
     if (banner.length) {
-        function updateStickyOffset() {
-            // Find the main header (Elementor usually uses header tag or .elementor-location-header)
-            var mainHeader = $('header').first();
-            var headerHeight = mainHeader.length ? mainHeader.outerHeight() : 90;
-            
-            // Check for WordPress admin bar
-            var adminBar = $('#wpadminbar');
-            var adminBarHeight = adminBar.length ? adminBar.outerHeight() : 0;
-            
-            var totalOffset = headerHeight + adminBarHeight;
-            
-            // Apply dynamic top offset
-            banner.css('top', totalOffset + 'px');
-            
-            return totalOffset;
-        }
-
-        var offset = updateStickyOffset();
         var bannerOriginalPos = banner.offset().top;
         
         // Recalculate on resize in case layout changes
         $(window).on('resize', function() {
-            offset = updateStickyOffset();
             if (!banner.hasClass('is-sticky')) {
                 bannerOriginalPos = banner.offset().top;
             }
@@ -125,7 +106,9 @@ jQuery(document).ready(function($) {
 
         $(window).on('scroll', function() {
             var scrollPos = $(window).scrollTop();
-            // Trigger when the scroll position passes the banner's original position minus the header offset
+            // Trigger when the scroll position passes the banner's original position
+            // Admin bar adds 32px to scroll requirements
+            var offset = $('body').hasClass('admin-bar') ? 32 : 0;
             if (scrollPos >= bannerOriginalPos - offset) {
                 banner.addClass('is-sticky');
             } else {
