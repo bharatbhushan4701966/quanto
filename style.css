@@ -809,7 +809,7 @@ html body .quanto-link-btn {
 }
 .insights-cta-button.primary {
     background-color: #ffffff !important;
-    color: #4625A9 !important;
+    color: #111 !important;
 }
 .insights-cta-button.primary:hover {
     background-color: #f3f4f6 !important;
