@@ -95,6 +95,23 @@ jQuery(document).ready(function($) {
     // Sticky Header Banner with Shadow
     var banner = $('.cmr-mc-top-banner');
     if (banner.length) {
+        // Fix for Elementor overflow:hidden breaking position:sticky
+        var parentNode = banner.parent();
+        while (parentNode.length && !parentNode.is('body') && !parentNode.is('html')) {
+            var ov = parentNode.css('overflow');
+            var ovy = parentNode.css('overflow-y');
+            var ovx = parentNode.css('overflow-x');
+            if (ov === 'hidden' || ovy === 'hidden' || ovx === 'hidden' || ov === 'clip' || ov === 'auto') {
+                // Force visible
+                parentNode.css({
+                    'overflow': 'visible',
+                    'overflow-x': 'visible',
+                    'overflow-y': 'visible'
+                });
+            }
+            parentNode = parentNode.parent();
+        }
+
         var bannerOriginalPos = banner.offset().top;
         
         // Recalculate on resize in case layout changes
