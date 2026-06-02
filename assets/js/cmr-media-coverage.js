@@ -95,24 +95,9 @@ jQuery(document).ready(function($) {
     // Sticky Header Banner with Shadow
     var banner = $('.cmr-mc-top-banner');
     if (banner.length) {
-        // Fix for Elementor overflow:hidden breaking position:sticky
-        var parentNode = banner.parent();
-        while (parentNode.length && !parentNode.is('body') && !parentNode.is('html')) {
-            var ov = parentNode.css('overflow');
-            var ovy = parentNode.css('overflow-y');
-            var ovx = parentNode.css('overflow-x');
-            if (ov === 'hidden' || ovy === 'hidden' || ovx === 'hidden' || ov === 'clip' || ov === 'auto') {
-                // Force visible
-                parentNode.css({
-                    'overflow': 'visible',
-                    'overflow-x': 'visible',
-                    'overflow-y': 'visible'
-                });
-            }
-            parentNode = parentNode.parent();
-        }
-
         var bannerOriginalPos = banner.offset().top;
+        var placeholder = $('<div class="cmr-mc-top-banner-placeholder" style="display:none;"></div>');
+        banner.after(placeholder);
         
         // Recalculate on resize in case layout changes
         $(window).on('resize', function() {
@@ -127,9 +112,15 @@ jQuery(document).ready(function($) {
             // Admin bar adds 32px to scroll requirements
             var offset = $('body').hasClass('admin-bar') ? 32 : 0;
             if (scrollPos >= bannerOriginalPos - offset) {
-                banner.addClass('is-sticky');
+                if (!banner.hasClass('is-sticky')) {
+                    placeholder.height(banner.outerHeight(true)).show();
+                    banner.addClass('is-sticky');
+                }
             } else {
-                banner.removeClass('is-sticky');
+                if (banner.hasClass('is-sticky')) {
+                    placeholder.hide();
+                    banner.removeClass('is-sticky');
+                }
             }
         });
     }

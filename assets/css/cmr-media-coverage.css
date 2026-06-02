@@ -15,12 +15,24 @@
     margin-bottom: 30px;
     flex-wrap: wrap;
     gap: 20px;
-    position: sticky;
-    top: 0; 
-    z-index: 999999; /* Cover the main header */
+    background-color: #fff;
+    transition: box-shadow 0.3s ease;
 }
 
-.admin-bar .cmr-mc-wrapper .cmr-mc-top-banner {
+.cmr-mc-wrapper .cmr-mc-top-banner.is-sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 999999;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    padding-left: max(20px, calc(50vw - 640px));
+    padding-right: max(20px, calc(50vw - 640px));
+    margin-bottom: 0;
+}
+
+.admin-bar .cmr-mc-wrapper .cmr-mc-top-banner.is-sticky {
     top: 32px; 
 }
 
@@ -37,12 +49,12 @@
 }
 
 .cmr-mc-wrapper .cmr-mc-top-banner.is-sticky::before {
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    display: none;
 }
 
 .cmr-mc-wrapper .cmr-mc-top-banner-title {
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: 600;
     color: #111;
 }
 
@@ -73,8 +85,8 @@
 
 .cmr-mc-wrapper .cmr-mc-title {
     font-family: 'Instrument Sans', sans-serif;
-    font-size: 36px;
-    font-weight: 700;
+    font-size: 48px;
+    font-weight: 600;
     margin: 0 0 10px 0;
     letter-spacing: -1.5px;
 }
