@@ -210,11 +210,11 @@
                                             </a>
                                         </div>
                                         <div class="elementor-element elementor-element-b3cba9e download-btn animejs-disable elementor-widget elementor-widget-button" data-id="b3cba9e" data-element_type="widget" data-e-type="widget" data-settings="{&quot;mas-animation&quot;:&quot;none&quot;}" data-widget_type="button.default" style="align-self: flex-end; width: 230px;">
-                                            <a class="elementor-button elementor-button-link elementor-size-sm insights-cta-button secondary" href="#" style="justify-content: center; width: 100%;">
+                                            <a class="elementor-button elementor-button-link elementor-size-sm insights-cta-button secondary" href="#" style="justify-content: center; width: 100%; background-color: transparent !important; border: 1px solid #ffffff !important;">
                                                 <span class="elementor-button-content-wrapper" style="width: 100%; justify-content: center;">
                                                     <span class="elementor-button-text" style="margin-right: 6px; font-weight: 500 !important;">Explore Press Release</span>
                                                     <span class="elementor-button-icon">
-                                                        <i class="fa-solid fa-arrow-right" style="font-size: 14px; transform: rotate(-45deg);"></i>
+                                                        <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg" alt="Icon" width="16" height="14" style="object-fit: contain;">
                                                     </span>
                                                 </span>
                                             </a>
