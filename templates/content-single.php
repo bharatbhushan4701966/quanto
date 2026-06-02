@@ -199,7 +199,7 @@
                                         <p class="insights-cta-text">Connect with our analysts to understand how these<br>trends impact your specific vertical.</p>
                                     </div>
                                     <div class="insights-cta-actions">
-                                        <div class="elementor-element elementor-element-b3cba9e download-btn animejs-disable elementor-widget elementor-widget-button" data-id="b3cba9e" data-element_type="widget" data-e-type="widget" data-settings="{&quot;mas-animation&quot;:&quot;none&quot;}" data-widget_type="button.default" style="align-self: flex-end; width: 280px;">
+                                        <div class="elementor-element elementor-element-b3cba9e download-btn animejs-disable elementor-widget elementor-widget-button" data-id="b3cba9e" data-element_type="widget" data-e-type="widget" data-settings="{&quot;mas-animation&quot;:&quot;none&quot;}" data-widget_type="button.default" style="align-self: flex-end; width: 235px;">
                                             <a class="elementor-button elementor-button-link elementor-size-sm insights-cta-button primary" href="#" style="justify-content: center; color: #111 !important; background-color: #ffffff !important; width: 100%; display: flex; align-items: center;">
                                                 <span class="elementor-button-content-wrapper" style="width: 100%; display: flex; align-items: center; justify-content: center;">
                                                     <span class="elementor-button-text" style="margin-right: 6px; color: #111 !important; font-weight: 500 !important; line-height: 1; white-space: nowrap;">Talk to Analyst</span>
@@ -209,7 +209,7 @@
                                                 </span>
                                             </a>
                                         </div>
-                                        <div class="elementor-element elementor-element-c4dcb9f download-btn animejs-disable elementor-widget elementor-widget-button" data-id="c4dcb9f" data-element_type="widget" data-e-type="widget" data-settings="{&quot;mas-animation&quot;:&quot;none&quot;}" data-widget_type="button.default" style="align-self: flex-end; width: 280px;">
+                                        <div class="elementor-element elementor-element-c4dcb9f download-btn animejs-disable elementor-widget elementor-widget-button" data-id="c4dcb9f" data-element_type="widget" data-e-type="widget" data-settings="{&quot;mas-animation&quot;:&quot;none&quot;}" data-widget_type="button.default" style="align-self: flex-end; width: 235px;">
                                             <a class="elementor-button elementor-button-link elementor-size-sm insights-cta-button secondary" href="#" style="justify-content: center; width: 100%; background-color: transparent !important; border: 1px solid #ffffff !important; display: flex; align-items: center;">
                                                 <span class="elementor-button-content-wrapper" style="width: 100%; display: flex; align-items: center; justify-content: center;">
                                                     <span class="elementor-button-text" style="margin-right: 6px; font-weight: 500 !important; color: #ffffff !important; line-height: 1; white-space: nowrap;">Explore Press Release</span>
