@@ -106,6 +106,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-media-contacts.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-press-releases.php';
 require_once QUANTO_DIR_PATH_INC . 'author-meta.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-latest-insights.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-industry-intelligence.php';
 
 // Save rating meta for cmr_news comments
 add_action('comment_post', 'cmr_save_comment_rating', 10, 2);
