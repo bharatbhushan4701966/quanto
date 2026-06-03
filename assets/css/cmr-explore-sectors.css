@@ -1,0 +1,120 @@
+.cmr-explore-sectors-section {
+    background-color: #f7f7f7;
+    padding: 80px 0;
+    font-family: 'Instrument Sans', sans-serif;
+    overflow-x: hidden;
+}
+
+.explore-sectors-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-left: 50px;
+}
+
+.explore-sectors-title {
+    font-size: 42px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 50px;
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+.explore-sectors-track {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 20px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+.explore-sectors-track::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+.explore-sector-card {
+    background-color: #ffffff;
+    flex: 0 0 320px;
+    min-height: 380px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+    scroll-snap-align: start;
+    cursor: pointer;
+}
+
+.explore-sector-card:hover {
+    border-color: #4625A9;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.sector-number {
+    font-size: 13px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: auto;
+}
+
+.sector-content {
+    margin-bottom: 40px;
+}
+
+.sector-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 15px;
+    margin-top: 0;
+}
+
+.sector-desc {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.sector-explore-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: #111;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.3s ease;
+    border-bottom: 1px solid #111;
+    padding-bottom: 2px;
+    align-self: flex-start;
+}
+
+.sector-explore-link i {
+    font-size: 10px;
+    transition: transform 0.3s ease;
+}
+
+.explore-sector-card:hover .sector-explore-link {
+    color: #4625A9;
+    border-bottom-color: #4625A9;
+}
+
+/* Specific active/hover style matching the 3rd card in mockup */
+/* Instead of hardcoding the 3rd, the hover state covers it cleanly */
+
+@media (max-width: 768px) {
+    .explore-sectors-container {
+        padding-left: 20px;
+    }
+    .explore-sectors-title {
+        font-size: 32px;
+    }
+    .explore-sector-card {
+        flex: 0 0 280px;
+        min-height: 340px;
+        padding: 30px;
+    }
+}
