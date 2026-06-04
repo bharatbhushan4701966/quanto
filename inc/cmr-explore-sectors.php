@@ -61,20 +61,34 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
                 </div>
             </div>
             <script>
-            document.addEventListener('DOMContentLoaded', function() {
+            function initExploreSectorsSwiper() {
+                var swiperEl = document.querySelector('.explore-sectors-swiper');
+                if (!swiperEl) return;
+                
                 if (typeof Swiper !== 'undefined') {
                     new Swiper('.explore-sectors-swiper', {
                         slidesPerView: 1.2,
                         spaceBetween: 20,
                         grabCursor: true,
+                        mousewheel: {
+                            forceToAxis: true,
+                        },
                         breakpoints: {
                             768: { slidesPerView: 2.5 },
                             1024: { slidesPerView: 3.5 },
                             1280: { slidesPerView: 4.5 }
                         }
                     });
+                } else {
+                    setTimeout(initExploreSectorsSwiper, 100);
                 }
-            });
+            }
+            
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initExploreSectorsSwiper);
+            } else {
+                initExploreSectorsSwiper();
+            }
             </script>
         </div>
         <?php
