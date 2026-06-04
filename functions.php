@@ -352,7 +352,7 @@ function cmr_market_updates_shortcode() {
         }
 
         .cmr-mu-category {
-            font-weight: 600;
+            font-weight: 500;
         }
         .cmr-mu-category.policy { color: #F5A623; }
         .cmr-mu-category.investment { color: #2ECC71; }
@@ -455,4 +455,14 @@ function cmr_market_updates_shortcode() {
         </div>
     </div>
     <?php return ob_get_clean();
+}
+
+// Apply Instrument Sans globally
+add_action('wp_head', 'cmr_global_font_style', 999);
+function cmr_global_font_style() {
+    echo '<style>
+        body, p, h1, h2, h3, h4, h5, h6, a, button, input, select, textarea, .elementor-button, .elementor-button-text {
+            font-family: "Instrument Sans", sans-serif !important;
+        }
+    </style>';
 }
