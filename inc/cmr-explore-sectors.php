@@ -45,19 +45,37 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
             <div class="explore-sectors-container">
                 <h2 class="explore-sectors-title">Explore Industry Intelligence<br>Across Sectors</h2>
                 
-                <div class="explore-sectors-track">
-                    <?php foreach ( $sectors as $sector ) : ?>
-                        <div class="explore-sector-card">
-                            <span class="sector-number"><?php echo esc_html( $sector['number'] ); ?></span>
-                            <div class="sector-content">
-                                <h3 class="sector-title"><?php echo esc_html( $sector['title'] ); ?></h3>
-                                <p class="sector-desc"><?php echo esc_html( $sector['desc'] ); ?></p>
+                <div class="swiper explore-sectors-swiper">
+                    <div class="swiper-wrapper explore-sectors-track">
+                        <?php foreach ( $sectors as $sector ) : ?>
+                            <div class="swiper-slide explore-sector-card">
+                                <span class="sector-number"><?php echo esc_html( $sector['number'] ); ?></span>
+                                <div class="sector-content">
+                                    <h3 class="sector-title"><?php echo esc_html( $sector['title'] ); ?></h3>
+                                    <p class="sector-desc"><?php echo esc_html( $sector['desc'] ); ?></p>
+                                </div>
+                                <a href="#" class="sector-explore-link">Explore <i class="fa-solid fa-arrow-right" style="transform: rotate(-45deg);"></i></a>
                             </div>
-                            <a href="#" class="sector-explore-link">Explore <i class="fa-solid fa-arrow-right" style="transform: rotate(-45deg);"></i></a>
-                        </div>
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                if (typeof Swiper !== 'undefined') {
+                    new Swiper('.explore-sectors-swiper', {
+                        slidesPerView: 1.2,
+                        spaceBetween: 20,
+                        grabCursor: true,
+                        breakpoints: {
+                            768: { slidesPerView: 2.5 },
+                            1024: { slidesPerView: 3.5 },
+                            1280: { slidesPerView: 4.5 }
+                        }
+                    });
+                }
+            });
+            </script>
         </div>
         <?php
         return ob_get_clean();

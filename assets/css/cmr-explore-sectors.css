@@ -21,22 +21,11 @@
 }
 
 .explore-sectors-track {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
     padding-bottom: 20px;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge */
-}
-.explore-sectors-track::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
 }
 
 .explore-sector-card {
     background-color: #ffffff;
-    flex: 0 0 calc((100% - 80px) / 4.5);
-    min-width: 260px;
     min-height: 380px;
     padding: 40px;
     display: flex;
@@ -44,8 +33,10 @@
     justify-content: flex-start;
     border: 1px solid transparent;
     transition: all 0.3s ease;
-    scroll-snap-align: start;
-    cursor: pointer;
+    cursor: grab;
+}
+.explore-sector-card:active {
+    cursor: grabbing;
 }
 
 .explore-sector-card:hover {
