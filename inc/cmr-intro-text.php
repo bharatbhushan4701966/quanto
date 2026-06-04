@@ -5,6 +5,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // CMR Intro Text Shortcode
+function cmr_register_intro_shortcode() {
+    add_shortcode('cmr_intro', 'cmr_intro_text_shortcode');
+}
+add_action('init', 'cmr_register_intro_shortcode');
+
 function cmr_intro_text_shortcode() {
     ob_start(); ?>
     <style>
