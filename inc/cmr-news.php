@@ -287,7 +287,8 @@ function cmr_news_tabs_shortcode( $atts ) {
     }
 
     ob_start();
-    $bg_class = is_page('who-we-serve') ? ' cmr-news-black-bg' : '';
+    $is_who_we_serve = is_page('who-we-serve');
+    $bg_class = $is_who_we_serve ? ' cmr-news-black-bg' : '';
     ?>
     <div class="cmr-news-container<?php echo esc_attr( $bg_class ); ?>">
         <!-- Tabs -->
@@ -424,7 +425,8 @@ function cmr_news_tabs_shortcode( $atts ) {
                                                         <span class="cmr-category-tag">&mdash; Media Releases</span>
                                                     </div>
                                                     <h3 class="cmr-card-title"><?php the_title(); ?></h3>
-                                                    <span class="cmr-read-coverage">More Details <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg" class="cmr-arrow-icon" alt="Arrow"></span>
+                                                    <?php $arrow_url = $is_who_we_serve ? 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg' : 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg'; ?>
+                                                    <span class="cmr-read-coverage">More Details <img src="<?php echo esc_url($arrow_url); ?>" class="cmr-arrow-icon" alt="Arrow"></span>
                                                 </div>
                                             </a>
                                         </div>
@@ -445,7 +447,8 @@ function cmr_news_tabs_shortcode( $atts ) {
                                                         <span class="cmr-category-tag">&mdash; Media Releases</span>
                                                     </div>
                                                     <h3 class="cmr-card-title"><?php the_title(); ?></h3>
-                                                    <span class="cmr-read-coverage">More Details <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg" class="cmr-arrow-icon" alt="Arrow"></span>
+                                                    <?php $arrow_url = $is_who_we_serve ? 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg' : 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg'; ?>
+                                                    <span class="cmr-read-coverage">More Details <img src="<?php echo esc_url($arrow_url); ?>" class="cmr-arrow-icon" alt="Arrow"></span>
                                                 </div>
                                             </a>
                                         </div>
@@ -486,7 +489,7 @@ function cmr_news_tabs_shortcode( $atts ) {
                                                 </div>
                                                 <h3 class="cmr-card-title"><?php the_title(); ?></h3>
                                                 <?php
-                                                $arrow_url = ( $count === 0 ) ? 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg' : 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg';
+                                                $arrow_url = $is_who_we_serve ? 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg' : 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg';
                                                 ?>
                                                 <span class="cmr-read-coverage">Read Coverage <img src="<?php echo esc_url($arrow_url); ?>" class="cmr-arrow-icon" alt="Arrow"></span>
                                             </div>
