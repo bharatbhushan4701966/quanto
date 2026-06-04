@@ -287,8 +287,9 @@ function cmr_news_tabs_shortcode( $atts ) {
     }
 
     ob_start();
+    $bg_class = is_page('who-we-serve') ? ' cmr-news-black-bg' : '';
     ?>
-    <div class="cmr-news-container">
+    <div class="cmr-news-container<?php echo esc_attr( $bg_class ); ?>">
         <!-- Tabs -->
         <div class="cmr-news-tabs">
             <?php 
