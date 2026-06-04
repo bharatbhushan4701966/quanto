@@ -130,8 +130,9 @@
 }
 
 .stay-updated-card-title {
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
     color: #111;
     line-height: 1.4;
     margin-bottom: 15px;
