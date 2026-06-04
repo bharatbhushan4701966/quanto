@@ -360,7 +360,8 @@ function cmr_market_updates_shortcode() {
 
         .cmr-mu-item-title {
             font-size: 18px;
-            font-weight: 700;
+            font-weight: 600;
+            letter-spacing: -0.5px;
             margin: 0;
             line-height: 1.4;
             color: #111;
