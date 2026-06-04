@@ -1,8 +1,10 @@
 .cmr-explore-sectors-section {
-    background-color: #f7f7f7;
-    padding: 80px 0;
     font-family: 'Instrument Sans', sans-serif;
-    overflow-x: hidden;
+    background-color: #F8F9FA;
+    padding: 80px 0;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
 }
 
 .explore-sectors-container {
@@ -21,11 +23,24 @@
 }
 
 .explore-sectors-track {
+    display: flex;
+    gap: 20px;
+    width: max-content;
     padding-bottom: 20px;
+    padding-left: calc((100vw - 1280px) / 2 + 50px);
+    padding-right: 40px;
+}
+
+@media (max-width: 1380px) {
+    .explore-sectors-track {
+        padding-left: 50px;
+    }
 }
 
 .explore-sector-card {
     background-color: #ffffff;
+    width: 270px;
+    flex-shrink: 0;
     min-height: 380px;
     padding: 40px;
     display: flex;

@@ -41,54 +41,58 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
 
         ob_start();
         ?>
-        <div class="cmr-explore-sectors-section">
+        <div class="cmr-explore-sectors-section" id="cmr-explore-section">
             <div class="explore-sectors-container">
                 <h2 class="explore-sectors-title">Explore Industry Intelligence<br>Across Sectors</h2>
-                
-                <div class="swiper explore-sectors-swiper">
-                    <div class="swiper-wrapper explore-sectors-track">
-                        <?php foreach ( $sectors as $sector ) : ?>
-                            <div class="swiper-slide explore-sector-card">
-                                <span class="sector-number"><?php echo esc_html( $sector['number'] ); ?></span>
-                                <div class="sector-content">
-                                    <h3 class="sector-title"><?php echo esc_html( $sector['title'] ); ?></h3>
-                                    <p class="sector-desc"><?php echo esc_html( $sector['desc'] ); ?></p>
-                                </div>
-                                <a href="#" class="sector-explore-link">Explore <i class="fa-solid fa-arrow-right" style="transform: rotate(-45deg);"></i></a>
+            </div>
+            
+            <div class="explore-sectors-track-wrapper">
+                <div class="explore-sectors-track" id="cmr-explore-track">
+                    <?php foreach ( $sectors as $sector ) : ?>
+                        <div class="explore-sector-card">
+                            <span class="sector-number"><?php echo esc_html( $sector['number'] ); ?></span>
+                            <div class="sector-content">
+                                <h3 class="sector-title"><?php echo esc_html( $sector['title'] ); ?></h3>
+                                <p class="sector-desc"><?php echo esc_html( $sector['desc'] ); ?></p>
                             </div>
-                        <?php endforeach; ?>
-                    </div>
+                            <a href="#" class="sector-explore-link">Explore <i class="fa-solid fa-arrow-right" style="transform: rotate(-45deg);"></i></a>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
-            <script>
-            function initExploreSectorsSwiper() {
-                var swiperEl = document.querySelector('.explore-sectors-swiper');
-                if (!swiperEl) return;
-                
-                if (typeof Swiper !== 'undefined') {
-                    new Swiper('.explore-sectors-swiper', {
-                        slidesPerView: 1.2,
-                        spaceBetween: 20,
-                        grabCursor: true,
-                        mousewheel: {
-                            forceToAxis: true,
-                        },
-                        breakpoints: {
-                            768: { slidesPerView: 2.5 },
-                            1024: { slidesPerView: 3.5 },
-                            1280: { slidesPerView: 4.5 }
-                        }
-                    });
-                } else {
-                    setTimeout(initExploreSectorsSwiper, 100);
-                }
-            }
             
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initExploreSectorsSwiper);
-            } else {
-                initExploreSectorsSwiper();
-            }
+            <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                    gsap.registerPlugin(ScrollTrigger);
+                    
+                    let track = document.getElementById("cmr-explore-track");
+                    let section = document.getElementById("cmr-explore-section");
+                    
+                    if (track && section) {
+                        function getScrollAmount() {
+                            let trackWidth = track.scrollWidth;
+                            // Move left enough to show the end of the track. Add padding offset
+                            return -(trackWidth - window.innerWidth + 40); 
+                        }
+                        
+                        const tween = gsap.to(track, {
+                            x: getScrollAmount,
+                            ease: "none"
+                        });
+        
+                        ScrollTrigger.create({
+                            trigger: section,
+                            start: "center center", // Pin when section reaches center
+                            end: () => `+=${getScrollAmount() * -1}`, // Scroll length based on track width
+                            pin: true,
+                            animation: tween,
+                            scrub: 1,
+                            invalidateOnRefresh: true
+                        });
+                    }
+                }
+            });
             </script>
         </div>
         <?php
