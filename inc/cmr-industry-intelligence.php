@@ -65,7 +65,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                                 <p class="intel-excerpt">
                                     Explore real-time trends, expert analysis, and strategic signals shaping the future of mobility and automotive ecosystems.
                                 </p>
-                                <a href="<?php echo esc_url( $post_link ); ?>" class="intel-more-link">More Details <i class="fa-solid fa-arrow-up-right"></i></a>
+                                <a href="<?php echo esc_url( $post_link ); ?>" class="intel-more-link">More Details <i class="fa-solid fa-arrow-right" style="transform: rotate(-45deg);"></i></a>
                             </div>
                         </div>
 
@@ -81,7 +81,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                                     <p class="intel-cta-text">Talk to our analysts for tailored recommendations across your sector.</p>
                                 </div>
                                 <div class="intel-cta-button-wrap">
-                                    <a href="#" class="intel-cta-btn">Get Industry Insights <i class="fa-solid fa-arrow-up-right"></i></a>
+                                    <a href="#" class="intel-cta-btn">Get Industry Insights <i class="fa-solid fa-arrow-right" style="transform: rotate(-45deg);"></i></a>
                                 </div>
                             </div>
                             <?php

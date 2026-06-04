@@ -60,6 +60,7 @@ function quanto_essential_scripts() {
     wp_register_style( 'cmr-latest-insights', get_theme_file_uri('/assets/css/cmr-latest-insights.css'), array(), time() );
     wp_register_style( 'cmr-industry-intelligence', get_theme_file_uri('/assets/css/cmr-industry-intelligence.css'), array(), time() );
     wp_register_style( 'cmr-explore-sectors', get_theme_file_uri('/assets/css/cmr-explore-sectors.css'), array(), time() );
+    wp_register_style( 'cmr-stay-updated', get_theme_file_uri('/assets/css/cmr-stay-updated.css'), array(), time() );
 
     // Enqueue homepage Elementor CSS anywhere we inject homepage Elementor sections,
     // including WooCommerce product pages rendered via custom template helpers.

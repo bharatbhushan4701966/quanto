@@ -83,7 +83,7 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
                                     <div class="insights-featured-content">
                                         <span class="insights-tag">&mdash; <?php echo esc_html( $category_name ); ?></span>
                                         <h3 class="insights-title"><?php echo esc_html( $post_title ); ?></h3>
-                                        <span class="insights-more-link">More Details <i class="fa-solid fa-arrow-up-right"></i></span>
+                                        <span class="insights-more-link">More Details <i class="fa-solid fa-arrow-right" style="transform: rotate(-45deg);"></i></span>
                                     </div>
                                 </a>
                             </div>
@@ -99,7 +99,7 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
                                     <div class="insights-stacked-content">
                                         <span class="insights-tag">&mdash; <?php echo esc_html( $category_name ); ?></span>
                                         <h4 class="insights-title"><?php echo esc_html( $post_title ); ?></h4>
-                                        <span class="insights-more-link">More Details <i class="fa-solid fa-arrow-up-right"></i></span>
+                                        <span class="insights-more-link">More Details <i class="fa-solid fa-arrow-right" style="transform: rotate(-45deg);"></i></span>
                                     </div>
                                 </a>
                             <?php

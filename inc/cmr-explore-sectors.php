@@ -53,7 +53,7 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
                                 <h3 class="sector-title"><?php echo esc_html( $sector['title'] ); ?></h3>
                                 <p class="sector-desc"><?php echo esc_html( $sector['desc'] ); ?></p>
                             </div>
-                            <a href="#" class="sector-explore-link">Explore <i class="fa-solid fa-arrow-up-right"></i></a>
+                            <a href="#" class="sector-explore-link">Explore <i class="fa-solid fa-arrow-right" style="transform: rotate(-45deg);"></i></a>
                         </div>
                     <?php endforeach; ?>
                 </div>

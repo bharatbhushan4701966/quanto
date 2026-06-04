@@ -108,6 +108,7 @@ require_once QUANTO_DIR_PATH_INC . 'author-meta.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-latest-insights.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-industry-intelligence.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-explore-sectors.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-stay-updated.php';
 
 // Save rating meta for cmr_news comments
 add_action('comment_post', 'cmr_save_comment_rating', 10, 2);
