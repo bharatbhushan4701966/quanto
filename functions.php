@@ -111,6 +111,8 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-explore-sectors.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-stay-updated.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-featured-insight.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-featured-intelligence-carousel.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-industry-intelligence-trends.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-dark-media-coverage.php';
 // Removed require for cmr-intro-text.php
 
 // Save rating meta for cmr_news comments
