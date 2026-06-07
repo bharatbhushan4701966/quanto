@@ -30,16 +30,16 @@ if ( ! function_exists( 'cmr_dark_media_render_posts' ) ) {
         // Sort by featured meta flag first, then date
         'meta_query'     => array(
             'relation' => 'AND',
-            'featured_clause' => array(
+            array(
                 'relation' => 'OR',
-                array(
+                'featured_clause' => array(
                     'key'     => '_cmr_news_is_featured',
                     'compare' => 'EXISTS',
                 ),
-                array(
+                'not_featured_clause' => array(
                     'key'     => '_cmr_news_is_featured',
                     'compare' => 'NOT EXISTS',
-                ),
+                )
             )
         ),
         'orderby'        => array(
@@ -97,19 +97,18 @@ if ( ! function_exists( 'cmr_dark_media_render_posts' ) ) {
                 if ( $count === 0 ) {
                     // Render Featured Hero
                     ?>
-                    <div class="cmr-dmc-hero">
-                        <div class="cmr-dmc-hero-image-wrap">
-                            <img src="<?php echo esc_url($bg_image); ?>" class="cmr-dmc-hero-image" alt="">
-                        </div>
-                        <div class="cmr-dmc-hero-content">
-                            <?php if ($logo_url): ?>
-                                <img src="<?php echo esc_url($logo_url); ?>" class="cmr-dmc-hero-logo" alt="">
-                            <?php endif; ?>
-                            <div class="cmr-dmc-hero-meta">
+                    <div class="cmr-dmc-featured">
+                        <img src="<?php echo esc_url($bg_image); ?>" class="cmr-dmc-featured-bg" alt="">
+                        <div class="cmr-dmc-featured-overlay"></div>
+                        <?php if ($logo_url): ?>
+                            <img src="<?php echo esc_url($logo_url); ?>" class="cmr-dmc-featured-logo" alt="">
+                        <?php endif; ?>
+                        <div class="cmr-dmc-featured-content">
+                            <div class="cmr-dmc-meta">
                                 <?php echo esc_html($publisher_name); ?> | Published <?php echo esc_html($date); ?>
                             </div>
-                            <h2 class="cmr-dmc-hero-title">
-                                <a href="<?php echo esc_url($link); ?>" target="_blank"><?php echo esc_html(get_the_title()); ?></a>
+                            <h2 class="cmr-dmc-featured-title">
+                                <a href="<?php echo esc_url($link); ?>" target="_blank" style="color: inherit; text-decoration: none;"><?php echo esc_html(get_the_title()); ?></a>
                             </h2>
                         </div>
                     </div>
