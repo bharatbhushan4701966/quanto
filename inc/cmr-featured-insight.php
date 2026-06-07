@@ -84,12 +84,20 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 margin: 0 0 20px 0;
                 line-height: 1.3;
                 letter-spacing: -0.5px;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
             }
             .cmr-fi-excerpt {
                 font-size: 18px;
                 color: #333;
                 line-height: 1.6;
                 margin-bottom: 30px;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
             }
             .cmr-fi-read-link {
                 display: inline-flex;

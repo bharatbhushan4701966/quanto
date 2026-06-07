@@ -9,10 +9,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
     function cmr_industry_intelligence_shortcode( $atts ) {
-        wp_enqueue_style( 'cmr-industry-intelligence' );
+        // We'll output styles inline to make it self-contained or rely on enqueue if it works better
+        // wp_enqueue_style( 'cmr-industry-intelligence' );
 
         $atts = shortcode_atts( array(
-            'posts_per_page' => 4, // 2 before CTA, 2 after CTA
+            'posts_per_page' => 6,
         ), $atts );
 
         $query_args = array(
@@ -28,66 +29,71 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
         ob_start();
         ?>
         <div class="cmr-industry-intel-section">
+            <div class="intel-header">
+                <h2>Latest Industry Intelligence</h2>
+                <p>Explore real-time insights and strategic analysis shaping industries and business decisions.</p>
+            </div>
+
             <?php if ( $insights_query->have_posts() ) : ?>
-                <div class="cmr-industry-intel-list">
+                <div class="intel-grid">
                     <?php
-                    $post_count = 0;
                     while ( $insights_query->have_posts() ) : $insights_query->the_post();
-                        $post_count++;
-                        
                         $post_title = get_the_title();
                         $post_link = get_permalink();
                         $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
                         if ( ! $thumbnail_url ) {
-                            $thumbnail_url = 'https://via.placeholder.com/800x400?text=No+Image';
+                            $thumbnail_url = 'https://via.placeholder.com/600x400?text=No+Image';
                         }
                         
                         // Categories / Tags
                         $category_name = 'Industry Intelligence';
-                        // Read Time
-                        $read_time = '4 min read';
+                        $terms = get_the_terms( get_the_ID(), 'category' );
+                        if ( $terms && ! is_wp_error( $terms ) ) {
+                            $category_name = $terms[0]->name;
+                        }
+
+                        // Calculate reading time
+                        $content = get_post_field( 'post_content', get_the_ID() );
+                        $word_count = str_word_count( strip_tags( $content ) );
+                        $read_time = ceil( $word_count / 200 );
+                        if ($read_time < 1) $read_time = 1;
                         ?>
                         
-                        <div class="intel-list-item">
-                            <div class="intel-item-image">
+                        <div class="intel-card">
+                            <div class="intel-card-img">
                                 <a href="<?php echo esc_url( $post_link ); ?>">
                                     <img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="<?php echo esc_attr( $post_title ); ?>" />
                                 </a>
                             </div>
-                            <div class="intel-item-content">
+                            <div class="intel-card-content">
                                 <div class="intel-meta">
-                                    <span class="intel-tag">&mdash; <?php echo esc_html( $category_name ); ?></span>
-                                    <span class="intel-read-time"><?php echo esc_html( $read_time ); ?></span>
+                                    <span class="intel-category">Industry Intelligence</span>
+                                    <span class="intel-read-time"><?php echo esc_html( $read_time ); ?> min read</span>
                                 </div>
                                 <h3 class="intel-title">
                                     <a href="<?php echo esc_url( $post_link ); ?>"><?php echo esc_html( $post_title ); ?></a>
                                 </h3>
-                                <p class="intel-excerpt">
-                                    Explore real-time trends, expert analysis, and strategic signals shaping the future of mobility and automotive ecosystems.
-                                </p>
-                                <a href="<?php echo esc_url( $post_link ); ?>" class="intel-more-link">More Details <i class="fa-solid fa-arrow-right" style="transform: rotate(-45deg);"></i></a>
+                                <div class="intel-excerpt">
+                                    <?php 
+                                    $excerpt = get_the_excerpt();
+                                    if ( empty( $excerpt ) ) {
+                                        $excerpt = wp_trim_words( $content, 12 );
+                                    } else {
+                                        $excerpt = wp_trim_words( $excerpt, 12 );
+                                    }
+                                    echo wp_kses_post( $excerpt ); 
+                                    ?>
+                                </div>
+                                <a href="<?php echo esc_url( $post_link ); ?>" class="intel-read-more">
+                                    More Details 
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                                        <polyline points="7 7 17 7 17 17"></polyline>
+                                    </svg>
+                                </a>
                             </div>
                         </div>
-
-                        <?php
-                        // Inject CTA after 2nd post
-                        if ( $post_count === 2 ) {
-                            ?>
-                            <div class="intel-cta-banner">
-                                <div class="intel-cta-title-wrap">
-                                    <h3 class="intel-cta-title">Need deeper insights?</h3>
-                                </div>
-                                <div class="intel-cta-text-wrap">
-                                    <p class="intel-cta-text">Talk to our analysts for tailored recommendations across your sector.</p>
-                                </div>
-                                <div class="intel-cta-button-wrap">
-                                    <a href="#" class="intel-cta-btn">Get Industry Insights <i class="fa-solid fa-arrow-right" style="transform: rotate(-45deg);"></i></a>
-                                </div>
-                            </div>
-                            <?php
-                        }
-                    endwhile;
-                    ?>
+                    <?php endwhile; ?>
                 </div>
                 
                 <div class="intel-load-more-wrap">
