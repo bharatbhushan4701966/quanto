@@ -63,14 +63,7 @@ if ( ! function_exists( 'cmr_dark_media_render_posts' ) ) {
             'value'   => $publisher,
             'compare' => '='
         );
-
-        if ( ! empty( $publisher ) ) {
-            $query_args['meta_query'][] = array(
-                'key'     => '_cmr_news_publisher_name',
-                'value'   => $publisher,
-                'compare' => '='
-            );
-        }
+    }
 
         $media_query = new WP_Query( $query_args );
 
