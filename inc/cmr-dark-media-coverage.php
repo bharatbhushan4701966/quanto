@@ -71,11 +71,11 @@ if ( ! function_exists( 'cmr_dark_media_render_posts' ) ) {
 
         if ( $media_query->have_posts() ) {
             $count = 0;
+            echo '<div class="cmr-news-grid">';
+            
             while ( $media_query->have_posts() ) {
                 $media_query->the_post();
                 $post_id = get_the_ID();
-                
-                // Fetch metadata
                 $bg_image = get_the_post_thumbnail_url( $post_id, 'large' );
                 $logo_id = get_post_meta( $post_id, '_cmr_news_source_logo_id', true );
                 $logo_url = $logo_id ? wp_get_attachment_url( $logo_id ) : '';
@@ -84,115 +84,57 @@ if ( ! function_exists( 'cmr_dark_media_render_posts' ) ) {
                 
                 if ( $document_id ) {
                     $link = wp_get_attachment_url( $document_id );
+                    $target = '_blank';
                 } elseif ( $ext_url ) {
                     $link = $ext_url;
+                    $target = '_blank';
                 } else {
                     $link = get_permalink( $post_id );
+                    $target = '_self';
                 }
                 
                 $reading_time = get_post_meta( $post_id, '_cmr_news_reading_time', true );
-                $publisher_name = get_post_meta( $post_id, '_cmr_news_publisher_name', true );
+                $publisher = get_post_meta( $post_id, '_cmr_news_publisher_name', true );
                 $date = get_the_date( 'M j, Y' );
 
-                if ( $count === 0 ) {
-                    // Render Featured Hero
-                    ?>
-                    <div class="cmr-dmc-featured">
-                        <img src="<?php echo esc_url($bg_image); ?>" class="cmr-dmc-featured-bg" alt="">
-                        <div class="cmr-dmc-featured-overlay"></div>
-                        <?php if ($logo_url): ?>
-                            <img src="<?php echo esc_url($logo_url); ?>" class="cmr-dmc-featured-logo" alt="">
-                        <?php endif; ?>
-                        <div class="cmr-dmc-featured-content">
-                            <div class="cmr-dmc-meta">
-                                <?php echo esc_html($publisher_name); ?> | Published <?php echo esc_html($date); ?>
-                            </div>
-                            <h2 class="cmr-dmc-featured-title">
-                                <a href="<?php echo esc_url($link); ?>" target="_blank" style="color: inherit; text-decoration: none;"><?php echo esc_html(get_the_title()); ?></a>
-                            </h2>
+                $card_class = ( $count === 0 ) ? 'cmr-card cmr-card-featured' : 'cmr-card cmr-card-standard';
+                ?>
+                <div class="<?php echo esc_attr( $card_class ); ?>">
+                    <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-card-link-wrapper">
+                        <div class="cmr-card-image-wrap">
+                            <?php if ( $bg_image ) : ?>
+                                <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
+                            <?php endif; ?>
+                            <?php if ( $logo_url ) : ?>
+                                <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo" alt="Source Logo">
+                            <?php endif; ?>
                         </div>
-                    </div>
-                    <?php
-                } elseif ( $count === 1 ) {
-                    // Start Grid
-                    echo '<div class="cmr-dmc-grid">';
-                    // Render first grid item
-                    ?>
-                    <div class="cmr-dmc-card">
-                        <a href="<?php echo esc_url($link); ?>" target="_blank" class="cmr-dmc-card-link-wrapper">
-                            <div class="cmr-dmc-card-img-wrap">
-                                <img src="<?php echo esc_url($bg_image); ?>" class="cmr-dmc-card-img" alt="">
-                                <?php if ($logo_url): ?>
-                                    <img src="<?php echo esc_url($logo_url); ?>" class="cmr-dmc-card-logo" alt="">
+                        <div class="cmr-card-content">
+                            <div class="cmr-card-meta">
+                                <div class="cmr-meta-left">
+                                    <?php if ( $publisher ) : ?>
+                                        <span class="cmr-publisher"><?php echo esc_html( $publisher ); ?></span> <span class="cmr-separator">|</span> 
+                                    <?php endif; ?>
+                                    <span class="cmr-date">Published <?php echo esc_html( $date ); ?></span>
+                                </div>
+                                <?php if ( $reading_time ) : ?>
+                                    <div class="cmr-meta-right">
+                                        <span class="cmr-read-time"><?php echo esc_html( $reading_time ); ?></span>
+                                    </div>
                                 <?php endif; ?>
                             </div>
-                            <div class="cmr-dmc-card-content">
-                                <div class="cmr-dmc-card-meta">
-                                    <div class="cmr-dmc-meta-left">
-                                        <?php if ( $publisher_name ) : ?>
-                                            <span class="cmr-dmc-publisher"><?php echo esc_html( $publisher_name ); ?></span> <span class="cmr-dmc-separator">|</span> 
-                                        <?php endif; ?>
-                                        <span class="cmr-dmc-date">Published <?php echo esc_html( $date ); ?></span>
-                                    </div>
-                                    <div class="cmr-dmc-meta-right">
-                                        <span class="cmr-dmc-read-time"><?php echo esc_html( $reading_time ); ?></span>
-                                    </div>
-                                </div>
-                                <h3 class="cmr-dmc-card-title"><?php echo esc_html(get_the_title()); ?></h3>
-                                <span class="cmr-dmc-read-coverage">
-                                    Read Coverage 
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="7" y1="17" x2="17" y2="7"></line>
-                                        <polyline points="7 7 17 7 17 17"></polyline>
-                                    </svg>
-                                </span>
-                            </div>
-                        </a>
-                    </div>
-                    <?php
-                } else {
-                    // Render Grid items
-                    ?>
-                    <div class="cmr-dmc-card">
-                        <a href="<?php echo esc_url($link); ?>" target="_blank" class="cmr-dmc-card-link-wrapper">
-                            <div class="cmr-dmc-card-img-wrap">
-                                <img src="<?php echo esc_url($bg_image); ?>" class="cmr-dmc-card-img" alt="">
-                                <?php if ($logo_url): ?>
-                                    <img src="<?php echo esc_url($logo_url); ?>" class="cmr-dmc-card-logo" alt="">
-                                <?php endif; ?>
-                            </div>
-                            <div class="cmr-dmc-card-content">
-                                <div class="cmr-dmc-card-meta">
-                                    <div class="cmr-dmc-meta-left">
-                                        <?php if ( $publisher_name ) : ?>
-                                            <span class="cmr-dmc-publisher"><?php echo esc_html( $publisher_name ); ?></span> <span class="cmr-dmc-separator">|</span> 
-                                        <?php endif; ?>
-                                        <span class="cmr-dmc-date">Published <?php echo esc_html( $date ); ?></span>
-                                    </div>
-                                    <div class="cmr-dmc-meta-right">
-                                        <span class="cmr-dmc-read-time"><?php echo esc_html( $reading_time ); ?></span>
-                                    </div>
-                                </div>
-                                <h3 class="cmr-dmc-card-title"><?php echo esc_html(get_the_title()); ?></h3>
-                                <span class="cmr-dmc-read-coverage">
-                                    Read Coverage 
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="7" y1="17" x2="17" y2="7"></line>
-                                        <polyline points="7 7 17 7 17 17"></polyline>
-                                    </svg>
-                                </span>
-                            </div>
-                        </a>
-                    </div>
-                    <?php
-                }
-
+                            <h3 class="cmr-card-title"><?php the_title(); ?></h3>
+                            <?php
+                            $arrow_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg';
+                            ?>
+                            <span class="cmr-read-coverage">Read Coverage <img src="<?php echo esc_url($arrow_url); ?>" class="cmr-arrow-icon" alt="Arrow"></span>
+                        </div>
+                    </a>
+                </div>
+                <?php
                 $count++;
             }
-            
-            if ($count > 1) {
-                echo '</div>'; // close grid
-            }
+            echo '</div>'; // Close cmr-news-grid
         } else {
             echo '<p style="color: #ccc;">No coverage found for this publisher.</p>';
         } 
@@ -207,6 +149,9 @@ if ( ! function_exists( 'cmr_dark_media_coverage_shortcode' ) ) {
         $atts = shortcode_atts( array(
             'posts_per_page' => 4,
         ), $atts );
+
+        // Enqueue the news styling
+        wp_enqueue_style( 'cmr-news-style', get_template_directory_uri() . '/assets/css/cmr-news.css', array(), time() );
 
         global $wpdb;
         $publishers = $wpdb->get_col("
@@ -277,194 +222,7 @@ if ( ! function_exists( 'cmr_dark_media_coverage_shortcode' ) ) {
                 opacity: 0.8;
             }
 
-            /* Featured Section */
-            .cmr-dmc-featured {
-                position: relative;
-                width: 100%;
-                height: 500px;
-                border-radius: 8px;
-                overflow: hidden;
-                margin-bottom: 20px;
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-end;
-            }
-            .cmr-dmc-featured img.cmr-dmc-featured-bg {
-                position: absolute;
-                top: 0; left: 0; width: 100%; height: 100%;
-                object-fit: cover;
-                z-index: 1;
-            }
-            .cmr-dmc-featured-overlay {
-                position: absolute;
-                top: 0; left: 0; width: 100%; height: 100%;
-                background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 40%, transparent 100%);
-                z-index: 2;
-            }
-            .cmr-dmc-featured-logo {
-                position: absolute;
-                top: 30px;
-                left: 30px;
-                width: 50px;
-                height: 50px;
-                object-fit: contain;
-                z-index: 3;
-                border-radius: 8px;
-            }
-            .cmr-dmc-featured-content {
-                position: relative;
-                z-index: 3;
-                padding: 40px;
-                max-width: 800px;
-            }
-            .cmr-dmc-meta {
-                font-size: 13px;
-                color: #ccc;
-                margin-bottom: 15px;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-            }
-            .cmr-dmc-featured-title {
-                font-size: 32px;
-                font-weight: 700;
-                color: #fff;
-                line-height: 1.3;
-                margin: 0 0 20px 0;
-            }
-            .cmr-dmc-read-link {
-                color: #fff;
-                font-size: 14px;
-                font-weight: 600;
-                text-decoration: none;
-                display: inline-flex;
-                align-items: center;
-                gap: 5px;
-                border-bottom: 1.5px solid #fff;
-                padding-bottom: 2px;
-                transition: opacity 0.3s;
-            }
-            .cmr-dmc-read-link:hover {
-                opacity: 0.8;
-            }
-            .cmr-dmc-read-link svg {
-                width: 12px; height: 12px;
-            }
 
-            /* Grid Section */
-            .cmr-dmc-grid {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 20px;
-            }
-            @media (max-width: 992px) {
-                .cmr-dmc-grid {
-                    grid-template-columns: repeat(2, 1fr);
-                }
-            }
-            @media (max-width: 768px) {
-                .cmr-dmc-grid {
-                    grid-template-columns: 1fr;
-                }
-                .cmr-dmc-featured {
-                    height: 400px;
-                }
-                .cmr-dmc-featured-title {
-                    font-size: 24px;
-                }
-                .cmr-dmc-featured-content {
-                    padding: 20px;
-                }
-                .cmr-dmc-featured-logo {
-                    top: 20px; left: 20px;
-                }
-            }
-            .cmr-dmc-card {
-                display: flex;
-                flex-direction: column;
-            }
-            .cmr-dmc-card-link-wrapper {
-                text-decoration: none;
-                display: flex;
-                flex-direction: column;
-                height: 100%;
-                color: #fff;
-            }
-            .cmr-dmc-card-img-wrap {
-                position: relative;
-                width: 100%;
-                aspect-ratio: 16 / 11;
-                border-radius: 8px;
-                overflow: hidden;
-                margin-bottom: 20px;
-            }
-            .cmr-dmc-card-img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                transition: transform 0.3s ease;
-            }
-            .cmr-dmc-card-link-wrapper:hover .cmr-dmc-card-img {
-                transform: scale(1.05);
-            }
-            .cmr-dmc-card-logo {
-                position: absolute;
-                bottom: 15px;
-                left: 15px;
-                width: 45px;
-                height: 45px;
-                object-fit: contain;
-                z-index: 2;
-                border-radius: 6px;
-            }
-            .cmr-dmc-card-content {
-                display: flex;
-                flex-direction: column;
-                flex-grow: 1;
-            }
-            .cmr-dmc-card-meta {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                font-size: 13px;
-                color: #aaa;
-                margin-bottom: 12px;
-            }
-            .cmr-dmc-meta-left {
-                display: flex;
-                align-items: center;
-                gap: 5px;
-            }
-            .cmr-dmc-card-title {
-                font-size: 18px;
-                font-weight: 600;
-                color: #fff;
-                line-height: 1.4;
-                margin: 0 0 20px 0;
-            }
-            .cmr-dmc-read-coverage {
-                display: inline-flex;
-                align-items: center;
-                gap: 6px;
-                font-size: 14px;
-                font-weight: 600;
-                color: #fff;
-                border-bottom: 1.5px solid #fff;
-                padding-bottom: 2px;
-                margin-top: auto;
-                align-self: flex-start;
-                transition: opacity 0.3s;
-            }
-            .cmr-dmc-read-coverage svg {
-                width: 12px; height: 12px;
-                transition: transform 0.3s ease;
-            }
-            .cmr-dmc-card-link-wrapper:hover .cmr-dmc-read-coverage {
-                opacity: 0.8;
-            }
-            .cmr-dmc-card-link-wrapper:hover .cmr-dmc-read-coverage svg {
-                transform: translate(2px, -2px);
-            }
 
             .cmr-dmc-content-area {
                 transition: opacity 0.3s ease;
@@ -492,7 +250,7 @@ if ( ! function_exists( 'cmr_dark_media_coverage_shortcode' ) ) {
                 </a>
             </div>
 
-            <div class="cmr-dmc-content-area" id="cmr-dmc-content-<?php echo esc_attr($atts['posts_per_page']); ?>">
+            <div class="cmr-dmc-content-area cmr-news-container cmr-news-black-bg" style="padding: 0; background-color: transparent !important;" id="cmr-dmc-content-<?php echo esc_attr($atts['posts_per_page']); ?>">
                 <?php echo cmr_dark_media_render_posts('', $atts['posts_per_page']); ?>
             </div>
             
