@@ -1,0 +1,377 @@
+<?php
+/**
+ * Shortcode for Featured Insight Carousel
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
+    function cmr_featured_insight_shortcode( $atts ) {
+        $atts = shortcode_atts( array(
+            'post_type'      => 'cmr_news',
+            'posts_per_page' => 5,
+        ), $atts );
+
+        $query_args = array(
+            'post_type'      => $atts['post_type'],
+            'posts_per_page' => $atts['posts_per_page'],
+            'post_status'    => 'publish',
+            'orderby'        => 'date',
+            'order'          => 'DESC',
+        );
+
+        $featured_query = new WP_Query( $query_args );
+
+        if ( ! $featured_query->have_posts() ) {
+            return '<p>No featured insights found.</p>';
+        }
+
+        $posts_data = array();
+        while ( $featured_query->have_posts() ) {
+            $featured_query->the_post();
+            
+            $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+            if ( ! $thumbnail_url ) {
+                $thumbnail_url = 'https://via.placeholder.com/1200x800?text=Featured+Image';
+            }
+            
+            // Categories
+            $category_name = 'Industry Intelligence';
+            $badge_name = 'Trends';
+            $terms = get_the_terms( get_the_ID(), 'category' );
+            if ( $terms && ! is_wp_error( $terms ) ) {
+                $category_name = $terms[0]->name;
+                $badge_name = $terms[0]->name;
+            }
+
+            // Read time calculation
+            $content = get_post_field( 'post_content', get_the_ID() );
+            $word_count = str_word_count( strip_tags( $content ) );
+            $read_time = ceil( $word_count / 200 );
+            if ($read_time < 1) $read_time = 1;
+
+            // Excerpt
+            $excerpt = get_the_excerpt();
+            if ( empty( $excerpt ) ) {
+                $excerpt = wp_trim_words( $content, 20 );
+            } else {
+                $excerpt = wp_trim_words( $excerpt, 20 );
+            }
+
+            $posts_data[] = array(
+                'title'       => get_the_title(),
+                'link'        => get_permalink(),
+                'image'       => $thumbnail_url,
+                'category'    => $category_name,
+                'badge'       => $badge_name,
+                'read_time'   => $read_time,
+                'excerpt'     => wp_kses_post( $excerpt ),
+            );
+        }
+        wp_reset_postdata();
+
+        $slider_id = 'cmr-fi-' . wp_rand(1000, 9999);
+
+        ob_start();
+        ?>
+        <style>
+            .cmr-fi-carousel-wrapper {
+                font-family: 'Instrument Sans', sans-serif !important;
+                max-width: 1280px;
+                margin: 50px auto;
+                padding: 0 20px;
+                overflow: hidden;
+            }
+            .cmr-fi-header {
+                margin-bottom: 30px;
+            }
+            .cmr-fi-header h2 {
+                font-size: 36px;
+                font-weight: 700;
+                color: #111;
+                margin: 0 0 10px 0;
+                letter-spacing: -1px;
+            }
+            .cmr-fi-header p {
+                font-size: 16px;
+                color: #555;
+                margin: 0;
+            }
+            
+            .cmr-fi-slider-container {
+                position: relative;
+                width: 100%;
+                height: 550px;
+                overflow: hidden;
+            }
+            
+            .cmr-fi-track {
+                display: flex;
+                height: 100%;
+                transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+                gap: 20px;
+            }
+            
+            .cmr-fi-slide {
+                flex: 0 0 85%; /* Shows part of the next slide */
+                height: 100%;
+                position: relative;
+                border-radius: 4px;
+                overflow: hidden;
+                background-size: cover;
+                background-position: center;
+                transition: opacity 0.5s ease;
+            }
+            
+            @media (max-width: 992px) {
+                .cmr-fi-slide {
+                    flex: 0 0 100%;
+                }
+            }
+
+            .cmr-fi-slide::before {
+                content: '';
+                position: absolute;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.1) 100%);
+            }
+            
+            .cmr-fi-top-bar {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 25%;
+                height: 6px;
+                background: #00D2B9; /* Cyan color */
+                z-layer: 2;
+            }
+
+            .cmr-fi-badge-pill {
+                position: absolute;
+                top: 30px;
+                left: 40px;
+                background: #fff;
+                color: #111;
+                padding: 6px 20px;
+                border-radius: 30px;
+                font-size: 13px;
+                font-weight: 600;
+                z-index: 2;
+            }
+
+            .cmr-fi-content-box {
+                position: absolute;
+                bottom: 40px;
+                left: 40px;
+                right: 40px;
+                z-index: 2;
+                max-width: 700px;
+            }
+            
+            @media (max-width: 768px) {
+                .cmr-fi-badge-pill { top: 20px; left: 20px; }
+                .cmr-fi-content-box { bottom: 20px; left: 20px; right: 20px; }
+                .cmr-fi-slider-container { height: 450px; }
+            }
+
+            .cmr-fi-meta-row {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                color: #eee;
+                font-size: 14px;
+                margin-bottom: 15px;
+            }
+            .cmr-fi-meta-row::before {
+                content: '';
+                display: block;
+                width: 30px;
+                height: 1px;
+                background: #ccc;
+            }
+
+            .cmr-fi-slide-title {
+                font-size: 28px;
+                font-weight: 700;
+                color: #fff;
+                margin: 0 0 15px 0;
+                line-height: 1.3;
+                letter-spacing: -0.5px;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            .cmr-fi-slide-excerpt {
+                font-size: 15px;
+                color: #ddd;
+                line-height: 1.6;
+                margin-bottom: 25px;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            .cmr-fi-more-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 15px;
+                font-weight: 700;
+                color: #fff;
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+            .cmr-fi-more-link:hover {
+                color: #00D2B9;
+            }
+            .cmr-fi-more-link svg {
+                width: 14px;
+                height: 14px;
+                transition: transform 0.3s ease;
+            }
+            .cmr-fi-more-link:hover svg {
+                transform: translate(3px, -3px);
+            }
+
+            /* Thumbnails */
+            .cmr-fi-thumbs {
+                position: absolute;
+                bottom: 30px;
+                right: 30px;
+                display: flex;
+                gap: 10px;
+                z-index: 10;
+            }
+            @media (max-width: 992px) {
+                .cmr-fi-thumbs {
+                    display: none; /* Hide thumbs on small screens */
+                }
+            }
+            
+            .cmr-fi-thumb {
+                width: 50px;
+                height: 50px;
+                border-radius: 6px;
+                overflow: hidden;
+                cursor: pointer;
+                opacity: 0.6;
+                transition: all 0.3s ease;
+                border: 2px solid transparent;
+            }
+            .cmr-fi-thumb img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+            .cmr-fi-thumb.active {
+                opacity: 1;
+                border-color: #00D2B9;
+                transform: scale(1.1);
+            }
+            .cmr-fi-thumb:hover {
+                opacity: 1;
+            }
+        </style>
+
+        <div class="cmr-fi-carousel-wrapper" id="<?php echo esc_attr( $slider_id ); ?>">
+            <div class="cmr-fi-header">
+                <h2>Featured Intelligence</h2>
+                <p>Curated insights and high-impact analysis shaping key industry conversations.</p>
+            </div>
+            
+            <div class="cmr-fi-slider-container">
+                <div class="cmr-fi-track">
+                    <?php foreach ( $posts_data as $index => $post ) : ?>
+                        <div class="cmr-fi-slide" style="background-image: url('<?php echo esc_url( $post['image'] ); ?>');">
+                            <div class="cmr-fi-top-bar"></div>
+                            <div class="cmr-fi-badge-pill"><?php echo esc_html( $post['badge'] ); ?></div>
+                            
+                            <div class="cmr-fi-content-box">
+                                <div class="cmr-fi-meta-row">
+                                    <span><?php echo esc_html( $post['category'] ); ?></span>
+                                    <span><?php echo esc_html( $post['read_time'] ); ?> min read</span>
+                                </div>
+                                <h3 class="cmr-fi-slide-title"><?php echo esc_html( $post['title'] ); ?></h3>
+                                <div class="cmr-fi-slide-excerpt"><?php echo wp_kses_post( $post['excerpt'] ); ?></div>
+                                <a href="<?php echo esc_url( $post['link'] ); ?>" class="cmr-fi-more-link">
+                                    More Details 
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                                        <polyline points="7 7 17 7 17 17"></polyline>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <div class="cmr-fi-thumbs">
+                    <?php foreach ( $posts_data as $index => $post ) : ?>
+                        <div class="cmr-fi-thumb <?php echo $index === 0 ? 'active' : ''; ?>" data-slide="<?php echo esc_attr($index); ?>">
+                            <img src="<?php echo esc_url( $post['image'] ); ?>" alt="Thumb">
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const slider = document.getElementById('<?php echo esc_js( $slider_id ); ?>');
+                if (!slider) return;
+
+                const track = slider.querySelector('.cmr-fi-track');
+                const thumbs = slider.querySelectorAll('.cmr-fi-thumb');
+                const slides = slider.querySelectorAll('.cmr-fi-slide');
+                
+                if (!track || slides.length === 0) return;
+
+                let currentIndex = 0;
+
+                function updateSlider(index) {
+                    currentIndex = index;
+                    
+                    // The width of a slide plus gap. It's 85% width + 20px gap.
+                    // Instead of exact px calculation, we can use percentage + gap logic or read clientWidth
+                    const slideWidth = slides[0].getBoundingClientRect().width;
+                    const gap = 20; 
+                    const moveAmount = (slideWidth + gap) * index;
+                    
+                    track.style.transform = 'translateX(-' + moveAmount + 'px)';
+
+                    // Update thumbs
+                    thumbs.forEach(function(thumb, i) {
+                        if (i === index) {
+                            thumb.classList.add('active');
+                        } else {
+                            thumb.classList.remove('active');
+                        }
+                    });
+                }
+
+                thumbs.forEach(function(thumb) {
+                    thumb.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-slide'));
+                        updateSlider(index);
+                    });
+                });
+                
+                // Recalculate on resize
+                window.addEventListener('resize', function() {
+                    updateSlider(currentIndex);
+                });
+            });
+        </script>
+        <?php
+        return ob_get_clean();
+    }
+}
+// Remove old shortcode if previously added
+remove_shortcode( 'cmr_featured_intelligence_carousel' );
+add_shortcode( 'cmr_featured_intelligence_carousel', 'cmr_featured_insight_shortcode' );
