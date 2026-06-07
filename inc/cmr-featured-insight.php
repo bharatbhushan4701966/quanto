@@ -30,7 +30,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 font-family: 'Instrument Sans', sans-serif !important;
                 max-width: 800px;
                 margin: 0 auto;
-                background: #fff;
+                background: #f5f5f5;
             }
             .cmr-fi-image-wrap {
                 position: relative;

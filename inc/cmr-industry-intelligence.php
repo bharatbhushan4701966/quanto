@@ -9,8 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
     function cmr_industry_intelligence_shortcode( $atts ) {
-        // We'll output styles inline to make it self-contained or rely on enqueue if it works better
-        // wp_enqueue_style( 'cmr-industry-intelligence' );
+        wp_enqueue_style( 'cmr-industry-intelligence' );
 
         $atts = shortcode_atts( array(
             'posts_per_page' => 6,
