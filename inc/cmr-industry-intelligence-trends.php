@@ -248,8 +248,9 @@ if ( ! function_exists( 'cmr_industry_intelligence_trends_shortcode' ) ) {
                 if (track && section) {
                     function getScrollAmount() {
                         let trackWidth = track.scrollWidth;
-                        // Move left enough to show the end of the track.
-                        return -(trackWidth - window.innerWidth + 40); 
+                        let containerWidth = track.parentElement.offsetWidth;
+                        // Move left by the difference between full track width and visible container width
+                        return -(trackWidth - containerWidth); 
                     }
                     
                     const tween = gsap.to(track, {
