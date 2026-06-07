@@ -109,12 +109,12 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-latest-insights.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-industry-intelligence.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-explore-sectors.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-stay-updated.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-featured-insight.php';
 // Removed require for cmr-intro-text.php
 
 // Save rating meta for cmr_news comments
 add_action('comment_post', 'cmr_save_comment_rating', 10, 2);
 function cmr_save_comment_rating( $comment_id, $comment_approved ) {
-    // Ensure rating is set and post type is cmr_news
     if ( isset( $_POST['rating'] ) && isset( $_POST['comment_post_ID'] ) ) {
         $post_id = intval( $_POST['comment_post_ID'] );
         if ( get_post_type( $post_id ) === 'cmr_news' ) {
