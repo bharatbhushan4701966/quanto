@@ -7,8 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
-    function cmr_featured_insight_shortcode( $atts ) {
+if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
+    function cmr_featured_intelligence_carousel_shortcode( $atts ) {
         $atts = shortcode_atts( array(
             'post_type'      => 'cmr_news',
             'posts_per_page' => 5,
@@ -374,4 +374,4 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
 }
 // Remove old shortcode if previously added
 remove_shortcode( 'cmr_featured_intelligence_carousel' );
-add_shortcode( 'cmr_featured_intelligence_carousel', 'cmr_featured_insight_shortcode' );
+add_shortcode( 'cmr_featured_intelligence_carousel', 'cmr_featured_intelligence_carousel_shortcode' );

@@ -49,44 +49,35 @@ if ( ! function_exists( 'cmr_industry_intelligence_trends_shortcode' ) ) {
                 margin: 0;
             }
             
+            .cmr-intel-trends-track-container {
+                overflow: hidden; /* Important for GSAP */
+                width: 100%;
+            }
+
             .cmr-intel-trends-track {
                 display: flex;
                 gap: 20px;
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-                padding-bottom: 20px; /* Space for scrollbar */
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: thin;
-                scrollbar-color: #ccc transparent;
-            }
-            
-            .cmr-intel-trends-track::-webkit-scrollbar {
-                height: 6px;
-            }
-            .cmr-intel-trends-track::-webkit-scrollbar-track {
-                background: transparent;
-            }
-            .cmr-intel-trends-track::-webkit-scrollbar-thumb {
-                background-color: #ccc;
-                border-radius: 10px;
+                width: max-content; /* Let it be as wide as needed for GSAP */
+                padding-bottom: 20px;
             }
 
             .cmr-intel-trends-card {
-                flex: 0 0 calc(33.333% - 14px); /* 3 cards visible on desktop minus gap */
-                scroll-snap-align: start;
+                /* We set fixed width for cards so they overflow the screen */
+                width: calc((1280px - 80px) / 3); /* approx 1/3 of max container width */
+                max-width: 400px; 
+                flex-shrink: 0;
                 display: flex;
                 flex-direction: column;
-                min-width: 300px;
             }
             
             @media (max-width: 992px) {
                 .cmr-intel-trends-card {
-                    flex: 0 0 calc(50% - 10px); /* 2 cards */
+                    width: calc(50vw - 30px);
                 }
             }
             @media (max-width: 768px) {
                 .cmr-intel-trends-card {
-                    flex: 0 0 85%; /* 1 card and peek of next */
+                    width: calc(85vw - 20px);
                 }
             }
 
@@ -185,64 +176,100 @@ if ( ! function_exists( 'cmr_industry_intelligence_trends_shortcode' ) ) {
             }
         </style>
 
-        <div class="cmr-intel-trends-wrapper">
+        <div class="cmr-intel-trends-wrapper" id="cmr-intel-trends-section">
             <div class="cmr-intel-trends-header">
                 <h2>Industry Intelligence Trends</h2>
                 <p>Track emerging shifts, growth signals, and market movements in real time.</p>
             </div>
             
             <?php if ( $trends_query->have_posts() ) : ?>
-                <div class="cmr-intel-trends-track">
-                    <?php
-                    while ( $trends_query->have_posts() ) : $trends_query->the_post();
-                        $post_title = get_the_title();
-                        $post_link = get_permalink();
-                        $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
-                        if ( ! $thumbnail_url ) {
-                            $thumbnail_url = 'https://via.placeholder.com/600x400?text=No+Image';
-                        }
-                        
-                        // Category
-                        $category_name = 'Industry Intelligence';
-                        $terms = get_the_terms( get_the_ID(), 'category' );
-                        if ( $terms && ! is_wp_error( $terms ) ) {
-                            $category_name = $terms[0]->name;
-                        }
+                <div class="cmr-intel-trends-track-container">
+                    <div class="cmr-intel-trends-track" id="cmr-intel-trends-track">
+                        <?php
+                        while ( $trends_query->have_posts() ) : $trends_query->the_post();
+                            $post_title = get_the_title();
+                            $post_link = get_permalink();
+                            $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+                            if ( ! $thumbnail_url ) {
+                                $thumbnail_url = 'https://via.placeholder.com/600x400?text=No+Image';
+                            }
+                            
+                            // Category
+                            $category_name = 'Industry Intelligence';
+                            $terms = get_the_terms( get_the_ID(), 'category' );
+                            if ( $terms && ! is_wp_error( $terms ) ) {
+                                $category_name = $terms[0]->name;
+                            }
 
-                        // Reading time
-                        $content = get_post_field( 'post_content', get_the_ID() );
-                        $word_count = str_word_count( strip_tags( $content ) );
-                        $read_time = ceil( $word_count / 200 );
-                        if ($read_time < 1) $read_time = 1;
-                        ?>
-                        
-                        <div class="cmr-intel-trends-card">
-                            <div class="cmr-intel-trends-img">
-                                <a href="<?php echo esc_url( $post_link ); ?>">
-                                    <img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="<?php echo esc_attr( $post_title ); ?>" loading="lazy" />
+                            // Reading time
+                            $content = get_post_field( 'post_content', get_the_ID() );
+                            $word_count = str_word_count( strip_tags( $content ) );
+                            $read_time = ceil( $word_count / 200 );
+                            if ($read_time < 1) $read_time = 1;
+                            ?>
+                            
+                            <div class="cmr-intel-trends-card">
+                                <div class="cmr-intel-trends-img">
+                                    <a href="<?php echo esc_url( $post_link ); ?>">
+                                        <img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="<?php echo esc_attr( $post_title ); ?>" loading="lazy" />
+                                    </a>
+                                </div>
+                                <div class="cmr-intel-trends-meta">
+                                    <span class="cmr-intel-trends-cat"><?php echo esc_html( $category_name ); ?></span>
+                                    <span><?php echo esc_html( $read_time ); ?> min read</span>
+                                </div>
+                                <h3 class="cmr-intel-trends-title">
+                                    <a href="<?php echo esc_url( $post_link ); ?>"><?php echo esc_html( $post_title ); ?></a>
+                                </h3>
+                                <a href="<?php echo esc_url( $post_link ); ?>" class="cmr-intel-trends-more">
+                                    More Details 
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                                        <polyline points="7 7 17 7 17 17"></polyline>
+                                    </svg>
                                 </a>
                             </div>
-                            <div class="cmr-intel-trends-meta">
-                                <span class="cmr-intel-trends-cat"><?php echo esc_html( $category_name ); ?></span>
-                                <span><?php echo esc_html( $read_time ); ?> min read</span>
-                            </div>
-                            <h3 class="cmr-intel-trends-title">
-                                <a href="<?php echo esc_url( $post_link ); ?>"><?php echo esc_html( $post_title ); ?></a>
-                            </h3>
-                            <a href="<?php echo esc_url( $post_link ); ?>" class="cmr-intel-trends-more">
-                                More Details 
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="7" y1="17" x2="17" y2="7"></line>
-                                    <polyline points="7 7 17 7 17 17"></polyline>
-                                </svg>
-                            </a>
-                        </div>
-                    <?php endwhile; ?>
+                        <?php endwhile; ?>
+                    </div>
                 </div>
             <?php else : ?>
                 <p>No trends found.</p>
             <?php endif; wp_reset_postdata(); ?>
         </div>
+
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+                
+                let track = document.getElementById("cmr-intel-trends-track");
+                let section = document.getElementById("cmr-intel-trends-section");
+                
+                if (track && section) {
+                    function getScrollAmount() {
+                        let trackWidth = track.scrollWidth;
+                        // Move left enough to show the end of the track.
+                        return -(trackWidth - window.innerWidth + 40); 
+                    }
+                    
+                    const tween = gsap.to(track, {
+                        x: getScrollAmount,
+                        ease: "none"
+                    });
+    
+                    ScrollTrigger.create({
+                        trigger: section,
+                        start: "center center", // Pin when section reaches center
+                        end: () => `+=${getScrollAmount() * -1}`, // Scroll length based on track width
+                        pin: true,
+                        animation: tween,
+                        scrub: 1,
+                        invalidateOnRefresh: true
+                    });
+                }
+            }
+        });
+        </script>
         <?php
         return ob_get_clean();
     }
