@@ -172,7 +172,7 @@ if ( ! function_exists( 'cmr_dark_media_coverage_shortcode' ) ) {
         <style>
             .cmr-dmc-wrapper {
                 font-family: 'Instrument Sans', sans-serif !important;
-                background-color: #111;
+                background-color: #000000;
                 color: #fff;
                 padding: 40px 20px;
                 border-radius: 12px;
