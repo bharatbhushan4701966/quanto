@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * CMR Post Sync API
  */
@@ -208,7 +208,11 @@ function cmr_sync_missing_posts_callback( WP_REST_Request $request ) {
     $created = 0;
     $log = array();
     
-    foreach ( $missing_slugs as $slug ) {
+    // To prevent server timeouts, we'll only process up to 20 missing posts per request.
+    // The user can simply refresh the endpoint to sync the next batch.
+    $batch_to_process = array_slice($missing_slugs, 0, 20);
+    
+    foreach ( $batch_to_process as $slug ) {
         // Fetch full post data for this slug
         $post_res = wp_remote_get( "https://cmrindia.com/wp-json/wp/v2/posts?_embed=true&slug={$slug}", array('timeout' => 60) );
         if ( is_wp_error( $post_res ) ) continue;
