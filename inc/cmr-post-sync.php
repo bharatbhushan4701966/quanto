@@ -19,6 +19,12 @@ add_action( 'rest_api_init', function () {
         'callback'            => 'cmr_sync_missing_posts_callback',
         'permission_callback' => '__return_true', 
     ) );
+    
+    register_rest_route( 'cmr/v1', '/migrate-pr', array(
+        'methods'             => 'GET',
+        'callback'            => 'cmr_migrate_press_releases_callback',
+        'permission_callback' => '__return_true',
+    ) );
 } );
 
 // Helper to require media functions for sideloading images

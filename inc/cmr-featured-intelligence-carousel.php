@@ -82,7 +82,7 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
                 max-width: 1280px;
                 margin: 50px auto;
                 padding: 0 20px;
-                overflow: hidden;
+                /* overflow: visible to allow thumbs to overlap */
             }
             .cmr-fi-header {
                 margin-bottom: 30px;
@@ -249,10 +249,12 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
 
             /* Thumbnails */
             .cmr-fi-thumbs {
-                position: absolute;
-                bottom: 30px;
-                right: 30px;
+                position: relative;
+                margin-top: -25px;
+                margin-bottom: -25px;
                 display: flex;
+                justify-content: flex-end;
+                padding-right: 30px;
                 gap: 10px;
                 z-index: 10;
             }
@@ -319,14 +321,14 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
                         </div>
                     <?php endforeach; ?>
                 </div>
+            </div>
 
-                <div class="cmr-fi-thumbs">
-                    <?php foreach ( $posts_data as $index => $post ) : ?>
-                        <div class="cmr-fi-thumb <?php echo $index === 0 ? 'active' : ''; ?>" data-slide="<?php echo esc_attr($index); ?>">
-                            <img src="<?php echo esc_url( $post['image'] ); ?>" alt="Thumb">
-                        </div>
-                    <?php endforeach; ?>
-                </div>
+            <div class="cmr-fi-thumbs">
+                <?php foreach ( $posts_data as $index => $post ) : ?>
+                    <div class="cmr-fi-thumb <?php echo $index === 0 ? 'active' : ''; ?>" data-slide="<?php echo esc_attr($index); ?>">
+                        <img src="<?php echo esc_url( $post['image'] ); ?>" alt="Thumb">
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
 
