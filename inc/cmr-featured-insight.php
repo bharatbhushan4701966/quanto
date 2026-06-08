@@ -118,8 +118,8 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 display: inline-flex;
                 align-items: center;
                 gap: 8px;
-                font-size: 16px;
-                font-weight: 700;
+                font-size: 15px;
+                font-weight: 600;
                 color: #111;
                 text-decoration: none;
                 transition: color 0.3s ease;
