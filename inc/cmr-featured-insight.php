@@ -28,18 +28,35 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
         <style>
             .cmr-fi-container {
                 font-family: 'Instrument Sans', sans-serif !important;
-                max-width: 800px;
+                width: 100%;
+                max-width: 447px;
+                height: 585px;
                 margin: 0 auto;
-                background: #f5f5f5;
+                background: #fff;
+                display: flex;
+                flex-direction: column;
+                border: 1px solid #eaeaea;
             }
             .cmr-fi-image-wrap {
                 position: relative;
                 width: 100%;
-                margin-bottom: 30px;
+                height: 342px;
+                margin-bottom: 0;
+                overflow: hidden;
+            }
+            .cmr-fi-content {
+                background: #F8F9FB;
+                height: 243px;
+                padding: 22px 23px;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
             }
             .cmr-fi-image-wrap img {
                 width: 100%;
-                height: auto;
+                height: 100%;
+                object-fit: cover;
                 display: block;
             }
             .cmr-fi-badge {
