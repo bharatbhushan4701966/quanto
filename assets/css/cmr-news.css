@@ -779,6 +779,7 @@
 /* Who we serve page specific black bg overrides */
 .cmr-news-container.cmr-news-black-bg {
     background-color: #000 !important;
+    padding: 0 !important;
 }
 .cmr-news-container.cmr-news-black-bg .cmr-news-tabs {
     display: none !important;

@@ -28,7 +28,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
         <style>
             .cmr-intel-list-wrapper {
                 font-family: 'Instrument Sans', sans-serif !important;
-                max-width: 1000px;
+                max-width: 1280px;
                 margin: 0 auto;
                 display: flex;
                 flex-direction: column;
@@ -178,6 +178,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
             .cmr-intel-list-load-more {
                 text-align: center;
                 margin-top: 20px;
+                width: 100%;
             }
             .cmr-intel-list-load-more button {
                 background: transparent;
@@ -185,11 +186,13 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 color: #111;
                 font-size: 14px;
                 font-weight: 600;
-                padding: 12px 60px;
+                padding: 14px 0;
                 border-radius: 40px;
                 cursor: pointer;
                 transition: all 0.3s ease;
                 font-family: inherit;
+                width: 100%;
+                display: block;
             }
             .cmr-intel-list-load-more button:hover {
                 background: #fafafa;
