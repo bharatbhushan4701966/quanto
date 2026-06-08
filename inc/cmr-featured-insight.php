@@ -30,7 +30,6 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 font-family: 'Instrument Sans', sans-serif !important;
                 width: 100%;
                 max-width: 447px;
-                height: 585px;
                 background: #fff;
                 display: flex;
                 flex-direction: column;
@@ -45,7 +44,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
             }
             .cmr-fi-content {
                 background: #F8F9FB;
-                height: 243px;
+                flex-grow: 1;
                 padding: 22px 23px;
                 box-sizing: border-box;
                 display: flex;
