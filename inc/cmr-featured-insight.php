@@ -31,7 +31,6 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 width: 100%;
                 max-width: 447px;
                 height: 585px;
-                margin: 0 auto;
                 background: #fff;
                 display: flex;
                 flex-direction: column;
@@ -151,7 +150,8 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
             }
         </style>
         <?php if ( $featured_query->have_posts() ) : ?>
-            <div class="cmr-fi-container">
+            <div class="cmr-fi-wrapper" style="display: flex; justify-content: flex-end; width: 100%; padding-right: 16px;">
+                <div class="cmr-fi-container">
                 <?php while ( $featured_query->have_posts() ) : $featured_query->the_post(); 
                     $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
                     if ( ! $thumbnail_url ) {
@@ -196,6 +196,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                     </a>
                 </div>
                 <?php endwhile; ?>
+                </div>
             </div>
         <?php else : ?>
             <p>No featured insight found.</p>
