@@ -484,7 +484,7 @@ add_action( 'rest_api_init', function () {
 function cmr_migrate_press_releases_callback() {
     $args = array(
         'post_type' => 'post',
-        'category_name' => 'press-releases', // The slug for Press Releases
+        'category_name' => 'pressreleases', // The correct slug for Press Releases
         'posts_per_page' => -1,
     );
     $query = new WP_Query($args);
