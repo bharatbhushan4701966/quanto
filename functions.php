@@ -250,7 +250,10 @@ function cmr_intro_text_shortcode_inline() {
 
 // CMR Market Updates Shortcode
 add_shortcode('cmr_market_updates', 'cmr_market_updates_shortcode');
-function cmr_market_updates_shortcode() {
+function cmr_market_updates_shortcode($atts) {
+    $atts = shortcode_atts( array(
+        'category' => ''
+    ), $atts );
     ob_start(); ?>
     <style>
         .cmr-market-updates-section {
@@ -406,57 +409,53 @@ function cmr_market_updates_shortcode() {
         </div>
         
         <div class="cmr-mu-right">
-            <a href="#" class="cmr-mu-item">
-                <div class="cmr-mu-item-content">
-                    <div class="cmr-mu-meta">
-                        <span class="cmr-mu-date">Nov 12 | 09:41 AM</span>
-                        <span class="cmr-mu-category policy">Policy Shift</span>
-                    </div>
-                    <h3 class="cmr-mu-item-title">EU passes new emissions targets for commercial fleets by 2030.</h3>
-                </div>
-                <div class="cmr-mu-arrow">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                </div>
-            </a>
+            <?php
+            $mu_args = array(
+                'post_type' => 'post',
+                'posts_per_page' => 4,
+            );
             
-            <a href="#" class="cmr-mu-item">
-                <div class="cmr-mu-item-content">
-                    <div class="cmr-mu-meta">
-                        <span class="cmr-mu-date">Nov 09 | 14:20 PM</span>
-                        <span class="cmr-mu-category investment">Investment Growth</span>
-                    </div>
-                    <h3 class="cmr-mu-item-title">Major OEM announces $2B investment in solid-state battery tech.</h3>
-                </div>
-                <div class="cmr-mu-arrow">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                </div>
-            </a>
+            // Allow category filtering if the user adds category="slug" to the shortcode
+            if ( isset($atts['category']) && !empty($atts['category']) ) {
+                $mu_args['category_name'] = $atts['category'];
+            }
             
-            <a href="#" class="cmr-mu-item">
-                <div class="cmr-mu-item-content">
-                    <div class="cmr-mu-meta">
-                        <span class="cmr-mu-date">Nov 05 | 11:05 AM</span>
-                        <span class="cmr-mu-category supply">Supply Risk</span>
-                    </div>
-                    <h3 class="cmr-mu-item-title">Lidar startup partners with leading tier-1 supplier amid chip shortages.</h3>
-                </div>
-                <div class="cmr-mu-arrow">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                </div>
-            </a>
+            $mu_query = new WP_Query($mu_args);
             
-            <a href="#" class="cmr-mu-item">
+            if ($mu_query->have_posts()) :
+                while ($mu_query->have_posts()) : $mu_query->the_post();
+                    $date = get_the_time('M d | h:i A');
+                    $categories = get_the_category();
+                    $cat_name = '';
+                    $cat_class = 'policy'; // default fallback color class
+                    if ( ! empty( $categories ) ) {
+                        $cat_name = esc_html( $categories[0]->name );
+                        // Assigning a random color class for visual variety just like the hardcoded ones
+                        $color_classes = array('policy', 'investment', 'supply');
+                        $cat_class = $color_classes[ array_rand($color_classes) ];
+                    }
+            ?>
+            <a href="<?php echo esc_url(get_permalink()); ?>" class="cmr-mu-item">
                 <div class="cmr-mu-item-content">
                     <div class="cmr-mu-meta">
-                        <span class="cmr-mu-date">Nov 05 | 11:05 AM</span>
-                        <span class="cmr-mu-category investment">Investment Growth</span>
+                        <span class="cmr-mu-date"><?php echo $date; ?></span>
+                        <?php if ( $cat_name ) : ?>
+                            <span class="cmr-mu-category <?php echo $cat_class; ?>"><?php echo $cat_name; ?></span>
+                        <?php endif; ?>
                     </div>
-                    <h3 class="cmr-mu-item-title">Who's Leading the Autonomous Vehicle Race in 2026?</h3>
+                    <h3 class="cmr-mu-item-title"><?php echo get_the_title(); ?></h3>
                 </div>
                 <div class="cmr-mu-arrow">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                 </div>
             </a>
+            <?php 
+                endwhile; 
+                wp_reset_postdata();
+            else : 
+                echo '<p>No updates found.</p>';
+            endif; 
+            ?>
         </div>
     </div>
     <?php return ob_get_clean();
