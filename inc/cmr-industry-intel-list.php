@@ -186,13 +186,16 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 color: #111;
                 font-size: 14px;
                 font-weight: 600;
-                padding: 14px 0;
+                padding: 0;
                 border-radius: 40px;
                 cursor: pointer;
                 transition: all 0.3s ease;
                 font-family: inherit;
-                width: 100%;
-                display: block;
+                width: 288px;
+                height: 54px;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
             }
             .cmr-intel-list-load-more button:hover {
                 background: #fafafa;

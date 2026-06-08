@@ -31,17 +31,6 @@ if ( ! function_exists( 'cmr_stay_updated_shortcode' ) ) {
             <div class="stay-updated-container">
                 <h2 class="stay-updated-title">Stay up to date with the latest from CMR -<br>research, perspectives and industry news.</h2>
                 
-                <div class="stay-updated-controls">
-                    <div class="stay-updated-filters">
-                        <button class="filter-pill active">
-                            <i class="fa-regular fa-newspaper"></i> Media Releases
-                        </button>
-                        <button class="filter-pill">
-                            <i class="fa-solid fa-chart-pie"></i> Quarterly Results
-                        </button>
-                    </div>
-                    <a href="#" class="explore-all-link">Explore All <i class="fa-solid fa-arrow-right" style="transform: rotate(-45deg);"></i></a>
-                </div>
 
                 <?php if ( $news_query->have_posts() ) : ?>
                     <div class="stay-updated-grid">
