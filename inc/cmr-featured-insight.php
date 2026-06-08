@@ -95,7 +95,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 color: #666;
             }
             .cmr-fi-title {
-                font-size: 32px;
+                font-size: 18px;
                 font-weight: 600;
                 color: #111;
                 margin: 0 0 20px 0;
@@ -107,7 +107,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 overflow: hidden;
             }
             .cmr-fi-excerpt {
-                font-size: 18px;
+                font-size: 15px;
                 color: #333;
                 line-height: 1.6;
                 margin-bottom: 30px;
@@ -183,7 +183,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                         if ( empty( $excerpt ) ) {
                             $excerpt = wp_trim_words( $content, 25 );
                         }
-                        echo wp_kses_post( $excerpt ); 
+                        echo esc_html( wp_strip_all_tags( $excerpt ) ); 
                         ?>
                     </div>
                     
