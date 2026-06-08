@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 add_action( 'rest_api_init', function () {
     register_rest_route( 'cmr/v1', '/sync-authors', array(
-        'methods'             => 'POST',
+        'methods'             => 'GET, POST',
         'callback'            => 'cmr_sync_authors_callback',
         'permission_callback' => '__return_true', // Open for ad-hoc syncing. Can be restricted to current_user_can('manage_options') later.
     ) );
