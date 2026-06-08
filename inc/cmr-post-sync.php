@@ -208,12 +208,10 @@ function cmr_sync_missing_posts_callback( WP_REST_Request $request ) {
     $created = 0;
     $log = array();
     
-    // To prevent server timeouts, we'll only process up to 20 missing posts per request.
-    // The user can simply refresh the endpoint to sync the next batch.
-    $batch_to_process = array_slice($missing_slugs, 0, 20);
+    // Only process up to 10 at a time to be absolutely safe against timeouts
+    $batch_to_process = array_slice($missing_slugs, 0, 10);
     
     foreach ( $batch_to_process as $slug ) {
-        // Fetch full post data for this slug
         $post_res = wp_remote_get( "https://cmrindia.com/wp-json/wp/v2/posts?_embed=true&slug={$slug}", array('timeout' => 60) );
         if ( is_wp_error( $post_res ) ) continue;
         
@@ -222,9 +220,8 @@ function cmr_sync_missing_posts_callback( WP_REST_Request $request ) {
         
         if ( empty( $post_data ) || ! is_array( $post_data ) ) continue;
         
-        $post = $post_data[0]; // The post object
+        $post = $post_data[0]; 
         
-        // --- Process Category and Author (Same as standard sync) ---
         $category_ids = array();
         if ( isset( $post->_embedded->{'wp:term'} ) && is_array( $post->_embedded->{'wp:term'} ) ) {
             $terms = $post->_embedded->{'wp:term'}[0]; 
@@ -235,9 +232,7 @@ function cmr_sync_missing_posts_callback( WP_REST_Request $request ) {
                         $category_ids[] = $local_term->term_id;
                     } else {
                         $new_term = wp_insert_term( $term->name, 'category', array( 'slug' => $term->slug ) );
-                        if ( ! is_wp_error( $new_term ) ) {
-                            $category_ids[] = $new_term['term_id'];
-                        }
+                        if ( ! is_wp_error( $new_term ) ) $category_ids[] = $new_term['term_id'];
                     }
                 }
             }
@@ -256,9 +251,7 @@ function cmr_sync_missing_posts_callback( WP_REST_Request $request ) {
                     'display_name' => sanitize_text_field( $author_data->name ),
                     'role'         => 'author',
                 ) );
-                if ( ! is_wp_error( $user_id ) ) {
-                    $author_id = $user_id;
-                }
+                if ( ! is_wp_error( $user_id ) ) $author_id = $user_id;
             }
         }
         
@@ -281,9 +274,7 @@ function cmr_sync_missing_posts_callback( WP_REST_Request $request ) {
                 $media = $post->_embedded->{'wp:featuredmedia'}[0];
                 if ( isset( $media->source_url ) ) {
                     $image_id = media_sideload_image( $media->source_url, $post_id, null, 'id' );
-                    if ( ! is_wp_error( $image_id ) ) {
-                        set_post_thumbnail( $post_id, $image_id );
-                    }
+                    if ( ! is_wp_error( $image_id ) ) set_post_thumbnail( $post_id, $image_id );
                 }
             }
             $created++;
@@ -293,11 +284,20 @@ function cmr_sync_missing_posts_callback( WP_REST_Request $request ) {
         }
     }
     
+    $remaining = count($missing_slugs) - count($batch_to_process);
+    $msg = "Synced {$created} missing posts. ";
+    if ($remaining > 0) {
+        $msg .= "There are still {$remaining} missing posts. Please refresh this page to sync the next batch.";
+    } else {
+        $msg .= "All missing posts have now been synced!";
+    }
+    
     return new WP_REST_Response( array(
         'success' => true,
-        'message' => "Found and synced missing posts.",
-        'missing_slugs' => array_values($missing_slugs),
-        'created' => $created,
+        'message' => $msg,
+        'missing_found' => count($missing_slugs),
+        'created_this_batch' => $created,
+        'remaining_missing' => max(0, $remaining),
         'log' => $log
     ), 200 );
 }
