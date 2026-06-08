@@ -413,6 +413,7 @@ function cmr_market_updates_shortcode($atts) {
             $mu_args = array(
                 'post_type' => 'post',
                 'posts_per_page' => 4,
+                'category_name' => 'market-updates', // Default category
             );
             
             // Allow category filtering if the user adds category="slug" to the shortcode
