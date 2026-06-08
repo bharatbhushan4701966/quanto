@@ -142,10 +142,19 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
                 position: absolute;
                 top: 0;
                 left: 0;
-                width: 25%;
+                width: 0;
                 height: 6px;
                 background: #00D2B9; /* Cyan color */
-                z-layer: 2;
+                z-index: 2;
+            }
+
+            @keyframes cmrFiProgress {
+                0% { width: 0; }
+                100% { width: 100%; }
+            }
+
+            .cmr-fi-slide.active .cmr-fi-top-bar {
+                animation: cmrFiProgress 5s linear forwards;
             }
 
             .cmr-fi-badge-pill {
@@ -333,6 +342,15 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
                 if (!track || slides.length === 0) return;
 
                 let currentIndex = 0;
+                let intervalId;
+
+                function startInterval() {
+                    clearInterval(intervalId);
+                    intervalId = setInterval(function() {
+                        let nextIndex = (currentIndex + 1) % slides.length;
+                        updateSlider(nextIndex);
+                    }, 5000);
+                }
 
                 function updateSlider(index) {
                     currentIndex = index;
@@ -345,6 +363,16 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
                     
                     track.style.transform = 'translateX(-' + moveAmount + 'px)';
 
+                    // Update slides active class to restart animation
+                    slides.forEach(function(slide, i) {
+                        slide.classList.remove('active');
+                        if (i === index) {
+                            // Trigger reflow to restart CSS animation
+                            void slide.offsetWidth;
+                            slide.classList.add('active');
+                        }
+                    });
+
                     // Update thumbs
                     thumbs.forEach(function(thumb, i) {
                         if (i === index) {
@@ -353,6 +381,8 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
                             thumb.classList.remove('active');
                         }
                     });
+
+                    startInterval();
                 }
 
                 thumbs.forEach(function(thumb) {
@@ -366,6 +396,10 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
                 window.addEventListener('resize', function() {
                     updateSlider(currentIndex);
                 });
+
+                // Initialize the slider
+                updateSlider(0);
+
             });
         </script>
         <?php
