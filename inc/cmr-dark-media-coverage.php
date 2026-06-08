@@ -23,59 +23,87 @@ if ( ! function_exists( 'cmr_dark_media_filter_ajax' ) ) {
 
 if ( ! function_exists( 'cmr_dark_media_render_posts' ) ) {
     function cmr_dark_media_render_posts( $publisher = '', $posts_per_page = 4 ) {
-        $query_args = array(
-        'post_type'      => 'cmr_news',
-        'posts_per_page' => $posts_per_page,
-        'post_status'    => 'publish',
-        // Sort by featured meta flag first, then date
-        'meta_query'     => array(
-            'relation' => 'AND',
-            array(
-                'relation' => 'OR',
-                'featured_clause' => array(
+        // Query for the featured post
+        $featured_args = array(
+            'post_type'      => 'cmr_news',
+            'posts_per_page' => 1,
+            'post_status'    => 'publish',
+            'meta_query'     => array(
+                array(
                     'key'     => '_cmr_news_is_featured',
-                    'compare' => 'EXISTS',
-                ),
-                'not_featured_clause' => array(
-                    'key'     => '_cmr_news_is_featured',
-                    'compare' => 'NOT EXISTS',
+                    'value'   => '1',
+                    'compare' => '='
                 )
-            )
-        ),
-        'orderby'        => array(
-            'featured_clause' => 'DESC',
-            'date'            => 'DESC'
-        ),
-        'tax_query'      => array(
-            'relation' => 'AND',
-            array(
-                'taxonomy' => 'cmr_news_category',
-                'field'    => 'slug',
-                'terms'    => array('media-releases', 'media-release', 'media_releases', 'media_release'),
-                'operator' => 'NOT IN'
             ),
-        ),
-    );
-
-    if ( ! empty( $publisher ) ) {
-        $query_args['meta_query'][] = array(
-            'key'     => '_cmr_news_publisher_name',
-            'value'   => $publisher,
-            'compare' => '='
+            'tax_query'      => array(
+                array(
+                    'taxonomy' => 'cmr_news_category',
+                    'field'    => 'slug',
+                    'terms'    => array('media-releases', 'media-release', 'media_releases', 'media_release'),
+                    'operator' => 'NOT IN'
+                ),
+            ),
         );
-    }
+        if ( ! empty( $publisher ) ) {
+            $featured_args['meta_query'][] = array(
+                'key'     => '_cmr_news_publisher_name',
+                'value'   => $publisher,
+                'compare' => '='
+            );
+        }
+        $featured_query = new WP_Query( $featured_args );
+        $featured_post_id = 0;
+        if ( $featured_query->have_posts() ) {
+            $featured_post_id = $featured_query->posts[0]->ID;
+        }
 
-        $media_query = new WP_Query( $query_args );
+        // Query for standard posts
+        $remaining_count = $featured_post_id ? $posts_per_page - 1 : $posts_per_page;
+        $standard_args = array(
+            'post_type'      => 'cmr_news',
+            'posts_per_page' => $remaining_count,
+            'post_status'    => 'publish',
+            'post__not_in'   => $featured_post_id ? array( $featured_post_id ) : array(),
+            'tax_query'      => array(
+                array(
+                    'taxonomy' => 'cmr_news_category',
+                    'field'    => 'slug',
+                    'terms'    => array('media-releases', 'media-release', 'media_releases', 'media_release'),
+                    'operator' => 'NOT IN'
+                ),
+            ),
+        );
+        if ( ! empty( $publisher ) ) {
+            $standard_args['meta_query'] = array(
+                array(
+                    'key'     => '_cmr_news_publisher_name',
+                    'value'   => $publisher,
+                    'compare' => '='
+                )
+            );
+        }
+        $standard_query = new WP_Query( $standard_args );
+
+        // Merge posts
+        $all_posts = array();
+        if ( $featured_post_id ) {
+            $all_posts[] = $featured_query->posts[0];
+        }
+        foreach ( $standard_query->posts as $p ) {
+            $all_posts[] = $p;
+        }
+
+        global $post;
 
         ob_start();
 
-        if ( $media_query->have_posts() ) {
+        if ( ! empty( $all_posts ) ) {
             $count = 0;
             echo '<div class="cmr-news-grid">';
             
-            while ( $media_query->have_posts() ) {
-                $media_query->the_post();
-                $post_id = get_the_ID();
+            foreach ( $all_posts as $post ) {
+                setup_postdata( $post );
+                $post_id = $post->ID;
                 $bg_image = get_the_post_thumbnail_url( $post_id, 'large' );
                 $logo_id = get_post_meta( $post_id, '_cmr_news_source_logo_id', true );
                 $logo_url = $logo_id ? wp_get_attachment_url( $logo_id ) : '';
@@ -135,6 +163,7 @@ if ( ! function_exists( 'cmr_dark_media_render_posts' ) ) {
                 $count++;
             }
             echo '</div>'; // Close cmr-news-grid
+            wp_reset_postdata();
         } else {
             echo '<p style="color: #ccc;">No coverage found for this publisher.</p>';
         } 
@@ -196,7 +225,7 @@ if ( ! function_exists( 'cmr_dark_media_coverage_shortcode' ) ) {
                 background: transparent;
                 border: 1px solid #333;
                 color: #ccc;
-                padding: 8px 24px;
+                padding: 4px 24px;
                 border-radius: 30px;
                 font-size: 14px;
                 cursor: pointer;
