@@ -428,12 +428,10 @@ function cmr_market_updates_shortcode($atts) {
                     $date = get_the_time('M d | h:i A');
                     $categories = get_the_category();
                     $cat_name = '';
-                    $cat_class = 'policy'; // default fallback color class
+                    $cat_class = 'policy'; // Consistent default color class
                     if ( ! empty( $categories ) ) {
                         $cat_name = esc_html( $categories[0]->name );
-                        // Assigning a random color class for visual variety just like the hardcoded ones
-                        $color_classes = array('policy', 'investment', 'supply');
-                        $cat_class = $color_classes[ array_rand($color_classes) ];
+                        // We removed random color classes so the same category always looks consistent.
                     }
             ?>
             <a href="<?php echo esc_url(get_permalink()); ?>" class="cmr-mu-item">
