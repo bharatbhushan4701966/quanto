@@ -151,10 +151,10 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 font-size: 15px;
                 line-height: 1.5;
                 margin: 0;
-                color: rgba(255,255,255,0.9);
+                color: rgba(255, 255, 255, 0.9);
                 max-width: 320px;
             }
-            .cmr-intel-list-banner-right .cmr-banner-btn {
+            .cmr-intel-list-banner-right .download-btn {
                 background: #fff;
                 color: #4B24B3;
                 text-decoration: none;
@@ -167,11 +167,11 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 gap: 8px;
                 transition: all 0.3s ease;
             }
-            .cmr-intel-list-banner-right .cmr-banner-btn:hover {
+            .cmr-intel-list-banner-right .download-btn:hover {
                 background: #f0f0f0;
                 transform: translateY(-2px);
             }
-            .cmr-intel-list-banner-right .cmr-banner-btn svg {
+            .cmr-intel-list-banner-right .download-btn svg {
                 width: 14px;
                 height: 14px;
             }
@@ -287,7 +287,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                                 <p>Talk to our analysts for tailored recommendations across your sector.</p>
                             </div>
                             <div class="cmr-intel-list-banner-right">
-                                <a href="/contact" class="cmr-banner-btn">
+                                <a href="/contact" class="download-btn">
                                     Get Industry Insights 
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                         <line x1="7" y1="17" x2="17" y2="7"></line>
