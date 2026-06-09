@@ -14,6 +14,7 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
 
         $atts = shortcode_atts( array(
             'posts_per_page' => 4,
+            'nav_title'      => 'Automotive',
         ), $atts );
 
         $query_args = array(
@@ -29,9 +30,18 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
         ob_start();
         ?>
         <div class="cmr-latest-insights-section">
-            <div class="cmr-insights-header">
-                <h2>Latest Insights</h2>
-                <p>Explore expert analysis, research reports, and real-time market signals shaping industries and business strategy.</p>
+            <div class="intel-nav-bar">
+                <div class="intel-nav-title">
+                    <?php echo esc_html( $atts['nav_title'] ); ?>
+                </div>
+                <div class="intel-nav-links">
+                    <a href="#">Overview</a>
+                    <a href="#">Insights</a>
+                    <a href="#">Reports</a>
+                    <a href="#">Market Updates</a>
+                    <a href="#">Newsroom</a>
+                    <a href="#">CMR in news</a>
+                </div>
             </div>
 
             <div class="cmr-insights-filters-bar">

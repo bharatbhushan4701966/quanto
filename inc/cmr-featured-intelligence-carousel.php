@@ -357,11 +357,19 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
                 function updateSlider(index) {
                     currentIndex = index;
                     
-                    // The width of a slide plus gap. It's 85% width + 20px gap.
-                    // Instead of exact px calculation, we can use percentage + gap logic or read clientWidth
+                    // The width of a slide plus gap.
                     const slideWidth = slides[0].getBoundingClientRect().width;
-                    const gap = 20; 
-                    const moveAmount = (slideWidth + gap) * index;
+                    const gap = 10; 
+                    let moveAmount = (slideWidth + gap) * index;
+                    
+                    // Prevent leaving a blank space on the right for the last slide
+                    const trackWidth = (slideWidth + gap) * slides.length - gap;
+                    const containerWidth = track.parentElement.clientWidth;
+                    const maxMoveAmount = Math.max(0, trackWidth - containerWidth);
+                    
+                    if (moveAmount > maxMoveAmount) {
+                        moveAmount = maxMoveAmount;
+                    }
                     
                     track.style.transform = 'translateX(-' + moveAmount + 'px)';
 
