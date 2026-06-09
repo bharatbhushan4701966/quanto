@@ -65,7 +65,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                     <a href="#">Overview</a>
                     <a href="#">Insights</a>
                     <a href="#">Reports</a>
-                    <a href="#">Market Updates</a>
+                    <a href="#cmr-market-updates">Market Updates</a>
                     <a href="#">Newsroom</a>
                     <a href="#">CMR in news</a>
                 </div>

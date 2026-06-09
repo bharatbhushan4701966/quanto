@@ -112,6 +112,49 @@ add_action('wp_footer', function() {
                 window.addEventListener('resize', updateSticky, { passive: true });
                 setTimeout(updateSticky, 100);
                 setTimeout(updateSticky, 1000); // Failsafe for late render
+                
+                // Add smooth scrolling for anchor links inside this navBar
+                const links = navBar.querySelectorAll('.intel-nav-links a[href^="#"]');
+                links.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        const targetId = this.getAttribute('href').substring(1);
+                        if (!targetId) return;
+                        
+                        const targetElement = document.getElementById(targetId);
+                        if (targetElement) {
+                            e.preventDefault();
+                            
+                            // Re-calculate the total sticky offset dynamically
+                            let stickyOffset = 0;
+                            const wpAdminBar = document.getElementById('wpadminbar');
+                            if (wpAdminBar && window.getComputedStyle(wpAdminBar).position === 'fixed') {
+                                stickyOffset = wpAdminBar.offsetHeight;
+                            }
+                            const headers = document.querySelectorAll('header, [data-elementor-type="header"], .elementor-location-header, .elementor-sticky--active');
+                            headers.forEach(h => {
+                                if (h === navBar || h.contains(navBar)) return;
+                                const hStyle = window.getComputedStyle(h);
+                                if (hStyle.position === 'fixed' || hStyle.position === 'sticky' || h.classList.contains('elementor-sticky--active')) {
+                                    const hRect = h.getBoundingClientRect();
+                                    if (hRect.top <= stickyOffset + 10 && hRect.bottom > stickyOffset && hRect.bottom < (window.innerHeight / 2)) {
+                                        stickyOffset = hRect.bottom;
+                                    }
+                                }
+                            });
+                            
+                            // The nav bar itself will be sticky, so we add its height to the offset
+                            const navHeight = navBar.offsetHeight || 60;
+                            const finalOffset = stickyOffset + navHeight + 20; // 20px extra breathing room
+                            
+                            const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+                            
+                            window.scrollTo({
+                                top: targetPosition - finalOffset,
+                                behavior: 'smooth'
+                            });
+                        }
+                    });
+                });
             });
         }
 

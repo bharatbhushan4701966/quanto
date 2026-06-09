@@ -396,7 +396,7 @@ function cmr_market_updates_shortcode($atts) {
         }
     </style>
 
-    <div class="cmr-market-updates-section">
+    <div id="cmr-market-updates" class="cmr-market-updates-section">
         <div class="cmr-mu-left">
             <h2 class="cmr-mu-title">Market Updates</h2>
             <p class="cmr-mu-desc">Need real-time market updates for your business?</p>
