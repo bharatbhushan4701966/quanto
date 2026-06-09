@@ -137,8 +137,8 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 margin: 10px 0;
             }
             .cmr-intel-list-banner-left h3 {
-                font-size: 28px;
-                font-weight: 700;
+                font-size: 45px;
+                font-weight: 600;
                 margin: 0;
                 color: #fff;
                 letter-spacing: -0.5px;
