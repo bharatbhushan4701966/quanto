@@ -16,12 +16,16 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
             'nav_title'      => 'Automotive',
         ), $atts );
 
+        $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+
         $query_args = array(
             'post_type'      => 'cmr_news',
             'posts_per_page' => $atts['posts_per_page'],
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
+            'category_name'  => 'infotech',
+            'paged'          => $paged
         );
 
         $insights_query = new WP_Query( $query_args );
@@ -105,9 +109,75 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                     <?php endwhile; ?>
                 </div>
                 
-                <div class="intel-load-more-wrap">
-                    <button class="intel-load-more-btn">Load More</button>
+                <div class="intel-pagination-wrap">
+                    <?php if ( $paged == 1 && $insights_query->max_num_pages > 1 ) : ?>
+                        <div class="intel-load-more-wrap" style="text-align: center; margin-top: 30px;">
+                            <button class="intel-load-more-btn" data-page="1" data-max="<?php echo esc_attr($insights_query->max_num_pages); ?>" data-ajaxurl="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" style="background: transparent; border: 1px solid #ccc; color: #111; font-size: 14px; font-weight: 600; border-radius: 40px; cursor: pointer; transition: all 0.3s ease; width: 288px; height: 54px; display: inline-flex; justify-content: center; align-items: center;">Load More</button>
+                        </div>
+                    <?php elseif ( $insights_query->max_num_pages > 1 ) : ?>
+                        <div class="intel-numeric-pagination" style="text-align: center; margin-top: 30px; display: flex; justify-content: center; gap: 10px;">
+                            <?php 
+                            echo paginate_links( array(
+                                'total'   => $insights_query->max_num_pages,
+                                'current' => $paged,
+                                'format'  => '?paged=%#%',
+                                'prev_text' => '&laquo; Prev',
+                                'next_text' => 'Next &raquo;',
+                            ) ); 
+                            ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
+
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const btn = document.querySelector('.intel-load-more-btn');
+                    if (btn) {
+                        let clickCount = 0;
+                        btn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            let page = parseInt(btn.getAttribute('data-page'));
+                            let max = parseInt(btn.getAttribute('data-max'));
+                            let ajaxurl = btn.getAttribute('data-ajaxurl');
+                            let nextPage = page + 1;
+                            
+                            btn.innerText = 'Loading...';
+                            btn.disabled = true;
+
+                            fetch(ajaxurl, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                body: 'action=cmr_load_more_intel&page=' + nextPage + '&base_url=' + encodeURIComponent(window.location.pathname)
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    document.querySelector('.intel-grid').insertAdjacentHTML('beforeend', data.data.html);
+                                    btn.setAttribute('data-page', nextPage);
+                                    clickCount++;
+                                    
+                                    if (nextPage >= max || clickCount >= 2) {
+                                        // Replace with pagination
+                                        document.querySelector('.intel-pagination-wrap').innerHTML = '<div class="intel-numeric-pagination" style="text-align: center; margin-top: 30px; display: flex; justify-content: center; gap: 10px;">' + data.data.pagination + '</div>';
+                                    } else {
+                                        btn.innerText = 'Load More';
+                                        btn.disabled = false;
+                                    }
+                                } else {
+                                    btn.innerText = 'No more posts';
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                btn.innerText = 'Load More';
+                                btn.disabled = false;
+                            });
+                        });
+                    }
+                });
+                </script>
                 
             <?php else : ?>
                 <p>No insights found.</p>
