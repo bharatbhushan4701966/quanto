@@ -328,8 +328,8 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
                     
                     if (totalSlides <= 1) return; // No need to pin if only 1 slide
                     
-                    // We pin the panel for 100vh per slide to give plenty of scroll duration
-                    const scrollDuration = (totalSlides - 1) * window.innerHeight;
+                    // Increase scroll duration significantly so the transitions happen slower
+                    const scrollDuration = (totalSlides * 1.5) * window.innerHeight;
                     
                     ScrollTrigger.create({
                         trigger: wrap,
