@@ -49,13 +49,26 @@ add_action('wp_footer', function() {
                     const placeholderRect = placeholder.getBoundingClientRect();
                     const navHeight = navBar.offsetHeight || 60;
                     
-                    let wpOffset = 0;
+                    let totalOffset = 0;
                     const wpAdminBar = document.getElementById('wpadminbar');
                     if (wpAdminBar && window.getComputedStyle(wpAdminBar).position === 'fixed') {
-                        wpOffset = wpAdminBar.offsetHeight;
+                        totalOffset = wpAdminBar.offsetHeight;
                     }
 
-                    if (placeholderRect.top <= wpOffset && sectionRect.bottom > (navHeight + wpOffset)) {
+                    // Dynamically find the bottom of any sticky Elementor main header
+                    const headers = document.querySelectorAll('header, [data-elementor-type="header"], .elementor-location-header, .elementor-sticky--active');
+                    headers.forEach(h => {
+                        if (h === navBar || h.contains(navBar)) return;
+                        const hRect = h.getBoundingClientRect();
+                        const hStyle = window.getComputedStyle(h);
+                        if ((hStyle.position === 'fixed' || hStyle.position === 'sticky' || h.classList.contains('elementor-sticky--active')) && hRect.top <= totalOffset + 10) {
+                            if (hRect.bottom > totalOffset && hRect.bottom < (window.innerHeight / 2)) {
+                                totalOffset = hRect.bottom;
+                            }
+                        }
+                    });
+
+                    if (placeholderRect.top <= totalOffset && sectionRect.bottom > (navHeight + totalOffset)) {
                         if (!navBar.classList.contains('intel-nav-fixed-js')) {
                             placeholder.style.height = navHeight + 'px';
                             const style = window.getComputedStyle(navBar);
@@ -65,10 +78,10 @@ add_action('wp_footer', function() {
                             document.body.appendChild(navBar);
                         }
                         
-                        if (sectionRect.bottom <= (navHeight + wpOffset)) {
+                        if (sectionRect.bottom <= (navHeight + totalOffset)) {
                             navBar.style.top = (sectionRect.bottom - navHeight) + 'px';
                         } else {
-                            navBar.style.top = wpOffset + 'px';
+                            navBar.style.top = totalOffset + 'px';
                         }
                     } else {
                         if (navBar.classList.contains('intel-nav-fixed-js')) {
