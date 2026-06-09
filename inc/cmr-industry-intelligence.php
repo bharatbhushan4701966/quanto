@@ -14,6 +14,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
         $atts = shortcode_atts( array(
             'posts_per_page' => 6,
             'nav_title'      => 'Automotive',
+            'show_nav'       => 'true',
         ), $atts );
 
         $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
@@ -39,6 +40,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
         ob_start();
         ?>
         <div class="cmr-industry-intel-section">
+            <?php if ( $atts['show_nav'] !== 'false' ) : ?>
             <div class="intel-nav-bar">
                 <div class="intel-nav-title">
                     <?php echo esc_html( $atts['nav_title'] ); ?>
@@ -52,6 +54,11 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                     <a href="#">CMR in news</a>
                 </div>
             </div>
+            <?php else : ?>
+            <h2 style="font-size: 36px; font-weight: 700; color: #111; margin: 0 0 30px 0; letter-spacing: -1px; font-family: 'Instrument Sans', sans-serif;">
+                <?php echo esc_html( $atts['nav_title'] ); ?>
+            </h2>
+            <?php endif; ?>
 
             <?php if ( $insights_query->have_posts() ) : ?>
                 <div class="intel-grid">
