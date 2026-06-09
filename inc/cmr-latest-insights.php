@@ -14,6 +14,7 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
 
         $atts = shortcode_atts( array(
             'posts_per_page' => 4,
+            'nav_title'      => 'Automotive',
             'section_title'  => 'Latest Insights',
             'section_desc'   => 'Explore expert analysis, research reports, and real-time market signals shaping industries and business strategy.',
         ), $atts );
@@ -31,7 +32,21 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
         ob_start();
         ?>
         <div class="cmr-latest-insights-section">
-            <div class="cmr-latest-insights-header" style="margin-bottom: 40px;">
+            <div class="cmr-latest-nav-bar intel-nav-bar">
+                <div class="intel-nav-title">
+                    <?php echo esc_html( $atts['nav_title'] ); ?>
+                </div>
+                <div class="intel-nav-links">
+                    <a href="#">Overview</a>
+                    <a href="#">Insights</a>
+                    <a href="#">Reports</a>
+                    <a href="#cmr-market-updates">Market Updates</a>
+                    <a href="#">Newsroom</a>
+                    <a href="#">CMR in news</a>
+                </div>
+            </div>
+
+            <div class="cmr-latest-insights-header" style="margin-bottom: 40px; margin-top: 50px;">
                 <?php if ( ! empty( $atts['section_title'] ) ) : ?>
                     <h2 class="cmr-latest-insights-title" style="font-size: 42px; font-weight: 700; color: #111; margin: 0 0 15px 0; letter-spacing: -1px;">
                         <?php echo esc_html( $atts['section_title'] ); ?>
@@ -129,41 +144,22 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
         </div>
         
         <style>
-        .cmr-filters-fixed-js {
-            position: fixed !important;
-            left: 0;
-            width: 100%;
-            z-index: 999999;
-            background: #fff;
-            padding-top: 15px !important;
-            padding-bottom: 15px !important;
-            padding-left: calc((100vw - 1280px) / 2) !important;
-            padding-right: calc((100vw - 1280px) / 2) !important;
-            margin-bottom: 0 !important;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            font-family: 'Instrument Sans', sans-serif !important;
-        }
-        @media (max-width: 1320px) {
-            .cmr-filters-fixed-js {
-                padding-left: 20px !important;
-                padding-right: 20px !important;
-            }
-        }
+        /* Reusing .intel-nav-fixed-js from cmr-sticky-nav-script.php for consistency */
         </style>
         
         <script>
         document.addEventListener('DOMContentLoaded', function() {
             const sections = document.querySelectorAll('.cmr-latest-insights-section');
             sections.forEach(section => {
-                const filterBar = section.querySelector('.cmr-insights-filters-bar');
-                if (!filterBar) return;
+                const navBar = section.querySelector('.cmr-latest-nav-bar');
+                if (!navBar) return;
                 
                 // Create a placeholder to prevent grid jumping when bar becomes fixed
                 const placeholder = document.createElement('div');
-                placeholder.className = 'cmr-insights-filters-placeholder';
+                placeholder.className = 'cmr-latest-nav-placeholder';
                 placeholder.style.height = '0px';
                 placeholder.style.marginBottom = '0px';
-                filterBar.parentNode.insertBefore(placeholder, filterBar);
+                navBar.parentNode.insertBefore(placeholder, navBar);
                 
                 function updateSticky() {
                     const sectionRect = section.getBoundingClientRect();
@@ -175,7 +171,7 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
                     }
                     const headers = document.querySelectorAll('header, [data-elementor-type="header"], .elementor-location-header, .elementor-sticky--active');
                     headers.forEach(h => {
-                        if (h === filterBar || h.contains(filterBar)) return;
+                        if (h === navBar || h.contains(navBar)) return;
                         const hStyle = window.getComputedStyle(h);
                         if (hStyle.position === 'fixed' || hStyle.position === 'sticky' || h.classList.contains('elementor-sticky--active')) {
                             const hRect = h.getBoundingClientRect();
@@ -186,27 +182,27 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
                     });
 
                     // Trigger sticky as soon as the section touches the sticky offset
-                    if (sectionRect.top <= stickyOffset && sectionRect.bottom > (filterBar.offsetHeight + stickyOffset)) {
-                        if (!filterBar.classList.contains('cmr-filters-fixed-js')) {
+                    if (sectionRect.top <= stickyOffset && sectionRect.bottom > (navBar.offsetHeight + stickyOffset)) {
+                        if (!navBar.classList.contains('intel-nav-fixed-js')) {
                             // Save original height
-                            placeholder.style.height = filterBar.offsetHeight + 'px';
-                            const style = window.getComputedStyle(filterBar);
+                            placeholder.style.height = navBar.offsetHeight + 'px';
+                            const style = window.getComputedStyle(navBar);
                             placeholder.style.marginBottom = style.marginBottom;
                             
-                            filterBar.classList.add('cmr-filters-fixed-js');
-                            document.body.appendChild(filterBar); // Escaping elementor transform context
+                            navBar.classList.add('intel-nav-fixed-js');
+                            document.body.appendChild(navBar); // Escaping elementor transform context
                         }
                         
-                        if (sectionRect.bottom <= (filterBar.offsetHeight + stickyOffset)) {
-                            filterBar.style.top = (sectionRect.bottom - filterBar.offsetHeight) + 'px';
+                        if (sectionRect.bottom <= (navBar.offsetHeight + stickyOffset)) {
+                            navBar.style.top = (sectionRect.bottom - navBar.offsetHeight) + 'px';
                         } else {
-                            filterBar.style.top = stickyOffset + 'px';
+                            navBar.style.top = stickyOffset + 'px';
                         }
                     } else {
-                        if (filterBar.classList.contains('cmr-filters-fixed-js')) {
-                            filterBar.classList.remove('cmr-filters-fixed-js');
-                            filterBar.style.top = '';
-                            placeholder.parentNode.insertBefore(filterBar, placeholder.nextSibling);
+                        if (navBar.classList.contains('intel-nav-fixed-js')) {
+                            navBar.classList.remove('intel-nav-fixed-js');
+                            navBar.style.top = '';
+                            placeholder.parentNode.insertBefore(navBar, placeholder.nextSibling);
                             placeholder.style.height = '0px';
                             placeholder.style.marginBottom = '0px';
                         }
