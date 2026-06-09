@@ -30,19 +30,9 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
         ob_start();
         ?>
         <div class="cmr-latest-insights-section">
-            <div class="intel-nav-bar">
-                <div class="intel-nav-title">
-                    <?php echo esc_html( $atts['nav_title'] ); ?>
-                </div>
-                <div class="intel-nav-links">
-                    <a href="#">Overview</a>
-                    <a href="#">Insights</a>
-                    <a href="#">Reports</a>
-                    <a href="#">Market Updates</a>
-                    <a href="#">Newsroom</a>
-                    <a href="#">CMR in news</a>
-                </div>
-            </div>
+            <h2 class="cmr-latest-insights-title" style="font-size: 36px; font-weight: 700; color: #111; margin: 0 0 30px 0; letter-spacing: -1px;">
+                <?php echo esc_html( $atts['nav_title'] ); ?>
+            </h2>
 
             <div class="cmr-insights-filters-bar">
                 <div class="cmr-insights-filters">
