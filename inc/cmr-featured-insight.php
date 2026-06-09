@@ -73,7 +73,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                margin-bottom: 20px;
+                margin-bottom: 7px;
                 font-size: 14px;
                 color: #666;
             }
@@ -96,7 +96,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 font-size: 18px;
                 font-weight: 600;
                 color: #111;
-                margin: 0 0 20px 0;
+                margin: 0 0 7px 0;
                 line-height: 1.3;
                 letter-spacing: -0.5px;
                 display: -webkit-box;
@@ -108,7 +108,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 font-size: 15px;
                 color: #333;
                 line-height: 1.6;
-                margin-bottom: 30px;
+                margin-bottom: 12px;
                 display: -webkit-box;
                 -webkit-line-clamp: 3;
                 -webkit-box-orient: vertical;

@@ -111,11 +111,11 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
                 display: flex;
                 height: 100%;
                 transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-                gap: 20px;
+                gap: 10px;
             }
             
             .cmr-fi-slide {
-                flex: 0 0 85%; /* Shows part of the next slide */
+                flex: 0 0 92%; /* Shows less of the next slide */
                 height: 100%;
                 position: relative;
                 border-radius: 4px;
@@ -254,7 +254,7 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
                 margin-bottom: -25px;
                 display: flex;
                 justify-content: flex-end;
-                padding-right: 30px;
+                padding-right: calc(8% + 30px);
                 gap: 10px;
                 z-index: 10;
             }

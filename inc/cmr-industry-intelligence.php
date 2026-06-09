@@ -13,6 +13,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
 
         $atts = shortcode_atts( array(
             'posts_per_page' => 6,
+            'nav_title'      => 'Automotive',
         ), $atts );
 
         $query_args = array(
@@ -28,9 +29,18 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
         ob_start();
         ?>
         <div class="cmr-industry-intel-section">
-            <div class="intel-header">
-                <h2>Latest Industry Intelligence</h2>
-                <p>Explore real-time insights and strategic analysis shaping industries and business decisions.</p>
+            <div class="intel-nav-bar">
+                <div class="intel-nav-title">
+                    <?php echo esc_html( $atts['nav_title'] ); ?>
+                </div>
+                <div class="intel-nav-links">
+                    <a href="#">Overview</a>
+                    <a href="#">Insights</a>
+                    <a href="#">Reports</a>
+                    <a href="#">Market Updates</a>
+                    <a href="#">Newsroom</a>
+                    <a href="#">CMR in news</a>
+                </div>
             </div>
 
             <?php if ( $insights_query->have_posts() ) : ?>
