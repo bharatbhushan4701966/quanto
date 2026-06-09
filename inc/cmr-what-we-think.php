@@ -176,11 +176,16 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             position: absolute; top: 0; left: 0; width: 100%;
             display: flex; gap: 24px;
             opacity: 0;
-            transition: opacity 0.5s ease;
+            transform: translateY(40px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
             pointer-events: none;
         }
         .cmr-wwt-slide:first-child { position: relative; }
-        .cmr-wwt-slide.cmr-wwt-show { opacity: 1; pointer-events: auto; }
+        .cmr-wwt-slide.cmr-wwt-show { 
+            opacity: 1; 
+            transform: translateY(0);
+            pointer-events: auto; 
+        }
 
         .cmr-wwt-card { flex: 1; min-width: 0; }
 
