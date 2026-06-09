@@ -87,12 +87,13 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
 
         .cmr-wwt-panel {
             width: 100%;
-            height: 100vh;
+            height: calc(100vh - 80px); /* Leave room for sticky headers */
             display: flex;
-            align-items: flex-start;
+            align-items: center; /* Vertically center the content */
             justify-content: center;
             z-index: 2;
-            padding-top: 100px; /* Space from top when pinned */
+            padding-top: 0;
+            padding-bottom: 20px;
         }
 
         .cmr-wwt-inner {
@@ -104,7 +105,7 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             margin: 0 auto;
         }
 
-        .cmr-wwt-header { margin-bottom: 30px; }
+        .cmr-wwt-header { margin-bottom: 20px; }
 
         .cmr-wwt-section-label {
             font-size: 14px;
@@ -112,12 +113,12 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             text-transform: uppercase;
             letter-spacing: 2.5px;
             color: #000;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             font-family: 'Instrument Sans', sans-serif;
         }
 
         .cmr-wwt-heading {
-            font-size: 48px;
+            font-size: 42px; /* Slightly smaller to save vertical space */
             font-weight: 600;
             line-height: 1.25;
             color: #1a1a2e;
@@ -130,8 +131,8 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
         .cmr-wwt-content {
             display: flex;
             align-items: flex-start;
-            gap: 200px;
-            margin-top: 40px;
+            gap: 100px; /* Reduced from 200px to give cards more room */
+            margin-top: 20px;
         }
 
         .cmr-wwt-left-col { flex: 0 0 240px; padding-top: 10px; }
@@ -140,7 +141,7 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             display: flex;
             align-items: center;
             gap: 14px;
-            padding: 14px 0;
+            padding: 10px 0;
             cursor: pointer;
         }
 
@@ -184,7 +185,7 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
         .cmr-wwt-card { flex: 1; min-width: 0; }
 
         .cmr-wwt-card-img {
-            height: 272px;
+            height: 220px; /* Reduced from 272px to ensure text below is always visible */
             width: 100%;
             max-width: 354px;
             overflow: hidden;
@@ -327,7 +328,7 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
                     
                     ScrollTrigger.create({
                         trigger: wrap,
-                        start: "top top+=100", // Account for sticky headers if any, or just top
+                        start: "top top+=80", // Account for sticky headers if any
                         end: "+=" + scrollDuration,
                         pin: panel,
                         scrub: true,
