@@ -38,16 +38,19 @@ add_action('wp_footer', function() {
             navBars.forEach(navBar => {
                 const section = navBar.closest('.cmr-industry-intel-section');
                 
-                // Wrap navBar in a placeholder
+                // Create a 0-height marker placeholder
                 const placeholder = document.createElement('div');
                 placeholder.className = 'intel-nav-placeholder';
+                placeholder.style.height = '0px';
+                placeholder.style.visibility = 'hidden';
                 navBar.parentNode.insertBefore(placeholder, navBar);
-                placeholder.appendChild(navBar);
+
+                let originalNavHeight = navBar.offsetHeight || 60;
+                let originalMarginBottom = window.getComputedStyle(navBar).marginBottom;
 
                 function updateSticky() {
                     const sectionRect = section.getBoundingClientRect();
                     const placeholderRect = placeholder.getBoundingClientRect();
-                    const navHeight = navBar.offsetHeight || 60;
                     
                     let totalOffset = 0;
                     const wpAdminBar = document.getElementById('wpadminbar');
@@ -58,7 +61,7 @@ add_action('wp_footer', function() {
                     // Dynamically find sticky headers
                     const headers = document.querySelectorAll('header, [data-elementor-type="header"], .elementor-location-header, .elementor-sticky--active');
                     headers.forEach(h => {
-                        if (h === navBar || h.contains(navBar) || placeholder.contains(h)) return;
+                        if (h === navBar || h.contains(navBar)) return;
                         const hRect = h.getBoundingClientRect();
                         const hStyle = window.getComputedStyle(h);
                         if ((hStyle.position === 'fixed' || hStyle.position === 'sticky' || h.classList.contains('elementor-sticky--active')) && hRect.top <= totalOffset + 10) {
@@ -69,15 +72,19 @@ add_action('wp_footer', function() {
                     });
 
                     // Trigger sticky when placeholder hits the top offset
-                    if (placeholderRect.top <= totalOffset && sectionRect.bottom > (navHeight + totalOffset)) {
+                    if (placeholderRect.top <= totalOffset && sectionRect.bottom > (originalNavHeight + totalOffset)) {
                         if (!navBar.classList.contains('intel-nav-fixed-js')) {
-                            placeholder.style.height = navHeight + 'px'; // Hold the space
+                            // Lock in the dimensions of the navBar into the placeholder before extracting it!
+                            placeholder.style.height = originalNavHeight + 'px';
+                            placeholder.style.marginBottom = originalMarginBottom;
+                            
                             navBar.classList.add('intel-nav-fixed-js');
+                            document.body.appendChild(navBar); // Move to body to escape Elementor transform context
                         }
                         
                         // Push up if section is scrolling away
-                        if (sectionRect.bottom <= (navHeight + totalOffset)) {
-                            navBar.style.top = (sectionRect.bottom - navHeight) + 'px';
+                        if (sectionRect.bottom <= (originalNavHeight + totalOffset)) {
+                            navBar.style.top = (sectionRect.bottom - originalNavHeight) + 'px';
                         } else {
                             navBar.style.top = totalOffset + 'px';
                         }
@@ -86,7 +93,13 @@ add_action('wp_footer', function() {
                         if (navBar.classList.contains('intel-nav-fixed-js')) {
                             navBar.classList.remove('intel-nav-fixed-js');
                             navBar.style.top = '';
-                            placeholder.style.height = ''; // Let it auto-size
+                            
+                            // Re-insert navBar immediately after the placeholder
+                            placeholder.parentNode.insertBefore(navBar, placeholder.nextSibling);
+                            
+                            // Reset placeholder to 0-height marker
+                            placeholder.style.height = '0px';
+                            placeholder.style.marginBottom = '0px';
                         }
                     }
                 }
