@@ -97,8 +97,8 @@ function cmr_load_more_intel_ajax() {
             'format'  => '?paged=%#%',
             'total'   => $insights_query->max_num_pages,
             'current' => $paged,
-            'prev_text' => '&laquo; Prev',
-            'next_text' => 'Next &raquo;',
+            'prev_text' => '<svg width="12" height="18" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 1L1 7L7 13" stroke="#6A35FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+            'next_text' => '<svg width="12" height="18" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L7 7L1 13" stroke="#6A35FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
         ) );
     }
 

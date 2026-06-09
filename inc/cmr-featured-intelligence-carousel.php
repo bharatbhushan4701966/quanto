@@ -253,7 +253,7 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
             /* Thumbnails */
             .cmr-fi-thumbs {
                 position: relative;
-                margin-top: -25px;
+                margin-top: -60px;
                 margin-bottom: -25px;
                 display: flex;
                 justify-content: flex-end;
