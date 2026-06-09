@@ -177,7 +177,7 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             display: flex; gap: 24px;
             opacity: 0;
             transform: translateY(40px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            transition: opacity 1.5s ease, transform 1.5s ease;
             pointer-events: none;
         }
         .cmr-wwt-slide:first-child { position: relative; }
@@ -328,8 +328,8 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
                     
                     if (totalSlides <= 1) return; // No need to pin if only 1 slide
                     
-                    // Increase scroll duration significantly so the transitions happen slower
-                    const scrollDuration = (totalSlides * 1.5) * window.innerHeight;
+                    // Set scroll duration (amount of pinning)
+                    const scrollDuration = totalSlides * window.innerHeight;
                     
                     ScrollTrigger.create({
                         trigger: wrap,
