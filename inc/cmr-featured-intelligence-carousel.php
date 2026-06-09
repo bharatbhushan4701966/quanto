@@ -124,6 +124,9 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
                 background-position: center;
                 transition: opacity 0.5s ease;
             }
+            .cmr-fi-slide:last-child {
+                flex: 0 0 100%;
+            }
             
             @media (max-width: 992px) {
                 .cmr-fi-slide {
@@ -357,19 +360,9 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
                 function updateSlider(index) {
                     currentIndex = index;
                     
-                    // The width of a slide plus gap.
                     const slideWidth = slides[0].getBoundingClientRect().width;
                     const gap = 10; 
-                    let moveAmount = (slideWidth + gap) * index;
-                    
-                    // Prevent leaving a blank space on the right for the last slide
-                    const trackWidth = (slideWidth + gap) * slides.length - gap;
-                    const containerWidth = track.parentElement.clientWidth;
-                    const maxMoveAmount = Math.max(0, trackWidth - containerWidth);
-                    
-                    if (moveAmount > maxMoveAmount) {
-                        moveAmount = maxMoveAmount;
-                    }
+                    const moveAmount = (slideWidth + gap) * index;
                     
                     track.style.transform = 'translateX(-' + moveAmount + 'px)';
 

@@ -263,7 +263,7 @@ function cmr_market_updates_shortcode($atts) {
             flex-wrap: wrap;
             gap: 60px;
             font-family: 'Instrument Sans', sans-serif !important;
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
             padding: 80px 20px;
             color: #111;

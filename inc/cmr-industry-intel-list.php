@@ -156,7 +156,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
             }
             .cmr-intel-list-banner-right .download-btn {
                 background: #fff;
-                color: #4B24B3;
+                color: #111;
                 text-decoration: none;
                 padding: 12px 24px;
                 border-radius: 40px;
