@@ -20,8 +20,14 @@ function cmr_load_more_intel_ajax() {
         'post_status'    => 'publish',
         'orderby'        => 'date',
         'order'          => 'DESC',
-        'category_name'  => 'infotech',
-        'paged'          => $paged
+        'paged'          => $paged,
+        'tax_query'      => array(
+            array(
+                'taxonomy' => 'category',
+                'field'    => 'slug',
+                'terms'    => 'infotech',
+            ),
+        ),
     );
 
     $insights_query = new WP_Query( $query_args );

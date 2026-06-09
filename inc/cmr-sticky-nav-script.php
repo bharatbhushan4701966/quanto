@@ -42,7 +42,8 @@ add_action('wp_footer', function() {
 
                 function updateSticky() {
                     const sectionRect = section.getBoundingClientRect();
-                    const navHeight = navBar.offsetHeight;
+                    const placeholderRect = placeholder.getBoundingClientRect();
+                    const navHeight = navBar.offsetHeight || 60;
                     
                     let wpOffset = 0;
                     const wpAdminBar = document.getElementById('wpadminbar');
@@ -50,13 +51,17 @@ add_action('wp_footer', function() {
                         wpOffset = wpAdminBar.offsetHeight;
                     }
 
-                    if (sectionRect.top <= wpOffset && sectionRect.bottom > (navHeight + wpOffset)) {
+                    // Use placeholderRect.top to know when to stick, since placeholder stays in flow
+                    if (placeholderRect.top <= wpOffset && sectionRect.bottom > (navHeight + wpOffset)) {
                         if (!navBar.classList.contains('intel-nav-fixed-js')) {
                             placeholder.style.height = navHeight + 'px';
                             placeholder.style.display = 'block';
                             const style = window.getComputedStyle(navBar);
                             placeholder.style.marginBottom = style.marginBottom;
+                            
                             navBar.classList.add('intel-nav-fixed-js');
+                            // Move to body to break out of z-index and overflow traps!
+                            document.body.appendChild(navBar);
                         }
                         
                         if (sectionRect.bottom <= (navHeight + wpOffset)) {
@@ -66,9 +71,11 @@ add_action('wp_footer', function() {
                         }
                     } else {
                         if (navBar.classList.contains('intel-nav-fixed-js')) {
-                            placeholder.style.display = 'none';
                             navBar.classList.remove('intel-nav-fixed-js');
                             navBar.style.top = '';
+                            // Move back to original location
+                            placeholder.parentNode.insertBefore(navBar, placeholder);
+                            placeholder.style.display = 'none';
                         }
                     }
                 }
