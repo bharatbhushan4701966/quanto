@@ -40,11 +40,13 @@ add_action('wp_footer', function() {
                 const section = navBar.parentElement;
                 const placeholder = document.createElement('div');
                 placeholder.className = 'intel-nav-placeholder';
-                placeholder.style.display = 'none';
+                placeholder.style.height = '0px';
+                placeholder.style.visibility = 'hidden';
                 navBar.parentNode.insertBefore(placeholder, navBar);
 
                 function updateSticky() {
                     const sectionRect = section.getBoundingClientRect();
+                    const placeholderRect = placeholder.getBoundingClientRect();
                     const navHeight = navBar.offsetHeight || 60;
                     
                     let wpOffset = 0;
@@ -53,10 +55,9 @@ add_action('wp_footer', function() {
                         wpOffset = wpAdminBar.offsetHeight;
                     }
 
-                    if (sectionRect.top <= wpOffset && sectionRect.bottom > (navHeight + wpOffset)) {
+                    if (placeholderRect.top <= wpOffset && sectionRect.bottom > (navHeight + wpOffset)) {
                         if (!navBar.classList.contains('intel-nav-fixed-js')) {
                             placeholder.style.height = navHeight + 'px';
-                            placeholder.style.display = 'block';
                             const style = window.getComputedStyle(navBar);
                             placeholder.style.marginBottom = style.marginBottom;
                             
@@ -74,7 +75,7 @@ add_action('wp_footer', function() {
                             navBar.classList.remove('intel-nav-fixed-js');
                             navBar.style.top = '';
                             placeholder.parentNode.insertBefore(navBar, placeholder);
-                            placeholder.style.display = 'none';
+                            placeholder.style.height = '0px';
                         }
                     }
                 }
