@@ -12,9 +12,11 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
         wp_enqueue_style( 'cmr-industry-intelligence' );
 
         $atts = shortcode_atts( array(
-            'posts_per_page' => 6,
-            'nav_title'      => 'Automotive',
-            'show_nav'       => 'true',
+            'posts_per_page'   => 6,
+            'nav_title'        => 'Automotive',
+            'show_nav'         => 'true',
+            'section_title'    => 'Latest Industry Intelligence',
+            'section_subtitle' => 'Explore real-time insights and strategic analysis shaping industries and business decisions.',
         ), $atts );
 
         $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
@@ -40,6 +42,20 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
         ob_start();
         ?>
         <div class="cmr-industry-intel-section">
+            
+            <?php if ( ! empty( $atts['section_title'] ) ) : ?>
+            <div class="cmr-intel-header" style="margin-bottom: 40px;">
+                <h2 style="font-size: 44px; font-weight: 700; color: #111; margin: 0 0 12px 0; letter-spacing: -1px; font-family: 'Instrument Sans', sans-serif; line-height: 1.2;">
+                    <?php echo esc_html( $atts['section_title'] ); ?>
+                </h2>
+                <?php if ( ! empty( $atts['section_subtitle'] ) ) : ?>
+                <p style="font-size: 16px; color: #333; margin: 0; font-family: 'Instrument Sans', sans-serif; max-width: 800px; line-height: 1.5;">
+                    <?php echo esc_html( $atts['section_subtitle'] ); ?>
+                </p>
+                <?php endif; ?>
+            </div>
+            <?php endif; ?>
+
             <?php if ( $atts['show_nav'] !== 'false' ) : ?>
             <div class="intel-nav-bar">
                 <div class="intel-nav-title">
@@ -54,10 +70,6 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                     <a href="#">CMR in news</a>
                 </div>
             </div>
-            <?php else : ?>
-            <h2 style="font-size: 36px; font-weight: 700; color: #111; margin: 0 0 30px 0; letter-spacing: -1px; font-family: 'Instrument Sans', sans-serif;">
-                <?php echo esc_html( $atts['nav_title'] ); ?>
-            </h2>
             <?php endif; ?>
 
             <?php if ( $insights_query->have_posts() ) : ?>
