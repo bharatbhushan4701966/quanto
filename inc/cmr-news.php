@@ -258,7 +258,7 @@ add_shortcode( 'cmr_news_tabs', 'cmr_news_tabs_shortcode' );
 function cmr_news_tabs_shortcode( $atts ) {
     $atts = shortcode_atts( array(
         'category' => '', // Comma separated slugs to include (e.g. 'cmr-in-news')
-        'exclude'  => '', // Comma separated slugs to exclude (e.g. 'media-releases')
+        'exclude'  => 'media-release', // Automatically exclude the duplicate singular category
     ), $atts, 'cmr_news_tabs' );
 
     // Enqueue frontend assets using get_template_directory_uri()
