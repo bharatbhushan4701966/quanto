@@ -34,15 +34,15 @@ add_action('wp_footer', function() {
         window.cmrStickyNavInitialized = true;
         
         function initStickyNav() {
-            // Only apply sticky behavior to the intel-nav-bar inside cmr-industry-intel-section
             const navBars = document.querySelectorAll('.cmr-industry-intel-section .intel-nav-bar');
             navBars.forEach(navBar => {
-                const section = navBar.parentElement;
+                const section = navBar.closest('.cmr-industry-intel-section');
+                
+                // Wrap navBar in a placeholder
                 const placeholder = document.createElement('div');
                 placeholder.className = 'intel-nav-placeholder';
-                placeholder.style.height = '0px';
-                placeholder.style.visibility = 'hidden';
                 navBar.parentNode.insertBefore(placeholder, navBar);
+                placeholder.appendChild(navBar);
 
                 function updateSticky() {
                     const sectionRect = section.getBoundingClientRect();
@@ -55,10 +55,10 @@ add_action('wp_footer', function() {
                         totalOffset = wpAdminBar.offsetHeight;
                     }
 
-                    // Dynamically find the bottom of any sticky Elementor main header
+                    // Dynamically find sticky headers
                     const headers = document.querySelectorAll('header, [data-elementor-type="header"], .elementor-location-header, .elementor-sticky--active');
                     headers.forEach(h => {
-                        if (h === navBar || h.contains(navBar)) return;
+                        if (h === navBar || h.contains(navBar) || placeholder.contains(h)) return;
                         const hRect = h.getBoundingClientRect();
                         const hStyle = window.getComputedStyle(h);
                         if ((hStyle.position === 'fixed' || hStyle.position === 'sticky' || h.classList.contains('elementor-sticky--active')) && hRect.top <= totalOffset + 10) {
@@ -68,33 +68,31 @@ add_action('wp_footer', function() {
                         }
                     });
 
+                    // Trigger sticky when placeholder hits the top offset
                     if (placeholderRect.top <= totalOffset && sectionRect.bottom > (navHeight + totalOffset)) {
                         if (!navBar.classList.contains('intel-nav-fixed-js')) {
-                            placeholder.style.height = navHeight + 'px';
-                            const style = window.getComputedStyle(navBar);
-                            placeholder.style.marginBottom = style.marginBottom;
-                            
+                            placeholder.style.height = navHeight + 'px'; // Hold the space
                             navBar.classList.add('intel-nav-fixed-js');
-                            document.body.appendChild(navBar);
                         }
                         
+                        // Push up if section is scrolling away
                         if (sectionRect.bottom <= (navHeight + totalOffset)) {
                             navBar.style.top = (sectionRect.bottom - navHeight) + 'px';
                         } else {
                             navBar.style.top = totalOffset + 'px';
                         }
                     } else {
+                        // Remove sticky
                         if (navBar.classList.contains('intel-nav-fixed-js')) {
                             navBar.classList.remove('intel-nav-fixed-js');
                             navBar.style.top = '';
-                            placeholder.parentNode.insertBefore(navBar, placeholder);
-                            placeholder.style.height = '0px';
+                            placeholder.style.height = ''; // Let it auto-size
                         }
                     }
                 }
 
-                window.addEventListener('scroll', updateSticky);
-                window.addEventListener('resize', updateSticky);
+                window.addEventListener('scroll', updateSticky, { passive: true });
+                window.addEventListener('resize', updateSticky, { passive: true });
                 setTimeout(updateSticky, 100);
                 setTimeout(updateSticky, 1000); // Failsafe for late render
             });
