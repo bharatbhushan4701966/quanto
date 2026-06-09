@@ -79,12 +79,10 @@ add_action('wp_footer', function() {
                         boundaryBottom = marketUpdatesSection.getBoundingClientRect().bottom;
                     }
 
-                    // Trigger sticky when placeholder hits the top offset + 40px buffer
-                    // This perfectly counteracts the 40px margin-bottom of the title, 
-                    // making the bar snap exactly when the title scrolls out of view (1 scroll earlier!)
-                    const triggerOffset = totalOffset + 40;
-
-                    if (placeholderRect.top <= triggerOffset && boundaryBottom > (originalNavHeight + totalOffset)) {
+                    // Trigger sticky as soon as the section touches the top offset!
+                    // Using sectionRect.top instead of placeholderRect.top means the user doesn't have 
+                    // to scroll past the title to activate it.
+                    if (sectionRect.top <= totalOffset && boundaryBottom > (originalNavHeight + totalOffset)) {
                         if (!navBar.classList.contains('intel-nav-fixed-js')) {
                             // Lock in the dimensions of the navBar into the placeholder before extracting it!
                             placeholder.style.height = originalNavHeight + 'px';
