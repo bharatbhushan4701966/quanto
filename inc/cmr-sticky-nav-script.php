@@ -71,12 +71,20 @@ add_action('wp_footer', function() {
                         }
                     });
 
+                    // Determine the boundary for the sticky nav. 
+                    // By default it's the current section, but we extend it to the market updates section if it exists.
+                    let boundaryBottom = sectionRect.bottom;
+                    const marketUpdatesSection = document.getElementById('cmr-market-updates');
+                    if (marketUpdatesSection) {
+                        boundaryBottom = marketUpdatesSection.getBoundingClientRect().bottom;
+                    }
+
                     // Trigger sticky when placeholder hits the top offset + 40px buffer
                     // This perfectly counteracts the 40px margin-bottom of the title, 
                     // making the bar snap exactly when the title scrolls out of view (1 scroll earlier!)
                     const triggerOffset = totalOffset + 40;
 
-                    if (placeholderRect.top <= triggerOffset && sectionRect.bottom > (originalNavHeight + totalOffset)) {
+                    if (placeholderRect.top <= triggerOffset && boundaryBottom > (originalNavHeight + totalOffset)) {
                         if (!navBar.classList.contains('intel-nav-fixed-js')) {
                             // Lock in the dimensions of the navBar into the placeholder before extracting it!
                             placeholder.style.height = originalNavHeight + 'px';
@@ -87,8 +95,8 @@ add_action('wp_footer', function() {
                         }
                         
                         // Push up if section is scrolling away
-                        if (sectionRect.bottom <= (originalNavHeight + totalOffset)) {
-                            navBar.style.top = (sectionRect.bottom - originalNavHeight) + 'px';
+                        if (boundaryBottom <= (originalNavHeight + totalOffset)) {
+                            navBar.style.top = (boundaryBottom - originalNavHeight) + 'px';
                         } else {
                             navBar.style.top = totalOffset + 'px';
                         }
