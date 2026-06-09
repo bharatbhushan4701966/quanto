@@ -20,6 +20,7 @@ add_action('wp_footer', function() {
         padding-right: calc((100vw - 1280px) / 2) !important;
         margin-bottom: 0 !important;
         box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        font-family: 'Instrument Sans', sans-serif !important;
     }
     @media (max-width: 1320px) {
         .intel-nav-fixed-js {
@@ -31,8 +32,10 @@ add_action('wp_footer', function() {
     <script>
     if (!window.cmrStickyNavInitialized) {
         window.cmrStickyNavInitialized = true;
-        document.addEventListener('DOMContentLoaded', function() {
-            const navBars = document.querySelectorAll('.intel-nav-bar');
+        
+        function initStickyNav() {
+            // Only apply sticky behavior to the intel-nav-bar inside cmr-industry-intel-section
+            const navBars = document.querySelectorAll('.cmr-industry-intel-section .intel-nav-bar');
             navBars.forEach(navBar => {
                 const section = navBar.parentElement;
                 const placeholder = document.createElement('div');
@@ -51,7 +54,6 @@ add_action('wp_footer', function() {
                         wpOffset = wpAdminBar.offsetHeight;
                     }
 
-                    // Use placeholderRect.top to know when to stick, since placeholder stays in flow
                     if (placeholderRect.top <= wpOffset && sectionRect.bottom > (navHeight + wpOffset)) {
                         if (!navBar.classList.contains('intel-nav-fixed-js')) {
                             placeholder.style.height = navHeight + 'px';
@@ -60,7 +62,6 @@ add_action('wp_footer', function() {
                             placeholder.style.marginBottom = style.marginBottom;
                             
                             navBar.classList.add('intel-nav-fixed-js');
-                            // Move to body to break out of z-index and overflow traps!
                             document.body.appendChild(navBar);
                         }
                         
@@ -73,7 +74,6 @@ add_action('wp_footer', function() {
                         if (navBar.classList.contains('intel-nav-fixed-js')) {
                             navBar.classList.remove('intel-nav-fixed-js');
                             navBar.style.top = '';
-                            // Move back to original location
                             placeholder.parentNode.insertBefore(navBar, placeholder);
                             placeholder.style.display = 'none';
                         }
@@ -83,8 +83,15 @@ add_action('wp_footer', function() {
                 window.addEventListener('scroll', updateSticky);
                 window.addEventListener('resize', updateSticky);
                 setTimeout(updateSticky, 100);
+                setTimeout(updateSticky, 1000); // Failsafe for late render
             });
-        });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initStickyNav);
+        } else {
+            initStickyNav();
+        }
     }
     </script>
     <?php

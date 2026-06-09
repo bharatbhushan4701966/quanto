@@ -15,7 +15,7 @@ function cmr_load_more_intel_ajax() {
     $base_url = isset( $_POST['base_url'] ) ? sanitize_text_field( $_POST['base_url'] ) : '/';
     
     $query_args = array(
-        'post_type'      => 'cmr_news',
+        'post_type'      => array( 'post', 'cmr_news' ),
         'posts_per_page' => 6,
         'post_status'    => 'publish',
         'orderby'        => 'date',

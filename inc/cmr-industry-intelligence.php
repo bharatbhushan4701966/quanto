@@ -19,7 +19,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
         $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 
         $query_args = array(
-            'post_type'      => 'cmr_news',
+            'post_type'      => array( 'post', 'cmr_news' ),
             'posts_per_page' => $atts['posts_per_page'],
             'post_status'    => 'publish',
             'orderby'        => 'date',
