@@ -172,7 +172,7 @@ function cmr_media_releases_general_shortcode( $atts ) {
             font-weight: 700;
             line-height: 1.1;
             margin: 0 0 20px 0;
-            letter-spacing: -1px;
+            letter-spacing: 1px;
             color: #111;
         }
 
@@ -193,38 +193,52 @@ function cmr_media_releases_general_shortcode( $atts ) {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: #6B3FA0;
-            color: #fff;
+            background-color: white !important;
+            border: 1px solid white !important;
+            color: #000000 !important;
             text-decoration: none;
-            padding: 14px 28px;
-            border-radius: 40px;
+            padding: 16px 28px !important;
+            border-radius: 50px !important;
             font-size: 15px;
             font-weight: 600;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
+        }
+        
+        .cmr-mrg-btn-primary svg path,
+        .cmr-mrg-btn-primary svg polyline,
+        .cmr-mrg-btn-primary svg line {
+            stroke: #000000 !important;
         }
         
         .cmr-mrg-btn-primary:hover {
-            background: #552f82;
-            color: #fff;
+            background-color: #f5f5f5 !important;
+            border-color: #f5f5f5 !important;
         }
 
         .cmr-mrg-btn-outline {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: transparent;
-            color: #111;
+            background-color: white !important;
+            border: 1px solid white !important;
+            color: #000000 !important;
             text-decoration: none;
-            padding: 14px 28px;
-            border-radius: 40px;
+            padding: 16px 28px !important;
+            border-radius: 50px !important;
             font-size: 15px;
             font-weight: 600;
-            border: 1px solid #111;
             transition: all 0.3s ease;
         }
 
+        .cmr-mrg-btn-outline svg path,
+        .cmr-mrg-btn-outline svg polyline,
+        .cmr-mrg-btn-outline svg line {
+            stroke: #000000 !important;
+        }
+
         .cmr-mrg-btn-outline:hover {
-            background: #f5f5f5;
+            background-color: #f5f5f5 !important;
+            border-color: #f5f5f5 !important;
         }
 
         /* Bottom Row Items */
@@ -351,7 +365,6 @@ function cmr_media_releases_general_shortcode( $atts ) {
                     <a href="<?php echo $top_post['pdf_link'] ? esc_url($top_post['pdf_link']) : '#'; ?>" 
                        class="cmr-mrg-btn-outline" 
                        id="cmr-mrg-main-pdf" 
-                       style="display: <?php echo $top_post['pdf_link'] ? 'inline-flex' : 'none'; ?>" 
                        target="_blank">
                         Download PDF
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
@@ -414,10 +427,10 @@ function cmr_media_releases_general_shortcode( $atts ) {
                         
                         if (data.pdf_link) {
                             mainPdf.href = data.pdf_link;
-                            mainPdf.style.display = 'inline-flex';
                         } else {
-                            mainPdf.style.display = 'none';
+                            mainPdf.href = '#';
                         }
+                        mainPdf.style.display = 'inline-flex';
                         
                         mainImg.style.opacity = 1;
                     }, 200);
