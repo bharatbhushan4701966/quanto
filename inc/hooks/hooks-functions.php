@@ -444,7 +444,13 @@
                 $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
                 $css_content = $css_file->get_content();
                 if ( ! empty( $css_content ) ) {
-                    echo '<style>' . $css_content . '</style>';
+                    echo '<style id="quanto-footer-css-inline">' . $css_content . '</style>';
+                } else {
+                    // Fallback to read from file directly
+                    $file_path = $css_file->get_path();
+                    if ( file_exists( $file_path ) ) {
+                        echo '<style id="quanto-footer-css-file">' . file_get_contents( $file_path ) . '</style>';
+                    }
                 }
             }
 
