@@ -109,3 +109,90 @@ function cmr_load_more_intel_ajax() {
         'pagination' => $pagination
     ) );
 }
+
+add_action( 'wp_ajax_cmr_load_more_media_releases', 'cmr_load_more_media_releases_ajax' );
+add_action( 'wp_ajax_nopriv_cmr_load_more_media_releases', 'cmr_load_more_media_releases_ajax' );
+
+function cmr_load_more_media_releases_ajax() {
+    $paged = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
+    $year  = isset( $_POST['year'] ) ? sanitize_text_field( $_POST['year'] ) : '';
+    $search = isset( $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : '';
+    
+    $args = array(
+        'post_type'      => 'cmr_news',
+        'posts_per_page' => 6,
+        'post_status'    => 'publish',
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+        'paged'          => $paged,
+    );
+
+    if ( ! empty( $year ) ) {
+        $args['date_query'] = array(
+            array(
+                'year'  => $year,
+            ),
+        );
+    }
+
+    if ( ! empty( $search ) ) {
+        $args['s'] = $search;
+    }
+
+    $query = new WP_Query( $args );
+
+    ob_start();
+    if ( $query->have_posts() ) {
+        while ( $query->have_posts() ) {
+            $query->the_post();
+            $post_id = get_the_ID();
+            $title = get_the_title();
+            $link = get_permalink();
+            $excerpt = wp_trim_words( get_the_excerpt(), 18 );
+            if ( empty($excerpt) ) {
+                $excerpt = wp_trim_words( get_post_field('post_content', $post_id), 18 );
+            }
+            $bg_image = get_the_post_thumbnail_url( $post_id, 'medium_large' );
+            if ( ! $bg_image ) {
+                $bg_image = 'https://via.placeholder.com/600x400';
+            }
+            
+            $content = get_post_field( 'post_content', $post_id );
+            $word_count = str_word_count( strip_tags( $content ) );
+            $read_time = ceil( $word_count / 200 );
+            if ($read_time < 1) $read_time = 1;
+            $date = get_the_date('d M Y');
+            ?>
+            <div class="cmr-mrg-card">
+                <div class="cmr-mrg-card-img-wrap">
+                    <a href="<?php echo esc_url($link); ?>">
+                        <img src="<?php echo esc_url($bg_image); ?>" alt="<?php echo esc_attr($title); ?>">
+                    </a>
+                </div>
+                <div class="cmr-mrg-card-meta">
+                    <div class="cmr-mrg-card-label">Press Release <span>|</span> <?php echo esc_html($date); ?></div>
+                    <div class="cmr-mrg-card-time"><?php echo esc_html($read_time); ?> min read</div>
+                </div>
+                <h3 class="cmr-mrg-card-title">
+                    <a href="<?php echo esc_url($link); ?>"><?php echo esc_html($title); ?></a>
+                </h3>
+                <p class="cmr-mrg-card-excerpt"><?php echo esc_html($excerpt); ?></p>
+                <a href="<?php echo esc_url($link); ?>" class="cmr-mrg-card-link">
+                    Read full Release 
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+            </div>
+            <?php
+        }
+    }
+    $html = ob_get_clean();
+
+    $has_more = $paged < $query->max_num_pages;
+
+    wp_reset_postdata();
+
+    wp_send_json_success( array(
+        'html' => $html,
+        'has_more' => $has_more
+    ) );
+}

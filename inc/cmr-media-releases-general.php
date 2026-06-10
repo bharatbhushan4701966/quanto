@@ -346,7 +346,7 @@ function cmr_media_releases_general_shortcode( $atts ) {
                 <div class="cmr-mrg-actions">
                     <a href="<?php echo esc_url($top_post['link']); ?>" class="cmr-mrg-btn-primary" id="cmr-mrg-main-link">
                         Read full Release
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                     </a>
                     <a href="<?php echo $top_post['pdf_link'] ? esc_url($top_post['pdf_link']) : '#'; ?>" 
                        class="cmr-mrg-btn-outline" 
@@ -354,7 +354,7 @@ function cmr_media_releases_general_shortcode( $atts ) {
                        style="display: <?php echo $top_post['pdf_link'] ? 'inline-flex' : 'none'; ?>" 
                        target="_blank">
                         Download PDF
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                     </a>
                 </div>
             </div>
