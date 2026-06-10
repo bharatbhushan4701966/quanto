@@ -287,7 +287,7 @@ function cmr_news_tabs_shortcode( $atts ) {
     }
 
     ob_start();
-    $is_who_we_serve = is_page('who-we-serve');
+    $is_who_we_serve = is_page('who-we-serve') || is_page('press-releases');
     $bg_class = $is_who_we_serve ? ' cmr-news-black-bg' : '';
     ?>
     <div class="cmr-news-container<?php echo esc_attr( $bg_class ); ?>">
