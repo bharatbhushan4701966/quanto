@@ -307,6 +307,7 @@ function cmr_media_releases_general_shortcode( $atts ) {
             font-weight: 600;
             line-height: 1.4;
             margin: 0;
+            letter-spacing: 1px;
             color: #111;
         }
 

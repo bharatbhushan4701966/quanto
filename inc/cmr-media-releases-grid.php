@@ -37,11 +37,15 @@ function cmr_media_releases_grid_shortcode() {
             display: flex;
             align-items: center;
             gap: 40px;
-            padding-bottom: 20px;
+            padding: 20px 0;
             border-bottom: 1px solid #eaeaea;
             margin-bottom: 40px;
             overflow-x: auto;
             white-space: nowrap;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            background: #fff;
         }
         .cmr-mrg-top-nav a {
             text-decoration: none;
@@ -217,6 +221,7 @@ function cmr_media_releases_grid_shortcode() {
         .cmr-mrg-card-title a {
             color: inherit;
             text-decoration: none;
+            letter-spacing: 1px;
         }
 
         .cmr-mrg-card-excerpt {
