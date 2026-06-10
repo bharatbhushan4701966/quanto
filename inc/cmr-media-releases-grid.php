@@ -45,22 +45,18 @@ function cmr_media_releases_grid_shortcode() {
             transition: box-shadow 0.3s ease;
         }
 
-        .cmr-mrg-top-nav.is-sticky {
-            position: fixed;
-            top: 0;
+        .cmr-mrg-fixed-js {
+            position: fixed !important;
             left: 0;
             right: 0;
-            width: 100%;
-            z-index: 999999;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            padding-left: max(20px, calc(50vw - 640px));
-            padding-right: max(20px, calc(50vw - 640px));
-            margin-bottom: 0;
+            width: 100% !important;
+            z-index: 999999 !important;
             background: #fff;
-        }
-
-        .admin-bar .cmr-mrg-top-nav.is-sticky {
-            top: 32px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding-left: max(20px, calc(50vw - 640px)) !important;
+            padding-right: max(20px, calc(50vw - 640px)) !important;
+            margin: 0 !important;
+            transition: none !important;
         }
         .cmr-mrg-top-nav a {
             text-decoration: none;
@@ -501,40 +497,67 @@ function cmr_media_releases_grid_shortcode() {
         }
 
         // Sticky Nav Logic
-        const banner = document.querySelector('.cmr-mrg-top-nav');
-        if (banner) {
-            let bannerOriginalPos = banner.getBoundingClientRect().top + window.scrollY;
+        const sections = document.querySelectorAll('.cmr-mrg-wrapper');
+        sections.forEach(section => {
+            const navBar = section.querySelector('.cmr-mrg-top-nav');
+            if (!navBar) return;
+            
             const placeholder = document.createElement('div');
             placeholder.className = 'cmr-mrg-top-nav-placeholder';
-            placeholder.style.display = 'none';
-            banner.parentNode.insertBefore(placeholder, banner.nextSibling);
-
-            window.addEventListener('resize', function() {
-                if (!banner.classList.contains('is-sticky')) {
-                    bannerOriginalPos = banner.getBoundingClientRect().top + window.scrollY;
-                }
-            });
-
-            window.addEventListener('scroll', function() {
-                const scrollPos = window.scrollY;
-                const offset = document.body.classList.contains('admin-bar') ? 32 : 0;
+            placeholder.style.height = '0px';
+            placeholder.style.marginBottom = '0px';
+            navBar.parentNode.insertBefore(placeholder, navBar);
+            
+            function updateSticky() {
+                const sectionRect = section.getBoundingClientRect();
                 
-                if (scrollPos >= bannerOriginalPos - offset) {
-                    if (!banner.classList.contains('is-sticky')) {
-                        placeholder.style.height = banner.offsetHeight + 'px';
-                        placeholder.style.display = 'block';
-                        banner.classList.add('is-sticky');
-                        document.body.appendChild(banner);
+                let stickyOffset = 0;
+                const wpAdminBar = document.getElementById('wpadminbar');
+                if (wpAdminBar && window.getComputedStyle(wpAdminBar).position === 'fixed') {
+                    stickyOffset = wpAdminBar.offsetHeight;
+                }
+                const headers = document.querySelectorAll('header, [data-elementor-type="header"], .elementor-location-header, .elementor-sticky--active');
+                headers.forEach(h => {
+                    if (h === navBar || h.contains(navBar)) return;
+                    const hStyle = window.getComputedStyle(h);
+                    if (hStyle.position === 'fixed' || hStyle.position === 'sticky' || h.classList.contains('elementor-sticky--active')) {
+                        const hRect = h.getBoundingClientRect();
+                        if (hRect.top <= stickyOffset + 10 && hRect.bottom > stickyOffset && hRect.bottom < (window.innerHeight / 2)) {
+                            stickyOffset = hRect.bottom;
+                        }
+                    }
+                });
+
+                if (sectionRect.top <= stickyOffset && sectionRect.bottom > (navBar.offsetHeight + stickyOffset)) {
+                    if (!navBar.classList.contains('cmr-mrg-fixed-js')) {
+                        placeholder.style.height = navBar.offsetHeight + 'px';
+                        const style = window.getComputedStyle(navBar);
+                        placeholder.style.marginBottom = style.marginBottom;
+                        
+                        navBar.classList.add('cmr-mrg-fixed-js');
+                        document.body.appendChild(navBar); 
+                    }
+                    
+                    if (sectionRect.bottom <= (navBar.offsetHeight + stickyOffset)) {
+                        navBar.style.top = (sectionRect.bottom - navBar.offsetHeight) + 'px';
+                    } else {
+                        navBar.style.top = stickyOffset + 'px';
                     }
                 } else {
-                    if (banner.classList.contains('is-sticky')) {
-                        placeholder.style.display = 'none';
-                        banner.classList.remove('is-sticky');
-                        placeholder.parentNode.insertBefore(banner, placeholder);
+                    if (navBar.classList.contains('cmr-mrg-fixed-js')) {
+                        navBar.classList.remove('cmr-mrg-fixed-js');
+                        navBar.style.top = '';
+                        placeholder.parentNode.insertBefore(navBar, placeholder.nextSibling);
+                        placeholder.style.height = '0px';
+                        placeholder.style.marginBottom = '0px';
                     }
                 }
-            });
-        }
+            }
+            
+            window.addEventListener('scroll', updateSticky, { passive: true });
+            window.addEventListener('resize', updateSticky, { passive: true });
+            setTimeout(updateSticky, 100);
+        });
     });
     </script>
     <?php
