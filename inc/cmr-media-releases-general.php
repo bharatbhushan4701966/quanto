@@ -198,11 +198,11 @@ function cmr_media_releases_general_shortcode( $atts ) {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background-color: white !important;
-            border: 1px solid white !important;
-            color: #000000 !important;
+            background-color: #6241CA !important;
+            border: 1px solid #6241CA !important;
+            color: #ffffff !important;
             text-decoration: none;
-            padding: 16px 28px !important;
+            padding: 8px 24px !important;
             border-radius: 50px !important;
             font-size: 15px;
             font-weight: 600;
@@ -212,12 +212,12 @@ function cmr_media_releases_general_shortcode( $atts ) {
         .cmr-mrg-btn-primary svg path,
         .cmr-mrg-btn-primary svg polyline,
         .cmr-mrg-btn-primary svg line {
-            stroke: #000000 !important;
+            stroke: #ffffff !important;
         }
         
         .cmr-mrg-btn-primary:hover {
-            background-color: #f5f5f5 !important;
-            border-color: #f5f5f5 !important;
+            background-color: #5132b8 !important;
+            border-color: #5132b8 !important;
         }
 
         .cmr-mrg-btn-outline {
@@ -225,10 +225,10 @@ function cmr_media_releases_general_shortcode( $atts ) {
             align-items: center;
             gap: 8px;
             background-color: white !important;
-            border: 1px solid white !important;
+            border: 1px solid #000000 !important;
             color: #000000 !important;
             text-decoration: none;
-            padding: 16px 28px !important;
+            padding: 8px 24px !important;
             border-radius: 50px !important;
             font-size: 15px;
             font-weight: 600;
