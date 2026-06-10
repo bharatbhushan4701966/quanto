@@ -39,13 +39,28 @@ function cmr_media_releases_grid_shortcode() {
             gap: 40px;
             padding: 20px 0;
             border-bottom: 1px solid #eaeaea;
-            margin-bottom: 40px;
             overflow-x: auto;
             white-space: nowrap;
-            position: sticky;
-            top: 0;
-            z-index: 99;
             background: #fff;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .cmr-mrg-top-nav.is-sticky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 999999;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            padding-left: max(20px, calc(50vw - 640px));
+            padding-right: max(20px, calc(50vw - 640px));
+            margin-bottom: 0;
+            background: #fff;
+        }
+
+        .admin-bar .cmr-mrg-top-nav.is-sticky {
+            top: 32px; 
         }
         .cmr-mrg-top-nav a {
             text-decoration: none;
@@ -482,6 +497,42 @@ function cmr_media_releases_grid_shortcode() {
             loadMoreBtn.addEventListener('click', function() {
                 currentPage++;
                 fetchPosts(true);
+            });
+        }
+
+        // Sticky Nav Logic
+        const banner = document.querySelector('.cmr-mrg-top-nav');
+        if (banner) {
+            let bannerOriginalPos = banner.getBoundingClientRect().top + window.scrollY;
+            const placeholder = document.createElement('div');
+            placeholder.className = 'cmr-mrg-top-nav-placeholder';
+            placeholder.style.display = 'none';
+            banner.parentNode.insertBefore(placeholder, banner.nextSibling);
+
+            window.addEventListener('resize', function() {
+                if (!banner.classList.contains('is-sticky')) {
+                    bannerOriginalPos = banner.getBoundingClientRect().top + window.scrollY;
+                }
+            });
+
+            window.addEventListener('scroll', function() {
+                const scrollPos = window.scrollY;
+                const offset = document.body.classList.contains('admin-bar') ? 32 : 0;
+                
+                if (scrollPos >= bannerOriginalPos - offset) {
+                    if (!banner.classList.contains('is-sticky')) {
+                        placeholder.style.height = banner.offsetHeight + 'px';
+                        placeholder.style.display = 'block';
+                        banner.classList.add('is-sticky');
+                        document.body.appendChild(banner);
+                    }
+                } else {
+                    if (banner.classList.contains('is-sticky')) {
+                        placeholder.style.display = 'none';
+                        banner.classList.remove('is-sticky');
+                        placeholder.parentNode.insertBefore(banner, placeholder);
+                    }
+                }
             });
         }
     });
