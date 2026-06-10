@@ -32,9 +32,6 @@ function cmr_media_releases_general_shortcode( $atts ) {
             $link = get_permalink();
             $excerpt = wp_trim_words( get_the_excerpt(), 20 );
             $bg_image = get_the_post_thumbnail_url( $post_id, 'large' );
-            if ( ! $bg_image ) {
-                $bg_image = 'https://via.placeholder.com/800x500';
-            }
 
             // Estimate read time (rough calculation based on word count)
             $content = get_post_field( 'post_content', $post_id );
@@ -134,6 +131,14 @@ function cmr_media_releases_general_shortcode( $atts ) {
             top: 0;
             left: 0;
             transition: opacity 0.4s ease;
+        }
+
+        .cmr-mrg-placeholder-svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ccc;
         }
 
         .cmr-mrg-featured-content {
@@ -347,8 +352,9 @@ function cmr_media_releases_general_shortcode( $atts ) {
     <div class="cmr-mrg-section" id="cmr-mrg-app">
         <!-- Top Featured Area -->
         <div class="cmr-mrg-featured">
-            <div class="cmr-mrg-featured-img-wrap">
-                <img src="<?php echo esc_url($top_post['image']); ?>" alt="Featured Image" class="cmr-mrg-featured-img" id="cmr-mrg-main-img">
+            <div class="cmr-mrg-featured-img-wrap" style="background-color:#f4f4f4;">
+                <svg class="cmr-mrg-placeholder-svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                <img src="<?php echo esc_url($top_post['image']); ?>" alt="Featured Image" class="cmr-mrg-featured-img" id="cmr-mrg-main-img" style="display: <?php echo $top_post['image'] ? 'block' : 'none'; ?>;">
             </div>
             <div class="cmr-mrg-featured-content">
                 <div class="cmr-mrg-meta-top">
@@ -378,8 +384,11 @@ function cmr_media_releases_general_shortcode( $atts ) {
         <div class="cmr-mrg-nav">
             <?php foreach ( $bottom_posts as $index => $post ) : ?>
             <div class="cmr-mrg-nav-item <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo $index; ?>">
-                <div class="cmr-mrg-nav-img-wrap">
-                    <img src="<?php echo esc_url($post['image']); ?>" alt="Thumbnail" class="cmr-mrg-nav-img">
+                <div class="cmr-mrg-nav-img-wrap" style="background-color:#f4f4f4; display:flex; align-items:center; justify-content:center; position:relative;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:#ccc; position:absolute;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                    <?php if ($post['image']) : ?>
+                        <img src="<?php echo esc_url($post['image']); ?>" alt="Thumbnail" class="cmr-mrg-nav-img" style="position:relative; z-index:1;">
+                    <?php endif; ?>
                 </div>
                 <div class="cmr-mrg-nav-content">
                     <div class="cmr-mrg-nav-label">Media Releases</div>
@@ -420,7 +429,12 @@ function cmr_media_releases_general_shortcode( $atts ) {
                     // Slight fade effect
                     mainImg.style.opacity = 0;
                     setTimeout(() => {
-                        mainImg.src = data.image;
+                        if (data.image) {
+                            mainImg.src = data.image;
+                            mainImg.style.display = 'block';
+                        } else {
+                            mainImg.style.display = 'none';
+                        }
                         mainTime.textContent = data.read_time;
                         mainTitle.textContent = data.title;
                         mainExcerpt.textContent = data.excerpt;

@@ -177,6 +177,10 @@ function cmr_media_releases_grid_shortcode() {
             height: 240px;
             overflow: hidden;
             margin-bottom: 20px;
+            background-color: #f4f4f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .cmr-mrg-card-img-wrap img {
             width: 100%;
@@ -353,9 +357,6 @@ function cmr_media_releases_grid_shortcode() {
                         $excerpt = wp_trim_words( get_post_field('post_content', $post_id), 18 );
                     }
                     $bg_image = get_the_post_thumbnail_url( $post_id, 'medium_large' );
-                    if ( ! $bg_image ) {
-                        $bg_image = 'https://via.placeholder.com/600x400';
-                    }
                     
                     $content = get_post_field( 'post_content', $post_id );
                     $word_count = str_word_count( strip_tags( $content ) );
@@ -365,8 +366,14 @@ function cmr_media_releases_grid_shortcode() {
                     ?>
                     <div class="cmr-mrg-card">
                         <div class="cmr-mrg-card-img-wrap">
-                            <a href="<?php echo esc_url($link); ?>">
-                                <img src="<?php echo esc_url($bg_image); ?>" alt="<?php echo esc_attr($title); ?>">
+                            <a href="<?php echo esc_url($link); ?>" style="display: block; width: 100%; height: 100%;">
+                                <?php if ( $bg_image ) : ?>
+                                    <img src="<?php echo esc_url($bg_image); ?>" alt="<?php echo esc_attr($title); ?>">
+                                <?php else : ?>
+                                    <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #ccc;">
+                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                    </div>
+                                <?php endif; ?>
                             </a>
                         </div>
                         <div class="cmr-mrg-card-meta">
