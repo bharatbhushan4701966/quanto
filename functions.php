@@ -116,6 +116,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-media-releases-grid.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-featured-intelligence-carousel.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-industry-intel-list.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-industry-intelligence-trends.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-industry-stack.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-breadcrumbs.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-sticky-nav-script.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-ajax-handlers.php';
