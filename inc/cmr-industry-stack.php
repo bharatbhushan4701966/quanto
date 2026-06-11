@@ -16,6 +16,7 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
         ), $atts );
 
         ob_start();
+        ?>
         <style>
             .cmr-stack-wrapper {
                 font-family: 'Instrument Sans', sans-serif;
