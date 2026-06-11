@@ -9,8 +9,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
     function cmr_industry_stack_shortcode( $atts ) {
+        $atts = shortcode_atts( array(
+            'icon_1' => 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/service-icon1.svg',
+            'icon_2' => 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Group-266.svg',
+            'icon_3' => 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Vector2.svg.svg',
+        ), $atts );
+
         ob_start();
-        ?>
         <style>
             .cmr-stack-wrapper {
                 font-family: 'Instrument Sans', sans-serif;
@@ -42,7 +47,7 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
             }
             .cmr-stack-card {
                 background: #fff;
-                padding: 40px;
+                padding: 40px 40px 40px 40px;
                 border-radius: 4px;
                 display: flex;
                 flex-direction: column;
@@ -75,6 +80,7 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
                 color: #111;
                 margin: 0 0 15px 0;
                 line-height: 1.3;
+                letter-spacing: -1px;
             }
             .cmr-stack-desc {
                 font-size: 15px;
@@ -126,19 +132,12 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
         </style>
 
         <div class="cmr-stack-wrapper">
-            <div class="cmr-stack-header">
-                <h2>A Complete Industry Intelligence Stack</h2>
-                <p>Everything modern leaders need to drive data-guided AI strategies.</p>
-            </div>
-            
             <div class="cmr-stack-grid">
                 <!-- Card 1 -->
                 <div class="cmr-stack-card">
                     <div class="cmr-stack-card-top">
                         <div class="cmr-stack-icon">
-                            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M0 0H34V15L15 34H0V0Z" fill="#4B12C2"/>
-                            </svg>
+                            <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/service-icon1.svg" alt="Industry Intelligence Icon" style="width: 34px; height: 34px; object-fit: contain;">
                         </div>
                         <div class="cmr-stack-number">01</div>
                     </div>
@@ -155,9 +154,7 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
                 <div class="cmr-stack-card">
                     <div class="cmr-stack-card-top">
                         <div class="cmr-stack-icon">
-                            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M0 0H10C19.3888 0 27 7.61116 27 17C27 26.3888 19.3888 34 10 34H0V0Z" fill="#0035FF"/>
-                            </svg>
+                            <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Group-266.svg" alt="Consulting & Advisory Icon" style="width: 34px; height: 34px; object-fit: contain;">
                         </div>
                         <div class="cmr-stack-number">02</div>
                     </div>
@@ -174,9 +171,7 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
                 <div class="cmr-stack-card">
                     <div class="cmr-stack-card-top">
                         <div class="cmr-stack-icon">
-                            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8 0L17 9L26 0L34 8L25 17L34 26L26 34L17 25L8 34L0 26L9 17L0 8L8 0Z" fill="#00C1BC"/>
-                            </svg>
+                            <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Vector2.svg.svg" alt="Marketing Services Icon" style="width: 34px; height: 34px; object-fit: contain;">
                         </div>
                         <div class="cmr-stack-number">03</div>
                     </div>
