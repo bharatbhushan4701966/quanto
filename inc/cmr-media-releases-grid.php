@@ -75,9 +75,9 @@ function cmr_media_releases_grid_shortcode() {
             margin-bottom: 40px;
         }
         .cmr-mrg-header h1 {
-            font-size: 42px;
-            font-weight: 700;
-            margin: 0 0 15px 0;
+            font-size: 45px;
+            font-weight: 600;
+            margin: 40px 0 15px 0;
             letter-spacing: -1px;
             color: #111;
         }
@@ -85,7 +85,6 @@ function cmr_media_releases_grid_shortcode() {
             font-size: 16px;
             color: #555;
             margin: 0;
-            max-width: 700px;
             line-height: 1.5;
         }
 
