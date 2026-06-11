@@ -173,19 +173,27 @@ function cmr_media_releases_general_shortcode( $atts ) {
         }
 
         .cmr-mrg-title {
-            font-size: 40px;
+            font-size: 32px;
             font-weight: 700;
             line-height: 1.1;
             margin: 0 0 20px 0;
             letter-spacing: 1px;
             color: #111;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .cmr-mrg-excerpt {
-            font-size: 16px;
+            font-size: 15px;
             color: #444;
             line-height: 1.6;
             margin: 0 0 40px 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .cmr-mrg-actions {
