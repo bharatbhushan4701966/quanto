@@ -1,32 +1,35 @@
 <?php
 require_once( explode( "wp-content" , __FILE__ )[0] . "wp-load.php" );
 // 1. Delete existing 'Media Release' posts in 'cmr_news'
-$term = term_exists('Media Release', 'cmr_news_category');
+$terms_to_delete = array('Media Release', 'Media Releases');
 $deleted = 0;
 
-if ($term) {
-    $term_id = is_array($term) ? $term['term_id'] : $term;
-    $args_delete = array(
-        'post_type' => 'cmr_news',
-        'posts_per_page' => -1,
-        'tax_query' => array(
-            array(
-                'taxonomy' => 'cmr_news_category',
-                'field'    => 'term_id',
-                'terms'    => $term_id,
+foreach ($terms_to_delete as $term_name) {
+    $term = term_exists($term_name, 'cmr_news_category');
+    if ($term) {
+        $term_id = is_array($term) ? $term['term_id'] : $term;
+        $args_delete = array(
+            'post_type' => 'cmr_news',
+            'posts_per_page' => -1,
+            'tax_query' => array(
+                array(
+                    'taxonomy' => 'cmr_news_category',
+                    'field'    => 'term_id',
+                    'terms'    => $term_id,
+                ),
             ),
-        ),
-    );
-    
-    $query_delete = new WP_Query($args_delete);
-    if ($query_delete->have_posts()) {
-        while ($query_delete->have_posts()) {
-            $query_delete->the_post();
-            wp_delete_post(get_the_ID(), true); // true to bypass trash and force delete
-            $deleted++;
+        );
+        
+        $query_delete = new WP_Query($args_delete);
+        if ($query_delete->have_posts()) {
+            while ($query_delete->have_posts()) {
+                $query_delete->the_post();
+                wp_delete_post(get_the_ID(), true); // true to bypass trash and force delete
+                $deleted++;
+            }
         }
+        wp_reset_postdata();
     }
-    wp_reset_postdata();
 }
 
 echo "Deleted " . $deleted . " old Media Release posts from cmr_news.<br/>\n";
@@ -34,7 +37,7 @@ echo "Deleted " . $deleted . " old Media Release posts from cmr_news.<br/>\n";
 // 2. Migrate from regular posts to 'cmr_news'
 $args = array(
     'post_type' => 'post',
-    'category_name' => 'media-release', // The slug for Media Release
+    'category_name' => 'press-releases,media-release,media-releases', // The slug for Press/Media Releases
     'posts_per_page' => -1,
 );
 $query = new WP_Query($args);
