@@ -37,7 +37,7 @@ echo "Deleted " . $deleted . " old Media Release posts from cmr_news.<br/>\n";
 // 2. Migrate from regular posts to 'cmr_news'
 $args = array(
     'post_type' => 'post',
-    'category_name' => 'press-releases,media-release,media-releases', // The slug for Press/Media Releases
+    'category_name' => 'press-releases', // The exact slug confirmed to have the 117 posts
     'posts_per_page' => -1,
 );
 $query = new WP_Query($args);
