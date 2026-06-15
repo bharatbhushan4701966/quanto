@@ -27,8 +27,6 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
             ),
         );
 
-        global $post;
-        $cmr_backup_post = $post;
         $featured_query = new WP_Query( $query_args );
 
         ob_start();
@@ -208,12 +206,10 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
         <?php else : ?>
             <p>No featured insight found.</p>
         <?php endif; wp_reset_postdata();
-        if (isset($cmr_backup_post)) {
-            $post = $cmr_backup_post;
-            setup_postdata($post);
-        } ?>
+        ?>
         <?php
         return ob_get_clean();
     }
 }
 add_shortcode( 'cmr_featured_insight', 'cmr_featured_insight_shortcode' );
+

@@ -28,8 +28,6 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
             ),
         );
 
-        global $post;
-        $cmr_backup_post = $post;
         $hero_query = new WP_Query( $query_args );
 
         $posts_data = array();
@@ -69,11 +67,6 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
             }
         }
         wp_reset_postdata();
-        if (isset($cmr_backup_post)) {
-            $post = $cmr_backup_post;
-            setup_postdata($post);
-        }
-
         $slider_id = 'cmr-mu-hero-' . wp_rand(1000, 9999);
 
         ob_start();
@@ -466,3 +459,4 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
     }
 }
 add_shortcode( 'cmr_market_updates_hero', 'cmr_market_updates_hero_shortcode' );
+
