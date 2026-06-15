@@ -10,8 +10,8 @@ function cmr_mega_menu_who_we_are_shortcode($atts) {
         .cmr-mm-wrapper {
             position: relative;
             font-family: 'Instrument Sans', sans-serif;
-            width: 700px;
-            max-width: 100%;
+            width: 900px !important;
+            max-width: none !important;
             border-radius: 12px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.08);
             background: #fff;
@@ -262,11 +262,13 @@ function cmr_inject_who_we_are_mega_menu() {
             top: 100%;
             left: 50%;
             transform: translateX(-50%);
-            width: 900px;
+            min-width: 900px !important;
+            width: max-content !important;
+            max-width: none !important;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-            margin-top: 10px;
+            padding-top: 15px;
             z-index: 9999;
         }
 
