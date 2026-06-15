@@ -210,16 +210,84 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                     align-items: flex-start;
                     gap: 20px;
                 }
+                .cmr-mui-nav-links {
+                    flex-wrap: wrap;
+                }
             }
             @media (max-width: 768px) {
                 .cmr-mui-grid {
                     grid-template-columns: 1fr;
                 }
             }
+            
+            /* Sticky Nav CSS */
+            .cmr-mui-sticky-nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 15px 0;
+                margin-bottom: 20px;
+                border-bottom: 1px solid #eaeaea;
+                background: #fff;
+                z-index: 100;
+                width: 100%;
+            }
+            .cmr-mui-nav-title {
+                font-size: 22px;
+                font-weight: 700;
+                color: #111;
+            }
+            .cmr-mui-nav-links {
+                display: flex;
+                gap: 25px;
+                align-items: center;
+            }
+            .cmr-mui-nav-links a {
+                color: #111;
+                text-decoration: none;
+                font-size: 15px;
+                font-weight: 500;
+                transition: opacity 0.2s;
+            }
+            .cmr-mui-nav-links a:hover {
+                opacity: 0.7;
+            }
+            .cmr-mui-nav-links a.expert-btn {
+                font-weight: 600;
+            }
+            .cmr-mui-sticky-nav.intel-nav-fixed-js {
+                position: fixed !important;
+                left: 0;
+                right: 0;
+                padding: 15px 40px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+                border-bottom: none;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                transition: top 0.2s ease-out;
+            }
+            @media (max-width: 768px) {
+                .cmr-mui-sticky-nav.intel-nav-fixed-js {
+                    padding: 15px 20px;
+                }
+            }
         </style>
 
         <div class="cmr-mui-section">
-            <div class="cmr-mui-header">
+            <div class="cmr-mui-sticky-nav intel-nav-bar">
+                <div class="cmr-mui-nav-title">
+                    Market Updates
+                </div>
+                <div class="cmr-mui-nav-links">
+                    <a href="#">Featured</a>
+                    <a href="#">Latest Updates</a>
+                    <a href="#">CMR live</a>
+                    <a href="#">Reports</a>
+                    <a href="#" class="expert-btn">Get expert insights ↗</a>
+                </div>
+            </div>
+
+            <div class="cmr-mui-header" style="margin-top: 40px;">
                 <h2 class="cmr-mui-title">Market Updates & Strategic Insights</h2>
                 <p class="cmr-mui-subtitle">Track real-time shifts, growth signals, and strategic developments shaping key industries.</p>
             </div>
@@ -297,8 +365,7 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
         </div>
 
         <script>
-            // Sticky functionality is handled by CSS position: sticky
-            // Search functionality wrapper
+            // Filter functionality
             document.addEventListener('DOMContentLoaded', function() {
                 var searchInput = document.querySelector('.cmr-mui-search-wrap input');
                 if (searchInput) {
@@ -315,6 +382,72 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                         });
                     });
                 }
+                
+                // Sticky Nav Functionality
+                const sections = document.querySelectorAll('.cmr-mui-section');
+                sections.forEach(section => {
+                    const navBar = section.querySelector('.cmr-mui-sticky-nav');
+                    if (!navBar) return;
+                    
+                    // Create a placeholder to prevent grid jumping when bar becomes fixed
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'cmr-mui-nav-placeholder';
+                    placeholder.style.height = '0px';
+                    placeholder.style.marginBottom = '0px';
+                    navBar.parentNode.insertBefore(placeholder, navBar);
+                    
+                    function updateSticky() {
+                        const sectionRect = section.getBoundingClientRect();
+                        
+                        let stickyOffset = 0;
+                        const wpAdminBar = document.getElementById('wpadminbar');
+                        if (wpAdminBar && window.getComputedStyle(wpAdminBar).position === 'fixed') {
+                            stickyOffset = wpAdminBar.offsetHeight;
+                        }
+                        const headers = document.querySelectorAll('header, [data-elementor-type="header"], .elementor-location-header, .elementor-sticky--active');
+                        headers.forEach(h => {
+                            if (h === navBar || h.contains(navBar)) return;
+                            const hStyle = window.getComputedStyle(h);
+                            if (hStyle.position === 'fixed' || hStyle.position === 'sticky' || h.classList.contains('elementor-sticky--active')) {
+                                const hRect = h.getBoundingClientRect();
+                                if (hRect.top <= stickyOffset + 10 && hRect.bottom > stickyOffset && hRect.bottom < (window.innerHeight / 2)) {
+                                    stickyOffset = hRect.bottom;
+                                }
+                            }
+                        });
+
+                        // Trigger sticky as soon as the section touches the sticky offset
+                        if (sectionRect.top <= stickyOffset && sectionRect.bottom > (navBar.offsetHeight + stickyOffset)) {
+                            if (!navBar.classList.contains('intel-nav-fixed-js')) {
+                                // Save original height
+                                placeholder.style.height = navBar.offsetHeight + 'px';
+                                const style = window.getComputedStyle(navBar);
+                                placeholder.style.marginBottom = style.marginBottom;
+                                
+                                navBar.classList.add('intel-nav-fixed-js');
+                                document.body.appendChild(navBar); // Escaping elementor transform context
+                            }
+                            
+                            if (sectionRect.bottom <= (navBar.offsetHeight + stickyOffset)) {
+                                navBar.style.top = (sectionRect.bottom - navBar.offsetHeight) + 'px';
+                            } else {
+                                navBar.style.top = stickyOffset + 'px';
+                            }
+                        } else {
+                            if (navBar.classList.contains('intel-nav-fixed-js')) {
+                                navBar.classList.remove('intel-nav-fixed-js');
+                                navBar.style.top = '';
+                                placeholder.parentNode.insertBefore(navBar, placeholder.nextSibling);
+                                placeholder.style.height = '0px';
+                                placeholder.style.marginBottom = '0px';
+                            }
+                        }
+                    }
+                    
+                    window.addEventListener('scroll', updateSticky, { passive: true });
+                    window.addEventListener('resize', updateSticky, { passive: true });
+                    setTimeout(updateSticky, 100);
+                });
             });
         </script>
         <?php
