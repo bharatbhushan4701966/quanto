@@ -262,6 +262,7 @@ function cmr_inject_who_we_are_mega_menu() {
             top: 100%;
             left: 50%;
             transform: translateX(-50%);
+            width: 900px;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
