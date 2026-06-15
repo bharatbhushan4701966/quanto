@@ -28,37 +28,36 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
             ),
         );
 
-        $hero_query = new WP_Query( $query_args );
+        $hero_posts = get_posts( $query_args );
 
         $posts_data = array();
-        if ( $hero_query->have_posts() ) {
-            while ( $hero_query->have_posts() ) {
-                $hero_query->the_post();
+        if ( !empty($hero_posts) ) {
+            foreach ( $hero_posts as $post_obj ) {
                 
-                $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+                $thumbnail_url = get_the_post_thumbnail_url( $post_obj->ID, 'full' );
                 if ( ! $thumbnail_url ) {
                     $thumbnail_url = 'https://via.placeholder.com/1200x800?text=Featured+Image';
                 }
                 
                 $category_name = 'Market Updates';
-                $terms = get_the_terms( get_the_ID(), 'category' );
+                $terms = get_the_terms( $post_obj->ID, 'category' );
                 if ( $terms && ! is_wp_error( $terms ) ) {
                     $category_name = $terms[0]->name;
                 }
                 
-                $post_date = get_the_date('M d, Y');
+                $post_date = get_the_date('M d, Y', $post_obj);
                 
-                $excerpt = get_the_excerpt();
+                $excerpt = get_the_excerpt($post_obj);
                 if ( empty( $excerpt ) ) {
-                    $content = get_post_field( 'post_content', get_the_ID() );
+                    $content = $post_obj->post_content;
                     $excerpt = wp_trim_words( $content, 20 );
                 } else {
                     $excerpt = wp_trim_words( $excerpt, 20 );
                 }
 
                 $posts_data[] = array(
-                    'title'    => get_the_title(),
-                    'link'     => get_permalink(),
+                    'title'    => get_the_title($post_obj),
+                    'link'     => get_permalink($post_obj->ID),
                     'image'    => $thumbnail_url,
                     'category' => $category_name,
                     'date'     => $post_date,
@@ -66,8 +65,7 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
                 );
             }
         }
-        wp_reset_postdata();
-        $slider_id = 'cmr-mu-hero-' . wp_rand(1000, 9999);
+                $slider_id = 'cmr-mu-hero-' . wp_rand(1000, 9999);
 
         ob_start();
         ?>

@@ -118,6 +118,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-industry-intel-list.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-industry-intelligence-trends.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-industry-stack.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-market-updates-hero.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-market-updates-insights.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-breadcrumbs.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-sticky-nav-script.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-ajax-handlers.php';
@@ -430,12 +431,12 @@ function cmr_market_updates_shortcode($atts) {
                 $mu_args['category_name'] = $atts['category'];
             }
             
-            $mu_query = new WP_Query($mu_args);
+            $mu_posts = get_posts($mu_args);
             
-            if ($mu_query->have_posts()) :
-                while ($mu_query->have_posts()) : $mu_query->the_post();
-                    $date = get_the_time('M d | h:i A');
-                    $categories = get_the_category();
+            if (!empty($mu_posts)) :
+                foreach ($mu_posts as $post_obj) :
+                    $date = get_the_time('M d | h:i A', $post_obj);
+                    $categories = get_the_category($post_obj->ID);
                     $cat_name = '';
                     $cat_class = 'policy'; // Consistent default color class
                     if ( ! empty( $categories ) ) {
@@ -443,7 +444,7 @@ function cmr_market_updates_shortcode($atts) {
                         // We removed random color classes so the same category always looks consistent.
                     }
             ?>
-            <a href="<?php echo esc_url(get_permalink()); ?>" class="cmr-mu-item">
+            <a href="<?php echo esc_url(get_permalink($post_obj->ID)); ?>" class="cmr-mu-item">
                 <div class="cmr-mu-item-content">
                     <div class="cmr-mu-meta">
                         <span class="cmr-mu-date"><?php echo $date; ?></span>
@@ -451,16 +452,15 @@ function cmr_market_updates_shortcode($atts) {
                             <span class="cmr-mu-category <?php echo $cat_class; ?>"><?php echo $cat_name; ?></span>
                         <?php endif; ?>
                     </div>
-                    <h3 class="cmr-mu-item-title"><?php echo get_the_title(); ?></h3>
+                    <h3 class="cmr-mu-item-title"><?php echo get_the_title($post_obj); ?></h3>
                 </div>
                 <div class="cmr-mu-arrow">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                 </div>
             </a>
             <?php 
-                endwhile; 
-                wp_reset_postdata();
-        else : 
+                endforeach; 
+            else : 
                 echo '<p>No updates found.</p>';
             endif; 
             ?>
@@ -512,7 +512,7 @@ function cmr_migrate_press_releases_callback() {
         while ($query->have_posts()) {
             $query->the_post();
             $post_id = get_the_ID();
-            $title = get_the_title();
+            $title = get_the_title(\);
             
             // Check if it's already migrated
             $existing = get_posts(array(
@@ -555,8 +555,7 @@ function cmr_migrate_press_releases_callback() {
                 $log[] = "Error migrating: " . $title . " - " . $new_post_id->get_error_message();
             }
         }
-        wp_reset_postdata();
-        }
+                }
     
     return new WP_REST_Response(array(
         'success' => true,

@@ -27,7 +27,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
             ),
         );
 
-        $featured_query = new WP_Query( $query_args );
+        $featured_posts = get_posts( $query_args );
 
         ob_start();
         ?>
@@ -154,23 +154,23 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 }
             }
         </style>
-        <?php if ( $featured_query->have_posts() ) : ?>
+        <?php if ( !empty($featured_posts) ) : ?>
             <div class="cmr-fi-wrapper" style="display: flex; justify-content: flex-end; width: 100%; padding-right: 16px;">
                 <div class="cmr-fi-container">
-                <?php while ( $featured_query->have_posts() ) : $featured_query->the_post(); 
-                    $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+                <?php foreach ( $featured_posts as $post_obj ) : 
+                    $thumbnail_url = get_the_post_thumbnail_url( $post_obj->ID, 'full' );
                     if ( ! $thumbnail_url ) {
                         $thumbnail_url = 'https://via.placeholder.com/800x500?text=Featured+Image';
                     }
-                    $post_date = get_the_date('d F Y');
+                    $post_date = get_the_date('d F Y', $post_obj);
                     // Calculate reading time (approx 200 words per min)
-                    $content = get_post_field( 'post_content', get_the_ID() );
+                    $content = $post_obj->post_content;
                     $word_count = str_word_count( strip_tags( $content ) );
                     $read_time = ceil( $word_count / 200 );
                     if ($read_time < 1) $read_time = 1;
                 ?>
                 <div class="cmr-fi-image-wrap">
-                    <img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="<?php echo esc_attr( get_the_title() ); ?>">
+                    <img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="<?php echo esc_attr( get_the_title($post_obj) ); ?>">
                     <span class="cmr-fi-badge">Featured</span>
                 </div>
                 
@@ -180,11 +180,11 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                         <div class="cmr-fi-read-time"><?php echo esc_html( $read_time ); ?> min Read</div>
                     </div>
                     
-                    <h2 class="cmr-fi-title"><?php echo esc_html( get_the_title() ); ?></h2>
+                    <h2 class="cmr-fi-title"><?php echo esc_html( get_the_title($post_obj) ); ?></h2>
                     
                     <div class="cmr-fi-excerpt">
                         <?php 
-                        $excerpt = get_the_excerpt();
+                        $excerpt = get_the_excerpt($post_obj);
                         if ( empty( $excerpt ) ) {
                             $excerpt = wp_trim_words( $content, 25 );
                         }
@@ -192,7 +192,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                         ?>
                     </div>
                     
-                    <a href="<?php echo esc_url( get_permalink() ); ?>" class="cmr-fi-read-link">
+                    <a href="<?php echo esc_url( get_permalink($post_obj->ID) ); ?>" class="cmr-fi-read-link">
                         Read Insight
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="7" y1="17" x2="17" y2="7"></line>
@@ -200,12 +200,12 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                         </svg>
                     </a>
                 </div>
-                <?php endwhile; ?>
+                <?php endforeach; ?>
                 </div>
             </div>
         <?php else : ?>
             <p>No featured insight found.</p>
-        <?php endif; wp_reset_postdata();
+        <?php endif; 
         ?>
         <?php
         return ob_get_clean();

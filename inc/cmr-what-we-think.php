@@ -28,22 +28,21 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             ),
         );
 
-        $wwt_query = new WP_Query( $query_args );
+        $wwt_posts = get_posts( $query_args );
         
         $posts_data = [];
-        if ( $wwt_query->have_posts() ) {
-            while ( $wwt_query->have_posts() ) {
-                $wwt_query->the_post();
+        if ( !empty($wwt_posts) ) {
+            foreach ( $wwt_posts as $post_obj ) {
                 
-                $post_title = get_the_title();
-                $post_link = get_permalink();
-                $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'large' );
+                $post_title = get_the_title($post_obj);
+                $post_link = get_permalink($post_obj->ID);
+                $thumbnail_url = get_the_post_thumbnail_url( $post_obj->ID, 'large' );
                 if ( ! $thumbnail_url ) {
                     $thumbnail_url = 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80';
                 }
                 
                 $category_name = 'Insights';
-                $terms = get_the_terms( get_the_ID(), 'category' );
+                $terms = get_the_terms( $post_obj->ID, 'category' );
                 if ( $terms && ! is_wp_error( $terms ) ) {
                     $category_name = $terms[0]->name;
                 }
@@ -56,8 +55,7 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
                 );
             }
         }
-        wp_reset_postdata();
-        // Group into slides (chunks of 2)
+                // Group into slides (chunks of 2)
         $slides = array_chunk( $posts_data, 2 );
         
         // If no posts found, provide some dummy slides to match the original design layout exactly
