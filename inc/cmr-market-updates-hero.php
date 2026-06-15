@@ -28,8 +28,8 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
             ),
         );
 
-        global ;
-         = clone ;
+        global $post;
+        $cmr_backup_post = is_object($post) ? clone $post : null;
         $hero_query = new WP_Query( $query_args );
 
         $posts_data = array();
@@ -69,9 +69,9 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
             }
         }
         wp_reset_postdata();
-        if (isset()) {
-             = ;
-            setup_postdata();
+        if (isset($cmr_backup_post)) {
+            $post = $cmr_backup_post;
+            setup_postdata($post);
         }
 
         $slider_id = 'cmr-mu-hero-' . wp_rand(1000, 9999);

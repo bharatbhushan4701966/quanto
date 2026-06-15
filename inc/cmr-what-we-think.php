@@ -28,8 +28,8 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             ),
         );
 
-        global ;
-         = clone ;
+        global $post;
+        $cmr_backup_post = is_object($post) ? clone $post : null;
         $wwt_query = new WP_Query( $query_args );
         
         $posts_data = [];
@@ -59,9 +59,9 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             }
         }
         wp_reset_postdata();
-        if (isset()) {
-             = ;
-            setup_postdata();
+        if (isset($cmr_backup_post)) {
+            $post = $cmr_backup_post;
+            setup_postdata($post);
         }
 
         // Group into slides (chunks of 2)

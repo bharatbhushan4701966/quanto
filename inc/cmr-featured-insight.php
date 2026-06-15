@@ -27,8 +27,8 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
             ),
         );
 
-        global ;
-         = clone ;
+        global $post;
+        $cmr_backup_post = is_object($post) ? clone $post : null;
         $featured_query = new WP_Query( $query_args );
 
         ob_start();
@@ -208,9 +208,9 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
         <?php else : ?>
             <p>No featured insight found.</p>
         <?php endif; wp_reset_postdata();
-        if (isset()) {
-             = ;
-            setup_postdata();
+        if (isset($cmr_backup_post)) {
+            $post = $cmr_backup_post;
+            setup_postdata($post);
         } ?>
         <?php
         return ob_get_clean();
