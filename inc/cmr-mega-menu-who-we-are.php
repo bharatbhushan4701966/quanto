@@ -155,16 +155,23 @@ function cmr_mega_menu_who_we_are_shortcode($atts) {
             gap: 5px;
             font-size: 16px;
             font-weight: 600;
-            color: #111;
+            color: #000 !important;
             text-decoration: none;
-            border-bottom: 2px solid #111;
+            transition: color 0.2s;
+        }
+
+        .cmr-mm-explore-text {
+            border-bottom: 2px solid #000 !important;
             padding-bottom: 2px;
-            transition: color 0.2s, border-color 0.2s;
+            transition: border-color 0.2s;
         }
 
         .cmr-mm-explore:hover {
-            color: #6A35FF;
-            border-color: #6A35FF;
+            color: #6A35FF !important;
+        }
+
+        .cmr-mm-explore:hover .cmr-mm-explore-text {
+            border-color: #6A35FF !important;
         }
 
         @media (max-width: 768px) {
@@ -232,7 +239,7 @@ function cmr_mega_menu_who_we_are_shortcode($atts) {
                         </li>
                     </ul>
                     <a href="/explore" class="cmr-mm-explore">
-                        Explore 
+                        <span class="cmr-mm-explore-text">Explore</span> 
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                     </a>
                 </div>
