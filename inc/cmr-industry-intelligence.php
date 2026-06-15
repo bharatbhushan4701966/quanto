@@ -56,7 +56,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
             </div>
             <?php endif; ?>
 
-            <?php if ( $atts['show_nav'] !== 'false' ) : ?>
+            <?php if ( $atts['show_nav'] === 'true' ) : ?>
             <div class="intel-nav-bar">
                 <div class="intel-nav-title">
                     <?php echo esc_html( $atts['nav_title'] ); ?>
@@ -72,26 +72,26 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
             </div>
             <?php endif; ?>
 
-            <?php if ( $insights_query->have_posts() ) : ?>
+            <?php if ( ! empty($insights_posts) ) : ?>
                 <div class="intel-grid">
                     <?php
-                    while ( $insights_query->have_posts() ) : $insights_query->the_post();
-                        $post_title = get_the_title();
-                        $post_link = get_permalink();
-                        $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+                    foreach ( $insights_posts as $post_obj ) :
+                        $post_title = get_the_title( $post_obj );
+                        $post_link = get_permalink( $post_obj->ID );
+                        $thumbnail_url = get_the_post_thumbnail_url( $post_obj->ID, 'full' );
                         if ( ! $thumbnail_url ) {
                             $thumbnail_url = 'https://via.placeholder.com/600x400?text=No+Image';
                         }
                         
                         // Categories / Tags
                         $category_name = 'Industry Intelligence';
-                        $terms = get_the_terms( get_the_ID(), 'category' );
+                        $terms = get_the_terms( $post_obj->ID, 'category' );
                         if ( $terms && ! is_wp_error( $terms ) ) {
                             $category_name = $terms[0]->name;
                         }
 
                         // Calculate reading time
-                        $content = get_post_field( 'post_content', get_the_ID() );
+                        $content = $post_obj->post_content;
                         $word_count = str_word_count( strip_tags( $content ) );
                         $read_time = ceil( $word_count / 200 );
                         if ($read_time < 1) $read_time = 1;
@@ -113,7 +113,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                                 </h3>
                                 <div class="intel-excerpt">
                                     <?php 
-                                    $excerpt = get_the_excerpt();
+                                    $excerpt = get_the_excerpt( $post_obj );
                                     if ( empty( $excerpt ) ) {
                                         $excerpt = wp_trim_words( $content, 12 );
                                     } else {
@@ -131,7 +131,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                                 </a>
                             </div>
                         </div>
-                    <?php endwhile; ?>
+                    <?php endforeach; ?>
                 </div>
                 
                 <div class="intel-pagination-wrap">
@@ -206,7 +206,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                 
             <?php else : ?>
                 <p>No insights found.</p>
-            <?php endif; wp_reset_postdata(); ?>
+            <?php endif; ?>
         </div>
         <?php
         return ob_get_clean();
