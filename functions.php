@@ -126,6 +126,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-ajax-handlers.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-dark-media-coverage.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-author-sync.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-post-sync.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-mega-menu-who-we-are.php';
 // Removed require for cmr-intro-text.php
 
 // Save rating meta for cmr_news comments
