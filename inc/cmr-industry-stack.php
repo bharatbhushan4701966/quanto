@@ -77,7 +77,7 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
             }
             .cmr-stack-title {
                 font-size: 24px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111;
                 margin: 0 0 15px 0;
                 line-height: 1.3;
@@ -160,7 +160,7 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
                         <div class="cmr-stack-number">02</div>
                     </div>
                     <h3 class="cmr-stack-title">Consulting &<br>Advisory</h3>
-                    <p class="cmr-stack-desc">Expert-led strategies and future-ready roadmaps that turn market intelligence into growth—from opportunity assessment to market execution.</p>
+                    <p class="cmr-stack-desc">Expert-led strategies and future-ready roadmaps that drive growth through actionable market intelligence.</p>
                     <ul class="cmr-stack-list">
                         <li>Advisory support</li>
                         <li>Market entry & growth strategy</li>
