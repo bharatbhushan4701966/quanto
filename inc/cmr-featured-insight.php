@@ -14,7 +14,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
         ), $atts );
 
         $query_args = array(
-            'post_type'      => $atts['post_type'],
+            'post_type'      => array('post', 'cmr_news'),
             'posts_per_page' => 1,
             'post_status'    => 'publish',
             'orderby'        => 'date',
@@ -27,6 +27,8 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
             ),
         );
 
+        global ;
+         = clone ;
         $featured_query = new WP_Query( $query_args );
 
         ob_start();
@@ -205,7 +207,11 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
             </div>
         <?php else : ?>
             <p>No featured insight found.</p>
-        <?php endif; wp_reset_postdata(); ?>
+        <?php endif; wp_reset_postdata();
+        if (isset()) {
+             = ;
+            setup_postdata();
+        } ?>
         <?php
         return ob_get_clean();
     }

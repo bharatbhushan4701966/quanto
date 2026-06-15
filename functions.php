@@ -430,7 +430,9 @@ function cmr_market_updates_shortcode($atts) {
                 $mu_args['category_name'] = $atts['category'];
             }
             
-            $mu_query = new WP_Query($mu_args);
+            global ;
+         = clone ;
+        $mu_query = new WP_Query($mu_args);
             
             if ($mu_query->have_posts()) :
                 while ($mu_query->have_posts()) : $mu_query->the_post();
@@ -460,6 +462,10 @@ function cmr_market_updates_shortcode($atts) {
             <?php 
                 endwhile; 
                 wp_reset_postdata();
+        if (isset()) {
+             = ;
+            setup_postdata();
+        }
             else : 
                 echo '<p>No updates found.</p>';
             endif; 
@@ -496,7 +502,9 @@ function cmr_migrate_press_releases_callback() {
         'category_name' => 'pressreleases', // The correct slug for Press Releases
         'posts_per_page' => -1,
     );
-    $query = new WP_Query($args);
+    global ;
+         = clone ;
+        $query = new WP_Query($args);
     
     $migrated = 0;
     $log = array();
@@ -556,6 +564,10 @@ function cmr_migrate_press_releases_callback() {
             }
         }
         wp_reset_postdata();
+        if (isset()) {
+             = ;
+            setup_postdata();
+        }
     }
     
     return new WP_REST_Response(array(
