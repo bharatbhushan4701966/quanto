@@ -177,7 +177,7 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
                         <div class="cmr-stack-number">03</div>
                     </div>
                     <h3 class="cmr-stack-title">Marketing<br>Services</h3>
-                    <p class="cmr-stack-desc">Actionable intelligence and analyst guidance to drive faster, confident business decisions.</p>
+                    <p class="cmr-stack-desc">Actionable intelligence and trusted analyst guidance designed to drive faster, smarter, and more confident business decisions.</p>
                     <ul class="cmr-stack-list">
                         <li>Advisory support</li>
                         <li>Market entry & growth strategy</li>
