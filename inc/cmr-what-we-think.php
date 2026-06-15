@@ -29,7 +29,7 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
         );
 
         global $post;
-        $cmr_backup_post = is_object($post) ? clone $post : null;
+        $cmr_backup_post = $post;
         $wwt_query = new WP_Query( $query_args );
         
         $posts_data = [];

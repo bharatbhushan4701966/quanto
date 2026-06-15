@@ -29,7 +29,7 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
         );
 
         global $post;
-        $cmr_backup_post = is_object($post) ? clone $post : null;
+        $cmr_backup_post = $post;
         $hero_query = new WP_Query( $query_args );
 
         $posts_data = array();

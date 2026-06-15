@@ -431,7 +431,7 @@ function cmr_market_updates_shortcode($atts) {
             }
             
             global $post;
-        $cmr_backup_post = is_object($post) ? clone $post : null;
+        $cmr_backup_post = $post;
         $mu_query = new WP_Query($mu_args);
             
             if ($mu_query->have_posts()) :
@@ -503,7 +503,7 @@ function cmr_migrate_press_releases_callback() {
         'posts_per_page' => -1,
     );
     global $post;
-        $cmr_backup_post = is_object($post) ? clone $post : null;
+        $cmr_backup_post = $post;
         $query = new WP_Query($args);
     
     $migrated = 0;

@@ -28,7 +28,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
         );
 
         global $post;
-        $cmr_backup_post = is_object($post) ? clone $post : null;
+        $cmr_backup_post = $post;
         $featured_query = new WP_Query( $query_args );
 
         ob_start();
