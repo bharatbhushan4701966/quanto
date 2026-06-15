@@ -344,7 +344,7 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
 
             <form class="cmr-mu-hero-search" action="<?php echo esc_url(home_url('/')); ?>" method="get">
                 <div class="cmr-mu-hero-search-icon-left">
-                    <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/cmrheaderlogo.svg" alt="CMR Logo" style="width: 24px; height: auto;">
+                    <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/cmrlogo-with-oly-c.svg" alt="CMR Logo" style="width: 24px; height: auto;">
                 </div>
                 <input type="text" name="s" placeholder="Search..." required>
                 <button type="submit" class="cmr-mu-hero-search-btn">
