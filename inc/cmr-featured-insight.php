@@ -19,6 +19,12 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
+            'meta_query'     => array(
+                array(
+                    'key'     => '_thumbnail_id',
+                    'compare' => 'EXISTS'
+                ),
+            ),
         );
 
         $featured_query = new WP_Query( $query_args );
