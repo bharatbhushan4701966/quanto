@@ -35,7 +35,7 @@ function cmr_mega_menu_who_we_are_shortcode($atts) {
         }
 
         .cmr-mm-top {
-            padding: 40px 40px 30px;
+            padding: 0px 30px 20px;
             position: relative;
             z-index: 1;
             background: #fff;
@@ -49,7 +49,7 @@ function cmr_mega_menu_who_we_are_shortcode($atts) {
             color: #9ba4b5;
             letter-spacing: 1px;
             text-transform: uppercase;
-            margin-bottom: 25px;
+            margin-bottom: 14px;
         }
 
         .cmr-mm-grid {
@@ -70,6 +70,7 @@ function cmr_mega_menu_who_we_are_shortcode($atts) {
         .cmr-mm-item h4 {
             font-size: 18px;
             font-weight: 600;
+            letter-spacing: 0px;
             color: #111;
             margin: 0 0 8px 0;
             transition: color 0.2s ease;
@@ -83,7 +84,7 @@ function cmr_mega_menu_who_we_are_shortcode($atts) {
         }
 
         .cmr-mm-bottom {
-            padding: 30px 40px 40px;
+            padding: 10px 20px 30px;
             background: linear-gradient(135deg, #f0f4ff 0%, #e6f7ff 50%, #e6fff2 100%);
             border-bottom-left-radius: 12px;
             border-bottom-right-radius: 12px;
@@ -127,10 +128,10 @@ function cmr_mega_menu_who_we_are_shortcode($atts) {
         .cmr-mm-locations ul {
             list-style: none;
             padding: 0;
-            margin: 0 0 25px 0;
+            margin: 0 0 14px 0;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 0px;
         }
 
         .cmr-mm-locations li {
@@ -259,10 +260,9 @@ function cmr_inject_who_we_are_mega_menu() {
         
         .cmr-mm-wrapper {
             position: absolute !important;
-            top: 100%;
+            top: 45px;
             left: 50%;
             transform: translateX(-50%);
-            min-width: 900px !important;
             width: max-content !important;
             max-width: none !important;
             opacity: 0;
