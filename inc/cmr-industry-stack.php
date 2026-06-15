@@ -160,7 +160,7 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
                         <div class="cmr-stack-number">02</div>
                     </div>
                     <h3 class="cmr-stack-title">Consulting &<br>Advisory</h3>
-                    <p class="cmr-stack-desc">Expert-led strategies and future-ready roadmaps that turn market intelligence into growth — from opportunity assessment to go-to-market execution.</p>
+                    <p class="cmr-stack-desc">Expert-led strategies and future-ready roadmaps that turn market intelligence into growth—from opportunity assessment to market execution.</p>
                     <ul class="cmr-stack-list">
                         <li>Advisory support</li>
                         <li>Market entry & growth strategy</li>

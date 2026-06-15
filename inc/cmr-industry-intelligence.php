@@ -45,7 +45,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
             
             <?php if ( ! empty( $atts['section_title'] ) ) : ?>
             <div class="cmr-intel-header" style="margin-bottom: 40px;">
-                <h2 style="font-size: 44px; font-weight: 700; color: #111; margin: 0 0 12px 0; letter-spacing: -1px; font-family: 'Instrument Sans', sans-serif; line-height: 1.2;">
+                <h2 style="font-size: 44px; font-weight: 600; color: #111; margin: 0 0 12px 0; letter-spacing: -1px; font-family: 'Instrument Sans', sans-serif; line-height: 1.2;">
                     <?php echo esc_html( $atts['section_title'] ); ?>
                 </h2>
                 <?php if ( ! empty( $atts['section_subtitle'] ) ) : ?>
