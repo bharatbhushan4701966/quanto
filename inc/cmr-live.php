@@ -49,8 +49,8 @@ if ( ! function_exists( 'cmr_live_shortcode' ) ) {
                 margin-right: 20px;
             }
             .cmr-live-title-area h2 {
-                font-size: 42px;
-                font-weight: 700;
+                font-size: 48px;
+                font-weight: 600;
                 color: #111;
                 margin: 0 0 10px 0;
                 line-height: 1.2;
@@ -109,7 +109,7 @@ if ( ! function_exists( 'cmr_live_shortcode' ) ) {
                 color: inherit;
             }
             .cmr-live-card:hover .cmr-live-play-btn {
-                transform: scale(1.1);
+                opacity: 0.9;
             }
             .cmr-live-img-wrap {
                 position: relative;
@@ -208,7 +208,7 @@ if ( ! function_exists( 'cmr_live_shortcode' ) ) {
                     foreach ( $posts as $post_obj ) : 
                         $thumbnail_url = get_the_post_thumbnail_url( $post_obj->ID, 'large' );
                         if ( ! $thumbnail_url ) {
-                            $thumbnail_url = 'https://via.placeholder.com/800x450?text=CMR+Live';
+                            $thumbnail_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
                         }
                         
                         $category_name = 'AUTOMOTIVE'; // Default fallback
