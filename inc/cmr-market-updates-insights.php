@@ -233,6 +233,12 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                 background: #f8f8f8;
                 border-color: #aaa;
             }
+            .cmr-mui-pagination {
+                width: 100%;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+            }
             .cmr-mui-pagination .nav-links {
                 display: flex;
                 justify-content: center;
@@ -450,14 +456,48 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
             <?php if ( $max_pages > 1 ) : ?>
                 <div id="cmr-mui-pagination-wrap" class="cmr-mui-pagination" style="display: <?php echo (!empty($posts) && count($posts) > 9) ? 'none' : 'block'; ?>; margin-top: 40px;">
                     <?php
-                    echo paginate_links( array(
-                        'base'      => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ),
-                        'format'    => '?paged=%#%',
-                        'current'   => max( 1, get_query_var( 'paged' ) ),
-                        'total'     => $max_pages,
-                        'prev_text' => '<svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 15L1.5 8L8.5 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-                        'next_text' => '<svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 15L8.5 8L1.5 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-                    ) );
+                    $real_paged = max( 1, get_query_var( 'paged' ) );
+                    $fake_current = $real_paged * 3;
+                    $fake_total = $max_pages * 3;
+
+                    echo '<div class="nav-links">';
+
+                    // Prev button
+                    if ($fake_current > 1) {
+                        $prev_real = ceil(($fake_current - 1) / 3);
+                        echo '<a class="prev page-numbers" href="?paged=' . $prev_real . '"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 15L1.5 8L8.5 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>';
+                    }
+
+                    // Just show a few surrounding pages
+                    $start = max(1, $fake_current - 2);
+                    $end = min($fake_total, $fake_current + 2);
+
+                    if ($start > 1) {
+                        echo '<a class="page-numbers" href="?paged=1">1</a>';
+                        if ($start > 2) echo '<span class="page-numbers dots">...</span>';
+                    }
+
+                    for ($i = $start; $i <= $end; $i++) {
+                        $real_target = ceil($i / 3);
+                        if ($i == $fake_current) {
+                            echo '<span aria-current="page" class="page-numbers current">' . $i . '</span>';
+                        } else {
+                            echo '<a class="page-numbers" href="?paged=' . $real_target . '">' . $i . '</a>';
+                        }
+                    }
+
+                    if ($end < $fake_total) {
+                        if ($end < $fake_total - 1) echo '<span class="page-numbers dots">...</span>';
+                        $real_target = ceil($fake_total / 3);
+                        echo '<a class="page-numbers" href="?paged=' . $real_target . '">' . $fake_total . '</a>';
+                    }
+
+                    // Next button
+                    if ($fake_current < $fake_total) {
+                        $next_real = ceil(($fake_current + 1) / 3);
+                        echo '<a class="next page-numbers" href="?paged=' . $next_real . '"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 15L8.5 8L1.5 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>';
+                    }
+                    echo '</div>';
                     ?>
                 </div>
             <?php endif; ?>
