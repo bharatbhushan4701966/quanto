@@ -261,8 +261,10 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
                     
                     <div class="cmr-wwt-content">
                         <div class="cmr-wwt-left-col">
-                            <?php foreach($slides as $index => $slide): 
-                                $menu_label = isset($slide[0]['cat']) ? $slide[0]['cat'] : 'Insights';
+                            <?php 
+                                $preset_labels = ['Market Updates', 'Industry Insights', 'Research Reports'];
+                                foreach($slides as $index => $slide): 
+                                $menu_label = isset($preset_labels[$index]) ? $preset_labels[$index] : (isset($slide[0]['cat']) ? $slide[0]['cat'] : 'Insights');
                             ?>
                                 <div class="cmr-wwt-menu-item <?php echo $index === 0 ? 'cmr-wwt-on' : ''; ?>" data-i="<?php echo esc_attr($index); ?>">
                                     <span class="cmr-wwt-bullet"></span>
@@ -283,7 +285,8 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
                                             </div>
                                             <div class="cmr-wwt-card-cat" data-i="<?php echo esc_attr($index); ?>">
                                                 <span class="cmr-wwt-card-cat-line"></span>
-                                                <span class="cmr-wwt-card-cat-text"><?php echo esc_html($post['cat']); ?></span>
+                                                <?php $card_cat = isset($preset_labels[$index]) ? $preset_labels[$index] : $post['cat']; ?>
+                                                <span class="cmr-wwt-card-cat-text"><?php echo esc_html($card_cat); ?></span>
                                             </div>
                                             <div class="cmr-wwt-card-title">
                                                 <a href="<?php echo esc_url($post['link']); ?>" style="text-decoration: none; color: inherit;">
