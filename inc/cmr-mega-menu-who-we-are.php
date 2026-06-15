@@ -16,6 +16,7 @@ function cmr_mega_menu_who_we_are_shortcode($atts) {
             box-shadow: 0 10px 40px rgba(0,0,0,0.08);
             background: #fff;
             overflow: visible;
+            margin-top: 15px; /* space for arrow */
         }
         
         /* The top triangle arrow */
@@ -23,8 +24,8 @@ function cmr_mega_menu_who_we_are_shortcode($atts) {
             content: '';
             position: absolute;
             top: -8px;
-            left: 80px; /* Shifted arrow to align with nav item */
-            transform: rotate(45deg);
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
             width: 16px;
             height: 16px;
             background: #fff;
@@ -259,8 +260,8 @@ function cmr_inject_who_we_are_mega_menu() {
         .cmr-mm-wrapper {
             position: absolute !important;
             top: 100%;
-            left: -20px;
-            transform: none;
+            left: 50%;
+            transform: translateX(-50%);
             min-width: 900px !important;
             width: max-content !important;
             max-width: none !important;
@@ -280,10 +281,11 @@ function cmr_inject_who_we_are_mega_menu() {
             overflow: visible !important;
         }
 
+        /* Show on hover */
         .cmr-has-mega-menu:hover .cmr-mm-wrapper {
             opacity: 1;
             visibility: visible;
-            transform: translateY(0);
+            transform: translateX(-50%) translateY(0);
         }
 
         /* Hide the default submenu arrow if there is one */
