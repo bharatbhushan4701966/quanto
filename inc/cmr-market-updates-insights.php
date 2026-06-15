@@ -219,33 +219,51 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                 display: none !important;
             }
             .cmr-mui-btn {
-                background: #111;
-                color: #fff;
-                border: none;
-                padding: 12px 30px;
+                background: #fff;
+                color: #111;
+                border: 1px solid #ccc;
+                padding: 10px 40px;
+                border-radius: 50px;
                 font-size: 16px;
-                font-weight: 600;
+                font-weight: 500;
                 cursor: pointer;
-                transition: opacity 0.2s;
+                transition: all 0.2s;
             }
             .cmr-mui-btn:hover {
-                opacity: 0.8;
+                background: #f8f8f8;
+                border-color: #aaa;
             }
-            #cmr-mui-pagination-wrap {
-                text-align: center;
+            .cmr-mui-pagination .nav-links {
+                display: flex;
+                justify-content: center;
+                gap: 15px;
+                align-items: center;
             }
-            #cmr-mui-pagination-wrap .page-numbers {
-                display: inline-block;
-                padding: 8px 16px;
-                margin: 0 4px;
-                border: 1px solid #ddd;
-                color: #111;
+            .cmr-mui-pagination .page-numbers {
+                padding: 0;
+                width: 40px;
+                height: 40px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                border: none;
+                border-radius: 50%;
                 text-decoration: none;
+                color: #333;
+                font-size: 16px;
+                font-weight: 500;
+                background: transparent;
             }
-            #cmr-mui-pagination-wrap .page-numbers.current {
-                background: #111;
+            .cmr-mui-pagination .page-numbers.current {
+                background: #6244d4;
                 color: #fff;
-                border-color: #111;
+            }
+            .cmr-mui-pagination .page-numbers.prev, 
+            .cmr-mui-pagination .page-numbers.next {
+                color: #6244d4;
+            }
+            .cmr-mui-pagination .page-numbers.dots {
+                width: auto;
             }
             .cmr-mui-read-more:hover {
                 opacity: 0.7;
@@ -333,7 +351,13 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                     <a href="#">Latest Updates</a>
                     <a href="#">CMR live</a>
                     <a href="#">Reports</a>
-                    <a href="#" class="expert-btn">Get expert insights ↗</a>
+                    <a href="#" class="expert-btn" style="display: inline-flex; align-items: center;">
+                        Get expert insights 
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; margin-left: 4px;">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                    </a>
                 </div>
             </div>
 
@@ -424,15 +448,15 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
             <?php endif; ?>
             
             <?php if ( $max_pages > 1 ) : ?>
-                <div id="cmr-mui-pagination-wrap" style="display: <?php echo (!empty($posts) && count($posts) > 9) ? 'none' : 'block'; ?>; margin-top: 40px;">
+                <div id="cmr-mui-pagination-wrap" class="cmr-mui-pagination" style="display: <?php echo (!empty($posts) && count($posts) > 9) ? 'none' : 'block'; ?>; margin-top: 40px;">
                     <?php
                     echo paginate_links( array(
                         'base'      => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ),
                         'format'    => '?paged=%#%',
                         'current'   => max( 1, get_query_var( 'paged' ) ),
                         'total'     => $max_pages,
-                        'prev_text' => '&laquo; Prev',
-                        'next_text' => 'Next &raquo;',
+                        'prev_text' => '<svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 15L1.5 8L8.5 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+                        'next_text' => '<svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 15L8.5 8L1.5 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
                     ) );
                     ?>
                 </div>
