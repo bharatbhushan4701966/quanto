@@ -149,8 +149,10 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
             }
             .cmr-mui-card-img {
                 width: 100%;
-                height: 240px;
+                aspect-ratio: 4 / 3;
                 object-fit: cover;
+                display: block;
+                border-radius: 4px;
                 margin-bottom: 20px;
             }
             .cmr-mui-card-meta {
@@ -179,8 +181,9 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                 color: #111;
                 margin: 0 0 15px 0;
                 line-height: 1.3;
+                letter-spacing: -0.5px;
                 display: -webkit-box;
-                -webkit-line-clamp: 3;
+                -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
             }
@@ -190,7 +193,7 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                 line-height: 1.5;
                 margin: 0 0 20px 0;
                 display: -webkit-box;
-                -webkit-line-clamp: 3;
+                -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
             }
