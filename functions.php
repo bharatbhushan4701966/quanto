@@ -512,7 +512,7 @@ function cmr_migrate_press_releases_callback() {
         while ($query->have_posts()) {
             $query->the_post();
             $post_id = get_the_ID();
-            $title = get_the_title(\);
+            $title = get_the_title();
             
             // Check if it's already migrated
             $existing = get_posts(array(
