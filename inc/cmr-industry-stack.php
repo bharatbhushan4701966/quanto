@@ -52,7 +52,8 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
                 border-radius: 4px;
                 display: flex;
                 flex-direction: column;
-                height: 402px;
+                height: auto;
+                min-height: 402px;
                 box-shadow: 0 4px 20px rgba(0,0,0,0.03);
                 position: relative;
                 box-sizing: border-box;
