@@ -14,9 +14,12 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
             'category'       => '', // e.g. 'market-updates'
         ), $atts, 'cmr_market_updates_insights' );
 
+        $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+        
         $query_args = array(
             'post_type'      => 'post',
-            'posts_per_page' => intval( $atts['posts_per_page'] ),
+            'posts_per_page' => 27, // 9 items * 3 pages (2 load mores)
+            'paged'          => $paged,
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
@@ -30,6 +33,9 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
         }
 
         $insights_posts = get_posts( $query_args );
+        $all_query = new WP_Query($query_args);
+        $posts = $all_query->posts;
+        $max_pages = $all_query->max_num_pages;
 
         ob_start();
         ?>
@@ -139,6 +145,7 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                 display: flex;
                 flex-direction: column;
                 background: #fff;
+                height: 100%;
             }
             .cmr-mui-card-img {
                 width: 100%;
@@ -172,13 +179,20 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                 color: #111;
                 margin: 0 0 15px 0;
                 line-height: 1.3;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
             }
             .cmr-mui-card-excerpt {
                 font-size: 15px;
                 color: #555;
                 line-height: 1.5;
                 margin: 0 0 20px 0;
-                flex-grow: 1;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
             }
             .cmr-mui-read-more {
                 display: inline-flex;
@@ -190,12 +204,45 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                 border-bottom: 1px solid #111;
                 padding-bottom: 2px;
                 align-self: flex-start;
+                margin-top: auto;
                 transition: opacity 0.2s;
             }
             .cmr-mui-read-more svg {
-                width: 14px;
-                height: 14px;
-                margin-left: 6px;
+                width: 16px;
+                height: 16px;
+                margin-left: 5px;
+            }
+            .cmr-mui-card-hidden {
+                display: none !important;
+            }
+            .cmr-mui-btn {
+                background: #111;
+                color: #fff;
+                border: none;
+                padding: 12px 30px;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: opacity 0.2s;
+            }
+            .cmr-mui-btn:hover {
+                opacity: 0.8;
+            }
+            #cmr-mui-pagination-wrap {
+                text-align: center;
+            }
+            #cmr-mui-pagination-wrap .page-numbers {
+                display: inline-block;
+                padding: 8px 16px;
+                margin: 0 4px;
+                border: 1px solid #ddd;
+                color: #111;
+                text-decoration: none;
+            }
+            #cmr-mui-pagination-wrap .page-numbers.current {
+                background: #111;
+                color: #fff;
+                border-color: #111;
             }
             .cmr-mui-read-more:hover {
                 opacity: 0.7;
@@ -312,8 +359,12 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
             </div>
 
             <div class="cmr-mui-grid">
-                <?php if ( ! empty($insights_posts) ) : ?>
-                    <?php foreach ( $insights_posts as $post_obj ) : 
+                <?php if ( ! empty($posts) ) : 
+                    $post_count = 0;
+                    foreach ( $posts as $post_obj ) : 
+                        $post_count++;
+                        $hidden_class = ( $post_count > 9 ) ? ' cmr-mui-card-hidden' : '';
+                        
                         $thumbnail_url = get_the_post_thumbnail_url( $post_obj->ID, 'large' );
                         if ( ! $thumbnail_url ) {
                             $thumbnail_url = 'https://via.placeholder.com/600x400?text=Insight+Image';
@@ -338,7 +389,7 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                             $excerpt = wp_trim_words( $content, 20 );
                         }
                     ?>
-                    <div class="cmr-mui-card">
+                    <div class="cmr-mui-card<?php echo $hidden_class; ?>">
                         <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr(get_the_title($post_obj)); ?>" class="cmr-mui-card-img">
                         <div class="cmr-mui-card-meta">
                             <div class="cmr-mui-card-cat-date">
@@ -362,6 +413,27 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                     <p>No insights found.</p>
                 <?php endif; ?>
             </div>
+
+            <?php if ( ! empty($posts) && count($posts) > 9 ) : ?>
+                <div class="cmr-mui-actions" style="text-align: center; margin-top: 40px;">
+                    <button type="button" id="cmr-mui-load-more" class="cmr-mui-btn">Load More</button>
+                </div>
+            <?php endif; ?>
+            
+            <?php if ( $max_pages > 1 ) : ?>
+                <div id="cmr-mui-pagination-wrap" style="display: <?php echo (!empty($posts) && count($posts) > 9) ? 'none' : 'block'; ?>; margin-top: 40px;">
+                    <?php
+                    echo paginate_links( array(
+                        'base'      => str_replace( 999999999, '%#%', esc_url( get_pagenum_link( 999999999 ) ) ),
+                        'format'    => '?paged=%#%',
+                        'current'   => max( 1, get_query_var( 'paged' ) ),
+                        'total'     => $max_pages,
+                        'prev_text' => '&laquo; Prev',
+                        'next_text' => 'Next &raquo;',
+                    ) );
+                    ?>
+                </div>
+            <?php endif; ?>
         </div>
 
         <script>
@@ -380,6 +452,29 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                                 card.style.display = 'none';
                             }
                         });
+                    });
+                }
+                
+                // Load More Functionality
+                var loadMoreBtn = document.getElementById('cmr-mui-load-more');
+                var paginationWrap = document.getElementById('cmr-mui-pagination-wrap');
+                if (loadMoreBtn) {
+                    loadMoreBtn.addEventListener('click', function() {
+                        var hiddenCards = document.querySelectorAll('.cmr-mui-card.cmr-mui-card-hidden');
+                        var cardsToShow = 9;
+                        for (var i = 0; i < hiddenCards.length; i++) {
+                            if (i < cardsToShow) {
+                                hiddenCards[i].classList.remove('cmr-mui-card-hidden');
+                            }
+                        }
+                        
+                        var remainingHidden = document.querySelectorAll('.cmr-mui-card.cmr-mui-card-hidden');
+                        if (remainingHidden.length === 0) {
+                            loadMoreBtn.style.display = 'none';
+                            if (paginationWrap) {
+                                paginationWrap.style.display = 'block';
+                            }
+                        }
                     });
                 }
                 
