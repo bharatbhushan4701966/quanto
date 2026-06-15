@@ -20,6 +20,12 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
+            'meta_query'     => array(
+                array(
+                    'key'     => '_thumbnail_id',
+                    'compare' => 'EXISTS'
+                ),
+            ),
         );
 
         $wwt_query = new WP_Query( $query_args );
