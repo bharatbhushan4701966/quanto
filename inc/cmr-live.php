@@ -178,6 +178,7 @@ if ( ! function_exists( 'cmr_live_shortcode' ) ) {
                 color: #111;
                 margin: 0;
                 line-height: 1.3;
+                letter-spacing: -0.5px;
                 display: -webkit-box;
                 -webkit-line-clamp: 3;
                 -webkit-box-orient: vertical;
@@ -193,7 +194,7 @@ if ( ! function_exists( 'cmr_live_shortcode' ) ) {
                 </div>
                 <a href="/cmr-live" class="cmr-live-explore">
                     Explore More
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="7" y1="17" x2="17" y2="7"></line>
                         <polyline points="7 7 17 7 17 17"></polyline>
                     </svg>
