@@ -237,7 +237,89 @@ function cmr_mega_menu_who_we_are_shortcode($atts) {
                 </div>
             </div>
         </div>
-    </div>
     <?php
     return ob_get_clean();
+}
+
+// Automatically inject the mega menu into the nav bar
+add_action('wp_footer', 'cmr_inject_who_we_are_mega_menu', 100);
+function cmr_inject_who_we_are_mega_menu() {
+    // Generate the mega menu HTML
+    $mega_menu_html = do_shortcode('[cmr_mega_menu_who_we_are]');
+    ?>
+    <div id="cmr-hidden-mega-menu" style="display: none;">
+        <?php echo $mega_menu_html; ?>
+    </div>
+
+    <style>
+        /* CSS to make the nav item act as a dropdown wrapper */
+        .cmr-has-mega-menu {
+            position: relative !important;
+        }
+        
+        .cmr-mm-wrapper {
+            position: absolute !important;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+            margin-top: 10px;
+            z-index: 9999;
+        }
+
+        /* Adjust Elementor menu wrapper if needed so it doesnt clip */
+        .elementor-nav-menu--main {
+            overflow: visible !important;
+        }
+        
+        .elementor-widget-nav-menu .elementor-nav-menu {
+            overflow: visible !important;
+        }
+
+        /* Show on hover */
+        .cmr-has-mega-menu:hover .cmr-mm-wrapper {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Hide the default submenu arrow if there is one */
+        .cmr-has-mega-menu > a .sub-arrow {
+            display: none !important;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Find the hidden mega menu
+            var megaMenu = document.getElementById('cmr-hidden-mega-menu');
+            if (!megaMenu) return;
+
+            // Find all nav links to search for "Who we serve" or "Who we are"
+            var navLinks = document.querySelectorAll('.menu-item > a, .elementor-item');
+            
+            navLinks.forEach(function(link) {
+                var text = link.innerText.trim().toLowerCase();
+                // Attach to "Who we serve" (or fallback to "who we are" if changed)
+                if (text === 'who we serve' || text === 'who we are') {
+                    var parentLi = link.closest('li, .menu-item'); // Get the wrapping li
+                    if (parentLi) {
+                        parentLi.classList.add('cmr-has-mega-menu');
+                        // Move all contents of megaMenu into the li
+                        while (megaMenu.childNodes.length > 0) {
+                            parentLi.appendChild(megaMenu.childNodes[0]);
+                        }
+                    }
+                }
+            });
+            
+            // Remove the hidden container
+            if (megaMenu) {
+                megaMenu.remove();
+            }
+        });
+    </script>
+    <?php
 }
