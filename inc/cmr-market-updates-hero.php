@@ -91,8 +91,8 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
             }
             
             .cmr-mu-hero-title {
-                font-size: 54px;
-                font-weight: 700;
+                font-size: 60px;
+                font-weight: 600;
                 color: #111;
                 margin: 0 0 15px 0;
                 line-height: 1.1;
