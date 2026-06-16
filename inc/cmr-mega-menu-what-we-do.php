@@ -246,7 +246,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
         .cmr-mmw-explore-btn a {
             font-size: 16px;
             font-weight: 600;
-            color: #111;
+            color: #000 !important;
             text-decoration: none;
             display: inline-flex;
             align-items: center;

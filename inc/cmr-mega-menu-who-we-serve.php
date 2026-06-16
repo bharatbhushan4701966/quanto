@@ -121,11 +121,12 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
         }
 
         .cmr-mms-insight-item {
-            display: flex;
-            align-items: center;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
             gap: 15px;
             text-decoration: none;
-            color: #111;
+            color: #000 !important;
             font-weight: 600;
             font-size: 16px;
             white-space: nowrap;
