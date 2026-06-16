@@ -62,7 +62,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             padding: 30px;
             background: #fff;
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
 
         .cmr-mmw-right {
