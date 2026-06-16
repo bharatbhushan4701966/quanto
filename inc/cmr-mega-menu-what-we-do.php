@@ -3,18 +3,31 @@
 
 add_shortcode('cmr_mega_menu_what_we_do', 'cmr_mega_menu_what_we_do_shortcode');
 
-function cmr_mega_menu_what_we_do_shortcode($atts) {
-    ob_start();
-
-    // Fetch 3 latest posts
+function cmr_get_mmw_posts($slug, $fallback_offset) {
     $args = array(
         'post_type'      => 'post',
         'posts_per_page' => 3,
         'post_status'    => 'publish',
         'orderby'        => 'date',
-        'order'          => 'DESC'
+        'order'          => 'DESC',
+        'category_name'  => $slug
     );
-    $latest_posts = get_posts($args);
+    $posts = get_posts($args);
+    if (count($posts) < 3) {
+        $args['category_name'] = '';
+        $args['offset'] = $fallback_offset;
+        $posts = get_posts($args);
+    }
+    return $posts;
+}
+
+function cmr_mega_menu_what_we_do_shortcode($atts) {
+    ob_start();
+
+    // Fetch 3 distinct sets of posts
+    $posts_industry = cmr_get_mmw_posts('industry-intelligence', 0);
+    $posts_consulting = cmr_get_mmw_posts('consulting-advisory', 3);
+    $posts_marketing = cmr_get_mmw_posts('marketing-services', 6);
 
     ?>
     <style>
@@ -30,7 +43,6 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             display: flex;
         }
         
-        /* The top triangle arrow */
         .cmr-mmw-wrapper::before {
             content: '';
             position: absolute;
@@ -39,12 +51,11 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             transform: translateX(-50%) rotate(45deg);
             width: 16px;
             height: 16px;
-            background: #f3f5ff; /* Match the gradient roughly or leave white based on where the arrow is */
+            background: #f3f5ff; 
             box-shadow: -3px -3px 5px rgba(0,0,0,0.03);
             border-radius: 2px;
             z-index: 0;
         }
-        /* Actually, in the screenshot, the arrow is white and sits on the left side, but let's center it normally. */
 
         .cmr-mmw-left {
             width: 35%;
@@ -82,6 +93,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
         .cmr-mmw-item {
             text-decoration: none;
             display: block;
+            position: relative;
         }
         
         .cmr-mmw-item:hover h4 {
@@ -91,7 +103,6 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
         .cmr-mmw-item-header {
             display: flex;
             align-items: center;
-            gap: 5px;
             margin-bottom: 6px;
         }
 
@@ -102,6 +113,8 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             color: #111;
             margin: 0;
             transition: color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
         }
 
         .cmr-mmw-item p {
@@ -111,16 +124,42 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             line-height: 1.4;
         }
 
-        .cmr-mmw-item-purple h4 {
+        .cmr-mmw-item.active h4 {
             color: #6A35FF !important;
         }
 
-        .cmr-mmw-item-purple-text {
-            border-bottom: 2px solid #6A35FF;
+        .cmr-mmw-item.active::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -38px;
+            transform: translateY(-50%) rotate(45deg);
+            width: 16px;
+            height: 16px;
+            background: #fff;
+            border-top-right-radius: 2px;
+            z-index: 2;
+        }
+
+        .cmr-mmw-text-inner {
+            border-bottom: 2px solid transparent;
             padding-bottom: 2px;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 5px;
+            transition: border-color 0.2s;
+        }
+
+        .cmr-mmw-item.active .cmr-mmw-text-inner {
+            border-bottom: 2px solid #6A35FF;
+        }
+
+        .cmr-mmw-arrow {
+            display: none;
+            margin-left: 6px;
+        }
+
+        .cmr-mmw-item.active .cmr-mmw-arrow {
+            display: inline-block;
         }
 
         /* POSTS LIST */
@@ -132,7 +171,9 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
         }
 
         .cmr-mmw-post-card {
-            display: flex;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: stretch;
             background: #fff;
             border-radius: 8px;
             overflow: hidden;
@@ -227,32 +268,42 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
         }
     </style>
 
-    <div class="cmr-mmw-wrapper">
+    <div class="cmr-mmw-wrapper" id="cmr-mmw-wrapper-inner">
         <div class="cmr-mmw-left">
             <div class="cmr-mmw-label">WHAT WE DO</div>
             <div class="cmr-mmw-menu-list">
-                <a href="/industry-intelligence" class="cmr-mmw-item">
+                <a href="/industry-intelligence" class="cmr-mmw-item cmr-mmw-item-hover-trigger active" data-target="cmr-mmw-list-industry">
                     <div class="cmr-mmw-item-header">
-                        <h4>Industry Intelligence</h4>
+                        <h4>
+                            <span class="cmr-mmw-text-inner">
+                                Industry Intelligence
+                                <svg class="cmr-mmw-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </span>
+                        </h4>
                     </div>
                     <p>Market research and strategic insights</p>
                 </a>
                 
-                <a href="/consulting-advisory" class="cmr-mmw-item cmr-mmw-item-purple">
+                <a href="/consulting-advisory" class="cmr-mmw-item cmr-mmw-item-hover-trigger" data-target="cmr-mmw-list-consulting">
                     <div class="cmr-mmw-item-header">
                         <h4>
-                            <span class="cmr-mmw-item-purple-text">
+                            <span class="cmr-mmw-text-inner">
                                 Consulting & Advisory 
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                                <svg class="cmr-mmw-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                             </span>
                         </h4>
                     </div>
                     <p>Expert guidance for business growth</p>
                 </a>
                 
-                <a href="/marketing-services" class="cmr-mmw-item">
+                <a href="/marketing-services" class="cmr-mmw-item cmr-mmw-item-hover-trigger" data-target="cmr-mmw-list-marketing">
                     <div class="cmr-mmw-item-header">
-                        <h4>Marketing Services</h4>
+                        <h4>
+                            <span class="cmr-mmw-text-inner">
+                                Marketing Services
+                                <svg class="cmr-mmw-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                            </span>
+                        </h4>
                     </div>
                     <p>Research-backed marketing solutions</p>
                 </a>
@@ -261,9 +312,19 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
 
         <div class="cmr-mmw-right">
             <div class="cmr-mmw-label">LATEST POSTS</div>
-            <div class="cmr-mmw-posts-list">
-                <?php if ( ! empty( $latest_posts ) ) : ?>
-                    <?php foreach ( $latest_posts as $post ) : 
+            
+            <?php
+            $tabs = array(
+                'cmr-mmw-list-industry' => $posts_industry,
+                'cmr-mmw-list-consulting' => $posts_consulting,
+                'cmr-mmw-list-marketing' => $posts_marketing
+            );
+            $first_tab = true;
+            foreach ($tabs as $tab_id => $tab_posts) :
+            ?>
+            <div class="cmr-mmw-posts-list" id="<?php echo esc_attr($tab_id); ?>" style="<?php echo $first_tab ? 'display: flex;' : 'display: none;'; ?>">
+                <?php if ( ! empty( $tab_posts ) ) : ?>
+                    <?php foreach ( $tab_posts as $post ) : 
                         $thumbnail_url = get_the_post_thumbnail_url( $post->ID, 'medium' );
                         if ( ! $thumbnail_url ) {
                             $thumbnail_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
@@ -287,6 +348,10 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
                     <p>No recent posts found.</p>
                 <?php endif; ?>
             </div>
+            <?php 
+            $first_tab = false;
+            endforeach; 
+            ?>
             
             <div class="cmr-mmw-explore-btn">
                 <a href="/insights">
@@ -296,6 +361,33 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             </div>
         </div>
     </div>
+    
+    <script>
+        // Use a unique function to avoid global scope pollution if called multiple times
+        (function() {
+            var wrapper = document.getElementById('cmr-mmw-wrapper-inner');
+            if (!wrapper) return;
+            var items = wrapper.querySelectorAll('.cmr-mmw-item-hover-trigger');
+            var lists = wrapper.querySelectorAll('.cmr-mmw-posts-list');
+            
+            items.forEach(function(item) {
+                item.addEventListener('mouseenter', function() {
+                    // remove active class
+                    items.forEach(function(i) { i.classList.remove('active'); });
+                    // hide all lists
+                    lists.forEach(function(l) { l.style.display = 'none'; });
+                    
+                    // activate this
+                    this.classList.add('active');
+                    var targetId = this.getAttribute('data-target');
+                    var targetList = document.getElementById(targetId);
+                    if (targetList) {
+                        targetList.style.display = 'flex';
+                    }
+                });
+            });
+        })();
+    </script>
     <?php
     return ob_get_clean();
 }
@@ -353,7 +445,6 @@ function cmr_inject_what_we_do_mega_menu() {
                     if (parentLi) {
                         parentLi.classList.add('cmr-has-mega-menu-do');
                         
-                        // We need to wrap the contents in a padding wrapper to fix the hover gap
                         var wrapperOuter = document.createElement('div');
                         wrapperOuter.className = 'cmr-mmw-wrapper-outer';
                         
