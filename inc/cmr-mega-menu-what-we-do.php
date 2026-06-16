@@ -132,12 +132,13 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             content: '';
             position: absolute;
             top: 50%;
-            right: -38px;
-            transform: translateY(-50%) rotate(45deg);
-            width: 16px;
-            height: 16px;
-            background: #fff;
-            border-top-right-radius: 2px;
+            right: -30px;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            border-right: 12px solid #f3f5ff;
             z-index: 2;
         }
 
