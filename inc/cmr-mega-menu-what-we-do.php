@@ -51,7 +51,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             transform: translateX(-50%) rotate(45deg);
             width: 16px;
             height: 16px;
-            background: #f3f5ff; 
+            background: #fff; 
             box-shadow: -3px -3px 5px rgba(0,0,0,0.03);
             border-radius: 2px;
             z-index: 0;
