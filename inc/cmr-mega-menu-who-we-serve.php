@@ -57,7 +57,7 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
             color: #9ba4b5;
             letter-spacing: 1px;
             text-transform: uppercase;
-            margin-bottom: 14px;
+            margin-bottom: 0px;
         }
 
         .cmr-mms-item {
@@ -128,6 +128,7 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
             color: #111;
             font-weight: 600;
             font-size: 16px;
+            white-space: nowrap;
             transition: color 0.2s ease;
         }
 
