@@ -34,7 +34,7 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
         }
 
         .cmr-mms-top {
-            padding: 40px 40px 30px;
+            padding: 0px 30px 20px;
             position: relative;
             z-index: 1;
             background: #fff;
@@ -48,7 +48,7 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
         .cmr-mms-col {
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: 14px;
         }
 
         .cmr-mms-label {
@@ -57,7 +57,7 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
             color: #9ba4b5;
             letter-spacing: 1px;
             text-transform: uppercase;
-            margin-bottom: 5px;
+            margin-bottom: 14px;
         }
 
         .cmr-mms-item {
@@ -102,7 +102,7 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
         }
 
         .cmr-mms-bottom {
-            padding: 30px 40px;
+            padding: 10px 20px 30px;
             background: linear-gradient(135deg, #f3f5ff 0%, #edf9fb 50%, #e6faf7 100%);
             border-bottom-left-radius: 12px;
             border-bottom-right-radius: 12px;
@@ -117,7 +117,7 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
         .cmr-mms-insight-list {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 12px;
         }
 
         .cmr-mms-insight-item {
@@ -308,7 +308,7 @@ function cmr_inject_who_we_serve_mega_menu() {
         
         .cmr-mms-wrapper {
             position: absolute !important;
-            top: 45px;
+            top: 60px;
             left: 50%;
             transform: translateX(-50%);
             width: max-content !important;
