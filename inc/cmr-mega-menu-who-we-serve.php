@@ -60,6 +60,10 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
             margin-bottom: 0px;
         }
 
+        .cmr-mms-bottom .cmr-mms-label {
+            margin-bottom: 5px;
+        }
+
         .cmr-mms-item {
             text-decoration: none;
             display: block;
