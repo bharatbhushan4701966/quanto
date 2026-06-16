@@ -43,7 +43,7 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
             .cmr-mui-section {
                 font-family: 'Instrument Sans', sans-serif !important;
                 width: 100%;
-                max-width: 1200px;
+                max-width: 1280px;
                 margin: 0 auto;
                 padding: 40px 20px;
                 box-sizing: border-box;
