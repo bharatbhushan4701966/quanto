@@ -128,6 +128,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-author-sync.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-post-sync.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-mega-menu-who-we-are.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-mega-menu-who-we-serve.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-mega-menu-what-we-do.php';
 // Removed require for cmr-intro-text.php
 
 // Save rating meta for cmr_news comments
