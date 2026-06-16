@@ -312,8 +312,8 @@ function cmr_inject_who_we_are_mega_menu() {
             
             navLinks.forEach(function(link) {
                 var text = link.innerText.trim().toLowerCase();
-                // Attach to "Who we serve" (or fallback to "who we are" if changed)
-                if (text === 'who we serve' || text === 'who we are') {
+                // Attach to "Who we are"
+                if (text === 'who we are') {
                     var parentLi = link.closest('li, .menu-item'); // Get the wrapping li
                     if (parentLi) {
                         parentLi.classList.add('cmr-has-mega-menu');
