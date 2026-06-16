@@ -39,7 +39,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             border-radius: 12px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.08);
             background: #fff;
-            overflow: hidden;
+            background: #fff;
             display: flex;
         }
         
@@ -63,6 +63,8 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             background: #fff;
             position: relative;
             z-index: 2;
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
         }
 
         .cmr-mmw-right {
@@ -73,6 +75,8 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             z-index: 1;
             display: flex;
             flex-direction: column;
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
         }
 
         .cmr-mmw-label {
