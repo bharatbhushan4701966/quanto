@@ -269,10 +269,12 @@ function cmr_inject_newsroom_mega_menu() {
             z-index: 9999;
         }
 
-        .cmr-has-mega-menu-newsroom:hover .cmr-mmn-wrapper-outer {
+        .elementor-nav-menu--main .elementor-item:hover + .cmr-mmn-wrapper,
+        .cmr-has-mega-menu-news:hover .cmr-mmn-wrapper {
             opacity: 1;
             visibility: visible;
             transform: translateX(-50%) translateY(0);
+            top: 60px !important;
         }
 
         .cmr-has-mega-menu-newsroom > a .sub-arrow {

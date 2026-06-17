@@ -425,10 +425,12 @@ function cmr_inject_what_we_do_mega_menu() {
             z-index: 9999;
         }
 
+        .elementor-nav-menu--main .elementor-item:hover + .cmr-mmw-wrapper-outer,
         .cmr-has-mega-menu-do:hover .cmr-mmw-wrapper-outer {
             opacity: 1;
             visibility: visible;
             transform: translateX(-50%) translateY(0);
+            top: 60px !important;
         }
 
         .cmr-has-mega-menu-do > a .sub-arrow {

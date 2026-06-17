@@ -345,10 +345,12 @@ function cmr_inject_what_we_think_mega_menu() {
             z-index: 9999;
         }
 
-        .cmr-has-mega-menu-think:hover .cmr-mmt-wrapper-outer {
+        .elementor-nav-menu--main .elementor-item:hover + .cmr-mmt-wrapper,
+        .cmr-has-mega-menu-think:hover .cmr-mmt-wrapper {
             opacity: 1;
             visibility: visible;
             transform: translateX(-50%) translateY(0);
+            top: 60px !important;
         }
 
         .cmr-has-mega-menu-think > a .sub-arrow {
