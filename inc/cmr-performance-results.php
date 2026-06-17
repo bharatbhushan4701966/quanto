@@ -320,10 +320,7 @@ if ( ! function_exists( 'cmr_performance_results_shortcode' ) ) {
                                         <div class="cmr-pr-card-img">
                                             <div class="cmr-pr-card-badge">Q3 Result</div>
                                             <!-- SVG Logo placeholder based on image -->
-                                            <svg class="cmr-pr-card-logo" viewBox="0 0 100 100" fill="none" stroke="#103c80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M 30 50 L 50 30 L 80 30 L 60 50 L 80 70 L 50 70 Z" />
-                                                <path d="M 50 30 L 20 60 L 40 80 L 70 50" />
-                                            </svg>
+                                            <img class="cmr-pr-card-logo" src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/cmrlogo-with-oly-c.svg" alt="CMR Logo">
                                         </div>
                                         <div class="cmr-pr-card-content">
                                             <div class="cmr-pr-card-meta">
@@ -340,10 +337,7 @@ if ( ! function_exists( 'cmr_performance_results_shortcode' ) ) {
                                     <div class="cmr-pr-card">
                                         <div class="cmr-pr-card-img">
                                             <div class="cmr-pr-card-badge">Q2 Result</div>
-                                            <svg class="cmr-pr-card-logo" viewBox="0 0 100 100" fill="none" stroke="#103c80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M 30 50 L 50 30 L 80 30 L 60 50 L 80 70 L 50 70 Z" />
-                                                <path d="M 50 30 L 20 60 L 40 80 L 70 50" />
-                                            </svg>
+                                            <img class="cmr-pr-card-logo" src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/cmrlogo-with-oly-c.svg" alt="CMR Logo">
                                         </div>
                                         <div class="cmr-pr-card-content">
                                             <div class="cmr-pr-card-meta">
@@ -360,10 +354,7 @@ if ( ! function_exists( 'cmr_performance_results_shortcode' ) ) {
                                     <div class="cmr-pr-card">
                                         <div class="cmr-pr-card-img">
                                             <div class="cmr-pr-card-badge">Q1 Result</div>
-                                            <svg class="cmr-pr-card-logo" viewBox="0 0 100 100" fill="none" stroke="#103c80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M 30 50 L 50 30 L 80 30 L 60 50 L 80 70 L 50 70 Z" />
-                                                <path d="M 50 30 L 20 60 L 40 80 L 70 50" />
-                                            </svg>
+                                            <img class="cmr-pr-card-logo" src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/cmrlogo-with-oly-c.svg" alt="CMR Logo">
                                         </div>
                                         <div class="cmr-pr-card-content">
                                             <div class="cmr-pr-card-meta">

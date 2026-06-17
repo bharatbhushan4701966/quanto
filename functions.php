@@ -574,3 +574,18 @@ function cmr_migrate_press_releases_callback() {
     ), 200);
 }
 
+// Global Custom CSS for Menus
+add_action('wp_head', function() {
+    ?>
+    <style>
+        /* Make all top-level menu items purple on hover */
+        .elementor-nav-menu--main .elementor-item:hover,
+        .elementor-nav-menu--main .elementor-item.elementor-item-active,
+        .elementor-nav-menu--main .elementor-item:focus,
+        .menu-item > a:hover {
+            color: #6A35FF !important;
+        }
+    </style>
+    <?php
+});
+
