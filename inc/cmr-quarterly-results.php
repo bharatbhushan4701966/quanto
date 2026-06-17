@@ -131,6 +131,8 @@ if ( ! function_exists( 'cmr_quarterly_results_shortcode' ) ) {
                 position: relative;
                 display: flex;
                 justify-content: center;
+                margin-top: -160px;
+                z-index: 5;
             }
 
             /* CEO Image custom shape container */
@@ -408,6 +410,9 @@ if ( ! function_exists( 'cmr_quarterly_results_shortcode' ) ) {
                 }
                 .cmr-qr-ceo-img-wrap {
                     max-width: 300px;
+                }
+                .cmr-qr-ceo-img-col {
+                    margin-top: 0;
                 }
                 .cmr-qr-fy-grid {
                     grid-template-columns: 1fr;
