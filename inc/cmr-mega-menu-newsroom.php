@@ -269,8 +269,8 @@ function cmr_inject_newsroom_mega_menu() {
             z-index: 9999;
         }
 
-        .elementor-nav-menu--main .elementor-item:hover + .cmr-mmn-wrapper,
-        .cmr-has-mega-menu-news:hover .cmr-mmn-wrapper {
+        .elementor-nav-menu--main .elementor-item:hover + .cmr-mmn-wrapper-outer,
+        .cmr-has-mega-menu-newsroom:hover .cmr-mmn-wrapper-outer {
             opacity: 1;
             visibility: visible;
             transform: translateX(-50%) translateY(0);

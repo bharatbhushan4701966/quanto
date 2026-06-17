@@ -327,10 +327,14 @@ function cmr_inject_who_we_serve_mega_menu() {
         }
 
         /* Show on hover */
+        .elementor-nav-menu--main .elementor-item:hover + .cmr-mms-wrapper-outer,
+        .cmr-has-mega-menu-serve:hover .cmr-mms-wrapper-outer,
+        .elementor-nav-menu--main .elementor-item:hover + .cmr-mms-wrapper,
         .cmr-has-mega-menu-serve:hover .cmr-mms-wrapper {
             opacity: 1;
             visibility: visible;
             transform: translateX(-50%) translateY(0);
+            top: 60px !important;
         }
 
         /* Hide the default submenu arrow if there is one */

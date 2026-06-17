@@ -345,8 +345,8 @@ function cmr_inject_what_we_think_mega_menu() {
             z-index: 9999;
         }
 
-        .elementor-nav-menu--main .elementor-item:hover + .cmr-mmt-wrapper,
-        .cmr-has-mega-menu-think:hover .cmr-mmt-wrapper {
+        .elementor-nav-menu--main .elementor-item:hover + .cmr-mmt-wrapper-outer,
+        .cmr-has-mega-menu-think:hover .cmr-mmt-wrapper-outer {
             opacity: 1;
             visibility: visible;
             transform: translateX(-50%) translateY(0);
