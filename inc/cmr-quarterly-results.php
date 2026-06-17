@@ -177,7 +177,7 @@ if ( ! function_exists( 'cmr_quarterly_results_shortcode' ) ) {
 
             .cmr-qr-fy-grid {
                 display: grid;
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1.5fr 1fr;
                 gap: 40px;
                 margin-bottom: 80px;
             }
