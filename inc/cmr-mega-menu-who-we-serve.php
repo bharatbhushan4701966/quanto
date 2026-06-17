@@ -181,7 +181,7 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
             <div class="cmr-mms-col">
                 <div class="cmr-mms-label">WHO WE SERVE</div>
                 
-                <a href="/automotive" class="cmr-mms-item">
+                <a href="<?php echo esc_url( home_url( '/automotive/' ) ); ?>" class="cmr-mms-item">
                     <div class="cmr-mms-item-header">
                         <h4>Automotive</h4>
                         <span class="cmr-mms-badge">New</span>
@@ -189,28 +189,28 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
                     <p>Insights for the mobility ecosystem</p>
                 </a>
                 
-                <a href="/consumer-tech" class="cmr-mms-item">
+                <a href="<?php echo esc_url( home_url( '/consumer-tech/' ) ); ?>" class="cmr-mms-item">
                     <div class="cmr-mms-item-header">
                         <h4>Consumer Tech</h4>
                     </div>
                     <p>Understanding digital consumer behavior</p>
                 </a>
                 
-                <a href="/digital-supply-chain" class="cmr-mms-item">
+                <a href="<?php echo esc_url( home_url( '/digital-supply-chain/' ) ); ?>" class="cmr-mms-item">
                     <div class="cmr-mms-item-header">
                         <h4>Digital Supply Chain</h4>
                     </div>
                     <p>Intelligence for connected supply chains</p>
                 </a>
                 
-                <a href="/it-telecom" class="cmr-mms-item">
+                <a href="<?php echo esc_url( home_url( '/it-telecom/' ) ); ?>" class="cmr-mms-item">
                     <div class="cmr-mms-item-header">
                         <h4>IT & Telecom</h4>
                     </div>
                     <p>Research across technology markets</p>
                 </a>
                 
-                <a href="/semiconductors" class="cmr-mms-item">
+                <a href="<?php echo esc_url( home_url( '/semiconductors/' ) ); ?>" class="cmr-mms-item">
                     <div class="cmr-mms-item-header">
                         <h4>Semiconductors</h4>
                         <span class="cmr-mms-badge">New</span>
@@ -222,21 +222,21 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
             <div class="cmr-mms-col">
                 <div class="cmr-mms-label">INDUSTRY CONNECT</div>
                 
-                <a href="/enterprise-connect" class="cmr-mms-item">
+                <a href="<?php echo esc_url( home_url( '/enterprise-connect/' ) ); ?>" class="cmr-mms-item">
                     <div class="cmr-mms-item-header">
                         <h4>Enterprise Connect</h4>
                     </div>
                     <p>Insights for enterprise leaders</p>
                 </a>
                 
-                <a href="/smb-connect" class="cmr-mms-item">
+                <a href="<?php echo esc_url( home_url( '/smb-connect/' ) ); ?>" class="cmr-mms-item">
                     <div class="cmr-mms-item-header">
                         <h4>SMB Connect</h4>
                     </div>
                     <p>Growth strategies for SMBs</p>
                 </a>
                 
-                <a href="/channel-connect" class="cmr-mms-item">
+                <a href="<?php echo esc_url( home_url( '/channel-connect/' ) ); ?>" class="cmr-mms-item">
                     <div class="cmr-mms-item-header">
                         <h4>Channel Connect</h4>
                     </div>
@@ -248,7 +248,7 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
         <div class="cmr-mms-bottom">
             <div class="cmr-mms-label">INSIGHT</div>
             <div class="cmr-mms-insight-list">
-                <a href="/insight-1" class="cmr-mms-insight-item">
+                <a href="<?php echo esc_url( home_url( '/insight-1/' ) ); ?>" class="cmr-mms-insight-item">
                     <div class="cmr-mms-insight-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="9" y1="18" x2="15" y2="18"></line>
@@ -262,7 +262,7 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
                     Debugging with product analytics
                     <svg class="cmr-mms-insight-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </a>
-                <a href="/insight-2" class="cmr-mms-insight-item">
+                <a href="<?php echo esc_url( home_url( '/insight-2/' ) ); ?>" class="cmr-mms-insight-item">
                     <div class="cmr-mms-insight-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="9" y1="18" x2="15" y2="18"></line>
@@ -276,7 +276,7 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
                     Why it's never too early to add product ana...
                     <svg class="cmr-mms-insight-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </a>
-                <a href="/insight-3" class="cmr-mms-insight-item">
+                <a href="<?php echo esc_url( home_url( '/insight-3/' ) ); ?>" class="cmr-mms-insight-item">
                     <div class="cmr-mms-insight-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="9" y1="18" x2="15" y2="18"></line>

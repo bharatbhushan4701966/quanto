@@ -183,15 +183,15 @@ function cmr_mega_menu_newsroom_shortcode($atts) {
     <div class="cmr-mmn-wrapper">
         <div class="cmr-mmn-left">
             <div class="cmr-mmn-label">NEWSROOM</div>
-            <a href="/media-releases" class="cmr-mmn-item">
+            <a href="<?php echo esc_url( home_url( '/media-releases/' ) ); ?>" class="cmr-mmn-item">
                 <h4>Media Releases</h4>
                 <p>Official company announcements and updates</p>
             </a>
-            <a href="/quarterly-results" class="cmr-mmn-item">
+            <a href="<?php echo esc_url( home_url( '/quarterly-results/' ) ); ?>" class="cmr-mmn-item">
                 <h4>Quarterly Results</h4>
                 <p>Financial performance and investor updates</p>
             </a>
-            <a href="/cmr-in-news" class="cmr-mmn-item">
+            <a href="<?php echo esc_url( home_url( '/cmr-in-news/' ) ); ?>" class="cmr-mmn-item">
                 <h4>CMR in News</h4>
                 <p>Featured coverage across leading media</p>
             </a>

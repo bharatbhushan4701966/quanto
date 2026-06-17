@@ -192,19 +192,19 @@ function cmr_mega_menu_who_we_are_shortcode($atts) {
         <div class="cmr-mm-top">
             <div class="cmr-mm-label">WHO WE ARE</div>
             <div class="cmr-mm-grid">
-                <a href="/about-us" class="cmr-mm-item">
+                <a href="<?php echo esc_url( home_url( '/about-us/' ) ); ?>" class="cmr-mm-item">
                     <h4>About Us</h4>
                     <p>Our story, expertise, and vision</p>
                 </a>
-                <a href="/leadership" class="cmr-mm-item">
+                <a href="<?php echo esc_url( home_url( '/leadership/' ) ); ?>" class="cmr-mm-item">
                     <h4>Leadership</h4>
                     <p>Meet the leaders driving innovation</p>
                 </a>
-                <a href="/careers" class="cmr-mm-item">
+                <a href="<?php echo esc_url( home_url( '/careers/' ) ); ?>" class="cmr-mm-item">
                     <h4>Careers</h4>
                     <p>Build the future with us</p>
                 </a>
-                <a href="/contact-us" class="cmr-mm-item">
+                <a href="<?php echo esc_url( home_url( '/contact-us/' ) ); ?>" class="cmr-mm-item">
                     <h4>Contact Us</h4>
                     <p>Connect with our expert team</p>
                 </a>
@@ -238,7 +238,7 @@ function cmr_mega_menu_who_we_are_shortcode($atts) {
                             Mumbai
                         </li>
                     </ul>
-                    <a href="/explore" class="cmr-mm-explore">
+                    <a href="<?php echo esc_url( home_url( '/explore/' ) ); ?>" class="cmr-mm-explore">
                         <span class="cmr-mm-explore-text">Explore</span> 
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                     </a>

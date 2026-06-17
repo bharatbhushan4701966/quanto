@@ -277,7 +277,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
         <div class="cmr-mmw-left">
             <div class="cmr-mmw-label">WHAT WE DO</div>
             <div class="cmr-mmw-menu-list">
-                <a href="/industry-intelligence" class="cmr-mmw-item cmr-mmw-item-hover-trigger active" data-target="cmr-mmw-list-industry">
+                <a href="<?php echo esc_url( home_url( '/industry-intelligence/' ) ); ?>" class="cmr-mmw-item cmr-mmw-item-hover-trigger active" data-target="cmr-mmw-list-industry">
                     <div class="cmr-mmw-item-header">
                         <h4>
                             <span class="cmr-mmw-text-inner">
@@ -289,7 +289,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
                     <p>Market research and strategic insights</p>
                 </a>
                 
-                <a href="/consulting-advisory" class="cmr-mmw-item cmr-mmw-item-hover-trigger" data-target="cmr-mmw-list-consulting">
+                <a href="<?php echo esc_url( home_url( '/consulting-advisory/' ) ); ?>" class="cmr-mmw-item cmr-mmw-item-hover-trigger" data-target="cmr-mmw-list-consulting">
                     <div class="cmr-mmw-item-header">
                         <h4>
                             <span class="cmr-mmw-text-inner">
@@ -301,7 +301,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
                     <p>Expert guidance for business growth</p>
                 </a>
                 
-                <a href="/marketing-services" class="cmr-mmw-item cmr-mmw-item-hover-trigger" data-target="cmr-mmw-list-marketing">
+                <a href="<?php echo esc_url( home_url( '/marketing-services/' ) ); ?>" class="cmr-mmw-item cmr-mmw-item-hover-trigger" data-target="cmr-mmw-list-marketing">
                     <div class="cmr-mmw-item-header">
                         <h4>
                             <span class="cmr-mmw-text-inner">
@@ -359,7 +359,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             ?>
             
             <div class="cmr-mmw-explore-btn">
-                <a href="/insights">
+                <a href="<?php echo esc_url( home_url( '/insights/' ) ); ?>">
                     Explore More industry insights 
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                 </a>

@@ -146,7 +146,6 @@ if ( ! function_exists( 'cmr_quarterly_results_shortcode' ) ) {
             .cmr-qr-ceo-img-bg {
                 position: absolute;
                 top: 0; left: 0; width: 100%; height: 100%;
-                border: 2px solid rgba(255,255,255,0.1);
                 border-radius: 20px 20px 100px 100px; /* Approximate the shield shape */
                 z-index: 1;
             }
@@ -173,6 +172,7 @@ if ( ! function_exists( 'cmr_quarterly_results_shortcode' ) ) {
                 font-weight: 600;
                 margin-bottom: 40px;
                 letter-spacing: -1px;
+                color: #fff;
             }
 
             .cmr-qr-fy-grid {

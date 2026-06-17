@@ -237,26 +237,26 @@ function cmr_mega_menu_what_we_think_shortcode($atts) {
         <div class="cmr-mmt-left">
             <div class="cmr-mmt-col">
                 <div class="cmr-mmt-label">WHAT WE THINK</div>
-                <a href="/research-reports" class="cmr-mmt-item">
+                <a href="<?php echo esc_url( home_url( '/research-reports/' ) ); ?>" class="cmr-mmt-item">
                     <h4>Research Reports</h4>
                     <p>Data-driven insights and forecasts</p>
                 </a>
-                <a href="/industry-insights" class="cmr-mmt-item">
+                <a href="<?php echo esc_url( home_url( '/industry-insights/' ) ); ?>" class="cmr-mmt-item">
                     <h4>Industry Insights</h4>
                     <p>Expert analysis on emerging trends</p>
                 </a>
-                <a href="/market-updates" class="cmr-mmt-item">
+                <a href="<?php echo esc_url( home_url( '/market-updates/' ) ); ?>" class="cmr-mmt-item">
                     <h4>Market Updates</h4>
                     <p>Latest developments shaping industries</p>
                 </a>
             </div>
             <div class="cmr-mmt-col">
                 <div class="cmr-mmt-label">CMR LIVE</div>
-                <a href="/top-view" class="cmr-mmt-item">
+                <a href="<?php echo esc_url( home_url( '/top-view/' ) ); ?>" class="cmr-mmt-item">
                     <h4>Top View</h4>
                     <p>Watch expert perspectives and industry conversations.</p>
                 </a>
-                <a href="/podcasts" class="cmr-mmt-item">
+                <a href="<?php echo esc_url( home_url( '/podcasts/' ) ); ?>" class="cmr-mmt-item">
                     <h4>Podcasts</h4>
                     <p>Expert conversations on trends and innovation.</p>
                 </a>
