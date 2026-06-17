@@ -133,6 +133,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-mega-menu-what-we-think.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-mega-menu-newsroom.php';
 
 require_once QUANTO_DIR_PATH_INC . 'cmr-quarterly-results.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-investor-banner.php';
 // Removed require for cmr-intro-text.php
 
 // Save rating meta for cmr_news comments
