@@ -78,7 +78,7 @@ if ( ! function_exists( 'cmr_quarterly_results_shortcode' ) ) {
             .cmr-qr-main {
                 background: #5B42C1;
                 color: #fff;
-                padding: 80px 0 180px 0; /* extra padding bottom for the overlapping card */
+                padding: 20px 0 180px 0; /* extra padding bottom for the overlapping card */
                 position: relative;
             }
 
@@ -352,8 +352,7 @@ if ( ! function_exists( 'cmr_quarterly_results_shortcode' ) ) {
 
             .cmr-qr-action-bar {
                 background: #fff;
-                border-radius: 12px;
-                box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+                box-shadow: none;
                 display: flex;
                 padding: 40px;
                 justify-content: space-between;
@@ -401,7 +400,7 @@ if ( ! function_exists( 'cmr_quarterly_results_shortcode' ) ) {
             /* Extra spacer to push content below the overlapping card */
             .cmr-qr-bottom-spacer {
                 height: 100px;
-                background: #f8f9fb;
+                background: #ffffff;
             }
 
             @media (max-width: 992px) {
