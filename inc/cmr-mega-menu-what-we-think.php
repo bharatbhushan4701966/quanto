@@ -241,8 +241,8 @@ function cmr_mega_menu_what_we_think_shortcode($atts) {
                     <h4>Research Reports</h4>
                     <p>Data-driven insights and forecasts</p>
                 </a>
-                <a href="<?php echo esc_url( home_url( '/industry-insights/' ) ); ?>" class="cmr-mmt-item">
-                    <h4>Industry Insights</h4>
+                <a href="<?php echo esc_url( home_url( '/viewpoints/' ) ); ?>" class="cmr-mmt-item">
+                    <h4>View Points</h4>
                     <p>Expert analysis on emerging trends</p>
                 </a>
                 <a href="<?php echo esc_url( home_url( '/market-updates/' ) ); ?>" class="cmr-mmt-item">
