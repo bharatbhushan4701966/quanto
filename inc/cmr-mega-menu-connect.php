@@ -447,7 +447,7 @@ function cmr_inject_connect_mega_menu() {
             
             navLinks.forEach(function(link) {
                 var text = link.innerText.trim().toLowerCase();
-                if (text === 'CONNECT') {
+                if (text === 'connect') {
                     var parentLi = link.closest('li, .menu-item');
                     if (parentLi) {
                         parentLi.classList.add('cmr-has-mega-menu-connect');
