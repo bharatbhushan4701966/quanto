@@ -32,7 +32,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                 array(
                     'taxonomy' => 'category',
                     'field'    => 'slug',
-                    'terms'    => 'infotech',
+                    'terms'    => 'industry-connect',
                 ),
             ),
         );
@@ -105,7 +105,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                             </div>
                             <div class="intel-card-content">
                                 <div class="intel-meta">
-                                    <span class="intel-category">Industry Intelligence</span>
+                                    <span class="intel-category"><?php echo esc_html( $category_name ); ?></span>
                                     <span class="intel-read-time"><?php echo esc_html( $read_time ); ?> min read</span>
                                 </div>
                                 <h3 class="intel-title">
