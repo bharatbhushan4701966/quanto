@@ -87,7 +87,7 @@ if ( ! function_exists( 'cmr_quarterly_results_shortcode' ) ) {
                 display: flex;
                 gap: 60px;
                 align-items: center;
-                margin-bottom: 240px; /* Increased to prevent touching FY26 cards */
+                margin-bottom: 80px; /* Reduced gap */
             }
 
             .cmr-qr-quote-col {
@@ -407,10 +407,10 @@ if ( ! function_exists( 'cmr_quarterly_results_shortcode' ) ) {
                     flex-direction: column;
                 }
                 .cmr-qr-ceo-img-wrap {
-                    max-width: 300px;
+                    max-width: 420px; /* Increased from 300px for better visibility on mobile */
                 }
                 .cmr-qr-ceo-img-col {
-                    margin-top: 0;
+                    margin-top: 40px;
                 }
                 .cmr-qr-fy-grid {
                     grid-template-columns: 1fr;
