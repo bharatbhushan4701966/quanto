@@ -504,21 +504,41 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
         </div>
 
         <script>
-            // Filter functionality
+            // Filter functionality (AJAX Search)
             document.addEventListener('DOMContentLoaded', function() {
                 var searchInput = document.querySelector('.cmr-mui-search-wrap input');
+                var searchTimer;
                 if (searchInput) {
                     searchInput.addEventListener('keyup', function(e) {
-                        var val = e.target.value.toLowerCase();
-                        var cards = document.querySelectorAll('.cmr-mui-card');
-                        cards.forEach(function(card) {
-                            var title = card.querySelector('.cmr-mui-card-title').innerText.toLowerCase();
-                            if (title.indexOf(val) > -1) {
-                                card.style.display = '';
-                            } else {
-                                card.style.display = 'none';
-                            }
-                        });
+                        clearTimeout(searchTimer);
+                        var val = e.target.value.trim();
+                        
+                        searchTimer = setTimeout(function() {
+                            var grid = document.querySelector('.cmr-mui-grid');
+                            if (!grid) return;
+
+                            grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; padding:40px; font-size:18px;">Searching...</p>';
+                            
+                            var loadMoreBtn = document.getElementById('cmr-mui-load-more');
+                            if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+                            var paginationWrap = document.getElementById('cmr-mui-pagination-wrap');
+                            if (paginationWrap) paginationWrap.style.display = 'none';
+
+                            var formData = new FormData();
+                            formData.append('action', 'cmr_insights_ajax_search');
+                            formData.append('search_term', val);
+                            formData.append('prefix', 'cmr-mui-');
+                            formData.append('category', 'market-updates');
+                            
+                            fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+                                method: 'POST',
+                                body: formData
+                            })
+                            .then(function(res) { return res.text(); })
+                            .then(function(html) {
+                                grid.innerHTML = html;
+                            });
+                        }, 600); // 600ms debounce
                     });
                 }
                 
