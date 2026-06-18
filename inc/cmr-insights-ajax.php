@@ -11,8 +11,12 @@ function cmr_insights_ajax_search_callback() {
         'post_type'      => array('post', 'cmr_news'),
         'posts_per_page' => 21,
         'post_status'    => 'publish',
-        's'              => $search_term,
     );
+    
+    if (!empty($search_term)) {
+        $query_args['s'] = $search_term;
+    }
+    
     if (!empty($category)) {
         $query_args['category_name'] = $category;
     }
@@ -21,8 +25,24 @@ function cmr_insights_ajax_search_callback() {
     $posts = $all_query->posts;
 
     if (empty($posts)) {
-        echo '<p style="grid-column: 1 / -1; font-size: 18px; color: #444; text-align: center; padding: 40px;">No insights found matching "'.esc_html($search_term).' ".</p>';
-        wp_die();
+        echo '<p style="grid-column: 1 / -1; font-size: 18px; color: #444; text-align: center; padding: 40px 20px 0;">No insights found matching "'.esc_html($search_term).'". Here are some related articles you might like:</p>';
+        
+        // Fallback query
+        $fallback_args = array(
+            'post_type'      => array('post', 'cmr_news'),
+            'posts_per_page' => 3,
+            'post_status'    => 'publish',
+        );
+        if (!empty($category)) {
+            $fallback_args['category_name'] = $category;
+        }
+        $fallback_query = new WP_Query($fallback_args);
+        $posts = $fallback_query->posts;
+        
+        if (empty($posts)) {
+            echo '<p style="grid-column: 1 / -1; text-align: center; color: #888;">No articles available.</p>';
+            wp_die();
+        }
     }
 
     foreach ( $posts as $post_obj ) : 
