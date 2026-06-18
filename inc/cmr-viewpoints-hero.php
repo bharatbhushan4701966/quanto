@@ -18,6 +18,7 @@ if ( ! function_exists( 'cmr_viewpoints_hero_shortcode' ) ) {
             'post_type'      => array('post', 'cmr_news'),
             'posts_per_page' => $atts['posts_per_page'],
             'post_status'    => 'publish',
+            'category_name'  => 'viewpoint,viewpoints',
             'orderby'        => 'date',
             'order'          => 'DESC',
             'meta_query'     => array(
