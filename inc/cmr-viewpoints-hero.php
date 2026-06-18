@@ -337,8 +337,8 @@ if ( ! function_exists( 'cmr_viewpoints_hero_shortcode' ) ) {
                 <span style="color: #111; font-weight: 500;">Viewpoints</span>
             </div>
 
-            <h1 class="cmr-vp-hero-title">Viewpoints &<br>Real-Time Updates</h1>
-            <p class="cmr-vp-hero-subtitle">Actionable insights. Real-time signals. Smarter decisions. Stay ahead of what moves markets.</p>
+            <h1 class="cmr-vp-hero-title">Strategic Viewpoints on Technology Shifts</h1>
+            <p class="cmr-vp-hero-subtitle">Decoding complex market developments through curated editorial insights, expert columns, and analyst commentary.</p>
 
             <form class="cmr-vp-hero-search" action="<?php echo esc_url(home_url('/')); ?>" method="get">
                 <div class="cmr-vp-hero-search-icon-left">
