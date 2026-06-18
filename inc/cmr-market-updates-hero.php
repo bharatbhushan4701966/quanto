@@ -339,7 +339,7 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
             <h1 class="cmr-mu-hero-title">Market Intelligence &<br>Real-Time Updates</h1>
             <p class="cmr-mu-hero-subtitle">Actionable insights. Real-time signals. Smarter decisions. Stay ahead of what moves markets.</p>
 
-            <form class="cmr-mu-hero-search" action="<?php echo esc_url(home_url('/')); ?>" method="get">
+            <form id="cmr-mu-hero-search-form" class="cmr-mu-hero-search" action="<?php echo esc_url(home_url('/')); ?>" method="get">
                 <div class="cmr-mu-hero-search-icon-left">
                     <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/cmrlogo-with-oly-c.svg" alt="CMR Logo" style="width: 24px; height: auto;">
                 </div>
@@ -446,11 +446,49 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
                         updateSlider(index);
                     });
                 });
-                
                 window.addEventListener('resize', function() {
                     updateSlider(currentIndex);
                 });
             });
+        </script>
+        
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var muSearchForm = document.getElementById('cmr-mu-hero-search-form');
+            if (muSearchForm) {
+                muSearchForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    var searchTerm = this.querySelector('input[name="s"]').value;
+                    if (!searchTerm) return;
+                    
+                    var grid = document.querySelector('.cmr-mui-grid');
+                    if (grid) {
+                        grid.scrollIntoView({behavior: 'smooth', block: 'start'});
+                        grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; padding:40px; font-size:18px;">Searching...</p>';
+                        
+                        var loadMoreBtn = document.getElementById('cmr-mui-load-more');
+                        if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+                        var paginationWrap = document.getElementById('cmr-mui-pagination-wrap');
+                        if (paginationWrap) paginationWrap.style.display = 'none';
+
+                        var formData = new FormData();
+                        formData.append('action', 'cmr_insights_ajax_search');
+                        formData.append('search_term', searchTerm);
+                        formData.append('prefix', 'cmr-mui-');
+                        formData.append('category', 'market-updates');
+                        
+                        fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(function(res) { return res.text(); })
+                        .then(function(html) {
+                            grid.innerHTML = html;
+                        });
+                    }
+                });
+            }
+        });
         </script>
         <?php
         return ob_get_clean();

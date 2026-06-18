@@ -340,7 +340,7 @@ if ( ! function_exists( 'cmr_viewpoints_hero_shortcode' ) ) {
             <h1 class="cmr-vp-hero-title">Strategic Viewpoints on Technology Shifts</h1>
             <p class="cmr-vp-hero-subtitle">Decoding complex market developments through curated editorial insights, expert columns, and analyst commentary.</p>
 
-            <form class="cmr-vp-hero-search" action="<?php echo esc_url(home_url('/')); ?>" method="get">
+            <form id="cmr-vp-hero-search-form" class="cmr-vp-hero-search" action="<?php echo esc_url(home_url('/')); ?>" method="get">
                 <div class="cmr-vp-hero-search-icon-left">
                     <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/cmrlogo-with-oly-c.svg" alt="CMR Logo" style="width: 24px; height: auto;">
                 </div>
@@ -452,6 +452,45 @@ if ( ! function_exists( 'cmr_viewpoints_hero_shortcode' ) ) {
                     updateSlider(currentIndex);
                 });
             });
+        </script>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var vpSearchForm = document.getElementById('cmr-vp-hero-search-form');
+            if (vpSearchForm) {
+                vpSearchForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    var searchTerm = this.querySelector('input[name="s"]').value;
+                    if (!searchTerm) return;
+                    
+                    var grid = document.querySelector('.cmr-vpi-grid');
+                    if (grid) {
+                        grid.scrollIntoView({behavior: 'smooth', block: 'start'});
+                        grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; padding:40px; font-size:18px;">Searching...</p>';
+                        
+                        var loadMoreBtn = document.getElementById('cmr-vpi-load-more');
+                        if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+                        var paginationWrap = document.getElementById('cmr-vpi-pagination-wrap');
+                        if (paginationWrap) paginationWrap.style.display = 'none';
+
+                        var formData = new FormData();
+                        formData.append('action', 'cmr_insights_ajax_search');
+                        formData.append('search_term', searchTerm);
+                        formData.append('prefix', 'cmr-vpi-');
+                        formData.append('category', 'viewpoint,viewpoints');
+                        
+                        fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(function(res) { return res.text(); })
+                        .then(function(html) {
+                            grid.innerHTML = html;
+                        });
+                    }
+                });
+            }
+        });
         </script>
         <?php
         return ob_get_clean();

@@ -121,6 +121,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-market-updates-hero.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-viewpoints-hero.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-market-updates-insights.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-viewpoints-insights.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-insights-ajax.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-live.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-breadcrumbs.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-sticky-nav-script.php';
