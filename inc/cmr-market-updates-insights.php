@@ -111,7 +111,7 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
             }
             .cmr-mui-search-wrap input {
                 width: 100%;
-                padding: 12px 40px 12px 20px;
+                padding: 8px 40px 8px 20px;
                 border: 1px solid #ddd;
                 border-radius: 30px;
                 font-size: 14px;
@@ -125,7 +125,7 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
             .cmr-mui-search-icon {
                 position: absolute;
                 right: 5px;
-                top: 5px;
+                top: 8px;
                 width: 32px;
                 height: 32px;
                 background: #6d4bdf;
