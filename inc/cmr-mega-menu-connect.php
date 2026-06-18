@@ -25,9 +25,9 @@ function cmr_mega_menu_connect_shortcode($atts) {
     ob_start();
 
     // Fetch 3 distinct sets of posts
-    $posts_industry = cmr_get_mmc_posts('industry-intelligence', 0);
-    $posts_consulting = cmr_get_mmc_posts('consulting-advisory', 3);
-    $posts_marketing = cmr_get_mmc_posts('marketing-services', 6);
+    $posts_enterprise = cmr_get_mmc_posts('enterprise-connect', 0);
+    $posts_smb = cmr_get_mmc_posts('smb-connect', 3);
+    $posts_channel = cmr_get_mmc_posts('channel-connect', 6);
 
     ?>
     <style>
@@ -277,40 +277,40 @@ function cmr_mega_menu_connect_shortcode($atts) {
         <div class="cmr-mmc-left">
             <div class="cmr-mmc-label">CONNECT</div>
             <div class="cmr-mmc-menu-list">
-                <a href="<?php echo esc_url( home_url( '/industry-intelligence/' ) ); ?>" class="cmr-mmc-item cmr-mmc-item-hover-trigger active" data-target="cmr-mmc-list-industry">
+                <a href="<?php echo esc_url( home_url( '/enterprise-connect/' ) ); ?>" class="cmr-mmc-item cmr-mmc-item-hover-trigger active" data-target="cmr-mmc-list-enterprise">
                     <div class="cmr-mmc-item-header">
                         <h4>
                             <span class="cmr-mmc-text-inner">
-                                Industry Intelligence
+                                Enterprise Connect
                                 <svg class="cmr-mmc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                             </span>
                         </h4>
                     </div>
-                    <p>Market research and strategic insights</p>
+                    <p>Insights for enterprise leaders</p>
                 </a>
                 
-                <a href="<?php echo esc_url( home_url( '/consulting-advisory/' ) ); ?>" class="cmr-mmc-item cmr-mmc-item-hover-trigger" data-target="cmr-mmc-list-consulting">
+                <a href="<?php echo esc_url( home_url( '/smb-connect/' ) ); ?>" class="cmr-mmc-item cmr-mmc-item-hover-trigger" data-target="cmr-mmc-list-smb">
                     <div class="cmr-mmc-item-header">
                         <h4>
                             <span class="cmr-mmc-text-inner">
-                                Consulting & Advisory 
+                                SMB Connect 
                                 <svg class="cmr-mmc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                             </span>
                         </h4>
                     </div>
-                    <p>Expert guidance for business growth</p>
+                    <p>Growth strategies for SMBs</p>
                 </a>
                 
-                <a href="<?php echo esc_url( home_url( '/marketing-services/' ) ); ?>" class="cmr-mmc-item cmr-mmc-item-hover-trigger" data-target="cmr-mmc-list-marketing">
+                <a href="<?php echo esc_url( home_url( '/channel-connect/' ) ); ?>" class="cmr-mmc-item cmr-mmc-item-hover-trigger" data-target="cmr-mmc-list-channel">
                     <div class="cmr-mmc-item-header">
                         <h4>
                             <span class="cmr-mmc-text-inner">
-                                Marketing Services
+                                Channel Connect
                                 <svg class="cmr-mmc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                             </span>
                         </h4>
                     </div>
-                    <p>Research-backed marketing solutions</p>
+                    <p>Opportunities for channel partners</p>
                 </a>
             </div>
         </div>
@@ -320,9 +320,9 @@ function cmr_mega_menu_connect_shortcode($atts) {
             
             <?php
             $tabs = array(
-                'cmr-mmc-list-industry' => $posts_industry,
-                'cmr-mmc-list-consulting' => $posts_consulting,
-                'cmr-mmc-list-marketing' => $posts_marketing
+                'cmr-mmc-list-enterprise' => $posts_enterprise,
+                'cmr-mmc-list-smb' => $posts_smb,
+                'cmr-mmc-list-channel' => $posts_channel
             );
             $first_tab = true;
             foreach ($tabs as $tab_id => $tab_posts) :
