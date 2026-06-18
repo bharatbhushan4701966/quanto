@@ -85,7 +85,7 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                 flex-wrap: wrap;
             }
             .cmr-mui-filter-btn {
-                padding: 10px 20px;
+                padding: 8px 20px;
                 border: 1px solid #ddd;
                 border-radius: 30px;
                 background: #fff;
