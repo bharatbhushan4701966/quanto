@@ -26,12 +26,7 @@ function cmr_hero_banner_shortcode($atts) {
       overflow: hidden;
       
       background:
-        linear-gradient(
-          135deg,
-          rgba(72, 32, 176, 0.9) 0%,
-          rgba(0, 63, 235, 0.9) 50%,
-          rgba(0, 191, 188, 0.9) 100%
-        ),
+        linear-gradient(282.61deg, rgba(3, 191, 188, 0.83) -10.41%, rgba(0, 63, 235, 0.83) 32.78%, rgba(72, 32, 176, 0.83) 89.34%),
         url("https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/hero-05-bg.png");
       
       background-size: cover;
