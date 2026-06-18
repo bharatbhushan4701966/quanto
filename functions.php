@@ -587,7 +587,7 @@ add_action('wp_head', function() {
         }
 
         /* Keep the text purple when the user is hovering inside the mega menu card itself */
-        .cmr-has-mega-menu-are:hover > a,
+        .cmr-has-mega-menu:hover > a,
         .cmr-has-mega-menu-do:hover > a,
         .cmr-has-mega-menu-serve:hover > a,
         .cmr-has-mega-menu-think:hover > a,
