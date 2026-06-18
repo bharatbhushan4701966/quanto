@@ -87,7 +87,7 @@ if ( ! function_exists( 'cmr_quarterly_results_shortcode' ) ) {
                 display: flex;
                 gap: 60px;
                 align-items: center;
-                margin-bottom: 80px; /* Reduced gap */
+                margin-bottom: 0px; /* Reduced gap */
             }
 
             .cmr-qr-quote-col {
@@ -139,7 +139,7 @@ if ( ! function_exists( 'cmr_quarterly_results_shortcode' ) ) {
             .cmr-qr-ceo-img-wrap {
                 position: relative;
                 width: 100%;
-                max-width: 480px; /* Increased from 380px */
+                max-width: 580px; /* Increased from 380px */
                 aspect-ratio: 3/4;
             }
 
@@ -168,6 +168,7 @@ if ( ! function_exists( 'cmr_quarterly_results_shortcode' ) ) {
 
             /* FY26 Results Area */
             .cmr-qr-section-title {
+                margin-top: -70px;
                 font-size: 36px;
                 font-weight: 600;
                 margin-bottom: 40px;
