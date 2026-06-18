@@ -44,7 +44,7 @@ function cmr_hero_banner_shortcode($atts) {
       padding: 80px;
       max-width: 1400px;
       padding-top: 287px;
-      padding-left: 230px;
+      padding-left: 230px !important;
     }
 
     /* 1920+ layout */
