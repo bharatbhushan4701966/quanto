@@ -73,26 +73,26 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
             </div>
             <?php endif; ?>
 
-            <?php if ( ! empty($insights_posts) ) : ?>
+            <?php if ( $insights_query->have_posts() ) : ?>
                 <div class="intel-grid">
                     <?php
-                    foreach ( $insights_posts as $post_obj ) :
-                        $post_title = get_the_title( $post_obj );
-                        $post_link = get_permalink( $post_obj->ID );
-                        $thumbnail_url = get_the_post_thumbnail_url( $post_obj->ID, 'full' );
+                    while ( $insights_query->have_posts() ) : $insights_query->the_post();
+                        $post_title = get_the_title();
+                        $post_link = get_permalink();
+                        $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
                         if ( ! $thumbnail_url ) {
                             $thumbnail_url = 'https://via.placeholder.com/600x400?text=No+Image';
                         }
                         
                         // Categories / Tags
                         $category_name = 'Industry Intelligence';
-                        $terms = get_the_terms( $post_obj->ID, 'category' );
+                        $terms = get_the_terms( get_the_ID(), 'category' );
                         if ( $terms && ! is_wp_error( $terms ) ) {
                             $category_name = $terms[0]->name;
                         }
 
                         // Calculate reading time
-                        $content = $post_obj->post_content;
+                        $content = get_the_content();
                         $word_count = str_word_count( strip_tags( $content ) );
                         $read_time = ceil( $word_count / 200 );
                         if ($read_time < 1) $read_time = 1;
@@ -114,7 +114,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                                 </h3>
                                 <div class="intel-excerpt">
                                     <?php 
-                                    $excerpt = get_the_excerpt( $post_obj );
+                                    $excerpt = get_the_excerpt();
                                     if ( empty( $excerpt ) ) {
                                         $excerpt = wp_trim_words( $content, 12 );
                                     } else {
@@ -132,7 +132,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                                 </a>
                             </div>
                         </div>
-                    <?php endforeach; ?>
+                    <?php endwhile; wp_reset_postdata(); ?>
                 </div>
                 
                 <div class="intel-pagination-wrap">
