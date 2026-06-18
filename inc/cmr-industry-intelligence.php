@@ -23,7 +23,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
 
         $query_args = array(
             'post_type'      => array( 'post', 'cmr_news' ),
-            'posts_per_page' => $atts['posts_per_page'],
+            'posts_per_page' => 20, // Fetch more to allow for deduplication skipping
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
@@ -76,8 +76,19 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
             <?php if ( $insights_query->have_posts() ) : ?>
                 <div class="intel-grid">
                     <?php
-                    while ( $insights_query->have_posts() ) : $insights_query->the_post();
+                    $seen_titles = array();
+                    $displayed_count = 0;
+                    
+                    while ( $insights_query->have_posts() && $displayed_count < $atts['posts_per_page'] ) : $insights_query->the_post();
                         $post_title = get_the_title();
+                        
+                        // Prevent duplicates if multiple copies of the same article exist
+                        if ( in_array( $post_title, $seen_titles ) ) {
+                            continue;
+                        }
+                        $seen_titles[] = $post_title;
+                        $displayed_count++;
+                        
                         $post_link = get_permalink();
                         $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
                         if ( ! $thumbnail_url ) {
