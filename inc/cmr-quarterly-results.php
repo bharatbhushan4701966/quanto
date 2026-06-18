@@ -408,10 +408,13 @@ if ( ! function_exists( 'cmr_quarterly_results_shortcode' ) ) {
                     flex-direction: column;
                 }
                 .cmr-qr-ceo-img-wrap {
-                    max-width: 420px; /* Increased from 300px for better visibility on mobile */
+                    max-width: 580px; /* Increased for better visibility on mobile */
                 }
                 .cmr-qr-ceo-img-col {
                     margin-top: 40px;
+                }
+                .cmr-qr-section-title {
+                    margin-top: 40px; /* Reset the negative margin from desktop so it doesn't overlap on mobile */
                 }
                 .cmr-qr-fy-grid {
                     grid-template-columns: 1fr;

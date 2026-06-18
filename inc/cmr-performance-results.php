@@ -425,7 +425,7 @@ if ( ! function_exists( 'cmr_performance_results_shortcode' ) ) {
                         <div class="cmr-pr-accordion-content-wrap">
                             <div class="cmr-pr-accordion-inner">
                                 <div class="cmr-pr-list">
-                                    <a href="#" class="cmr-pr-list-item"><div class="cmr-pr-list-title">Annual Report</div><div class="cmr-pr-list-action">Download</div></a>
+                                    <a href="#" class="cmr-pr-list-item"><div class="cmr-pr-list-title">Annual Report</div><div class="cmr-pr-list-action">Download <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></div></a>
                                 </div>
                             </div>
                         </div>
@@ -442,7 +442,7 @@ if ( ! function_exists( 'cmr_performance_results_shortcode' ) ) {
                         <div class="cmr-pr-accordion-content-wrap">
                             <div class="cmr-pr-accordion-inner">
                                 <div class="cmr-pr-list">
-                                    <a href="#" class="cmr-pr-list-item"><div class="cmr-pr-list-title">Annual Report</div><div class="cmr-pr-list-action">Download</div></a>
+                                    <a href="#" class="cmr-pr-list-item"><div class="cmr-pr-list-title">Annual Report</div><div class="cmr-pr-list-action">Download <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></div></a>
                                 </div>
                             </div>
                         </div>
