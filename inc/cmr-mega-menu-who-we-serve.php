@@ -219,30 +219,7 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
                 </a>
             </div>
             
-            <div class="cmr-mms-col">
-                <div class="cmr-mms-label">INDUSTRY CONNECT</div>
-                
-                <a href="<?php echo esc_url( home_url( '/enterprise-connect/' ) ); ?>" class="cmr-mms-item">
-                    <div class="cmr-mms-item-header">
-                        <h4>Enterprise Connect</h4>
-                    </div>
-                    <p>Insights for enterprise leaders</p>
-                </a>
-                
-                <a href="<?php echo esc_url( home_url( '/smb-connect/' ) ); ?>" class="cmr-mms-item">
-                    <div class="cmr-mms-item-header">
-                        <h4>SMB Connect</h4>
-                    </div>
-                    <p>Growth strategies for SMBs</p>
-                </a>
-                
-                <a href="<?php echo esc_url( home_url( '/channel-connect/' ) ); ?>" class="cmr-mms-item">
-                    <div class="cmr-mms-item-header">
-                        <h4>Channel Connect</h4>
-                    </div>
-                    <p>Opportunities for channel partners</p>
-                </a>
-            </div>
+            
         </div>
 
         <div class="cmr-mms-bottom">

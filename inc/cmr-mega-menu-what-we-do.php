@@ -24,10 +24,57 @@ function cmr_get_mmw_posts($slug, $fallback_offset) {
 function cmr_mega_menu_what_we_do_shortcode($atts) {
     ob_start();
 
-    // Fetch 3 distinct sets of posts
-    $posts_industry = cmr_get_mmw_posts('industry-intelligence', 0);
-    $posts_consulting = cmr_get_mmw_posts('consulting-advisory', 3);
-    $posts_marketing = cmr_get_mmw_posts('marketing-services', 6);
+    // Content for tabs
+    $tabs_content = array(
+        'cmr-mmw-list-industry' => array(
+            'label' => 'INDUSTRY INTELLIGENCE',
+            'heading' => 'Industry Intelligence that drives smarter business decisions',
+            'desc' => 'Access real-time industry intelligence, expert analysis and strategic insights to stay ahead of market shifts and competitive dynamics.',
+            'list' => array(
+                'Understand market trends & shifts',
+                'Evaluate growth opportunities',
+                'Make data-driven decisions',
+                'Gain industry-specific insights'
+            ),
+            'link_text' => 'Explore industry intelligence',
+            'link_url' => home_url('/industry-intelligence/'),
+            'bottom_text' => 'Talk to our analysts for tailored recommendations across your sector.',
+            'bottom_link_text' => 'Get Industry insights',
+            'bottom_link_url' => home_url('/insights/')
+        ),
+        'cmr-mmw-list-consulting' => array(
+            'label' => 'CONSULTING & ADVISORY',
+            'heading' => 'Consulting & Advisory that drives business growth',
+            'desc' => 'Expert guidance to help you navigate complex business challenges and accelerate your growth trajectory.',
+            'list' => array(
+                'Strategic business planning',
+                'Operational optimization',
+                'Risk management & compliance',
+                'Digital transformation strategies'
+            ),
+            'link_text' => 'Explore consulting & advisory',
+            'link_url' => home_url('/consulting-advisory/'),
+            'bottom_text' => 'Talk to our advisors for customized solutions for your business.',
+            'bottom_link_text' => 'Get Advisory insights',
+            'bottom_link_url' => home_url('/insights/')
+        ),
+        'cmr-mmw-list-marketing' => array(
+            'label' => 'MARKETING SERVICES',
+            'heading' => 'Research-backed marketing solutions for your brand',
+            'desc' => 'Leverage our deep industry knowledge to create high-impact marketing campaigns that resonate with your target audience.',
+            'list' => array(
+                'Go-to-market strategies',
+                'Content & thought leadership',
+                'Lead generation campaigns',
+                'Brand positioning & messaging'
+            ),
+            'link_text' => 'Explore marketing services',
+            'link_url' => home_url('/marketing-services/'),
+            'bottom_text' => 'Talk to our marketing experts to elevate your brand presence.',
+            'bottom_link_text' => 'Get Marketing insights',
+            'bottom_link_url' => home_url('/insights/')
+        )
+    );
 
     ?>
     <style>
@@ -55,6 +102,18 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             box-shadow: -3px -3px 5px rgba(0,0,0,0.03);
             border-radius: 2px;
             z-index: 0;
+        }
+
+        @media (max-width: 1400px) {
+            .cmr-mmw-wrapper::before {
+                left: 20%;
+            }
+            
+            @media (max-width: 1100px) {
+                .cmr-mmw-wrapper::before {
+                    left: 15%;
+                }
+            }
         }
 
         .cmr-mmw-left {
@@ -167,100 +226,92 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             display: inline-block;
         }
 
-        /* POSTS LIST */
-        .cmr-mmw-posts-list {
+        /* CONTENT STYLES */
+        .cmr-mmw-content-panel {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .cmr-mmw-heading {
+            font-size: 28px;
+            line-height: 1.15;
+            font-weight: 700;
+            color: #111;
+            margin: 10px 0 15px 0;
+            letter-spacing: -0.5px;
+        }
+
+        .cmr-mmw-desc {
+            font-size: 15px;
+            color: #444;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .cmr-mmw-features {
             display: flex;
             flex-direction: column;
             gap: 15px;
-            flex: 1;
+            margin-bottom: 30px;
         }
 
-        .cmr-mmw-post-card {
-            display: flex !important;
-            flex-direction: row !important;
-            align-items: stretch;
-            background: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-            text-decoration: none;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .cmr-mmw-post-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-
-        .cmr-mmw-post-img {
-            width: 140px;
-            flex-shrink: 0;
-            background: #eaeaea;
-        }
-
-        .cmr-mmw-post-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .cmr-mmw-post-content {
-            padding: 15px;
+        .cmr-mmw-feature-item {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            flex: 1;
-        }
-
-        .cmr-mmw-post-date {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .cmr-mmw-post-title {
-            font-size: 15px;
-            font-weight: 600;
-            color: #111;
-            line-height: 1.3;
-            margin: 0 0 10px 0;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .cmr-mmw-post-readmore {
-            font-size: 13px;
-            font-weight: 600;
-            color: #111;
-            text-decoration: none;
-            display: inline-flex;
             align-items: center;
-            gap: 5px;
-            border-bottom: 1px solid #111;
-            padding-bottom: 1px;
-            width: max-content;
+            gap: 15px;
+            font-size: 15px;
+            color: #333;
+            font-weight: 500;
         }
 
-        .cmr-mmw-explore-btn {
-            text-align: center;
-            margin-top: 20px;
+        .cmr-mmw-feature-num {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #eee9fe;
+            color: #4e2ecf;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
         }
 
-        .cmr-mmw-explore-btn a {
+        .cmr-mmw-explore-link {
             font-size: 16px;
             font-weight: 600;
-            color: #000 !important;
+            color: #4e2ecf;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
+            margin-bottom: 20px;
             transition: color 0.2s ease;
         }
 
-        .cmr-mmw-explore-btn a:hover {
-            color: #6A35FF;
+        .cmr-mmw-explore-link:hover {
+            color: #3b23a3;
+        }
+
+        .cmr-mmw-bottom-bar {
+            margin-top: auto;
+            padding-top: 15px;
+            font-size: 13px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .cmr-mmw-bottom-bar a {
+            color: #4e2ecf;
+            font-weight: 600;
+            text-decoration: none;
+            margin-left: 5px;
+        }
+
+        .cmr-mmw-bottom-bar a:hover {
+            text-decoration: underline;
         }
 
         @media (max-width: 768px) {
@@ -316,54 +367,43 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
         </div>
 
         <div class="cmr-mmw-right">
-            <div class="cmr-mmw-label">LATEST POSTS</div>
-            
             <?php
-            $tabs = array(
-                'cmr-mmw-list-industry' => $posts_industry,
-                'cmr-mmw-list-consulting' => $posts_consulting,
-                'cmr-mmw-list-marketing' => $posts_marketing
-            );
             $first_tab = true;
-            foreach ($tabs as $tab_id => $tab_posts) :
+            foreach ($tabs_content as $tab_id => $tab_data) :
             ?>
-            <div class="cmr-mmw-posts-list" id="<?php echo esc_attr($tab_id); ?>" style="<?php echo $first_tab ? 'display: flex;' : 'display: none;'; ?>">
-                <?php if ( ! empty( $tab_posts ) ) : ?>
-                    <?php foreach ( $tab_posts as $post ) : 
-                        $thumbnail_url = get_the_post_thumbnail_url( $post->ID, 'medium' );
-                        if ( ! $thumbnail_url ) {
-                            $thumbnail_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
-                        }
+            <div class="cmr-mmw-content-panel cmr-mmw-posts-list" id="<?php echo esc_attr($tab_id); ?>" style="<?php echo $first_tab ? 'display: flex;' : 'display: none;'; ?>">
+                <div class="cmr-mmw-label"><?php echo esc_html($tab_data['label']); ?></div>
+                <h2 class="cmr-mmw-heading"><?php echo esc_html($tab_data['heading']); ?></h2>
+                <p class="cmr-mmw-desc"><?php echo esc_html($tab_data['desc']); ?></p>
+                
+                <div class="cmr-mmw-features">
+                    <?php 
+                    $counter = 1;
+                    foreach ($tab_data['list'] as $list_item) : 
                     ?>
-                        <a href="<?php echo esc_url( get_permalink( $post->ID ) ); ?>" class="cmr-mmw-post-card">
-                            <div class="cmr-mmw-post-img">
-                                <img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="<?php echo esc_attr( get_the_title( $post->ID ) ); ?>">
-                            </div>
-                            <div class="cmr-mmw-post-content">
-                                <div class="cmr-mmw-post-date"><?php echo get_the_date( 'M j, Y', $post->ID ); ?></div>
-                                <div class="cmr-mmw-post-title"><?php echo esc_html( get_the_title( $post->ID ) ); ?></div>
-                                <div class="cmr-mmw-post-readmore">
-                                    Read More 
-                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                                </div>
-                            </div>
-                        </a>
+                        <div class="cmr-mmw-feature-item">
+                            <span class="cmr-mmw-feature-num"><?php echo $counter++; ?></span>
+                            <span class="cmr-mmw-feature-text"><?php echo esc_html($list_item); ?></span>
+                        </div>
                     <?php endforeach; ?>
-                <?php else: ?>
-                    <p>No recent posts found.</p>
-                <?php endif; ?>
+                </div>
+
+                <div>
+                    <a href="<?php echo esc_url($tab_data['link_url']); ?>" class="cmr-mmw-explore-link">
+                        <?php echo esc_html($tab_data['link_text']); ?> 
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                    </a>
+                </div>
+
+                <div class="cmr-mmw-bottom-bar">
+                    <?php echo esc_html($tab_data['bottom_text']); ?>
+                    <a href="<?php echo esc_url($tab_data['bottom_link_url']); ?>"><?php echo esc_html($tab_data['bottom_link_text']); ?></a>
+                </div>
             </div>
             <?php 
             $first_tab = false;
             endforeach; 
             ?>
-            
-            <div class="cmr-mmw-explore-btn">
-                <a href="<?php echo esc_url( home_url( '/insights/' ) ); ?>">
-                    Explore More industry insights 
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                </a>
-            </div>
         </div>
     </div>
     
@@ -431,6 +471,27 @@ function cmr_inject_what_we_do_mega_menu() {
             visibility: visible;
             transform: translateX(-50%) translateY(0);
             top: 60px !important;
+        }
+
+        @media (max-width: 1400px) {
+            .cmr-mmw-wrapper-outer {
+                left: 0 !important;
+                transform: translateX(-15%) !important;
+            }
+            .elementor-nav-menu--main .elementor-item:hover + .cmr-mmw-wrapper-outer,
+            .cmr-has-mega-menu-do:hover .cmr-mmw-wrapper-outer {
+                transform: translateX(-15%) translateY(0) !important;
+            }
+            
+            @media (max-width: 1100px) {
+                .cmr-mmw-wrapper-outer {
+                    transform: translateX(-5%) !important;
+                }
+                .elementor-nav-menu--main .elementor-item:hover + .cmr-mmw-wrapper-outer,
+                .cmr-has-mega-menu-do:hover .cmr-mmw-wrapper-outer {
+                    transform: translateX(-5%) translateY(0) !important;
+                }
+            }
         }
 
         .cmr-has-mega-menu-do > a .sub-arrow {
