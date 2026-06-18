@@ -195,9 +195,14 @@ function cmr_mega_menu_connect_shortcode($atts) {
             width: 140px;
             flex-shrink: 0;
             background: #eaeaea;
+            position: relative;
+            min-height: 110px;
         }
 
         .cmr-mmc-post-img img {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;

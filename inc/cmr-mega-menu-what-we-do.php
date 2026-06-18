@@ -236,7 +236,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
         .cmr-mmw-heading {
             font-size: 28px;
             line-height: 1.15;
-            font-weight: 700;
+            font-weight: 600;
             color: #111;
             margin: 10px 0 15px 0;
             letter-spacing: -0.5px;
