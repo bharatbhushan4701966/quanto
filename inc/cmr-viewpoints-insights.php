@@ -308,7 +308,7 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
             }
             .cmr-vpi-nav-title {
                 font-size: 22px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111;
             }
             .cmr-vpi-nav-links {
@@ -368,8 +368,8 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
             </div>
 
             <div class="cmr-vpi-header" style="margin-top: 40px;">
-                <h2 class="cmr-vpi-title">Viewpoints & Strategic Insights</h2>
-                <p class="cmr-vpi-subtitle">Track real-time shifts, growth signals, and strategic developments shaping key industries.</p>
+                <h2 class="cmr-vpi-title">Expert Viewpoints & Strategic Perspectives</h2>
+                <p class="cmr-vpi-subtitle">Insights, opinions, and analysis shaping enterprise decisions across industries.</p>
             </div>
 
             <div class="cmr-vpi-nav-bar">

@@ -369,7 +369,7 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
 
             <div class="cmr-mui-header" style="margin-top: 40px;">
                 <h2 class="cmr-mui-title">Market Updates & Strategic Insights</h2>
-                <p class="cmr-mui-subtitle">Track real-time shifts, growth signals, and strategic developments shaping key industries.</p>
+                <p class="cmr-mui-subtitle">Insights, opinions, and analysis shaping enterprise decisions across industries.</p>
             </div>
 
             <div class="cmr-mui-nav-bar">

@@ -1172,7 +1172,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .main-menu>ul>li {
-  margin: 0 8px;
+  margin: 0 14px;
 }
 
 @media only screen and (max-width: 1199.98px) {
