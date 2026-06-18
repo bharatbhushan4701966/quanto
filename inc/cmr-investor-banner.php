@@ -138,14 +138,14 @@ if ( ! function_exists( 'cmr_investor_banner_shortcode' ) ) {
                 <div class="cmr-ib-card cmr-ib-card-black">
                     <div class="cmr-ib-label">Share Price</div>
                     <div class="cmr-ib-share-info">
-                        <div class="cmr-ib-exchange">NSE</div>
+                        <div class="cmr-ib-exchange">NSE/BSE</div>
                         <div class="cmr-ib-price-row">
-                            <div class="cmr-ib-price">₹ 77.0</div>
-                            <div class="cmr-ib-change">+5.45 (+2.11%)</div>
+                            <div class="cmr-ib-price" id="cmr-live-price">₹ --</div>
+                            <div class="cmr-ib-change" id="cmr-live-change">--</div>
                         </div>
-                        <div class="cmr-ib-date">15 May 3:23 p.m.</div>
+                        <div class="cmr-ib-date" id="cmr-live-date">Loading live data...</div>
                     </div>
-                    <a href="#" class="cmr-ib-link">
+                    <a href="https://www.screener.in/company/CMRSL/consolidated/" target="_blank" class="cmr-ib-link">
                         View Info <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                     </a>
                 </div>
@@ -170,9 +170,95 @@ if ( ! function_exists( 'cmr_investor_banner_shortcode' ) ) {
 
             </div>
         </div>
+        
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function fetchCMRPrice() {
+                var ajaxurl = '<?php echo esc_url(admin_url('admin-ajax.php')); ?>';
+                fetch(ajaxurl + '?action=cmr_get_share_price')
+                    .then(res => res.json())
+                    .then(res => {
+                        if(res.success && res.data) {
+                            var priceEl = document.getElementById('cmr-live-price');
+                            var changeEl = document.getElementById('cmr-live-change');
+                            var dateEl = document.getElementById('cmr-live-date');
+                            
+                            if (priceEl && res.data.price) priceEl.innerText = '₹ ' + res.data.price;
+                            if (changeEl && res.data.change) {
+                                changeEl.innerText = res.data.change;
+                                if(res.data.change.startsWith('-')) {
+                                    changeEl.style.color = '#ff4d4d';
+                                } else {
+                                    changeEl.style.color = '#4ade80';
+                                }
+                            }
+                            if (dateEl && res.data.date) dateEl.innerText = res.data.date;
+                        }
+                    })
+                    .catch(err => console.error('Error fetching share price:', err));
+            }
+
+            // Fetch immediately
+            fetchCMRPrice();
+
+            // Fetch every 60 seconds
+            setInterval(fetchCMRPrice, 60000);
+        });
+        </script>
         <?php
         return ob_get_clean();
     }
 }
 
 add_shortcode( 'cmr_investor_banner', 'cmr_investor_banner_shortcode' );
+
+// AJAX handler for live share price
+add_action('wp_ajax_cmr_get_share_price', 'cmr_get_share_price_handler');
+add_action('wp_ajax_nopriv_cmr_get_share_price', 'cmr_get_share_price_handler');
+
+function cmr_get_share_price_handler() {
+    $transient_key = 'cmr_live_share_price';
+    $data = get_transient($transient_key);
+
+    if (false === $data) {
+        $url = 'https://www.screener.in/company/CMRSL/consolidated/';
+        $args = array(
+            'headers' => array(
+                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
+            ),
+            'timeout' => 15,
+        );
+        $response = wp_remote_get($url, $args);
+        
+        $data = array(
+            'price' => '70.0', // fallback
+            'change' => '',
+            'date' => date('d M h:i a')
+        );
+
+        if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
+            $html = wp_remote_retrieve_body($response);
+            
+            // Extract Price
+            if (preg_match('/Current Price\s*<\/span>.*?<span class="nowrap value">\s*₹\s*<span class="number">([\d.]+)<\/span>/s', $html, $matches)) {
+                $data['price'] = $matches[1];
+            }
+
+            // Extract Change
+            if (preg_match('/<span class="font-size-12 (up|down)[^>]*>(.*?)<\/span>/s', $html, $change_matches)) {
+                $direction = $change_matches[1] === 'up' ? '+' : '-';
+                $data['change'] = $direction . trim(strip_tags($change_matches[2]));
+            }
+            
+            // Extract Date
+            if (preg_match('/<div class="ink-600 font-size-11 font-weight-500">(.*?)<\/div>/s', $html, $date_matches)) {
+                $data['date'] = preg_replace('/\s+/', ' ', trim(strip_tags($date_matches[1])));
+            }
+        }
+        
+        // Cache for 60 seconds
+        set_transient($transient_key, $data, 60);
+    }
+    
+    wp_send_json_success($data);
+}

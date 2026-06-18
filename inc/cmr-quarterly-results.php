@@ -276,7 +276,6 @@ if ( ! function_exists( 'cmr_quarterly_results_shortcode' ) ) {
                 display: flex;
                 justify-content: space-around;
                 align-items: flex-end;
-                padding-bottom: 20px;
                 border-bottom: 1px solid #eaeaea;
                 position: relative;
             }
