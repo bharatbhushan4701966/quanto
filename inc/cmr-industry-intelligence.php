@@ -38,6 +38,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
         );
 
         $insights_query = new WP_Query( $query_args );
+        $insights_posts = $insights_query->posts;
 
         ob_start();
         ?>
