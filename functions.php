@@ -134,6 +134,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-mega-menu-who-we-serve.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-mega-menu-what-we-do.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-mega-menu-what-we-think.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-mega-menu-newsroom.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-mega-menu-connect.php';
 
 require_once QUANTO_DIR_PATH_INC . 'cmr-quarterly-results.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-investor-banner.php';
@@ -595,7 +596,8 @@ add_action('wp_head', function() {
         .cmr-has-mega-menu-do:hover > a,
         .cmr-has-mega-menu-serve:hover > a,
         .cmr-has-mega-menu-think:hover > a,
-        .cmr-has-mega-menu-newsroom:hover > a {
+        .cmr-has-mega-menu-newsroom:hover > a,
+        .cmr-has-mega-menu-connect:hover > a {
             color: #6A35FF !important;
         }
     </style>
