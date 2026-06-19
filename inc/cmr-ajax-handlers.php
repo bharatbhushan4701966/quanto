@@ -206,36 +206,57 @@ add_action( 'wp_ajax_cmr_load_more_smb_connect', 'cmr_load_more_smb_connect_ajax
 add_action( 'wp_ajax_nopriv_cmr_load_more_smb_connect', 'cmr_load_more_smb_connect_ajax' );
 
 function cmr_load_more_smb_connect_ajax() {
-    $paged = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
-    $year  = isset( $_POST['year'] ) ? sanitize_text_field( $_POST['year'] ) : '';
-    $search = isset( $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : '';
+    $paged  = isset($_POST['page']) ? intval($_POST['page']) : 1;
+    $year   = isset($_POST['year']) ? sanitize_text_field($_POST['year']) : '';
+    $search = isset($_POST['search']) ? sanitize_text_field($_POST['search']) : '';
     
-    $offset_base = ( empty($year) && empty($search) ) ? 4 : 0;
-    $offset = $offset_base + ( ($paged - 1) * 6 );
-    
-    $args = array(
-        'post_type'      => 'post',
-        'category_name'  => 'smb-connect',
-        'posts_per_page' => 6,
-        'post_status'    => 'publish',
-        'orderby'        => 'date',
-        'order'          => 'DESC',
-        'offset'         => $offset,
-    );
-
-    if ( ! empty( $year ) ) {
-        $args['date_query'] = array(
-            array(
-                'year'  => $year,
-            ),
+    // We only use the unique IDs if there is NO year/search filter
+    if ( empty($year) && empty($search) ) {
+        $unique_ids = cmr_get_unique_smb_post_ids();
+        $offset_base = 4;
+        $offset = $offset_base + ( ($paged - 1) * 6 );
+        
+        $sliced_ids = array_slice( $unique_ids, $offset, 6 );
+        
+        if ( empty($sliced_ids) ) {
+            wp_send_json_success(array('html' => '', 'has_more' => false));
+        }
+        
+        $args = array(
+            'post_type'      => 'post',
+            'post__in'       => $sliced_ids,
+            'orderby'        => 'post__in',
+            'posts_per_page' => 6,
         );
-    }
+        $query = new WP_Query( $args );
+        
+        $total_pages = ceil( max( 0, count( $unique_ids ) - 4 ) / 6 );
+        $has_more = $paged < $total_pages;
+    } else {
+        $offset_base = 0;
+        $offset = $offset_base + ( ($paged - 1) * 6 );
+        
+        $args = array(
+            'post_type'      => 'post',
+            'category_name'  => 'smb-connect',
+            'posts_per_page' => 6,
+            'post_status'    => 'publish',
+            'orderby'        => 'date',
+            'order'          => 'DESC',
+            'offset'         => $offset
+        );
 
-    if ( ! empty( $search ) ) {
-        $args['s'] = $search;
-    }
+        if ( !empty($year) ) {
+            $args['year'] = $year;
+        }
 
-    $query = new WP_Query( $args );
+        if ( !empty($search) ) {
+            $args['s'] = $search;
+        }
+        
+        $query = new WP_Query( $args );
+        $has_more = $query->max_num_pages > $paged;
+    }
 
     ob_start();
     if ( $query->have_posts() ) {

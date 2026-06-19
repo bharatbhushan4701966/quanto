@@ -111,6 +111,36 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-explore-sectors.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-stay-updated.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-featured-insight.php';
 require_once get_theme_file_path( 'inc/cmr-what-we-think.php' );
+function cmr_get_unique_smb_post_ids() {
+    global $wpdb;
+    // We cache this query temporarily if needed, but a direct SQL fetch of 500 rows is extremely fast.
+    $results = $wpdb->get_results("
+        SELECT p.ID, p.post_title 
+        FROM {$wpdb->posts} p
+        INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
+        INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+        INNER JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
+        WHERE p.post_type = 'post' 
+          AND p.post_status = 'publish' 
+          AND t.slug = 'smb-connect'
+        ORDER BY p.post_date DESC
+        LIMIT 500
+    ");
+
+    $unique_ids = array();
+    $seen_titles = array();
+    if ( $results ) {
+        foreach ( $results as $row ) {
+            $title = trim( $row->post_title );
+            if ( ! isset( $seen_titles[ $title ] ) ) {
+                $seen_titles[ $title ] = true;
+                $unique_ids[] = $row->ID;
+            }
+        }
+    }
+    return $unique_ids;
+}
+
 require_once QUANTO_DIR_PATH_INC . 'cmr-media-releases-general.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-smb-connect-general.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-smb-connect-grid.php';

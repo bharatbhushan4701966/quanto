@@ -12,16 +12,19 @@ add_shortcode( 'cmr_smb_connect_general', 'cmr_smb_connect_general_shortcode' );
 function cmr_smb_connect_general_shortcode( $atts ) {
     ob_start();
 
-    // Query 4 latest cmr_news posts (or SMB Connects)
-    $args = array(
-        'post_type'      => 'post',
-        'category_name'  => 'smb-connect',
-        'posts_per_page' => 4,
-        'orderby'        => 'date',
-        'order'          => 'DESC',
-        'post_status'    => 'publish',
-    );
-    $query = new WP_Query( $args );
+    $unique_ids = cmr_get_unique_smb_post_ids();
+    $sliced_ids = array_slice( $unique_ids, 0, 4 );
+
+    $query = new WP_Query(); // Empty default
+    if ( ! empty( $sliced_ids ) ) {
+        $args = array(
+            'post_type'      => 'post',
+            'post__in'       => $sliced_ids,
+            'orderby'        => 'post__in', // Maintain the correct date order from SQL
+            'posts_per_page' => 4,
+        );
+        $query = new WP_Query( $args );
+    }
 
     $posts_data = [];
     if ( $query->have_posts() ) {
