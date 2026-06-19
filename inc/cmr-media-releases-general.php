@@ -293,9 +293,11 @@ function cmr_media_releases_general_shortcode( $atts ) {
         }
 
         .cmr-mrg-nav-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: 100% !important;
+            height: 100% !important;
+            min-height: 100% !important;
+            max-height: none !important;
+            object-fit: cover !important;
             display: block;
             position: absolute;
             top: 0;
