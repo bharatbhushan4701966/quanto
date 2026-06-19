@@ -28,6 +28,11 @@ function cmr_smb_tabs_shortcode( $atts ) {
         $include_slugs = !empty($atts['category']) ? array_map('trim', explode(',', $atts['category'])) : array();
         $exclude_slugs = !empty($atts['exclude']) ? array_map('trim', explode(',', $atts['exclude'])) : array();
         
+        // Force the media-releases tab to always be included if include_slugs is used
+        if ( !empty($include_slugs) && !in_array('media-releases', $include_slugs) ) {
+            $include_slugs[] = 'media-releases';
+        }
+        
         foreach ( $all_terms as $term ) {
             if ( !empty($include_slugs) && !in_array($term->slug, $include_slugs) ) continue;
             if ( !empty($exclude_slugs) && in_array($term->slug, $exclude_slugs) ) continue;
@@ -44,6 +49,7 @@ function cmr_smb_tabs_shortcode( $atts ) {
     $is_who_we_serve = true;
     $bg_class = ' cmr-news-black-bg cmr-smb-black-bg';
     ?>
+    <!-- DEBUG ATTS: <?php print_r($atts); ?> -->
     <div class="cmr-news-container<?php echo esc_attr( $bg_class ); ?>">
         <!-- Tabs -->
         <div class="cmr-news-tabs">
