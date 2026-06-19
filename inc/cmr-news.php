@@ -258,7 +258,7 @@ add_shortcode( 'cmr_news_tabs', 'cmr_news_tabs_shortcode' );
 function cmr_news_tabs_shortcode( $atts ) {
     $atts = shortcode_atts( array(
         'category' => '', // Comma separated slugs to include (e.g. 'cmr-in-news')
-        'exclude'  => 'media-release', // Automatically exclude the duplicate singular category
+        'exclude'  => '', // Don't exclude anything by default
     ), $atts, 'cmr_news_tabs' );
 
     // Enqueue frontend assets using get_template_directory_uri()
@@ -276,8 +276,9 @@ function cmr_news_tabs_shortcode( $atts ) {
         $exclude_slugs = !empty($atts['exclude']) ? array_map('trim', explode(',', $atts['exclude'])) : array();
         
         // Force the media-releases tab to always be included if include_slugs is used
-        if ( !empty($include_slugs) && !in_array('media-releases', $include_slugs) ) {
+        if ( !empty($include_slugs) && !in_array('media-releases', $include_slugs) && !in_array('media-release', $include_slugs) ) {
             $include_slugs[] = 'media-releases';
+            $include_slugs[] = 'media-release';
         }
         
         foreach ( $all_terms as $term ) {
@@ -334,7 +335,7 @@ function cmr_news_tabs_shortcode( $atts ) {
             ?>
                 <div class="cmr-news-tab-pane <?php echo esc_attr( $active_class ); ?>" id="cmr-tab-<?php echo esc_attr( $term->term_id ); ?>">
                     <?php
-                    $is_media_releases = ( $term->slug === 'media-releases' );
+                    $is_media_releases = ( $term->slug === 'media-releases' || $term->slug === 'media-release' );
                     $grid_class = $is_media_releases ? 'cmr-media-grid' : 'cmr-news-grid';
                     ?>
                     <div class="<?php echo esc_attr( $grid_class ); ?>">
