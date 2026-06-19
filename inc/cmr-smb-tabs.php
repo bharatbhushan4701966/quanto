@@ -42,7 +42,7 @@ function cmr_smb_tabs_shortcode( $atts ) {
     ob_start();
     // Force black background for this shortcode
     $is_who_we_serve = true;
-    $bg_class = ' cmr-news-black-bg';
+    $bg_class = ' cmr-news-black-bg cmr-smb-black-bg';
     ?>
     <div class="cmr-news-container<?php echo esc_attr( $bg_class ); ?>">
         <!-- Tabs -->

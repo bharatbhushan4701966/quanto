@@ -808,3 +808,26 @@
     color: #fff !important;
 }
 
+/* SMB Connect Tabs Black Background Overrides */
+.cmr-news-container.cmr-smb-black-bg {
+    padding: 40px 0 !important;
+}
+.cmr-news-container.cmr-smb-black-bg .cmr-news-tabs {
+    display: flex !important;
+}
+.cmr-news-container.cmr-smb-black-bg .cmr-explore-all {
+    display: inline-block !important;
+}
+.cmr-news-container.cmr-smb-black-bg .cmr-news-tab-btn {
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    color: #fff !important;
+}
+.cmr-news-container.cmr-smb-black-bg .cmr-news-tab-btn .cmr-tab-icon {
+    background-color: #fff !important;
+}
+.cmr-news-container.cmr-smb-black-bg .cmr-news-tab-btn.active, 
+.cmr-news-container.cmr-smb-black-bg .cmr-news-tab-btn:hover {
+    border-color: #fff !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
