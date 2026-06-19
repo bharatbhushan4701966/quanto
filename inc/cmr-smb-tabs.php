@@ -1,0 +1,275 @@
+<?php
+/**
+ * CMR SMB Connect Tabs Feature
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+add_shortcode( 'cmr_smb_tabs', 'cmr_smb_tabs_shortcode' );
+function cmr_smb_tabs_shortcode( $atts ) {
+    $atts = shortcode_atts( array(), $atts, 'cmr_smb_tabs' );
+
+    // Enqueue frontend assets using get_template_directory_uri()
+    wp_enqueue_style( 'cmr-news-style', get_template_directory_uri() . '/assets/css/cmr-news.css', array(), time() );
+    wp_enqueue_script( 'cmr-news-script', get_template_directory_uri() . '/assets/js/cmr-news.js', array('jquery'), time(), true );
+
+    // We hardcode the two tabs: SMB Connect and Media Releases
+    $tabs = array(
+        array(
+            'id' => 'smb-connect',
+            'name' => 'SMB Connect',
+            'icon_url' => 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/airdrop.svg',
+            'layout' => 'standard',
+            'target_count' => 5
+        ),
+        array(
+            'id' => 'media-releases',
+            'name' => 'Media Releases',
+            'icon_url' => 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/Frame.svg',
+            'layout' => 'media',
+            'target_count' => 4
+        )
+    );
+
+    ob_start();
+    // Force black background
+    $bg_class = ' cmr-news-black-bg';
+    ?>
+    <div class="cmr-news-container<?php echo esc_attr( $bg_class ); ?>">
+        <!-- Tabs -->
+        <div class="cmr-news-tabs">
+            <?php 
+            $first = true;
+            foreach ( $tabs as $tab ) : 
+                $active_class = $first ? 'active' : '';
+            ?>
+                <button class="cmr-news-tab-btn <?php echo esc_attr( $active_class ); ?>" data-target="cmr-tab-<?php echo esc_attr( $tab['id'] ); ?>">
+                    <?php 
+                    if ( $tab['icon_url'] ) {
+                        echo '<span class="cmr-tab-icon" style="-webkit-mask-image: url(' . esc_url($tab['icon_url']) . '); mask-image: url(' . esc_url($tab['icon_url']) . ');"></span> ';
+                    }
+                    echo '<span>' . esc_html( $tab['name'] ) . '</span>'; 
+                    ?>
+                </button>
+            <?php 
+                $first = false;
+            endforeach; 
+            ?>
+        </div>
+
+        <!-- Tab Contents -->
+        <div class="cmr-news-content-wrapper">
+            <?php 
+            $first = true;
+            foreach ( $tabs as $tab ) : 
+                $active_class = $first ? 'active' : '';
+            ?>
+                <div class="cmr-news-tab-pane <?php echo esc_attr( $active_class ); ?>" id="cmr-tab-<?php echo esc_attr( $tab['id'] ); ?>">
+                    <?php
+                    $is_media_releases = ( $tab['layout'] === 'media' );
+                    $grid_class = $is_media_releases ? 'cmr-media-grid' : 'cmr-news-grid';
+                    ?>
+                    <div class="<?php echo esc_attr( $grid_class ); ?>">
+                        <?php
+                        $target_count = $tab['target_count'];
+                        $all_posts = array();
+
+                        if ( $tab['id'] === 'smb-connect' ) {
+                            // Fetch standard posts from 'smb-connect' category
+                            $query = new WP_Query( array(
+                                'post_type'      => 'post',
+                                'category_name'  => 'smb-connect',
+                                'orderby'        => 'date',
+                                'order'          => 'DESC',
+                                'posts_per_page' => $target_count,
+                            ) );
+                            $all_posts = $query->posts;
+                        } else {
+                            // Fetch from cmr_news custom post type and taxonomy
+                            $media_term = get_term_by( 'slug', 'media-releases', 'cmr_news_category' );
+                            if ( $media_term ) {
+                                $pinned_query = new WP_Query( array(
+                                    'post_type' => 'cmr_news',
+                                    'tax_query' => array(
+                                        array(
+                                            'taxonomy' => 'cmr_news_category',
+                                            'field'    => 'term_id',
+                                            'terms'    => $media_term->term_id,
+                                        )
+                                    ),
+                                    'meta_query' => array(
+                                        array(
+                                            'key'     => '_cmr_news_is_featured',
+                                            'value'   => '1',
+                                            'compare' => '='
+                                        )
+                                    ),
+                                    'orderby' => 'date',
+                                    'order'   => 'DESC',
+                                    'posts_per_page' => $target_count,
+                                ) );
+                                
+                                $all_posts = $pinned_query->posts;
+                                $remaining = $target_count - count($all_posts);
+                                
+                                if ( $remaining > 0 ) {
+                                    $pinned_ids = wp_list_pluck( $all_posts, 'ID' );
+                                    $normal_args = array(
+                                        'post_type' => 'cmr_news',
+                                        'tax_query' => array(
+                                            array(
+                                                'taxonomy' => 'cmr_news_category',
+                                                'field'    => 'term_id',
+                                                'terms'    => $media_term->term_id,
+                                            )
+                                        ),
+                                        'orderby' => 'date',
+                                        'order'   => 'DESC',
+                                        'posts_per_page' => $remaining,
+                                    );
+                                    if ( ! empty( $pinned_ids ) ) {
+                                        $normal_args['post__not_in'] = $pinned_ids;
+                                    }
+                                    $normal_query = new WP_Query( $normal_args );
+                                    $all_posts = array_merge( $all_posts, $normal_query->posts );
+                                }
+                            }
+                        }
+
+                        if ( ! empty( $all_posts ) ) {
+                            $count = 0;
+                            $total_posts = count( $all_posts );
+                            global $post;
+                            foreach ( $all_posts as $post ) {
+                                setup_postdata( $post );
+                                $post_id = get_the_ID();
+                                $bg_image = get_the_post_thumbnail_url( $post_id, 'large' );
+                                $logo_id = get_post_meta( $post_id, '_cmr_news_source_logo_id', true );
+                                $logo_url = $logo_id ? wp_get_attachment_url( $logo_id ) : '';
+                                $ext_link = get_post_meta( $post_id, '_cmr_news_external_link', true );
+                                $reading_time = get_post_meta( $post_id, '_cmr_news_reading_time', true );
+                                $publisher = get_post_meta( $post_id, '_cmr_news_publisher_name', true );
+                                $document_id = get_post_meta( $post_id, '_cmr_news_document_id', true );
+                                $ext_url = get_post_meta( $post_id, '_cmr_news_external_link', true );
+                                if ( $document_id ) {
+                                    $link = wp_get_attachment_url( $document_id );
+                                    $target = '_blank';
+                                } elseif ( $ext_url ) {
+                                    $link = $ext_url;
+                                    $target = '_blank';
+                                } else {
+                                    $link = get_permalink( $post_id );
+                                    $target = '_self';
+                                }
+                                $date = get_the_date( 'M j, Y' );
+                                
+                                if ( $is_media_releases ) {
+                                    if ( $count === 0 ) {
+                                        // Left Featured
+                                        ?>
+                                        <div class="cmr-media-left">
+                                            <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-card-link-wrapper">
+                                                <div class="cmr-card-image-wrap">
+                                                    <?php if ( $bg_image ) : ?>
+                                                        <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="cmr-card-content">
+                                                    <div class="cmr-card-meta">
+                                                        <span class="cmr-category-tag">&mdash; Media Releases</span>
+                                                    </div>
+                                                    <h3 class="cmr-card-title"><?php the_title(); ?></h3>
+                                                    <?php $arrow_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg'; ?>
+                                                    <span class="cmr-read-coverage">More Details <img src="<?php echo esc_url($arrow_url); ?>" class="cmr-arrow-icon" alt="Arrow"></span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="cmr-media-right">
+                                        <?php
+                                    } else {
+                                        // Right List Items
+                                        ?>
+                                        <div class="cmr-media-horizontal-card">
+                                            <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-card-link-wrapper">
+                                                <div class="cmr-card-image-wrap">
+                                                    <?php if ( $bg_image ) : ?>
+                                                        <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="cmr-card-content">
+                                                    <div class="cmr-card-meta">
+                                                        <span class="cmr-category-tag">&mdash; Media Releases</span>
+                                                    </div>
+                                                    <h3 class="cmr-card-title"><?php the_title(); ?></h3>
+                                                    <?php $arrow_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg'; ?>
+                                                    <span class="cmr-read-coverage">More Details <img src="<?php echo esc_url($arrow_url); ?>" class="cmr-arrow-icon" alt="Arrow"></span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <?php
+                                    }
+                                    if ( $count === $total_posts - 1 && $count > 0 ) {
+                                        echo '</div>'; // Close cmr-media-right
+                                    } elseif ( $count === 0 && $total_posts === 1 ) {
+                                        echo '<div class="cmr-media-right"></div>'; // Empty right column if only 1 post
+                                    }
+                                } else {
+                                    // Original CMR In News Layout
+                                    $card_class = ( $count === 0 ) ? 'cmr-card cmr-card-featured' : 'cmr-card cmr-card-standard';
+                                    ?>
+                                    <div class="<?php echo esc_attr( $card_class ); ?>">
+                                        <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-card-link-wrapper">
+                                            <div class="cmr-card-image-wrap">
+                                                <?php if ( $bg_image ) : ?>
+                                                    <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
+                                                <?php endif; ?>
+                                                <?php if ( $logo_url ) : ?>
+                                                    <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo" alt="Source Logo">
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="cmr-card-content">
+                                                <div class="cmr-card-meta">
+                                                    <div class="cmr-meta-left">
+                                                        <?php if ( $publisher ) : ?>
+                                                            <span class="cmr-publisher"><?php echo esc_html( $publisher ); ?></span> <span class="cmr-separator">|</span> 
+                                                        <?php endif; ?>
+                                                        <span class="cmr-date">Published <?php echo esc_html( $date ); ?></span>
+                                                    </div>
+                                                    <?php if ( $reading_time ) : ?>
+                                                        <div class="cmr-meta-right">
+                                                            <span class="cmr-read-time"><?php echo esc_html( $reading_time ); ?></span>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <h3 class="cmr-card-title"><?php the_title(); ?></h3>
+                                                <?php
+                                                $arrow_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg';
+                                                ?>
+                                                <span class="cmr-read-coverage">Read Coverage <img src="<?php echo esc_url($arrow_url); ?>" class="cmr-arrow-icon" alt="Arrow"></span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <?php
+                                }
+                                $count++;
+                            }
+                            wp_reset_postdata();
+                        }
+                        ?>
+                    </div>
+                </div>
+            <?php 
+                $first = false;
+            endforeach; 
+            ?>
+        </div>
+        
+        <div class="cmr-news-footer">
+            <a href="#" class="cmr-explore-all">Explore All <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg" class="cmr-arrow-icon" alt="Arrow"></a>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
