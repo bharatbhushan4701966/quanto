@@ -9,32 +9,39 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 add_shortcode( 'cmr_smb_tabs', 'cmr_smb_tabs_shortcode' );
 function cmr_smb_tabs_shortcode( $atts ) {
-    $atts = shortcode_atts( array(), $atts, 'cmr_smb_tabs' );
+    $atts = shortcode_atts( array(
+        'category' => '', // Comma separated slugs to include (e.g. 'cmr-in-news')
+        'exclude'  => 'media-release', // Automatically exclude the duplicate singular category
+    ), $atts, 'cmr_smb_tabs' );
 
     // Enqueue frontend assets using get_template_directory_uri()
     wp_enqueue_style( 'cmr-news-style', get_template_directory_uri() . '/assets/css/cmr-news.css', array(), time() );
     wp_enqueue_script( 'cmr-news-script', get_template_directory_uri() . '/assets/js/cmr-news.js', array('jquery'), time(), true );
 
-    // We hardcode the two tabs: SMB Connect and Media Releases
-    $tabs = array(
-        array(
-            'id' => 'smb-connect',
-            'name' => 'SMB Connect',
-            'icon_url' => 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/airdrop.svg',
-            'layout' => 'standard',
-            'target_count' => 5
-        ),
-        array(
-            'id' => 'media-releases',
-            'name' => 'Media Releases',
-            'icon_url' => 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/Frame.svg',
-            'layout' => 'media',
-            'target_count' => 4
-        )
-    );
+    $all_terms = get_terms( array(
+        'taxonomy'   => 'cmr_news_category',
+        'hide_empty' => true,
+    ) );
+    
+    $terms = array();
+    if ( ! empty( $all_terms ) && ! is_wp_error( $all_terms ) ) {
+        $include_slugs = !empty($atts['category']) ? array_map('trim', explode(',', $atts['category'])) : array();
+        $exclude_slugs = !empty($atts['exclude']) ? array_map('trim', explode(',', $atts['exclude'])) : array();
+        
+        foreach ( $all_terms as $term ) {
+            if ( !empty($include_slugs) && !in_array($term->slug, $include_slugs) ) continue;
+            if ( !empty($exclude_slugs) && in_array($term->slug, $exclude_slugs) ) continue;
+            $terms[] = $term;
+        }
+    }
+
+    if ( empty( $terms ) || is_wp_error( $terms ) ) {
+        return '<p>No news content available.</p>';
+    }
 
     ob_start();
-    // Force black background
+    // Force black background for this shortcode
+    $is_who_we_serve = true;
     $bg_class = ' cmr-news-black-bg';
     ?>
     <div class="cmr-news-container<?php echo esc_attr( $bg_class ); ?>">
@@ -42,15 +49,23 @@ function cmr_smb_tabs_shortcode( $atts ) {
         <div class="cmr-news-tabs">
             <?php 
             $first = true;
-            foreach ( $tabs as $tab ) : 
+            foreach ( $terms as $term ) : 
                 $active_class = $first ? 'active' : '';
             ?>
-                <button class="cmr-news-tab-btn <?php echo esc_attr( $active_class ); ?>" data-target="cmr-tab-<?php echo esc_attr( $tab['id'] ); ?>">
+                <button class="cmr-news-tab-btn <?php echo esc_attr( $active_class ); ?>" data-target="cmr-tab-<?php echo esc_attr( $term->term_id ); ?>">
                     <?php 
-                    if ( $tab['icon_url'] ) {
-                        echo '<span class="cmr-tab-icon" style="-webkit-mask-image: url(' . esc_url($tab['icon_url']) . '); mask-image: url(' . esc_url($tab['icon_url']) . ');"></span> ';
+                    $icon_url = '';
+                    if ( $term->name == 'CMR In News' ) {
+                        $icon_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/airdrop.svg';
+                    } elseif ( $term->name == 'Media Releases' ) {
+                        $icon_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/Frame.svg';
+                    } elseif ( $term->name == 'Quarterly Results' ) {
+                        $icon_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/quterly.svg';
                     }
-                    echo '<span>' . esc_html( $tab['name'] ) . '</span>'; 
+                    if ( $icon_url ) {
+                        echo '<span class="cmr-tab-icon" style="-webkit-mask-image: url(' . esc_url($icon_url) . '); mask-image: url(' . esc_url($icon_url) . ');"></span> ';
+                    }
+                    echo '<span>' . esc_html( $term->name ) . '</span>'; 
                     ?>
                 </button>
             <?php 
@@ -63,79 +78,62 @@ function cmr_smb_tabs_shortcode( $atts ) {
         <div class="cmr-news-content-wrapper">
             <?php 
             $first = true;
-            foreach ( $tabs as $tab ) : 
+            foreach ( $terms as $term ) : 
                 $active_class = $first ? 'active' : '';
             ?>
-                <div class="cmr-news-tab-pane <?php echo esc_attr( $active_class ); ?>" id="cmr-tab-<?php echo esc_attr( $tab['id'] ); ?>">
+                <div class="cmr-news-tab-pane <?php echo esc_attr( $active_class ); ?>" id="cmr-tab-<?php echo esc_attr( $term->term_id ); ?>">
                     <?php
-                    $is_media_releases = ( $tab['layout'] === 'media' );
+                    $is_media_releases = ( $term->slug === 'media-releases' );
                     $grid_class = $is_media_releases ? 'cmr-media-grid' : 'cmr-news-grid';
                     ?>
                     <div class="<?php echo esc_attr( $grid_class ); ?>">
                         <?php
-                        $target_count = $tab['target_count'];
-                        $all_posts = array();
-
-                        if ( $tab['id'] === 'smb-connect' ) {
-                            // Fetch standard posts from 'smb-connect' category
-                            $query = new WP_Query( array(
-                                'post_type'      => 'post',
-                                'category_name'  => 'smb-connect',
-                                'orderby'        => 'date',
-                                'order'          => 'DESC',
-                                'posts_per_page' => $target_count,
-                            ) );
-                            $all_posts = $query->posts;
-                        } else {
-                            // Fetch from cmr_news custom post type and taxonomy
-                            $media_term = get_term_by( 'slug', 'media-releases', 'cmr_news_category' );
-                            if ( $media_term ) {
-                                $pinned_query = new WP_Query( array(
-                                    'post_type' => 'cmr_news',
-                                    'tax_query' => array(
-                                        array(
-                                            'taxonomy' => 'cmr_news_category',
-                                            'field'    => 'term_id',
-                                            'terms'    => $media_term->term_id,
-                                        )
-                                    ),
-                                    'meta_query' => array(
-                                        array(
-                                            'key'     => '_cmr_news_is_featured',
-                                            'value'   => '1',
-                                            'compare' => '='
-                                        )
-                                    ),
-                                    'orderby' => 'date',
-                                    'order'   => 'DESC',
-                                    'posts_per_page' => $target_count,
-                                ) );
-                                
-                                $all_posts = $pinned_query->posts;
-                                $remaining = $target_count - count($all_posts);
-                                
-                                if ( $remaining > 0 ) {
-                                    $pinned_ids = wp_list_pluck( $all_posts, 'ID' );
-                                    $normal_args = array(
-                                        'post_type' => 'cmr_news',
-                                        'tax_query' => array(
-                                            array(
-                                                'taxonomy' => 'cmr_news_category',
-                                                'field'    => 'term_id',
-                                                'terms'    => $media_term->term_id,
-                                            )
-                                        ),
-                                        'orderby' => 'date',
-                                        'order'   => 'DESC',
-                                        'posts_per_page' => $remaining,
-                                    );
-                                    if ( ! empty( $pinned_ids ) ) {
-                                        $normal_args['post__not_in'] = $pinned_ids;
-                                    }
-                                    $normal_query = new WP_Query( $normal_args );
-                                    $all_posts = array_merge( $all_posts, $normal_query->posts );
-                                }
+                        $target_count = $is_media_releases ? 4 : 5;
+                        
+                        $pinned_query = new WP_Query( array(
+                            'post_type' => 'cmr_news',
+                            'tax_query' => array(
+                                array(
+                                    'taxonomy' => 'cmr_news_category',
+                                    'field'    => 'term_id',
+                                    'terms'    => $term->term_id,
+                                )
+                            ),
+                            'meta_query' => array(
+                                array(
+                                    'key'     => '_cmr_news_is_featured',
+                                    'value'   => '1',
+                                    'compare' => '='
+                                )
+                            ),
+                            'orderby' => 'date',
+                            'order'   => 'DESC',
+                            'posts_per_page' => $target_count,
+                        ) );
+                        
+                        $all_posts = $pinned_query->posts;
+                        $remaining = $target_count - count($all_posts);
+                        
+                        if ( $remaining > 0 ) {
+                            $pinned_ids = wp_list_pluck( $all_posts, 'ID' );
+                            $normal_args = array(
+                                'post_type' => 'cmr_news',
+                                'tax_query' => array(
+                                    array(
+                                        'taxonomy' => 'cmr_news_category',
+                                        'field'    => 'term_id',
+                                        'terms'    => $term->term_id,
+                                    )
+                                ),
+                                'orderby' => 'date',
+                                'order'   => 'DESC',
+                                'posts_per_page' => $remaining,
+                            );
+                            if ( ! empty( $pinned_ids ) ) {
+                                $normal_args['post__not_in'] = $pinned_ids;
                             }
+                            $normal_query = new WP_Query( $normal_args );
+                            $all_posts = array_merge( $all_posts, $normal_query->posts );
                         }
 
                         if ( ! empty( $all_posts ) ) {
@@ -181,7 +179,7 @@ function cmr_smb_tabs_shortcode( $atts ) {
                                                         <span class="cmr-category-tag">&mdash; Media Releases</span>
                                                     </div>
                                                     <h3 class="cmr-card-title"><?php the_title(); ?></h3>
-                                                    <?php $arrow_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg'; ?>
+                                                    <?php $arrow_url = $is_who_we_serve ? 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg' : 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg'; ?>
                                                     <span class="cmr-read-coverage">More Details <img src="<?php echo esc_url($arrow_url); ?>" class="cmr-arrow-icon" alt="Arrow"></span>
                                                 </div>
                                             </a>
@@ -203,7 +201,7 @@ function cmr_smb_tabs_shortcode( $atts ) {
                                                         <span class="cmr-category-tag">&mdash; Media Releases</span>
                                                     </div>
                                                     <h3 class="cmr-card-title"><?php the_title(); ?></h3>
-                                                    <?php $arrow_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg'; ?>
+                                                    <?php $arrow_url = $is_who_we_serve ? 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg' : 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg'; ?>
                                                     <span class="cmr-read-coverage">More Details <img src="<?php echo esc_url($arrow_url); ?>" class="cmr-arrow-icon" alt="Arrow"></span>
                                                 </div>
                                             </a>
@@ -245,7 +243,7 @@ function cmr_smb_tabs_shortcode( $atts ) {
                                                 </div>
                                                 <h3 class="cmr-card-title"><?php the_title(); ?></h3>
                                                 <?php
-                                                $arrow_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg';
+                                                $arrow_url = $is_who_we_serve ? 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg' : 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg';
                                                 ?>
                                                 <span class="cmr-read-coverage">Read Coverage <img src="<?php echo esc_url($arrow_url); ?>" class="cmr-arrow-icon" alt="Arrow"></span>
                                             </div>
