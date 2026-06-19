@@ -99,9 +99,9 @@
 
 .cmr-card-bg {
     display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
     transition: transform 0.5s ease;
 }
 
@@ -298,7 +298,7 @@
 }
 
 .cmr-media-left .cmr-card-image-wrap {
-    width: 638px;
+    width: 100%;
     height: 527px;
 }
 
