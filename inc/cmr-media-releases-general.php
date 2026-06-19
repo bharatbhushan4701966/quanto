@@ -23,12 +23,19 @@ function cmr_media_releases_general_shortcode( $atts ) {
     $query = new WP_Query( $args );
 
     $posts_data = [];
+    $seen_titles = [];
     if ( $query->have_posts() ) {
         while ( $query->have_posts() ) {
             $query->the_post();
             
             $post_id = get_the_ID();
             $title = get_the_title();
+            
+            if ( in_array( $title, $seen_titles ) ) {
+                continue;
+            }
+            $seen_titles[] = $title;
+            
             $link = get_permalink();
             $excerpt = wp_trim_words( get_the_excerpt(), 20 );
             $bg_image = get_the_post_thumbnail_url( $post_id, 'large' );
@@ -96,7 +103,7 @@ function cmr_media_releases_general_shortcode( $atts ) {
     }
 
     $top_post = $posts_data[0];
-    $bottom_posts = array_slice($posts_data, 0, 3); // Take first 3 for the bottom tabs
+    $bottom_posts = array_slice($posts_data, 1, 3); // Take next 3 for the bottom tabs
     ?>
     <style>
         .cmr-mrg-section {
