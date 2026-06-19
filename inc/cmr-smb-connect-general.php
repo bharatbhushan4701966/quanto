@@ -24,19 +24,12 @@ function cmr_smb_connect_general_shortcode( $atts ) {
     $query = new WP_Query( $args );
 
     $posts_data = [];
-    $seen_titles = [];
     if ( $query->have_posts() ) {
         while ( $query->have_posts() ) {
             $query->the_post();
             
             $post_id = get_the_ID();
             $title = get_the_title();
-            
-            if ( in_array( $title, $seen_titles ) ) {
-                continue;
-            }
-            $seen_titles[] = $title;
-            
             $link = get_permalink();
             $excerpt = wp_trim_words( get_the_excerpt(), 20 );
             $bg_image = get_the_post_thumbnail_url( $post_id, 'large' );

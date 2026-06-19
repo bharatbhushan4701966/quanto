@@ -358,18 +358,11 @@ function cmr_media_releases_grid_shortcode() {
         <!-- Grid -->
         <div class="cmr-mrg-grid" id="cmr-mrg-grid">
             <?php
-            $seen_titles = array();
             if ( $query->have_posts() ) {
                 while ( $query->have_posts() ) {
                     $query->the_post();
                     $post_id = get_the_ID();
                     $title = get_the_title();
-                    
-                    if ( in_array( $title, $seen_titles ) ) {
-                        continue;
-                    }
-                    $seen_titles[] = $title;
-                    
                     $link = get_permalink();
                     $excerpt = wp_trim_words( get_the_excerpt(), 18 );
                     if ( empty($excerpt) ) {
