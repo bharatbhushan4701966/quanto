@@ -20,8 +20,10 @@ function cmr_smb_connect_grid_shortcode() {
         'post_status'    => 'publish',
         'orderby'        => 'date',
         'order'          => 'DESC',
+        'offset'         => 4,
     );
     $query = new WP_Query( $args );
+    $query->max_num_pages = ceil( max( 0, $query->found_posts - 4 ) / 6 );
 
     ?>
     <style>

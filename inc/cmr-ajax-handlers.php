@@ -118,13 +118,16 @@ function cmr_load_more_media_releases_ajax() {
     $year  = isset( $_POST['year'] ) ? sanitize_text_field( $_POST['year'] ) : '';
     $search = isset( $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : '';
     
+    $offset_base = ( empty($year) && empty($search) ) ? 4 : 0;
+    $offset = $offset_base + ( ($paged - 1) * 6 );
+    
     $args = array(
         'post_type'      => 'cmr_news',
         'posts_per_page' => 6,
         'post_status'    => 'publish',
         'orderby'        => 'date',
         'order'          => 'DESC',
-        'paged'          => $paged,
+        'offset'         => $offset,
     );
 
     if ( ! empty( $year ) ) {
@@ -187,7 +190,8 @@ function cmr_load_more_media_releases_ajax() {
     }
     $html = ob_get_clean();
 
-    $has_more = $paged < $query->max_num_pages;
+    $total_pages = ceil( max( 0, $query->found_posts - $offset_base ) / 6 );
+    $has_more = $paged < $total_pages;
 
     wp_reset_postdata();
 
@@ -206,6 +210,9 @@ function cmr_load_more_smb_connect_ajax() {
     $year  = isset( $_POST['year'] ) ? sanitize_text_field( $_POST['year'] ) : '';
     $search = isset( $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : '';
     
+    $offset_base = ( empty($year) && empty($search) ) ? 4 : 0;
+    $offset = $offset_base + ( ($paged - 1) * 6 );
+    
     $args = array(
         'post_type'      => 'post',
         'category_name'  => 'smb-connect',
@@ -213,7 +220,7 @@ function cmr_load_more_smb_connect_ajax() {
         'post_status'    => 'publish',
         'orderby'        => 'date',
         'order'          => 'DESC',
-        'paged'          => $paged,
+        'offset'         => $offset,
     );
 
     if ( ! empty( $year ) ) {
@@ -276,7 +283,8 @@ function cmr_load_more_smb_connect_ajax() {
     }
     $html = ob_get_clean();
 
-    $has_more = $paged < $query->max_num_pages;
+    $total_pages = ceil( max( 0, $query->found_posts - $offset_base ) / 6 );
+    $has_more = $paged < $total_pages;
 
     wp_reset_postdata();
 
