@@ -112,6 +112,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-stay-updated.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-featured-insight.php';
 require_once get_theme_file_path( 'inc/cmr-what-we-think.php' );
 require_once QUANTO_DIR_PATH_INC . 'cmr-media-releases-general.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-smb-connect-general.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-media-releases-grid.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-featured-intelligence-carousel.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-industry-intel-list.php';
