@@ -284,6 +284,12 @@ function cmr_media_releases_general_shortcode( $atts ) {
         .cmr-mrg-nav-img-wrap {
             width: 120px;
             flex-shrink: 0;
+            position: relative;
+            background-color: #f4f4f4;
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            overflow: hidden;
         }
 
         .cmr-mrg-nav-img {
@@ -291,6 +297,10 @@ function cmr_media_releases_general_shortcode( $atts ) {
             height: 100%;
             object-fit: cover;
             display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
         }
 
         .cmr-mrg-nav-content {
@@ -322,6 +332,10 @@ function cmr_media_releases_general_shortcode( $atts ) {
             margin: 0;
             letter-spacing: 1px;
             color: #111;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         @media (max-width: 992px) {
@@ -392,10 +406,10 @@ function cmr_media_releases_general_shortcode( $atts ) {
         <div class="cmr-mrg-nav">
             <?php foreach ( $bottom_posts as $index => $post ) : ?>
             <div class="cmr-mrg-nav-item <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo $index; ?>">
-                <div class="cmr-mrg-nav-img-wrap" style="background-color:#f4f4f4; display:flex; align-items:center; justify-content:center; position:relative;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:#ccc; position:absolute;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                <div class="cmr-mrg-nav-img-wrap">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:#ccc; position:absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                     <?php if ($post['image']) : ?>
-                        <img src="<?php echo esc_url($post['image']); ?>" alt="Thumbnail" class="cmr-mrg-nav-img" style="position:relative; z-index:1;">
+                        <img src="<?php echo esc_url($post['image']); ?>" alt="Thumbnail" class="cmr-mrg-nav-img">
                     <?php endif; ?>
                 </div>
                 <div class="cmr-mrg-nav-content">
