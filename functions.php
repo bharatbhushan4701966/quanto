@@ -81,6 +81,15 @@ function quanto_force_enable_woocommerce_reviews() {
 // Custom Breadcrumb Shortcode
 add_shortcode('cmr_breadcrumb', 'cmr_breadcrumb_shortcode');
 function cmr_breadcrumb_shortcode() {
+    $current_title = '';
+    if ( is_archive() ) {
+        $current_title = wp_strip_all_tags( get_the_archive_title() );
+    } elseif ( is_search() ) {
+        $current_title = 'Search Results';
+    } else {
+        $current_title = get_the_title();
+    }
+    
     ob_start();
     ?>
     <div class="breadcumb-menu-wrap" style="margin-bottom: 20px; padding: 0;">
@@ -88,7 +97,7 @@ function cmr_breadcrumb_shortcode() {
             <ul class="justify-content-center" style="margin:0; padding:0; display:flex; align-items:center; list-style:none; justify-content: center;">
                 <li><a href="<?php echo esc_url( home_url('/') ); ?>" title="Home" style="color: #666; font-weight: 500; font-size: 12px; text-decoration:none;">Home</a></li>
                 <span class="arrow" style="margin: 0 10px; color: #666; font-size:12px;"><i class="fa-solid fa-angle-right"></i></span>
-                <li class="active" title="Media Releases" style="color: #111; font-weight: 500; font-size: 12px;">Media Releases</li>
+                <li class="active" title="<?php echo esc_attr( $current_title ); ?>" style="color: #111; font-weight: 500; font-size: 12px;"><?php echo esc_html( $current_title ); ?></li>
             </ul>
         </div>
     </div>
