@@ -181,6 +181,7 @@ function cmr_get_unique_enterprise_post_ids() {
 
 require_once QUANTO_DIR_PATH_INC . 'cmr-media-releases-general.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-enterprise-connect-general.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-enterprise-connect-grid.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-smb-connect-general.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-smb-connect-grid.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-smb-tabs.php';
