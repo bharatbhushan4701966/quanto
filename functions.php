@@ -150,7 +150,37 @@ function cmr_get_unique_smb_post_ids() {
     return $unique_ids;
 }
 
+function cmr_get_unique_enterprise_post_ids() {
+    global $wpdb;
+    $results = $wpdb->get_results("
+        SELECT p.ID, p.post_title 
+        FROM {$wpdb->posts} p
+        INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
+        INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+        INNER JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
+        WHERE p.post_type = 'post' 
+          AND p.post_status = 'publish' 
+          AND t.slug = 'enterprise-connect'
+        ORDER BY p.post_date DESC
+        LIMIT 500
+    ");
+
+    $unique_ids = array();
+    $seen_titles = array();
+    if ( $results ) {
+        foreach ( $results as $row ) {
+            $title = trim( $row->post_title );
+            if ( ! isset( $seen_titles[ $title ] ) ) {
+                $seen_titles[ $title ] = true;
+                $unique_ids[] = $row->ID;
+            }
+        }
+    }
+    return $unique_ids;
+}
+
 require_once QUANTO_DIR_PATH_INC . 'cmr-media-releases-general.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-enterprise-connect-general.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-smb-connect-general.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-smb-connect-grid.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-smb-tabs.php';
