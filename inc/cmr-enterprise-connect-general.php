@@ -117,12 +117,12 @@ function cmr_enterprise_connect_general_shortcode( $atts ) {
             background: #fff;
             border: 1px solid #eaeaea;
             margin-bottom: 24px;
-            min-height: 400px;
+            min-height: 320px;
             transition: all 0.4s ease;
         }
         
         .cmr-entcg-featured-img-wrap {
-            flex: 0 0 50%;
+            flex: 0 0 40%;
             overflow: hidden;
             position: relative;
         }
@@ -131,6 +131,7 @@ function cmr_enterprise_connect_general_shortcode( $atts ) {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center top;
             position: absolute;
             top: 0;
             left: 0;
@@ -146,8 +147,8 @@ function cmr_enterprise_connect_general_shortcode( $atts ) {
         }
 
         .cmr-entcg-featured-content {
-            flex: 0 0 50%;
-            padding: 60px;
+            flex: 0 0 60%;
+            padding: 40px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -485,4 +486,5 @@ function cmr_enterprise_connect_general_shortcode( $atts ) {
     <?php
     return ob_get_clean();
 }
+
 
