@@ -6,19 +6,34 @@ add_shortcode('cmr_mega_menu_connect', 'cmr_mega_menu_connect_shortcode');
 function cmr_get_mmc_posts($slug, $fallback_offset) {
     $args = array(
         'post_type'      => 'post',
-        'posts_per_page' => 3,
+        'posts_per_page' => 20, // Fetch more to allow filtering
         'post_status'    => 'publish',
         'orderby'        => 'date',
         'order'          => 'DESC',
         'category_name'  => $slug
     );
-    $posts = get_posts($args);
-    if (count($posts) < 3) {
+    $raw_posts = get_posts($args);
+    if (count($raw_posts) < 3) {
         $args['category_name'] = '';
         $args['offset'] = $fallback_offset;
-        $posts = get_posts($args);
+        $raw_posts = get_posts($args);
     }
-    return $posts;
+    
+    $unique_posts = array();
+    $seen_titles = array();
+    
+    foreach ($raw_posts as $p) {
+        $title = trim($p->post_title);
+        if (!isset($seen_titles[$title])) {
+            $seen_titles[$title] = true;
+            $unique_posts[] = $p;
+            if (count($unique_posts) == 3) {
+                break;
+            }
+        }
+    }
+    
+    return $unique_posts;
 }
 
 function cmr_mega_menu_connect_shortcode($atts) {
