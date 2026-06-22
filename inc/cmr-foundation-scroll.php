@@ -34,7 +34,7 @@ function cmr_foundation_scroll_shortcode($atts) {
             display: flex;
             flex-direction: column;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1280px;
             padding: 0 20px;
             margin: 0 auto;
         }
@@ -53,21 +53,23 @@ function cmr_foundation_scroll_shortcode($atts) {
         .cmr-foundation-content {
             display: flex;
             align-items: flex-start;
-            gap: 100px;
         }
 
         .cmr-foundation-left {
-            flex: 0 0 240px;
+            flex: 0 0 50%;
+            padding-right: 50px;
+            border-right: 1px solid #eaeaea;
         }
 
         .cmr-foundation-nav-item {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 600;
             color: #d1d1d1;
             margin-bottom: 30px;
             cursor: pointer;
             transition: color 0.4s ease;
             font-family: 'Instrument Sans', sans-serif;
+            letter-spacing: -1px;
         }
 
         .cmr-foundation-nav-item:hover,
@@ -76,7 +78,7 @@ function cmr_foundation_scroll_shortcode($atts) {
         }
 
         .cmr-foundation-right {
-            flex: 1;
+            flex: 0 0 50%;
             position: relative;
         }
 
@@ -89,6 +91,7 @@ function cmr_foundation_scroll_shortcode($atts) {
             transform: translateY(40px);
             transition: opacity 1.5s ease, transform 1.5s ease;
             pointer-events: none;
+            padding-left: 50px;
         }
 
         .cmr-foundation-block:first-child {
@@ -99,6 +102,16 @@ function cmr_foundation_scroll_shortcode($atts) {
             opacity: 1;
             transform: translateY(0);
             pointer-events: auto;
+        }
+
+        .cmr-foundation-block-title {
+            font-size: 36px;
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -1px;
+            margin: 0 0 20px 0;
+            font-family: 'Instrument Sans', sans-serif;
+            color: #111;
         }
 
         .cmr-foundation-block-desc {
@@ -114,10 +127,12 @@ function cmr_foundation_scroll_shortcode($atts) {
             .cmr-foundation-panel { position: relative !important; height: auto !important; padding: 40px 0; }
             .cmr-foundation-title { font-size: 28px; margin-bottom: 40px; }
             .cmr-foundation-content { flex-direction: column; gap: 24px; }
-            .cmr-foundation-left { flex: none; width: 100%; display: flex; gap: 20px; overflow-x: auto; padding-bottom: 10px; border-bottom: 1px solid #eaeaea; margin-bottom: 20px; }
+            .cmr-foundation-left { flex: none; width: 100%; display: flex; gap: 20px; overflow-x: auto; padding-right: 0; padding-bottom: 10px; border-bottom: 1px solid #eaeaea; border-right: none; margin-bottom: 20px; }
             .cmr-foundation-nav-item { font-size: 20px; margin-bottom: 0; white-space: nowrap; }
-            .cmr-foundation-block { position: relative; opacity: 1; pointer-events: auto; transform: none; display: none; }
+            .cmr-foundation-right { flex: none; width: 100%; }
+            .cmr-foundation-block { position: relative; opacity: 1; pointer-events: auto; transform: none; display: none; padding-left: 0; }
             .cmr-foundation-block.show { display: block; }
+            .cmr-foundation-block-title { font-size: 28px; }
         }
     </style>
 
@@ -135,14 +150,17 @@ function cmr_foundation_scroll_shortcode($atts) {
                     
                     <div class="cmr-foundation-right">
                         <div class="cmr-foundation-block show" data-index="0">
+                            <h3 class="cmr-foundation-block-title">Driving Confident Decisions</h3>
                             <p class="cmr-foundation-block-desc">We help organizations navigate change with confidence. By delivering data-driven intelligence and meaningful engagement, we enable leaders to identify opportunity, manage risk and make informed strategic decisions that drive sustainable growth.</p>
                         </div>
                         
                         <div class="cmr-foundation-block" data-index="1">
+                            <h3 class="cmr-foundation-block-title">Empowering the Future</h3>
                             <p class="cmr-foundation-block-desc">We believe the future belongs to intelligent, interconnected ecosystems. As data, AI and emerging technologies reshape markets, organizations that act on real-time insights and predictive intelligence will lead. Our vision is to empower businesses of all sizes to unlock this advantage and build long-term, data-driven success.</p>
                         </div>
                         
                         <div class="cmr-foundation-block" data-index="2">
+                            <h3 class="cmr-foundation-block-title">Delivering Excellence</h3>
                             <p class="cmr-foundation-block-desc">We create the future by equipping leaders to act ahead of change. Through high-impact research, AI-powered analytics and strategic advisory, we anticipate market shifts, translate complex data into foresight and enable confident adoption, growth and differentiation. By combining intelligence with influence - through our thought leadership and executive forums, we turn insight into decisions that shape what comes next.</p>
                         </div>
                     </div>
