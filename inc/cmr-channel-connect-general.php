@@ -117,12 +117,12 @@ function cmr_channel_connect_general_shortcode( $atts ) {
             background: #fff;
             border: 1px solid #eaeaea;
             margin-bottom: 24px;
-            min-height: 320px;
+            min-height: 400px;
             transition: all 0.4s ease;
         }
         
         .cmr-cancg-featured-img-wrap {
-            flex: 0 0 40%;
+            flex: 0 0 50%;
             overflow: hidden;
             position: relative;
         }
@@ -131,7 +131,6 @@ function cmr_channel_connect_general_shortcode( $atts ) {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center top;
             position: absolute;
             top: 0;
             left: 0;
@@ -147,8 +146,8 @@ function cmr_channel_connect_general_shortcode( $atts ) {
         }
 
         .cmr-cancg-featured-content {
-            flex: 0 0 60%;
-            padding: 40px;
+            flex: 0 0 50%;
+            padding: 60px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -486,5 +485,6 @@ function cmr_channel_connect_general_shortcode( $atts ) {
     <?php
     return ob_get_clean();
 }
+
 
 
