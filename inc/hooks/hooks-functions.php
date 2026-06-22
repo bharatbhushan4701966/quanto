@@ -288,12 +288,11 @@
                 return false;
             }
 
-            $footer_id = quanto_find_footer_post_by_slug();
-            if ( $footer_id ) {
-                return $footer_id;
-            }
-
             if ( ! class_exists( 'ReduxFramework' ) ) {
+                $footer_id = quanto_find_footer_post_by_slug();
+                if ( $footer_id ) {
+                    return $footer_id;
+                }
                 return false;
             }
 
@@ -344,6 +343,11 @@
 
             if ( quanto_opt( 'quanto_footer_builder_trigger' ) === 'footer_builder' ) {
                 return (int) quanto_opt( 'quanto_footer_builder_select' );
+            }
+
+            $footer_id = quanto_find_footer_post_by_slug();
+            if ( $footer_id ) {
+                return $footer_id;
             }
 
             return false;
@@ -495,30 +499,9 @@
     // footer content Function
     if( !function_exists('quanto_footer_content_cb') ) {
         function quanto_footer_content_cb( ) {
-            // Try to find and render a quanto_footer post by slug first
-            if ( class_exists( '\\Elementor\\Plugin' ) ) {
-                $plugin_instance = \Elementor\Plugin::instance();
-                if ( ! empty( $plugin_instance->frontend ) && method_exists( $plugin_instance->frontend, 'get_builder_content_for_display' ) ) {
-                    $footer_slugs = array( 'main-footer', 'main-fotter' );
-                    $footer_id    = false;
-                    foreach ( $footer_slugs as $slug ) {
-                        $posts = get_posts( array(
-                            'name'        => $slug,
-                            'post_type'   => 'quanto_footer',
-                            'post_status' => 'publish',
-                            'numberposts' => 1,
-                        ) );
-                        if ( ! empty( $posts ) ) {
-                            $footer_id = $posts[0]->ID;
-                            break;
-                        }
-                    }
-                    if ( $footer_id ) {
-                        quanto_render_elementor_footer( $footer_id );
-                        return;
-                    }
-                }
-            }
+            // We rely on Redux settings and page metadata first, 
+            // then fall back to 'main-footer' via slug if not set.
+
 
             if ( class_exists( 'ReduxFramework' ) && did_action( 'elementor/loaded' ) && class_exists( '\\Elementor\\Plugin' ) ) {
 
@@ -613,6 +596,14 @@
             } else {
                 // Elementor or Redux not active – use prebuilt footer
                 quanto_footer_global_option();
+            }
+
+            // Fallback: if we didn't render anything above, try 'main-footer' slug
+            if ( class_exists( '\\Elementor\\Plugin' ) ) {
+                $footer_id = quanto_find_footer_post_by_slug();
+                if ( $footer_id ) {
+                    quanto_render_elementor_footer( $footer_id );
+                }
             }
 
         }
