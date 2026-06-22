@@ -147,7 +147,7 @@ function cmr_channel_connect_general_shortcode( $atts ) {
 
         .cmr-cancg-featured-content {
             flex: 0 0 50%;
-            padding: 60px 60px 100px 60px;
+            padding: 100px 60px 100px 60px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -485,6 +485,7 @@ function cmr_channel_connect_general_shortcode( $atts ) {
     <?php
     return ob_get_clean();
 }
+
 
 
 
