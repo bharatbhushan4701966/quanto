@@ -314,3 +314,233 @@ function cmr_load_more_smb_connect_ajax() {
         'has_more' => $has_more
     ) );
 }
+
+
+
+add_action( 'wp_ajax_cmr_load_more_enterprise_connect', 'cmr_load_more_enterprise_connect_ajax' );
+add_action( 'wp_ajax_nopriv_cmr_load_more_enterprise_connect', 'cmr_load_more_enterprise_connect_ajax' );
+
+function cmr_load_more_enterprise_connect_ajax() {
+    $paged  = isset($_POST['page']) ? intval($_POST['page']) : 1;
+    $year   = isset($_POST['year']) ? sanitize_text_field($_POST['year']) : '';
+    $search = isset($_POST['search']) ? sanitize_text_field($_POST['search']) : '';
+    
+    // We only use the unique IDs if there is NO year/search filter
+    if ( empty($year) && empty($search) ) {
+        $unique_ids = cmr_get_unique_enterprise_post_ids();
+        $offset_base = 4;
+        $offset = $offset_base + ( ($paged - 1) * 6 );
+        
+        $sliced_ids = array_slice( $unique_ids, $offset, 6 );
+        
+        if ( empty($sliced_ids) ) {
+            wp_send_json_success(array('html' => '', 'has_more' => false));
+        }
+        
+        $args = array(
+            'post_type'      => 'post',
+            'post__in'       => $sliced_ids,
+            'orderby'        => 'post__in',
+            'posts_per_page' => 6,
+        );
+        $query = new WP_Query( $args );
+        
+        $total_pages = ceil( max( 0, count( $unique_ids ) - 4 ) / 6 );
+        $has_more = $paged < $total_pages;
+    } else {
+        $offset_base = 0;
+        $offset = $offset_base + ( ($paged - 1) * 6 );
+        
+        $args = array(
+            'post_type'      => 'post',
+            'category_name'  => 'enterprise-connect',
+            'posts_per_page' => 6,
+            'post_status'    => 'publish',
+            'orderby'        => 'date',
+            'order'          => 'DESC',
+            'offset'         => $offset
+        );
+
+        if ( !empty($year) ) {
+            $args['year'] = $year;
+        }
+
+        if ( !empty($search) ) {
+            $args['s'] = $search;
+        }
+        
+        $query = new WP_Query( $args );
+        $has_more = $query->max_num_pages > $paged;
+    }
+
+    ob_start();
+    if ( $query->have_posts() ) {
+        while ( $query->have_posts() ) {
+            $query->the_post();
+            $post_id = get_the_ID();
+            $title = get_the_title();
+            $link = get_permalink();
+            $excerpt = wp_trim_words( get_the_excerpt(), 18 );
+            if ( empty($excerpt) ) {
+                $excerpt = wp_trim_words( get_post_field('post_content', $post_id), 18 );
+            }
+            $bg_image = get_the_post_thumbnail_url( $post_id, 'medium_large' );
+            if ( ! $bg_image ) {
+                $bg_image = 'https://via.placeholder.com/600x400';
+            }
+            
+            $content = get_post_field( 'post_content', $post_id );
+            $word_count = str_word_count( strip_tags( $content ) );
+            $read_time = ceil( $word_count / 200 );
+            if ($read_time < 1) $read_time = 1;
+            $date = get_the_date('d M Y');
+            ?>
+            <div class="cmr-enterprisecgd-card">
+                <div class="cmr-enterprisecgd-card-img-wrap">
+                    <a href="<?php echo esc_url($link); ?>">
+                        <img src="<?php echo esc_url($bg_image); ?>" alt="<?php echo esc_attr($title); ?>">
+                    </a>
+                </div>
+                <div class="cmr-enterprisecgd-card-meta">
+                    <div class="cmr-enterprisecgd-card-label">Enterprise Connect <span>|</span> <?php echo esc_html($date); ?></div>
+                    <div class="cmr-enterprisecgd-card-time"><?php echo esc_html($read_time); ?> min read</div>
+                </div>
+                <h3 class="cmr-enterprisecgd-card-title">
+                    <a href="<?php echo esc_url($link); ?>"><?php echo esc_html($title); ?></a>
+                </h3>
+                <p class="cmr-enterprisecgd-card-excerpt"><?php echo esc_html($excerpt); ?></p>
+                <a href="<?php echo esc_url($link); ?>" class="cmr-enterprisecgd-card-link">
+                    Read full Release 
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+            </div>
+            <?php
+        }
+    }
+    $html = ob_get_clean();
+
+    $total_pages = ceil( max( 0, $query->found_posts - $offset_base ) / 6 );
+    $has_more = $paged < $total_pages;
+
+    wp_reset_postdata();
+
+    wp_send_json_success( array(
+        'html' => $html,
+        'has_more' => $has_more
+    ) );
+}
+
+
+
+add_action( 'wp_ajax_cmr_load_more_channel_connect', 'cmr_load_more_channel_connect_ajax' );
+add_action( 'wp_ajax_nopriv_cmr_load_more_channel_connect', 'cmr_load_more_channel_connect_ajax' );
+
+function cmr_load_more_channel_connect_ajax() {
+    $paged  = isset($_POST['page']) ? intval($_POST['page']) : 1;
+    $year   = isset($_POST['year']) ? sanitize_text_field($_POST['year']) : '';
+    $search = isset($_POST['search']) ? sanitize_text_field($_POST['search']) : '';
+    
+    // We only use the unique IDs if there is NO year/search filter
+    if ( empty($year) && empty($search) ) {
+        $unique_ids = cmr_get_unique_channel_post_ids();
+        $offset_base = 4;
+        $offset = $offset_base + ( ($paged - 1) * 6 );
+        
+        $sliced_ids = array_slice( $unique_ids, $offset, 6 );
+        
+        if ( empty($sliced_ids) ) {
+            wp_send_json_success(array('html' => '', 'has_more' => false));
+        }
+        
+        $args = array(
+            'post_type'      => 'post',
+            'post__in'       => $sliced_ids,
+            'orderby'        => 'post__in',
+            'posts_per_page' => 6,
+        );
+        $query = new WP_Query( $args );
+        
+        $total_pages = ceil( max( 0, count( $unique_ids ) - 4 ) / 6 );
+        $has_more = $paged < $total_pages;
+    } else {
+        $offset_base = 0;
+        $offset = $offset_base + ( ($paged - 1) * 6 );
+        
+        $args = array(
+            'post_type'      => 'post',
+            'category_name'  => 'channel-connect',
+            'posts_per_page' => 6,
+            'post_status'    => 'publish',
+            'orderby'        => 'date',
+            'order'          => 'DESC',
+            'offset'         => $offset
+        );
+
+        if ( !empty($year) ) {
+            $args['year'] = $year;
+        }
+
+        if ( !empty($search) ) {
+            $args['s'] = $search;
+        }
+        
+        $query = new WP_Query( $args );
+        $has_more = $query->max_num_pages > $paged;
+    }
+
+    ob_start();
+    if ( $query->have_posts() ) {
+        while ( $query->have_posts() ) {
+            $query->the_post();
+            $post_id = get_the_ID();
+            $title = get_the_title();
+            $link = get_permalink();
+            $excerpt = wp_trim_words( get_the_excerpt(), 18 );
+            if ( empty($excerpt) ) {
+                $excerpt = wp_trim_words( get_post_field('post_content', $post_id), 18 );
+            }
+            $bg_image = get_the_post_thumbnail_url( $post_id, 'medium_large' );
+            if ( ! $bg_image ) {
+                $bg_image = 'https://via.placeholder.com/600x400';
+            }
+            
+            $content = get_post_field( 'post_content', $post_id );
+            $word_count = str_word_count( strip_tags( $content ) );
+            $read_time = ceil( $word_count / 200 );
+            if ($read_time < 1) $read_time = 1;
+            $date = get_the_date('d M Y');
+            ?>
+            <div class="cmr-channelcgd-card">
+                <div class="cmr-channelcgd-card-img-wrap">
+                    <a href="<?php echo esc_url($link); ?>">
+                        <img src="<?php echo esc_url($bg_image); ?>" alt="<?php echo esc_attr($title); ?>">
+                    </a>
+                </div>
+                <div class="cmr-channelcgd-card-meta">
+                    <div class="cmr-channelcgd-card-label">Channel Connect <span>|</span> <?php echo esc_html($date); ?></div>
+                    <div class="cmr-channelcgd-card-time"><?php echo esc_html($read_time); ?> min read</div>
+                </div>
+                <h3 class="cmr-channelcgd-card-title">
+                    <a href="<?php echo esc_url($link); ?>"><?php echo esc_html($title); ?></a>
+                </h3>
+                <p class="cmr-channelcgd-card-excerpt"><?php echo esc_html($excerpt); ?></p>
+                <a href="<?php echo esc_url($link); ?>" class="cmr-channelcgd-card-link">
+                    Read full Release 
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+            </div>
+            <?php
+        }
+    }
+    $html = ob_get_clean();
+
+    $total_pages = ceil( max( 0, $query->found_posts - $offset_base ) / 6 );
+    $has_more = $paged < $total_pages;
+
+    wp_reset_postdata();
+
+    wp_send_json_success( array(
+        'html' => $html,
+        'has_more' => $has_more
+    ) );
+}
