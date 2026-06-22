@@ -421,6 +421,8 @@ function cmr_channel_connect_grid_shortcode() {
         <div class="cmr-channelcgd-load-more-wrap" style="display: <?php echo $has_more ? 'block' : 'none'; ?>;">
             <button class="cmr-channelcgd-load-more" id="cmr-channelcgd-load-more-btn">Load More</button>
         </div>
+        <!-- Pagination -->
+        <div class="cmr-channelcgd-pagination-wrap" style="display: none;"></div>
     </div>
 
     <script>
@@ -462,10 +464,19 @@ function cmr_channel_connect_grid_shortcode() {
                         grid.insertAdjacentHTML('beforeend', response.data.html);
                     }
                     
-                    if (response.data.has_more) {
+                    const paginationWrap = document.querySelector('.cmr-channelcgd-pagination-wrap');
+                    if (response.data.pagination) {
+                        loadMoreBtn.parentElement.style.display = 'none';
+                        if (paginationWrap) {
+                            paginationWrap.innerHTML = '<div class="intel-numeric-pagination" style="text-align: center; margin-top: 30px; display: flex; justify-content: center; gap: 10px;">' + response.data.pagination + '</div>';
+                            paginationWrap.style.display = 'block';
+                        }
+                    } else if (response.data.has_more) {
                         loadMoreBtn.parentElement.style.display = 'block';
+                        if (paginationWrap) paginationWrap.style.display = 'none';
                     } else {
                         loadMoreBtn.parentElement.style.display = 'none';
+                        if (paginationWrap) paginationWrap.style.display = 'none';
                     }
                 }
                 if (loadMoreBtn) loadMoreBtn.classList.remove('cmr-channelcgd-loading');
@@ -570,4 +581,5 @@ function cmr_channel_connect_grid_shortcode() {
     <?php
     return ob_get_clean();
 }
+
 
