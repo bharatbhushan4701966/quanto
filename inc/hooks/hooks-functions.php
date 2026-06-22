@@ -409,6 +409,21 @@
             $footer_id = quanto_get_resolved_footer_id();
             if ( $footer_id ) {
                 quanto_enqueue_elementor_post_assets( $footer_id );
+                
+                add_action('wp_head', function() use ($footer_id) {
+                    if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+                        $css_file = new \Elementor\Core\Files\CSS\Post( $footer_id );
+                        $css = $css_file->get_content();
+                        if ($css) {
+                            echo "<style id='forced-footer-css-head'>\n" . $css . "\n</style>\n";
+                        } else {
+                            $path = $css_file->get_path();
+                            if (file_exists($path)) {
+                                echo "<style id='forced-footer-css-head-fallback'>\n" . file_get_contents($path) . "\n</style>\n";
+                            }
+                        }
+                    }
+                }, 999);
             }
 
             // Also enqueue homepage CSS early on single posts, pages and products 
@@ -419,6 +434,21 @@
                     $homepage_id = 14;
                 }
                 quanto_enqueue_elementor_post_assets( $homepage_id );
+                
+                add_action('wp_head', function() use ($homepage_id) {
+                    if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+                        $css_file = new \Elementor\Core\Files\CSS\Post( $homepage_id );
+                        $css = $css_file->get_content();
+                        if ($css) {
+                            echo "<style id='forced-homepage-css-head'>\n" . $css . "\n</style>\n";
+                        } else {
+                            $path = $css_file->get_path();
+                            if (file_exists($path)) {
+                                echo "<style id='forced-homepage-css-head-fallback'>\n" . file_get_contents($path) . "\n</style>\n";
+                            }
+                        }
+                    }
+                }, 999);
 
                 // Enqueue Similar Reports page assets early
                 $target_page = get_page_by_path( 'similar-reports-by-industry' );
