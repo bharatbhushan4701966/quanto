@@ -315,6 +315,32 @@ function cmr_smb_connect_grid_shortcode() {
                 width: 100%;
             }
         }
+            .intel-numeric-pagination .page-numbers {
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 50%;
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            font-weight: 500;
+            background: transparent;
+        }
+        .intel-numeric-pagination .page-numbers.current {
+            background: #6A35FF;
+            color: #fff;
+        }
+        .intel-numeric-pagination .page-numbers.prev, 
+        .intel-numeric-pagination .page-numbers.next {
+            color: #6A35FF;
+        }
+        .intel-numeric-pagination .page-numbers.dots {
+            width: auto;
+        }
     </style>
 
     <div class="cmr-smbcgd-wrapper">
@@ -581,5 +607,6 @@ function cmr_smb_connect_grid_shortcode() {
     <?php
     return ob_get_clean();
 }
+
 
 
