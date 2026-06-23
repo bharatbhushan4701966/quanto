@@ -9,7 +9,7 @@ function cmr_location_accordion_shortcode($atts) {
     <style>
         .cmr-loc-accordion-wrapper {
             font-family: 'Instrument Sans', sans-serif !important;
-            max-width: 1103px; /* Exact Figma width */
+            max-width: 1280px;
             margin: 0 auto;
             padding: 40px 20px;
             color: #111;
