@@ -330,8 +330,6 @@
                         return (int) quanto_opt( 'quanto_footer_builder_select' );
                     }
                 }
-
-                return false;
             }
 
             if ( is_archive() || is_home() || is_search() || is_singular() ) {
@@ -469,127 +467,12 @@
     // footer content Function
     if( !function_exists('quanto_footer_content_cb') ) {
         function quanto_footer_content_cb( ) {
-            // We rely on Redux settings and page metadata first, 
-            // then fall back to 'main-footer' via slug if not set.
-
-            if ( class_exists( 'ReduxFramework' ) && did_action( 'elementor/loaded' ) && class_exists( '\\Elementor\\Plugin' ) ) {
-
-                if ( is_page() || is_page_template( 'template-builder.php' ) ) {
-                    $post_id               = get_the_ID();
-                    $footer_enable_disable = '';
-                    $footer_settings       = '';
-                    $footer_local          = '';
-
-                    if (
-                        class_exists( '\\Elementor\\Core\\Settings\\Manager' ) &&
-                        method_exists( '\\Elementor\\Core\\Settings\\Manager', 'get_settings_managers' )
-                    ) {
-                        try {
-                            $page_settings_manager = \Elementor\Core\Settings\Manager::get_settings_managers( 'page' );
-                            if ( $page_settings_manager && method_exists( $page_settings_manager, 'get_model' ) ) {
-                                $page_settings_model = $page_settings_manager->get_model( $post_id );
-                                if ( $page_settings_model ) {
-                                    $footer_settings       = $page_settings_model->get_settings( 'quanto_footer_style' );
-                                    $footer_local          = $page_settings_model->get_settings( 'quanto_footer_builder_option' );
-                                    $footer_enable_disable = $page_settings_model->get_settings( 'quanto_footer_choice' );
-                                }
-                            }
-                        } catch ( Exception $e ) {
-                            // fall through
-                        }
-                    }
-
-                    if ( $footer_enable_disable === 'yes' ) {
-                        if ( $footer_settings === 'footer_builder' && ! empty( $footer_local ) ) {
-                            $quanto_local_footer = get_post( $footer_local );
-                            if ( $quanto_local_footer ) {
-                                quanto_render_elementor_footer( $quanto_local_footer->ID );
-                                return;
-                            }
-                        } else {
-                            $trigger = quanto_opt( 'quanto_footer_builder_trigger' );
-                            if ( $trigger === 'footer_builder' ) {
-                                $global = get_post( quanto_opt( 'quanto_footer_builder_select' ) );
-                                if ( $global ) {
-                                    quanto_render_elementor_footer( $global->ID );
-                                    return;
-                                } else {
-                                    quanto_footer_global_option();
-                                    return;
-                                }
-                            } else {
-                                quanto_footer_global_option();
-                                return;
-                            }
-                        }
-                    } else {
-                        quanto_footer_global_option();
-                        return;
-                    }
-
-                } elseif ( is_archive() || is_home() || is_search() || is_singular() ) {
-
-                    $archive_footer_id = quanto_opt( 'quanto_archive_footer_select_options' );
-
-                    if ( ! empty( $archive_footer_id ) ) {
-                        $footer_post = get_post( $archive_footer_id );
-                        if ( $footer_post ) {
-                            quanto_render_elementor_footer( $footer_post->ID );
-                            return;
-                        } else {
-                            quanto_footer_global_option();
-                            return;
-                        }
-                    } else {
-                        $trigger = quanto_opt( 'quanto_footer_builder_trigger' );
-                        if ( $trigger === 'footer_builder' ) {
-                            $global = get_post( quanto_opt( 'quanto_footer_builder_select' ) );
-                            if ( $global ) {
-                                quanto_render_elementor_footer( $global->ID );
-                                return;
-                            } else {
-                                quanto_footer_global_option();
-                                return;
-                            }
-                        } else {
-                            quanto_footer_global_option();
-                            return;
-                        }
-                    }
-
-                } else {
-
-                    $trigger = quanto_opt( 'quanto_footer_builder_trigger' );
-                    if ( $trigger === 'footer_builder' ) {
-                        $global = get_post( quanto_opt( 'quanto_footer_builder_select' ) );
-                        if ( $global ) {
-                            quanto_render_elementor_footer( $global->ID );
-                            return;
-                        } else {
-                            quanto_footer_global_option();
-                            return;
-                        }
-                    } else {
-                        quanto_footer_global_option();
-                        return;
-                    }
-                }
-
+            $footer_id = quanto_get_resolved_footer_id();
+            if ( $footer_id ) {
+                quanto_render_elementor_footer( $footer_id );
             } else {
-                // Elementor or Redux not active – use prebuilt footer
                 quanto_footer_global_option();
-                return;
             }
-
-            // Fallback: if we didn't render anything above, try 'main-footer' slug
-            if ( class_exists( '\\Elementor\\Plugin' ) ) {
-                $footer_id = quanto_find_footer_post_by_slug();
-                if ( $footer_id ) {
-                    quanto_render_elementor_footer( $footer_id );
-                    return;
-                }
-            }
-
         }
     }
 
