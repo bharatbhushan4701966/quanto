@@ -265,7 +265,7 @@
 
     if ( ! function_exists( 'quanto_find_footer_post_by_slug' ) ) {
         function quanto_find_footer_post_by_slug() {
-            foreach ( array( 'main-footer', 'main-fotter' ) as $slug ) {
+            foreach ( array( 'main-footer', 'main-fotter', 'main' ) as $slug ) {
                 $posts = get_posts( array(
                     'name'        => $slug,
                     'post_type'   => 'quanto_footer',
