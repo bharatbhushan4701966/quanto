@@ -11,7 +11,7 @@ function cmr_team_grid_shortcode($atts) {
     // Attributes
     $atts = shortcode_atts(array(
         'posts_per_page' => -1,
-        'post_type'      => 'team', // Change this if the plugin uses a different slug like 'quanto_team'
+        'post_type'      => 'quanto_team', 
     ), $atts);
 
     // Setup the query
