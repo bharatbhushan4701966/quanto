@@ -25,7 +25,7 @@ function cmr_team_grid_shortcode($atts) {
 
     $team_query = new WP_Query($args);
 
-    if (!$team_query->have_posts()) {
+    if (empty($team_query->posts)) {
         return '<p>No team members found.</p>';
     }
 
@@ -128,26 +128,28 @@ function cmr_team_grid_shortcode($atts) {
 
     <div class="cmr-team-grid-container">
         <div class="cmr-team-grid">
-            <?php while ($team_query->have_posts()) : $team_query->the_post(); 
+            <?php foreach ($team_query->posts as $team_post) : 
+                $post_id = $team_post->ID;
+                
                 // Adjust these meta keys if your plugin uses different ones
-                $role = get_post_meta(get_the_ID(), 'designation', true);
-                if (!$role) $role = get_post_meta(get_the_ID(), '_team_role', true);
-                if (!$role) $role = get_post_meta(get_the_ID(), 'role', true);
+                $role = get_post_meta($post_id, 'designation', true);
+                if (!$role) $role = get_post_meta($post_id, '_team_role', true);
+                if (!$role) $role = get_post_meta($post_id, 'role', true);
 
-                $linkedin = get_post_meta(get_the_ID(), 'linkedin', true);
-                if (!$linkedin) $linkedin = get_post_meta(get_the_ID(), '_linkedin_url', true);
+                $linkedin = get_post_meta($post_id, 'linkedin', true);
+                if (!$linkedin) $linkedin = get_post_meta($post_id, '_linkedin_url', true);
 
-                $twitter = get_post_meta(get_the_ID(), 'twitter', true);
-                if (!$twitter) $twitter = get_post_meta(get_the_ID(), '_twitter_url', true);
+                $twitter = get_post_meta($post_id, 'twitter', true);
+                if (!$twitter) $twitter = get_post_meta($post_id, '_twitter_url', true);
 
-                $image_url = get_the_post_thumbnail_url(get_the_ID(), 'large');
+                $image_url = get_the_post_thumbnail_url($post_id, 'large');
                 if (!$image_url) {
                     $image_url = 'https://via.placeholder.com/600x800.png?text=No+Image'; // Fallback
                 }
             ?>
                 <div class="cmr-team-member">
                     <div class="cmr-team-image-wrap">
-                        <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+                        <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr(get_the_title($post_id)); ?>">
                         <div class="cmr-team-overlay">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="7" y1="17" x2="17" y2="7"></line>
@@ -156,7 +158,7 @@ function cmr_team_grid_shortcode($atts) {
                         </div>
                     </div>
                     <div class="cmr-team-info">
-                        <h3 class="cmr-team-name"><?php the_title(); ?></h3>
+                        <h3 class="cmr-team-name"><?php echo get_the_title($post_id); ?></h3>
                         <p class="cmr-team-role"><?php echo esc_html($role); ?></p>
                         <div class="cmr-team-social">
                             <?php if ($linkedin) : ?>
@@ -176,11 +178,10 @@ function cmr_team_grid_shortcode($atts) {
                         </div>
                     </div>
                 </div>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
         </div>
     </div>
 
     <?php
-    wp_reset_postdata();
     return ob_get_clean();
 }
