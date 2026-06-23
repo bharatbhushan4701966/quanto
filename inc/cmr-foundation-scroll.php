@@ -56,8 +56,8 @@ function cmr_foundation_scroll_shortcode($atts) {
         }
 
         .cmr-foundation-left {
-            flex: 0 0 50%;
-            padding-right: 50px;
+            flex: 0 0 33.3333%; /* 4 columns out of 12 */
+            padding-right: 60px;
             border-right: 1px solid #eaeaea;
         }
 
@@ -78,7 +78,7 @@ function cmr_foundation_scroll_shortcode($atts) {
         }
 
         .cmr-foundation-right {
-            flex: 0 0 50%;
+            flex: 0 0 66.6666%; /* 8 columns out of 12 */
             position: relative;
         }
 
@@ -91,7 +91,7 @@ function cmr_foundation_scroll_shortcode($atts) {
             transform: translateY(40px);
             transition: opacity 1.5s ease, transform 1.5s ease;
             pointer-events: none;
-            padding-left: 50px;
+            padding-left: 60px;
         }
 
         .cmr-foundation-block:first-child {
