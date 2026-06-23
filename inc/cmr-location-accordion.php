@@ -9,7 +9,7 @@ function cmr_location_accordion_shortcode($atts) {
     <style>
         .cmr-loc-accordion-wrapper {
             font-family: 'Instrument Sans', sans-serif !important;
-            max-width: 1280px;
+            max-width: 1103px; /* Exact Figma width */
             margin: 0 auto;
             padding: 40px 20px;
             color: #111;
@@ -94,7 +94,7 @@ function cmr_location_accordion_shortcode($atts) {
 
         .cmr-loc-item.active .cmr-loc-content {
             max-height: 1200px;
-            padding-bottom: 40px;
+            padding-bottom: 50px; /* Gap at the bottom */
         }
 
         .cmr-loc-content-inner {
@@ -102,7 +102,8 @@ function cmr_location_accordion_shortcode($atts) {
             opacity: 0;
             transition: opacity 0.4s ease;
             transition-delay: 0.1s;
-            display: block; /* Removed flex */
+            display: block; 
+            margin-top: 35px; /* Gap at the top between header and map */
         }
 
         .cmr-loc-item.active .cmr-loc-content-inner {
@@ -111,7 +112,7 @@ function cmr_location_accordion_shortcode($atts) {
 
         .cmr-loc-map {
             width: 100%;
-            min-height: 450px;
+            height: 592px; /* Figma specified height */
             background: #f5f5f5;
             position: relative;
             overflow: hidden;
