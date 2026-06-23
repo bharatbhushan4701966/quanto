@@ -93,37 +93,62 @@ function cmr_location_accordion_shortcode($atts) {
         }
 
         .cmr-loc-item.active .cmr-loc-content {
-            max-height: 1000px;
+            max-height: 1200px;
             padding-bottom: 40px;
         }
 
         .cmr-loc-content-inner {
-            display: flex;
-            gap: 60px;
+            position: relative;
             opacity: 0;
             transition: opacity 0.4s ease;
             transition-delay: 0.1s;
+            display: block; /* Removed flex */
         }
 
         .cmr-loc-item.active .cmr-loc-content-inner {
             opacity: 1;
         }
 
+        .cmr-loc-map {
+            width: 100%;
+            min-height: 450px;
+            background: #f5f5f5;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cmr-loc-map iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
         .cmr-loc-details {
-            flex: 0 0 350px;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 380px;
+            background: #fff;
+            padding: 50px 40px;
+            z-index: 10;
+            box-shadow: 5px 0 25px rgba(0,0,0,0.03); /* Subtle shadow for depth */
         }
 
         .cmr-loc-details h4 {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 600;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             margin-top: 0;
-            letter-spacing: -0.5px;
+            letter-spacing: -1px;
             color: #111;
         }
 
         .cmr-loc-address-block {
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .cmr-loc-address-block .icon {
@@ -136,11 +161,13 @@ function cmr_location_accordion_shortcode($atts) {
             font-size: 16px;
             margin-bottom: 8px;
             color: #111;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .cmr-loc-address {
-            font-size: 16px;
-            color: #555;
+            font-size: 15px;
+            color: #333;
             line-height: 1.6;
             margin-bottom: 20px;
         }
@@ -154,7 +181,8 @@ function cmr_location_accordion_shortcode($atts) {
             color: #111;
             text-decoration: none;
             margin-bottom: 12px;
-            font-size: 18px;
+            font-size: 20px;
+            letter-spacing: -0.5px;
             transition: color 0.3s;
         }
 
@@ -166,36 +194,18 @@ function cmr_location_accordion_shortcode($atts) {
             font-weight: 600;
         }
 
-        .cmr-loc-map {
-            flex: 1;
-            background: #f5f5f5;
-            overflow: hidden;
-            min-height: 350px;
-            position: relative;
-        }
-
-        .cmr-loc-map iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
         @media (max-width: 992px) {
-            .cmr-loc-content-inner {
-                flex-direction: column;
-                gap: 30px;
-            }
             .cmr-loc-details {
-                flex: auto;
+                position: relative;
+                top: auto;
+                left: auto;
+                transform: none;
+                width: 100%;
+                padding: 30px 20px;
+                box-shadow: none;
             }
             .cmr-loc-map {
-                min-height: 250px;
-            }
-            .cmr-loc-item.active .cmr-loc-content {
-                max-height: 1500px;
+                min-height: 300px;
             }
         }
         @media (max-width: 768px) {
@@ -214,6 +224,9 @@ function cmr_location_accordion_shortcode($atts) {
             </div>
             <div class="cmr-loc-content">
                 <div class="cmr-loc-content-inner">
+                    <div class="cmr-loc-map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.037227411979!2d77.0366883!3d28.4384462!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1872b7e19bf1%3A0x6b3060c42730b91e!2sCyber%20Media%20Research!5e0!3m2!1sen!2sin!4v1718880000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
                     <div class="cmr-loc-details">
                         <h4>Address</h4>
                         <div class="cmr-loc-address-block">
@@ -231,9 +244,6 @@ function cmr_location_accordion_shortcode($atts) {
                             <a href="tel:+911244822222" class="phone">+91-124-4822222</a>
                         </div>
                     </div>
-                    <div class="cmr-loc-map">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.037227411979!2d77.0366883!3d28.4384462!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1872b7e19bf1%3A0x6b3060c42730b91e!2sCyber%20Media%20Research!5e0!3m2!1sen!2sin!4v1718880000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
                 </div>
             </div>
         </div>
@@ -246,6 +256,9 @@ function cmr_location_accordion_shortcode($atts) {
             </div>
             <div class="cmr-loc-content">
                 <div class="cmr-loc-content-inner">
+                    <div class="cmr-loc-map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.001696423075!2d77.5912997148219!3d12.971598690855901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sBengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1718880000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
                     <div class="cmr-loc-details">
                         <h4>Address</h4>
                         <div class="cmr-loc-address-block">
@@ -263,9 +276,6 @@ function cmr_location_accordion_shortcode($atts) {
                             <a href="tel:+911244822222" class="phone">+91-124-4822222</a>
                         </div>
                     </div>
-                    <div class="cmr-loc-map">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.001696423075!2d77.5912997148219!3d12.971598690855901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sBengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1718880000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
                 </div>
             </div>
         </div>
@@ -278,6 +288,9 @@ function cmr_location_accordion_shortcode($atts) {
             </div>
             <div class="cmr-loc-content">
                 <div class="cmr-loc-content-inner">
+                    <div class="cmr-loc-map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241317.116099518!2d72.7410988628036!3d19.082197839352945!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1718880000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
                     <div class="cmr-loc-details">
                         <h4>Address</h4>
                         <div class="cmr-loc-address-block">
@@ -295,9 +308,6 @@ function cmr_location_accordion_shortcode($atts) {
                             <a href="tel:+911244822222" class="phone">+91-124-4822222</a>
                         </div>
                     </div>
-                    <div class="cmr-loc-map">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241317.116099518!2d72.7410988628036!3d19.082197839352945!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1718880000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
                 </div>
             </div>
         </div>
@@ -310,6 +320,9 @@ function cmr_location_accordion_shortcode($atts) {
             </div>
             <div class="cmr-loc-content">
                 <div class="cmr-loc-content-inner">
+                    <div class="cmr-loc-map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255282.3235282208!2d103.70416551604928!3d1.313996123018251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da11238a8b9375%3A0x887869cf52abf5c4!2sSingapore!5e0!3m2!1sen!2sin!4v1718880000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
                     <div class="cmr-loc-details">
                         <h4>Address</h4>
                         <div class="cmr-loc-address-block">
@@ -326,9 +339,6 @@ function cmr_location_accordion_shortcode($atts) {
                             <a href="mailto:info@cmrindia.com" class="email">info@cmrindia.com</a>
                             <a href="tel:+911244822222" class="phone">+91-124-4822222</a>
                         </div>
-                    </div>
-                    <div class="cmr-loc-map">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255282.3235282208!2d103.70416551604928!3d1.313996123018251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da11238a8b9375%3A0x887869cf52abf5c4!2sSingapore!5e0!3m2!1sen!2sin!4v1718880000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
             </div>
