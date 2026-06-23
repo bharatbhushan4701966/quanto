@@ -15,7 +15,7 @@ function cmr_custom_smtp_mailer( $phpmailer ) {
     $phpmailer->SMTPAuth   = true;
     $phpmailer->Port       = 587; 
     $phpmailer->Username   = 'beastbad270@gmail.com'; // Your Gmail
-    $phpmailer->Password   = 'YOUR_16_DIGIT_APP_PASSWORD'; // Paste the 16-digit app password here
+    $phpmailer->Password   = 'fcyvrhnvohoobkgw'; // Paste the 16-digit app password here
     $phpmailer->SMTPSecure = 'tls'; 
     // ---------------------------------------------------------
 
