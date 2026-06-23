@@ -52,6 +52,7 @@ function cmr_job_application_form_shortcode($atts) {
             font-weight: 600;
             margin-bottom: 15px;
             color: #111;
+            letter-spacing: 0px;
         }
 
         /* Drag and Drop Zone */
@@ -269,13 +270,18 @@ function cmr_job_application_form_shortcode($atts) {
             border: none;
         }
 
+        .cmr-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
         .cmr-btn-outline {
             background: transparent;
             border: 1px solid #111;
             color: #111;
         }
 
-        .cmr-btn-outline:hover {
+        .cmr-btn-outline:hover:not(:disabled) {
             background: #f5f5f5;
         }
 
@@ -284,8 +290,30 @@ function cmr_job_application_form_shortcode($atts) {
             color: #fff;
         }
 
-        .cmr-btn-primary:hover {
+        .cmr-btn-primary:hover:not(:disabled) {
             background: #5536a0;
+        }
+
+        /* Messages */
+        .cmr-form-message {
+            display: none;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        .cmr-form-success {
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .cmr-form-error {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
         }
 
         @media (max-width: 768px) {
@@ -304,14 +332,17 @@ function cmr_job_application_form_shortcode($atts) {
             <p>Please upload your latest resume and provide your professional details below to help us understand your background. Once submitted, our team will review your profile and get back to you shortly.</p>
         </div>
 
-        <form class="cmr-job-application-form" id="cmrJobForm">
+        <form class="cmr-job-application-form" id="cmrJobForm" enctype="multipart/form-data">
             
+            <input type="hidden" name="action" value="cmr_submit_application">
+            <input type="hidden" name="job_title" value="<?php echo esc_attr($job_title); ?>">
+
             <!-- Upload Resume Section -->
             <div class="cmr-job-form-section">
                 <h3>Upload Resume *</h3>
                 
                 <div class="cmr-upload-zone" id="cmrUploadZone">
-                    <input type="file" id="cmrResumeFile" accept=".pdf,.doc,.docx" required>
+                    <input type="file" id="cmrResumeFile" name="resume" accept=".pdf,.doc,.docx" required>
                     <div class="cmr-upload-icon">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -365,17 +396,17 @@ function cmr_job_application_form_shortcode($atts) {
                 <h3>Basic Information *</h3>
                 <div class="cmr-form-grid">
                     <div class="cmr-input-group">
-                        <input type="text" class="cmr-input" placeholder="Full Name" required>
+                        <input type="text" name="full_name" class="cmr-input" placeholder="Full Name" required>
                     </div>
                     <div class="cmr-input-group">
-                        <input type="text" class="cmr-input" placeholder="Current Location" required>
+                        <input type="text" name="location" class="cmr-input" placeholder="Current Location" required>
                     </div>
                     <div class="cmr-input-group cmr-form-col-full">
-                        <input type="email" class="cmr-input" placeholder="Enter your e-mail address" required>
+                        <input type="email" name="email" class="cmr-input" placeholder="Enter your e-mail address" required>
                     </div>
                     <div class="cmr-phone-group cmr-form-col-full">
                         <div class="cmr-phone-prefix">+91</div>
-                        <input type="tel" class="cmr-input cmr-phone-input" placeholder="9876543210" required>
+                        <input type="tel" name="phone" class="cmr-input cmr-phone-input" placeholder="9876543210" required>
                     </div>
                 </div>
             </div>
@@ -385,10 +416,10 @@ function cmr_job_application_form_shortcode($atts) {
                 <h3>Quick Details *</h3>
                 <div class="cmr-form-grid">
                     <div class="cmr-input-group">
-                        <input type="text" class="cmr-input" placeholder="Total Experience (in yrs)" required>
+                        <input type="text" name="experience" class="cmr-input" placeholder="Total Experience (in yrs)" required>
                     </div>
                     <div class="cmr-input-group">
-                        <input type="text" class="cmr-input" placeholder="Expected Salary" required>
+                        <input type="text" name="salary" class="cmr-input" placeholder="Expected Salary" required>
                     </div>
                 </div>
             </div>
@@ -397,17 +428,23 @@ function cmr_job_application_form_shortcode($atts) {
             <div class="cmr-job-form-section">
                 <h3>Optional</h3>
                 <div class="cmr-input-group">
-                    <input type="url" class="cmr-input" placeholder="Portfolio Link">
+                    <input type="url" name="portfolio" class="cmr-input" placeholder="Portfolio Link">
                 </div>
             </div>
 
+            <div id="cmrFormError" class="cmr-form-message cmr-form-error"></div>
+            
             <!-- Actions -->
             <div class="cmr-form-actions">
-                <button type="button" class="cmr-btn cmr-btn-outline" onclick="document.getElementById('cmrJobForm').reset(); document.getElementById('cmrFileDelete').click();">Cancel</button>
-                <button type="submit" class="cmr-btn cmr-btn-primary">Submit Application</button>
+                <button type="button" id="cmrCancelBtn" class="cmr-btn cmr-btn-outline" onclick="document.getElementById('cmrJobForm').reset(); document.getElementById('cmrFileDelete').click(); document.getElementById('cmrFormError').style.display='none';">Cancel</button>
+                <button type="submit" id="cmrSubmitBtn" class="cmr-btn cmr-btn-primary">Submit Application</button>
             </div>
 
         </form>
+
+        <div id="cmrFormSuccess" class="cmr-form-message cmr-form-success">
+            <strong>Application Submitted!</strong><br>Thank you for applying. We have received your resume and our team will get back to you shortly.
+        </div>
     </div>
 
     <script>
@@ -418,6 +455,13 @@ function cmr_job_application_form_shortcode($atts) {
             const fileNameDisplay = document.getElementById('cmrFileName');
             const fileSizeDisplay = document.getElementById('cmrFileSize');
             const fileDeleteBtn = document.getElementById('cmrFileDelete');
+            const form = document.getElementById('cmrJobForm');
+            const submitBtn = document.getElementById('cmrSubmitBtn');
+            const cancelBtn = document.getElementById('cmrCancelBtn');
+            const successMsg = document.getElementById('cmrFormSuccess');
+            const errorMsg = document.getElementById('cmrFormError');
+
+            const ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
 
             // Handle Drag and Drop Visuals
             ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -453,6 +497,13 @@ function cmr_job_application_form_shortcode($atts) {
                 if (files.length > 0) {
                     const file = files[0];
                     
+                    // Simple Validation
+                    if (file.size > 5 * 1024 * 1024) {
+                        alert("File exceeds 5MB limit. Please choose a smaller file.");
+                        fileInput.value = '';
+                        return;
+                    }
+
                     // Show Preview, hide Dropzone
                     dropZone.style.display = 'none';
                     filePreview.style.display = 'flex';
@@ -470,11 +521,42 @@ function cmr_job_application_form_shortcode($atts) {
                 dropZone.style.display = 'block';
             });
 
-            // Form Submit (Prevent default for UI demo)
-            const form = document.getElementById('cmrJobForm');
+            // Form Submit via AJAX
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
-                alert('Form UI submitted successfully! (Backend hook required)');
+                
+                errorMsg.style.display = 'none';
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Submitting...';
+                cancelBtn.disabled = true;
+
+                const formData = new FormData(form);
+
+                fetch(ajaxurl, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        form.style.display = 'none';
+                        successMsg.style.display = 'block';
+                    } else {
+                        errorMsg.textContent = data.data.message || 'An error occurred. Please try again.';
+                        errorMsg.style.display = 'block';
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Submit Application';
+                        cancelBtn.disabled = false;
+                    }
+                })
+                .catch(error => {
+                    errorMsg.textContent = 'A network error occurred. Please try again later.';
+                    errorMsg.style.display = 'block';
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Submit Application';
+                    cancelBtn.disabled = false;
+                    console.error('Error:', error);
+                });
             });
         });
     </script>
