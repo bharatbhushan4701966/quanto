@@ -91,7 +91,7 @@ function cmr_foundation_scroll_shortcode($atts) {
             transform: translateY(40px);
             transition: opacity 1.5s ease, transform 1.5s ease;
             pointer-events: none;
-            padding-left: 60px;
+            padding-left: 100px;
         }
 
         .cmr-foundation-block:first-child {
@@ -150,7 +150,7 @@ function cmr_foundation_scroll_shortcode($atts) {
                     
                     <div class="cmr-foundation-right">
                         <div class="cmr-foundation-block show" data-index="0">
-                            <h3 class="cmr-foundation-block-title">Driving Confident Decisions</h3>
+                            <h3 class="cmr-foundation-block-title">Driving Confident<br>Decisions</h3>
                             <p class="cmr-foundation-block-desc">We help organizations navigate change with confidence. By delivering data-driven intelligence and meaningful engagement, we enable leaders to identify opportunity, manage risk and make informed strategic decisions that drive sustainable growth.</p>
                         </div>
                         
