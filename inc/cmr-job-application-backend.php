@@ -140,7 +140,13 @@ function cmr_handle_job_application_submit() {
     }
     $body .= "<br><p>The applicant's resume is attached to this email.</p>";
 
-    $headers = array('Content-Type: text/html; charset=UTF-8');
+    $site_domain = parse_url(home_url(), PHP_URL_HOST);
+    $sender_email = 'no-reply@' . $site_domain;
+    
+    $headers = array(
+        'Content-Type: text/html; charset=UTF-8',
+        'From: Quanto Job Application <' . $sender_email . '>'
+    );
     $attachments = array($file_path);
 
     $mail_sent = wp_mail($to, $subject, $body, $headers, $attachments);
