@@ -7,17 +7,18 @@ function cmr_custom_smtp_mailer( $phpmailer ) {
     $phpmailer->isSMTP();
     
     // ---------------------------------------------------------
-    // CHANGE YOUR HOST CREDENTIALS HERE
+    // USE GMAIL AS YOUR FREE MAIL SERVER
+    // 1. Go to Google Account -> Security -> App Passwords
+    // 2. Generate a 16-digit password and paste it below
     // ---------------------------------------------------------
-    $phpmailer->Host       = 'smtp.example.com'; // e.g., smtp.gmail.com or smtp.office365.com
+    $phpmailer->Host       = 'smtp.gmail.com'; 
     $phpmailer->SMTPAuth   = true;
-    $phpmailer->Port       = 587; // Usually 587 (TLS) or 465 (SSL)
-    $phpmailer->Username   = 'your-email@example.com';
-    $phpmailer->Password   = 'your-email-password';
-    $phpmailer->SMTPSecure = 'tls'; // 'tls' or 'ssl'
+    $phpmailer->Port       = 587; 
+    $phpmailer->Username   = 'beastbad270@gmail.com'; // Your Gmail
+    $phpmailer->Password   = 'YOUR_16_DIGIT_APP_PASSWORD'; // Paste the 16-digit app password here
+    $phpmailer->SMTPSecure = 'tls'; 
     // ---------------------------------------------------------
 
-    // Optional: Force the "From" address to match your authenticated SMTP Username
-    $phpmailer->From       = 'your-email@example.com';
-    $phpmailer->FromName   = 'Quanto Website';
+    $phpmailer->From       = 'beastbad270@gmail.com';
+    $phpmailer->FromName   = 'Quanto Careers';
 }
