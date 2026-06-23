@@ -413,21 +413,6 @@
             $footer_id = quanto_get_resolved_footer_id();
             if ( $footer_id ) {
                 quanto_enqueue_elementor_post_assets( $footer_id );
-                
-                add_action('wp_head', function() use ($footer_id) {
-                    if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
-                        $css_file = new \Elementor\Core\Files\CSS\Post( $footer_id );
-                        $css = $css_file->get_content();
-                        if ($css) {
-                            echo "<style id='forced-footer-css-head'>\n" . $css . "\n</style>\n";
-                        } else {
-                            $path = $css_file->get_path();
-                            if (file_exists($path)) {
-                                echo "<style id='forced-footer-css-head-fallback'>\n" . file_get_contents($path) . "\n</style>\n";
-                            }
-                        }
-                    }
-                }, 999);
             }
 
             // Also enqueue homepage CSS early on single posts, pages and products 
@@ -438,21 +423,6 @@
                     $homepage_id = 14;
                 }
                 quanto_enqueue_elementor_post_assets( $homepage_id );
-                
-                add_action('wp_head', function() use ($homepage_id) {
-                    if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
-                        $css_file = new \Elementor\Core\Files\CSS\Post( $homepage_id );
-                        $css = $css_file->get_content();
-                        if ($css) {
-                            echo "<style id='forced-homepage-css-head'>\n" . $css . "\n</style>\n";
-                        } else {
-                            $path = $css_file->get_path();
-                            if (file_exists($path)) {
-                                echo "<style id='forced-homepage-css-head-fallback'>\n" . file_get_contents($path) . "\n</style>\n";
-                            }
-                        }
-                    }
-                }, 999);
 
                 // Enqueue Similar Reports page assets early
                 $target_page = get_page_by_path( 'similar-reports-by-industry' );
@@ -502,7 +472,6 @@
             // We rely on Redux settings and page metadata first, 
             // then fall back to 'main-footer' via slug if not set.
 
-
             if ( class_exists( 'ReduxFramework' ) && did_action( 'elementor/loaded' ) && class_exists( '\\Elementor\\Plugin' ) ) {
 
                 if ( is_page() || is_page_template( 'template-builder.php' ) ) {
@@ -535,6 +504,7 @@
                             $quanto_local_footer = get_post( $footer_local );
                             if ( $quanto_local_footer ) {
                                 quanto_render_elementor_footer( $quanto_local_footer->ID );
+                                return;
                             }
                         } else {
                             $trigger = quanto_opt( 'quanto_footer_builder_trigger' );
@@ -542,15 +512,19 @@
                                 $global = get_post( quanto_opt( 'quanto_footer_builder_select' ) );
                                 if ( $global ) {
                                     quanto_render_elementor_footer( $global->ID );
+                                    return;
                                 } else {
                                     quanto_footer_global_option();
+                                    return;
                                 }
                             } else {
                                 quanto_footer_global_option();
+                                return;
                             }
                         }
                     } else {
                         quanto_footer_global_option();
+                        return;
                     }
 
                 } elseif ( is_archive() || is_home() || is_search() || is_singular() ) {
@@ -561,8 +535,10 @@
                         $footer_post = get_post( $archive_footer_id );
                         if ( $footer_post ) {
                             quanto_render_elementor_footer( $footer_post->ID );
+                            return;
                         } else {
                             quanto_footer_global_option();
+                            return;
                         }
                     } else {
                         $trigger = quanto_opt( 'quanto_footer_builder_trigger' );
@@ -570,11 +546,14 @@
                             $global = get_post( quanto_opt( 'quanto_footer_builder_select' ) );
                             if ( $global ) {
                                 quanto_render_elementor_footer( $global->ID );
+                                return;
                             } else {
                                 quanto_footer_global_option();
+                                return;
                             }
                         } else {
                             quanto_footer_global_option();
+                            return;
                         }
                     }
 
@@ -585,17 +564,21 @@
                         $global = get_post( quanto_opt( 'quanto_footer_builder_select' ) );
                         if ( $global ) {
                             quanto_render_elementor_footer( $global->ID );
+                            return;
                         } else {
                             quanto_footer_global_option();
+                            return;
                         }
                     } else {
                         quanto_footer_global_option();
+                        return;
                     }
                 }
 
             } else {
                 // Elementor or Redux not active – use prebuilt footer
                 quanto_footer_global_option();
+                return;
             }
 
             // Fallback: if we didn't render anything above, try 'main-footer' slug
@@ -603,6 +586,7 @@
                 $footer_id = quanto_find_footer_post_by_slug();
                 if ( $footer_id ) {
                     quanto_render_elementor_footer( $footer_id );
+                    return;
                 }
             }
 
