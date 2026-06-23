@@ -243,6 +243,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-foundation-scroll.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-location-accordion.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-job-application-form.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-job-application-backend.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-smtp-config.php';
 
 require_once QUANTO_DIR_PATH_INC . 'cmr-quarterly-results.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-investor-banner.php';
