@@ -541,6 +541,9 @@ function cmr_job_application_form_shortcode($atts) {
                     if (data.success) {
                         form.style.display = 'none';
                         successMsg.style.display = 'block';
+                        
+                        // Scroll to the success message so the user doesn't end up at the footer
+                        successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     } else {
                         errorMsg.textContent = data.data.message || 'An error occurred. Please try again.';
                         errorMsg.style.display = 'block';
