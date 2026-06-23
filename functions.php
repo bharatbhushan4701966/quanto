@@ -241,6 +241,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-mega-menu-newsroom.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-mega-menu-connect.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-foundation-scroll.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-location-accordion.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-job-application-form.php';
 
 require_once QUANTO_DIR_PATH_INC . 'cmr-quarterly-results.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-investor-banner.php';
