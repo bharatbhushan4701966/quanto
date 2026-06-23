@@ -342,7 +342,7 @@ function cmr_job_application_form_shortcode($atts) {
                 <h3>Upload Resume *</h3>
                 
                 <div class="cmr-upload-zone" id="cmrUploadZone">
-                    <input type="file" id="cmrResumeFile" name="resume" accept=".pdf,.doc,.docx" required>
+                    <input type="file" id="cmrResumeFile" name="resume" accept=".pdf,.doc,.docx,.jpg,.jpeg" required>
                     <div class="cmr-upload-icon">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -351,7 +351,7 @@ function cmr_job_application_form_shortcode($atts) {
                         </svg>
                     </div>
                     <div class="cmr-upload-text">Drag & drop your resume here</div>
-                    <div class="cmr-upload-subtext">PDF, DOC (Max 5MB)</div>
+                    <div class="cmr-upload-subtext">PDF, DOC, JPG (Max 5MB)</div>
                     <div class="cmr-upload-browse">Browse files</div>
                 </div>
 

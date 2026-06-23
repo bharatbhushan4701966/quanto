@@ -71,9 +71,9 @@ function cmr_handle_job_application_submit() {
         $uploadedfile = $_FILES['resume'];
         
         // Allowed file types
-        $supported_types = array('application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        $supported_types = array('application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg');
         if (!in_array($uploadedfile['type'], $supported_types)) {
-            wp_send_json_error(array('message' => 'Invalid file type. Only PDF and DOC/DOCX are allowed.'));
+            wp_send_json_error(array('message' => 'Invalid file type. Only PDF, DOC/DOCX, and JPG are allowed.'));
             wp_die();
         }
 
