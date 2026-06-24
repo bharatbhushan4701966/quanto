@@ -711,6 +711,201 @@ add_action('wp_head', function() {
             color: #6A35FF !important;
         }
     </style>
+transform: translate(3px, -3px);
+        }
+
+        @media (max-width: 992px) {
+            .cmr-market-updates-section {
+                flex-direction: column;
+                gap: 40px;
+            }
+        }
+    </style>
+
+    <div id="cmr-market-updates" class="cmr-market-updates-section">
+        <div class="cmr-mu-left">
+            <h2 class="cmr-mu-title">Market Updates</h2>
+            <p class="cmr-mu-desc">Need real-time market updates for your business?</p>
+            <div class="elementor-element elementor-element-c4dcb9f download-btn animejs-disable elementor-widget elementor-widget-button" data-id="c4dcb9f" data-element_type="widget" data-e-type="widget" data-settings="{&quot;mas-animation&quot;:&quot;none&quot;}" data-widget_type="button.default" style="align-self: flex-start; width: 53%;">
+                <a class="elementor-button elementor-button-link elementor-size-sm insights-cta-button secondary" href="#" style="justify-content: center; width: 100%; background-color: transparent !important; border: 1px solid #111 !important; display: flex; align-items: center; border-radius: 40px; padding: 12px 24px;">
+                    <span class="elementor-button-content-wrapper" style="width: 100%; display: flex; align-items: center; justify-content: center;">
+                        <span class="elementor-button-text" style="margin-right: 6px; font-size: 14px; font-weight: 600 !important; color: #111 !important; line-height: 1; white-space: nowrap;">Talk to Analyst</span>
+                        <span class="elementor-button-icon" style="display: flex; align-items: center;">
+                            <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg" alt="Icon" width="16" height="14" style="object-fit: contain;">
+                        </span>
+                    </span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="cmr-mu-right">
+            <?php
+            $mu_args = array(
+                'post_type' => 'post',
+                'posts_per_page' => 4,
+                'category_name' => 'market-updates', // Default category
+            );
+            
+            // Allow category filtering if the user adds category="slug" to the shortcode
+            if ( isset($atts['category']) && !empty($atts['category']) ) {
+                $mu_args['category_name'] = $atts['category'];
+            }
+            
+            $mu_posts = get_posts($mu_args);
+            
+            if (!empty($mu_posts)) :
+                foreach ($mu_posts as $post_obj) :
+                    $date = get_the_time('M d | h:i A', $post_obj);
+                    $categories = get_the_category($post_obj->ID);
+                    $cat_name = '';
+                    $cat_class = 'policy'; // Consistent default color class
+                    if ( ! empty( $categories ) ) {
+                        $cat_name = esc_html( $categories[0]->name );
+                        // We removed random color classes so the same category always looks consistent.
+                    }
+            ?>
+            <a href="<?php echo esc_url(get_permalink($post_obj->ID)); ?>" class="cmr-mu-item">
+                <div class="cmr-mu-item-content">
+                    <div class="cmr-mu-meta">
+                        <span class="cmr-mu-date"><?php echo $date; ?></span>
+                        <?php if ( $cat_name ) : ?>
+                            <span class="cmr-mu-category <?php echo $cat_class; ?>"><?php echo $cat_name; ?></span>
+                        <?php endif; ?>
+                    </div>
+                    <h3 class="cmr-mu-item-title"><?php echo get_the_title($post_obj); ?></h3>
+                </div>
+                <div class="cmr-mu-arrow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
+            </a>
+            <?php 
+                endforeach; 
+            else : 
+                echo '<p>No updates found.</p>';
+            endif; 
+            ?>
+        </div>
+    </div>
+    <?php return ob_get_clean();
+}
+
+// Apply Instrument Sans globally
+add_action('wp_head', 'cmr_global_font_style', 999);
+function cmr_global_font_style() {
+    echo '<style>
+        body, p, h1, h2, h3, h4, h5, h6, a, button, input, select, textarea, .elementor-button, .elementor-button-text {
+            font-family: "Instrument Sans", sans-serif !important;
+        }
+    </style>';
+}
+
+
+
+// Temporary endpoint to migrate Press Releases to CMR News
+add_action( 'rest_api_init', function () {
+    register_rest_route( 'cmr/v1', '/migrate-pr', array(
+        'methods'             => 'GET',
+        'callback'            => 'cmr_migrate_press_releases_callback',
+        'permission_callback' => '__return_true',
+    ) );
+} );
+
+function cmr_migrate_press_releases_callback() {
+    $args = array(
+        'post_type' => 'post',
+        'category_name' => 'pressreleases', // The correct slug for Press Releases
+        'posts_per_page' => -1,
+    );
+    $query = new WP_Query($args);
+    
+    $migrated = 0;
+    $log = array();
+    
+    if ($query->have_posts()) {
+        // Ensure Media Release category exists in cmr_news_category
+        $term = term_exists('Media Release', 'cmr_news_category');
+        if (!$term) {
+            $term = wp_insert_term('Media Release', 'cmr_news_category');
+        }
+        $term_id = is_array($term) ? $term['term_id'] : $term;
+        
+        while ($query->have_posts()) {
+            $query->the_post();
+            $post_id = get_the_ID();
+            $title = get_the_title();
+            
+            // Check if it's already migrated
+            $existing = get_posts(array(
+                'post_type' => 'cmr_news',
+                'title' => $title,
+                'posts_per_page' => 1,
+            ));
+            
+            if (!empty($existing)) {
+                $log[] = "Skipped (Already migrated): " . $title;
+                continue;
+            }
+            
+            // Duplicate the post
+            $new_post = array(
+                'post_title' => $title,
+                'post_content' => get_post_field('post_content', $post_id),
+                'post_excerpt' => get_post_field('post_excerpt', $post_id),
+                'post_status' => 'publish',
+                'post_type' => 'cmr_news',
+                'post_date' => get_post_field('post_date', $post_id),
+                'post_author' => get_post_field('post_author', $post_id),
+            );
+            
+            $new_post_id = wp_insert_post($new_post);
+            
+            if (!is_wp_error($new_post_id)) {
+                // Assign taxonomy term
+                wp_set_object_terms($new_post_id, (int)$term_id, 'cmr_news_category');
+                
+                // Copy featured image
+                $thumb_id = get_post_thumbnail_id($post_id);
+                if ($thumb_id) {
+                    set_post_thumbnail($new_post_id, $thumb_id);
+                }
+                
+                $migrated++;
+                $log[] = "Migrated successfully: " . $title;
+            } else {
+                $log[] = "Error migrating: " . $title . " - " . $new_post_id->get_error_message();
+            }
+        }
+                }
+    
+    return new WP_REST_Response(array(
+        'success' => true,
+        'migrated_count' => $migrated,
+        'log' => $log
+    ), 200);
+}
+
+// Global Custom CSS for Menus
+add_action('wp_head', function() {
+    ?>
+    <style>
+        /* Make all top-level menu items purple on hover */
+        .elementor-nav-menu--main .elementor-item:hover,
+        .elementor-nav-menu--main .elementor-item.elementor-item-active,
+        .elementor-nav-menu--main .elementor-item:focus,
+        .menu-item > a:hover {
+            color: #6A35FF !important;
+        }
+
+        /* Keep the text purple when the user is hovering inside the mega menu card itself */
+        .cmr-has-mega-menu:hover > a,
+        .cmr-has-mega-menu-do:hover > a,
+        .cmr-has-mega-menu-serve:hover > a,
+        .cmr-has-mega-menu-think:hover > a,
+        .cmr-has-mega-menu-newsroom:hover > a,
+        .cmr-has-mega-menu-connect:hover > a {
+            color: #6A35FF !important;
+        }
+    </style>
     <?php
 });
 
@@ -871,14 +1066,3 @@ add_action('wp_footer', function() {
     </style>
     <?php
 });
-
-// Apply Instrument Sans globally
-add_action('wp_head', 'cmr_global_font_style', 999);
-function cmr_global_font_style() {
-    echo '<style>
-        body, p, h1, h2, h3, h4, h5, h6, a, button, input, select, textarea, .elementor-button, .elementor-button-text {
-            font-family: "Instrument Sans", sans-serif !important;
-        }
-    </style>';
-}
-
