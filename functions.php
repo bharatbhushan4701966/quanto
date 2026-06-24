@@ -920,21 +920,6 @@ add_action('wp_head', function() {
         max-width: 350px !important;
         width: 100% !important;
     }
-    /* Reduce horizontal gap between the 2 columns */
-    @media (min-width: 768px) {
-        html body .col-md-6:nth-child(odd):has(.quanto-team-box) .quanto-team-box,
-        html body .col-xl-3:nth-child(odd):has(.quanto-team-box) .quanto-team-box,
-        html body .elementor-column:nth-child(odd):has(.quanto-team-box) .quanto-team-box {
-            margin-left: auto !important;
-            margin-right: 20px !important;
-        }
-        html body .col-md-6:nth-child(even):has(.quanto-team-box) .quanto-team-box,
-        html body .col-xl-3:nth-child(even):has(.quanto-team-box) .quanto-team-box,
-        html body .elementor-column:nth-child(even):has(.quanto-team-box) .quanto-team-box {
-            margin-left: 20px !important;
-            margin-right: auto !important;
-        }
-    }
     html body .quanto-team-box .team-thumb {
         position: relative !important;
         width: 100% !important;
