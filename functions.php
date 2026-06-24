@@ -714,3 +714,91 @@ add_action('wp_head', function() {
     <?php
 });
 
+// Global Custom CSS for Team Box
+add_action('wp_head', function() {
+    ?>
+    <style id="quanto-team-custom-css">
+    /* Custom Styles for Quanto Team Box (Elementor Widget) */
+    html body .quanto-team-box {
+        margin: 0 auto 30px auto !important;
+        display: block !important;
+        max-width: 350px !important;
+        width: 100% !important;
+    }
+    html body .quanto-team-box .team-thumb {
+        position: relative !important;
+        width: 100% !important;
+        max-width: 350px !important;
+        margin: 0 auto !important;
+        aspect-ratio: 3 / 4 !important;
+        overflow: hidden !important;
+    }
+    html body .quanto-team-box .team-thumb img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        display: block !important;
+    }
+    html body .quanto-team-box .team-thumb::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+        z-index: 1;
+    }
+    html body .quanto-team-box:hover .team-thumb::after {
+        opacity: 1;
+    }
+    html body .quanto-team-box .team-thumb::before {
+        content: '';
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        width: 40px;
+        height: 40px;
+        background-color: #fff;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='7' y1='17' x2='17' y2='7'%3E%3C/line%3E%3Cpolyline points='7 7 17 7 17 17'%3E%3C/polyline%3E%3C/svg%3E");
+        background-size: 20px;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 50%;
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 2;
+        pointer-events: none;
+    }
+    html body .quanto-team-box:hover .team-thumb::before {
+        opacity: 1;
+        transform: translate(5px, -5px);
+    }
+    html body .quanto-team-box .team-content {
+        margin-top: 20px !important;
+        text-align: left !important;
+    }
+    html body .quanto-team-box .team-member-name,
+    html body .quanto-team-box .team-member-name a {
+        font-family: 'Instrument Sans', sans-serif !important;
+        font-size: 32px !important;
+        font-weight: 700 !important;
+        color: #111 !important;
+        margin: 0 0 5px 0 !important;
+        line-height: 1.1 !important;
+        letter-spacing: -0.5px !important;
+        text-decoration: none !important;
+    }
+    html body .quanto-team-box .team-member-position {
+        font-size: 16px !important;
+        color: #666 !important;
+        display: block !important;
+    }
+    /* Ensure social icons stay above the dark overlay if they exist */
+    html body .quanto-team-box .team-thumb .custom-ul {
+        position: relative !important;
+        z-index: 3 !important;
+    }
+    </style>
+    <?php
+});
