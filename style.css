@@ -1133,3 +1133,23 @@ html body .quanto-link-btn {
     position: relative;
     z-index: 3;
 }
+
+/* Force 2 columns instead of 4 for the team grid */
+@media (min-width: 992px) {
+    .col-xl-3:has(.quanto-team-box) {
+        flex: 0 0 auto !important;
+        width: 50% !important;
+    }
+}
+@media (max-width: 991px) and (min-width: 768px) {
+    .col-md-6:has(.quanto-team-box) {
+        flex: 0 0 auto !important;
+        width: 50% !important;
+    }
+}
+@media (max-width: 767px) {
+    .col-sm-12:has(.quanto-team-box) {
+        flex: 0 0 auto !important;
+        width: 100% !important;
+    }
+}
