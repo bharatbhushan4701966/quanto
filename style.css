@@ -849,6 +849,201 @@ html body .quanto-link-btn {
     --flex-wrap-mobile: wrap;
     --gap: 0px 0px;
     --row-gap: 0px;
+.quanto-similar-reports-section .e-con > .e-con-inner > .e-con:nth-child(2) .elementor-heading-title,
+.quanto-similar-reports-section .e-con > .e-con-inner > .e-con:nth-child(2) .e-heading-base {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    font-family: 'Instrument Sans', sans-serif !important;
+    color: #000000 !important;
+    letter-spacing: 0px !important;
+    margin-top: -30px !important;
+}
+
+.quanto-similar-reports-section .elementor-widget-button .elementor-button {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    background-color: #6241CA !important;
+    color: #ffffff !important;
+    border-radius: 40px !important;
+}
+
+
+/* Global override for quanto link button */
+html body .quanto-link-btn {
+    font-weight: 600;
+    font-size: 14px !important;
+    line-height: 144.444%;
+    letter-spacing: -0.18px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--color-primary);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.5s ease;
+    width: max-content;
+}
+
+
+
+/* Override padding for elementor section 5e656d6 */
+.elementor-14 .elementor-element.elementor-element-5e656d6 {
+    --padding-top: 40px !important;
+    --padding-bottom: 40px !important;
+}
+/* Custom Author Box */
+.cmr-custom-author-box {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 30px;
+}
+.cmr-custom-author-avatar img {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+.cmr-custom-author-info h4 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'Instrument Sans', sans-serif;
+}
+.cmr-custom-author-info p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #666;
+    font-family: 'Instrument Sans', sans-serif;
+}
+.cmr-custom-author-social a {
+    color: #000;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+.cmr-custom-author-social a:hover {
+    color: var(--color-primary);
+}
+/* Ratings Summary */
+.cmr-ratings-summary {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 30px;
+}
+.cmr-ratings-summary h2 {
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 700;
+    margin-bottom: 20px;
+    font-size: 32px;
+    color: #111;
+}
+.cmr-ratings-summary .rating-stars i {
+    color: #fbbf24; /* gold */
+}
+.cmr-ratings-summary .progress {
+    background-color: #f0f0f0;
+}
+.cmr-ratings-summary .progress-bar {
+    background-color: #22c55e; /* default green */
+}
+.comment-rating-stars i {
+    color: #fbbf24;
+    margin-right: 2px;
+}
+
+.insights-cta-banner {
+    background: #4625A9;
+    border-radius: 8px;
+    padding: 40px 50px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.insights-cta-content {
+    flex-grow: 1;
+}
+.insights-cta-title {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+}
+.insights-cta-text {
+    font-family: 'Instrument Sans', sans-serif;
+    color: #ffffff !important;
+    font-size: 18px;
+    line-height: 1.5;
+    margin: 0;
+    font-weight: 400;
+}
+.insights-cta-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 240px;
+}
+.insights-cta-button {
+    background-color: var(--color-white) !important;
+    color: #4B10B4 !important;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 8px;
+    border-radius: 43px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    text-decoration: none;
+    border: 1px solid transparent;
+}
+.insights-cta-button.primary {
+    background-color: #ffffff !important;
+    color: #111 !important;
+}
+.insights-cta-button.primary:hover {
+    background-color: #f3f4f6 !important;
+    transform: translateY(-2px);
+}
+.insights-cta-button.secondary {
+    background-color: #4625A9 !important;
+    color: #ffffff !important;
+    border: 1px solid #ffffff !important;
+}
+.insights-cta-button.secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+    transform: translateY(-2px);
+}
+@media (max-width: 768px) {
+    .insights-cta-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 30px;
+    }
+    .insights-cta-actions {
+        width: 100%;
+        min-width: 100%;
+    }
+}
+
+/* Elementor Overrides */
+.elementor-9397 .elementor-element.elementor-element-5ff086a {
+    --display: flex;
+    --flex-direction: row;
+    --container-widget-width: initial;
+    --container-widget-height: 100%;
+    --container-widget-flex-grow: 1;
+    --container-widget-align-self: stretch;
+    --flex-wrap-mobile: wrap;
+    --gap: 0px 0px;
+    --row-gap: 0px;
     --column-gap: 0px;
     --margin-top: -30px;
     /* --margin-bottom: 20px; */
@@ -858,4 +1053,83 @@ html body .quanto-link-btn {
     --padding-bottom: 0px;
     --padding-left: 0px;
     --padding-right: 0px;
+}
+
+/* Custom Styles for Quanto Team Box (Elementor Widget) */
+.quanto-team-box {
+    margin-bottom: 30px;
+    display: block;
+}
+.quanto-team-box .team-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    margin: 0;
+}
+.quanto-team-box .team-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.quanto-team-box .team-thumb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+.quanto-team-box:hover .team-thumb::after {
+    opacity: 1;
+}
+.quanto-team-box .team-thumb::before {
+    content: '';
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='7' y1='17' x2='17' y2='7'%3E%3C/line%3E%3Cpolyline points='7 7 17 7 17 17'%3E%3C/polyline%3E%3C/svg%3E");
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 2;
+    pointer-events: none;
+}
+.quanto-team-box:hover .team-thumb::before {
+    opacity: 1;
+    transform: translate(5px, -5px);
+}
+.quanto-team-box .team-content {
+    margin-top: 20px;
+    text-align: left;
+}
+.quanto-team-box .team-member-name,
+.quanto-team-box .team-member-name a {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 32px;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 5px 0;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    text-decoration: none;
+}
+.quanto-team-box .team-member-position {
+    font-size: 16px;
+    color: #666;
+    display: block;
+}
+/* Ensure social icons stay above the dark overlay if they exist */
+.quanto-team-box .team-thumb .custom-ul {
+    position: relative;
+    z-index: 3;
 }
