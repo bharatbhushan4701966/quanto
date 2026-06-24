@@ -794,214 +794,22 @@ add_action('wp_head', function() {
         color: #666 !important;
         display: block !important;
     }
-            font-family: "Instrument Sans", sans-serif !important;
-        }
-    </style>';
-}
-
-
-
-// Temporary endpoint to migrate Press Releases to CMR News
-add_action( 'rest_api_init', function () {
-    register_rest_route( 'cmr/v1', '/migrate-pr', array(
-        'methods'             => 'GET',
-        'callback'            => 'cmr_migrate_press_releases_callback',
-        'permission_callback' => '__return_true',
-    ) );
-} );
-
-function cmr_migrate_press_releases_callback() {
-    $args = array(
-        'post_type' => 'post',
-        'category_name' => 'pressreleases', // The correct slug for Press Releases
-        'posts_per_page' => -1,
-    );
-    $query = new WP_Query($args);
-    
-    $migrated = 0;
-    $log = array();
-    
-    if ($query->have_posts()) {
-        // Ensure Media Release category exists in cmr_news_category
-        $term = term_exists('Media Release', 'cmr_news_category');
-        if (!$term) {
-            $term = wp_insert_term('Media Release', 'cmr_news_category');
-        }
-        $term_id = is_array($term) ? $term['term_id'] : $term;
-        
-        while ($query->have_posts()) {
-            $query->the_post();
-            $post_id = get_the_ID();
-            $title = get_the_title();
-            
-            // Check if it's already migrated
-            $existing = get_posts(array(
-                'post_type' => 'cmr_news',
-                'title' => $title,
-                'posts_per_page' => 1,
-            ));
-            
-            if (!empty($existing)) {
-                $log[] = "Skipped (Already migrated): " . $title;
-                continue;
-            }
-            
-            // Duplicate the post
-            $new_post = array(
-                'post_title' => $title,
-                'post_content' => get_post_field('post_content', $post_id),
-                'post_excerpt' => get_post_field('post_excerpt', $post_id),
-                'post_status' => 'publish',
-                'post_type' => 'cmr_news',
-                'post_date' => get_post_field('post_date', $post_id),
-                'post_author' => get_post_field('post_author', $post_id),
-            );
-            
-            $new_post_id = wp_insert_post($new_post);
-            
-            if (!is_wp_error($new_post_id)) {
-                // Assign taxonomy term
-                wp_set_object_terms($new_post_id, (int)$term_id, 'cmr_news_category');
-                
-                // Copy featured image
-                $thumb_id = get_post_thumbnail_id($post_id);
-                if ($thumb_id) {
-                    set_post_thumbnail($new_post_id, $thumb_id);
-                }
-                
-                $migrated++;
-                $log[] = "Migrated successfully: " . $title;
-            } else {
-                $log[] = "Error migrating: " . $title . " - " . $new_post_id->get_error_message();
-            }
-        }
-                }
-    
-    return new WP_REST_Response(array(
-        'success' => true,
-        'migrated_count' => $migrated,
-        'log' => $log
-    ), 200);
-}
-
-// Global Custom CSS for Menus
-add_action('wp_head', function() {
-    ?>
-    <style>
-        /* Make all top-level menu items purple on hover */
-        .elementor-nav-menu--main .elementor-item:hover,
-        .elementor-nav-menu--main .elementor-item.elementor-item-active,
-        .elementor-nav-menu--main .elementor-item:focus,
-        .menu-item > a:hover {
-            color: #6A35FF !important;
-        }
-
-        /* Keep the text purple when the user is hovering inside the mega menu card itself */
-        .cmr-has-mega-menu:hover > a,
-        .cmr-has-mega-menu-do:hover > a,
-        .cmr-has-mega-menu-serve:hover > a,
-        .cmr-has-mega-menu-think:hover > a,
-        .cmr-has-mega-menu-newsroom:hover > a,
-        .cmr-has-mega-menu-connect:hover > a {
-            color: #6A35FF !important;
-        }
-
-        /* Force Transparent Header to float over main content */
-        header.header {
-            position: absolute !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            z-index: 9999 !important;
-        }
-    </style>
-    <?php
-});
-
-// Global Custom CSS for Team Box
-add_action('wp_head', function() {
-    ?>
-    <style id="quanto-team-custom-css">
-    /* Custom Styles for Quanto Team Box (Elementor Widget) */
-    html body .quanto-team-box {
-        margin: 0 auto 30px auto !important;
-        display: block !important;
-        max-width: 350px !important;
-        width: 100% !important;
-    }
-    html body .quanto-team-box .team-thumb {
-        position: relative !important;
-        width: 100% !important;
-        max-width: 350px !important;
-        margin: 0 auto !important;
-        aspect-ratio: 3 / 4 !important;
-        overflow: hidden !important;
-    }
-    html body .quanto-team-box .team-thumb img {
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
-        display: block !important;
-    }
-    html body .quanto-team-box .team-thumb::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        pointer-events: none;
-        z-index: 1;
-    }
-    html body .quanto-team-box:hover .team-thumb::after {
-        opacity: 1;
-    }
-    html body .quanto-team-box .team-thumb::before {
-        content: '';
-        position: absolute;
-        right: 20px;
-        bottom: 20px;
-        width: 40px;
-        height: 40px;
-        background-color: #fff;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='7' y1='17' x2='17' y2='7'%3E%3C/line%3E%3Cpolyline points='7 7 17 7 17 17'%3E%3C/polyline%3E%3C/svg%3E");
-        background-size: 20px;
-        background-repeat: no-repeat;
-        background-position: center;
-        border-radius: 50%;
-        opacity: 0;
-        transition: all 0.3s ease;
-        z-index: 2;
-        pointer-events: none;
-    }
-    html body .quanto-team-box:hover .team-thumb::before {
-        opacity: 1;
-        transform: translate(5px, -5px);
-    }
-    html body .quanto-team-box .team-content {
-        margin-top: 20px !important;
-        text-align: left !important;
-    }
-    html body .quanto-team-box .team-member-name,
-    html body .quanto-team-box .team-member-name a {
-        font-family: 'Instrument Sans', sans-serif !important;
-        font-size: 32px !important;
-        font-weight: 700 !important;
-        color: #111 !important;
-        margin: 0 0 5px 0 !important;
-        line-height: 1.1 !important;
-        letter-spacing: -0.5px !important;
-        text-decoration: none !important;
-    }
-    html body .quanto-team-box .team-member-position {
-        font-size: 16px !important;
-        color: #666 !important;
-        display: block !important;
-    }
     /* Ensure social icons stay above the dark overlay if they exist */
     html body .quanto-team-box .team-thumb .custom-ul {
         position: relative !important;
         z-index: 3 !important;
+    }
+
+    /* Reduce horizontal gap between the two team cards */
+    @media (min-width: 768px) {
+        html body .col-md-6:nth-child(odd) .quanto-team-box {
+            margin-right: 20px !important;
+            margin-left: auto !important;
+        }
+        html body .col-md-6:nth-child(even) .quanto-team-box {
+            margin-left: 20px !important;
+            margin-right: auto !important;
+        }
     }
     </style>
     <?php
