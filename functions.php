@@ -905,6 +905,15 @@ add_action('wp_head', function() {
         .cmr-has-mega-menu-connect:hover > a {
             color: #6A35FF !important;
         }
+
+        /* Force Transparent Header to float over main content */
+        header.header {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            z-index: 9999 !important;
+        }
     </style>
     <?php
 });
