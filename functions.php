@@ -720,10 +720,17 @@ add_action('wp_head', function() {
     <style id="quanto-team-custom-css">
     /* Custom Styles for Quanto Team Box (Elementor Widget) */
     html body .quanto-team-box {
+        position: relative !important;
         margin: 0 auto 30px auto !important;
         display: block !important;
         max-width: 350px !important;
         width: 100% !important;
+    }
+    html body .quanto-team-box .team-member-name a::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 2;
     }
     html body .quanto-team-box .team-thumb {
         position: relative !important;
