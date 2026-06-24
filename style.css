@@ -1057,8 +1057,10 @@ html body .quanto-link-btn {
 
 /* Custom Styles for Quanto Team Box (Elementor Widget) */
 .quanto-team-box {
-    margin-bottom: 30px;
+    margin: 0 auto 30px auto;
     display: block;
+    max-width: 380px; /* Limit size in 2-column layout */
+    width: 100%;
 }
 .quanto-team-box .team-thumb {
     position: relative;
