@@ -857,13 +857,18 @@ add_action('wp_footer', function() {
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        width: 32px !important;
-        height: 32px !important;
+        width: 20px !important;
+        height: 20px !important;
         color: #111 !important;
-        font-size: 18px !important;
+        font-size: 20px !important;
         text-decoration: none !important;
         transition: all 0.3s !important;
         background: transparent !important;
+    }
+    html body .quanto-team-box .team-content .custom-ul li a svg {
+        width: 20px !important;
+        height: 20px !important;
+        fill: currentColor !important;
     }
     html body .quanto-team-box .team-content .custom-ul li a:hover {
         color: #6A35FF !important;
