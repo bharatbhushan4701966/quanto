@@ -160,9 +160,9 @@
 	add_action('quanto_blog_postexcerpt_read_content','quanto_blog_postexcerpt_read_content_cb');
 
 	/**
-	* Hook for footer content (Disabled to prevent duplicate footers, as user manually added them to Elementor pages)
+	* Hook for footer content
 	*/
-	// add_action( 'quanto_footer_content', 'quanto_footer_content_cb', 10 );
+	add_action( 'quanto_footer_content', 'quanto_footer_content_cb', 10 );
 
 	/**
 	* Enqueue Elementor footer CSS early (in <head>) so styles are present when footer renders
