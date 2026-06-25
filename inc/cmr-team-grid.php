@@ -33,8 +33,6 @@ function cmr_team_grid_shortcode($atts) {
     ?>
     <style>
         .cmr-team-grid-container {
-            width: 100%;
-            max-width: 1200px;
             margin: 0 auto;
         }
         .cmr-team-grid {
