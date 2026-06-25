@@ -972,7 +972,8 @@ add_action('wp_footer', function() {
     /* Styling for the relocated social icons */
     html body .quanto-team-box .team-content .custom-ul {
         display: flex !important;
-        gap: 15px !important;
+        justify-content: flex-start !important;
+        gap: 8px !important;
         margin-top: 15px !important;
         padding: 0 !important;
         list-style: none !important;
@@ -984,9 +985,9 @@ add_action('wp_footer', function() {
     html body .quanto-team-box .team-content .custom-ul li a {
         display: flex !important;
         align-items: center !important;
-        justify-content: center !important;
-        width: 32px !important;
-        height: 32px !important;
+        justify-content: flex-start !important;
+        width: 24px !important;
+        height: 24px !important;
         color: #111 !important;
         font-size: 18px !important;
         text-decoration: none !important;
