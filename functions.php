@@ -719,13 +719,7 @@ add_action('wp_head', function() {
     ?>
     <style id="quanto-team-custom-css">
     /* Custom Styles for Quanto Team Box (Elementor Widget) */
-    html body .quanto-team-box {
-        position: relative !important;
-        margin: 0 auto 30px auto !important;
-        display: block !important;
-        max-width: 350px !important;
-        width: 100% !important;
-    }
+
     html body .quanto-team-box .team-member-name a::after {
         content: '';
         position: absolute;
@@ -808,17 +802,7 @@ add_action('wp_head', function() {
         z-index: 3 !important;
     }
 
-    /* Reduce horizontal gap between the two team cards */
-    @media (min-width: 768px) {
-        html body .col-md-6:nth-child(odd) .quanto-team-box {
-            margin-right: 0 !important;
-            margin-left: auto !important;
-        }
-        html body .col-md-6:nth-child(even) .quanto-team-box {
-            margin-left: 0 !important;
-            margin-right: auto !important;
-        }
-    }
+
     </style>
     <?php
 });
