@@ -146,7 +146,7 @@ function cmr_team_grid_shortcode($atts) {
                 }
             ?>
                 <div class="cmr-team-member">
-                    <div class="cmr-team-image-wrap">
+                    <a href="<?php echo get_permalink($post_id); ?>" class="cmr-team-image-wrap" style="display:block;">
                         <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr(get_the_title($post_id)); ?>">
                         <div class="cmr-team-overlay">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -154,7 +154,7 @@ function cmr_team_grid_shortcode($atts) {
                                 <polyline points="7 7 17 7 17 17"></polyline>
                             </svg>
                         </div>
-                    </div>
+                    </a>
                     <div class="cmr-team-info">
                         <h3 class="cmr-team-name"><?php echo get_the_title($post_id); ?></h3>
                         <p class="cmr-team-role"><?php echo esc_html($role); ?></p>
