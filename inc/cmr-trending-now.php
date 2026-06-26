@@ -26,11 +26,16 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
         ?>
         <style>
             .cmr-trending-section {
-                max-width: 1200px;
-                margin: 60px auto;
-                padding: 40px 20px;
-                background-color: #f8f9fa; /* Light background based on the design */
+                width: 100%;
+                background-color: #f8f9fa;
+                padding: 60px 0;
                 font-family: 'Instrument Sans', sans-serif !important;
+            }
+
+            .cmr-trending-inner {
+                max-width: 1280px;
+                margin: 0 auto;
+                padding: 0 20px;
             }
 
             .cmr-trending-header {
@@ -72,10 +77,18 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
             }
 
             .cmr-trending-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
+                display: flex;
                 gap: 20px;
-                /* If they want a slider later, this grid can become a flex container */
+                overflow-x: auto;
+                scroll-behavior: smooth;
+                scroll-snap-type: x mandatory;
+                padding-bottom: 20px; /* Space for scrollbar */
+                -ms-overflow-style: none; /* IE and Edge */
+                scrollbar-width: none; /* Firefox */
+            }
+
+            .cmr-trending-grid::-webkit-scrollbar {
+                display: none; /* Chrome, Safari and Opera */
             }
 
             .cmr-tn-card {
@@ -88,6 +101,8 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
                 display: flex;
                 flex-direction: row;
                 height: 342px;
+                flex: 0 0 calc(50% - 10px);
+                scroll-snap-align: start;
             }
 
             .cmr-tn-card:hover {
@@ -183,8 +198,8 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
             }
 
             @media (max-width: 992px) {
-                .cmr-trending-grid {
-                    grid-template-columns: 1fr;
+                .cmr-tn-card {
+                    flex: 0 0 calc(100% - 0px);
                 }
             }
 
@@ -204,22 +219,19 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
         </style>
 
         <section class="cmr-trending-section">
-            <div class="cmr-trending-header">
-                <h2 class="cmr-trending-title"><?php echo esc_html( $atts['title'] ); ?></h2>
-                <div class="cmr-trending-nav">
-                    <button class="cmr-nav-prev"><i class="fa-solid fa-arrow-left"></i></button>
-                    <button class="cmr-nav-next"><i class="fa-solid fa-arrow-right"></i></button>
+            <div class="cmr-trending-inner">
+                <div class="cmr-trending-header">
+                    <h2 class="cmr-trending-title"><?php echo esc_html( $atts['title'] ); ?></h2>
+                    <div class="cmr-trending-nav">
+                        <button class="cmr-nav-prev" onclick="document.querySelector('.cmr-trending-grid').scrollBy({left: -600, behavior: 'smooth'})"><i class="fa-solid fa-arrow-left"></i></button>
+                        <button class="cmr-nav-next" onclick="document.querySelector('.cmr-trending-grid').scrollBy({left: 600, behavior: 'smooth'})"><i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="cmr-trending-grid">
-                <?php 
-                if ( ! empty( $products ) ) {
-                    // For now, let's just display the first 2 items to match the exact grid screenshot. 
-                    // To implement the slider functionality later, JS will be needed.
-                    $display_count = min( count($products), 2 );
-                    for ( $i = 0; $i < $display_count; $i++ ) {
-                        $product = $products[$i];
+                
+                <div class="cmr-trending-grid">
+                    <?php 
+                    if ( ! empty( $products ) ) {
+                        foreach ( $products as $product ) {
                         $image_url = wp_get_attachment_image_src( $product->get_image_id(), 'medium' );
                         $image_url = $image_url ? $image_url[0] : 'https://via.placeholder.com/400x400';
                         
@@ -256,6 +268,7 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
                     echo '<p>No trending products found.</p>';
                 }
                 ?>
+                </div>
             </div>
         </section>
         <?php
