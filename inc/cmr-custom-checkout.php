@@ -256,6 +256,8 @@ if ( ! function_exists( 'cmr_custom_checkout_shortcode' ) ) {
                 border-radius: 0 !important;
                 box-shadow: none !important;
                 padding: 0 !important;
+                clear: both !important;
+                width: 100%;
             }
             .cmr-checkout-wrapper #payment ul.payment_methods {
                 padding: 0 !important;
@@ -541,6 +543,8 @@ if ( ! function_exists( 'cmr_custom_checkout_shortcode' ) ) {
                             heading.id = 'cmr-payment-heading';
                             heading.innerText = 'Payment options';
                             heading.style.marginTop = '30px';
+                            heading.style.clear = 'both';
+                            heading.style.display = 'block';
                             customerDetails.appendChild(heading);
                         }
                         customerDetails.appendChild(payment);
