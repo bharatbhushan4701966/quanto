@@ -85,10 +85,31 @@ if ( ! function_exists( 'cmr_custom_checkout_shortcode' ) ) {
                 width: 100%;
                 clear: both;
             }
+            .cmr-checkout-wrapper .woocommerce-checkout .form-row {
+                margin-bottom: 16px !important;
+            }
             .cmr-checkout-wrapper .woocommerce-checkout .form-row::after {
                 content: "";
                 display: table;
                 clear: both;
+            }
+            
+            /* ===== FIELD LAYOUT MATCHING BLOCK CHECKOUT ===== */
+            .cmr-checkout-wrapper #billing_city_field,
+            .cmr-checkout-wrapper #shipping_city_field,
+            .cmr-checkout-wrapper #billing_postcode_field,
+            .cmr-checkout-wrapper #shipping_postcode_field {
+                width: 48% !important;
+                float: left !important;
+                clear: both !important;
+            }
+            .cmr-checkout-wrapper #billing_state_field,
+            .cmr-checkout-wrapper #shipping_state_field,
+            .cmr-checkout-wrapper #billing_phone_field,
+            .cmr-checkout-wrapper #shipping_phone_field {
+                width: 48% !important;
+                float: right !important;
+                clear: none !important;
             }
 
             /* ===== FLOATING LABELS ===== */
@@ -332,9 +353,12 @@ if ( ! function_exists( 'cmr_custom_checkout_shortcode' ) ) {
             .cmr-checkout-wrapper .woocommerce-message,
             .cmr-checkout-wrapper .woocommerce-info {
                 border-radius: 4px;
-                padding: 14px;
+                padding: 16px 20px;
                 margin-bottom: 20px;
                 font-size: 14px;
+                background: #fef2f2;
+                border: 1px solid #fca5a5;
+                color: #991b1b;
             }
             .cmr-checkout-wrapper .woocommerce-error::before,
             .cmr-checkout-wrapper .woocommerce-message::before,
@@ -505,6 +529,30 @@ if ( ! function_exists( 'cmr_custom_checkout_shortcode' ) ) {
                         billingFieldsWrapper.style.display = 'block';
                     });
                 }
+                
+                // Move Payment block to left column inside customer details
+                function movePayment() {
+                    var payment = document.getElementById('payment');
+                    var customerDetails = document.getElementById('customer_details');
+                    if(payment && customerDetails && payment.parentNode !== customerDetails) {
+                        // Add Payment options heading if it doesn't exist
+                        if (!document.getElementById('cmr-payment-heading')) {
+                            var heading = document.createElement('h3');
+                            heading.id = 'cmr-payment-heading';
+                            heading.innerText = 'Payment options';
+                            heading.style.marginTop = '30px';
+                            customerDetails.appendChild(heading);
+                        }
+                        customerDetails.appendChild(payment);
+                    }
+                }
+                movePayment();
+                if (typeof jQuery !== 'undefined') {
+                    jQuery(document).on('updated_checkout', function() {
+                        movePayment();
+                    });
+                }
+                
             }, 500); // 500ms delay to ensure select2 is loaded
         });
         </script>
