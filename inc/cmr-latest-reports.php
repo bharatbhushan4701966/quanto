@@ -247,31 +247,46 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
             }
 
             .cmr-pagination-wrap {
-                text-align: center;
-                margin-top: 40px;
                 display: none;
+                justify-content: center;
+                align-items: center;
+                margin-top: 40px;
+                gap: 5px;
             }
             
             .cmr-pagination-wrap .page-numbers {
-                display: inline-block;
-                padding: 10px 15px;
-                margin: 0 5px;
-                border: 1px solid #d1d5db;
-                border-radius: 4px;
-                color: #374151;
+                padding: 0;
+                width: 40px;
+                height: 40px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                border: none;
+                border-radius: 50%;
                 text-decoration: none;
+                color: #333;
+                font-size: 16px;
                 font-weight: 500;
+                background: transparent;
                 transition: all 0.2s ease;
             }
             
             .cmr-pagination-wrap .page-numbers:hover {
-                background: #f3f4f6;
+                opacity: 0.7;
             }
             
             .cmr-pagination-wrap .page-numbers.current {
                 background: #6b46c1;
-                color: #ffffff;
-                border-color: #6b46c1;
+                color: #fff;
+            }
+            
+            .cmr-pagination-wrap .page-numbers.prev, 
+            .cmr-pagination-wrap .page-numbers.next {
+                color: #6b46c1;
+            }
+            
+            .cmr-pagination-wrap .page-numbers.dots {
+                width: auto;
             }
 
             .cmr-loading-spinner {
@@ -393,12 +408,12 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
                                     loadMoreBtn.style.display = 'inline-block';
                                 } else {
                                     paginationWrap.innerHTML = data.data.pagination;
-                                    paginationWrap.style.display = 'block';
+                                    paginationWrap.style.display = 'flex';
                                     bindPaginationEvents();
                                 }
                             } else if ( data.data.pagination && loadMoreCount >= 2 ) {
                                 paginationWrap.innerHTML = data.data.pagination;
-                                paginationWrap.style.display = 'block';
+                                paginationWrap.style.display = 'flex';
                                 bindPaginationEvents();
                             }
                         } else {
@@ -590,13 +605,18 @@ if ( ! function_exists( 'cmr_load_reports_ajax' ) ) {
 
         $pagination_html = '';
         if ( $query->max_num_pages > 1 ) {
+            // Include custom SVG arrows for Prev/Next like the articles
+            $prev_icon = '<svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 15L1.5 8L8.5 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+            $next_icon = '<svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 15L8.5 8L1.5 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+            
             $pagination_html = paginate_links( array(
                 'base' => '%_%',
                 'format' => '?paged=%#%',
                 'current' => $paged,
                 'total' => $query->max_num_pages,
-                'prev_text' => '&laquo; Prev',
-                'next_text' => 'Next &raquo;',
+                'prev_text' => $prev_icon,
+                'next_text' => $next_icon,
+                'type' => 'plain'
             ) );
         }
 
