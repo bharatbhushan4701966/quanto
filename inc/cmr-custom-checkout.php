@@ -135,6 +135,10 @@ if ( ! function_exists( 'cmr_custom_checkout_shortcode' ) ) {
                 box-sizing: border-box;
                 transition: border-color 0.15s ease;
             }
+            .cmr-checkout-wrapper .woocommerce-checkout input::placeholder,
+            .cmr-checkout-wrapper .woocommerce-checkout textarea::placeholder {
+                color: transparent !important;
+            }
             .cmr-checkout-wrapper .woocommerce-checkout textarea {
                 height: auto;
                 min-height: 80px;
@@ -389,3 +393,8 @@ function cmr_checkout_product_image_classic( $name, $cart_item, $cart_item_key )
 
     return $thumbnail . '<div class="cmr-checkout-item-details" style="display:inline-block; vertical-align:top; width: calc(100% - 80px); line-height: 1.4;">' . $name . $excerpt_html . '</div><div style="clear:both;"></div>';
 }
+
+/**
+ * Remove the order notes / additional information field.
+ */
+add_filter( 'woocommerce_enable_order_notes_field', '__return_false', 9999 );
