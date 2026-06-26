@@ -228,3 +228,30 @@ if ( ! function_exists( 'cmr_custom_checkout_shortcode' ) ) {
     }
 }
 add_shortcode( 'cmr_custom_checkout', 'cmr_custom_checkout_shortcode' );
+
+/**
+ * Add product image to the classic WooCommerce checkout order review table.
+ */
+add_filter( 'woocommerce_cart_item_name', 'cmr_checkout_product_image_classic', 10, 3 );
+function cmr_checkout_product_image_classic( $name, $cart_item, $cart_item_key ) {
+    // Only apply on the checkout page order review table
+    if ( ! is_checkout() || is_wc_endpoint_url() ) {
+        return $name;
+    }
+    
+    $_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+    
+    // Get the product thumbnail
+    $thumbnail = $_product->get_image( array( 65, 65 ), array( 'class' => 'cmr-checkout-thumb', 'style' => 'width: 65px; height: 65px; object-fit: cover; border-radius: 4px; margin-right: 15px; vertical-align: top; float: left;' ) );
+    
+    // Get a short description (excerpt)
+    $excerpt = $_product->get_short_description();
+    if ( $excerpt ) {
+        $excerpt = wp_trim_words( strip_tags( $excerpt ), 10, '...' );
+        $excerpt_html = '<div style="font-size: 12px; color: #6b7280; margin-top: 5px; line-height: 1.4;">' . $excerpt . '</div>';
+    } else {
+        $excerpt_html = '';
+    }
+
+    return $thumbnail . '<div class="cmr-checkout-item-details" style="display:inline-block; vertical-align:top; width: calc(100% - 80px); line-height: 1.4;">' . $name . $excerpt_html . '</div><div style="clear:both;"></div>';
+}
