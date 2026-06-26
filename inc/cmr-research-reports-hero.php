@@ -75,7 +75,7 @@ if ( ! function_exists( 'cmr_research_reports_hero_shortcode' ) ) {
 
             .cmr-research-hero h1 {
                 font-size: 56px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #ffffff;
                 margin: 0 0 20px 0;
                 letter-spacing: -1.5px;
@@ -96,7 +96,7 @@ if ( ! function_exists( 'cmr_research_reports_hero_shortcode' ) ) {
                 margin: 0 auto 30px auto;
             }
 
-            .cmr-research-search-form {
+            .cmr-vp-hero-search {
                 display: flex;
                 align-items: center;
                 background: #ffffff;
@@ -107,17 +107,17 @@ if ( ! function_exists( 'cmr_research_reports_hero_shortcode' ) ) {
                 transition: border-color 0.3s ease;
             }
             
-            .cmr-research-search-form:focus-within {
+            .cmr-vp-hero-search:focus-within {
                 border-color: #7b4cf6;
             }
 
-            .cmr-research-search-icon-left {
-                color: #6b46c1;
-                font-size: 20px;
+            .cmr-vp-hero-search-icon-left {
                 margin-right: 15px;
+                display: flex;
+                align-items: center;
             }
 
-            .cmr-research-search-input {
+            .cmr-vp-hero-search input[type="text"] {
                 flex: 1;
                 border: none;
                 background: transparent;
@@ -128,11 +128,11 @@ if ( ! function_exists( 'cmr_research_reports_hero_shortcode' ) ) {
                 outline: none;
             }
 
-            .cmr-research-search-input::placeholder {
+            .cmr-vp-hero-search input[type="text"]::placeholder {
                 color: #a0a0a0;
             }
 
-            .cmr-research-search-btn {
+            .cmr-vp-hero-search-btn {
                 background: #6b46c1;
                 color: #ffffff;
                 border: none;
@@ -144,10 +144,9 @@ if ( ! function_exists( 'cmr_research_reports_hero_shortcode' ) ) {
                 justify-content: center;
                 cursor: pointer;
                 transition: background 0.3s ease, transform 0.2s ease;
-                font-size: 18px;
             }
 
-            .cmr-research-search-btn:hover {
+            .cmr-vp-hero-search-btn:hover {
                 background: #55359e;
                 transform: scale(1.05);
             }
@@ -202,19 +201,14 @@ if ( ! function_exists( 'cmr_research_reports_hero_shortcode' ) ) {
                 <p class="desc"><?php echo esc_html( $atts['description'] ); ?></p>
 
                 <div class="cmr-research-search-wrapper">
-                    <form role="search" method="get" class="cmr-research-search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
-                        <!-- Left Icon (Using generic layer-group as a placeholder for the abstract logo) -->
-                        <div class="cmr-research-search-icon-left">
-                            <i class="fa-brands fa-hive"></i> 
+                    <form id="cmr-vp-hero-search-form" class="cmr-vp-hero-search" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="get">
+                        <div class="cmr-vp-hero-search-icon-left">
+                            <img decoding="async" src="<?php echo esc_url( home_url( '/' ) ); ?>wp-content/uploads/2026/06/cmrlogo-with-oly-c.svg" alt="CMR Logo" style="width: 24px; height: auto;">
                         </div>
-                        
-                        <input type="search" class="cmr-research-search-input" placeholder="Search..." value="<?php echo get_search_query(); ?>" name="s" />
-                        
-                        <!-- Post type filter to only search products -->
+                        <input type="text" name="s" placeholder="Search..." required="" value="<?php echo get_search_query(); ?>">
                         <input type="hidden" name="post_type" value="product" />
-                        
-                        <button type="submit" class="cmr-research-search-btn">
-                            <i class="fa-solid fa-magnifying-glass"></i>
+                        <button type="submit" class="cmr-vp-hero-search-btn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                         </button>
                     </form>
                 </div>
