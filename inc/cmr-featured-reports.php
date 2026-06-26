@@ -262,8 +262,16 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                     <div class="cmr-fr-large-content">
                         <a href="<?php echo esc_url( $product->get_permalink() ); ?>" class="cmr-fr-large-title"><?php echo esc_html( $product->get_name() ); ?></a>
                         <div class="cmr-fr-stars">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
-                            <span>(4)</span>
+                            <?php 
+                            $rating = floatval( $product->get_average_rating() );
+                            $count = intval( $product->get_review_count() );
+                            for ( $s = 1; $s <= 5; $s++ ) {
+                                if ( $s <= $rating ) echo '<i class="fa-solid fa-star"></i>';
+                                elseif ( $s - 0.5 <= $rating ) echo '<i class="fa-solid fa-star-half-stroke"></i>';
+                                else echo '<i class="fa-regular fa-star"></i>';
+                            }
+                            ?>
+                            <span>(<?php echo $count; ?>)</span>
                         </div>
                         <div class="cmr-fr-brand">CyberMedia Research (CMR)</div>
                         
@@ -298,8 +306,16 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                                     <div class="cmr-fr-category">&mdash; <?php echo esc_html( $cat_name ); ?></div>
                                     <a href="<?php echo esc_url( $product->get_permalink() ); ?>" class="cmr-fr-small-title"><?php echo esc_html( $product->get_name() ); ?></a>
                                     <div class="cmr-fr-stars">
-                                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
-                                        <span>(4)</span>
+                                        <?php 
+                                        $rating = floatval( $product->get_average_rating() );
+                                        $count = intval( $product->get_review_count() );
+                                        for ( $s = 1; $s <= 5; $s++ ) {
+                                            if ( $s <= $rating ) echo '<i class="fa-solid fa-star"></i>';
+                                            elseif ( $s - 0.5 <= $rating ) echo '<i class="fa-solid fa-star-half-stroke"></i>';
+                                            else echo '<i class="fa-regular fa-star"></i>';
+                                        }
+                                        ?>
+                                        <span>(<?php echo $count; ?>)</span>
                                     </div>
                                     <div class="cmr-fr-brand">CyberMedia Research (CMR)</div>
                                     <div class="cmr-fr-price">
