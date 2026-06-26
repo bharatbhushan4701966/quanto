@@ -21,18 +21,7 @@ if ( ! function_exists( 'cmr_custom_checkout_shortcode' ) ) {
             }
 
             .cmr-checkout-wrapper .cmr-back-link {
-                display: inline-flex;
-                align-items: center;
-                gap: 8px;
-                color: #374151;
-                font-weight: 600;
-                font-size: 15px;
-                text-decoration: none;
-                margin-bottom: 30px;
-            }
-
-            .cmr-checkout-wrapper .cmr-back-link:hover {
-                color: #000;
+                display: none; /* Removed from top, added to bottom */
             }
 
             /* Two Column Checkout Layout */
@@ -81,12 +70,14 @@ if ( ! function_exists( 'cmr_custom_checkout_shortcode' ) ) {
             .cmr-checkout-wrapper .woocommerce-checkout select,
             .cmr-checkout-wrapper .woocommerce-checkout textarea {
                 width: 100%;
-                padding: 12px 15px;
+                padding: 24px 15px 8px 15px; /* Space for absolute label */
+                height: 54px; /* fixed height */
                 border: 1px solid #d1d5db;
                 border-radius: 4px;
                 font-size: 15px;
                 outline: none;
                 background: #fff;
+                box-sizing: border-box;
             }
             
             .cmr-checkout-wrapper .woocommerce-checkout input:focus,
@@ -96,14 +87,22 @@ if ( ! function_exists( 'cmr_custom_checkout_shortcode' ) ) {
             }
             
             .cmr-checkout-wrapper .woocommerce-checkout label {
-                display: block;
-                font-weight: 600;
-                margin-bottom: 8px;
-                font-size: 13px;
+                position: absolute;
+                top: 8px;
+                left: 15px;
+                font-size: 11px;
                 color: #6b7280;
+                font-weight: 500;
+                z-index: 2;
+                margin: 0;
+            }
+            .cmr-checkout-wrapper .woocommerce-checkout .checkbox {
+                position: static;
+                font-size: 14px;
             }
             
             .cmr-checkout-wrapper .woocommerce-checkout .form-row {
+                position: relative;
                 margin-bottom: 20px;
                 width: 100%;
             }
@@ -126,14 +125,15 @@ if ( ! function_exists( 'cmr_custom_checkout_shortcode' ) ) {
             
             /* Select2 Overrides (WooCommerce defaults to Select2) */
             .cmr-checkout-wrapper .select2-container--default .select2-selection--single {
-                height: 47px;
+                height: 54px;
                 border: 1px solid #d1d5db;
                 border-radius: 4px;
                 display: flex;
                 align-items: center;
+                padding-top: 16px;
             }
             .cmr-checkout-wrapper .select2-container--default .select2-selection--single .select2-selection__arrow {
-                height: 45px;
+                height: 52px;
             }
 
             /* Order Table Styling */
@@ -203,10 +203,19 @@ if ( ! function_exists( 'cmr_custom_checkout_shortcode' ) ) {
             }
 
             /* Checkout Button */
+            .cmr-checkout-wrapper .woocommerce-checkout #payment .place-order {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+            
             .cmr-checkout-wrapper .woocommerce-checkout #payment .place-order button {
                 background: #4b23a0;
                 color: #ffffff;
-                width: 100%;
+                width: auto;
+                flex: 1;
+                max-width: 250px;
                 padding: 16px;
                 border-radius: 50px;
                 font-size: 16px;
@@ -245,6 +254,11 @@ if ( ! function_exists( 'cmr_custom_checkout_shortcode' ) ) {
     }
 }
 add_shortcode( 'cmr_custom_checkout', 'cmr_custom_checkout_shortcode' );
+
+add_action( 'woocommerce_review_order_before_submit', 'cmr_checkout_add_return_to_cart_button' );
+function cmr_checkout_add_return_to_cart_button() {
+    echo '<a href="' . esc_url( wc_get_cart_url() ) . '" class="cmr-checkout-return-btn" style="color: #4b5563; text-decoration: none; font-weight: 500; font-size: 14px;">&larr; Return to Cart</a>';
+}
 
 /**
  * Add product image to the classic WooCommerce checkout order review table.
