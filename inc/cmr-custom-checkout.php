@@ -99,12 +99,29 @@ if ( ! function_exists( 'cmr_custom_checkout_shortcode' ) ) {
                 display: block;
                 font-weight: 600;
                 margin-bottom: 8px;
-                font-size: 14px;
-                color: #374151;
+                font-size: 13px;
+                color: #6b7280;
             }
             
             .cmr-checkout-wrapper .woocommerce-checkout .form-row {
                 margin-bottom: 20px;
+                width: 100%;
+            }
+
+            .cmr-checkout-wrapper .woocommerce-checkout .form-row-first {
+                float: left;
+                width: 48%;
+            }
+
+            .cmr-checkout-wrapper .woocommerce-checkout .form-row-last {
+                float: right;
+                width: 48%;
+            }
+            
+            .cmr-checkout-wrapper .woocommerce-checkout .form-row::after {
+                content: "";
+                display: table;
+                clear: both;
             }
             
             /* Select2 Overrides (WooCommerce defaults to Select2) */
