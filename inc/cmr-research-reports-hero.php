@@ -92,7 +92,7 @@ if ( ! function_exists( 'cmr_research_reports_hero_shortcode' ) ) {
             /* Search Bar */
             .cmr-research-search-wrapper {
                 position: relative;
-                max-width: 600px;
+                max-width: 638px;
                 margin: 0 auto 30px auto;
             }
 
@@ -101,7 +101,8 @@ if ( ! function_exists( 'cmr_research_reports_hero_shortcode' ) ) {
                 align-items: center;
                 background: #ffffff;
                 border-radius: 50px;
-                padding: 5px 5px 5px 20px;
+                height: 48px;
+                padding: 0 4px 0 20px;
                 box-shadow: 0 10px 30px rgba(0,0,0,0.2);
                 border: 2px solid transparent;
                 transition: border-color 0.3s ease;
@@ -121,7 +122,8 @@ if ( ! function_exists( 'cmr_research_reports_hero_shortcode' ) ) {
                 flex: 1;
                 border: none;
                 background: transparent;
-                padding: 12px 0;
+                padding: 0;
+                height: 100%;
                 font-size: 16px;
                 font-family: inherit;
                 color: #111;
@@ -136,8 +138,8 @@ if ( ! function_exists( 'cmr_research_reports_hero_shortcode' ) ) {
                 background: #6b46c1;
                 color: #ffffff;
                 border: none;
-                width: 45px;
-                height: 45px;
+                width: 40px;
+                height: 40px;
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
