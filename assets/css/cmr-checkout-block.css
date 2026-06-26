@@ -106,19 +106,26 @@
     border-bottom: 1px solid #e5e7eb;
 }
 
-.wp-block-woocommerce-checkout .wc-block-components-order-summary-item__image {
+.wp-block-woocommerce-checkout .wc-block-components-order-summary-item__image,
+.wp-block-woocommerce-checkout .wc-block-components-product-image,
+.wp-block-woocommerce-checkout .wc-block-checkout-order-summary-cart-item__image {
     display: block !important;
     width: 65px !important;
     height: 65px !important;
     flex-shrink: 0;
     position: relative;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
-.wp-block-woocommerce-checkout .wc-block-components-order-summary-item__image img {
+.wp-block-woocommerce-checkout .wc-block-components-order-summary-item__image img,
+.wp-block-woocommerce-checkout .wc-block-components-product-image img,
+.wp-block-woocommerce-checkout .wc-block-checkout-order-summary-cart-item__image img {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
     border-radius: 4px;
+    display: block !important;
 }
 
 /* Actions Block (Return to Cart & Place Order) */
