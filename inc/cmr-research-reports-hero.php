@@ -83,7 +83,7 @@ if ( ! function_exists( 'cmr_research_reports_hero_shortcode' ) ) {
 
             .cmr-research-hero p.desc {
                 font-size: 18px;
-                color: #d1d1d1;
+                color: #fffff;
                 line-height: 1.6;
                 margin: 0 auto 40px auto;
                 max-width: 650px;
