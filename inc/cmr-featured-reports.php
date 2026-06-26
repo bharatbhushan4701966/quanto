@@ -145,29 +145,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                 margin-bottom: auto;
             }
 
-            .cmr-fr-large-footer {
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-end;
-                margin-top: auto;
-                padding-top: 50px;
-            }
 
-            .cmr-fr-large-footer h3 {
-                font-size: 42px;
-                font-weight: 800;
-                color: rgba(255,255,255,0.2);
-                line-height: 1;
-                margin: 0;
-                text-transform: uppercase;
-            }
-
-            .cmr-fr-large-footer p {
-                font-size: 12px;
-                color: rgba(255,255,255,0.5);
-                margin: 0;
-                text-align: right;
-            }
 
             /* Small Cards (Right) */
             .cmr-fr-small-col {
@@ -289,10 +267,6 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                         </div>
                         <div class="cmr-fr-brand">CyberMedia Research (CMR)</div>
                         
-                        <div class="cmr-fr-large-footer">
-                            <h3>Annual<br>Report</h3>
-                            <p>Where<br>Minimalism<br>Meets<br>Meaning</p>
-                        </div>
                     </div>
                 </div>
                 <?php endif; ?>
