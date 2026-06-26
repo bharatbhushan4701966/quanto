@@ -138,14 +138,20 @@ if ( ! function_exists( 'cmr_research_reports_hero_shortcode' ) ) {
                 background: #6b46c1;
                 color: #ffffff;
                 border: none;
-                width: 40px;
-                height: 40px;
+                width: 27px;
+                height: 27px;
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
                 transition: background 0.3s ease, transform 0.2s ease;
+                padding: 0;
+            }
+
+            .cmr-vp-hero-search-btn svg {
+                width: 14px;
+                height: 14px;
             }
 
             .cmr-vp-hero-search-btn:hover {
