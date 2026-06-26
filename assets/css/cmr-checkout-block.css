@@ -1,0 +1,93 @@
+/* cmr-checkout-block.css */
+
+/* Main Container */
+.wp-block-woocommerce-checkout {
+    display: flex !important;
+    gap: 40px;
+    flex-wrap: wrap;
+    max-width: 1280px;
+    margin: 40px auto !important;
+    font-family: 'Instrument Sans', sans-serif !important;
+    align-items: flex-start;
+}
+
+/* Left side fields (Shipping/Billing/Payment) */
+.wp-block-woocommerce-checkout-fields-block {
+    flex: 2;
+    min-width: 300px;
+}
+
+/* Right side totals (Order Summary) */
+.wp-block-woocommerce-checkout-totals-block {
+    flex: 1;
+    min-width: 300px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    padding: 30px;
+    border-radius: 4px;
+    position: sticky;
+    top: 40px;
+}
+
+/* Input fields styling */
+.wp-block-woocommerce-checkout .wc-block-components-text-input input,
+.wp-block-woocommerce-checkout input[type="text"],
+.wp-block-woocommerce-checkout input[type="email"],
+.wp-block-woocommerce-checkout input[type="tel"],
+.wp-block-woocommerce-checkout select,
+.wp-block-woocommerce-checkout textarea {
+    border: 1px solid #d1d5db !important;
+    border-radius: 4px !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.wp-block-woocommerce-checkout .wc-block-components-text-input input:focus,
+.wp-block-woocommerce-checkout input:focus,
+.wp-block-woocommerce-checkout select:focus,
+.wp-block-woocommerce-checkout textarea:focus {
+    border-color: #6b46c1 !important;
+    box-shadow: 0 0 0 1px #6b46c1 !important;
+}
+
+/* Titles */
+.wp-block-woocommerce-checkout h2 {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    margin-bottom: 25px !important;
+    color: #111827 !important;
+    border-bottom: 2px solid #f3f4f6;
+    padding-bottom: 10px;
+}
+
+/* Place order button overrides */
+.wp-block-woocommerce-checkout .wc-block-components-checkout-place-order-button {
+    background-color: #4b23a0 !important;
+    color: #ffffff !important;
+    border-radius: 50px !important;
+    font-weight: 600 !important;
+    padding: 16px !important;
+    width: 100% !important;
+    margin-top: 20px !important;
+    transition: background-color 0.2s ease !important;
+    font-size: 16px !important;
+}
+
+.wp-block-woocommerce-checkout .wc-block-components-checkout-place-order-button:hover {
+    background-color: #391880 !important;
+}
+
+/* Responsive adjustments */
+@media(max-width: 992px) {
+    .wp-block-woocommerce-checkout {
+        flex-direction: column;
+    }
+    .wp-block-woocommerce-checkout-fields-block,
+    .wp-block-woocommerce-checkout-totals-block {
+        width: 100%;
+        flex: none;
+    }
+    .wp-block-woocommerce-checkout-totals-block {
+        position: static;
+    }
+}
