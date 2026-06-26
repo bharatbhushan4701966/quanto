@@ -363,6 +363,54 @@ if ( ! function_exists( 'cmr_custom_checkout_shortcode' ) ) {
                     width: 100%;
                 }
             }
+            
+            /* ===== SUMMARY STEP (JS INJECTED) ===== */
+            .cmr-checkout-wrapper .cmr-address-summary-box {
+                border: 1px solid #e5e7eb;
+                border-radius: 4px;
+                padding: 20px;
+                margin-bottom: 30px;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                background: #fff;
+            }
+            .cmr-checkout-wrapper .cmr-address-summary-content {
+                color: #4b5563;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+            .cmr-checkout-wrapper .cmr-address-summary-name {
+                color: #111827;
+                font-weight: 600;
+                margin-bottom: 5px;
+            }
+            .cmr-checkout-wrapper .cmr-edit-address-btn {
+                color: #6b7280;
+                font-size: 14px;
+                text-decoration: none;
+                font-weight: 500;
+                cursor: pointer;
+            }
+            .cmr-checkout-wrapper .cmr-edit-address-btn:hover {
+                color: #111827;
+            }
+            .cmr-checkout-wrapper .cmr-save-address-btn {
+                background: #f9fafb;
+                border: 1px solid #d1d5db;
+                color: #374151;
+                padding: 10px 20px;
+                border-radius: 4px;
+                font-size: 14px;
+                font-weight: 600;
+                cursor: pointer;
+                margin-top: 10px;
+                display: inline-block;
+                width: auto;
+            }
+            .cmr-checkout-wrapper .cmr-save-address-btn:hover {
+                background: #f3f4f6;
+            }
         </style>
         
         <div class="cmr-checkout-wrapper">
@@ -373,6 +421,94 @@ if ( ! function_exists( 'cmr_custom_checkout_shortcode' ) ) {
             echo do_shortcode('[woocommerce_checkout]'); 
             ?>
         </div>
+        
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var checkoutWrapper = document.querySelector('.cmr-checkout-wrapper');
+            if(!checkoutWrapper) return;
+
+            // Wait a moment for Woo scripts to initialize
+            setTimeout(function() {
+                var billingFieldsWrapper = document.querySelector('.woocommerce-billing-fields__field-wrapper');
+                var billingHeading = document.querySelector('.woocommerce-billing-fields h3');
+                
+                if (billingFieldsWrapper && billingHeading) {
+                    // Create Save Button
+                    var saveBtn = document.createElement('button');
+                    saveBtn.type = 'button';
+                    saveBtn.className = 'cmr-save-address-btn';
+                    saveBtn.innerText = 'Save & Continue';
+                    billingFieldsWrapper.appendChild(saveBtn);
+                    
+                    // Create Summary Box (Hidden initially)
+                    var summaryBox = document.createElement('div');
+                    summaryBox.className = 'cmr-address-summary-box';
+                    summaryBox.style.display = 'none';
+                    
+                    var summaryContent = document.createElement('div');
+                    summaryContent.className = 'cmr-address-summary-content';
+                    
+                    var editBtn = document.createElement('a');
+                    editBtn.className = 'cmr-edit-address-btn';
+                    editBtn.innerText = 'Edit';
+                    editBtn.href = '#';
+                    
+                    summaryBox.appendChild(summaryContent);
+                    summaryBox.appendChild(editBtn);
+                    
+                    // Insert summary box after heading
+                    billingHeading.parentNode.insertBefore(summaryBox, billingHeading.nextSibling);
+                    
+                    // Save Button Logic
+                    saveBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        var fName = document.getElementById('billing_first_name') ? document.getElementById('billing_first_name').value : '';
+                        var lName = document.getElementById('billing_last_name') ? document.getElementById('billing_last_name').value : '';
+                        var address1 = document.getElementById('billing_address_1') ? document.getElementById('billing_address_1').value : '';
+                        var address2 = document.getElementById('billing_address_2') ? document.getElementById('billing_address_2').value : '';
+                        var city = document.getElementById('billing_city') ? document.getElementById('billing_city').value : '';
+                        
+                        var stateSelect = document.getElementById('billing_state');
+                        var state = '';
+                        if(stateSelect) {
+                            if(stateSelect.tagName === 'SELECT') {
+                                state = stateSelect.options[stateSelect.selectedIndex] ? stateSelect.options[stateSelect.selectedIndex].text : '';
+                            } else {
+                                state = stateSelect.value;
+                            }
+                        }
+                        
+                        var postcode = document.getElementById('billing_postcode') ? document.getElementById('billing_postcode').value : '';
+                        
+                        var countrySelect = document.getElementById('billing_country');
+                        var country = '';
+                        if(countrySelect && countrySelect.tagName === 'SELECT') {
+                            country = countrySelect.options[countrySelect.selectedIndex] ? countrySelect.options[countrySelect.selectedIndex].text : '';
+                        }
+                        
+                        var phone = document.getElementById('billing_phone') ? document.getElementById('billing_phone').value : '';
+                        
+                        var fullAddressArray = [address1, address2, postcode, state, country, phone].filter(Boolean);
+                        var fullAddressStr = fullAddressArray.join(', ');
+                        
+                        summaryContent.innerHTML = '<div class="cmr-address-summary-name">' + fName + ' ' + lName + '</div>' + 
+                                                   '<div>' + fullAddressStr + '</div>';
+                                                   
+                        billingFieldsWrapper.style.display = 'none';
+                        summaryBox.style.display = 'flex';
+                    });
+                    
+                    // Edit Button Logic
+                    editBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        summaryBox.style.display = 'none';
+                        billingFieldsWrapper.style.display = 'block';
+                    });
+                }
+            }, 500); // 500ms delay to ensure select2 is loaded
+        });
+        </script>
+        
         <?php
         return ob_get_clean();
     }
