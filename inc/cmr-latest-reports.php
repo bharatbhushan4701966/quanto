@@ -246,6 +246,34 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
                 color: #111827;
             }
 
+            .cmr-pagination-wrap {
+                text-align: center;
+                margin-top: 40px;
+                display: none;
+            }
+            
+            .cmr-pagination-wrap .page-numbers {
+                display: inline-block;
+                padding: 10px 15px;
+                margin: 0 5px;
+                border: 1px solid #d1d5db;
+                border-radius: 4px;
+                color: #374151;
+                text-decoration: none;
+                font-weight: 500;
+                transition: all 0.2s ease;
+            }
+            
+            .cmr-pagination-wrap .page-numbers:hover {
+                background: #f3f4f6;
+            }
+            
+            .cmr-pagination-wrap .page-numbers.current {
+                background: #6b46c1;
+                color: #ffffff;
+                border-color: #6b46c1;
+            }
+
             .cmr-loading-spinner {
                 display: none;
                 text-align: center;
@@ -306,6 +334,8 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
             <div class="cmr-load-more-wrap">
                 <button class="cmr-load-more-btn" id="cmr-load-more-btn" style="display: none;">Load More</button>
             </div>
+            
+            <div class="cmr-pagination-wrap" id="cmr-pagination-wrap"></div>
         </section>
 
         <script>
@@ -313,21 +343,29 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
                 let currentPage = 1;
                 let currentCategory = '';
                 let currentSearch = '';
+                let loadMoreCount = 0;
                 const grid = document.getElementById('cmr-latest-grid');
                 const loadMoreBtn = document.getElementById('cmr-load-more-btn');
+                const paginationWrap = document.getElementById('cmr-pagination-wrap');
                 const spinner = document.getElementById('cmr-loading-spinner');
                 const searchInput = document.getElementById('cmr-lr-search');
                 const searchBtn = document.getElementById('cmr-lr-search-btn');
                 const filterPills = document.querySelectorAll('.cmr-filter-pill');
 
-                function loadProducts( reset = false ) {
+                function loadProducts( reset = false, pageNum = null ) {
                     if ( reset ) {
-                        currentPage = 1;
+                        if (pageNum) {
+                            currentPage = pageNum;
+                        } else {
+                            currentPage = 1;
+                            loadMoreCount = 0;
+                        }
                         grid.innerHTML = '';
                     }
 
                     spinner.style.display = 'block';
                     loadMoreBtn.style.display = 'none';
+                    paginationWrap.style.display = 'none';
 
                     const formData = new FormData();
                     formData.append('action', 'cmr_load_reports');
@@ -351,7 +389,17 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
                             }
                             
                             if ( data.data.has_more ) {
-                                loadMoreBtn.style.display = 'inline-block';
+                                if ( loadMoreCount < 2 ) {
+                                    loadMoreBtn.style.display = 'inline-block';
+                                } else {
+                                    paginationWrap.innerHTML = data.data.pagination;
+                                    paginationWrap.style.display = 'block';
+                                    bindPaginationEvents();
+                                }
+                            } else if ( data.data.pagination && loadMoreCount >= 2 ) {
+                                paginationWrap.innerHTML = data.data.pagination;
+                                paginationWrap.style.display = 'block';
+                                bindPaginationEvents();
                             }
                         } else {
                             if ( reset ) {
@@ -365,12 +413,29 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
                     });
                 }
 
+                function bindPaginationEvents() {
+                    const pageLinks = paginationWrap.querySelectorAll('a.page-numbers');
+                    pageLinks.forEach(link => {
+                        link.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            const href = this.getAttribute('href');
+                            // Extract paged query param
+                            const urlParams = new URLSearchParams(href.split('?')[1]);
+                            const page = urlParams.get('paged') || 1;
+                            loadProducts(true, parseInt(page));
+                            // Scroll back to top of section
+                            document.querySelector('.cmr-latest-section').scrollIntoView({ behavior: 'smooth' });
+                        });
+                    });
+                }
+
                 // Initial Load
                 loadProducts(true);
 
                 // Load More Click
                 loadMoreBtn.addEventListener('click', function() {
                     currentPage++;
+                    loadMoreCount++;
                     loadProducts();
                 });
 
@@ -523,9 +588,22 @@ if ( ! function_exists( 'cmr_load_reports_ajax' ) ) {
 
         $has_more = ( $query->max_num_pages > $paged );
 
+        $pagination_html = '';
+        if ( $query->max_num_pages > 1 ) {
+            $pagination_html = paginate_links( array(
+                'base' => '%_%',
+                'format' => '?paged=%#%',
+                'current' => $paged,
+                'total' => $query->max_num_pages,
+                'prev_text' => '&laquo; Prev',
+                'next_text' => 'Next &raquo;',
+            ) );
+        }
+
         wp_send_json_success( array(
             'html' => $html,
-            'has_more' => $has_more
+            'has_more' => $has_more,
+            'pagination' => $pagination_html
         ) );
     }
 }
