@@ -19,7 +19,7 @@ function cmr_sync_products_callback( WP_REST_Request $request ) {
     cmr_require_media_functions(); // ensure media functions are loaded
 
     $page = $request->get_param('page') ? intval($request->get_param('page')) : 1;
-    $per_page = $request->get_param('per_page') ? intval($request->get_param('per_page')) : 10; 
+    $per_page = $request->get_param('per_page') ? intval($request->get_param('per_page')) : 100; 
 
     $target_url = "https://cmrindia.com/wp-json/wc/store/products?page={$page}&per_page={$per_page}";
     $response = wp_remote_get( $target_url, array( 'timeout' => 300 ) );
