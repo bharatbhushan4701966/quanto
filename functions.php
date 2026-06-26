@@ -241,7 +241,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-trending-now.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-custom-report-cta.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-latest-reports.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-custom-cart.php';
-require_once QUANTO_DIR_PATH_INC . 'cmr-custom-checkout.php';
+
 require_once QUANTO_DIR_PATH_INC . 'cmr-mega-menu-who-we-are.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-mega-menu-who-we-serve.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-mega-menu-what-we-do.php';
