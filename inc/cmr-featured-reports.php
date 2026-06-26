@@ -48,9 +48,9 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
 
             .cmr-fr-card {
                 background: #ffffff;
-                border-radius: 8px;
+                border-radius: 0;
                 overflow: hidden;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+                border: 1px solid #e5e7eb;
                 position: relative;
                 transition: transform 0.3s ease;
                 display: flex;
@@ -85,8 +85,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
             /* Big Card (Left) */
             .cmr-fr-large {
                 flex-direction: column;
-                height: 100%;
-                min-height: 500px;
+                height: 695px;
             }
 
             .cmr-fr-large .cmr-fr-image-wrap {
@@ -174,13 +173,12 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
             .cmr-fr-small-col {
                 display: flex;
                 flex-direction: column;
-                gap: 20px;
+                gap: 11px;
             }
 
             .cmr-fr-small {
                 flex-direction: row;
-                height: calc(50% - 10px);
-                border: 1px solid #f3f4f6;
+                height: 342px;
             }
 
             .cmr-fr-small .cmr-fr-image-wrap {
