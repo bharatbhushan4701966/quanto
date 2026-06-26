@@ -139,6 +139,10 @@ if ( ! function_exists( 'cmr_custom_checkout_shortcode' ) ) {
             .cmr-checkout-wrapper .woocommerce-checkout textarea::placeholder {
                 color: transparent !important;
             }
+            .cmr-checkout-wrapper .woocommerce-checkout #billing_address_2_field input::placeholder,
+            .cmr-checkout-wrapper .woocommerce-checkout #shipping_address_2_field input::placeholder {
+                color: #9ca3af !important;
+            }
             .cmr-checkout-wrapper .woocommerce-checkout textarea {
                 height: auto;
                 min-height: 80px;
@@ -190,7 +194,8 @@ if ( ! function_exists( 'cmr_custom_checkout_shortcode' ) ) {
             .cmr-checkout-wrapper .shop_table th,
             .cmr-checkout-wrapper .shop_table td {
                 padding: 12px 0;
-                border-bottom: 1px solid #e5e7eb;
+                border: none !important;
+                border-bottom: 1px solid #e5e7eb !important;
                 text-align: left;
                 font-size: 14px;
                 vertical-align: top;
@@ -306,6 +311,13 @@ if ( ! function_exists( 'cmr_custom_checkout_shortcode' ) ) {
             }
 
             /* ===== CHECKBOX: Use same address ===== */
+            .cmr-checkout-wrapper #ship-to-different-address {
+                clear: both;
+                display: block;
+                width: 100%;
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
             .cmr-checkout-wrapper #ship-to-different-address label {
                 position: static !important;
                 font-size: 14px !important;
@@ -323,6 +335,11 @@ if ( ! function_exists( 'cmr_custom_checkout_shortcode' ) ) {
                 padding: 14px;
                 margin-bottom: 20px;
                 font-size: 14px;
+            }
+            .cmr-checkout-wrapper .woocommerce-error::before,
+            .cmr-checkout-wrapper .woocommerce-message::before,
+            .cmr-checkout-wrapper .woocommerce-info::before {
+                display: none !important;
             }
 
             /* ===== RESPONSIVE ===== */
