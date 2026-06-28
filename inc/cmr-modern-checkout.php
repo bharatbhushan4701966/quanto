@@ -67,6 +67,10 @@ if ( ! function_exists( 'cmr_modern_checkout_shortcode' ) ) {
                 margin-top: 30px;
                 margin-bottom: 20px;
             }
+            .cmr-modern-checkout-wrapper h3.cmr-section-heading-small,
+            .cmr-modern-checkout-wrapper h3#cmr-shipping-heading {
+                font-size: 18px;
+            }
             .cmr-modern-checkout-wrapper #customer_details > h3:first-child {
                 margin-top: 0;
             }
@@ -120,15 +124,21 @@ if ( ! function_exists( 'cmr_modern_checkout_shortcode' ) ) {
             /* Floating Labels */
             .cmr-modern-checkout-wrapper label {
                 position: absolute;
-                top: 8px;
-                left: 14px;
-                font-size: 11px;
+                top: 19px;
+                left: 15px;
+                font-size: 14px;
                 color: #6b7280;
-                font-weight: 500;
+                font-weight: 400;
                 z-index: 2;
                 margin: 0;
                 pointer-events: none;
                 line-height: 1;
+                transition: all 0.2s ease-out;
+            }
+            .cmr-modern-checkout-wrapper .form-row.float-active label {
+                top: 8px;
+                font-size: 11px;
+                font-weight: 500;
             }
             .cmr-modern-checkout-wrapper label .required { display: none; }
             .cmr-modern-checkout-wrapper .checkbox,
@@ -286,7 +296,7 @@ if ( ! function_exists( 'cmr_modern_checkout_shortcode' ) ) {
                 clear: both;
             }
             .cmr-modern-checkout-wrapper .cmr-shipping-methods {
-                border: 1px solid #6b7280;
+                border: 1px solid #d1d5db;
                 border-radius: 4px;
                 padding: 16px;
                 display: flex;
@@ -461,7 +471,7 @@ if ( ! function_exists( 'cmr_modern_checkout_shortcode' ) ) {
                     if (!shippingBlock) {
                         shippingBlock = document.createElement('div');
                         shippingBlock.id = 'cmr-shipping-block';
-                        shippingBlock.innerHTML = '<h3 class="cmr-section-heading">Shipping options</h3><div class="cmr-shipping-content"></div>';
+                        shippingBlock.innerHTML = '<h3 id="cmr-shipping-heading" class="cmr-section-heading">Shipping options</h3><div class="cmr-shipping-content"></div>';
                         customerDetails.appendChild(shippingBlock);
                     }
                     
@@ -469,10 +479,6 @@ if ( ! function_exists( 'cmr_modern_checkout_shortcode' ) ) {
                     contentBox.innerHTML = ''; // clear old
                     
                     shippingRows.forEach(function(row) {
-                        // Clone the methods but maintain the actual inputs in the table (hidden)
-                        // Wait, it's better to physically move them so inputs work.
-                        // WooCommerce update_checkout replaces the table body.
-                        // So we must move them on every update.
                         var ul = row.querySelector('#shipping_method');
                         if (ul) {
                             var methods = ul.querySelectorAll('li');
@@ -484,10 +490,9 @@ if ( ! function_exists( 'cmr_modern_checkout_shortcode' ) ) {
                                 var label = li.querySelector('label');
                                 
                                 if (input && label) {
-                                    // Parse label text to extract price to right side
                                     var priceMatch = label.innerHTML.match(/<span[^>]*>(.*?)<\/span>/);
                                     var priceText = priceMatch ? priceMatch[0] : '';
-                                    label.innerHTML = label.innerText.replace(priceText, ''); // Strip price from label
+                                    label.innerHTML = label.innerText.replace(priceText, '');
                                     
                                     var newLabel = document.createElement('label');
                                     newLabel.appendChild(input);
@@ -504,12 +509,11 @@ if ( ! function_exists( 'cmr_modern_checkout_shortcode' ) ) {
                                 }
                             });
                         }
-                        // Hide original row
                         row.style.display = 'none';
                     });
                 }
                 
-                // 4. Move Payment Options to Left Column
+                // 4. Move Payment Options and Email to Left Column
                 function movePayment() {
                     var payment = document.getElementById('payment');
                     if (payment && payment.parentNode !== customerDetails) {
@@ -523,7 +527,6 @@ if ( ! function_exists( 'cmr_modern_checkout_shortcode' ) ) {
                         }
                         customerDetails.appendChild(payment);
                         
-                        // Add return to cart link near place order button
                         var placeOrder = payment.querySelector('.place-order');
                         if (placeOrder && !placeOrder.querySelector('.cmr-return-cart')) {
                             var returnLink = document.createElement('a');
@@ -531,6 +534,31 @@ if ( ! function_exists( 'cmr_modern_checkout_shortcode' ) ) {
                             returnLink.className = 'cmr-return-cart';
                             returnLink.innerHTML = '&larr; Return to Cart';
                             placeOrder.insertBefore(returnLink, placeOrder.firstChild);
+                        }
+                        
+                        // Move Email to very bottom
+                        var emailRow = document.getElementById('billing_email_field');
+                        if (emailRow) {
+                            var contactHeading = document.getElementById('cmr-contact-heading');
+                            if (!contactHeading) {
+                                contactHeading = document.createElement('h3');
+                                contactHeading.id = 'cmr-contact-heading';
+                                contactHeading.className = 'cmr-section-heading cmr-section-heading-small';
+                                contactHeading.innerText = 'Contact information';
+                                customerDetails.appendChild(contactHeading);
+                            }
+                            customerDetails.appendChild(emailRow);
+                            
+                            var guestText = document.getElementById('cmr-guest-text');
+                            if (!guestText) {
+                                guestText = document.createElement('p');
+                                guestText.id = 'cmr-guest-text';
+                                guestText.innerText = 'You are currently checking out as a guest.';
+                                guestText.style.fontSize = '12px';
+                                guestText.style.color = '#6b7280';
+                                guestText.style.marginTop = '8px';
+                                customerDetails.appendChild(guestText);
+                            }
                         }
                     }
                 }
@@ -546,7 +574,6 @@ if ( ! function_exists( 'cmr_modern_checkout_shortcode' ) ) {
                         
                         var content = document.createElement('div');
                         content.className = 'cmr-coupon-content';
-                        // Rebuild coupon form safely without form tags inside form
                         content.innerHTML = '<input type="text" id="cmr_coupon_code" placeholder="Coupon code"> <button type="button" id="cmr_apply_coupon">Apply</button>';
                         
                         table.parentNode.insertBefore(accordion, table);
@@ -568,6 +595,25 @@ if ( ! function_exists( 'cmr_modern_checkout_shortcode' ) ) {
                         });
                     }
                 }
+                
+                // 6. Floating Label Interactions
+                function updateFloatingLabels() {
+                    var rows = document.querySelectorAll('.cmr-modern-checkout-wrapper .form-row');
+                    rows.forEach(function(row) {
+                        var input = row.querySelector('input, textarea, select');
+                        if (input && input.type !== 'checkbox' && input.type !== 'radio') {
+                            if (input.value.trim() !== '' || document.activeElement === input || input.tagName === 'SELECT') {
+                                row.classList.add('float-active');
+                            } else {
+                                row.classList.remove('float-active');
+                            }
+                        }
+                    });
+                }
+                document.addEventListener('input', updateFloatingLabels);
+                document.addEventListener('focusin', updateFloatingLabels);
+                document.addEventListener('focusout', updateFloatingLabels);
+                setTimeout(updateFloatingLabels, 100);
 
                 // Initial setup
                 extractShipping();
@@ -579,6 +625,7 @@ if ( ! function_exists( 'cmr_modern_checkout_shortcode' ) ) {
                     jQuery(document).on('updated_checkout', function() {
                         extractShipping();
                         movePayment();
+                        updateFloatingLabels();
                     });
                 }
                 
