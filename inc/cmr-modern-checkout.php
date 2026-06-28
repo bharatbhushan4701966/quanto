@@ -8,6 +8,20 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+// Add excerpt to product name in checkout order review
+add_filter( 'woocommerce_cart_item_name', 'cmr_checkout_product_excerpt', 10, 3 );
+function cmr_checkout_product_excerpt( $item_name, $cart_item, $cart_item_key ) {
+    if ( is_checkout() ) {
+        $product = $cart_item['data'];
+        $excerpt = $product->get_short_description();
+        if ( !empty($excerpt) ) {
+            $excerpt = wp_trim_words( $excerpt, 15, '...' );
+            $item_name .= '<br><span style="font-size: 11px; color: #6b7280; font-weight: normal; display: block; margin-top: 5px; line-height: 1.4;">' . $excerpt . '</span>';
+        }
+    }
+    return $item_name;
+}
+
 if ( ! function_exists( 'cmr_modern_checkout_shortcode' ) ) {
     function cmr_modern_checkout_shortcode() {
         ob_start();
@@ -614,11 +628,94 @@ if ( ! function_exists( 'cmr_modern_checkout_shortcode' ) ) {
                 document.addEventListener('focusin', updateFloatingLabels);
                 document.addEventListener('focusout', updateFloatingLabels);
                 setTimeout(updateFloatingLabels, 100);
+                
+                // 7. Structure Fixes (Address link, Notes check, Fake billing check, Error icons)
+                function applyStructureFixes() {
+                    // Apartment link
+                    var address2Field = document.getElementById('billing_address_2_field');
+                    if (address2Field && !document.getElementById('cmr_add_apt_link')) {
+                        address2Field.style.display = 'none';
+                        var addApartmentLink = document.createElement('a');
+                        addApartmentLink.id = 'cmr_add_apt_link';
+                        addApartmentLink.href = '#';
+                        addApartmentLink.innerText = '+ Add apartment, suite, etc.';
+                        addApartmentLink.style.display = 'block';
+                        addApartmentLink.style.fontSize = '13px';
+                        addApartmentLink.style.color = '#6b7280';
+                        addApartmentLink.style.marginBottom = '15px';
+                        addApartmentLink.style.textDecoration = 'none';
+                        address2Field.parentNode.insertBefore(addApartmentLink, address2Field);
+                        addApartmentLink.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            address2Field.style.display = 'block';
+                            addApartmentLink.style.display = 'none';
+                        });
+                    }
+                    
+                    // Order Notes checkbox
+                    var orderCommentsField = document.getElementById('order_comments_field');
+                    if (orderCommentsField && !document.getElementById('cmr_toggle_note')) {
+                        orderCommentsField.style.display = 'none';
+                        var noteCheckboxWrapper = document.createElement('div');
+                        noteCheckboxWrapper.className = 'cmr-add-note-wrapper';
+                        noteCheckboxWrapper.style.marginBottom = '20px';
+                        noteCheckboxWrapper.style.marginTop = '20px';
+                        noteCheckboxWrapper.innerHTML = '<label style="position: static; pointer-events: auto; display: flex; align-items: center; gap: 10px; cursor: pointer; color: #6b7280; font-size: 13px;"><input type="checkbox" id="cmr_toggle_note" style="width: 18px; height: 18px; margin: 0; accent-color: #6b46c1; cursor: pointer;">Add a note to your order</label>';
+                        orderCommentsField.parentNode.insertBefore(noteCheckboxWrapper, orderCommentsField);
+                        document.getElementById('cmr_toggle_note').addEventListener('change', function() {
+                            if (this.checked) {
+                                orderCommentsField.style.display = 'block';
+                                updateFloatingLabels();
+                            } else {
+                                orderCommentsField.style.display = 'none';
+                            }
+                        });
+                    }
+                    
+                    // Billing fake checkbox logic
+                    var shipDifferentWrapper = document.getElementById('ship-to-different-address');
+                    if (shipDifferentWrapper && !document.getElementById('cmr_fake_billing_checkbox')) {
+                        var realCheckbox = shipDifferentWrapper.querySelector('input');
+                        if (realCheckbox) {
+                            shipDifferentWrapper.style.display = 'none';
+                            var fakeCheckboxWrapper = document.createElement('div');
+                            fakeCheckboxWrapper.style.marginBottom = '30px';
+                            fakeCheckboxWrapper.style.marginTop = '15px';
+                            fakeCheckboxWrapper.innerHTML = '<label style="position: static; pointer-events: auto; display: flex; align-items: center; gap: 10px; cursor: pointer; color: #4b5563; font-size: 13px;"><input type="checkbox" id="cmr_fake_billing_checkbox" checked style="width: 18px; height: 18px; margin: 0; accent-color: #111827; cursor: pointer;">Use same address for billing</label>';
+                            shipDifferentWrapper.parentNode.insertBefore(fakeCheckboxWrapper, shipDifferentWrapper);
+                            
+                            var fakeCheckbox = document.getElementById('cmr_fake_billing_checkbox');
+                            fakeCheckbox.addEventListener('change', function() {
+                                realCheckbox.checked = !this.checked;
+                                var event = new Event('change', { bubbles: true });
+                                realCheckbox.dispatchEvent(event);
+                            });
+                            // Init woo logic
+                            realCheckbox.checked = false;
+                            var initEvent = new Event('change', { bubbles: true });
+                            realCheckbox.dispatchEvent(initEvent);
+                        }
+                    }
+                    
+                    // Error icons
+                    var errors = document.querySelectorAll('.woocommerce-error');
+                    errors.forEach(function(err) {
+                        if (!err.querySelector('svg')) {
+                            err.style.display = 'flex';
+                            err.style.alignItems = 'center';
+                            err.style.gap = '10px';
+                            var icon = document.createElement('div');
+                            icon.innerHTML = '<svg style="width: 20px; height: 20px; flex-shrink: 0; fill: #dc2626;" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>';
+                            err.insertBefore(icon.firstChild, err.firstChild);
+                        }
+                    });
+                }
 
                 // Initial setup
                 extractShipping();
                 movePayment();
                 buildCoupon();
+                applyStructureFixes();
 
                 // On WooCommerce AJAX update
                 if (typeof jQuery !== 'undefined') {
@@ -626,6 +723,7 @@ if ( ! function_exists( 'cmr_modern_checkout_shortcode' ) ) {
                         extractShipping();
                         movePayment();
                         updateFloatingLabels();
+                        applyStructureFixes();
                     });
                 }
                 
