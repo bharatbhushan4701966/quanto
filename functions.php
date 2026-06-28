@@ -1137,3 +1137,5 @@ add_action('wp_footer', function() {
     </style>
     <?php
 });
+
+require_once QUANTO_DIR_PATH_INC . 'cmr-modern-checkout.php';
