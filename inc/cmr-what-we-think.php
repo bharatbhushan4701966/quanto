@@ -129,6 +129,48 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             font-family: 'Instrument Sans', sans-serif;
             margin: 0;
             letter-spacing: -1px;
+            letter-spacing: -1px;
+        }
+
+        .cmr-wwt-card { flex: 1; min-width: 0; }
+
+        .cmr-wwt-card-img {
+            height: 220px; /* Reduced from 272px to ensure text below is always visible */
+            width: 100%;
+            max-width: 354px;
+            overflow: hidden;
+            margin-bottom: 14px;
+        }
+        .cmr-wwt-card-img img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover; 
+            display: block; 
+        }
+
+        .cmr-wwt-card-cat { display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer; }
+        .cmr-wwt-card-cat-line { width:24px; height:2px; background:#6B3FA0; flex-shrink:0; }
+        .cmr-wwt-card-cat-text { font-size:12px; font-weight:400; color:#6B3FA0; letter-spacing:0.3px; text-transform: uppercase; }
+
+        .cmr-wwt-card-title {
+            font-size: 18px; font-weight: 600; line-height: 1.4;
+            color: #1a1a2e; margin-bottom: 14px; min-height: 44px;
+            font-family: 'Instrument Sans', sans-serif;
+        }
+
+        .cmr-wwt-card-link {
+            display:inline-flex; align-items:center; gap:8px;
+            font-family:"Instrument Sans", sans-serif;
+            font-size:14px; font-weight:600; line-height:1.2; color:#111;
+            text-decoration:none; background:none; border:none;
+            padding:0 0 6px 0; border-bottom:2px solid #111;
+        }
+        .cmr-wwt-card-link:hover { color:#6B3FA0; border-bottom-color: #6B3FA0; }
+        .cmr-wwt-card-link::after {
+            content:""; width:12px; height:12px;
+            background-image:url('https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg');
+            background-repeat:no-repeat; background-size:contain; background-position:center;
+            display:inline-block;
         }
 
         @media (max-width: 1024px) {
