@@ -186,18 +186,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
         .slide-cta-button:hover{
             transform: translateY(-2px);
         }
-        /* SCROLL TRANSFORM STATE */
-        .is-scrolled .slide-blue-layer {
-            opacity: 0;
-            transform: translateY(-150px);
-        }
-        .is-scrolled .slide-image-layer {
-            transform: translate(0, 0);
-            box-shadow: 0 0 0 rgba(0,0,0,0);
-        }
-        .is-scrolled .slide-image-layer img {
-            filter: grayscale(0);
-        }
+        /* SCROLL TRANSFORM STATE (Handled by GSAP now) */
 
         /* Mobile Responsiveness */
         @media (max-width: 1024px) {
@@ -247,10 +236,6 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             }
             .slide-image-layer {
                 transform: translate(-20px, 30px);
-            }
-            
-            .is-scrolled .slide-blue-layer {
-                transform: translateY(-60px);
             }
             
             .slide-main-heading { 
@@ -343,22 +328,57 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             const triggerZone = document.getElementById('slide-trigger-zone');
             
             if (mainBox && triggerZone) {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            mainBox.classList.add('is-scrolled');
-                        } else {
-                            if (entry.boundingClientRect.top > 0) {
-                                mainBox.classList.remove('is-scrolled');
+                const initGSAP = () => {
+                    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+                        setTimeout(initGSAP, 50);
+                        return;
+                    }
+                    gsap.registerPlugin(ScrollTrigger);
+                    
+                    const blueLayer = mainBox.querySelector('.slide-blue-layer');
+                    const imageLayer = mainBox.querySelector('.slide-image-layer');
+                    const img = imageLayer.querySelector('img');
+                    
+                    // Remove CSS transitions so GSAP can scrub smoothly
+                    blueLayer.style.transition = 'none';
+                    imageLayer.style.transition = 'none';
+                    img.style.transition = 'none';
+                    
+                    let mm = gsap.matchMedia();
+                    
+                    // Desktop & Tablet Landscape
+                    mm.add("(min-width: 769px)", () => {
+                        let tl = gsap.timeline({
+                            scrollTrigger: {
+                                trigger: triggerZone,
+                                start: "top 75%",
+                                end: "top 25%",
+                                scrub: 1
                             }
-                        }
+                        });
+                        
+                        tl.to(blueLayer, { opacity: 0, y: -150, ease: "none" }, 0)
+                          .to(imageLayer, { x: 0, y: 0, boxShadow: "0px 0px 0px rgba(0,0,0,0)", ease: "none" }, 0)
+                          .to(img, { filter: "grayscale(0)", ease: "none" }, 0);
                     });
-                }, {
-                    root: null,
-                    threshold: 0.3
-                });
-                
-                observer.observe(triggerZone);
+                    
+                    // Mobile & Tablet Portrait
+                    mm.add("(max-width: 768px)", () => {
+                        let tl = gsap.timeline({
+                            scrollTrigger: {
+                                trigger: mainBox, // Trigger when the image itself enters viewport
+                                start: "top 85%",
+                                end: "center center",
+                                scrub: 1
+                            }
+                        });
+                        
+                        tl.to(blueLayer, { opacity: 0, y: -60, ease: "none" }, 0)
+                          .to(imageLayer, { x: 0, y: 0, boxShadow: "0px 0px 0px rgba(0,0,0,0)", ease: "none" }, 0)
+                          .to(img, { filter: "grayscale(0)", ease: "none" }, 0);
+                    });
+                };
+                initGSAP();
             }
 
             const reportBtn = document.querySelector('.slide-cta-button');
@@ -378,3 +398,4 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
     return ob_get_clean();
 }
 add_shortcode( 'cmr_slide_of_the_day', 'cmr_slide_of_the_day_shortcode' );
+
