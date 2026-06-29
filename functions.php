@@ -928,7 +928,8 @@ add_action('wp_footer', function() {
         body, p, h1, h2, h3, h4, h5, h6, a, button, input, select, textarea, .elementor-button, .elementor-button-text {
             font-family: "Instrument Sans", sans-serif !important;
         }
-    </style>';
+    </style>
+    <?php
 }
 
 
