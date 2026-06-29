@@ -101,7 +101,7 @@ function cmr_team_scroll_shortcode($atts) {
 
         .cmr-team-card-name {
             font-size: 24px;
-            font-weight: 700;
+            font-weight: 600;
             color: #111;
             margin: 0 0 8px 0;
             letter-spacing: -0.5px;
@@ -186,18 +186,35 @@ function cmr_team_scroll_shortcode($atts) {
                 $role = get_post_meta($post_id, 'designation', true);
                 if (!$role) $role = get_post_meta($post_id, '_team_role', true);
                 if (!$role) $role = get_post_meta($post_id, 'role', true);
+                if (!$role) $role = get_post_meta($post_id, 'job_title', true);
+                if (!$role) $role = get_post_meta($post_id, 'position', true);
+                if (!$role) $role = get_post_meta($post_id, 'member_designation', true);
+                if (!$role) $role = get_post_meta($post_id, 'team_designation', true);
 
                 $linkedin = get_post_meta($post_id, 'linkedin', true);
                 if (!$linkedin) $linkedin = get_post_meta($post_id, '_linkedin_url', true);
+                if (!$linkedin) $linkedin = get_post_meta($post_id, 'linkedin_url', true);
+                if (!$linkedin) $linkedin = get_post_meta($post_id, 'linkedin_link', true);
 
                 $twitter = get_post_meta($post_id, 'twitter', true);
                 if (!$twitter) $twitter = get_post_meta($post_id, '_twitter_url', true);
+                if (!$twitter) $twitter = get_post_meta($post_id, 'twitter_url', true);
+                if (!$twitter) $twitter = get_post_meta($post_id, 'twitter_link', true);
+                if (!$twitter) $twitter = get_post_meta($post_id, 'x_url', true);
 
                 $image_url = get_the_post_thumbnail_url($post_id, 'large');
                 if (!$image_url) {
                     $image_url = 'https://via.placeholder.com/600x800.png?text=No+Image'; 
                 }
             ?>
+                <!-- DEBUG META FOR <?php echo esc_html($team_post->post_title); ?>: 
+                <?php 
+                $all_meta = get_post_meta($post_id);
+                foreach($all_meta as $mk => $mv) {
+                    echo esc_html($mk) . ' => ' . esc_html(print_r($mv, true)) . "\n";
+                }
+                ?>
+                -->
                 <div class="cmr-team-card">
                     <div class="cmr-team-card-image">
                         <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($team_post->post_title); ?>">
