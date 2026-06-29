@@ -131,111 +131,17 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             letter-spacing: -1px;
         }
 
-        .cmr-wwt-content {
-            display: flex;
-            align-items: flex-start;
-            gap: 100px; /* Reduced from 200px to give cards more room */
-            margin-top: 20px;
-        }
-
-        .cmr-wwt-left-col { flex: 0 0 240px; padding-top: 10px; }
-
-        .cmr-wwt-menu-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 10px 0;
-            cursor: pointer;
-        }
-
-        .cmr-wwt-bullet {
-            width: 10px; height: 10px;
-            border-radius: 50%;
-            background: #d0d0d5;
-            flex-shrink: 0;
-            transition: background 0.4s ease;
-        }
-
-        .cmr-wwt-menu-label {
-            font-size: 36px;
-            font-weight: 600;
-            color: #c0c0c8;
-            transition: color 0.4s ease;
-            line-height: 1.3;
-            white-space: nowrap;
-            font-family: 'Instrument Sans', sans-serif;
-            letter-spacing: -1px;
-        }
-
-        .cmr-wwt-menu-item:hover .cmr-wwt-menu-label,
-        .cmr-wwt-menu-item.cmr-wwt-on .cmr-wwt-menu-label { color: #6B3FA0; }
-        .cmr-wwt-menu-item.cmr-wwt-on .cmr-wwt-menu-label { font-weight: 700; }
-        .cmr-wwt-menu-item:hover .cmr-wwt-bullet,
-        .cmr-wwt-menu-item.cmr-wwt-on .cmr-wwt-bullet { background: #6B3FA0; }
-
-        .cmr-wwt-right-col { flex: 1; min-width: 0; position: relative; }
-
-        .cmr-wwt-slide {
-            position: absolute; top: 0; left: 0; width: 100%;
-            display: flex; gap: 24px;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 1.5s ease, transform 1.5s ease;
-            pointer-events: none;
-        }
-        .cmr-wwt-slide:first-child { position: relative; }
-        .cmr-wwt-slide.cmr-wwt-show { 
-            opacity: 1; 
-            transform: translateY(0);
-            pointer-events: auto; 
-        }
-
-        .cmr-wwt-card { flex: 1; min-width: 0; }
-
-        .cmr-wwt-card-img {
-            height: 220px; /* Reduced from 272px to ensure text below is always visible */
-            width: 100%;
-            max-width: 354px;
-            overflow: hidden;
-            margin-bottom: 14px;
-        }
-        .cmr-wwt-card-img img {
-            height: 100%;
-            width: 100%;
-            object-fit: cover; 
-            display: block; 
-        }
-
-        .cmr-wwt-card-cat { display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer; }
-        .cmr-wwt-card-cat-line { width:24px; height:2px; background:#6B3FA0; flex-shrink:0; }
-        .cmr-wwt-card-cat-text { font-size:12px; font-weight:400; color:#6B3FA0; letter-spacing:0.3px; text-transform: uppercase; }
-
-        .cmr-wwt-card-title {
-            font-size: 18px; font-weight: 600; line-height: 1.4;
-            color: #1a1a2e; margin-bottom: 14px; min-height: 44px;
-            font-family: 'Instrument Sans', sans-serif;
-        }
-
-        .cmr-wwt-card-link {
-            display:inline-flex; align-items:center; gap:8px;
-            font-family:"Instrument Sans", sans-serif;
-            font-size:14px; font-weight:600; line-height:1.2; color:#111;
-            text-decoration:none; background:none; border:none;
-            padding:0 0 6px 0; border-bottom:2px solid #111;
-        }
-        .cmr-wwt-card-link:hover { color:#6B3FA0; border-bottom-color: #6B3FA0; }
-        .cmr-wwt-card-link::after {
-            content:""; width:12px; height:12px;
-            background-image:url('https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg');
-            background-repeat:no-repeat; background-size:contain; background-position:center;
-            display:inline-block;
-        }
-
         @media (max-width: 1024px) {
             .cmr-wwt-heading { font-size: 34px; }
             .cmr-wwt-left-col { flex: 0 0 200px; }
             .cmr-wwt-menu-label { font-size: 20px; }
-            .cmr-wwt-content { gap: 30px; }
+            .cmr-wwt-desktop-content { display: flex; align-items: flex-start; gap: 30px; margin-top: 20px; }
+            .cmr-wwt-mobile-content { display: none; }
+        }
+        
+        @media (min-width: 1025px) {
+            .cmr-wwt-desktop-content { display: flex; align-items: flex-start; gap: 100px; margin-top: 20px; }
+            .cmr-wwt-mobile-content { display: none; }
         }
 
         @media (max-width: 768px) {
@@ -243,12 +149,36 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             .cmr-wwt-panel { position: relative !important; height: auto !important; padding: 40px 0; }
             .cmr-wwt-heading { font-size: 28px; }
             .cmr-wwt-header { margin-bottom: 20px; }
-            .cmr-wwt-content { flex-direction: column; gap: 24px; }
-            .cmr-wwt-left-col { flex: none; width: 100%; display: flex; gap: 20px; overflow-x: auto; padding-bottom: 10px; }
-            .cmr-wwt-menu-item { padding: 8px 0; }
-            .cmr-wwt-menu-label { font-size: 16px; }
-            .cmr-wwt-slide { position: relative; opacity: 1; pointer-events: auto; flex-direction: column; gap: 20px; display: none; }
-            .cmr-wwt-slide.cmr-wwt-show { display: flex; }
+            .cmr-wwt-desktop-content { display: none; }
+            .cmr-wwt-mobile-content { display: block; margin-top: 20px; }
+            
+            .cmr-wwt-acc-item { margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+            .cmr-wwt-acc-item:last-child { border-bottom: none; }
+            
+            .cmr-wwt-acc-header { 
+                display: flex; align-items: center; justify-content: space-between; 
+                padding: 15px 0; cursor: pointer; 
+            }
+            .cmr-wwt-acc-title-wrap { display: flex; align-items: center; gap: 12px; }
+            .cmr-wwt-acc-bullet { width: 10px; height: 10px; border-radius: 50%; background: #111; transition: background 0.3s; }
+            .cmr-wwt-acc-title { font-size: 20px; font-weight: 600; color: #111; margin: 0; font-family: 'Instrument Sans', sans-serif; letter-spacing: -0.5px; transition: color 0.3s; }
+            
+            .cmr-wwt-acc-icon { 
+                width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
+                transition: transform 0.3s ease; color: #6B3FA0;
+            }
+            .cmr-wwt-acc-icon svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+            
+            .cmr-wwt-acc-content { 
+                max-height: 0; overflow: hidden; transition: max-height 0.4s ease; 
+            }
+            .cmr-wwt-acc-inner { padding: 10px 0 20px 22px; display: flex; flex-direction: column; gap: 24px; }
+            
+            /* Active State */
+            .cmr-wwt-acc-item.active .cmr-wwt-acc-bullet { background: #6B3FA0; }
+            .cmr-wwt-acc-item.active .cmr-wwt-acc-title { color: #6B3FA0; }
+            .cmr-wwt-acc-item.active .cmr-wwt-acc-icon { transform: rotate(90deg); }
+            
             .cmr-wwt-card-img { width: 100%; max-width: 100%; height: 240px; }
             .cmr-wwt-card-title { font-size: 16px; min-height: auto; }
         }
@@ -262,7 +192,7 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
                         <h2 class="cmr-wwt-heading"><?php echo wp_kses_post( $atts['section_title'] ); ?></h2>
                     </div>
                     
-                    <div class="cmr-wwt-content">
+                    <div class="cmr-wwt-desktop-content">
                         <div class="cmr-wwt-left-col">
                             <?php 
                                 $preset_labels = ['Market Updates', 'Industry Insights', 'Research Reports'];
@@ -302,6 +232,48 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
                                 </div>
                             <?php endforeach; ?>
                         </div>
+                    </div>
+
+                    <div class="cmr-wwt-mobile-content">
+                        <?php foreach($slides as $index => $slide): 
+                            $menu_label = isset($preset_labels[$index]) ? $preset_labels[$index] : (isset($slide[0]['cat']) ? $slide[0]['cat'] : 'Insights');
+                        ?>
+                            <div class="cmr-wwt-acc-item <?php echo $index === 0 ? 'active' : ''; ?>">
+                                <div class="cmr-wwt-acc-header">
+                                    <div class="cmr-wwt-acc-title-wrap">
+                                        <span class="cmr-wwt-acc-bullet"></span>
+                                        <h3 class="cmr-wwt-acc-title"><?php echo esc_html($menu_label); ?></h3>
+                                    </div>
+                                    <div class="cmr-wwt-acc-icon">
+                                        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg>
+                                    </div>
+                                </div>
+                                <div class="cmr-wwt-acc-content" style="<?php echo $index === 0 ? 'max-height: 2000px;' : ''; ?>">
+                                    <div class="cmr-wwt-acc-inner">
+                                        <?php foreach($slide as $post): ?>
+                                            <div class="cmr-wwt-card">
+                                                <div class="cmr-wwt-card-img">
+                                                    <a href="<?php echo esc_url($post['link']); ?>">
+                                                        <img src="<?php echo esc_url($post['image']); ?>" alt="<?php echo esc_attr($post['title']); ?>">
+                                                    </a>
+                                                </div>
+                                                <div class="cmr-wwt-card-cat">
+                                                    <span class="cmr-wwt-card-cat-line"></span>
+                                                    <?php $card_cat = isset($preset_labels[$index]) ? $preset_labels[$index] : $post['cat']; ?>
+                                                    <span class="cmr-wwt-card-cat-text"><?php echo esc_html($card_cat); ?></span>
+                                                </div>
+                                                <div class="cmr-wwt-card-title">
+                                                    <a href="<?php echo esc_url($post['link']); ?>" style="text-decoration: none; color: inherit;">
+                                                        <?php echo esc_html($post['title']); ?>
+                                                    </a>
+                                                </div>
+                                                <a class="cmr-wwt-card-link" href="<?php echo esc_url($post['link']); ?>">More Details</a>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
@@ -375,18 +347,45 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             function initMobileWWT() {
                 const wraps = document.querySelectorAll('.cmr-wwt-wrap');
                 wraps.forEach(wrap => {
-                    const slides = wrap.querySelectorAll('.cmr-wwt-slide');
-                    const menuItems = wrap.querySelectorAll('.cmr-wwt-menu-item');
+                    const accItems = wrap.querySelectorAll('.cmr-wwt-acc-item');
                     
-                    menuItems.forEach((item, i) => {
-                        item.addEventListener('click', function() {
-                            menuItems.forEach(m => m.classList.remove('cmr-wwt-on'));
-                            slides.forEach(s => s.classList.remove('cmr-wwt-show'));
-                            
-                            this.classList.add('cmr-wwt-on');
-                            slides[i].classList.add('cmr-wwt-show');
-                        });
+                    accItems.forEach((item) => {
+                        const header = item.querySelector('.cmr-wwt-acc-header');
+                        const content = item.querySelector('.cmr-wwt-acc-content');
+                        
+                        if(header && content) {
+                            header.addEventListener('click', function() {
+                                const isActive = item.classList.contains('active');
+                                
+                                // Close all others
+                                accItems.forEach(acc => {
+                                    acc.classList.remove('active');
+                                    const accContent = acc.querySelector('.cmr-wwt-acc-content');
+                                    if(accContent) {
+                                        accContent.style.maxHeight = '0px';
+                                    }
+                                });
+                                
+                                // Open this one if it wasn't active
+                                if(!isActive) {
+                                    item.classList.add('active');
+                                    content.style.maxHeight = content.scrollHeight + 'px';
+                                }
+                            });
+                        }
                     });
+                    
+                    // On initial load, calculate height for the already active item
+                    const activeItem = wrap.querySelector('.cmr-wwt-acc-item.active');
+                    if(activeItem) {
+                        const content = activeItem.querySelector('.cmr-wwt-acc-content');
+                        if(content) {
+                            // setTimeout to ensure DOM is fully rendered for scrollHeight
+                            setTimeout(() => {
+                                content.style.maxHeight = content.scrollHeight + 'px';
+                            }, 100);
+                        }
+                    }
                 });
             }
             
