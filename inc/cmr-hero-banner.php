@@ -216,7 +216,7 @@ function cmr_hero_banner_shortcode($atts) {
     @media (max-width: 768px){
 
       .hero-content{
-        padding: 100px 16px 40px;
+        padding: 100px 20px 40px !important;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -224,12 +224,12 @@ function cmr_hero_banner_shortcode($atts) {
       }
 
       .hero-title{
-        font-size: 36px;
-        line-height: 46px;
+        font-size: 38px;
+        line-height: 48px;
         letter-spacing: -1px;
         font-weight: 600;
-        max-width: 280px;
-        margin: 0 auto 12px;
+        max-width: 340px;
+        margin: 0 auto 20px;
         text-align: center;
       }
 
@@ -242,11 +242,11 @@ function cmr_hero_banner_shortcode($atts) {
       }
 
       .hero p{
-        font-size: 12px;
-        line-height: 18px;
+        font-size: 16px;
+        line-height: 24px;
         color: #ffffff;
-        max-width: 280px;
-        margin: 0 auto 20px;
+        max-width: 340px;
+        margin: 0 auto 30px;
         text-align: center;
       }
 
@@ -254,20 +254,21 @@ function cmr_hero_banner_shortcode($atts) {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 12px;
+        gap: 16px;
         margin-top: 10px;
         width: 100%;
+        max-width: 340px;
       }
 
       .btn-primary{
         width: 100%;
-        max-width: 280px;
-        height: 44px;
-        border-radius: 30px;
-        font-size: 14px;
-        font-weight: 500;
+        max-width: none;
+        height: 52px;
+        border-radius: 40px;
+        font-size: 16px;
+        font-weight: 600;
         background: #ffffff;
-        color: #000;
+        color: #000 !important;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -275,13 +276,13 @@ function cmr_hero_banner_shortcode($atts) {
 
       .btn-outline{
         width: 100%;
-        max-width: 280px;
-        height: 44px;
-        border-radius: 30px;
-        font-size: 14px;
-        font-weight: 500;
+        max-width: none;
+        height: 52px;
+        border-radius: 40px;
+        font-size: 16px;
+        font-weight: 600;
         border: 1px solid #ffffff;
-        color: #ffffff;
+        color: #ffffff !important;
         display: flex;
         align-items: center;
         justify-content: center;
