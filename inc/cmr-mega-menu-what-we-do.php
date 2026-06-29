@@ -570,9 +570,7 @@ function cmr_inject_what_we_do_mega_menu() {
                         var wrapperOuter = document.createElement('div');
                         wrapperOuter.className = 'cmr-mmw-wrapper-outer';
                         
-                        while (megaMenuDo.childNodes.length > 0) {
-                            wrapperOuter.appendChild(megaMenuDo.childNodes[0]);
-                        }
+                        Array.from(megaMenuDo.childNodes).forEach(function(node) { wrapperOuter.appendChild(node.cloneNode(true)); });
                         
                         parentLi.appendChild(wrapperOuter);
                     }
@@ -586,5 +584,6 @@ function cmr_inject_what_we_do_mega_menu() {
     </script>
     <?php
 }
+
 
 

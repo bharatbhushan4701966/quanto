@@ -213,7 +213,16 @@ function cmr_mega_menu_who_we_are_shortcode($atts) {
                 align-items: flex-start !important;
             }
         }
-    </style>
+    
+        .elementor-nav-menu--dropdown {
+            height: auto !important;
+            max-height: none !important;
+            overflow: visible !important;
+        }
+        .elementor-nav-menu--dropdown a {
+            pointer-events: auto !important;
+        }
+</style>
 
     <div class="cmr-mm-wrapper">
         <div class="cmr-mm-top">
@@ -353,7 +362,16 @@ function cmr_inject_who_we_are_mega_menu() {
                 align-items: flex-start !important;
             }
         }
-    </style>
+    
+        .elementor-nav-menu--dropdown {
+            height: auto !important;
+            max-height: none !important;
+            overflow: visible !important;
+        }
+        .elementor-nav-menu--dropdown a {
+            pointer-events: auto !important;
+        }
+</style>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -372,9 +390,7 @@ function cmr_inject_who_we_are_mega_menu() {
                     if (parentLi) {
                         parentLi.classList.add('cmr-has-mega-menu');
                         // Move all contents of megaMenu into the li
-                        while (megaMenu.childNodes.length > 0) {
-                            parentLi.appendChild(megaMenu.childNodes[0]);
-                        }
+                        Array.from(megaMenu.childNodes).forEach(function(node) { parentLi.appendChild(node.cloneNode(true)); });
                         
                         link.addEventListener('click', function(e) {
                             if (window.innerWidth <= 1024) {
@@ -394,5 +410,7 @@ function cmr_inject_who_we_are_mega_menu() {
     </script>
     <?php
 }
+
+
 
 

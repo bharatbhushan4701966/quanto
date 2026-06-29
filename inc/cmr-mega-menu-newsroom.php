@@ -353,9 +353,7 @@ function cmr_inject_newsroom_mega_menu() {
                         var wrapperOuter = document.createElement('div');
                         wrapperOuter.className = 'cmr-mmn-wrapper-outer';
                         
-                        while (megaMenuNewsroom.childNodes.length > 0) {
-                            wrapperOuter.appendChild(megaMenuNewsroom.childNodes[0]);
-                        }
+                        Array.from(megaMenuNewsroom.childNodes).forEach(function(node) { wrapperOuter.appendChild(node.cloneNode(true)); });
                         
                         parentLi.appendChild(wrapperOuter);
                     }
@@ -369,5 +367,6 @@ function cmr_inject_newsroom_mega_menu() {
     </script>
     <?php
 }
+
 
 

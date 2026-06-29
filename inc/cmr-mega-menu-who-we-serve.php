@@ -387,9 +387,7 @@ function cmr_inject_who_we_serve_mega_menu() {
                     var parentLi = link.closest('li, .menu-item');
                     if (parentLi) {
                         parentLi.classList.add('cmr-has-mega-menu-serve');
-                        while (megaMenuServe.childNodes.length > 0) {
-                            parentLi.appendChild(megaMenuServe.childNodes[0]);
-                        }
+                        Array.from(megaMenuServe.childNodes).forEach(function(node) { parentLi.appendChild(node.cloneNode(true)); });
                     }
                 }
             });
@@ -401,5 +399,6 @@ function cmr_inject_who_we_serve_mega_menu() {
     </script>
     <?php
 }
+
 
 

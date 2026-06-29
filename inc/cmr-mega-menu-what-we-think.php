@@ -429,9 +429,7 @@ function cmr_inject_what_we_think_mega_menu() {
                         var wrapperOuter = document.createElement('div');
                         wrapperOuter.className = 'cmr-mmt-wrapper-outer';
                         
-                        while (megaMenuThink.childNodes.length > 0) {
-                            wrapperOuter.appendChild(megaMenuThink.childNodes[0]);
-                        }
+                        Array.from(megaMenuThink.childNodes).forEach(function(node) { wrapperOuter.appendChild(node.cloneNode(true)); });
                         
                         parentLi.appendChild(wrapperOuter);
                     }
@@ -445,5 +443,6 @@ function cmr_inject_what_we_think_mega_menu() {
     </script>
     <?php
 }
+
 
 
