@@ -121,6 +121,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-explore-sectors.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-stay-updated.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-featured-insight.php';
 require_once get_theme_file_path( 'inc/cmr-what-we-think.php' );
+require_once get_theme_file_path( 'inc/cmr-slide-of-the-day.php' );
 function cmr_get_unique_smb_post_ids() {
     global $wpdb;
     // We cache this query temporarily if needed, but a direct SQL fetch of 500 rows is extremely fast.
