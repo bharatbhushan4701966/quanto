@@ -174,6 +174,33 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
                 grid-template-columns: 1fr;
             }
         }
+            @media (max-width: 1024px) {
+            .cmr-has-mega-menu .cmr-mm-wrapper {
+                position: static !important;
+                transform: none !important;
+                width: 100% !important;
+                box-shadow: none !important;
+                display: none;
+                opacity: 1;
+                visibility: visible;
+                padding-top: 0;
+                margin-top: 0;
+            }
+            .cmr-has-mega-menu.cmr-mobile-open > .cmr-mm-wrapper {
+                display: block !important;
+            }
+            .cmr-has-mega-menu .cmr-mm-wrapper::before {
+                display: none !important;
+            }
+            .cmr-mm-grid {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
+            .cmr-mm-bottom-content {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+            }
+        }
     </style>
 
     <div class="cmr-mms-wrapper">
@@ -318,6 +345,33 @@ function cmr_inject_who_we_serve_mega_menu() {
         .cmr-has-mega-menu-serve > a .sub-arrow {
             display: none !important;
         }
+            @media (max-width: 1024px) {
+            .cmr-has-mega-menu .cmr-mm-wrapper {
+                position: static !important;
+                transform: none !important;
+                width: 100% !important;
+                box-shadow: none !important;
+                display: none;
+                opacity: 1;
+                visibility: visible;
+                padding-top: 0;
+                margin-top: 0;
+            }
+            .cmr-has-mega-menu.cmr-mobile-open > .cmr-mm-wrapper {
+                display: block !important;
+            }
+            .cmr-has-mega-menu .cmr-mm-wrapper::before {
+                display: none !important;
+            }
+            .cmr-mm-grid {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
+            .cmr-mm-bottom-content {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+            }
+        }
     </style>
 
     <script>
@@ -347,3 +401,4 @@ function cmr_inject_who_we_serve_mega_menu() {
     </script>
     <?php
 }
+
