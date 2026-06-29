@@ -58,7 +58,10 @@
             $header_style = $settings_model->get_settings( 'quanto_header_style' );
             $builder_option = $settings_model->get_settings( 'quanto_header_builder_option' );
 
-            if ( is_front_page() || get_the_title() == 'Home' ) {
+            $current_path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+            $is_home_page = is_front_page() || is_home() || get_the_title() == 'Home' || $current_path == '' || $current_path == 'home';
+            
+            if ( $is_home_page ) {
                 $main_header = get_page_by_path( 'main', OBJECT, 'quanto_header' );
                 $blog_header = get_page_by_path( 'blog-header', OBJECT, 'quanto_header' );
                 
@@ -75,22 +78,41 @@
                 if ( $main_header && $blog_header ) {
                     echo '<style>
                     @media (max-width: 1024px) {
-                        .quanto-header-desktop { display: none !important; }
-                        .quanto-header-mobile { display: block !important; }
+                        #quanto-header-desktop { display: none !important; }
+                        #quanto-header-mobile { display: block !important; }
                     }
                     @media (min-width: 1025px) {
-                        .quanto-header-desktop { display: block !important; }
-                        .quanto-header-mobile { display: none !important; }
+                        #quanto-header-desktop { display: block !important; }
+                        #quanto-header-mobile { display: none !important; }
                     }
                     </style>';
                     
-                    echo '<header class="header quanto-header-desktop">';
+                    echo '<header id="quanto-header-desktop" class="header">';
                     echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $main_header->ID, true );
                     echo '</header>';
                     
-                    echo '<header class="header quanto-header-mobile">';
+                    echo '<header id="quanto-header-mobile" class="header" style="display:none;">';
                     echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $blog_header->ID, true );
                     echo '</header>';
+                    
+                    echo '<script>
+                    (function(){
+                        function updateHeaders() {
+                            var desktop = document.getElementById("quanto-header-desktop");
+                            var mobile = document.getElementById("quanto-header-mobile");
+                            if(window.innerWidth <= 1024) {
+                                if(desktop) desktop.style.setProperty("display", "none", "important");
+                                if(mobile) mobile.style.setProperty("display", "block", "important");
+                            } else {
+                                if(desktop) desktop.style.setProperty("display", "block", "important");
+                                if(mobile) mobile.style.setProperty("display", "none", "important");
+                            }
+                        }
+                        window.addEventListener("resize", updateHeaders);
+                        window.addEventListener("DOMContentLoaded", updateHeaders);
+                        updateHeaders();
+                    })();
+                    </script>';
                 } else {
                     if ( $main_header ) {
                         echo '<header class="header">';
