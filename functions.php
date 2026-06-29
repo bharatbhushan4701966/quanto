@@ -890,57 +890,6 @@ add_action('wp_head', function() {
     <?php
 });
 
-// Move social icons from image thumb to below text using JS
-add_action('wp_footer', function() {
-    ?>
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var teamBoxes = document.querySelectorAll(".quanto-team-box");
-        teamBoxes.forEach(function(box) {
-            var ul = box.querySelector(".custom-ul");
-            var content = box.querySelector(".team-content");
-            if (ul && content) {
-                content.appendChild(ul);
-            }
-        });
-    });
-    </script>
-    <style id="quanto-team-social-css">
-    /* Styling for the relocated social icons */
-    html body .quanto-team-box .team-content .custom-ul {
-        display: flex !important;
-        gap: 15px !important;
-        margin-top: 15px !important;
-        padding: 0 !important;
-        list-style: none !important;
-    }
-    html body .quanto-team-box .team-content .custom-ul li {
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    html body .quanto-team-box .team-content .custom-ul li a {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        width: 32px !important;
-        height: 32px !important;
-        color: #111 !important;
-    }
-    </style>
-    <?php
-});
-
-// Apply Instrument Sans globally
-add_action('wp_head', 'cmr_global_font_style', 999);
-function cmr_global_font_style() {
-    echo '<style>
-        body, p, h1, h2, h3, h4, h5, h6, a, button, input, select, textarea, .elementor-button, .elementor-button-text {
-            font-family: "Instrument Sans", sans-serif !important;
-        }
-    </style>';
-}
-
-
 
 // Temporary endpoint to migrate Press Releases to CMR News
 add_action( 'rest_api_init', function () {
