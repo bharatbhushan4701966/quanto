@@ -58,7 +58,50 @@
             $header_style = $settings_model->get_settings( 'quanto_header_style' );
             $builder_option = $settings_model->get_settings( 'quanto_header_builder_option' );
 
-            if ( $header_style == 'header_builder' && ! empty( $builder_option ) ) {
+            if ( is_front_page() || get_the_title() == 'Home' ) {
+                $main_header = get_page_by_path( 'main', OBJECT, 'quanto_header' );
+                $blog_header = get_page_by_path( 'blog-header', OBJECT, 'quanto_header' );
+                
+                if ( ! $main_header ) {
+                    $main_header = get_post( quanto_opt( 'quanto_header_select_options' ) );
+                }
+                if ( ! $blog_header ) {
+                    $archive_header_id = quanto_opt('quanto_archive_header_select_options');
+                    if ( ! empty( $archive_header_id ) ) {
+                        $blog_header = get_post( $archive_header_id );
+                    }
+                }
+
+                if ( $main_header && $blog_header ) {
+                    echo '<style>
+                    @media (max-width: 1024px) {
+                        .quanto-header-desktop { display: none !important; }
+                        .quanto-header-mobile { display: block !important; }
+                    }
+                    @media (min-width: 1025px) {
+                        .quanto-header-desktop { display: block !important; }
+                        .quanto-header-mobile { display: none !important; }
+                    }
+                    </style>';
+                    
+                    echo '<header class="header quanto-header-desktop">';
+                    echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $main_header->ID, true );
+                    echo '</header>';
+                    
+                    echo '<header class="header quanto-header-mobile">';
+                    echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $blog_header->ID, true );
+                    echo '</header>';
+                } else {
+                    if ( $main_header ) {
+                        echo '<header class="header">';
+                        echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $main_header->ID, true );
+                        echo '</header>';
+                    } else {
+                        quanto_global_header_option();
+                    }
+                }
+            }
+            elseif ( $header_style == 'header_builder' && ! empty( $builder_option ) ) {
                 $header_post = get_post( $builder_option );
                 echo '<header class="header">';
                 echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $header_post->ID, true );
