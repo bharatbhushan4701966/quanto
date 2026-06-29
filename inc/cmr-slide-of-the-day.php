@@ -231,11 +231,18 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
                 margin-right: auto;
             }
             .slide-blue-layer {
-                height: calc(100% + 40px);
-                transform: translateY(-30px);
+                width: 100%;
+                height: calc(100% + 20px);
+                left: 0;
+                top: 0;
+                transform: none;
             }
             .slide-image-layer {
-                transform: translate(-20px, 30px);
+                width: calc(100% - 30px);
+                height: 100%;
+                left: 15px;
+                top: 0;
+                transform: none;
             }
             
             .slide-main-heading { 
@@ -372,10 +379,9 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
                                 scrub: 1
                             }
                         });
-                        
-                        tl.to(blueLayer, { opacity: 0, y: -60, ease: "none" }, 0)
-                          .to(imageLayer, { x: 0, y: 0, boxShadow: "0px 0px 0px rgba(0,0,0,0)", ease: "none" }, 0)
-                          .to(img, { filter: "grayscale(0)", ease: "none" }, 0);
+                        // On mobile, blue box and image remain static as a frame.
+                        // Only the grayscale effect animates!
+                        tl.to(img, { filter: "grayscale(0)", ease: "none" }, 0);
                     });
                 };
                 initGSAP();
