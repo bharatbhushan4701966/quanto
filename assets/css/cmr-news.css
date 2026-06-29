@@ -266,18 +266,112 @@
 }
 
 @media (max-width: 768px) {
-    .cmr-card-featured {
-        height: 400px;
+    /* Horizontal Scrolling for Tabs */
+    .cmr-news-tabs {
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 10px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
     }
-    .cmr-card-featured .cmr-card-content {
+    .cmr-news-tabs::-webkit-scrollbar {
+        display: none;
+    }
+    .cmr-news-tab-btn {
+        flex-shrink: 0;
+    }
+
+    /* Horizontal Scrolling for Grid */
+    .cmr-news-grid,
+    .cmr-media-grid {
+        display: flex;
+        overflow-x: auto;
+        gap: 15px;
+        padding-bottom: 15px;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+    .cmr-news-grid::-webkit-scrollbar,
+    .cmr-media-grid::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .cmr-media-right {
+        display: contents; 
+    }
+
+    /* Make all cards look like featured cards & fit horizontal scroll */
+    .cmr-card-featured,
+    .cmr-card-standard,
+    .cmr-media-left,
+    .cmr-media-horizontal-card {
+        flex: 0 0 85%;
+        height: 400px;
+        scroll-snap-align: start;
+        grid-column: auto;
+    }
+    
+    .cmr-card-standard .cmr-card-link-wrapper,
+    .cmr-media-horizontal-card .cmr-card-link-wrapper {
+        position: relative;
+        height: 100%;
+        display: block !important;
+    }
+    
+    .cmr-card-standard .cmr-card-image-wrap,
+    .cmr-media-horizontal-card .cmr-card-image-wrap {
+        height: 100% !important;
+        width: 100% !important;
+        flex: 1 !important;
+    }
+    
+    .cmr-card-standard .cmr-card-content,
+    .cmr-media-horizontal-card .cmr-card-content {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+        background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+        color: #fff;
+    }
+
+    .cmr-card-standard .cmr-card-title,
+    .cmr-media-horizontal-card .cmr-card-title {
+        color: #fff !important;
+        font-size: 18px !important;
+    }
+    
+    .cmr-card-standard .cmr-card-meta,
+    .cmr-media-horizontal-card .cmr-category-tag {
+        color: #ddd !important;
+    }
+
+    .cmr-card-standard .cmr-read-coverage,
+    .cmr-media-horizontal-card .cmr-read-coverage {
+        color: #fff !important;
+        border-color: #fff !important;
+    }
+
+    .cmr-card-standard .cmr-card-logo,
+    .cmr-media-horizontal-card .cmr-card-logo {
+        position: absolute;
+        top: auto;
+        bottom: 160px;
+        left: 20px;
+        width: 60px;
+        height: 60px;
+        z-index: 2;
+    }
+
+    .cmr-card-featured .cmr-card-content,
+    .cmr-media-left .cmr-card-content {
         padding: 20px;
     }
     .cmr-card-featured .cmr-card-logo {
         left: 20px;
         bottom: 160px;
-    }
-    .cmr-card-standard {
-        grid-column: span 12;
     }
 }
 
@@ -380,16 +474,7 @@
         height: 300px;
     }
 }
-@media (max-width: 600px) {
-    .cmr-media-horizontal-card .cmr-card-link-wrapper {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .cmr-media-horizontal-card .cmr-card-image-wrap {
-        flex: 0 0 200px;
-        width: 100%;
-    }
-}
+/* 600px removed */
 
 .cmr-arrow-icon {
     width: 14px;
