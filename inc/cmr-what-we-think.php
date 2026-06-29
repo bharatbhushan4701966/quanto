@@ -173,6 +173,26 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             display:inline-block;
         }
 
+        .cmr-wwt-menu-item:hover .cmr-wwt-bullet,
+        .cmr-wwt-menu-item.cmr-wwt-on .cmr-wwt-bullet { background: #6B3FA0; }
+
+        .cmr-wwt-right-col { flex: 1; min-width: 0; position: relative; }
+
+        .cmr-wwt-slide {
+            position: absolute; top: 0; left: 0; width: 100%;
+            display: flex; gap: 24px;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.5s ease, transform 1.5s ease;
+            pointer-events: none;
+        }
+        .cmr-wwt-slide:first-child { position: relative; }
+        .cmr-wwt-slide.cmr-wwt-show { 
+            opacity: 1; 
+            transform: translateY(0);
+            pointer-events: auto; 
+        }
+
         @media (max-width: 1024px) {
             .cmr-wwt-heading { font-size: 34px; }
             .cmr-wwt-left-col { flex: 0 0 200px; }
