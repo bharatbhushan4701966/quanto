@@ -202,7 +202,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
         /* Mobile Responsiveness */
         @media (max-width: 1024px) {
             .slide-main-layout {
-                flex-direction: column;
+                flex-direction: column-reverse;
                 gap: 50px;
             }
             .slide-right-column { padding-top: 50px; }
@@ -230,7 +230,10 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             .slide-right-column {
                 padding-top: 0;
                 padding-bottom: 60px;
-                text-align: left;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
             }
             .slide-sticky-box {
                 width: 90%; /* Slight margin on mobile for the blue box to overflow correctly */
@@ -274,10 +277,13 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             }
             .slide-badge {
                 margin-bottom: 20px;
+                justify-content: center;
             }
             .slide-cta-button {
                 padding: 14px 24px;
                 font-size: 15px !important;
+                width: 100%;
+                justify-content: center;
             }
         }
         @media (max-width: 480px) {
@@ -337,21 +343,22 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             const triggerZone = document.getElementById('slide-trigger-zone');
             
             if (mainBox && triggerZone) {
-                window.addEventListener('scroll', () => {
-                    const rect = triggerZone.getBoundingClientRect();
-                    const viewportHeight = window.innerHeight;
-                    
-                    // Calculate progress relative to viewport middle
-                    const triggerStart = viewportHeight * 0.75;
-                    const progress = (triggerStart - rect.top) / (viewportHeight * 0.5);
-                    
-                    // Apply the transform class based on scroll progress
-                    if (progress > 0.2) {
-                        mainBox.classList.add('is-scrolled');
-                    } else {
-                        mainBox.classList.remove('is-scrolled');
-                    }
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            mainBox.classList.add('is-scrolled');
+                        } else {
+                            if (entry.boundingClientRect.top > 0) {
+                                mainBox.classList.remove('is-scrolled');
+                            }
+                        }
+                    });
+                }, {
+                    root: null,
+                    threshold: 0.3
                 });
+                
+                observer.observe(triggerZone);
             }
 
             const reportBtn = document.querySelector('.slide-cta-button');
