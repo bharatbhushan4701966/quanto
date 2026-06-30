@@ -178,7 +178,163 @@ function cmr_mega_menu_newsroom_shortcode($atts) {
                 width: 100%;
             }
         }
-                        
+                        @media (max-width: 1024px) {
+            .cmr-mm-label, .cmr-mmt-label, .cmr-mmw-label, .cmr-mms-label, .cmr-mmn-label, .cmr-mmc-label { display: none !important; }
+            .cmr-has-mega-menu-newsroom .cmr-mmn-wrapper-outer {
+                position: static !important;
+                transform: none !important;
+                width: 100% !important;
+                box-shadow: none !important;
+                display: none;
+                opacity: 1;
+                visibility: visible;
+                padding-top: 0;
+                margin-top: 0;
+            }
+            .cmr-has-mega-menu-newsroom.cmr-mobile-open > .cmr-mmn-wrapper-outer {
+                display: block !important;
+            }
+            .cmr-has-mega-menu-newsroom .cmr-mmn-wrapper-outer::before {
+                display: none !important;
+            }
+            .cmr-mm-grid {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
+            .cmr-mm-bottom-content {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+            }
+        }
+    </style>
+
+    <div class="cmr-mmn-wrapper">
+        <div class="cmr-mmn-left">
+            <div class="cmr-mmn-label">NEWSROOM</div>
+            <a href="<?php echo esc_url( home_url( '/press-releases/' ) ); ?>" class="cmr-mmn-item">
+                <h4>Media Releases</h4>
+                <p>Official company announcements and updates</p>
+            </a>
+            <a href="<?php echo esc_url( home_url( '/quarterly-results/' ) ); ?>" class="cmr-mmn-item">
+                <h4>Quarterly Results</h4>
+                <p>Financial performance and investor updates</p>
+            </a>
+            <a href="<?php echo esc_url( home_url( '/cmr-news/' ) ); ?>" class="cmr-mmn-item">
+                <h4>CMR in News</h4>
+                <p>Featured coverage across leading media</p>
+            </a>
+        </div>
+
+        <div class="cmr-mmn-right">
+            <div class="cmr-mmn-label" style="margin-bottom: 15px;">LATEST ANNOUNCEMENT</div>
+            
+            <?php if ($latest_news) : 
+                $thumbnail_url = get_the_post_thumbnail_url( $latest_news->ID, 'medium_large' );
+                if ( ! $thumbnail_url ) {
+                    $thumbnail_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
+                }
+            ?>
+            <a href="<?php echo esc_url(get_permalink($latest_news->ID)); ?>" class="cmr-mmn-announcement">
+                <div class="cmr-mmn-announcement-img">
+                    <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr(get_the_title($latest_news->ID)); ?>">
+                </div>
+                <div class="cmr-mmn-announcement-title">
+                    <?php echo esc_html(get_the_title($latest_news->ID)); ?>
+                </div>
+                <div class="cmr-mmn-announcement-desc">
+                    <?php echo wp_trim_words(get_the_excerpt($latest_news->ID), 15); ?>
+                </div>
+                <div class="cmr-mmn-read-more">
+                    Read full Release <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
+            </a>
+            <?php else : ?>
+            <a href="#" class="cmr-mmn-announcement">
+                <div class="cmr-mmn-announcement-img">
+                    <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg" alt="Latest Announcement">
+                </div>
+                <div class="cmr-mmn-announcement-title">
+                    Explore our newest corporate updates.
+                </div>
+                <div class="cmr-mmn-announcement-desc">
+                    Check out the all new dashboard view. Pages now load faster.
+                </div>
+                <div class="cmr-mmn-read-more">
+                    Read full Release <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
+            </a>
+            <?php endif; ?>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+
+add_action('wp_footer', 'cmr_inject_newsroom_mega_menu', 100);
+function cmr_inject_newsroom_mega_menu() {
+    $mega_menu_html = do_shortcode('[cmr_mega_menu_newsroom]');
+    ?>
+    <div id="cmr-hidden-mega-menu-newsroom" style="display: none;">
+        <?php echo $mega_menu_html; ?>
+    </div>
+
+    <style>
+        .cmr-has-mega-menu-newsroom {
+            position: relative !important;
+        }
+        
+        .cmr-mmn-wrapper-outer {
+            position: absolute !important;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: max-content !important;
+            max-width: none !important;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+            padding-top: 15px;
+            z-index: 9999;
+        }
+
+        .elementor-nav-menu--main .elementor-item:hover + .cmr-mmn-wrapper-outer,
+        .cmr-has-mega-menu-newsroom:hover .cmr-mmn-wrapper-outer {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+            top: 60px !important;
+        }
+
+        .cmr-has-mega-menu-newsroom > a .sub-arrow {
+            display: none !important;
+        }
+            @media (max-width: 1024px) {
+            .cmr-has-mega-menu .cmr-mm-wrapper {
+                position: static !important;
+                transform: none !important;
+                width: 100% !important;
+                box-shadow: none !important;
+                display: none;
+                opacity: 1;
+                visibility: visible;
+                padding-top: 0;
+                margin-top: 0;
+            }
+            .cmr-has-mega-menu.cmr-mobile-open > .cmr-mm-wrapper {
+                display: block !important;
+            }
+            .cmr-has-mega-menu .cmr-mm-wrapper::before {
+                display: none !important;
+            }
+            .cmr-mm-grid {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
+            .cmr-mm-bottom-content {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+            }
+        }
     </style>
 
     <script>

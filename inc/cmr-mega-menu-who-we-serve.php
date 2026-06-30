@@ -174,7 +174,206 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
                 grid-template-columns: 1fr;
             }
         }
-                        
+                        @media (max-width: 1024px) {
+            .cmr-mm-label, .cmr-mmt-label, .cmr-mmw-label, .cmr-mms-label, .cmr-mmn-label, .cmr-mmc-label { display: none !important; }
+            .cmr-has-mega-menu-serve .cmr-mms-wrapper {
+                position: static !important;
+                transform: none !important;
+                width: 100% !important;
+                box-shadow: none !important;
+                display: none;
+                opacity: 1;
+                visibility: visible;
+                padding-top: 0;
+                margin-top: 0;
+            }
+            .cmr-has-mega-menu-serve.cmr-mobile-open > .cmr-mms-wrapper {
+                display: block !important;
+            }
+            .cmr-has-mega-menu-serve .cmr-mms-wrapper::before {
+                display: none !important;
+            }
+            .cmr-mm-grid {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
+            .cmr-mm-bottom-content {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+            }
+        }
+    </style>
+
+    <div class="cmr-mms-wrapper">
+        <div class="cmr-mms-top">
+            <div class="cmr-mms-col">
+                <div class="cmr-mms-label">WHO WE SERVE</div>
+                
+                <a href="<?php echo esc_url( home_url( '/who-we-serve/' ) ); ?>" class="cmr-mms-item">
+                    <div class="cmr-mms-item-header">
+                        <h4>Automotive</h4>
+                        <span class="cmr-mms-badge">New</span>
+                    </div>
+                    <p>Insights for the mobility ecosystem</p>
+                </a>
+                
+                <a href="<?php echo esc_url( home_url( '/consumer-tech/' ) ); ?>" class="cmr-mms-item">
+                    <div class="cmr-mms-item-header">
+                        <h4>Consumer Tech</h4>
+                    </div>
+                    <p>Understanding digital consumer behavior</p>
+                </a>
+                
+                <a href="<?php echo esc_url( home_url( '/digital-supply-chain/' ) ); ?>" class="cmr-mms-item">
+                    <div class="cmr-mms-item-header">
+                        <h4>Digital Supply Chain</h4>
+                    </div>
+                    <p>Intelligence for connected supply chains</p>
+                </a>
+                
+                <a href="<?php echo esc_url( home_url( '/it-telecom/' ) ); ?>" class="cmr-mms-item">
+                    <div class="cmr-mms-item-header">
+                        <h4>IT & Telecom</h4>
+                    </div>
+                    <p>Research across technology markets</p>
+                </a>
+                
+                <a href="<?php echo esc_url( home_url( '/semiconductors/' ) ); ?>" class="cmr-mms-item">
+                    <div class="cmr-mms-item-header">
+                        <h4>Semiconductors</h4>
+                        <span class="cmr-mms-badge">New</span>
+                    </div>
+                    <p>Tracking innovation and demand shifts</p>
+                </a>
+            </div>
+            
+            
+        </div>
+
+        <div class="cmr-mms-bottom">
+            <div class="cmr-mms-label">INSIGHT</div>
+            <div class="cmr-mms-insight-list">
+                <a href="<?php echo esc_url( home_url( '/insight-1/' ) ); ?>" class="cmr-mms-insight-item">
+                    <div class="cmr-mms-insight-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="9" y1="18" x2="15" y2="18"></line>
+                            <line x1="10" y1="22" x2="14" y2="22"></line>
+                            <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 12 3a4.65 4.65 0 0 0-4.5 4.5c0 .89.28 1.5.83 2.1.84.89 1.47 1.83 1.67 2.9"></path>
+                            <line x1="12" y1="7" x2="12" y2="10"></line>
+                            <line x1="8" y1="11" x2="10" y2="11"></line>
+                            <line x1="14" y1="11" x2="16" y2="11"></line>
+                        </svg>
+                    </div>
+                    Debugging with product analytics
+                    <svg class="cmr-mms-insight-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+                <a href="<?php echo esc_url( home_url( '/insight-2/' ) ); ?>" class="cmr-mms-insight-item">
+                    <div class="cmr-mms-insight-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="9" y1="18" x2="15" y2="18"></line>
+                            <line x1="10" y1="22" x2="14" y2="22"></line>
+                            <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 12 3a4.65 4.65 0 0 0-4.5 4.5c0 .89.28 1.5.83 2.1.84.89 1.47 1.83 1.67 2.9"></path>
+                            <line x1="12" y1="7" x2="12" y2="10"></line>
+                            <line x1="8" y1="11" x2="10" y2="11"></line>
+                            <line x1="14" y1="11" x2="16" y2="11"></line>
+                        </svg>
+                    </div>
+                    Why it's never too early to add product ana...
+                    <svg class="cmr-mms-insight-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+                <a href="<?php echo esc_url( home_url( '/insight-3/' ) ); ?>" class="cmr-mms-insight-item">
+                    <div class="cmr-mms-insight-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="9" y1="18" x2="15" y2="18"></line>
+                            <line x1="10" y1="22" x2="14" y2="22"></line>
+                            <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 12 3a4.65 4.65 0 0 0-4.5 4.5c0 .89.28 1.5.83 2.1.84.89 1.47 1.83 1.67 2.9"></path>
+                            <line x1="12" y1="7" x2="12" y2="10"></line>
+                            <line x1="8" y1="11" x2="10" y2="11"></line>
+                            <line x1="14" y1="11" x2="16" y2="11"></line>
+                        </svg>
+                    </div>
+                    Data implementation, starting with the 'why'
+                    <svg class="cmr-mms-insight-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+            </div>
+        </div>
+    <?php
+    return ob_get_clean();
+}
+
+// Automatically inject the mega menu into the nav bar
+add_action('wp_footer', 'cmr_inject_who_we_serve_mega_menu', 100);
+function cmr_inject_who_we_serve_mega_menu() {
+    // Generate the mega menu HTML
+    $mega_menu_html = do_shortcode('[cmr_mega_menu_who_we_serve]');
+    ?>
+    <div id="cmr-hidden-mega-menu-serve" style="display: none;">
+        <?php echo $mega_menu_html; ?>
+    </div>
+
+    <style>
+        /* CSS to make the nav item act as a dropdown wrapper */
+        .cmr-has-mega-menu-serve {
+            position: relative !important;
+        }
+        
+        .cmr-mms-wrapper {
+            position: absolute !important;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: max-content !important;
+            max-width: none !important;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+            padding-top: 15px;
+            z-index: 9999;
+        }
+
+        /* Show on hover */
+        .elementor-nav-menu--main .elementor-item:hover + .cmr-mms-wrapper-outer,
+        .cmr-has-mega-menu-serve:hover .cmr-mms-wrapper-outer,
+        .elementor-nav-menu--main .elementor-item:hover + .cmr-mms-wrapper,
+        .cmr-has-mega-menu-serve:hover .cmr-mms-wrapper {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+            top: 80px !important;
+        }
+
+        /* Hide the default submenu arrow if there is one */
+        .cmr-has-mega-menu-serve > a .sub-arrow {
+            display: none !important;
+        }
+            @media (max-width: 1024px) {
+            .cmr-mm-label, .cmr-mmt-label { display: none !important; }
+            .cmr-has-mega-menu .cmr-mm-wrapper {
+                position: static !important;
+                transform: none !important;
+                width: 100% !important;
+                box-shadow: none !important;
+                display: none;
+                opacity: 1;
+                visibility: visible;
+                padding-top: 0;
+                margin-top: 0;
+            }
+            .cmr-has-mega-menu.cmr-mobile-open > .cmr-mm-wrapper {
+                display: block !important;
+            }
+            .cmr-has-mega-menu .cmr-mm-wrapper::before {
+                display: none !important;
+            }
+            .cmr-mm-grid {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
+            .cmr-mm-bottom-content {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+            }
+        }
     </style>
 
     <script>

@@ -231,7 +231,187 @@ function cmr_mega_menu_what_we_think_shortcode($atts) {
                 flex-direction: column;
             }
         }
-                        
+                        @media (max-width: 1024px) {
+            .cmr-mm-label, .cmr-mmt-label, .cmr-mmw-label, .cmr-mms-label, .cmr-mmn-label, .cmr-mmc-label { display: none !important; }
+            .cmr-has-mega-menu-think .cmr-mmt-wrapper-outer {
+                position: static !important;
+                transform: none !important;
+                width: 100% !important;
+                box-shadow: none !important;
+                display: none;
+                opacity: 1;
+                visibility: visible;
+                padding-top: 0;
+                margin-top: 0;
+            }
+            .cmr-has-mega-menu-think.cmr-mobile-open > .cmr-mmt-wrapper-outer {
+                display: block !important;
+            }
+            .cmr-has-mega-menu-think .cmr-mmt-wrapper-outer::before {
+                display: none !important;
+            }
+            .cmr-mm-grid {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
+            .cmr-mm-bottom-content {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+            }
+        }
+    </style>
+
+    <div class="cmr-mmt-wrapper">
+        <div class="cmr-mmt-left">
+            <div class="cmr-mmt-col">
+                <div class="cmr-mmt-label">WHAT WE THINK</div>
+                <a href="<?php echo esc_url( home_url( '/research-reports/' ) ); ?>" class="cmr-mmt-item">
+                    <h4>Research Reports</h4>
+                    <p>Data-driven insights and forecasts</p>
+                </a>
+                <a href="<?php echo esc_url( home_url( '/viewpoints/' ) ); ?>" class="cmr-mmt-item">
+                    <h4>View Points</h4>
+                    <p>Expert analysis on emerging trends</p>
+                </a>
+                <a href="<?php echo esc_url( home_url( '/market-updates/' ) ); ?>" class="cmr-mmt-item">
+                    <h4>Market Updates</h4>
+                    <p>Latest developments shaping industries</p>
+                </a>
+            </div>
+            <div class="cmr-mmt-col">
+                <div class="cmr-mmt-label">CMR LIVE</div>
+                <a href="<?php echo esc_url( home_url( '/top-view/' ) ); ?>" class="cmr-mmt-item">
+                    <h4>Top View</h4>
+                    <p>Watch expert perspectives and industry conversations.</p>
+                </a>
+                <a href="<?php echo esc_url( home_url( '/podcasts/' ) ); ?>" class="cmr-mmt-item">
+                    <h4>Podcasts</h4>
+                    <p>Expert conversations on trends and innovation.</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="cmr-mmt-right">
+            <div class="cmr-mmt-label">REPORT</div>
+            
+            <?php if ($product) : 
+                $price = get_post_meta($product->ID, '_regular_price', true);
+                $price_display = $price ? '$' . $price : '$450';
+                $thumbnail_url = get_the_post_thumbnail_url( $product->ID, 'medium' );
+                if ( ! $thumbnail_url ) {
+                    $thumbnail_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
+                }
+            ?>
+            <a href="<?php echo esc_url(get_permalink($product->ID)); ?>" class="cmr-mmt-report-card">
+                <div class="cmr-mmt-report-img">
+                    <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr(get_the_title($product->ID)); ?>">
+                </div>
+                <div class="cmr-mmt-report-content">
+                    <div class="cmr-mmt-report-cat">IT & Telecom</div>
+                    <div class="cmr-mmt-report-title"><?php echo esc_html(get_the_title($product->ID)); ?></div>
+                    <div class="cmr-mmt-report-meta">
+                        <div class="cmr-mmt-report-rating">
+                            ★ ★ ★ ★ ★ <span class="cmr-mmt-report-rating-count">(2)</span>
+                        </div>
+                        <div class="cmr-mmt-report-price"><?php echo esc_html($price_display); ?></div>
+                    </div>
+                    <div class="cmr-mmt-report-btn">
+                        Download Report ↓
+                    </div>
+                </div>
+            </a>
+            <?php else : ?>
+            <a href="#" class="cmr-mmt-report-card">
+                <div class="cmr-mmt-report-img">
+                    <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg" alt="Report">
+                </div>
+                <div class="cmr-mmt-report-content">
+                    <div class="cmr-mmt-report-cat">IT & Telecom</div>
+                    <div class="cmr-mmt-report-title">Steering Innovation: Technology Trends and Opportunities in India's Startup</div>
+                    <div class="cmr-mmt-report-meta">
+                        <div class="cmr-mmt-report-rating">
+                            ★ ★ ★ ★ ★ <span class="cmr-mmt-report-rating-count">(2)</span>
+                        </div>
+                        <div class="cmr-mmt-report-price">$450</div>
+                    </div>
+                    <div class="cmr-mmt-report-btn">
+                        Download Report ↓
+                    </div>
+                </div>
+            </a>
+            <?php endif; ?>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+
+add_action('wp_footer', 'cmr_inject_what_we_think_mega_menu', 100);
+function cmr_inject_what_we_think_mega_menu() {
+    $mega_menu_html = do_shortcode('[cmr_mega_menu_what_we_think]');
+    ?>
+    <div id="cmr-hidden-mega-menu-think" style="display: none;">
+        <?php echo $mega_menu_html; ?>
+    </div>
+
+    <style>
+        .cmr-has-mega-menu-think {
+            position: relative !important;
+        }
+        
+        .cmr-mmt-wrapper-outer {
+            position: absolute !important;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: max-content !important;
+            max-width: none !important;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+            padding-top: 15px;
+            z-index: 9999;
+        }
+
+        .elementor-nav-menu--main .elementor-item:hover + .cmr-mmt-wrapper-outer,
+        .cmr-has-mega-menu-think:hover .cmr-mmt-wrapper-outer {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+            top: 60px !important;
+        }
+
+        .cmr-has-mega-menu-think > a .sub-arrow {
+            display: none !important;
+        }
+            @media (max-width: 1024px) {
+            .cmr-mm-label, .cmr-mmt-label { display: none !important; }
+            .cmr-has-mega-menu .cmr-mm-wrapper {
+                position: static !important;
+                transform: none !important;
+                width: 100% !important;
+                box-shadow: none !important;
+                display: none;
+                opacity: 1;
+                visibility: visible;
+                padding-top: 0;
+                margin-top: 0;
+            }
+            .cmr-has-mega-menu.cmr-mobile-open > .cmr-mm-wrapper {
+                display: block !important;
+            }
+            .cmr-has-mega-menu .cmr-mm-wrapper::before {
+                display: none !important;
+            }
+            .cmr-mm-grid {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
+            .cmr-mm-bottom-content {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+            }
+        }
     </style>
 
     <script>
