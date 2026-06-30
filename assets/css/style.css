@@ -1559,6 +1559,10 @@ Mobile Menu Menu CSS
   visibility: visible;
 }
 
+body.quanto-body-visible {
+  overflow: hidden !important;
+}
+
 .quanto-menu-wrapper.quanto-body-visible .quanto-menu-area {
   left: 0;
   opacity: 1;
@@ -8808,4 +8812,7 @@ h1.custom-product-title {
     flex: 1;
   }
 }
+
+
+@media (max-width: 1024px) { .cmr-mobile-open > div[class*='-wrapper'] { margin-bottom: 40px !important; } }
 
