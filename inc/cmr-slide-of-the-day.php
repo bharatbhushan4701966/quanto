@@ -278,11 +278,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
                 justify-content: center;
             }
         }
-        @media (max-width: 480px) {
-            .slide-image-layer {
-                transform: translate(-10px, 20px);
-            }
-        }
+
     </style>
 
     <div class="brain-component-wrapper">
