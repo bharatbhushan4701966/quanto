@@ -415,49 +415,7 @@ function cmr_mega_menu_connect_shortcode($atts) {
         </div>
     </div>
     
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var megaMenuTemplate = document.getElementById('cmr-mmc-wrapper-inner');
-            if (!megaMenuTemplate) return;
-
-            function injectMegaMenu() {
-                var navLinks = document.querySelectorAll('.menu-item > a, .elementor-item');
-                navLinks.forEach(function(link) {
-                    var text = link.innerText.trim().toLowerCase();
-                    if (text === 'connect') {
-                        var parentLi = link.closest('li, .menu-item');
-                        if (parentLi && !parentLi.classList.contains('cmr-has-mega-menu-connect')) {
-                            parentLi.classList.add('cmr-has-mega-menu-connect');
-                            var wrapperOuter = document.createElement('div');
-                            wrapperOuter.className = 'cmr-mmc-wrapper-outer';
-                            Array.from(megaMenuTemplate.childNodes).forEach(function(node) { wrapperOuter.appendChild(node.cloneNode(true)); });
-                            parentLi.appendChild(wrapperOuter);
-                        }
-                    }
-                });
-            }
-
-            injectMegaMenu();
-            setInterval(injectMegaMenu, 1000);
-
-            document.addEventListener('click', function(e) {
-                if (window.innerWidth <= 1024) {
-                    var link = e.target.closest('a');
-                    if (link) {
-                        var text = link.innerText.trim().toLowerCase();
-                        if (text === 'connect') {
-                            var parentLi = link.closest('.cmr-has-mega-menu-connect');
-                            if (parentLi) {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                parentLi.classList.toggle('cmr-mobile-open');
-                            }
-                        }
-                    }
-                }
-            }, true);
-        });
-    </script>
+    
     <?php
     return ob_get_clean();
 }
@@ -501,34 +459,7 @@ function cmr_inject_connect_mega_menu() {
         .cmr-has-mega-menu-connect > a .sub-arrow {
             display: none !important;
         }
-            @media (max-width: 1024px) {
-            .cmr-mm-label, .cmr-mmt-label { display: none !important; }
-            .cmr-has-mega-menu .cmr-mm-wrapper {
-                position: static !important;
-                transform: none !important;
-                width: 100% !important;
-                box-shadow: none !important;
-                display: none;
-                opacity: 1;
-                visibility: visible;
-                padding-top: 0;
-                margin-top: 0;
-            }
-            .cmr-has-mega-menu.cmr-mobile-open > .cmr-mm-wrapper {
-                display: block !important;
-            }
-            .cmr-has-mega-menu .cmr-mm-wrapper::before {
-                display: none !important;
-            }
-            .cmr-mm-grid {
-                grid-template-columns: 1fr !important;
-                gap: 15px !important;
-            }
-            .cmr-mm-bottom-content {
-                flex-direction: column !important;
-                align-items: flex-start !important;
-            }
-        }
+            
     </style>
 
     <script>
