@@ -322,9 +322,9 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
                 width: 100%;
             }
         }
-            @media (max-width: 1024px) {
-            .cmr-mm-label, .cmr-mmt-label { display: none !important; }
-            .cmr-has-mega-menu .cmr-mm-wrapper {
+                        @media (max-width: 1024px) {
+            .cmr-mm-label, .cmr-mmt-label, .cmr-mmw-label, .cmr-mms-label, .cmr-mmn-label, .cmr-mmc-label { display: none !important; }
+            .cmr-has-mega-menu-do .cmr-mmw-wrapper-outer {
                 position: static !important;
                 transform: none !important;
                 width: 100% !important;
@@ -335,10 +335,10 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
                 padding-top: 0;
                 margin-top: 0;
             }
-            .cmr-has-mega-menu.cmr-mobile-open > .cmr-mm-wrapper {
+            .cmr-has-mega-menu-do.cmr-mobile-open > .cmr-mmw-wrapper-outer {
                 display: block !important;
             }
-            .cmr-has-mega-menu .cmr-mm-wrapper::before {
+            .cmr-has-mega-menu-do .cmr-mmw-wrapper-outer::before {
                 display: none !important;
             }
             .cmr-mm-grid {
@@ -446,8 +446,8 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
                     var text = link.innerText.trim().toLowerCase();
                     if (text === 'what we do') {
                         var parentLi = link.closest('li, .menu-item');
-                        if (parentLi && !parentLi.classList.contains('active')) {
-                            parentLi.classList.add('active');
+                        if (parentLi && !parentLi.classList.contains('cmr-has-mega-menu-do')) {
+                            parentLi.classList.add('cmr-has-mega-menu-do');
                             var wrapperOuter = document.createElement('div');
                             wrapperOuter.className = 'cmr-mmw-wrapper-outer';
                             Array.from(megaMenuTemplate.childNodes).forEach(function(node) { wrapperOuter.appendChild(node.cloneNode(true)); });
@@ -466,7 +466,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
                     if (link) {
                         var text = link.innerText.trim().toLowerCase();
                         if (text === 'what we do') {
-                            var parentLi = link.closest('.active');
+                            var parentLi = link.closest('.cmr-has-mega-menu-do');
                             if (parentLi) {
                                 e.preventDefault();
                                 e.stopPropagation();
@@ -583,8 +583,8 @@ function cmr_inject_what_we_do_mega_menu() {
                     var text = link.innerText.trim().toLowerCase();
                     if (text === 'what we do') {
                         var parentLi = link.closest('li, .menu-item');
-                        if (parentLi && !parentLi.classList.contains('active')) {
-                            parentLi.classList.add('active');
+                        if (parentLi && !parentLi.classList.contains('cmr-has-mega-menu-do')) {
+                            parentLi.classList.add('cmr-has-mega-menu-do');
                             var wrapperOuter = document.createElement('div');
                             wrapperOuter.className = 'cmr-mmw-wrapper-outer';
                             Array.from(megaMenuTemplate.childNodes).forEach(function(node) { wrapperOuter.appendChild(node.cloneNode(true)); });
@@ -603,7 +603,7 @@ function cmr_inject_what_we_do_mega_menu() {
                     if (link) {
                         var text = link.innerText.trim().toLowerCase();
                         if (text === 'what we do') {
-                            var parentLi = link.closest('.active');
+                            var parentLi = link.closest('.cmr-has-mega-menu-do');
                             if (parentLi) {
                                 e.preventDefault();
                                 e.stopPropagation();

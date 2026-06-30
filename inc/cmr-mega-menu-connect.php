@@ -291,9 +291,9 @@ function cmr_mega_menu_connect_shortcode($atts) {
                 width: 100%;
             }
         }
-            @media (max-width: 1024px) {
-            .cmr-mm-label, .cmr-mmt-label { display: none !important; }
-            .cmr-has-mega-menu .cmr-mm-wrapper {
+                        @media (max-width: 1024px) {
+            .cmr-mm-label, .cmr-mmt-label, .cmr-mmw-label, .cmr-mms-label, .cmr-mmn-label, .cmr-mmc-label { display: none !important; }
+            .cmr-has-mega-menu-connect .cmr-mmc-wrapper-outer {
                 position: static !important;
                 transform: none !important;
                 width: 100% !important;
@@ -304,10 +304,10 @@ function cmr_mega_menu_connect_shortcode($atts) {
                 padding-top: 0;
                 margin-top: 0;
             }
-            .cmr-has-mega-menu.cmr-mobile-open > .cmr-mm-wrapper {
+            .cmr-has-mega-menu-connect.cmr-mobile-open > .cmr-mmc-wrapper-outer {
                 display: block !important;
             }
-            .cmr-has-mega-menu .cmr-mm-wrapper::before {
+            .cmr-has-mega-menu-connect .cmr-mmc-wrapper-outer::before {
                 display: none !important;
             }
             .cmr-mm-grid {
@@ -426,8 +426,8 @@ function cmr_mega_menu_connect_shortcode($atts) {
                     var text = link.innerText.trim().toLowerCase();
                     if (text === 'connect') {
                         var parentLi = link.closest('li, .menu-item');
-                        if (parentLi && !parentLi.classList.contains('active')) {
-                            parentLi.classList.add('active');
+                        if (parentLi && !parentLi.classList.contains('cmr-has-mega-menu-connect')) {
+                            parentLi.classList.add('cmr-has-mega-menu-connect');
                             var wrapperOuter = document.createElement('div');
                             wrapperOuter.className = 'cmr-mmc-wrapper-outer';
                             Array.from(megaMenuTemplate.childNodes).forEach(function(node) { wrapperOuter.appendChild(node.cloneNode(true)); });
@@ -446,7 +446,7 @@ function cmr_mega_menu_connect_shortcode($atts) {
                     if (link) {
                         var text = link.innerText.trim().toLowerCase();
                         if (text === 'connect') {
-                            var parentLi = link.closest('.active');
+                            var parentLi = link.closest('.cmr-has-mega-menu-connect');
                             if (parentLi) {
                                 e.preventDefault();
                                 e.stopPropagation();
@@ -542,8 +542,8 @@ function cmr_inject_connect_mega_menu() {
                     var text = link.innerText.trim().toLowerCase();
                     if (text === 'connect') {
                         var parentLi = link.closest('li, .menu-item');
-                        if (parentLi && !parentLi.classList.contains('active')) {
-                            parentLi.classList.add('active');
+                        if (parentLi && !parentLi.classList.contains('cmr-has-mega-menu-connect')) {
+                            parentLi.classList.add('cmr-has-mega-menu-connect');
                             var wrapperOuter = document.createElement('div');
                             wrapperOuter.className = 'cmr-mmc-wrapper-outer';
                             Array.from(megaMenuTemplate.childNodes).forEach(function(node) { wrapperOuter.appendChild(node.cloneNode(true)); });
@@ -562,7 +562,7 @@ function cmr_inject_connect_mega_menu() {
                     if (link) {
                         var text = link.innerText.trim().toLowerCase();
                         if (text === 'connect') {
-                            var parentLi = link.closest('.active');
+                            var parentLi = link.closest('.cmr-has-mega-menu-connect');
                             if (parentLi) {
                                 e.preventDefault();
                                 e.stopPropagation();

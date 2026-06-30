@@ -231,9 +231,9 @@ function cmr_mega_menu_what_we_think_shortcode($atts) {
                 flex-direction: column;
             }
         }
-            @media (max-width: 1024px) {
-            .cmr-mm-label, .cmr-mmt-label { display: none !important; }
-            .cmr-has-mega-menu .cmr-mm-wrapper {
+                        @media (max-width: 1024px) {
+            .cmr-mm-label, .cmr-mmt-label, .cmr-mmw-label, .cmr-mms-label, .cmr-mmn-label, .cmr-mmc-label { display: none !important; }
+            .cmr-has-mega-menu-think .cmr-mmt-wrapper-outer {
                 position: static !important;
                 transform: none !important;
                 width: 100% !important;
@@ -244,10 +244,10 @@ function cmr_mega_menu_what_we_think_shortcode($atts) {
                 padding-top: 0;
                 margin-top: 0;
             }
-            .cmr-has-mega-menu.cmr-mobile-open > .cmr-mm-wrapper {
+            .cmr-has-mega-menu-think.cmr-mobile-open > .cmr-mmt-wrapper-outer {
                 display: block !important;
             }
-            .cmr-has-mega-menu .cmr-mm-wrapper::before {
+            .cmr-has-mega-menu-think .cmr-mmt-wrapper-outer::before {
                 display: none !important;
             }
             .cmr-mm-grid {
