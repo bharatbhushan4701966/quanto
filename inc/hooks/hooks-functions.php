@@ -444,15 +444,19 @@
             // Manually print CSS to ensure it renders correctly after multiple Elementor template injections
             if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
                 $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
+                $file_path = $css_file->get_path();
+                
+                // If CSS file doesn't exist, regenerate it
+                if ( ! file_exists( $file_path ) ) {
+                    $css_file->update();
+                }
+                
                 $css_content = $css_file->get_content();
                 if ( ! empty( $css_content ) ) {
                     echo '<style id="quanto-footer-css-inline">' . $css_content . '</style>';
                 } else {
-                    // Fallback to read from file directly
-                    $file_path = $css_file->get_path();
-                    if ( file_exists( $file_path ) ) {
-                        echo '<style id="quanto-footer-css-file">' . file_get_contents( $file_path ) . '</style>';
-                    }
+                    // Fallback to link tag if content couldn't be loaded directly
+                    echo '<link rel="stylesheet" id="quanto-footer-css-fallback" href="' . esc_url( $css_file->get_url() ) . '" type="text/css" media="all" />';
                 }
             }
 
