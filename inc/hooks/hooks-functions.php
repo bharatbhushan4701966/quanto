@@ -436,30 +436,20 @@
 
     if ( ! function_exists( 'quanto_render_elementor_footer' ) ) {
         function quanto_render_elementor_footer( $post_id, $class = 'footer' ) {
+            // Enqueue elementor core assets if needed
             quanto_enqueue_elementor_post_assets( $post_id );
             
-            // Manually print CSS to ensure it renders correctly after multiple Elementor template injections
+            echo '<footer class="' . esc_attr( $class ) . '">';
+            
+            // Force Elementor to print its CSS inline just in case
             if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
                 $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
-                $file_path = $css_file->get_path();
-                
-                // If CSS file doesn't exist, regenerate it
-                if ( ! file_exists( $file_path ) ) {
-                    $css_file->update();
-                }
-                
-                $css_content = $css_file->get_content();
-                if ( ! empty( $css_content ) ) {
-                    echo '<style id="quanto-footer-css-inline">' . $css_content . '</style>';
-                } else {
-                    // Fallback to link tag if content couldn't be loaded directly
-                    echo '<link rel="stylesheet" id="quanto-footer-css-fallback" href="' . esc_url( $css_file->get_url() ) . '" type="text/css" media="all" />';
-                }
+                $css_file->enqueue();
+                $css_file->print_css();
             }
-
-            echo '<footer class="' . esc_attr( $class ) . '">';
-            echo '<div data-elementor-type="footer" data-elementor-id="' . esc_attr( $post_id ) . '" class="elementor elementor-' . esc_attr( $post_id ) . ' elementor-location-footer">';
-            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
+            
+            echo '<div data-elementor-type="wp-post" data-elementor-id="' . esc_attr( $post_id ) . '" class="elementor elementor-' . esc_attr( $post_id ) . '">';
+            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, false );
             echo '</div>';
             echo '</footer>';
         }

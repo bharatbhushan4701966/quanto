@@ -165,11 +165,6 @@
 	add_action( 'quanto_footer_content', 'quanto_footer_content_cb', 10 );
 
 	/**
-	* Enqueue Elementor footer CSS early (in <head>) so styles are present when footer renders
-	*/
-	add_action( 'wp_enqueue_scripts', 'quanto_enqueue_footer_css_early', 99 );
-
-	/**
 	* Hook for main wrapper end
 	*/
 	add_action( 'quanto_main_wrapper_end', 'quanto_main_wrapper_end_cb', 10 );
