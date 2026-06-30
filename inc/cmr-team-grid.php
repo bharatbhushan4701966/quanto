@@ -129,16 +129,35 @@ function cmr_team_grid_shortcode($atts) {
             <?php foreach ($team_query->posts as $team_post) : 
                 $post_id = $team_post->ID;
                 
-                // Adjust these meta keys if your plugin uses different ones
-                $role = get_post_meta($post_id, 'designation', true);
-                if (!$role) $role = get_post_meta($post_id, '_team_role', true);
-                if (!$role) $role = get_post_meta($post_id, 'role', true);
+                $all_meta = get_post_meta($post_id);
+                $role = '';
+                $linkedin = '';
+                $twitter = '';
 
-                $linkedin = get_post_meta($post_id, 'linkedin', true);
-                if (!$linkedin) $linkedin = get_post_meta($post_id, '_linkedin_url', true);
+                foreach ($all_meta as $key => $values) {
+                    // Ignore internal WordPress meta keys starting with '_' except specific ones
+                    if (strpos($key, '_') === 0 && !preg_match('/team_role|designation|linkedin|twitter/i', $key)) {
+                        continue;
+                    }
+                    
+                    $val = $values[0];
+                    if (empty($val)) continue;
 
-                $twitter = get_post_meta($post_id, 'twitter', true);
-                if (!$twitter) $twitter = get_post_meta($post_id, '_twitter_url', true);
+                    if (empty($role) && preg_match('/designation|role|job_title|position/i', $key)) {
+                        $role = $val;
+                    }
+                    if (empty($linkedin) && preg_match('/linkedin/i', $key)) {
+                        $linkedin = $val;
+                    }
+                    if (empty($twitter) && preg_match('/twitter|x_url/i', $key)) {
+                        $twitter = $val;
+                    }
+                }
+
+                // Fallback to excerpt for role if still empty
+                if (empty($role)) {
+                    $role = get_the_excerpt($post_id);
+                }
 
                 $image_url = get_the_post_thumbnail_url($post_id, 'large');
                 if (!$image_url) {

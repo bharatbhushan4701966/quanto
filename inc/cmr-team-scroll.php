@@ -183,38 +183,41 @@ function cmr_team_scroll_shortcode($atts) {
             <?php foreach ($team_members as $team_post) : 
                 $post_id = $team_post->ID;
                 
-                $role = get_post_meta($post_id, 'designation', true);
-                if (!$role) $role = get_post_meta($post_id, '_team_role', true);
-                if (!$role) $role = get_post_meta($post_id, 'role', true);
-                if (!$role) $role = get_post_meta($post_id, 'job_title', true);
-                if (!$role) $role = get_post_meta($post_id, 'position', true);
-                if (!$role) $role = get_post_meta($post_id, 'member_designation', true);
-                if (!$role) $role = get_post_meta($post_id, 'team_designation', true);
+                $all_meta = get_post_meta($post_id);
+                $role = '';
+                $linkedin = '';
+                $twitter = '';
 
-                $linkedin = get_post_meta($post_id, 'linkedin', true);
-                if (!$linkedin) $linkedin = get_post_meta($post_id, '_linkedin_url', true);
-                if (!$linkedin) $linkedin = get_post_meta($post_id, 'linkedin_url', true);
-                if (!$linkedin) $linkedin = get_post_meta($post_id, 'linkedin_link', true);
+                foreach ($all_meta as $key => $values) {
+                    // Ignore internal WordPress meta keys starting with '_' except specific ones
+                    if (strpos($key, '_') === 0 && !preg_match('/team_role|designation|linkedin|twitter/i', $key)) {
+                        continue;
+                    }
+                    
+                    $val = $values[0];
+                    if (empty($val)) continue;
 
-                $twitter = get_post_meta($post_id, 'twitter', true);
-                if (!$twitter) $twitter = get_post_meta($post_id, '_twitter_url', true);
-                if (!$twitter) $twitter = get_post_meta($post_id, 'twitter_url', true);
-                if (!$twitter) $twitter = get_post_meta($post_id, 'twitter_link', true);
-                if (!$twitter) $twitter = get_post_meta($post_id, 'x_url', true);
+                    if (empty($role) && preg_match('/designation|role|job_title|position/i', $key)) {
+                        $role = $val;
+                    }
+                    if (empty($linkedin) && preg_match('/linkedin/i', $key)) {
+                        $linkedin = $val;
+                    }
+                    if (empty($twitter) && preg_match('/twitter|x_url/i', $key)) {
+                        $twitter = $val;
+                    }
+                }
+
+                // Fallback to excerpt for role if still empty
+                if (empty($role)) {
+                    $role = get_the_excerpt($post_id);
+                }
 
                 $image_url = get_the_post_thumbnail_url($post_id, 'large');
                 if (!$image_url) {
                     $image_url = 'https://via.placeholder.com/600x800.png?text=No+Image'; 
                 }
             ?>
-                <!-- DEBUG META FOR <?php echo esc_html($team_post->post_title); ?>: 
-                <?php 
-                $all_meta = get_post_meta($post_id);
-                foreach($all_meta as $mk => $mv) {
-                    echo esc_html($mk) . ' => ' . esc_html(print_r($mv, true)) . "\n";
-                }
-                ?>
-                -->
                 <div class="cmr-team-card">
                     <div class="cmr-team-card-image">
                         <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($team_post->post_title); ?>">
