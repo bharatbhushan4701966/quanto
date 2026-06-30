@@ -292,6 +292,7 @@ function cmr_mega_menu_connect_shortcode($atts) {
             }
         }
             @media (max-width: 1024px) {
+            .cmr-mm-label, .cmr-mmt-label { display: none !important; }
             .cmr-has-mega-menu .cmr-mm-wrapper {
                 position: static !important;
                 transform: none !important;
@@ -415,30 +416,47 @@ function cmr_mega_menu_connect_shortcode($atts) {
     </div>
     
     <script>
-        // Use a unique function to avoid global scope pollution if called multiple times
-        (function() {
-            var wrapper = document.getElementById('cmr-mmc-wrapper-inner');
-            if (!wrapper) return;
-            var items = wrapper.querySelectorAll('.cmr-mmc-item-hover-trigger');
-            var lists = wrapper.querySelectorAll('.cmr-mmc-posts-list');
-            
-            items.forEach(function(item) {
-                item.addEventListener('mouseenter', function() {
-                    // remove active class
-                    items.forEach(function(i) { i.classList.remove('active'); });
-                    // hide all lists
-                    lists.forEach(function(l) { l.style.display = 'none'; });
-                    
-                    // activate this
-                    this.classList.add('active');
-                    var targetId = this.getAttribute('data-target');
-                    var targetList = document.getElementById(targetId);
-                    if (targetList) {
-                        targetList.style.display = 'flex';
+        document.addEventListener('DOMContentLoaded', function() {
+            var megaMenuTemplate = document.getElementById('cmr-mmc-wrapper-inner');
+            if (!megaMenuTemplate) return;
+
+            function injectMegaMenu() {
+                var navLinks = document.querySelectorAll('.menu-item > a, .elementor-item');
+                navLinks.forEach(function(link) {
+                    var text = link.innerText.trim().toLowerCase();
+                    if (text === 'connect') {
+                        var parentLi = link.closest('li, .menu-item');
+                        if (parentLi && !parentLi.classList.contains('active')) {
+                            parentLi.classList.add('active');
+                            var wrapperOuter = document.createElement('div');
+                            wrapperOuter.className = 'cmr-mmc-wrapper-outer';
+                            Array.from(megaMenuTemplate.childNodes).forEach(function(node) { wrapperOuter.appendChild(node.cloneNode(true)); });
+                            parentLi.appendChild(wrapperOuter);
+                        }
                     }
                 });
-            });
-        })();
+            }
+
+            injectMegaMenu();
+            setInterval(injectMegaMenu, 1000);
+
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 1024) {
+                    var link = e.target.closest('a');
+                    if (link) {
+                        var text = link.innerText.trim().toLowerCase();
+                        if (text === 'connect') {
+                            var parentLi = link.closest('.active');
+                            if (parentLi) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                parentLi.classList.toggle('cmr-mobile-open');
+                            }
+                        }
+                    }
+                }
+            }, true);
+        });
     </script>
     <?php
     return ob_get_clean();
@@ -484,6 +502,7 @@ function cmr_inject_connect_mega_menu() {
             display: none !important;
         }
             @media (max-width: 1024px) {
+            .cmr-mm-label, .cmr-mmt-label { display: none !important; }
             .cmr-has-mega-menu .cmr-mm-wrapper {
                 position: static !important;
                 transform: none !important;
@@ -514,31 +533,45 @@ function cmr_inject_connect_mega_menu() {
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var megaMenuDo = document.getElementById('cmr-hidden-mega-menu-connect');
-            if (!megaMenuDo) return;
+            var megaMenuTemplate = document.getElementById('cmr-mmc-wrapper-inner');
+            if (!megaMenuTemplate) return;
 
-            var navLinks = document.querySelectorAll('.menu-item > a, .elementor-item');
-            
-            navLinks.forEach(function(link) {
-                var text = link.innerText.trim().toLowerCase();
-                if (text === 'connect') {
-                    var parentLi = link.closest('li, .menu-item');
-                    if (parentLi) {
-                        parentLi.classList.add('cmr-has-mega-menu-connect');
-                        
-                        var wrapperOuter = document.createElement('div');
-                        wrapperOuter.className = 'cmr-mmc-wrapper-outer';
-                        
-                        Array.from(megaMenuDo.childNodes).forEach(function(node) { wrapperOuter.appendChild(node.cloneNode(true)); });
-                        
-                        parentLi.appendChild(wrapperOuter);
+            function injectMegaMenu() {
+                var navLinks = document.querySelectorAll('.menu-item > a, .elementor-item');
+                navLinks.forEach(function(link) {
+                    var text = link.innerText.trim().toLowerCase();
+                    if (text === 'connect') {
+                        var parentLi = link.closest('li, .menu-item');
+                        if (parentLi && !parentLi.classList.contains('active')) {
+                            parentLi.classList.add('active');
+                            var wrapperOuter = document.createElement('div');
+                            wrapperOuter.className = 'cmr-mmc-wrapper-outer';
+                            Array.from(megaMenuTemplate.childNodes).forEach(function(node) { wrapperOuter.appendChild(node.cloneNode(true)); });
+                            parentLi.appendChild(wrapperOuter);
+                        }
+                    }
+                });
+            }
+
+            injectMegaMenu();
+            setInterval(injectMegaMenu, 1000);
+
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 1024) {
+                    var link = e.target.closest('a');
+                    if (link) {
+                        var text = link.innerText.trim().toLowerCase();
+                        if (text === 'connect') {
+                            var parentLi = link.closest('.active');
+                            if (parentLi) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                parentLi.classList.toggle('cmr-mobile-open');
+                            }
+                        }
                     }
                 }
-            });
-            
-            if (megaMenuDo) {
-                megaMenuDo.remove();
-            }
+            }, true);
         });
     </script>
     <?php

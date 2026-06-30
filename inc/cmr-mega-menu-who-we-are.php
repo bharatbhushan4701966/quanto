@@ -187,6 +187,7 @@ function cmr_mega_menu_who_we_are_shortcode($atts) {
             }
         }
             @media (max-width: 1024px) {
+            .cmr-mm-label, .cmr-mmt-label { display: none !important; }
             .cmr-has-mega-menu .cmr-mm-wrapper {
                 position: static !important;
                 transform: none !important;
@@ -336,6 +337,7 @@ function cmr_inject_who_we_are_mega_menu() {
             display: none !important;
         }
             @media (max-width: 1024px) {
+            .cmr-mm-label, .cmr-mmt-label { display: none !important; }
             .cmr-has-mega-menu .cmr-mm-wrapper {
                 position: static !important;
                 transform: none !important;
@@ -378,7 +380,6 @@ function cmr_inject_who_we_are_mega_menu() {
             var megaMenuTemplate = document.getElementById('cmr-hidden-mega-menu');
             if (!megaMenuTemplate) return;
 
-            // Function to inject mega menu into any matching links
             function injectMegaMenu() {
                 var navLinks = document.querySelectorAll('.menu-item > a, .elementor-item');
                 navLinks.forEach(function(link) {
@@ -387,20 +388,15 @@ function cmr_inject_who_we_are_mega_menu() {
                         var parentLi = link.closest('li, .menu-item');
                         if (parentLi && !parentLi.classList.contains('cmr-has-mega-menu')) {
                             parentLi.classList.add('cmr-has-mega-menu');
-                            // Copy all contents of megaMenu into the li
-                            Array.from(megaMenuTemplate.childNodes).forEach(function(node) { 
-                                parentLi.appendChild(node.cloneNode(true)); 
-                            });
+                            Array.from(megaMenuTemplate.childNodes).forEach(function(node) { parentLi.appendChild(node.cloneNode(true)); });
                         }
                     }
                 });
             }
 
-            // Run immediately and also every 1s to catch dynamically cloned mobile menus
             injectMegaMenu();
             setInterval(injectMegaMenu, 1000);
 
-            // Handle mobile click with event delegation (so it works on cloned elements too)
             document.addEventListener('click', function(e) {
                 if (window.innerWidth <= 1024) {
                     var link = e.target.closest('a');
@@ -416,7 +412,7 @@ function cmr_inject_who_we_are_mega_menu() {
                         }
                     }
                 }
-            }, true); // use capture to ensure it overrides default link behavior
+            }, true);
         });
     </script>
     <?php

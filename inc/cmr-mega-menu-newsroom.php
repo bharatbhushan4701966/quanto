@@ -338,31 +338,45 @@ function cmr_inject_newsroom_mega_menu() {
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var megaMenuNewsroom = document.getElementById('cmr-hidden-mega-menu-newsroom');
-            if (!megaMenuNewsroom) return;
+            var megaMenuTemplate = document.getElementById('cmr-hidden-mega-menu-newsroom');
+            if (!megaMenuTemplate) return;
 
-            var navLinks = document.querySelectorAll('.menu-item > a, .elementor-item');
-            
-            navLinks.forEach(function(link) {
-                var text = link.innerText.trim().toLowerCase();
-                if (text === 'newsroom' || text === 'news room') {
-                    var parentLi = link.closest('li, .menu-item');
-                    if (parentLi) {
-                        parentLi.classList.add('cmr-has-mega-menu-newsroom');
-                        
-                        var wrapperOuter = document.createElement('div');
-                        wrapperOuter.className = 'cmr-mmn-wrapper-outer';
-                        
-                        Array.from(megaMenuNewsroom.childNodes).forEach(function(node) { wrapperOuter.appendChild(node.cloneNode(true)); });
-                        
-                        parentLi.appendChild(wrapperOuter);
+            function injectMegaMenu() {
+                var navLinks = document.querySelectorAll('.menu-item > a, .elementor-item');
+                navLinks.forEach(function(link) {
+                    var text = link.innerText.trim().toLowerCase();
+                    if (text === 'newsroom' || text === 'news room') {
+                        var parentLi = link.closest('li, .menu-item');
+                        if (parentLi && !parentLi.classList.contains('cmr-has-mega-menu-newsroom')) {
+                            parentLi.classList.add('cmr-has-mega-menu-newsroom');
+                            var wrapperOuter = document.createElement('div');
+                            wrapperOuter.className = 'cmr-mmn-wrapper-outer';
+                            Array.from(megaMenuTemplate.childNodes).forEach(function(node) { wrapperOuter.appendChild(node.cloneNode(true)); });
+                            parentLi.appendChild(wrapperOuter);
+                        }
+                    }
+                });
+            }
+
+            injectMegaMenu();
+            setInterval(injectMegaMenu, 1000);
+
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 1024) {
+                    var link = e.target.closest('a');
+                    if (link) {
+                        var text = link.innerText.trim().toLowerCase();
+                        if (text === 'newsroom' || text === 'news room') {
+                            var parentLi = link.closest('.cmr-has-mega-menu-newsroom');
+                            if (parentLi) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                parentLi.classList.toggle('cmr-mobile-open');
+                            }
+                        }
                     }
                 }
-            });
-            
-            if (megaMenuNewsroom) {
-                megaMenuNewsroom.remove();
-            }
+            }, true);
         });
     </script>
     <?php

@@ -175,6 +175,7 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
             }
         }
             @media (max-width: 1024px) {
+            .cmr-mm-label, .cmr-mmt-label { display: none !important; }
             .cmr-has-mega-menu .cmr-mm-wrapper {
                 position: static !important;
                 transform: none !important;
@@ -346,6 +347,7 @@ function cmr_inject_who_we_serve_mega_menu() {
             display: none !important;
         }
             @media (max-width: 1024px) {
+            .cmr-mm-label, .cmr-mmt-label { display: none !important; }
             .cmr-has-mega-menu .cmr-mm-wrapper {
                 position: static !important;
                 transform: none !important;
@@ -376,25 +378,42 @@ function cmr_inject_who_we_serve_mega_menu() {
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var megaMenuServe = document.getElementById('cmr-hidden-mega-menu-serve');
-            if (!megaMenuServe) return;
+            var megaMenuTemplate = document.getElementById('cmr-hidden-mega-menu-serve');
+            if (!megaMenuTemplate) return;
 
-            var navLinks = document.querySelectorAll('.menu-item > a, .elementor-item');
-            
-            navLinks.forEach(function(link) {
-                var text = link.innerText.trim().toLowerCase();
-                if (text === 'who we serve') {
-                    var parentLi = link.closest('li, .menu-item');
-                    if (parentLi) {
-                        parentLi.classList.add('cmr-has-mega-menu-serve');
-                        Array.from(megaMenuServe.childNodes).forEach(function(node) { parentLi.appendChild(node.cloneNode(true)); });
+            function injectMegaMenu() {
+                var navLinks = document.querySelectorAll('.menu-item > a, .elementor-item');
+                navLinks.forEach(function(link) {
+                    var text = link.innerText.trim().toLowerCase();
+                    if (text === 'who we serve') {
+                        var parentLi = link.closest('li, .menu-item');
+                        if (parentLi && !parentLi.classList.contains('cmr-has-mega-menu-serve')) {
+                            parentLi.classList.add('cmr-has-mega-menu-serve');
+                            Array.from(megaMenuTemplate.childNodes).forEach(function(node) { parentLi.appendChild(node.cloneNode(true)); });
+                        }
+                    }
+                });
+            }
+
+            injectMegaMenu();
+            setInterval(injectMegaMenu, 1000);
+
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 1024) {
+                    var link = e.target.closest('a');
+                    if (link) {
+                        var text = link.innerText.trim().toLowerCase();
+                        if (text === 'who we serve') {
+                            var parentLi = link.closest('.cmr-has-mega-menu-serve');
+                            if (parentLi) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                parentLi.classList.toggle('cmr-mobile-open');
+                            }
+                        }
                     }
                 }
-            });
-            
-            if (megaMenuServe) {
-                megaMenuServe.remove();
-            }
+            }, true);
         });
     </script>
     <?php
