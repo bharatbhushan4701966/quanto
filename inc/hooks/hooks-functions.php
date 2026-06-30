@@ -434,9 +434,6 @@
         }
     }
 
-    // Helper: render an Elementor footer post inside a <footer> tag
-    // Passing `true` as 2nd arg to get_builder_content_for_display forces inline CSS output,
-    // which works regardless of when wp_head() has fired.
     if ( ! function_exists( 'quanto_render_elementor_footer' ) ) {
         function quanto_render_elementor_footer( $post_id, $class = 'footer' ) {
             quanto_enqueue_elementor_post_assets( $post_id );
@@ -461,7 +458,9 @@
             }
 
             echo '<footer class="' . esc_attr( $class ) . '">';
+            echo '<div data-elementor-type="footer" data-elementor-id="' . esc_attr( $post_id ) . '" class="elementor elementor-' . esc_attr( $post_id ) . ' elementor-location-footer">';
             echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
+            echo '</div>';
             echo '</footer>';
         }
     }
