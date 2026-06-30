@@ -417,8 +417,6 @@ function cmr_news_tabs_shortcode( $atts ) {
                                 
                                 if ( $is_media_releases ) {
                                     if ( $count === 0 ) {
-                                        // Left Featured
-                                        ?>
                                         <div class="cmr-media-left">
                                             <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-card-link-wrapper">
                                                 <div class="cmr-card-image-wrap">
@@ -436,7 +434,6 @@ function cmr_news_tabs_shortcode( $atts ) {
                                                 </div>
                                             </a>
                                         </div>
-                                        <div class="cmr-media-right">
                                         <?php
                                     } else {
                                         // Right List Items
@@ -459,11 +456,6 @@ function cmr_news_tabs_shortcode( $atts ) {
                                             </a>
                                         </div>
                                         <?php
-                                    }
-                                    if ( $count === $total_posts - 1 && $count > 0 ) {
-                                        echo '</div>'; // Close cmr-media-right
-                                    } elseif ( $count === 0 && $total_posts === 1 ) {
-                                        echo '<div class="cmr-media-right"></div>'; // Empty right column if only 1 post
                                     }
                                 } else {
                                     // Original CMR In News Layout

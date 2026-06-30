@@ -296,10 +296,6 @@
     .cmr-media-grid::-webkit-scrollbar {
         display: none;
     }
-    
-    .cmr-media-right {
-        display: contents; 
-    }
 
     /* Make all cards look like featured cards & fit horizontal scroll */
     .cmr-card-featured,
@@ -379,9 +375,15 @@
 .cmr-media-grid {
     display: grid;
     grid-template-columns: 638px 1fr;
+    grid-auto-rows: min-content;
     gap: 27px;
     max-width: 1280px;
     margin: 0 auto;
+}
+
+.cmr-media-left {
+    grid-column: 1;
+    grid-row: 1 / span 3;
 }
 
 .cmr-media-left .cmr-card-link-wrapper {
@@ -419,10 +421,8 @@
     font-size: 13px;
 }
 
-.cmr-media-right {
-    display: flex;
-    flex-direction: column;
-    gap: 27px;
+.cmr-media-horizontal-card {
+    grid-column: 2;
 }
 
 .cmr-media-horizontal-card .cmr-card-link-wrapper {
