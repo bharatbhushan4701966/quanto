@@ -8816,3 +8816,40 @@ h1.custom-product-title {
 
 @media (max-width: 1024px) { .cmr-mobile-open > div[class*='-wrapper'] { margin-bottom: 40px !important; } }
 
+
+@media (max-width: 1024px) {
+    /* Make wrappers static instead of absolute on mobile so they push content down */
+    .cmr-has-mega-menu-do .cmr-mmw-wrapper-outer,
+    .cmr-has-mega-menu-think .cmr-mmt-wrapper-outer,
+    .cmr-has-mega-menu-newsroom .cmr-mmn-wrapper-outer,
+    .cmr-has-mega-menu-serve .cmr-mms-wrapper-outer,
+    .cmr-has-mega-menu-connect .cmr-mmc-wrapper-outer {
+        position: static !important;
+        transform: none !important;
+        width: 100% !important;
+        box-shadow: none !important;
+        display: none;
+        opacity: 1;
+        visibility: visible;
+        padding-top: 0;
+        margin-top: 0;
+    }
+    
+    /* Show them when toggled open */
+    .cmr-has-mega-menu-do.cmr-mobile-open > .cmr-mmw-wrapper-outer,
+    .cmr-has-mega-menu-think.cmr-mobile-open > .cmr-mmt-wrapper-outer,
+    .cmr-has-mega-menu-newsroom.cmr-mobile-open > .cmr-mmn-wrapper-outer,
+    .cmr-has-mega-menu-serve.cmr-mobile-open > .cmr-mms-wrapper-outer,
+    .cmr-has-mega-menu-connect.cmr-mobile-open > .cmr-mmc-wrapper-outer {
+        display: block !important;
+    }
+    
+    /* Hide the pseudo arrows on mobile */
+    .cmr-has-mega-menu-do .cmr-mmw-wrapper-outer::before,
+    .cmr-has-mega-menu-think .cmr-mmt-wrapper-outer::before,
+    .cmr-has-mega-menu-newsroom .cmr-mmn-wrapper-outer::before,
+    .cmr-has-mega-menu-serve .cmr-mms-wrapper-outer::before,
+    .cmr-has-mega-menu-connect .cmr-mmc-wrapper-outer::before {
+        display: none !important;
+    }
+}
