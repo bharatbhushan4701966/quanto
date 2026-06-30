@@ -243,7 +243,7 @@ function cmr_team_scroll_shortcode($atts) {
         </div>
 
         <div class="cmr-team-view-all">
-            <a href="/who-we-are">View Team 
+            <a href="<?php echo esc_url( home_url( '/leadership/' ) ); ?>">View Team 
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>

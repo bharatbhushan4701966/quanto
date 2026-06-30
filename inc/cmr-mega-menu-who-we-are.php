@@ -375,37 +375,48 @@ function cmr_inject_who_we_are_mega_menu() {
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Find the hidden mega menu
-            var megaMenu = document.getElementById('cmr-hidden-mega-menu');
-            if (!megaMenu) return;
+            var megaMenuTemplate = document.getElementById('cmr-hidden-mega-menu');
+            if (!megaMenuTemplate) return;
 
-            // Find all nav links to search for "Who we serve" or "Who we are"
-            var navLinks = document.querySelectorAll('.menu-item > a, .elementor-item');
-            
-            navLinks.forEach(function(link) {
-                var text = link.innerText.trim().toLowerCase();
-                // Attach to "Who we are"
-                if (text === 'who we are') {
-                    var parentLi = link.closest('li, .menu-item'); // Get the wrapping li
-                    if (parentLi) {
-                        parentLi.classList.add('cmr-has-mega-menu');
-                        // Move all contents of megaMenu into the li
-                        Array.from(megaMenu.childNodes).forEach(function(node) { parentLi.appendChild(node.cloneNode(true)); });
-                        
-                        link.addEventListener('click', function(e) {
-                            if (window.innerWidth <= 1024) {
+            // Function to inject mega menu into any matching links
+            function injectMegaMenu() {
+                var navLinks = document.querySelectorAll('.menu-item > a, .elementor-item');
+                navLinks.forEach(function(link) {
+                    var text = link.innerText.trim().toLowerCase();
+                    if (text === 'who we are') {
+                        var parentLi = link.closest('li, .menu-item');
+                        if (parentLi && !parentLi.classList.contains('cmr-has-mega-menu')) {
+                            parentLi.classList.add('cmr-has-mega-menu');
+                            // Copy all contents of megaMenu into the li
+                            Array.from(megaMenuTemplate.childNodes).forEach(function(node) { 
+                                parentLi.appendChild(node.cloneNode(true)); 
+                            });
+                        }
+                    }
+                });
+            }
+
+            // Run immediately and also every 1s to catch dynamically cloned mobile menus
+            injectMegaMenu();
+            setInterval(injectMegaMenu, 1000);
+
+            // Handle mobile click with event delegation (so it works on cloned elements too)
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 1024) {
+                    var link = e.target.closest('a');
+                    if (link) {
+                        var text = link.innerText.trim().toLowerCase();
+                        if (text === 'who we are') {
+                            var parentLi = link.closest('.cmr-has-mega-menu');
+                            if (parentLi) {
                                 e.preventDefault();
+                                e.stopPropagation();
                                 parentLi.classList.toggle('cmr-mobile-open');
                             }
-                        });
+                        }
                     }
                 }
-            });
-            
-            // Remove the hidden container
-            if (megaMenu) {
-                megaMenu.remove();
-            }
+            }, true); // use capture to ensure it overrides default link behavior
         });
     </script>
     <?php
