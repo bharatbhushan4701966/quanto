@@ -417,6 +417,7 @@ function cmr_news_tabs_shortcode( $atts ) {
                                 
                                 if ( $is_media_releases ) {
                                     if ( $count === 0 ) {
+                                        ?>
                                         <div class="cmr-media-left">
                                             <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-card-link-wrapper">
                                                 <div class="cmr-card-image-wrap">
