@@ -26,12 +26,13 @@ function cmr_inject_mobile_mega_menu() {
         justify-content: space-between;
         align-items: center;
         padding: 20px 24px;
-        background-color: #000;
-        color: #fff;
+        background-color: #fff;
+        color: #000;
+        border-bottom: 1px solid #eee;
     }
     .cmr-mobile-nav-logo { display: flex; align-items: center; }
     .cmr-mobile-nav-close {
-        background: none; border: none; color: #fff;
+        background: none; border: none; color: #000;
         cursor: pointer; padding: 0;
         display: flex; align-items: center; justify-content: center;
     }
@@ -77,7 +78,7 @@ function cmr_inject_mobile_mega_menu() {
     <div class="cmr-mobile-nav-overlay" id="cmrMobileNav">
         <div class="cmr-mobile-nav-header">
             <a href="/" class="cmr-mobile-nav-logo">
-                <img src="/wp-content/uploads/2026/06/cmr-logo-white.svg" alt="CMR" style="height: 30px; filter: invert(1);">
+                <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/cmrheaderlogo.svg" alt="CMR" style="height: 30px;">
             </a>
             <button class="cmr-mobile-nav-close" aria-label="Close mobile menu">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
