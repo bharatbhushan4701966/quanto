@@ -171,7 +171,7 @@ function quanto_essential_scripts() {
 
     // main script
     wp_enqueue_script( 'quanto-main-script', get_theme_file_uri( '/assets/js/main.js' ), array('jquery'), time(), true );
-    wp_enqueue_script( 'cmr-mobile-menu-js', get_theme_file_uri( '/assets/js/cmr-mobile-menu.js' ), array('jquery'), '1.1', true );
+    wp_enqueue_script( 'cmr-mobile-menu-js', get_theme_file_uri( '/assets/js/cmr-mobile-menu.js' ), array('jquery'), '1.2', true );
     
     // comment reply
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
