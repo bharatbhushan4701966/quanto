@@ -69,9 +69,6 @@ function cmr_inject_mobile_mega_menu() {
     .cmr-mobile-nav-link:last-child { margin-bottom: 0; }
     .cmr-mobile-nav-link-title { font-size: 18px; font-weight: 600; color: #111; margin-bottom: 4px; }
     .cmr-mobile-nav-link-desc { font-size: 15px; color: #666; line-height: 1.4; }
-    @media (min-width: 1025px) {
-        .cmr-mobile-nav-overlay { display: none !important; }
-    }
     @media (max-width: 1024px) {
         .quanto-menu-wrapper,
         .quanto-body-visible .quanto-menu-wrapper {
@@ -296,6 +293,7 @@ function cmr_inject_mobile_mega_menu() {
         document.addEventListener('click', function(e) {
             var toggle = e.target.closest('.menuBar-toggle, .quanto-menu-toggle');
             if (toggle) {
+                alert("Hamburger Clicked! Running custom CMR script.");
                 console.log("CMR Custom Mobile Menu Toggle Clicked!");
                 e.preventDefault();
                 e.stopPropagation();
@@ -339,4 +337,5 @@ function cmr_inject_mobile_mega_menu() {
     </script>
     <?php
 }
-add_action('wp_footer', 'cmr_inject_mobile_mega_menu', 100);
+add_action('wp_footer', 'cmr_inject_mobile_mega_menu', 1);
+add_action('wp_body_open', 'cmr_inject_mobile_mega_menu', 1);
