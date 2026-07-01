@@ -3,6 +3,82 @@
 
 function cmr_inject_mobile_mega_menu() {
     ?>
+    <style>
+    /* Custom Zendesk-style Drill-down Mobile Menu CSS */
+    .cmr-mobile-nav-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #fff;
+        z-index: 999999;
+        display: flex;
+        flex-direction: column;
+        transform: translateY(-100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        font-family: 'Instrument Sans', sans-serif;
+        overflow: hidden;
+    }
+    .cmr-mobile-nav-overlay.cmr-nav-open {
+        transform: translateY(0) !important;
+    }
+    .cmr-mobile-nav-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 24px;
+        background-color: #000;
+        color: #fff;
+    }
+    .cmr-mobile-nav-logo { display: flex; align-items: center; }
+    .cmr-mobile-nav-close {
+        background: none; border: none; color: #fff;
+        cursor: pointer; padding: 0;
+        display: flex; align-items: center; justify-content: center;
+    }
+    .cmr-mobile-nav-viewport { flex: 1; position: relative; overflow: hidden; background: #fff; }
+    .cmr-mobile-nav-panel {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        overflow-y: auto; background: #fff;
+        transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        padding: 10px 0;
+    }
+    .cmr-mobile-nav-panel-main { transform: translateX(0); }
+    .cmr-mobile-nav-panel-main.cmr-slide-left { transform: translateX(-100%); }
+    .cmr-mobile-nav-panel-sub { transform: translateX(100%); }
+    .cmr-mobile-nav-panel-sub.cmr-active { transform: translateX(0); }
+    .cmr-mobile-nav-item {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 20px 24px; font-size: 18px; font-weight: 600; color: #111;
+        text-decoration: none; border-bottom: 1px solid #f0f0f0;
+    }
+    .cmr-mobile-nav-item svg { color: #666; }
+    .cmr-mobile-nav-back {
+        display: flex; align-items: center; gap: 12px;
+        padding: 20px 24px; font-size: 18px; font-weight: 600; color: #111;
+        background: none; border: none; border-bottom: 1px solid #f0f0f0;
+        width: 100%; text-align: left; cursor: pointer;
+    }
+    .cmr-mobile-nav-content { padding: 24px; }
+    .cmr-mobile-nav-label {
+        font-size: 12px; font-weight: 700; color: #9ba4b5;
+        letter-spacing: 1px; text-transform: uppercase; margin-bottom: 20px;
+    }
+    .cmr-mobile-nav-link { display: block; text-decoration: none; margin-bottom: 24px; }
+    .cmr-mobile-nav-link:last-child { margin-bottom: 0; }
+    .cmr-mobile-nav-link-title { font-size: 18px; font-weight: 600; color: #111; margin-bottom: 4px; }
+    .cmr-mobile-nav-link-desc { font-size: 15px; color: #666; line-height: 1.4; }
+    @media (min-width: 1025px) {
+        .cmr-mobile-nav-overlay { display: none !important; }
+    }
+    @media (max-width: 1024px) {
+        .quanto-menu-wrapper,
+        .quanto-body-visible .quanto-menu-wrapper {
+            display: none !important; visibility: hidden !important; opacity: 0 !important;
+        }
+    }
+    </style>
     <div class="cmr-mobile-nav-overlay" id="cmrMobileNav">
         <div class="cmr-mobile-nav-header">
             <a href="/" class="cmr-mobile-nav-logo">
@@ -220,6 +296,7 @@ function cmr_inject_mobile_mega_menu() {
         document.addEventListener('click', function(e) {
             var toggle = e.target.closest('.menuBar-toggle, .quanto-menu-toggle');
             if (toggle) {
+                console.log("CMR Custom Mobile Menu Toggle Clicked!");
                 e.preventDefault();
                 e.stopPropagation();
                 e.stopImmediatePropagation();
