@@ -270,6 +270,26 @@ function cmr_inject_mobile_mega_menu() {
         </div>
     </div>
     <script>
+    // STEP 1: On DOMContentLoaded, move the overlay out of its hidden parent to <body>
+    // Elementor nests wp_footer output inside hidden mega-menu wrappers,
+    // so the overlay inherits display:none from its parent even with !important.
+    document.addEventListener('DOMContentLoaded', function() {
+        // Remove duplicate overlays (Elementor clones the header multiple times)
+        var allOverlays = document.querySelectorAll('.cmr-mobile-nav-overlay');
+        if (allOverlays.length > 1) {
+            // Keep only the last one (most complete), remove the rest
+            for (var i = 0; i < allOverlays.length - 1; i++) {
+                allOverlays[i].parentNode.removeChild(allOverlays[i]);
+            }
+        }
+        // Move the remaining overlay to <body> so it's not trapped in a hidden parent
+        var overlay = document.querySelector('.cmr-mobile-nav-overlay');
+        if (overlay && overlay.parentElement !== document.body) {
+            document.body.appendChild(overlay);
+        }
+    });
+
+    // STEP 2: Click handlers using event delegation on capture phase
     document.addEventListener('click', function(e) {
         // 1. Toggle Open
         var toggle = e.target.closest('.menuBar-toggle, .quanto-menu-toggle');
@@ -278,12 +298,10 @@ function cmr_inject_mobile_mega_menu() {
             e.stopPropagation();
             e.stopImmediatePropagation();
             
-            var liveOverlay = document.getElementById('cmrMobileNav');
+            var liveOverlay = document.querySelector('.cmr-mobile-nav-overlay');
             if (liveOverlay) {
                 liveOverlay.classList.add('cmr-nav-open');
                 document.body.style.overflow = 'hidden';
-            } else {
-                alert("Mobile menu HTML missing!");
             }
             return;
         }
@@ -291,7 +309,7 @@ function cmr_inject_mobile_mega_menu() {
         // 2. Close Button
         if (e.target.closest('.cmr-mobile-nav-close')) {
             e.preventDefault();
-            var liveOverlay = document.getElementById('cmrMobileNav');
+            var liveOverlay = document.querySelector('.cmr-mobile-nav-overlay');
             if (liveOverlay) {
                 liveOverlay.classList.remove('cmr-nav-open');
                 document.body.style.overflow = '';
