@@ -20,7 +20,7 @@ function quanto_essential_scripts() {
 	$quanto_style_path    = get_stylesheet_directory() . '/style.css';
 	$quanto_style_version = file_exists( $quanto_style_path ) ? filemtime( $quanto_style_path ) : wp_get_theme()->get( 'Version' );
 	wp_enqueue_style( 'quanto-style', get_stylesheet_uri(), array(), $quanto_style_version );
-    wp_enqueue_style( 'cmr-mobile-menu-css', get_theme_file_uri( '/assets/css/cmr-mobile-menu.css' ), array(), '1.1' );
+    wp_enqueue_style( 'cmr-mobile-menu-css', get_theme_file_uri( '/assets/css/cmr-mobile-menu.css' ), array(), time() );
 
     // google font
     wp_enqueue_style( 'quanto-fonts', quanto_google_fonts() ,array(), wp_get_theme()->get( 'Version' ) );
@@ -171,7 +171,6 @@ function quanto_essential_scripts() {
 
     // main script
     wp_enqueue_script( 'quanto-main-script', get_theme_file_uri( '/assets/js/main.js' ), array('jquery'), time(), true );
-    wp_enqueue_script( 'cmr-mobile-menu-js', get_theme_file_uri( '/assets/js/cmr-mobile-menu.js' ), array('jquery'), '1.2', true );
     
     // comment reply
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
