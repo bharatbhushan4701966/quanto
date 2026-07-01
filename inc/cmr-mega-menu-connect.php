@@ -114,6 +114,8 @@ function cmr_mega_menu_connect_shortcode($atts) {
             text-decoration: none;
             display: block;
             position: relative;
+            padding: 0 !important;
+            margin: 0 !important;
         }
         
         .cmr-mmc-item:hover h4 {
@@ -199,6 +201,8 @@ function cmr_mega_menu_connect_shortcode($atts) {
             border-radius: 8px;
             overflow: hidden;
             text-decoration: none;
+            padding: 0 !important;
+            margin: 0 !important;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
@@ -277,6 +281,7 @@ function cmr_mega_menu_connect_shortcode($atts) {
             display: inline-flex;
             align-items: center;
             gap: 5px;
+            padding: 0 !important;
             transition: color 0.2s ease;
         }
 

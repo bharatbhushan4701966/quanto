@@ -145,6 +145,8 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             text-decoration: none;
             display: block;
             position: relative;
+            padding: 0 !important;
+            margin: 0 !important;
         }
         
         .cmr-mmw-item:hover h4 {
@@ -276,6 +278,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             align-items: center;
             gap: 8px;
             margin-bottom: 20px;
+            padding: 0 !important;
             transition: color 0.2s ease;
         }
 
@@ -296,6 +299,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             font-weight: 600;
             text-decoration: none;
             margin-left: 5px;
+            padding: 0 !important;
         }
 
         .cmr-mmw-bottom-bar a:hover {
