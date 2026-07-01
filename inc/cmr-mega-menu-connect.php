@@ -482,7 +482,9 @@ function cmr_inject_connect_mega_menu() {
                             parentLi.classList.add('cmr-has-mega-menu-connect');
                             var wrapperOuter = document.createElement('div');
                             wrapperOuter.className = 'cmr-mmc-wrapper-outer';
-                            Array.from(megaMenuTemplate.childNodes).forEach(function(node) { wrapperOuter.appendChild(node.cloneNode(true)); });
+                            var clonedWrapper = megaMenuTemplate.cloneNode(true);
+                            clonedWrapper.removeAttribute('id');
+                            wrapperOuter.appendChild(clonedWrapper);
                             parentLi.appendChild(wrapperOuter);
                         }
                     }

@@ -488,7 +488,9 @@ function cmr_inject_what_we_do_mega_menu() {
                             parentLi.classList.add('cmr-has-mega-menu-do');
                             var wrapperOuter = document.createElement('div');
                             wrapperOuter.className = 'cmr-mmw-wrapper-outer';
-                            Array.from(megaMenuTemplate.childNodes).forEach(function(node) { wrapperOuter.appendChild(node.cloneNode(true)); });
+                            var clonedWrapper = megaMenuTemplate.cloneNode(true);
+                            clonedWrapper.removeAttribute('id');
+                            wrapperOuter.appendChild(clonedWrapper);
                             parentLi.appendChild(wrapperOuter);
                         }
                     }
