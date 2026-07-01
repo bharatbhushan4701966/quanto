@@ -250,6 +250,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-mega-menu-what-we-do.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-mega-menu-what-we-think.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-mega-menu-newsroom.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-mega-menu-connect.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-mobile-mega-menu.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-foundation-scroll.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-location-accordion.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-job-application-form.php';
