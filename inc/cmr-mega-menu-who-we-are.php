@@ -187,7 +187,7 @@ function cmr_mega_menu_who_we_are_shortcode($atts) {
             }
         }
             @media (max-width: 1024px) {
-            .cmr-mm-label, .cmr-mmt-label { display: none !important; }
+            .cmr-mm-bottom { display: none !important; }
             .cmr-has-mega-menu .cmr-mm-wrapper {
                 position: static !important;
                 transform: none !important;

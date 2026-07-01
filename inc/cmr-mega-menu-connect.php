@@ -297,7 +297,7 @@ function cmr_mega_menu_connect_shortcode($atts) {
             }
         }
                         @media (max-width: 1024px) {
-            .cmr-mm-label, .cmr-mmt-label, .cmr-mmw-label, .cmr-mms-label, .cmr-mmn-label, .cmr-mmc-label { display: none !important; }
+            .cmr-mmc-right { display: none !important; }
             .cmr-has-mega-menu-connect .cmr-mmc-wrapper-outer {
                 position: static !important;
                 transform: none !important;

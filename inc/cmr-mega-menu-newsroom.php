@@ -179,7 +179,7 @@ function cmr_mega_menu_newsroom_shortcode($atts) {
             }
         }
                         @media (max-width: 1024px) {
-            .cmr-mm-label, .cmr-mmt-label, .cmr-mmw-label, .cmr-mms-label, .cmr-mmn-label, .cmr-mmc-label { display: none !important; }
+            .cmr-mmn-right { display: none !important; }
             .cmr-has-mega-menu-newsroom .cmr-mmn-wrapper-outer {
                 position: static !important;
                 transform: none !important;

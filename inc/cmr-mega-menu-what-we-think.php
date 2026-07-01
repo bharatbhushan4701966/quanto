@@ -232,7 +232,7 @@ function cmr_mega_menu_what_we_think_shortcode($atts) {
             }
         }
                         @media (max-width: 1024px) {
-            .cmr-mm-label, .cmr-mmt-label, .cmr-mmw-label, .cmr-mms-label, .cmr-mmn-label, .cmr-mmc-label { display: none !important; }
+            .cmr-mmt-right { display: none !important; }
             .cmr-has-mega-menu-think .cmr-mmt-wrapper-outer {
                 position: static !important;
                 transform: none !important;
