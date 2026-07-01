@@ -94,7 +94,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             content: '';
             position: absolute;
             top: -8px;
-            left: 70px;
+            left: 50%;
             transform: translateX(-50%) rotate(45deg);
             width: 16px;
             height: 16px;
@@ -451,7 +451,8 @@ function cmr_inject_what_we_do_mega_menu() {
         .cmr-mmw-wrapper-outer {
             position: absolute !important;
             top: 60px;
-            left: -30px;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
             width: max-content !important;
             max-width: none !important;
             opacity: 0;
