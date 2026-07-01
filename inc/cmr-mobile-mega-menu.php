@@ -27,12 +27,12 @@ function cmr_inject_mobile_mega_menu() {
         align-items: center;
         padding: 20px 24px;
         background-color: #fff;
-        color: #000;
+        color: #ff0000;
         border-bottom: 1px solid #eee;
     }
     .cmr-mobile-nav-logo { display: flex; align-items: center; }
     .cmr-mobile-nav-close {
-        background: none; border: none; color: #000;
+        background: none; border: none; color: #ff0000;
         cursor: pointer; padding: 0;
         display: flex; align-items: center; justify-content: center;
     }
