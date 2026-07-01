@@ -26,17 +26,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Intercept clicks on the original theme mobile menu toggle
     // Assuming it's '.quanto-menu-toggle' or '.menuBar-toggle'
-    var themeToggles = document.querySelectorAll('.menuBar-toggle, .quanto-menu-toggle');
-    themeToggles.forEach(function(toggle) {
-        toggle.addEventListener('click', function(e) {
+    document.addEventListener('click', function(e) {
+        var toggle = e.target.closest('.menuBar-toggle, .quanto-menu-toggle');
+        if (toggle) {
             e.preventDefault();
             e.stopPropagation();
+            e.stopImmediatePropagation();
             
             // Open our custom overlay
             overlay.classList.add('cmr-nav-open');
             document.body.style.overflow = 'hidden'; // Prevent body scrolling
-        });
-    });
+        }
+    }, true); // Use capture phase to intercept before jQuery!
 
     // Close button logic
     closeBtn.addEventListener('click', closeOverlay);
