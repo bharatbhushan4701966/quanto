@@ -347,8 +347,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
                 <a href="<?php echo esc_url( home_url( '/what-we-do/' ) ); ?>" class="cmr-mmw-item cmr-mmw-item-hover-trigger active" data-target="cmr-mmw-list-industry">
                     <div class="cmr-mmw-item-header">
                         <h4>
-                            <span class="cmr-mmw-text-inner">
-                                Industry Intelligence
+                            <span class="cmr-mmw-text-inner">Industry Intelligence
                                 <svg class="cmr-mmw-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                             </span>
                         </h4>
@@ -359,8 +358,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
                 <a href="<?php echo esc_url( home_url( '/consulting-advisory/' ) ); ?>" class="cmr-mmw-item cmr-mmw-item-hover-trigger" data-target="cmr-mmw-list-consulting">
                     <div class="cmr-mmw-item-header">
                         <h4>
-                            <span class="cmr-mmw-text-inner">
-                                Consulting & Advisory 
+                            <span class="cmr-mmw-text-inner">Consulting & Advisory 
                                 <svg class="cmr-mmw-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                             </span>
                         </h4>
@@ -371,8 +369,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
                 <a href="<?php echo esc_url( home_url( '/marketing-services/' ) ); ?>" class="cmr-mmw-item cmr-mmw-item-hover-trigger" data-target="cmr-mmw-list-marketing">
                     <div class="cmr-mmw-item-header">
                         <h4>
-                            <span class="cmr-mmw-text-inner">
-                                Marketing Services
+                            <span class="cmr-mmw-text-inner">Marketing Services
                                 <svg class="cmr-mmw-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                             </span>
                         </h4>

@@ -329,8 +329,7 @@ function cmr_mega_menu_connect_shortcode($atts) {
                 <a href="<?php echo esc_url( home_url( '/enterprise-connect/' ) ); ?>" class="cmr-mmc-item cmr-mmc-item-hover-trigger active" data-target="cmr-mmc-list-enterprise">
                     <div class="cmr-mmc-item-header">
                         <h4>
-                            <span class="cmr-mmc-text-inner">
-                                Enterprise Connect
+                            <span class="cmr-mmc-text-inner">Enterprise Connect
                                 <svg class="cmr-mmc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                             </span>
                         </h4>
@@ -341,8 +340,7 @@ function cmr_mega_menu_connect_shortcode($atts) {
                 <a href="<?php echo esc_url( home_url( '/smb-connect/' ) ); ?>" class="cmr-mmc-item cmr-mmc-item-hover-trigger" data-target="cmr-mmc-list-smb">
                     <div class="cmr-mmc-item-header">
                         <h4>
-                            <span class="cmr-mmc-text-inner">
-                                SMB Connect 
+                            <span class="cmr-mmc-text-inner">SMB Connect 
                                 <svg class="cmr-mmc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                             </span>
                         </h4>
@@ -353,8 +351,7 @@ function cmr_mega_menu_connect_shortcode($atts) {
                 <a href="<?php echo esc_url( home_url( '/channel-connect/' ) ); ?>" class="cmr-mmc-item cmr-mmc-item-hover-trigger" data-target="cmr-mmc-list-channel">
                     <div class="cmr-mmc-item-header">
                         <h4>
-                            <span class="cmr-mmc-text-inner">
-                                Channel Connect
+                            <span class="cmr-mmc-text-inner">Channel Connect
                                 <svg class="cmr-mmc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                             </span>
                         </h4>
