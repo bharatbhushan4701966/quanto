@@ -32,7 +32,7 @@ function cmr_inject_mobile_mega_menu() {
     }
     .cmr-mobile-nav-logo { display: flex; align-items: center; }
     .cmr-mobile-nav-close {
-        background: none; border: none; color: #ff0000;
+        background: none; border: none; color: #000;
         cursor: pointer; padding: 0;
         display: flex; align-items: center; justify-content: center;
     }
