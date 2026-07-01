@@ -270,67 +270,73 @@ function cmr_inject_mobile_mega_menu() {
         </div>
     </div>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var overlay = document.getElementById('cmrMobileNav');
-        var closeBtn = overlay ? overlay.querySelector('.cmr-mobile-nav-close') : null;
-        var mainPanel = document.getElementById('cmrPanelMain');
-        var subPanels = overlay ? overlay.querySelectorAll('.cmr-mobile-nav-panel-sub') : [];
-        var navItems = overlay ? overlay.querySelectorAll('.cmr-mobile-nav-item') : [];
-        var backBtns = overlay ? overlay.querySelectorAll('.cmr-mobile-nav-back') : [];
-        
-        function closeOverlay() {
-            if (!overlay) return;
-            overlay.classList.remove('cmr-nav-open');
-            document.body.style.overflow = '';
-            setTimeout(function() {
-                if (mainPanel) mainPanel.classList.remove('cmr-slide-left');
-                subPanels.forEach(function(panel) { panel.classList.remove('cmr-active'); });
-            }, 300);
+    document.addEventListener('click', function(e) {
+        // 1. Toggle Open
+        var toggle = e.target.closest('.menuBar-toggle, .quanto-menu-toggle');
+        if (toggle) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            
+            var liveOverlay = document.getElementById('cmrMobileNav');
+            if (liveOverlay) {
+                liveOverlay.classList.add('cmr-nav-open');
+                document.body.style.overflow = 'hidden';
+            } else {
+                alert("Mobile menu HTML missing!");
+            }
+            return;
         }
 
-        document.addEventListener('click', function(e) {
-            var toggle = e.target.closest('.menuBar-toggle, .quanto-menu-toggle');
-            if (toggle) {
-                console.log("CMR Custom Mobile Menu Toggle Clicked!");
-                e.preventDefault();
-                e.stopPropagation();
-                e.stopImmediatePropagation();
+        // 2. Close Button
+        if (e.target.closest('.cmr-mobile-nav-close')) {
+            e.preventDefault();
+            var liveOverlay = document.getElementById('cmrMobileNav');
+            if (liveOverlay) {
+                liveOverlay.classList.remove('cmr-nav-open');
+                document.body.style.overflow = '';
                 
-                if (!overlay) {
-                    alert("Mobile menu HTML missing. Purge cache!");
-                    return;
-                }
-                overlay.classList.add('cmr-nav-open');
-                document.body.style.overflow = 'hidden';
+                // Reset panels
+                setTimeout(function() {
+                    var mainPanel = document.getElementById('cmrPanelMain');
+                    if (mainPanel) mainPanel.classList.remove('cmr-slide-left');
+                    liveOverlay.querySelectorAll('.cmr-mobile-nav-panel-sub').forEach(function(p) {
+                        p.classList.remove('cmr-active');
+                    });
+                }, 300);
             }
-        }, true);
+            return;
+        }
 
-        if (!overlay) return;
-        if (closeBtn) closeBtn.addEventListener('click', closeOverlay);
-
-        navItems.forEach(function(item) {
-            item.addEventListener('click', function(e) {
+        // 3. Drill down (Forward Navigation)
+        var navItem = e.target.closest('.cmr-mobile-nav-item');
+        if (navItem) {
+            var targetId = navItem.getAttribute('data-target');
+            if (targetId) {
                 e.preventDefault();
-                var targetId = this.getAttribute('data-target');
                 var targetPanel = document.getElementById(targetId);
+                var mainPanel = document.getElementById('cmrPanelMain');
                 if (targetPanel && mainPanel) {
                     mainPanel.classList.add('cmr-slide-left');
                     targetPanel.classList.add('cmr-active');
                 }
-            });
-        });
+            }
+            return;
+        }
 
-        backBtns.forEach(function(btn) {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                var parentPanel = this.closest('.cmr-mobile-nav-panel-sub');
-                if (parentPanel && mainPanel) {
-                    parentPanel.classList.remove('cmr-active');
-                    mainPanel.classList.remove('cmr-slide-left');
-                }
-            });
-        });
-    });
+        // 4. Back Button (Backward Navigation)
+        var backBtn = e.target.closest('.cmr-mobile-nav-back');
+        if (backBtn) {
+            e.preventDefault();
+            var parentPanel = backBtn.closest('.cmr-mobile-nav-panel-sub');
+            var mainPanel = document.getElementById('cmrPanelMain');
+            if (parentPanel && mainPanel) {
+                parentPanel.classList.remove('cmr-active');
+                mainPanel.classList.remove('cmr-slide-left');
+            }
+            return;
+        }
+    }, true);
     </script>
     <?php
 }
