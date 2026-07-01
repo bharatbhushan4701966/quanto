@@ -63,7 +63,7 @@ function cmr_mega_menu_connect_shortcode($atts) {
             position: absolute;
             top: -8px;
             left: auto;
-            right: 15%;
+            right: 70px;
             transform: translateX(50%) rotate(45deg);
             width: 16px;
             height: 16px;
