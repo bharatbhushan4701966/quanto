@@ -293,7 +293,6 @@ function cmr_inject_mobile_mega_menu() {
         document.addEventListener('click', function(e) {
             var toggle = e.target.closest('.menuBar-toggle, .quanto-menu-toggle');
             if (toggle) {
-                alert("Hamburger Clicked! Running custom CMR script.");
                 console.log("CMR Custom Mobile Menu Toggle Clicked!");
                 e.preventDefault();
                 e.stopPropagation();
@@ -337,5 +336,4 @@ function cmr_inject_mobile_mega_menu() {
     </script>
     <?php
 }
-add_action('wp_footer', 'cmr_inject_mobile_mega_menu', 1);
-add_action('wp_body_open', 'cmr_inject_mobile_mega_menu', 1);
+add_action('wp_footer', 'cmr_inject_mobile_mega_menu', 100);
