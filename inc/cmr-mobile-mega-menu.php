@@ -6,22 +6,20 @@ function cmr_inject_mobile_mega_menu() {
     <style>
     /* Custom Zendesk-style Drill-down Mobile Menu CSS */
     .cmr-mobile-nav-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: #fff;
-        z-index: 999999;
-        display: flex;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        background-color: #fff !important;
+        z-index: 2147483647 !important;
+        display: none !important;
         flex-direction: column;
-        transform: translateY(-100%);
-        transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
         font-family: 'Instrument Sans', sans-serif;
         overflow: hidden;
     }
     .cmr-mobile-nav-overlay.cmr-nav-open {
-        transform: translateY(0) !important;
+        display: flex !important;
     }
     .cmr-mobile-nav-header {
         display: flex;
