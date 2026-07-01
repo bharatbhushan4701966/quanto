@@ -418,7 +418,7 @@ function cmr_news_tabs_shortcode( $atts ) {
                                 if ( $is_media_releases ) {
                                     if ( $count === 0 ) {
                                         ?>
-                                        <div class="cmr-media-left">
+                                        <div class="cmr-media-left cmr-card">
                                             <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-card-link-wrapper">
                                                 <div class="cmr-card-image-wrap">
                                                     <?php if ( $bg_image ) : ?>
@@ -439,7 +439,7 @@ function cmr_news_tabs_shortcode( $atts ) {
                                     } else {
                                         // Right List Items
                                         ?>
-                                        <div class="cmr-media-horizontal-card">
+                                        <div class="cmr-media-horizontal-card cmr-card">
                                             <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-card-link-wrapper">
                                                 <div class="cmr-card-image-wrap">
                                                     <?php if ( $bg_image ) : ?>
