@@ -178,7 +178,7 @@ function cmr_smb_connect_general_shortcode( $atts ) {
 
         .cmr-smbcg-title {
             font-size: 32px;
-            font-weight: 700;
+            font-weight: 600;
             line-height: 1.1;
             margin: 0 0 20px 0;
             letter-spacing: 1px;
@@ -394,14 +394,7 @@ function cmr_smb_connect_general_shortcode( $atts ) {
                 
                 <div class="cmr-smbcg-actions">
                     <a href="<?php echo esc_url($top_post['link']); ?>" class="cmr-smbcg-btn-primary" id="cmr-smbcg-main-link">
-                        Read full Release
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                    </a>
-                    <a href="<?php echo $top_post['pdf_link'] ? esc_url($top_post['pdf_link']) : '#'; ?>" 
-                       class="cmr-smbcg-btn-outline" 
-                       id="cmr-smbcg-main-pdf" 
-                       target="_blank">
-                        Download PDF
+                        Read More
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                     </a>
                 </div>
@@ -437,54 +430,63 @@ function cmr_smb_connect_general_shortcode( $atts ) {
         const mainTitle = document.getElementById('cmr-smbcg-main-title');
         const mainExcerpt = document.getElementById('cmr-smbcg-main-excerpt');
         const mainLink = document.getElementById('cmr-smbcg-main-link');
-        const mainPdf = document.getElementById('cmr-smbcg-main-pdf');
 
-        navItems.forEach(item => {
+        let currentIndex = 0;
+        let rotationInterval;
+
+        function switchTab(idx) {
+            navItems.forEach(nav => nav.classList.remove('active'));
+            const activeItem = document.querySelector(`.cmr-smbcg-nav-item[data-index="${idx}"]`);
+            if (activeItem) {
+                activeItem.classList.add('active');
+            }
+            
+            const data = postsData[idx];
+            if (data) {
+                mainImg.style.opacity = 0;
+                setTimeout(() => {
+                    if (data.image) {
+                        mainImg.src = data.image;
+                        mainImg.style.display = 'block';
+                    } else {
+                        mainImg.style.display = 'none';
+                    }
+                    mainTime.textContent = data.read_time;
+                    mainTitle.textContent = data.title;
+                    mainExcerpt.textContent = data.excerpt;
+                    mainLink.href = data.link;
+                    
+                    mainImg.style.opacity = 1;
+                }, 200);
+            }
+        }
+
+        function startRotation() {
+            clearInterval(rotationInterval);
+            rotationInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % postsData.length;
+                switchTab(currentIndex);
+            }, 5000);
+        }
+
+        navItems.forEach((item) => {
             item.addEventListener('click', function(e) {
-                e.preventDefault(); // Optional, if you want them to be pure tabs
-                
-                // Remove active class from all
-                navItems.forEach(nav => nav.classList.remove('active'));
-                
-                // Add active to clicked
-                this.classList.add('active');
-                
-                // Get data index
-                const idx = this.getAttribute('data-index');
-                const data = postsData[idx];
-                
-                if (data) {
-                    // Slight fade effect
-                    mainImg.style.opacity = 0;
-                    setTimeout(() => {
-                        if (data.image) {
-                            mainImg.src = data.image;
-                            mainImg.style.display = 'block';
-                        } else {
-                            mainImg.style.display = 'none';
-                        }
-                        mainTime.textContent = data.read_time;
-                        mainTitle.textContent = data.title;
-                        mainExcerpt.textContent = data.excerpt;
-                        mainLink.href = data.link;
-                        
-                        if (data.pdf_link) {
-                            mainPdf.href = data.pdf_link;
-                        } else {
-                            mainPdf.href = '#';
-                        }
-                        mainPdf.style.display = 'inline-flex';
-                        
-                        mainImg.style.opacity = 1;
-                    }, 200);
-                }
+                e.preventDefault();
+                const idx = parseInt(this.getAttribute('data-index'), 10);
+                currentIndex = idx;
+                switchTab(currentIndex);
+                startRotation(); // Restart interval on manual click
             });
         });
+
+        // Start initial rotation
+        startRotation();
     });
     </script>
     <?php
     return ob_get_clean();
 }
+
 
 
 
