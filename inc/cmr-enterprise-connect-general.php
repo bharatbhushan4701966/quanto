@@ -394,14 +394,7 @@ function cmr_enterprise_connect_general_shortcode( $atts ) {
                 
                 <div class="cmr-entcg-actions">
                     <a href="<?php echo esc_url($top_post['link']); ?>" class="cmr-entcg-btn-primary" id="cmr-entcg-main-link">
-                        Read full Release
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                    </a>
-                    <a href="<?php echo $top_post['pdf_link'] ? esc_url($top_post['pdf_link']) : '#'; ?>" 
-                       class="cmr-entcg-btn-outline" 
-                       id="cmr-entcg-main-pdf" 
-                       target="_blank">
-                        Download PDF
+                        Read More
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                     </a>
                 </div>
@@ -437,7 +430,6 @@ function cmr_enterprise_connect_general_shortcode( $atts ) {
         const mainTitle = document.getElementById('cmr-entcg-main-title');
         const mainExcerpt = document.getElementById('cmr-entcg-main-excerpt');
         const mainLink = document.getElementById('cmr-entcg-main-link');
-        const mainPdf = document.getElementById('cmr-entcg-main-pdf');
 
         navItems.forEach(item => {
             item.addEventListener('click', function(e) {
@@ -467,13 +459,6 @@ function cmr_enterprise_connect_general_shortcode( $atts ) {
                         mainTitle.textContent = data.title;
                         mainExcerpt.textContent = data.excerpt;
                         mainLink.href = data.link;
-                        
-                        if (data.pdf_link) {
-                            mainPdf.href = data.pdf_link;
-                        } else {
-                            mainPdf.href = '#';
-                        }
-                        mainPdf.style.display = 'inline-flex';
                         
                         mainImg.style.opacity = 1;
                     }, 200);
