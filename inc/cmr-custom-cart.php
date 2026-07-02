@@ -447,7 +447,7 @@ function cmr_get_cart_html() {
             <i class="fa-solid fa-cart-shopping" style="font-size: 48px; color: #d1d5db; margin-bottom: 20px;"></i>
             <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 15px;">Your cart is currently empty!</h2>
             <p style="color: #6b7280; margin-bottom: 30px;">Browse our latest reports and add them to your cart.</p>
-            <a href="/reports/" style="display: inline-block; background: #4b23a0; color: #fff; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 600;">Return to Shop</a>
+            <a href="https://qai8358l95-staging.onrocket.site/research-reports/" style="display: inline-block; background: #4b23a0; color: #fff; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 600;">Return to Shop</a>
         </div>
         <?php
         return ob_get_clean();
