@@ -8872,7 +8872,7 @@ h1.custom-product-title {
 /* Container - purple background */
 [data-id="0c2bf70"] {
     background-color: #6241CA !important;
-    border-radius: 24px !important;
+    border-radius: 0 !important;
     padding: 60px 50px !important;
     height: 100%;
     overflow: hidden !important;
@@ -8937,6 +8937,6 @@ h1.custom-product-title {
     }
     [data-id="0c2bf70"] {
         padding: 40px 24px !important;
-        border-radius: 16px !important;
+        border-radius: 0 !important;
     }
 }
