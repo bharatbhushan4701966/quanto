@@ -55,7 +55,7 @@ function cmr_team_scroll_shortcode($atts) {
         .cmr-team-scroll-title {
             text-align: center;
             font-size: 40px;
-            font-weight: 700;
+            font-weight: 600;
             color: #000;
             margin-bottom: 50px;
             letter-spacing: -1px;
