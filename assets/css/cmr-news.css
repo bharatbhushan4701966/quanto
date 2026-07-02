@@ -9,6 +9,7 @@
 /* Tab Buttons Container */
 .cmr-news-tabs {
     display: flex;
+    justify-content: center;
     gap: 15px;
     margin-bottom: 30px;
 }
