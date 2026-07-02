@@ -269,7 +269,7 @@ function cmr_channel_connect_general_shortcode( $atts ) {
             display: flex;
             background: #f9f9fb;
             cursor: pointer;
-            border-top: 3px solid transparent;
+            border-top: 3px solid transparent; position: relative;
             transition: all 0.3s ease;
             text-decoration: none;
             color: inherit;
@@ -279,8 +279,27 @@ function cmr_channel_connect_general_shortcode( $atts ) {
             background: #f0f0f5;
         }
 
+        .cmr-cancg-nav-item::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: 0;
+            height: 3px;
+            background-color: #00E5FF;
+            width: 0;
+            z-index: 10;
+        }
+
+        .cmr-cancg-nav-item.active::before {
+            animation: cmrLoaderAnim 5s linear forwards;
+        }
+
+        @keyframes cmrLoaderAnim {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
         .cmr-cancg-nav-item.active {
-            border-top-color: #00E5FF;
             background: #fff;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
@@ -436,6 +455,7 @@ function cmr_channel_connect_general_shortcode( $atts ) {
 
         function switchTab(idx) {
             navItems.forEach(nav => nav.classList.remove('active'));
+            void document.body.offsetWidth; // Force reflow to restart CSS animation
             const activeItem = document.querySelector(`.cmr-cancg-nav-item[data-index="${idx}"]`);
             if (activeItem) {
                 activeItem.classList.add('active');
@@ -486,6 +506,7 @@ function cmr_channel_connect_general_shortcode( $atts ) {
     <?php
     return ob_get_clean();
 }
+
 
 
 
