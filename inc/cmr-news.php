@@ -338,7 +338,7 @@ function cmr_news_tabs_shortcode( $atts ) {
                     $is_media_releases = ( $term->slug === 'media-releases' || $term->slug === 'media-release' );
                     $grid_class = $is_media_releases ? 'cmr-media-grid' : 'cmr-news-grid';
                     ?>
-                    <div class="<?php echo esc_attr( $grid_class ); ?>">
+                    <div class="cmr-news-grid">
                         <?php
                         $target_count = $is_media_releases ? 4 : 5;
                         
@@ -415,87 +415,42 @@ function cmr_news_tabs_shortcode( $atts ) {
                                 }
                                 $date = get_the_date( 'M j, Y' );
                                 
-                                if ( $is_media_releases ) {
-                                    if ( $count === 0 ) {
-                                        ?>
-                                        <div class="cmr-media-left cmr-card">
-                                            <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-card-link-wrapper">
-                                                <div class="cmr-card-image-wrap">
-                                                    <?php if ( $bg_image ) : ?>
-                                                        <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
-                                                    <?php endif; ?>
-                                                </div>
-                                                <div class="cmr-card-content">
-                                                    <div class="cmr-card-meta">
-                                                        <span class="cmr-category-tag">&mdash; Media Releases</span>
-                                                    </div>
-                                                    <h3 class="cmr-card-title"><?php the_title(); ?></h3>
-                                                    <?php $arrow_url = $is_who_we_serve ? 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg' : 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg'; ?>
-                                                    <span class="cmr-read-coverage">More Details <img src="<?php echo esc_url($arrow_url); ?>" class="cmr-arrow-icon" alt="Arrow"></span>
-                                                </div>
-                                            </a>
+                                $card_class = ( $count === 0 ) ? 'cmr-card cmr-card-featured' : 'cmr-card cmr-card-standard';
+                                ?>
+                                <div class="<?php echo esc_attr( $card_class ); ?>">
+                                    <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-card-link-wrapper">
+                                        <div class="cmr-card-image-wrap">
+                                            <?php if ( $bg_image ) : ?>
+                                                <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
+                                            <?php endif; ?>
+                                            <?php if ( $logo_url ) : ?>
+                                                <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo" alt="Source Logo">
+                                            <?php endif; ?>
                                         </div>
-                                        <?php
-                                    } else {
-                                        // Right List Items
-                                        ?>
-                                        <div class="cmr-media-horizontal-card cmr-card">
-                                            <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-card-link-wrapper">
-                                                <div class="cmr-card-image-wrap">
-                                                    <?php if ( $bg_image ) : ?>
-                                                        <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
+                                        <div class="cmr-card-content">
+                                            <div class="cmr-card-meta">
+                                                <div class="cmr-meta-left">
+                                                    <?php if ( $publisher ) : ?>
+                                                        <span class="cmr-publisher"><?php echo esc_html( $publisher ); ?></span> <span class="cmr-separator">|</span> 
                                                     <?php endif; ?>
+                                                    <span class="cmr-date">Published <?php echo esc_html( $date ); ?></span>
                                                 </div>
-                                                <div class="cmr-card-content">
-                                                    <div class="cmr-card-meta">
-                                                        <span class="cmr-category-tag">&mdash; Media Releases</span>
+                                                <?php if ( $reading_time ) : ?>
+                                                    <div class="cmr-meta-right">
+                                                        <span class="cmr-read-time"><?php echo esc_html( $reading_time ); ?></span>
                                                     </div>
-                                                    <h3 class="cmr-card-title"><?php the_title(); ?></h3>
-                                                    <?php $arrow_url = $is_who_we_serve ? 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg' : 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg'; ?>
-                                                    <span class="cmr-read-coverage">More Details <img src="<?php echo esc_url($arrow_url); ?>" class="cmr-arrow-icon" alt="Arrow"></span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <?php
-                                    }
-                                } else {
-                                    // Original CMR In News Layout
-                                    $card_class = ( $count === 0 ) ? 'cmr-card cmr-card-featured' : 'cmr-card cmr-card-standard';
-                                    ?>
-                                    <div class="<?php echo esc_attr( $card_class ); ?>">
-                                        <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-card-link-wrapper">
-                                            <div class="cmr-card-image-wrap">
-                                                <?php if ( $bg_image ) : ?>
-                                                    <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
-                                                <?php endif; ?>
-                                                <?php if ( $logo_url ) : ?>
-                                                    <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo" alt="Source Logo">
                                                 <?php endif; ?>
                                             </div>
-                                            <div class="cmr-card-content">
-                                                <div class="cmr-card-meta">
-                                                    <div class="cmr-meta-left">
-                                                        <?php if ( $publisher ) : ?>
-                                                            <span class="cmr-publisher"><?php echo esc_html( $publisher ); ?></span> <span class="cmr-separator">|</span> 
-                                                        <?php endif; ?>
-                                                        <span class="cmr-date">Published <?php echo esc_html( $date ); ?></span>
-                                                    </div>
-                                                    <?php if ( $reading_time ) : ?>
-                                                        <div class="cmr-meta-right">
-                                                            <span class="cmr-read-time"><?php echo esc_html( $reading_time ); ?></span>
-                                                        </div>
-                                                    <?php endif; ?>
-                                                </div>
-                                                <h3 class="cmr-card-title"><?php the_title(); ?></h3>
-                                                <?php
-                                                $arrow_url = $is_who_we_serve ? 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg' : 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg';
-                                                ?>
-                                                <span class="cmr-read-coverage">Read Coverage <img src="<?php echo esc_url($arrow_url); ?>" class="cmr-arrow-icon" alt="Arrow"></span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <?php
-                                }
+                                            <h3 class="cmr-card-title"><?php the_title(); ?></h3>
+                                            <?php
+                                            $arrow_url = $is_who_we_serve ? 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg' : 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg';
+                                            $btn_text = $is_media_releases ? 'More Details' : 'Read Coverage';
+                                            ?>
+                                            <span class="cmr-read-coverage"><?php echo esc_html($btn_text); ?> <img src="<?php echo esc_url($arrow_url); ?>" class="cmr-arrow-icon" alt="Arrow"></span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <?php
                                 $count++;
                             }
                             wp_reset_postdata();
