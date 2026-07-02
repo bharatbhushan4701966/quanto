@@ -9,7 +9,6 @@
 /* Tab Buttons Container */
 .cmr-news-tabs {
     display: flex;
-    justify-content: center;
     gap: 15px;
     margin-bottom: 30px;
 }
@@ -180,6 +179,10 @@
     padding-bottom: 2px;
     font-weight: 500;
     font-size: 13px;
+}
+
+.cmr-card-featured .cmr-arrow-icon {
+    filter: brightness(0) invert(1);
 }
 
 /* Standard Card (Bottom Row, spans 4 cols) */
