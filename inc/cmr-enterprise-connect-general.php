@@ -431,40 +431,56 @@ function cmr_enterprise_connect_general_shortcode( $atts ) {
         const mainExcerpt = document.getElementById('cmr-entcg-main-excerpt');
         const mainLink = document.getElementById('cmr-entcg-main-link');
 
-        navItems.forEach(item => {
+        let currentIndex = 0;
+        let rotationInterval;
+
+        function switchTab(idx) {
+            navItems.forEach(nav => nav.classList.remove('active'));
+            const activeItem = document.querySelector(`.cmr-entcg-nav-item[data-index="${idx}"]`);
+            if (activeItem) {
+                activeItem.classList.add('active');
+            }
+            
+            const data = postsData[idx];
+            if (data) {
+                mainImg.style.opacity = 0;
+                setTimeout(() => {
+                    if (data.image) {
+                        mainImg.src = data.image;
+                        mainImg.style.display = 'block';
+                    } else {
+                        mainImg.style.display = 'none';
+                    }
+                    mainTime.textContent = data.read_time;
+                    mainTitle.textContent = data.title;
+                    mainExcerpt.textContent = data.excerpt;
+                    mainLink.href = data.link;
+                    
+                    mainImg.style.opacity = 1;
+                }, 200);
+            }
+        }
+
+        function startRotation() {
+            clearInterval(rotationInterval);
+            rotationInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % postsData.length;
+                switchTab(currentIndex);
+            }, 5000);
+        }
+
+        navItems.forEach((item) => {
             item.addEventListener('click', function(e) {
-                e.preventDefault(); // Optional, if you want them to be pure tabs
-                
-                // Remove active class from all
-                navItems.forEach(nav => nav.classList.remove('active'));
-                
-                // Add active to clicked
-                this.classList.add('active');
-                
-                // Get data index
-                const idx = this.getAttribute('data-index');
-                const data = postsData[idx];
-                
-                if (data) {
-                    // Slight fade effect
-                    mainImg.style.opacity = 0;
-                    setTimeout(() => {
-                        if (data.image) {
-                            mainImg.src = data.image;
-                            mainImg.style.display = 'block';
-                        } else {
-                            mainImg.style.display = 'none';
-                        }
-                        mainTime.textContent = data.read_time;
-                        mainTitle.textContent = data.title;
-                        mainExcerpt.textContent = data.excerpt;
-                        mainLink.href = data.link;
-                        
-                        mainImg.style.opacity = 1;
-                    }, 200);
-                }
+                e.preventDefault();
+                const idx = parseInt(this.getAttribute('data-index'), 10);
+                currentIndex = idx;
+                switchTab(currentIndex);
+                startRotation(); // Restart interval on manual click
             });
         });
+
+        // Start initial rotation
+        startRotation();
     });
     </script>
     <?php
