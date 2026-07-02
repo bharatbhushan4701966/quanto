@@ -8868,37 +8868,75 @@ h1.custom-product-title {
     }
 }
 
-/* Global Elementor Styles for 'Your challenge' Section (Copied from Homepage) */
-.elementor-element-0c2bf70 {
+/* Global Elementor Styles for 'Your challenge' Section */
+/* Container - purple background */
+[data-id="0c2bf70"] {
     background-color: #6241CA !important;
-    border-radius: 24px;
+    border-radius: 24px !important;
     padding: 60px 50px !important;
     height: 100%;
+    overflow: hidden !important;
 }
-.elementor-element-26cf3fc {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+[data-id="26cf3fc"] {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
 }
-.elementor-element-8a75792, .elementor-element-f4f7f56 {
+/* Desktop heading */
+[data-id="8a75792"] {
     color: #FFFFFF !important;
     font-size: 42px !important;
     line-height: 1.2 !important;
     font-weight: 700 !important;
     margin-bottom: 24px !important;
 }
-.elementor-element-8834a3c, .elementor-element-97a5f81 {
+/* Mobile heading */
+[data-id="f4f7f56"] {
+    color: #FFFFFF !important;
+    font-size: 28px !important;
+    line-height: 1.2 !important;
+    font-weight: 700 !important;
+    margin-bottom: 16px !important;
+}
+/* Desktop paragraph */
+[data-id="8834a3c"] {
     color: #FFFFFF !important;
     font-size: 16px !important;
     line-height: 1.6 !important;
     opacity: 0.9;
     margin-bottom: 30px !important;
 }
-.elementor-element-6101dd4 .elementor-icon-list-item {
+/* Mobile paragraph */
+[data-id="97a5f81"] {
+    color: #FFFFFF !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    opacity: 0.9;
+    margin-bottom: 20px !important;
+}
+/* Icon list */
+[data-id="6101dd4"] .elementor-icon-list-item {
     padding-bottom: 15px !important;
 }
-.elementor-element-6101dd4 .elementor-icon-list-text {
+[data-id="6101dd4"] .elementor-icon-list-text {
     color: #FFFFFF !important;
     font-size: 16px !important;
     font-weight: 500 !important;
+}
+/* Keep desktop/mobile visibility rules */
+@media (min-width: 768px) {
+    [data-id="f4f7f56"],
+    [data-id="97a5f81"] {
+        display: none !important;
+    }
+}
+@media (max-width: 767px) {
+    [data-id="8a75792"],
+    [data-id="8834a3c"] {
+        display: none !important;
+    }
+    [data-id="0c2bf70"] {
+        padding: 40px 24px !important;
+        border-radius: 16px !important;
+    }
 }
