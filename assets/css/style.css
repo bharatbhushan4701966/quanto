@@ -8854,17 +8854,16 @@ h1.custom-product-title {
     }
 }
 
- / *   F i x   f o r   P r o d u c t   P a g e   C o n t a c t   S e c t i o n   D e s k t o p / M o b i l e   v i s i b i l i t y   * / 
- @ m e d i a   ( m i n - w i d t h :   7 6 8 p x )   { 
-         . e l e m e n t o r - e l e m e n t - f 4 f 7 f 5 6 , 
-         . e l e m e n t o r - e l e m e n t - 9 7 a 5 f 8 1   { 
-                 d i s p l a y :   n o n e   ! i m p o r t a n t ; 
-         } 
- } 
- @ m e d i a   ( m a x - w i d t h :   7 6 7 p x )   { 
-         . e l e m e n t o r - e l e m e n t - 8 a 7 5 7 9 2 , 
-         . e l e m e n t o r - e l e m e n t - 8 8 3 4 a 3 c   { 
-                 d i s p l a y :   n o n e   ! i m p o r t a n t ; 
-         } 
- }  
- 
+/* Fix for Product Page Contact Section Desktop/Mobile visibility */
+@media (min-width: 768px) {
+    .elementor-element-f4f7f56,
+    .elementor-element-97a5f81 {
+        display: none !important;
+    }
+}
+@media (max-width: 767px) {
+    .elementor-element-8a75792,
+    .elementor-element-8834a3c {
+        display: none !important;
+    }
+}
