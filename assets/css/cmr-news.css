@@ -363,8 +363,8 @@
         top: auto;
         bottom: 160px;
         left: 20px;
-        width: 60px;
-        height: 60px;
+        width: 35px;
+        height: 35px;
         z-index: 2;
     }
 
@@ -374,6 +374,12 @@
     .cmr-card-featured .cmr-card-logo {
         left: 20px;
         bottom: 160px;
+        width: 35px;
+        height: 35px;
+    }
+
+    .cmr-arrow-icon {
+        filter: brightness(0) invert(1);
     }
 }
 
