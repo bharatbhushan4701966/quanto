@@ -449,7 +449,7 @@
             }
             
             echo '<div data-elementor-type="wp-post" data-elementor-id="' . esc_attr( $post_id ) . '" class="elementor elementor-' . esc_attr( $post_id ) . '">';
-            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, false );
+            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
             echo '</div>';
             echo '</footer>';
         }
