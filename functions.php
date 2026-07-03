@@ -65,6 +65,9 @@ require_once QUANTO_DIR_PATH_HOOKS . 'hooks.php';
 // hooks funtion
 require_once QUANTO_DIR_PATH_HOOKS . 'hooks-functions.php';
 
+// Enqueue footer CSS early
+add_action( 'wp_enqueue_scripts', 'quanto_enqueue_footer_css_early', 10 );
+
 // Force enable WooCommerce product reviews and ratings
 add_action( 'init', 'quanto_force_enable_woocommerce_reviews' );
 function quanto_force_enable_woocommerce_reviews() {
