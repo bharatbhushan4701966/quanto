@@ -23,41 +23,58 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
         );
 
         foreach ( $categories_to_fetch as $slug => $label ) {
-            // First try to find in post categories
-            $query_args = array(
-                'post_type'      => 'post',
-                'posts_per_page' => 2,
-                'post_status'    => 'publish',
-                'orderby'        => 'date',
-                'order'          => 'DESC',
-                'category_name'  => $slug,
-                'meta_query'     => array(
-                    array( 'key' => '_thumbnail_id', 'compare' => 'EXISTS' )
-                )
-            );
-            $posts = get_posts( $query_args );
+            $posts = array();
 
-            // If we don't have 2 posts, try cmr_news_category
-            if ( count($posts) < 2 ) {
-                $news_args = array(
-                    'post_type'      => 'cmr_news',
-                    'posts_per_page' => 2 - count($posts),
+            if ( $slug === 'research-reports' && class_exists( 'WooCommerce' ) ) {
+                // For Research Reports, query WooCommerce products
+                $product_args = array(
+                    'post_type'      => 'product',
+                    'posts_per_page' => 2,
                     'post_status'    => 'publish',
                     'orderby'        => 'date',
                     'order'          => 'DESC',
-                    'tax_query'      => array(
-                        array(
-                            'taxonomy' => 'cmr_news_category',
-                            'field'    => 'slug',
-                            'terms'    => $slug
-                        )
-                    ),
                     'meta_query'     => array(
                         array( 'key' => '_thumbnail_id', 'compare' => 'EXISTS' )
                     )
                 );
-                $news_posts = get_posts( $news_args );
-                $posts = array_merge( $posts, $news_posts );
+                $posts = get_posts( $product_args );
+            } else {
+                // First try to find in post categories
+                $query_args = array(
+                    'post_type'      => 'post',
+                    'posts_per_page' => 2,
+                    'post_status'    => 'publish',
+                    'orderby'        => 'date',
+                    'order'          => 'DESC',
+                    'category_name'  => $slug,
+                    'meta_query'     => array(
+                        array( 'key' => '_thumbnail_id', 'compare' => 'EXISTS' )
+                    )
+                );
+                $posts = get_posts( $query_args );
+
+                // If we don't have 2 posts, try cmr_news_category
+                if ( count($posts) < 2 ) {
+                    $news_args = array(
+                        'post_type'      => 'cmr_news',
+                        'posts_per_page' => 2 - count($posts),
+                        'post_status'    => 'publish',
+                        'orderby'        => 'date',
+                        'order'          => 'DESC',
+                        'tax_query'      => array(
+                            array(
+                                'taxonomy' => 'cmr_news_category',
+                                'field'    => 'slug',
+                                'terms'    => $slug
+                            )
+                        ),
+                        'meta_query'     => array(
+                            array( 'key' => '_thumbnail_id', 'compare' => 'EXISTS' )
+                        )
+                    );
+                    $news_posts = get_posts( $news_args );
+                    $posts = array_merge( $posts, $news_posts );
+                }
             }
 
             // Fallback: If still not enough, just grab any latest posts not in the slide
