@@ -454,6 +454,7 @@ function cmr_news_tabs_shortcode( $atts ) {
                                 $count++;
                             }
                             wp_reset_postdata();
+                        }
                         ?>
                     </div>
                     
