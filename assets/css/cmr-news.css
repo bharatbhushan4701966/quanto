@@ -996,3 +996,10 @@
         height: 200px;
     }
 }
+
+/* Increase Explore All Arrow Size */
+.cmr-explore-all .cmr-arrow-icon {
+    width: 24px;
+    height: 24px;
+    margin-left: 8px;
+}

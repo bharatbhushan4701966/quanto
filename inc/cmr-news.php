@@ -459,7 +459,7 @@ function cmr_news_tabs_shortcode( $atts ) {
                     </div>
                     
                     <div class="cmr-news-footer">
-                        <a href="<?php echo esc_url( get_term_link( $term ) ); ?>" class="cmr-explore-all">Explore All <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg" class="cmr-arrow-icon" alt="Arrow"></a>
+                        <a href="<?php echo esc_url( home_url( '/' . $term->slug . '/' ) ); ?>" class="cmr-explore-all">Explore All <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg" class="cmr-arrow-icon" alt="Arrow"></a>
                     </div>
                 </div>
             <?php 
