@@ -85,6 +85,11 @@ function cmr_inject_mobile_mega_menu() {
     .cmr-mobile-nav-link.cmr-active-link .cmr-mobile-nav-link-title {
         color: #6A35FF !important;
     }
+
+    /* Show arrow for all items */
+    .cmr-mm-arrow, .cmr-mms-arrow, .cmr-mmt-arrow, .cmr-mmw-arrow, .cmr-mmc-arrow, .cmr-mmn-arrow {
+        display: inline-block !important;
+    }
     </style>
     <div class="cmr-mobile-nav-overlay" id="cmrMobileNav">
         <div class="cmr-mobile-nav-header">
@@ -313,6 +318,21 @@ function cmr_inject_mobile_mega_menu() {
                 
                 if (normalizedLink === normalizedCurrent) {
                     link.classList.add('cmr-active-link');
+                    // For mega menu tabs, also set the active tab
+                    if (link.hasAttribute('data-target')) {
+                        var targetId = link.getAttribute('data-target');
+                        var wrapper = link.closest('.cmr-mm-wrapper, .cmr-mms-wrapper, .cmr-mmt-wrapper, .cmr-mmw-wrapper, .cmr-mmc-wrapper, .cmr-mmn-wrapper');
+                        if (wrapper) {
+                            // Remove active from all tabs
+                            wrapper.querySelectorAll('a[data-target]').forEach(function(t) { t.classList.remove('active'); });
+                            // Hide all panels
+                            wrapper.querySelectorAll('.cmr-mmw-content-panel, .cmr-mmt-content-panel, .cmr-mmc-content-panel, .cmr-mms-content-panel, .cmr-mmn-content-panel').forEach(function(p) { p.style.display = 'none'; });
+                            // Activate this one
+                            link.classList.add('active');
+                            var targetPanel = document.getElementById(targetId);
+                            if (targetPanel) { targetPanel.style.display = 'flex'; }
+                        }
+                    }
                 }
             }
         });
