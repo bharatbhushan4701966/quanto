@@ -454,18 +454,17 @@ function cmr_news_tabs_shortcode( $atts ) {
                                 $count++;
                             }
                             wp_reset_postdata();
-                        }
                         ?>
+                    </div>
+                    
+                    <div class="cmr-news-footer">
+                        <a href="<?php echo esc_url( get_term_link( $term ) ); ?>" class="cmr-explore-all">Explore All <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg" class="cmr-arrow-icon" alt="Arrow"></a>
                     </div>
                 </div>
             <?php 
                 $first = false;
             endforeach; 
             ?>
-        </div>
-        
-        <div class="cmr-news-footer">
-            <a href="#" class="cmr-explore-all">Explore All <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg" class="cmr-arrow-icon" alt="Arrow"></a>
         </div>
     </div>
     <?php

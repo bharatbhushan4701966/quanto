@@ -14,26 +14,70 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             'section_title'  => 'Insights That Drive Strategic<br> Business Decisions',
         ), $atts );
 
-        $query_args = array(
-            'post_type'      => array( 'post', 'cmr_news' ),
-            'posts_per_page' => 6,
-            'post_status'    => 'publish',
-            'orderby'        => 'date',
-            'order'          => 'DESC',
-            'meta_query'     => array(
-                array(
-                    'key'     => '_thumbnail_id',
-                    'compare' => 'EXISTS'
-                ),
-            ),
+        $slides = array();
+        
+        $categories_to_fetch = array(
+            'market-updates'    => 'Market Updates',
+            'industry-insights' => 'Industry Insights',
+            'research-reports'  => 'Research Reports'
         );
 
-        $wwt_posts = get_posts( $query_args );
-        
-        $posts_data = [];
-        if ( !empty($wwt_posts) ) {
-            foreach ( $wwt_posts as $post_obj ) {
-                
+        foreach ( $categories_to_fetch as $slug => $label ) {
+            // First try to find in post categories
+            $query_args = array(
+                'post_type'      => 'post',
+                'posts_per_page' => 2,
+                'post_status'    => 'publish',
+                'orderby'        => 'date',
+                'order'          => 'DESC',
+                'category_name'  => $slug,
+                'meta_query'     => array(
+                    array( 'key' => '_thumbnail_id', 'compare' => 'EXISTS' )
+                )
+            );
+            $posts = get_posts( $query_args );
+
+            // If we don't have 2 posts, try cmr_news_category
+            if ( count($posts) < 2 ) {
+                $news_args = array(
+                    'post_type'      => 'cmr_news',
+                    'posts_per_page' => 2 - count($posts),
+                    'post_status'    => 'publish',
+                    'orderby'        => 'date',
+                    'order'          => 'DESC',
+                    'tax_query'      => array(
+                        array(
+                            'taxonomy' => 'cmr_news_category',
+                            'field'    => 'slug',
+                            'terms'    => $slug
+                        )
+                    ),
+                    'meta_query'     => array(
+                        array( 'key' => '_thumbnail_id', 'compare' => 'EXISTS' )
+                    )
+                );
+                $news_posts = get_posts( $news_args );
+                $posts = array_merge( $posts, $news_posts );
+            }
+
+            // Fallback: If still not enough, just grab any latest posts not in the slide
+            if ( count($posts) < 2 ) {
+                $fallback_args = array(
+                    'post_type'      => array('post', 'cmr_news'),
+                    'posts_per_page' => 2 - count($posts),
+                    'post_status'    => 'publish',
+                    'orderby'        => 'date',
+                    'order'          => 'DESC',
+                    'meta_query'     => array(
+                        array( 'key' => '_thumbnail_id', 'compare' => 'EXISTS' )
+                    )
+                );
+                $fallback_posts = get_posts( $fallback_args );
+                $posts = array_merge( $posts, $fallback_posts );
+            }
+
+            $slide_data = array();
+            foreach ( $posts as $post_obj ) {
                 $post_title = get_the_title($post_obj);
                 $post_link = get_permalink($post_obj->ID);
                 $thumbnail_url = get_the_post_thumbnail_url( $post_obj->ID, 'large' );
@@ -41,22 +85,15 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
                     $thumbnail_url = 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80';
                 }
                 
-                $category_name = 'Insights';
-                $terms = get_the_terms( $post_obj->ID, 'category' );
-                if ( $terms && ! is_wp_error( $terms ) ) {
-                    $category_name = $terms[0]->name;
-                }
-                
-                $posts_data[] = array(
+                $slide_data[] = array(
                     'title' => $post_title,
                     'link'  => $post_link,
                     'image' => $thumbnail_url,
-                    'cat'   => $category_name,
+                    'cat'   => $label, // Always use the requested category label
                 );
             }
+            $slides[] = $slide_data;
         }
-                // Group into slides (chunks of 2)
-        $slides = array_chunk( $posts_data, 2 );
         
         // If no posts found, provide some dummy slides to match the original design layout exactly
         if (empty($slides)) {
