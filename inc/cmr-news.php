@@ -338,7 +338,7 @@ function cmr_news_tabs_shortcode( $atts ) {
                     $is_media_releases = ( $term->slug === 'media-releases' || $term->slug === 'media-release' );
                     $grid_class = $is_media_releases ? 'cmr-media-grid' : 'cmr-news-grid';
                     ?>
-                    <div class="cmr-news-grid">
+                    <div class="<?php echo esc_attr( $grid_class ); ?>">
                         <?php
                         $target_count = $is_media_releases ? 4 : 5;
                         
