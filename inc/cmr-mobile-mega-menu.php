@@ -74,6 +74,17 @@ function cmr_inject_mobile_mega_menu() {
             display: none !important; visibility: hidden !important; opacity: 0 !important;
         }
     }
+    
+    /* Active state for all mega menus */
+    .cmr-mm-item.cmr-active-link h4,
+    .cmr-mms-item.cmr-active-link h4,
+    .cmr-mmt-item.cmr-active-link h4,
+    .cmr-mmw-item.cmr-active-link h4,
+    .cmr-mmc-item.cmr-active-link h4,
+    .cmr-mmn-item.cmr-active-link h4,
+    .cmr-mobile-nav-link.cmr-active-link .cmr-mobile-nav-link-title {
+        color: #6A35FF !important;
+    }
     </style>
     <div class="cmr-mobile-nav-overlay" id="cmrMobileNav">
         <div class="cmr-mobile-nav-header">
@@ -288,6 +299,23 @@ function cmr_inject_mobile_mega_menu() {
         if (overlay && overlay.parentElement !== document.body) {
             document.body.appendChild(overlay);
         }
+
+        // Highlight active menu items for BOTH desktop and mobile mega menus
+        var currentUrl = window.location.href.split('#')[0].split('?')[0]; 
+        var normalizedCurrent = currentUrl.replace(/\/$/, "");
+
+        var allMegaLinks = document.querySelectorAll('.cmr-mm-item, .cmr-mms-item, .cmr-mmt-item, .cmr-mmw-item, .cmr-mmc-item, .cmr-mmn-item, .cmr-mobile-nav-link');
+        
+        allMegaLinks.forEach(function(link) {
+            if (link.href) {
+                var linkUrl = link.href.split('#')[0].split('?')[0];
+                var normalizedLink = linkUrl.replace(/\/$/, "");
+                
+                if (normalizedLink === normalizedCurrent) {
+                    link.classList.add('cmr-active-link');
+                }
+            }
+        });
     });
 
     // STEP 2: Click handlers using event delegation on capture phase
