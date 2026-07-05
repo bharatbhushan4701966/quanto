@@ -950,3 +950,13 @@ add_action('wp_footer', function() {
     </style>
     <?php
 });
+
+// Override the Elementor Services widget from the theme
+add_action('elementor/widgets/register', function($widgets_manager) {
+    // Unregister the plugin's original widget if it exists
+    $widgets_manager->unregister('quanto_services');
+    
+    // Register our theme's overridden widget
+    require_once get_template_directory() . '/inc/widgets/service.php';
+    $widgets_manager->register(new \Quanto_Service_Theme());
+}, 20); // Priority 20 to run after the plugin registers its widgets
