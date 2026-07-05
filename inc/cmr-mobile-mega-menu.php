@@ -329,7 +329,9 @@ function cmr_inject_mobile_mega_menu() {
                             wrapper.querySelectorAll('.cmr-mmw-content-panel, .cmr-mmt-content-panel, .cmr-mmc-content-panel, .cmr-mms-content-panel, .cmr-mmn-content-panel').forEach(function(p) { p.style.display = 'none'; });
                             // Activate this one
                             link.classList.add('active');
-                            var targetPanel = document.getElementById(targetId);
+                            // Because mega menus are cloned, there are multiple elements with the same ID.
+                            // We must find the target panel INSIDE the current wrapper.
+                            var targetPanel = wrapper.querySelector('[id="' + targetId + '"]');
                             if (targetPanel) { targetPanel.style.display = 'flex'; }
                         }
                     }
