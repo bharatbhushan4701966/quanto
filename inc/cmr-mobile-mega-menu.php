@@ -339,6 +339,33 @@ function cmr_inject_mobile_mega_menu() {
             }
         });
     });
+    
+    // STEP 1.5: Hover handlers using event delegation for cloned mega menu tabs
+    document.addEventListener('mouseover', function(e) {
+        var trigger = e.target.closest('.cmr-mmw-item-hover-trigger, .cmr-mmt-item-hover-trigger, .cmr-mmc-item-hover-trigger, .cmr-mms-item-hover-trigger, .cmr-mmn-item-hover-trigger');
+        if (trigger) {
+            var targetId = trigger.getAttribute('data-target');
+            if (!targetId) return;
+            
+            var wrapper = trigger.closest('.cmr-mm-wrapper, .cmr-mms-wrapper, .cmr-mmt-wrapper, .cmr-mmw-wrapper, .cmr-mmc-wrapper, .cmr-mmn-wrapper');
+            if (wrapper) {
+                // Remove active from all triggers
+                wrapper.querySelectorAll('a[data-target]').forEach(function(t) { t.classList.remove('active'); });
+                
+                // Hide all panels
+                wrapper.querySelectorAll('.cmr-mmw-content-panel, .cmr-mmt-content-panel, .cmr-mmc-content-panel, .cmr-mms-content-panel, .cmr-mmn-content-panel').forEach(function(p) { p.style.display = 'none'; });
+                
+                // Activate this trigger
+                trigger.classList.add('active');
+                
+                // Show target panel inside this wrapper
+                var targetPanel = wrapper.querySelector('[id="' + targetId + '"]');
+                if (targetPanel) {
+                    targetPanel.style.display = 'flex';
+                }
+            }
+        }
+    });
 
     // STEP 2: Click handlers using event delegation on capture phase
     document.addEventListener('click', function(e) {
