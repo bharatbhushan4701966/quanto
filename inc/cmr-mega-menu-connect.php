@@ -20,12 +20,16 @@ function cmr_get_mmc_posts($slug, $fallback_offset) {
     }
     
     $unique_posts = array();
-    $seen_titles = array();
+    
+    global $cmr_mmc_seen_titles;
+    if (!isset($cmr_mmc_seen_titles)) {
+        $cmr_mmc_seen_titles = array();
+    }
     
     foreach ($raw_posts as $p) {
         $title = trim($p->post_title);
-        if (!isset($seen_titles[$title])) {
-            $seen_titles[$title] = true;
+        if (!isset($cmr_mmc_seen_titles[$title])) {
+            $cmr_mmc_seen_titles[$title] = true;
             $unique_posts[] = $p;
             if (count($unique_posts) == 3) {
                 break;

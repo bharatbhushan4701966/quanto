@@ -326,7 +326,7 @@ function cmr_inject_mobile_mega_menu() {
                             // Remove active from all tabs
                             wrapper.querySelectorAll('a[data-target]').forEach(function(t) { t.classList.remove('active'); });
                             // Hide all panels
-                            wrapper.querySelectorAll('.cmr-mmw-content-panel, .cmr-mmt-content-panel, .cmr-mmc-content-panel, .cmr-mms-content-panel, .cmr-mmn-content-panel').forEach(function(p) { p.style.display = 'none'; });
+                            wrapper.querySelectorAll('.cmr-mmw-content-panel, .cmr-mmt-content-panel, .cmr-mmc-content-panel, .cmr-mms-content-panel, .cmr-mmn-content-panel, .cmr-mmw-posts-list, .cmr-mmc-posts-list, .cmr-mmt-posts-list').forEach(function(p) { p.style.display = 'none'; });
                             // Activate this one
                             link.classList.add('active');
                             // Because mega menus are cloned, there are multiple elements with the same ID.
@@ -353,7 +353,7 @@ function cmr_inject_mobile_mega_menu() {
                 wrapper.querySelectorAll('a[data-target]').forEach(function(t) { t.classList.remove('active'); });
                 
                 // Hide all panels
-                wrapper.querySelectorAll('.cmr-mmw-content-panel, .cmr-mmt-content-panel, .cmr-mmc-content-panel, .cmr-mms-content-panel, .cmr-mmn-content-panel').forEach(function(p) { p.style.display = 'none'; });
+                wrapper.querySelectorAll('.cmr-mmw-content-panel, .cmr-mmt-content-panel, .cmr-mmc-content-panel, .cmr-mms-content-panel, .cmr-mmn-content-panel, .cmr-mmw-posts-list, .cmr-mmc-posts-list, .cmr-mmt-posts-list').forEach(function(p) { p.style.display = 'none'; });
                 
                 // Activate this trigger
                 trigger.classList.add('active');
