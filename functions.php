@@ -997,6 +997,23 @@ add_shortcode('cmr_footer', function() {
     return $cached_footer;
 });
 
+// Helper to manually print Elementor CSS for a post inside a shortcode
+if ( ! function_exists('cmr_print_elementor_css') ) {
+    function cmr_print_elementor_css($post_id) {
+        $upload_dir = wp_upload_dir();
+        if ( ! empty( $upload_dir['basedir'] ) && ! empty( $upload_dir['baseurl'] ) ) {
+            $css_path = trailingslashit( $upload_dir['basedir'] ) . 'elementor/css/';
+            $css_url  = trailingslashit( $upload_dir['baseurl'] ) . 'elementor/css/';
+            
+            $post_css_file = 'post-' . $post_id . '.css';
+            if ( file_exists( $css_path . $post_css_file ) ) {
+                $ver = filemtime( $css_path . $post_css_file );
+                echo '<link rel="stylesheet" href="' . esc_url($css_url . $post_css_file . '?ver=' . $ver) . '" type="text/css" media="all" />';
+            }
+        }
+    }
+}
+
 // Shortcode to display the Challenge section by rendering the quanto_tab_build post
 add_shortcode('cmr_challenge', function() {
     ob_start();
@@ -1012,10 +1029,8 @@ add_shortcode('cmr_challenge', function() {
     if ( $posts && !empty($posts[0]) ) {
         $post_id = $posts[0]->ID;
         
-        // Enqueue Elementor CSS for this post
-        if ( function_exists( 'quanto_enqueue_elementor_post_assets' ) ) {
-            quanto_enqueue_elementor_post_assets( $post_id );
-        }
+        // Print CSS link inline
+        cmr_print_elementor_css($post_id);
         
         // Render it
         if ( class_exists( '\\Elementor\\Plugin' ) ) {
@@ -1041,10 +1056,8 @@ add_shortcode('cmr_footer_card', function() {
     if ( $posts && !empty($posts[0]) ) {
         $post_id = $posts[0]->ID;
         
-        // Enqueue Elementor CSS for this post
-        if ( function_exists( 'quanto_enqueue_elementor_post_assets' ) ) {
-            quanto_enqueue_elementor_post_assets( $post_id );
-        }
+        // Print CSS link inline
+        cmr_print_elementor_css($post_id);
         
         // Render it
         if ( class_exists( '\\Elementor\\Plugin' ) ) {
