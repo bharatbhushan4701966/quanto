@@ -374,26 +374,30 @@
                 if ( $active_kit_id ) {
                     $kit_file = 'post-' . $active_kit_id . '.css';
                     if ( file_exists( $css_path . $kit_file ) ) {
-                        wp_enqueue_style( 'elementor-post-' . $active_kit_id, $css_url . $kit_file, array(), null );
+                        $ver = filemtime( $css_path . $kit_file );
+                        wp_enqueue_style( 'elementor-post-' . $active_kit_id, $css_url . $kit_file, array(), $ver );
                     }
                 }
 
                 $post_css_file = 'post-' . $post_id . '.css';
                 if ( file_exists( $css_path . $post_css_file ) ) {
-                    wp_enqueue_style( 'elementor-post-' . $post_id, $css_url . $post_css_file, array(), null );
+                    $ver = filemtime( $css_path . $post_css_file );
+                    wp_enqueue_style( 'elementor-post-' . $post_id, $css_url . $post_css_file, array(), $ver );
                 }
 
                 foreach ( $devices as $device ) {
                     $base_file = 'base-' . $device . '.css';
                     if ( file_exists( $css_path . $base_file ) ) {
-                        wp_enqueue_style( 'base-' . $device, $css_url . $base_file, array(), null );
+                        $ver = filemtime( $css_path . $base_file );
+                        wp_enqueue_style( 'base-' . $device, $css_url . $base_file, array(), $ver );
                     }
                 }
 
                 foreach ( $devices as $device ) {
                     $local_file = 'local-' . $post_id . '-frontend-' . $device . '.css';
                     if ( file_exists( $css_path . $local_file ) ) {
-                        wp_enqueue_style( 'local-' . $post_id . '-frontend-' . $device, $css_url . $local_file, array(), null );
+                        $ver = filemtime( $css_path . $local_file );
+                        wp_enqueue_style( 'local-' . $post_id . '-frontend-' . $device, $css_url . $local_file, array(), $ver );
                     }
                 }
             }
