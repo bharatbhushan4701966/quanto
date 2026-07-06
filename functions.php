@@ -961,3 +961,14 @@ add_action('elementor/widgets/register', function($widgets_manager) {
     $widgets_manager->register(new \Quanto_Service_Theme());
 }, 20); // Priority 20 to run after the plugin registers its widgets
 require_once get_template_directory() . '/inc/cmr-footer-css-fix.php';
+
+// Shortcode to display the main Elementor footer
+add_shortcode('cmr_footer', function() {
+    ob_start();
+    if ( function_exists( 'quanto_render_elementor_footer' ) ) {
+        // Enqueue the CSS first so it is available
+        quanto_enqueue_elementor_post_assets( 13499 );
+        quanto_render_elementor_footer( 13499 );
+    }
+    return ob_get_clean();
+});
