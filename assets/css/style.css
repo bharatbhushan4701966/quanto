@@ -8940,3 +8940,229 @@ h1.custom-product-title {
         border-radius: 0 !important;
     }
 }
+
+/* ------------------------------------------------------------- */
+/* FOOTER CSS (Restored and updated with new Elementor IDs)      */
+/* ------------------------------------------------------------- */
+
+/* Container - purple background */
+[data-id="0193dcd"] {
+    background-color: #6C22DA !important;
+    border-radius: 20px !important;
+    padding: 30px !important;
+    margin-bottom: 20px !important;
+}
+
+[data-id="502501a"] {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Heading */
+[data-id="1087267"] {
+    color: #FFFFFF !important;
+    font-size: 42px !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+    margin-bottom: 20px !important;
+}
+
+/* Paragraph */
+[data-id="7c84f17"] {
+    color: #FFFFFF !important;
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+    opacity: 0.9;
+    margin-bottom: 30px !important;
+}
+
+/* Icon list */
+[data-id="5184662"] .elementor-icon-list-item,
+[data-id="c1e30ed"] .elementor-icon-list-item {
+    padding-bottom: 15px !important;
+}
+[data-id="5184662"] .elementor-icon-list-text,
+[data-id="c1e30ed"] .elementor-icon-list-text {
+    color: #FFFFFF !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+}
+
+/* Let's connect heading */
+[data-id="4961a1e"] {
+    font-size: 80px !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+    letter-spacing: -2px !important;
+}
+
+@media (max-width: 767px) {
+    [data-id="0193dcd"] {
+        padding: 40px 24px !important;
+        border-radius: 0 !important;
+    }
+    [data-id="1087267"] {
+        font-size: 28px !important;
+        line-height: 1.2 !important;
+        margin-bottom: 16px !important;
+    }
+    [data-id="7c84f17"] {
+        font-size: 14px !important;
+        margin-bottom: 20px !important;
+    }
+    [data-id="4961a1e"] {
+        font-size: 48px !important;
+    }
+}
+
+/* ------------------------------------------------------------- */
+/* FOOTER CSS (Restored and updated with new Elementor IDs)      */
+/* ------------------------------------------------------------- */
+
+/* Container - purple background */
+[data-id="0193dcd"] {
+    background-color: #6C22DA !important;
+    border-radius: 20px !important;
+    padding: 30px !important;
+    margin-bottom: 20px !important;
+}
+
+[data-id="502501a"] {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Heading */
+[data-id="1087267"] {
+    color: #FFFFFF !important;
+    font-size: 42px !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+    margin-bottom: 20px !important;
+}
+
+/* Paragraph */
+[data-id="7c84f17"] {
+    color: #FFFFFF !important;
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+    opacity: 0.9;
+    margin-bottom: 30px !important;
+}
+
+/* Icon list */
+[data-id="5184662"] .elementor-icon-list-item,
+[data-id="c1e30ed"] .elementor-icon-list-item {
+    padding-bottom: 15px !important;
+}
+[data-id="5184662"] .elementor-icon-list-text,
+[data-id="c1e30ed"] .elementor-icon-list-text {
+    color: #FFFFFF !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+}
+
+/* Let's connect heading */
+[data-id="4961a1e"] {
+    font-size: 80px !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+    letter-spacing: -2px !important;
+}
+
+@media (max-width: 767px) {
+    [data-id="0193dcd"] {
+        padding: 40px 24px !important;
+        border-radius: 0 !important;
+    }
+    [data-id="1087267"] {
+        font-size: 28px !important;
+        line-height: 1.2 !important;
+        margin-bottom: 16px !important;
+    }
+    [data-id="7c84f17"] {
+        font-size: 14px !important;
+        margin-bottom: 20px !important;
+    }
+    [data-id="4961a1e"] {
+        font-size: 48px !important;
+    }
+}
+
+/* ------------------------------------------------------------- */
+/* DYNAMIC FOOTER CSS (Immune to Elementor ID changes)           */
+/* ------------------------------------------------------------- */
+
+/* Container - purple background */
+.cmr-dynamic-challenge-container {
+    background-color: #6C22DA !important;
+    border-radius: 20px !important;
+    padding: 30px !important;
+    margin-bottom: 20px !important;
+}
+
+.cmr-dynamic-challenge-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Heading */
+.cmr-dynamic-challenge-heading .elementor-heading-title {
+    color: #FFFFFF !important;
+    font-size: 42px !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+    margin-bottom: 20px !important;
+}
+
+/* Paragraph */
+.cmr-dynamic-challenge-text .elementor-widget-container {
+    color: #FFFFFF !important;
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+    opacity: 0.9;
+    margin-bottom: 30px !important;
+}
+
+/* Icon list */
+.cmr-dynamic-challenge-icon-list .elementor-icon-list-item {
+    padding-bottom: 15px !important;
+}
+.cmr-dynamic-challenge-icon-list .elementor-icon-list-text {
+    color: #FFFFFF !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+}
+
+/* Let's connect heading */
+.cmr-dynamic-lets-connect .elementor-heading-title {
+    font-size: 80px !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+    letter-spacing: -2px !important;
+}
+
+@media (max-width: 767px) {
+    .cmr-dynamic-challenge-container {
+        padding: 40px 24px !important;
+        border-radius: 0 !important;
+    }
+    .cmr-dynamic-challenge-heading .elementor-heading-title {
+        font-size: 28px !important;
+        line-height: 1.2 !important;
+        margin-bottom: 16px !important;
+    }
+    .cmr-dynamic-challenge-text .elementor-widget-container {
+        font-size: 14px !important;
+        margin-bottom: 20px !important;
+    }
+    .cmr-dynamic-lets-connect .elementor-heading-title {
+        font-size: 48px !important;
+    }
+}
