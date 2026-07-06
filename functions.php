@@ -997,19 +997,13 @@ add_shortcode('cmr_footer', function() {
     return $cached_footer;
 });
 
-// Helper to manually print Elementor CSS for a post inside a shortcode
+// Helper to force print Elementor CSS inline inside a shortcode
 if ( ! function_exists('cmr_print_elementor_css') ) {
     function cmr_print_elementor_css($post_id) {
-        $upload_dir = wp_upload_dir();
-        if ( ! empty( $upload_dir['basedir'] ) && ! empty( $upload_dir['baseurl'] ) ) {
-            $css_path = trailingslashit( $upload_dir['basedir'] ) . 'elementor/css/';
-            $css_url  = trailingslashit( $upload_dir['baseurl'] ) . 'elementor/css/';
-            
-            $post_css_file = 'post-' . $post_id . '.css';
-            if ( file_exists( $css_path . $post_css_file ) ) {
-                $ver = filemtime( $css_path . $post_css_file );
-                echo '<link rel="stylesheet" href="' . esc_url($css_url . $post_css_file . '?ver=' . $ver) . '" type="text/css" media="all" />';
-            }
+        if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+            $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
+            $css_file->enqueue();
+            $css_file->print_css();
         }
     }
 }

@@ -434,6 +434,23 @@
                 if ( $target_page ) {
                     quanto_enqueue_elementor_post_assets( $target_page->ID );
                 }
+                
+                // Enqueue quanto_tab_build template CSS early so shortcodes have CSS in <head>
+                $tab_slugs = array(
+                    'your-challenge-our-research-your-advantage',
+                    'fotter-card'
+                );
+                foreach ( $tab_slugs as $slug ) {
+                    $tab_posts = get_posts(array(
+                        'name'           => $slug,
+                        'post_type'      => 'quanto_tab_build',
+                        'posts_per_page' => 1,
+                        'post_status'    => 'publish',
+                    ));
+                    if ( $tab_posts && !empty($tab_posts[0]) ) {
+                        quanto_enqueue_elementor_post_assets( $tab_posts[0]->ID );
+                    }
+                }
             }
         }
     }
