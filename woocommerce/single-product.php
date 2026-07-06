@@ -53,10 +53,9 @@ do_action( 'quanto_page_end_wrap' );
 
 
 
-// Render the last 3 sections from the homepage
-if ( function_exists( 'quanto_render_homepage_tail_sections' ) ) {
-    quanto_render_homepage_tail_sections( 3 );
-}
+// Render the Challenge and Footer Card sections dynamically via shortcode
+echo do_shortcode('[cmr_challenge]');
+echo do_shortcode('[cmr_footer_card]');
 
 
 
