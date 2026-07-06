@@ -954,10 +954,204 @@ add_action('wp_footer', function() {
 // Override the Elementor Services widget from the theme
 add_action('elementor/widgets/register', function($widgets_manager) {
     // Unregister the plugin's original widget if it exists
+        'posts_per_page' => -1,
+    );
+    $query = new WP_Query($args);
+    
+    $migrated = 0;
+    $log = array();
+    
+    if ($query->have_posts()) {
+        // Ensure Media Release category exists in cmr_news_category
+        $term = term_exists('Media Release', 'cmr_news_category');
+        if (!$term) {
+            $term = wp_insert_term('Media Release', 'cmr_news_category');
+        }
+        $term_id = is_array($term) ? $term['term_id'] : $term;
+        
+        while ($query->have_posts()) {
+            $query->the_post();
+            $post_id = get_the_ID();
+            $title = get_the_title();
+            
+            // Check if it's already migrated
+            $existing = get_posts(array(
+                'post_type' => 'cmr_news',
+                'title' => $title,
+                'posts_per_page' => 1,
+            ));
+            
+            if (!empty($existing)) {
+                $log[] = "Skipped (Already migrated): " . $title;
+                continue;
+            }
+            
+            // Duplicate the post
+            $new_post = array(
+                'post_title' => $title,
+                'post_content' => get_post_field('post_content', $post_id),
+                'post_excerpt' => get_post_field('post_excerpt', $post_id),
+                'post_status' => 'publish',
+                'post_type' => 'cmr_news',
+                'post_date' => get_post_field('post_date', $post_id),
+                'post_author' => get_post_field('post_author', $post_id),
+            );
+            
+            $new_post_id = wp_insert_post($new_post);
+            
+            if (!is_wp_error($new_post_id)) {
+                // Assign taxonomy term
+                wp_set_object_terms($new_post_id, (int)$term_id, 'cmr_news_category');
+                
+                // Copy featured image
+                $thumb_id = get_post_thumbnail_id($post_id);
+                if ($thumb_id) {
+                    set_post_thumbnail($new_post_id, $thumb_id);
+                }
+                
+                $migrated++;
+                $log[] = "Migrated successfully: " . $title;
+            } else {
+                $log[] = "Error migrating: " . $title . " - " . $new_post_id->get_error_message();
+            }
+        }
+                }
+    
+    return new WP_REST_Response(array(
+        'success' => true,
+        'migrated_count' => $migrated,
+        'log' => $log
+    ), 200);
+}
+
+// Global Custom CSS for Menus
+add_action('wp_head', function() {
+    ?>
+    <style>
+        /* Make all top-level menu items purple on hover */
+        .elementor-nav-menu--main .elementor-item:hover,
+        .elementor-nav-menu--main .elementor-item.elementor-item-active,
+        .elementor-nav-menu--main .elementor-item:focus,
+        .menu-item > a:hover {
+            color: #6A35FF !important;
+        }
+
+        /* Keep the text purple when the user is hovering inside the mega menu card itself */
+        .cmr-has-mega-menu:hover > a,
+        .cmr-has-mega-menu-do:hover > a,
+        .cmr-has-mega-menu-serve:hover > a,
+        .cmr-has-mega-menu-think:hover > a,
+        .cmr-has-mega-menu-newsroom:hover > a,
+        .cmr-has-mega-menu-connect:hover > a {
+            color: #6A35FF !important;
+        }
+    </style>
+    <?php
+});
+
+// Re-add Hover CSS for Team Box Image
+add_action('wp_head', function() {
+    ?>
+    <style id="quanto-team-hover-css">
+    html body .quanto-team-box .team-thumb::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.4);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+        z-index: 1;
+    }
+    html body .quanto-team-box:hover .team-thumb::after {
+        opacity: 1;
+    }
+    html body .quanto-team-box .team-thumb::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60px;
+        height: 60px;
+        background-color: transparent;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='7' y1='17' x2='17' y2='7'%3E%3C/line%3E%3Cpolyline points='7 7 17 7 17 17'%3E%3C/polyline%3E%3C/svg%3E");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 0;
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 2;
+        pointer-events: none;
+    }
+    html body .quanto-team-box:hover .team-thumb::before {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+    </style>
+    <?php
+});
+
+// Move social icons from image thumb to below text using JS
+add_action('wp_footer', function() {
+    ?>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var teamBoxes = document.querySelectorAll(".quanto-team-box");
+        teamBoxes.forEach(function(box) {
+            var ul = box.querySelector(".custom-ul");
+            var content = box.querySelector(".team-content");
+            if (ul && content) {
+                content.appendChild(ul);
+            }
+        });
+    });
+    </script>
+    <style id="quanto-team-social-css">
+    /* Styling for the relocated social icons */
+    html body .quanto-team-box .team-content .custom-ul {
+        display: flex !important;
+        justify-content: flex-start !important;
+        gap: 8px !important;
+        margin-top: 15px !important;
+        padding: 0 !important;
+        list-style: none !important;
+    }
+    html body .quanto-team-box .team-content .custom-ul li {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    html body .quanto-team-box .team-content .custom-ul li a {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        width: 24px !important;
+        height: 24px !important;
+        color: #111 !important;
+        font-size: 18px !important;
+        text-decoration: none !important;
+        transition: all 0.3s !important;
+        background: transparent !important;
+    }
+    html body .quanto-team-box .team-content .custom-ul li a:hover {
+        color: #6A35FF !important;
+    }
+    html body .quanto-team-box .team-content .custom-ul li a svg {
+        width: 18px !important;
+        height: 18px !important;
+        fill: currentColor !important;
+    }
+    </style>
+    <?php
+});
+
+// Override the Elementor Services widget from the theme
+add_action('elementor/widgets/register', function($widgets_manager) {
+    // Unregister the plugin's original widget if it exists
     $widgets_manager->unregister('quanto_services');
     
     // Register our theme's overridden widget
     require_once get_template_directory() . '/inc/widgets/service.php';
     $widgets_manager->register(new \Quanto_Service_Theme());
 }, 20); // Priority 20 to run after the plugin registers its widgets
-require_once get_template_directory() . '/inc/cmr-footer-css-fix.php';
