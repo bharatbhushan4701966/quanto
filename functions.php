@@ -997,49 +997,31 @@ add_shortcode('cmr_footer', function() {
     return $cached_footer;
 });
 
-// Shortcode to display the Challenge section by fetching the rendered URL
+// Shortcode to display the Challenge section by rendering the quanto_tab_build post
 add_shortcode('cmr_challenge', function() {
-    $transient_key = 'cmr_challenge_html_cache';
-    $cached_challenge = get_transient( $transient_key );
+    ob_start();
     
-    // Check if user is logged in (to force refresh) or if cache is empty
-    if ( false === $cached_challenge || ( is_user_logged_in() && isset($_GET['refresh_challenge']) ) ) {
-        $url = 'https://qai8358l95-staging.onrocket.site/?quanto_tab_build=your-challenge-our-research-your-advantage';
-        $response = wp_remote_get( $url, array('timeout' => 15) );
+    // Find the post by slug
+    $posts = get_posts(array(
+        'name' => 'your-challenge-our-research-your-advantage',
+        'post_type' => 'quanto_tab_build',
+        'posts_per_page' => 1,
+        'post_status' => 'publish'
+    ));
+    
+    if ( $posts && !empty($posts[0]) ) {
+        $post_id = $posts[0]->ID;
         
-        if ( is_wp_error( $response ) ) {
-            return $cached_challenge ? $cached_challenge : '<!-- Error fetching challenge section -->';
+        // Enqueue Elementor CSS for this post
+        if ( function_exists( 'quanto_enqueue_elementor_post_assets' ) ) {
+            quanto_enqueue_elementor_post_assets( $post_id );
         }
         
-        $body = wp_remote_retrieve_body( $response );
-        
-        // Extract the Elementor container wrapper which contains all the content
-        if ( preg_match( '/<div data-elementor-type="[^"]+" data-elementor-id="[^"]+" class="elementor[^>]*>(.*?)<\/div>\s*<!-- \/ \.elementor -->/is', $body, $matches ) ||
-             preg_match( '/<div data-elementor-type="wp-post"[^>]*>.*?<\/div>\s*<\/div>\s*<\/div>/is', $body, $matches ) ||
-             preg_match( '/( <div data-elementor-type="wp-post".*)/is', $body, $matches ) ) {
-            
-            // Just grab everything from the first elementor wrapper to the footer wrapper
-            if ( preg_match( '/(<div data-elementor-type="wp-post".*?)<footer class="footer"/is', $body, $chunk_matches ) ) {
-                $cached_challenge = $chunk_matches[1];
-            } else {
-                $cached_challenge = $matches[0];
-            }
-            
-            // Extract the Elementor CSS link if it exists in the head
-            if ( preg_match( '/<link[^>]*href="[^"]*elementor\/css\/[^"]*"[^>]*>/is', $body, $css_matches ) ) {
-                // Since this page is basically an elementor template, we can grab all elementor CSS links
-                preg_match_all( '/<link[^>]*href="[^"]*elementor\/css\/[^"]*"[^>]*>/is', $body, $all_css_matches );
-                if ( !empty($all_css_matches[0]) ) {
-                    $css_links = implode("\n", $all_css_matches[0]);
-                    $cached_challenge = $css_links . "\n" . $cached_challenge;
-                }
-            }
-            
-            set_transient( $transient_key, $cached_challenge, 6 * HOUR_IN_SECONDS );
-        } else {
-            return '<!-- Challenge tag not found in remote URL -->';
+        // Render it
+        if ( class_exists( '\\Elementor\\Plugin' ) ) {
+            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
         }
     }
     
-    return $cached_challenge;
+    return ob_get_clean();
 });
