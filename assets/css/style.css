@@ -9017,6 +9017,22 @@ h1.custom-product-title {
     }
 }
 
+/* Let's connect direct targeting by data-id */
+[data-id="4961a1e"],
+[data-id="4961a1e"] a {
+    font-size: 80px !important;
+    line-height: 1.1 !important;
+    font-weight: 600 !important;
+    letter-spacing: -2px !important;
+}
+
+@media (max-width: 767px) {
+    [data-id="4961a1e"],
+    [data-id="4961a1e"] a {
+        font-size: 48px !important;
+    }
+}
+
 /* ------------------------------------------------------------- */
 /* FOOTER CSS (Restored and updated with new Elementor IDs)      */
 /* ------------------------------------------------------------- */
