@@ -112,10 +112,8 @@ add_filter('body_class', function($classes) {
         quanto_render_homepage_client_testimonials_section();
     }
 
-    // Render the last 4 sections from the homepage
-    if ( function_exists( 'quanto_render_homepage_tail_sections' ) ) {
-        quanto_render_homepage_tail_sections( 4 );
-    }
+    // Render the Challenge Section dynamically via shortcode
+    echo do_shortcode('[cmr_challenge]');
 
     //footer
     get_footer();
