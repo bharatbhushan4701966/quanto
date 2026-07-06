@@ -114,6 +114,9 @@ add_filter('body_class', function($classes) {
 
     // Render the Challenge Section dynamically via shortcode
     echo do_shortcode('[cmr_challenge]');
+    
+    // Render the Footer Card Section dynamically via shortcode
+    echo do_shortcode('[cmr_footer_card]');
 
     //footer
     get_footer();
