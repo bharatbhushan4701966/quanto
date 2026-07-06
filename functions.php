@@ -962,13 +962,37 @@ add_action('elementor/widgets/register', function($widgets_manager) {
 }, 20); // Priority 20 to run after the plugin registers its widgets
 require_once get_template_directory() . '/inc/cmr-footer-css-fix.php';
 
-// Shortcode to display the main Elementor footer
+// Shortcode to display the main Elementor footer by fetching the rendered URL
 add_shortcode('cmr_footer', function() {
-    ob_start();
-    if ( function_exists( 'quanto_render_elementor_footer' ) ) {
-        // Enqueue the CSS first so it is available
-        quanto_enqueue_elementor_post_assets( 13499 );
-        quanto_render_elementor_footer( 13499 );
+    $transient_key = 'cmr_footer_html_cache';
+    $cached_footer = get_transient( $transient_key );
+    
+    // Check if user is logged in (to force refresh) or if cache is empty
+    if ( false === $cached_footer || ( is_user_logged_in() && isset($_GET['refresh_footer']) ) ) {
+        $url = 'https://qai8358l95-staging.onrocket.site/?quanto_footer=main';
+        $response = wp_remote_get( $url, array('timeout' => 15) );
+        
+        if ( is_wp_error( $response ) ) {
+            return $cached_footer ? $cached_footer : '<!-- Error fetching footer -->';
+        }
+        
+        $body = wp_remote_retrieve_body( $response );
+        
+        // Extract everything from <footer class="footer"> to </footer>
+        // We'll also grab any inline styles right before it if they exist, but Elementor puts them inside.
+        if ( preg_match( '/<footer class="footer".*?<\/footer>/is', $body, $matches ) ) {
+            $cached_footer = $matches[0];
+            
+            // Extract the Elementor CSS link for post 13499 if it exists in the head
+            if ( preg_match( '/<link[^>]*href="[^"]*elementor\/css\/post-13499\.css[^"]*"[^>]*>/is', $body, $css_matches ) ) {
+                $cached_footer = $css_matches[0] . "\n" . $cached_footer;
+            }
+            
+            set_transient( $transient_key, $cached_footer, 6 * HOUR_IN_SECONDS );
+        } else {
+            return '<!-- Footer tag not found in remote URL -->';
+        }
     }
-    return ob_get_clean();
+    
+    return $cached_footer;
 });
