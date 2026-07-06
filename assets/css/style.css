@@ -9182,3 +9182,24 @@ h1.custom-product-title {
         font-size: 48px !important;
     }
 }
+
+/* Fix CONNECT column missing styles (when Elementor cache fails) */
+.footer h6[data-id="4c04cd0"] {
+    text-transform: uppercase !important;
+    color: #FFFFFF !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px !important;
+}
+.footer p.e-paragraph-base a {
+    color: #FFFFFF75 !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    text-decoration: none !important;
+    font-family: "Instrument Sans", Sans-serif !important;
+    transition: color 0.3s ease !important;
+}
+.footer p.e-paragraph-base a:hover {
+    color: #FFFFFF !important;
+}
+
