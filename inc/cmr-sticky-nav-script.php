@@ -21,6 +21,7 @@ add_action('wp_footer', function() {
         margin-bottom: 0 !important;
         box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         font-family: 'Instrument Sans', sans-serif !important;
+        box-sizing: border-box !important;
     }
     @media (max-width: 1320px) {
         .intel-nav-fixed-js {
