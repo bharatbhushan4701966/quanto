@@ -23,6 +23,9 @@ add_action('wp_footer', function() {
         font-family: 'Instrument Sans', sans-serif !important;
         box-sizing: border-box !important;
     }
+    .intel-nav-fixed-js .cmr-nav-btn-subscribe {
+        display: inline-flex !important;
+    }
     @media (max-width: 1320px) {
         .intel-nav-fixed-js {
             padding-left: 20px !important;
