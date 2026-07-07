@@ -20,6 +20,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
             'category'         => 'industry-connect',
             'link_overview'    => '#top',
             'link_insights'    => '#overview',
+            'link_trends'      => '#trends',
             'link_reports'     => '#reports',
             'link_market'      => '#cmr-market-updates',
             'link_newsroom'    => '#newsroom',
@@ -59,6 +60,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                 <div class="intel-nav-links" style="display: flex; align-items: center;">
                     <a href="<?php echo esc_attr( $atts['link_overview'] ); ?>">Overview</a>
                     <a href="<?php echo esc_attr( $atts['link_insights'] ); ?>">Insights</a>
+                    <a href="<?php echo esc_attr( $atts['link_trends'] ); ?>">Trends</a>
                     <a href="<?php echo esc_attr( $atts['link_reports'] ); ?>">Reports</a>
                     <a href="<?php echo esc_attr( $atts['link_market'] ); ?>">Market Updates</a>
                     <a href="<?php echo esc_attr( $atts['link_newsroom'] ); ?>">Featured</a>
@@ -254,6 +256,11 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                         // "Market Updates" section
                         if (text.includes("market intelligence &") || text.includes("market updates")) {
                             section.id = 'cmr-market-updates';
+                        }
+                        
+                        // "Trends" section
+                        if (text.includes("industry intelligence trends")) {
+                            section.id = 'trends';
                         }
                         
                         // "Newsroom" (now "Featured") section
