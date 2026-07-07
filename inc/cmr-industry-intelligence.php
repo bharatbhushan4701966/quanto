@@ -17,6 +17,13 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
             'show_nav'         => 'true',
             'section_title'    => 'Latest Industry Intelligence',
             'section_subtitle' => 'Explore real-time insights and strategic analysis shaping industries and business decisions.',
+            'category'         => 'automotive',
+            'link_overview'    => '#overview',
+            'link_insights'    => '#insights',
+            'link_reports'     => '#reports',
+            'link_market'      => '#cmr-market-updates',
+            'link_newsroom'    => '#newsroom',
+            'link_cmr_news'    => '#cmr-in-news'
         ), $atts );
 
         $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
@@ -32,7 +39,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                 array(
                     'taxonomy' => 'category',
                     'field'    => 'slug',
-                    'terms'    => 'industry-connect',
+                    'terms'    => $atts['category'],
                 ),
             ),
         );
@@ -63,12 +70,12 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                     <?php echo esc_html( $atts['nav_title'] ); ?>
                 </div>
                 <div class="intel-nav-links">
-                    <a href="#">Overview</a>
-                    <a href="#">Insights</a>
-                    <a href="#">Reports</a>
-                    <a href="#cmr-market-updates">Market Updates</a>
-                    <a href="#">Newsroom</a>
-                    <a href="#">CMR in news</a>
+                    <a href="<?php echo esc_attr( $atts['link_overview'] ); ?>">Overview</a>
+                    <a href="<?php echo esc_attr( $atts['link_insights'] ); ?>">Insights</a>
+                    <a href="<?php echo esc_attr( $atts['link_reports'] ); ?>">Reports</a>
+                    <a href="<?php echo esc_attr( $atts['link_market'] ); ?>">Market Updates</a>
+                    <a href="<?php echo esc_attr( $atts['link_newsroom'] ); ?>">Newsroom</a>
+                    <a href="<?php echo esc_attr( $atts['link_cmr_news'] ); ?>">CMR in news</a>
                 </div>
             </div>
             <?php endif; ?>
