@@ -118,7 +118,8 @@ function cmr_load_more_media_releases_ajax() {
     $year  = isset( $_POST['year'] ) ? sanitize_text_field( $_POST['year'] ) : '';
     $search = isset( $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : '';
     
-    $offset = ($paged - 1) * 6;
+    $offset_base = ( empty($year) && empty($search) ) ? 4 : 0;
+    $offset = $offset_base + ( ($paged - 1) * 6 );
     
     $args = array(
         'post_type'      => 'cmr_news',
@@ -197,7 +198,7 @@ function cmr_load_more_media_releases_ajax() {
     }
     $html = ob_get_clean();
 
-    $total_pages = ceil( max( 0, $query->found_posts ) / 6 );
+    $total_pages = ceil( max( 0, $query->found_posts - $offset_base ) / 6 );
     $has_more = $paged < $total_pages;
 
     $base_url = isset( $_POST['base_url'] ) ? sanitize_text_field( $_POST['base_url'] ) : '/';

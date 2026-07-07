@@ -19,6 +19,13 @@ function cmr_media_releases_general_shortcode( $atts ) {
         'orderby'        => 'date',
         'order'          => 'DESC',
         'post_status'    => 'publish',
+        'tax_query'      => array(
+            array(
+                'taxonomy' => 'cmr_news_category',
+                'field'    => 'slug',
+                'terms'    => array('media-release', 'media-releases', 'press-release', 'press-releases'),
+            ),
+        ),
     );
     $query = new WP_Query( $args );
 
