@@ -237,30 +237,29 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                     
                     allHeadings.forEach(function(h) {
                         var text = h.innerText.toLowerCase();
+                        var section = h.closest('section') || h.closest('.elementor-section') || h.closest('.e-con');
                         
+                        if (!section) return; // Skip if no valid section container found
+
                         // "CMR in news" section
                         if (text.includes("recognition of cmr in news") || text.includes("featured media coverage")) {
-                            var section = h.closest('section') || h.closest('.elementor-section');
-                            if (section) section.id = 'cmr-in-news';
+                            section.id = 'cmr-in-news';
                         }
                         
                         // "Reports" section
                         if (text.includes("similar reports") || text.includes("browse latest reports") || text.includes("featured reports")) {
-                            var section = h.closest('section') || h.closest('.elementor-section');
-                            if (section) section.id = 'reports';
+                            section.id = 'reports';
                         }
                         
                         // "Market Updates" section
                         if (text.includes("market intelligence &") || text.includes("market updates")) {
-                            var section = h.closest('section') || h.closest('.elementor-section');
-                            if (section) section.id = 'cmr-market-updates';
+                            section.id = 'cmr-market-updates';
                         }
                         
                         // "Newsroom" section
                         if (text.includes("media releases") && !text.includes("featured")) {
-                            var section = h.closest('section') || h.closest('.elementor-section');
                             // Only set if not already set by cmr-in-news
-                            if (section && section.id !== 'cmr-in-news') section.id = 'newsroom';
+                            if (section.id !== 'cmr-in-news') section.id = 'newsroom';
                         }
                     });
                 });
