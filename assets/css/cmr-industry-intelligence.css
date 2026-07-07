@@ -263,5 +263,19 @@
 #reports,
 #cmr-in-news,
 #newsroom {
-    scroll-margin-top: 100px;
+    scroll-margin-top: 150px !important;
+}
+
+#overview::before,
+#cmr-intel-trends-section::before,
+#cmr-market-updates::before,
+#reports::before,
+#cmr-in-news::before,
+#newsroom::before {
+    content: '';
+    display: block;
+    height: 150px;
+    margin-top: -150px;
+    visibility: hidden;
+    pointer-events: none;
 }
