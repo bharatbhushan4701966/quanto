@@ -9202,3 +9202,28 @@ h1.custom-product-title {
 .footer p.e-paragraph-base a:hover {
     color: #00BFBC !important;
 }
+
+/* Remove horizontal lines / borders appearing between sections on scroll */
+.elementor-widget-divider,
+.elementor-divider,
+.elementor-divider-separator {
+    display: none !important;
+}
+
+/* Remove any border between sections */
+.elementor-section + .elementor-section,
+.e-con + .e-con,
+.elementor-top-section + .elementor-top-section {
+    border-top: none !important;
+}
+
+/* Remove default hr styling that can appear between injected sections */
+.single-post .elementor hr,
+.single-post hr.wp-block-separator,
+.single-product .elementor hr,
+.single-product hr.wp-block-separator {
+    display: none !important;
+    border: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+}
