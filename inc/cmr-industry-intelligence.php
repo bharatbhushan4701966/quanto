@@ -60,10 +60,10 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                 <div class="intel-nav-links" style="display: flex; align-items: center;">
                     <a href="<?php echo esc_attr( $atts['link_overview'] ); ?>">Overview</a>
                     <a href="<?php echo esc_attr( $atts['link_insights'] ); ?>">Insights</a>
-                    <a href="<?php echo esc_attr( $atts['link_trends'] ); ?>">Trends</a>
-                    <a href="<?php echo esc_attr( $atts['link_reports'] ); ?>">Reports</a>
-                    <a href="<?php echo esc_attr( $atts['link_market'] ); ?>">Market Updates</a>
                     <a href="<?php echo esc_attr( $atts['link_newsroom'] ); ?>">Featured</a>
+                    <a href="<?php echo esc_attr( $atts['link_trends'] ); ?>">Trends</a>
+                    <a href="<?php echo esc_attr( $atts['link_market'] ); ?>">Market Updates</a>
+                    <a href="<?php echo esc_attr( $atts['link_reports'] ); ?>">Reports</a>
                     <a href="<?php echo esc_attr( $atts['link_cmr_news'] ); ?>">CMR in news</a>
                     
                     <a href="#cmr-footer-card-section" class="cmr-nav-btn-subscribe" style="display: inline-flex; align-items: center; justify-content: center; background: #fff; color: #111; font-weight: 600; font-size: 14px; padding: 8px 16px; border-radius: 40px; text-decoration: none; border: 1px solid #111; margin-left: 15px; line-height: 1; transition: all 0.3s ease;">
