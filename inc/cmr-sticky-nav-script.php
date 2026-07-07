@@ -74,8 +74,9 @@ add_action('wp_footer', function() {
                     // Determine the boundary for the sticky nav. 
                     let boundaryBottom = sectionRect.bottom;
                     
-                    // Try to find the testimonials section
+                    // Try to find the testimonials section by various classes/IDs including its known Elementor ID
                     let testimonialsSection = document.getElementById('testimonials') || 
+                                              document.querySelector('.elementor-element-82ef444') ||
                                               document.querySelector('.elementor-widget-testimonial-carousel') ||
                                               document.querySelector('.elementor-widget-testimonial');
                                               
@@ -91,9 +92,16 @@ add_action('wp_footer', function() {
                         // The boundary is the TOP of the testimonials section
                         boundaryBottom = testimonialsSection.getBoundingClientRect().top;
                     } else {
-                        const marketUpdatesSection = document.getElementById('cmr-market-updates');
-                        if (marketUpdatesSection) {
-                            boundaryBottom = marketUpdatesSection.getBoundingClientRect().bottom;
+                        // If no testimonials section is found, extend it to the footer so it never unsticks early
+                        const footer = document.querySelector('footer, .elementor-location-footer');
+                        if (footer) {
+                            boundaryBottom = footer.getBoundingClientRect().top;
+                        } else {
+                            // Ultimate fallback
+                            const marketUpdatesSection = document.getElementById('cmr-market-updates');
+                            if (marketUpdatesSection) {
+                                boundaryBottom = marketUpdatesSection.getBoundingClientRect().bottom;
+                            }
                         }
                     }
 
