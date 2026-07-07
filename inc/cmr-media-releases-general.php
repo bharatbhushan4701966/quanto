@@ -401,7 +401,7 @@ function cmr_media_releases_general_shortcode( $atts ) {
         }
     </style>
 
-    <div class="cmr-mrg-section" id="cmr-mrg-app">
+    <div class="cmr-mrg-section" id="cmr-in-news">
         <!-- Top Featured Area -->
         <div class="cmr-mrg-featured">
             <div class="cmr-mrg-featured-img-wrap" style="background-color:#fff;">
