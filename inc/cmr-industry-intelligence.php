@@ -69,13 +69,18 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                 <div class="intel-nav-title">
                     <?php echo esc_html( $atts['nav_title'] ); ?>
                 </div>
-                <div class="intel-nav-links">
+                <div class="intel-nav-links" style="display: flex; align-items: center;">
                     <a href="<?php echo esc_attr( $atts['link_overview'] ); ?>">Overview</a>
                     <a href="<?php echo esc_attr( $atts['link_insights'] ); ?>">Insights</a>
                     <a href="<?php echo esc_attr( $atts['link_reports'] ); ?>">Reports</a>
                     <a href="<?php echo esc_attr( $atts['link_market'] ); ?>">Market Updates</a>
                     <a href="<?php echo esc_attr( $atts['link_newsroom'] ); ?>">Newsroom</a>
                     <a href="<?php echo esc_attr( $atts['link_cmr_news'] ); ?>">CMR in news</a>
+                    
+                    <a href="#cmr-footer-card-section" class="cmr-nav-btn-subscribe" style="display: inline-flex; align-items: center; justify-content: center; background: #fff; color: #111; font-weight: 600; font-size: 14px; padding: 8px 16px; border-radius: 40px; text-decoration: none; border: 1px solid #111; margin-left: 15px; line-height: 1; transition: all 0.3s ease;">
+                        Subscribe now
+                        <svg style="margin-left: 6px;" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                    </a>
                 </div>
             </div>
             <?php endif; ?>
