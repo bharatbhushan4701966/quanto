@@ -272,7 +272,7 @@ function cmr_media_releases_general_shortcode( $atts ) {
             display: flex;
             background: #f9f9fb;
             cursor: pointer;
-            border-top: 3px solid transparent;
+            border-top: 3px solid transparent; position: relative;
             transition: all 0.3s ease;
             text-decoration: none;
             color: inherit;
@@ -282,10 +282,29 @@ function cmr_media_releases_general_shortcode( $atts ) {
             background: #f0f0f5;
         }
 
+        .cmr-mrg-nav-item::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: 0;
+            height: 3px;
+            background-color: #00E5FF;
+            width: 0;
+            z-index: 10;
+        }
+
         .cmr-mrg-nav-item.active {
-            border-top-color: #00E5FF;
             background: #fff;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .cmr-mrg-nav-item.active::before {
+            animation: cmrLoaderAnim 5s linear forwards;
+        }
+
+        @keyframes cmrLoaderAnim {
+            from { width: 0; }
+            to { width: 100%; }
         }
 
         .cmr-mrg-nav-img-wrap {
@@ -442,47 +461,65 @@ function cmr_media_releases_general_shortcode( $atts ) {
         const mainLink = document.getElementById('cmr-mrg-main-link');
         const mainPdf = document.getElementById('cmr-mrg-main-pdf');
 
+        let currentIndex = 0;
+        let rotationInterval;
+
+        function switchTab(idx) {
+            navItems.forEach(nav => nav.classList.remove('active'));
+            void document.body.offsetWidth; // Force reflow to restart CSS animation
+            
+            const activeItem = document.querySelector(`.cmr-mrg-nav-item[data-index="${idx}"]`);
+            if (activeItem) {
+                activeItem.classList.add('active');
+            }
+            
+            const data = postsData[idx];
+            if (data) {
+                mainImg.style.opacity = 0;
+                setTimeout(() => {
+                    if (data.image) {
+                        mainImg.src = data.image;
+                        mainImg.style.display = 'block';
+                    } else {
+                        mainImg.style.display = 'none';
+                    }
+                    mainTime.textContent = data.read_time;
+                    mainTitle.textContent = data.title;
+                    mainExcerpt.textContent = data.excerpt;
+                    mainLink.href = data.link;
+                    
+                    if (data.pdf_link) {
+                        mainPdf.href = data.pdf_link;
+                    } else {
+                        mainPdf.href = '#';
+                    }
+                    mainPdf.style.display = 'inline-flex';
+                    
+                    mainImg.style.opacity = 1;
+                }, 200);
+            }
+        }
+
+        function startRotation() {
+            clearInterval(rotationInterval);
+            rotationInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % postsData.length;
+                switchTab(currentIndex);
+            }, 5000);
+        }
+
         navItems.forEach(item => {
             item.addEventListener('click', function(e) {
-                e.preventDefault(); // Optional, if you want them to be pure tabs
-                
-                // Remove active class from all
-                navItems.forEach(nav => nav.classList.remove('active'));
-                
-                // Add active to clicked
-                this.classList.add('active');
-                
-                // Get data index
-                const idx = this.getAttribute('data-index');
-                const data = postsData[idx];
-                
-                if (data) {
-                    // Slight fade effect
-                    mainImg.style.opacity = 0;
-                    setTimeout(() => {
-                        if (data.image) {
-                            mainImg.src = data.image;
-                            mainImg.style.display = 'block';
-                        } else {
-                            mainImg.style.display = 'none';
-                        }
-                        mainTime.textContent = data.read_time;
-                        mainTitle.textContent = data.title;
-                        mainExcerpt.textContent = data.excerpt;
-                        mainLink.href = data.link;
-                        
-                        if (data.pdf_link) {
-                            mainPdf.href = data.pdf_link;
-                        } else {
-                            mainPdf.href = '#';
-                        }
-                        mainPdf.style.display = 'inline-flex';
-                        
-                        mainImg.style.opacity = 1;
-                    }, 200);
-                }
+                e.preventDefault();
+                const idx = parseInt(this.getAttribute('data-index'), 10);
+                currentIndex = idx;
+                switchTab(currentIndex);
+                startRotation(); // Restart interval on manual click
             });
         });
+
+        // Start initial rotation
+        startRotation();
     });
     </script>
     <?php
