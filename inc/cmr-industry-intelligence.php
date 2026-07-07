@@ -49,7 +49,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
 
         ob_start();
         ?>
-        <div class="cmr-industry-intel-section">
+        <div class="cmr-industry-intel-section" id="overview">
             
             <?php if ( ! empty( $atts['section_title'] ) ) : ?>
             <div class="cmr-intel-header" style="margin-bottom: 40px;">
@@ -86,7 +86,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
             <?php endif; ?>
 
             <?php if ( $insights_query->have_posts() ) : ?>
-                <div class="intel-grid">
+                <div class="intel-grid" id="insights">
                     <?php
                     $seen_titles = array();
                     $displayed_count = 0;

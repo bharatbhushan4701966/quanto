@@ -318,7 +318,7 @@ function cmr_media_releases_grid_shortcode() {
         }
     </style>
 
-    <div class="cmr-mrg-wrapper">
+    <div class="cmr-mrg-wrapper" id="newsroom">
         
         <!-- Top Nav -->
         <div class="cmr-mrg-top-nav">

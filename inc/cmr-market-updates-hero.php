@@ -329,7 +329,7 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
             }
         </style>
 
-        <div class="cmr-mu-hero-wrap">
+        <div class="cmr-mu-hero-wrap" id="cmr-market-updates">
             <div class="cmr-mu-hero-breadcrumbs">
                 <a href="<?php echo esc_url(home_url('/')); ?>">Home</a>
                 <span>&gt;</span>

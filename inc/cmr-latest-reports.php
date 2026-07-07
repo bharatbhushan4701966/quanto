@@ -321,7 +321,7 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
             }
         </style>
 
-        <section class="cmr-latest-section">
+        <section class="cmr-latest-section" id="reports">
             <div class="cmr-latest-header">
                 <h2 class="cmr-latest-title"><?php echo esc_html( $atts['title'] ); ?></h2>
                 <div class="cmr-filter-bar">
