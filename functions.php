@@ -1093,3 +1093,30 @@ add_shortcode('cmr_footer_card', function() {
     
     return ob_get_clean();
 });
+
+// Shortcode to display the Global Brands section by rendering the quanto_tab_build post
+add_shortcode('cmr_global_brands', function() {
+    ob_start();
+    
+    // Find the post by slug
+    $posts = get_posts(array(
+        'name' => 'we-worked-with-largest-global-brands',
+        'post_type' => 'quanto_tab_build',
+        'posts_per_page' => 1,
+        'post_status' => 'publish'
+    ));
+    
+    if ( $posts && !empty($posts[0]) ) {
+        $post_id = $posts[0]->ID;
+        
+        // Print CSS link inline
+        cmr_print_elementor_css($post_id);
+        
+        // Render it
+        if ( class_exists( '\\Elementor\\Plugin' ) ) {
+            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
+        }
+    }
+    
+    return ob_get_clean();
+});

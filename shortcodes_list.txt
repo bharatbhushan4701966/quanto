@@ -63,3 +63,4 @@
 [cmr_what_we_think] - Displays the "What We Think" section
 [quanto-template] - Core shortcode to render arbitrary Elementor templates by ID
 [cmr_testimonials] - Renders the testimonials section dynamically
+[cmr_global_brands] - Renders the 'we worked with largest global brands' section dynamically
