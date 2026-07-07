@@ -153,6 +153,15 @@ add_action('wp_footer', function() {
                         const targetId = this.getAttribute('href').substring(1);
                         if (!targetId) return;
                         
+                        if (targetId === 'top') {
+                            e.preventDefault();
+                            window.scrollTo({
+                                top: 0,
+                                behavior: 'smooth'
+                            });
+                            return;
+                        }
+                        
                         const targetElement = document.getElementById(targetId);
                         if (targetElement) {
                             e.preventDefault();
