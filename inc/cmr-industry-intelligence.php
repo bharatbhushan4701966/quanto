@@ -20,7 +20,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
             'category'         => 'industry-connect',
             'link_overview'    => '#top',
             'link_insights'    => '#overview',
-            'link_trends'      => '#trends',
+            'link_trends'      => '#cmr-intel-trends-section',
             'link_reports'     => '#reports',
             'link_market'      => '#cmr-market-updates',
             'link_newsroom'    => '#newsroom',
