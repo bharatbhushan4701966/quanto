@@ -72,11 +72,29 @@ add_action('wp_footer', function() {
                     });
 
                     // Determine the boundary for the sticky nav. 
-                    // By default it's the current section, but we extend it to the market updates section if it exists.
                     let boundaryBottom = sectionRect.bottom;
-                    const marketUpdatesSection = document.getElementById('cmr-market-updates');
-                    if (marketUpdatesSection) {
-                        boundaryBottom = marketUpdatesSection.getBoundingClientRect().bottom;
+                    
+                    // Try to find the testimonials section
+                    let testimonialsSection = document.getElementById('testimonials') || 
+                                              document.querySelector('.elementor-widget-testimonial-carousel') ||
+                                              document.querySelector('.elementor-widget-testimonial');
+                                              
+                    // Fallback: Find a heading with 'testimonial' and get its parent section
+                    if (!testimonialsSection) {
+                        const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')).filter(h => h.textContent.toLowerCase().includes('testimonial'));
+                        if (headings.length > 0) {
+                            testimonialsSection = headings[0].closest('.elementor-section') || headings[0].closest('section') || headings[0].parentElement;
+                        }
+                    }
+
+                    if (testimonialsSection) {
+                        // The boundary is the TOP of the testimonials section
+                        boundaryBottom = testimonialsSection.getBoundingClientRect().top;
+                    } else {
+                        const marketUpdatesSection = document.getElementById('cmr-market-updates');
+                        if (marketUpdatesSection) {
+                            boundaryBottom = marketUpdatesSection.getBoundingClientRect().bottom;
+                        }
                     }
 
                     // Trigger sticky as soon as the section touches the top offset!
