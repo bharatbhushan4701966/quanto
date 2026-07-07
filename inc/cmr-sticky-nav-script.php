@@ -75,7 +75,8 @@ add_action('wp_footer', function() {
                     let boundaryBottom = sectionRect.bottom;
                     
                     // Try to find the testimonials section by various classes/IDs including its known Elementor ID
-                    let testimonialsSection = document.getElementById('testimonials') || 
+                    let testimonialsSection = document.getElementById('cmr-testimonials-section') || 
+                                              document.getElementById('testimonials') || 
                                               document.querySelector('.elementor-element-82ef444') ||
                                               document.querySelector('.elementor-widget-testimonial-carousel') ||
                                               document.querySelector('.elementor-widget-testimonial');

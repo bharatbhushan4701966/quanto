@@ -1062,7 +1062,9 @@ add_shortcode('cmr_testimonials', function() {
         
         // Render it
         if ( class_exists( '\\Elementor\\Plugin' ) ) {
+            echo '<div id="cmr-testimonials-section">';
             echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
+            echo '</div>';
         }
     }
     
