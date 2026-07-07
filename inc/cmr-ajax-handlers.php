@@ -127,6 +127,14 @@ function cmr_load_more_media_releases_ajax() {
         'orderby'        => 'date',
         'order'          => 'DESC',
         'offset'         => $offset,
+        'tax_query'      => array(
+            'relation' => 'AND',
+            array(
+                'taxonomy' => 'cmr_news_category',
+                'field'    => 'slug',
+                'terms'    => array('media-release', 'media-releases', 'press-release', 'press-releases'),
+            ),
+        ),
     );
 
     if ( ! empty( $year ) ) {

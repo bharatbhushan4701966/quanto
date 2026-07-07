@@ -19,6 +19,13 @@ function cmr_media_releases_grid_shortcode() {
         'post_status'    => 'publish',
         'orderby'        => 'date',
         'order'          => 'DESC',
+        'tax_query'      => array(
+            array(
+                'taxonomy' => 'cmr_news_category',
+                'field'    => 'slug',
+                'terms'    => array('media-release', 'media-releases', 'press-release', 'press-releases'),
+            ),
+        ),
     );
     $query = new WP_Query( $args );
     $query->max_num_pages = ceil( max( 0, $query->found_posts ) / 6 );
