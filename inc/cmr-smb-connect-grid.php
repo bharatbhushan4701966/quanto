@@ -75,7 +75,7 @@ function cmr_smb_connect_grid_shortcode() {
         }
         .cmr-smbcgd-top-nav a:hover,
         .cmr-smbcgd-top-nav a.active {
-            font-weight: 700;
+            font-weight: 600;
         }
 
         /* Header Area */
@@ -235,7 +235,7 @@ function cmr_smb_connect_grid_shortcode() {
 
         .cmr-smbcgd-card-title {
             font-size: 18px;
-            font-weight: 700;
+            font-weight: 600;
             line-height: 1.4;
             margin: 0 0 12px 0;
             color: #111;

@@ -31,7 +31,7 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
             }
             .cmr-stack-header h2 {
                 font-size: 42px;
-                font-weight: 700;
+                font-weight: 600;
                 margin: 0 0 15px 0;
                 letter-spacing: -1px;
                 color: #111;
@@ -73,7 +73,7 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
             }
             .cmr-stack-number {
                 font-size: 16px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111;
             }
             .cmr-stack-title {

@@ -76,7 +76,7 @@ function cmr_media_releases_grid_shortcode() {
         }
         .cmr-mrg-top-nav a:hover,
         .cmr-mrg-top-nav a.active {
-            font-weight: 700;
+            font-weight: 600;
         }
 
         /* Header Area */
@@ -236,7 +236,7 @@ function cmr_media_releases_grid_shortcode() {
 
         .cmr-mrg-card-title {
             font-size: 18px;
-            font-weight: 700;
+            font-weight: 600;
             line-height: 1.4;
             margin: 0 0 12px 0;
             color: #111;

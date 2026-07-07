@@ -49,7 +49,7 @@ if ( ! function_exists( 'cmr_latest_insights_tech_shortcode' ) ) {
 
             <div class="cmr-latest-insights-header" style="margin-bottom: 40px; margin-top: 50px;">
                 <?php if ( ! empty( $atts['section_title'] ) ) : ?>
-                    <h2 class="cmr-latest-insights-title" style="font-size: 42px; font-weight: 700; color: #111; margin: 0 0 15px 0; letter-spacing: -1px;">
+                    <h2 class="cmr-latest-insights-title" style="font-size: 42px; font-weight: 600; color: #111; margin: 0 0 15px 0; letter-spacing: -1px;">
                         <?php echo esc_html( $atts['section_title'] ); ?>
                     </h2>
                 <?php endif; ?>

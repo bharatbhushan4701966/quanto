@@ -40,7 +40,7 @@ function cmr_render_press_releases_shortcode( $atts ) {
 
         .cmr-pr-title-area h2 {
             font-size: 56px;
-            font-weight: 700;
+            font-weight: 600;
             color: #fff;
             margin: 0 0 10px 0;
             letter-spacing: -1.5px;
@@ -141,7 +141,7 @@ function cmr_render_press_releases_shortcode( $atts ) {
         .cmr-pr-card-title {
             font-size: 18px;
             letter-spacing: 0px;
-            font-weight: 700;
+            font-weight: 600;
             color: #fff;
             margin: 0 0 15px 0;
             line-height: 1.3;

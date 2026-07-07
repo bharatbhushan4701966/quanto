@@ -282,7 +282,7 @@ button.button.alt.single_add_to_cart_button:hover::after {
 
 .custom-talk-analyst-btn .arrow-up-right {
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 600;
     transition: transform 0.25s ease;
 }
 
@@ -711,7 +711,7 @@ html body .quanto-link-btn {
 .cmr-custom-author-info h4 {
     margin: 0;
     font-size: 20px;
-    font-weight: 700;
+    font-weight: 600;
     font-family: 'Instrument Sans', sans-serif;
 }
 .cmr-custom-author-info p {
@@ -737,7 +737,7 @@ html body .quanto-link-btn {
 }
 .cmr-ratings-summary h2 {
     font-family: 'Instrument Sans', sans-serif;
-    font-weight: 700;
+    font-weight: 600;
     margin-bottom: 20px;
     font-size: 32px;
     color: #111;
@@ -774,7 +774,7 @@ html body .quanto-link-btn {
 .insights-cta-title {
     font-family: 'Instrument Sans', sans-serif;
     font-size: 38px;
-    font-weight: 700;
+    font-weight: 600;
     color: #fff;
     margin-bottom: 12px;
     letter-spacing: -0.5px;
@@ -906,7 +906,7 @@ html body .quanto-link-btn {
 .cmr-custom-author-info h4 {
     margin: 0;
     font-size: 20px;
-    font-weight: 700;
+    font-weight: 600;
     font-family: 'Instrument Sans', sans-serif;
 }
 .cmr-custom-author-info p {
@@ -932,7 +932,7 @@ html body .quanto-link-btn {
 }
 .cmr-ratings-summary h2 {
     font-family: 'Instrument Sans', sans-serif;
-    font-weight: 700;
+    font-weight: 600;
     margin-bottom: 20px;
     font-size: 32px;
     color: #111;
@@ -969,7 +969,7 @@ html body .quanto-link-btn {
 .insights-cta-title {
     font-family: 'Instrument Sans', sans-serif;
     font-size: 38px;
-    font-weight: 700;
+    font-weight: 600;
     color: #fff;
     margin-bottom: 12px;
     letter-spacing: -0.5px;
@@ -1118,7 +1118,7 @@ html body .quanto-link-btn {
 .quanto-team-box .team-member-name a {
     font-family: 'Instrument Sans', sans-serif !important;
     font-size: 32px;
-    font-weight: 700;
+    font-weight: 600;
     color: #111;
     margin: 0 0 5px 0;
     line-height: 1.1;

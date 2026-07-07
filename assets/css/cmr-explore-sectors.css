@@ -15,7 +15,7 @@
 
 .explore-sectors-title {
     font-size: 42px;
-    font-weight: 700;
+    font-weight: 600;
     color: #111;
     margin-bottom: 50px;
     line-height: 1.2;
@@ -61,7 +61,7 @@
 
 .sector-number {
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 600;
     color: #111;
     margin-bottom: 60px;
 }
@@ -73,7 +73,7 @@
 
 .sector-title {
     font-size: 20px;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: -0.5px;
     color: #111;
     margin-bottom: 15px;

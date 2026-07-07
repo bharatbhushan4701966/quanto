@@ -154,7 +154,7 @@
                                                     <?php echo get_avatar( $custom_author_id, 80, '', '', array( 'class' => 'rounded-circle' ) ); ?>
                                                 </div>
                                                 <div class="cmr-custom-author-info">
-                                                    <h4 class="mb-1" style="font-weight: 700; font-size: 20px; font-family: 'Instrument Sans', sans-serif; letter-spacing: 0.5px;"><?php echo esc_html( $author_data->display_name ); ?></h4>
+                                                    <h4 class="mb-1" style="font-weight: 600; font-size: 20px; font-family: 'Instrument Sans', sans-serif; letter-spacing: 0.5px;"><?php echo esc_html( $author_data->display_name ); ?></h4>
                                                     <?php if ( $designation ) : ?>
                                                         <p class="mb-2 text-muted" style="font-size: 14px; font-family: 'Instrument Sans', sans-serif;"><?php echo esc_html( $designation ); ?></p>
                                                     <?php endif; ?>

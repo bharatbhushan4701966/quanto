@@ -266,7 +266,7 @@
     background: #fff;
     color: #00B894; /* Teal color from screenshot */
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 600;
     padding: 4px 10px;
     border-radius: 20px;
     letter-spacing: 0.5px;
@@ -508,7 +508,7 @@
     background: #fff;
     color: #333;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 600;
     padding: 5px 12px;
     border-radius: 4px;
     z-index: 2;
@@ -542,7 +542,7 @@
 .cmr-nc-post-title {
     font-family: 'Instrument Sans', sans-serif;
     font-size: 24px;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1.3;
     margin: 0 0 10px 0;
     color: #fff;

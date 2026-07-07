@@ -35,10 +35,10 @@
         
         ?>
         <div class="cmr-ratings-summary mt-5 mb-5" style="background: transparent; box-shadow: none; padding: 0;">
-            <h2 style="font-size: 28px; font-weight: 700; margin-bottom: 25px; color: #000; font-family: 'Instrument Sans', sans-serif;">Rating</h2>
+            <h2 style="font-size: 28px; font-weight: 600; margin-bottom: 25px; color: #000; font-family: 'Instrument Sans', sans-serif;">Rating</h2>
             <div class="d-flex align-items-start">
                 <div class="rating-left me-5" style="min-width: 100px;">
-                    <div style="font-size: 48px; font-weight: 700; line-height: 1; color: #222; font-family: 'Instrument Sans', sans-serif;"><?php echo esc_html($avg_rating); ?></div>
+                    <div style="font-size: 48px; font-weight: 600; line-height: 1; color: #222; font-family: 'Instrument Sans', sans-serif;"><?php echo esc_html($avg_rating); ?></div>
                     <div class="rating-stars my-2" style="font-size: 14px; color: #fbbf24;">
                         <?php
                         $full_stars = floor($avg_rating);
@@ -119,14 +119,14 @@
 
     // Custom form for Modal
     $comment_field = '<div class="row g-3"><div class="col-12"><div class="mb-2">
-        <label style="font-family: \'Instrument Sans\', sans-serif; font-weight: 700; font-size: 16px; color: #111; margin-bottom: 15px; display:block;">What insights were most valuable?</label>
+        <label style="font-family: \'Instrument Sans\', sans-serif; font-weight: 600; font-size: 16px; color: #111; margin-bottom: 15px; display:block;">What insights were most valuable?</label>
         <textarea class="form-control" name="comment" placeholder="Please write product review here." style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 15px; font-family: \'Instrument Sans\', sans-serif; min-height: 120px;" '.esc_attr( $aria_req ).'></textarea>
     </div></div></div>';
     
     if ( get_post_type() === 'cmr_news' ) {
         $custom_rating = '
         <div class="cmr-star-rating-widget mb-4">
-            <label style="font-family: \'Instrument Sans\', sans-serif; font-weight: 700; font-size: 16px; color: #111; margin-bottom: 10px; display:block;">How would you rate this report?</label>
+            <label style="font-family: \'Instrument Sans\', sans-serif; font-weight: 600; font-size: 16px; color: #111; margin-bottom: 10px; display:block;">How would you rate this report?</label>
             <div class="cmr-stars" style="display: flex; gap: 8px; color: #fbbf24; font-size: 32px; cursor: pointer;">
                 <i class="fa-regular fa-star cmr-star" data-val="1"></i>
                 <i class="fa-regular fa-star cmr-star" data-val="2"></i>
@@ -177,7 +177,7 @@
                     <div style="padding-right: 70px;">
                         <h3 style="font-family: 'Instrument Sans', sans-serif; font-size: 18px; font-weight: 600; color: #111; margin-bottom: 10px; line-height: 1.4; letter-spacing: 0.5px; word-spacing: 1px;"><?php the_title(); ?></h3>
                         <p style="font-family: 'Instrument Sans', sans-serif; font-size: 16px; color: #6b7280; margin-bottom: 10px; letter-spacing: 0px;">CyberMedia Research (CMR)</p>
-                        <p style="font-family: 'Instrument Sans', sans-serif; font-size: 14px; color: #6b7280; margin-bottom: 0; letter-spacing: 0px;">SKU: <span style="font-weight: 700; color: #111;">CMR-ADAS-<?php the_ID(); ?></span></p>
+                        <p style="font-family: 'Instrument Sans', sans-serif; font-size: 14px; color: #6b7280; margin-bottom: 0; letter-spacing: 0px;">SKU: <span style="font-weight: 600; color: #111;">CMR-ADAS-<?php the_ID(); ?></span></p>
                     </div>
                 </div>
 

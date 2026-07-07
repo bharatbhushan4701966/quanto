@@ -89,7 +89,7 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
             }
             .cmr-fi-header h2 {
                 font-size: 36px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111;
                 margin: 0 0 10px 0;
                 letter-spacing: -1px;
@@ -206,7 +206,7 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
 
             .cmr-fi-slide-title {
                 font-size: 28px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #fff;
                 margin: 0 0 15px 0;
                 line-height: 1.3;
@@ -233,7 +233,7 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
                 align-items: center;
                 gap: 8px;
                 font-size: 15px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #fff;
                 text-decoration: none;
                 transition: color 0.3s ease;

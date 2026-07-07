@@ -49,7 +49,7 @@ function cmr_checkout_ui_shortcode( $atts ) {
         }
         .cmr-checkout-title {
             font-size: 24px;
-            font-weight: 700;
+            font-weight: 600;
             margin-top: 0;
             margin-bottom: 30px;
             letter-spacing: -0.5px;
@@ -120,7 +120,7 @@ function cmr_checkout_ui_shortcode( $atts ) {
         }
         .cmr-promo-title {
             font-size: 16px;
-            font-weight: 700;
+            font-weight: 600;
             margin-bottom: 15px;
             display: flex;
             align-items: center;
@@ -188,7 +188,7 @@ function cmr_checkout_ui_shortcode( $atts ) {
         }
         .cmr-order-title {
             font-size: 14px;
-            font-weight: 700;
+            font-weight: 600;
             line-height: 1.4;
             margin-bottom: 10px;
         }
@@ -199,7 +199,7 @@ function cmr_checkout_ui_shortcode( $atts ) {
 
         .cmr-order-summary-title {
             font-size: 16px;
-            font-weight: 700;
+            font-weight: 600;
             margin-bottom: 20px;
         }
         .cmr-summary-row {
@@ -219,7 +219,7 @@ function cmr_checkout_ui_shortcode( $atts ) {
             margin-top: 25px;
             margin-bottom: 25px;
             font-size: 18px;
-            font-weight: 700;
+            font-weight: 600;
             color: #111;
             padding-top: 20px;
             border-top: 1px solid #eaeaea;

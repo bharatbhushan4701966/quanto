@@ -195,7 +195,7 @@ function cmr_mega_menu_what_we_think_shortcode($atts) {
 
         .cmr-mmt-report-price {
             font-size: 16px;
-            font-weight: 700;
+            font-weight: 600;
             color: #111;
         }
 

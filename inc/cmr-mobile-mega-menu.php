@@ -61,7 +61,7 @@ function cmr_inject_mobile_mega_menu() {
     }
     .cmr-mobile-nav-content { padding: 24px; }
     .cmr-mobile-nav-label {
-        font-size: 12px; font-weight: 700; color: #9ba4b5;
+        font-size: 12px; font-weight: 600; color: #9ba4b5;
         letter-spacing: 1px; text-transform: uppercase; margin-bottom: 20px;
     }
     .cmr-mobile-nav-link { display: block; text-decoration: none; margin-bottom: 24px; }

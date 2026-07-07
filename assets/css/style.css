@@ -8281,7 +8281,7 @@ button.button.alt.single_add_to_cart_button:hover::after {
     padding: 6px 12px;
     border-radius: 6px;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     margin-bottom: 18px;
@@ -8483,7 +8483,7 @@ h1.custom-product-title {
 
 .custom-talk-analyst-btn .arrow-up-right {
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 600;
     transition: transform 0.25s ease;
 }
 
@@ -8501,7 +8501,7 @@ h1.custom-product-title {
 .safe-checkout-label {
     display: block;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 600;
     color: #475569;
     margin-bottom: 14px;
     text-transform: uppercase;
@@ -8538,7 +8538,7 @@ h1.custom-product-title {
 
 .share-label {
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 600;
     color: #475569;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -8610,7 +8610,7 @@ h1.custom-product-title {
 
 .tab-nav-item.active {
     color: #0f172a;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .tab-nav-item.active::after {
@@ -8887,7 +8887,7 @@ h1.custom-product-title {
     color: #FFFFFF !important;
     font-size: 42px !important;
     line-height: 1.2 !important;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
     margin-bottom: 24px !important;
 }
 /* Mobile heading */
@@ -8895,7 +8895,7 @@ h1.custom-product-title {
     color: #FFFFFF !important;
     font-size: 28px !important;
     line-height: 1.2 !important;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
     margin-bottom: 16px !important;
 }
 /* Desktop paragraph */
@@ -8965,7 +8965,7 @@ h1.custom-product-title {
     color: #FFFFFF !important;
     font-size: 42px !important;
     line-height: 1.1 !important;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
     margin-bottom: 20px !important;
 }
 
@@ -8994,7 +8994,7 @@ h1.custom-product-title {
 [data-id="4961a1e"] {
     font-size: 80px !important;
     line-height: 1.1 !important;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
     letter-spacing: -2px !important;
 }
 
@@ -9057,7 +9057,7 @@ h1.custom-product-title {
     color: #FFFFFF !important;
     font-size: 42px !important;
     line-height: 1.1 !important;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
     margin-bottom: 20px !important;
 }
 
@@ -9086,7 +9086,7 @@ h1.custom-product-title {
 [data-id="4961a1e"] {
     font-size: 80px !important;
     line-height: 1.1 !important;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
     letter-spacing: -2px !important;
 }
 
@@ -9133,7 +9133,7 @@ h1.custom-product-title {
     color: #FFFFFF !important;
     font-size: 42px !important;
     line-height: 1.1 !important;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
     margin-bottom: 20px !important;
 }
 
@@ -9188,7 +9188,7 @@ h1.custom-product-title {
     text-transform: uppercase !important;
     color: #FFFFFF !important;
     font-size: 14px !important;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
     letter-spacing: 1px !important;
 }
 .footer p.e-paragraph-base a {

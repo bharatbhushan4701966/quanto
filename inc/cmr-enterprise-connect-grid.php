@@ -75,7 +75,7 @@ function cmr_enterprise_connect_grid_shortcode() {
         }
         .cmr-enterprisecgd-top-nav a:hover,
         .cmr-enterprisecgd-top-nav a.active {
-            font-weight: 700;
+            font-weight: 600;
         }
 
         /* Header Area */
@@ -235,7 +235,7 @@ function cmr_enterprise_connect_grid_shortcode() {
 
         .cmr-enterprisecgd-card-title {
             font-size: 18px;
-            font-weight: 700;
+            font-weight: 600;
             line-height: 1.4;
             margin: 0 0 12px 0;
             color: #111;

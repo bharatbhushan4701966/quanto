@@ -265,7 +265,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             align-items: center;
             justify-content: center;
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 600;
             flex-shrink: 0;
         }
 

@@ -87,7 +87,7 @@ function cmr_team_grid_shortcode($atts) {
         }
         .cmr-team-name {
             font-size: 24px;
-            font-weight: 700;
+            font-weight: 600;
             margin: 0 0 5px 0;
             color: #111;
             letter-spacing: -0.5px;

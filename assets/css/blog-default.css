@@ -505,7 +505,7 @@ table {
 
   color: var(--color-primary);
 
-  font-weight: 700;
+  font-weight: 600;
 
   padding: 14px 0;
 
@@ -627,7 +627,7 @@ table tfoot tr td#next a:hover {
 
   color: var(--color-primary);
 
-  font-weight: 700;
+  font-weight: 600;
 
   padding: 14px 0;
 

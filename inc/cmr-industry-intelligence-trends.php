@@ -38,7 +38,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_trends_shortcode' ) ) {
             }
             .cmr-intel-trends-header h2 {
                 font-size: 36px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111;
                 margin: 0 0 10px 0;
                 letter-spacing: -1px;
@@ -125,7 +125,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_trends_shortcode' ) ) {
 
             .cmr-intel-trends-title {
                 font-size: 18px;
-                font-weight: 700;
+                font-weight: 600;
                 line-height: 1.4;
                 margin: 0 0 25px 0;
                 letter-spacing: -0.3px;
@@ -150,7 +150,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_trends_shortcode' ) ) {
                 align-items: center;
                 gap: 6px;
                 font-size: 14px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111;
                 text-decoration: none;
                 border-bottom: 1.5px solid #111;

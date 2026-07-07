@@ -49,7 +49,7 @@ if ( ! function_exists( 'cmr_quarterly_results_shortcode' ) ) {
 
             .cmr-qr-hero-subtitle {
                 font-size: 12px;
-                font-weight: 700;
+                font-weight: 600;
                 letter-spacing: 1px;
                 text-transform: uppercase;
                 margin-bottom: 20px;
@@ -213,7 +213,7 @@ if ( ! function_exists( 'cmr_quarterly_results_shortcode' ) ) {
                 background: #fff;
                 color: #111;
                 font-size: 11px;
-                font-weight: 700;
+                font-weight: 600;
                 padding: 6px 12px;
                 border-radius: 4px;
                 z-index: 2;

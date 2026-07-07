@@ -477,7 +477,7 @@ function cmr_intro_tech_shortcode_inline() {
         }
     </style>
     <div class="cmr-intro-tech-section">
-        <h2 style="font-size: 32px; font-weight: 700; color: #111; margin-top: 0; margin-bottom: 25px; text-transform: uppercase;">CONSUMER TECH</h2>
+        <h2 style="font-size: 32px; font-weight: 600; color: #111; margin-top: 0; margin-bottom: 25px; text-transform: uppercase;">CONSUMER TECH</h2>
         <p>Consumer technology is no longer defined by the device — it's defined by the experience surrounding it. AI integration, ecosystem lock-in and shifting ownership models are rewriting the rules of how people choose, use and stay loyal to technology brands.</p>
         <p>Companies still competing on specs alone are losing ground to those competing on context — understanding not just what consumers buy, but why, when and what they expect next.</p>
         <p>The winners won't just ship better products. They'll build smarter relationships with the people who use them.</p>

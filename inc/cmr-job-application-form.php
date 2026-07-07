@@ -29,7 +29,7 @@ function cmr_job_application_form_shortcode($atts) {
 
         .cmr-job-form-header h2 {
             font-size: 32px;
-            font-weight: 700;
+            font-weight: 600;
             letter-spacing: -1px;
             margin-bottom: 15px;
             color: #111;

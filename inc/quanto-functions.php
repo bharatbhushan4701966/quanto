@@ -459,7 +459,7 @@ function quanto_comment_callback( $comment, $args, $depth ) {
             </div>
             <div class="comment-content flex-grow-1">
                 <div class="d-flex align-items-center mb-1">
-                    <h6 class="mb-0 me-2" style="font-family: 'Instrument Sans', sans-serif; font-weight: 700; font-size: 16px; color: #111;"><?php echo esc_html( ucwords( get_comment_author() ) ); ?></h6>
+                    <h6 class="mb-0 me-2" style="font-family: 'Instrument Sans', sans-serif; font-weight: 600; font-size: 16px; color: #111;"><?php echo esc_html( ucwords( get_comment_author() ) ); ?></h6>
                     <?php
                     if ( get_post_type() === 'cmr_news' ) {
                         $r = get_comment_meta( get_comment_ID(), 'rating', true );

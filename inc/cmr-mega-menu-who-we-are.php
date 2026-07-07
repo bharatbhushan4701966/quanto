@@ -118,7 +118,7 @@ function cmr_mega_menu_who_we_are_shortcode($atts) {
 
         .cmr-mm-locations h3 {
             font-size: 20px;
-            font-weight: 700;
+            font-weight: 600;
             color: #111;
             margin: 0 0 20px 0;
             line-height: 1.3;

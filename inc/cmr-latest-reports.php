@@ -36,7 +36,7 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
 
             .cmr-latest-title {
                 font-size: 32px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #000000;
                 margin-bottom: 25px;
                 letter-spacing: -0.5px;
@@ -145,7 +145,7 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
                 background: #ffffff;
                 color: #ea580c; /* Orange for NEW */
                 font-size: 11px;
-                font-weight: 700;
+                font-weight: 600;
                 padding: 4px 10px;
                 border-radius: 4px;
                 z-index: 10;
@@ -172,7 +172,7 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
 
             .cmr-lr-title {
                 font-size: 16px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111827;
                 margin-bottom: 15px;
                 line-height: 1.4;
@@ -196,7 +196,7 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
 
             .cmr-lr-price {
                 font-size: 20px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111827;
                 margin-bottom: 20px;
                 margin-top: auto;

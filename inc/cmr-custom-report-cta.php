@@ -43,7 +43,7 @@ if ( ! function_exists( 'cmr_custom_report_cta_shortcode' ) ) {
 
             .cmr-crc-left h2 {
                 font-size: 36px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #ffffff;
                 margin: 0;
                 line-height: 1.2;

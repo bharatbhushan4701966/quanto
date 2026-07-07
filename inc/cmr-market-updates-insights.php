@@ -308,7 +308,7 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
             }
             .cmr-mui-nav-title {
                 font-size: 22px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111;
             }
             .cmr-mui-nav-links {

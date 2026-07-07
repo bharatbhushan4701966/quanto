@@ -34,7 +34,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
 
             .cmr-featured-reports-title {
                 font-size: 32px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #000000;
                 margin-bottom: 30px;
                 letter-spacing: -0.5px;
@@ -67,7 +67,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                 background: #ffffff;
                 color: #6b46c1;
                 font-size: 11px;
-                font-weight: 700;
+                font-weight: 600;
                 padding: 4px 10px;
                 border-radius: 4px;
                 z-index: 10;
@@ -121,7 +121,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
 
             .cmr-fr-large-title {
                 font-size: 24px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #ffffff;
                 margin-bottom: 10px;
                 line-height: 1.3;
@@ -187,7 +187,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
 
             .cmr-fr-small-title {
                 font-size: 18px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111827;
                 margin-bottom: 15px;
                 line-height: 1.3;
@@ -206,7 +206,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
             .cmr-fr-price {
                 margin-top: auto;
                 font-size: 20px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111827;
             }
 

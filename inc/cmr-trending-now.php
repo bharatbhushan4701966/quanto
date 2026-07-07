@@ -47,7 +47,7 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
 
             .cmr-trending-title {
                 font-size: 32px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #000000;
                 margin: 0;
                 letter-spacing: -0.5px;
@@ -127,7 +127,7 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
                 background: #ffffff;
                 color: #06b6d4; /* Cyan/Teal color based on design */
                 font-size: 11px;
-                font-weight: 700;
+                font-weight: 600;
                 padding: 4px 10px;
                 border-radius: 4px;
                 z-index: 10;
@@ -155,7 +155,7 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
 
             .cmr-tn-title {
                 font-size: 18px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111827;
                 margin-bottom: 15px;
                 line-height: 1.3;
@@ -186,7 +186,7 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
             .cmr-tn-price {
                 margin-top: auto;
                 font-size: 20px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111827;
             }
 

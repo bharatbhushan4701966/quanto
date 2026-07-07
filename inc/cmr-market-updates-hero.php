@@ -225,7 +225,7 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
                 padding: 6px 14px;
                 border-radius: 4px;
                 font-size: 11px;
-                font-weight: 700;
+                font-weight: 600;
                 letter-spacing: 1px;
                 display: flex;
                 align-items: center;
@@ -257,7 +257,7 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
             }
             .cmr-mu-slide-title {
                 font-size: 32px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111;
                 margin: 0 0 20px 0;
                 line-height: 1.2;
@@ -274,7 +274,7 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
                 align-items: center;
                 gap: 8px;
                 font-size: 14px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111;
                 text-decoration: none;
                 border-bottom: 1px solid #111;

@@ -81,7 +81,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
             }
             .cmr-intel-list-title {
                 font-size: 20px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111;
                 margin: 0 0 12px 0;
                 line-height: 1.4;
@@ -106,7 +106,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 align-items: center;
                 gap: 6px;
                 font-size: 13px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111;
                 text-decoration: none;
                 border-bottom: 1.5px solid #111;

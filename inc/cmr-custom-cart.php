@@ -58,7 +58,7 @@ if ( ! function_exists( 'cmr_custom_cart_shortcode' ) ) {
 
             .cmr-cart-box-title {
                 font-size: 18px;
-                font-weight: 700;
+                font-weight: 600;
                 margin: 0;
                 display: flex;
                 align-items: center;
@@ -107,7 +107,7 @@ if ( ! function_exists( 'cmr_custom_cart_shortcode' ) ) {
 
             .cmr-ci-title {
                 font-size: 16px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111827;
                 margin-bottom: 8px;
                 line-height: 1.4;
@@ -135,7 +135,7 @@ if ( ! function_exists( 'cmr_custom_cart_shortcode' ) ) {
                 top: 30px;
                 right: 0;
                 font-size: 20px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111827;
             }
 
@@ -251,7 +251,7 @@ if ( ! function_exists( 'cmr_custom_cart_shortcode' ) ) {
                 margin-top: 30px;
                 margin-bottom: 25px;
                 font-size: 20px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111827;
             }
             .cmr-checkout-btn {
@@ -445,7 +445,7 @@ function cmr_get_cart_html() {
         ?>
         <div class="cmr-cart-empty" style="text-align: center; padding: 100px 20px;">
             <i class="fa-solid fa-cart-shopping" style="font-size: 48px; color: #d1d5db; margin-bottom: 20px;"></i>
-            <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 15px;">Your cart is currently empty!</h2>
+            <h2 style="font-size: 24px; font-weight: 600; margin-bottom: 15px;">Your cart is currently empty!</h2>
             <p style="color: #6b7280; margin-bottom: 30px;">Browse our latest reports and add them to your cart.</p>
             <a href="https://qai8358l95-staging.onrocket.site/research-reports/" style="display: inline-block; background: #4b23a0; color: #fff; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 600;">Return to Shop</a>
         </div>

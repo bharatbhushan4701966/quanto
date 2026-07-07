@@ -182,7 +182,7 @@ function cmr_media_releases_general_shortcode( $atts ) {
 
         .cmr-mrg-title {
             font-size: 32px;
-            font-weight: 700;
+            font-weight: 600;
             line-height: 1.1;
             margin: 0 0 20px 0;
             letter-spacing: 1px;
