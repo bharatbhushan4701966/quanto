@@ -255,3 +255,13 @@
 .intel-numeric-pagination .next.page-numbers svg {
     display: block;
 }
+
+/* Add scroll margin to anchor targets so sticky nav does not cover them */
+#overview,
+#cmr-intel-trends-section,
+#cmr-market-updates,
+#reports,
+#cmr-in-news,
+#newsroom {
+    scroll-margin-top: 100px;
+}
