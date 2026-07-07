@@ -131,9 +131,9 @@ function cmr_media_releases_general_shortcode( $atts ) {
         }
 
         .cmr-mrg-featured-img {
-            width: 100%;
-            height: 100%;
-            object-fit: fill;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: fill !important;
             background-color: #fff;
             position: absolute;
             top: 0;
