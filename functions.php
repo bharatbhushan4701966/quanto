@@ -120,6 +120,7 @@ require_once QUANTO_DIR_PATH_INC . 'author-meta.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-latest-insights.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-latest-insights-tech.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-industry-intelligence.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-consulting-advisory.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-explore-sectors.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-stay-updated.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-featured-insight.php';
