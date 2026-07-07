@@ -12,12 +12,14 @@ add_action('wp_footer', function() {
     <style>
     .intel-nav-fixed-js {
         position: fixed !important;
-        left: 0;
+        left: 50% !important;
+        transform: translateX(-50%);
         width: 100%;
+        max-width: 1280px;
         z-index: 999999;
         background: #fff;
-        padding-left: calc((100vw - 1280px) / 2) !important;
-        padding-right: calc((100vw - 1280px) / 2) !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
         margin-bottom: 0 !important;
         box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         font-family: 'Instrument Sans', sans-serif !important;
