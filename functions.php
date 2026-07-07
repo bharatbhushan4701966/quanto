@@ -983,9 +983,9 @@ add_shortcode('cmr_footer', function() {
         if ( preg_match( '/<footer class="footer".*?<\/footer>/is', $body, $matches ) ) {
             $cached_footer = $matches[0];
             
-            // Extract the Elementor CSS link for post 13499 if it exists in the head
-            if ( preg_match( '/<link[^>]*href="[^"]*elementor\/css\/post-13499\.css[^"]*"[^>]*>/is', $body, $css_matches ) ) {
-                $cached_footer = $css_matches[0] . "\n" . $cached_footer;
+            // Extract ALL Elementor CSS links to ensure styles are loaded even if the footer post ID changes
+            if ( preg_match_all( '/<link[^>]*href="[^"]*elementor\/css\/post-\d+\.css[^"]*"[^>]*>/is', $body, $css_matches ) ) {
+                $cached_footer = implode("\n", $css_matches[0]) . "\n" . $cached_footer;
             }
             
             set_transient( $transient_key, $cached_footer, 6 * HOUR_IN_SECONDS );
