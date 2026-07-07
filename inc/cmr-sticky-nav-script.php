@@ -17,13 +17,24 @@ add_action('wp_footer', function() {
         width: 100%;
         max-width: 1200px;
         z-index: 999999;
-        background: #fff;
+        background: transparent !important;
         padding-left: 20px !important;
         padding-right: 20px !important;
         margin-bottom: 0 !important;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         font-family: 'Instrument Sans', sans-serif !important;
         box-sizing: border-box !important;
+    }
+    .intel-nav-fixed-js::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100vw;
+        height: 100%;
+        background: #fff;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        z-index: -1;
     }
     .intel-nav-fixed-js .cmr-nav-btn-subscribe {
         display: inline-flex !important;
