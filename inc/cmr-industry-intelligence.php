@@ -228,6 +228,43 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                 });
                 </script>
                 
+                <!-- Dynamic Anchor Script for Elementor Sections -->
+                <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    // This script dynamically assigns IDs to sections based on their headings
+                    // so that the sticky navbar anchor links work regardless of Elementor setup.
+                    var allHeadings = document.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title');
+                    
+                    allHeadings.forEach(function(h) {
+                        var text = h.innerText.toLowerCase();
+                        
+                        // "CMR in news" section
+                        if (text.includes("recognition of cmr in news") || text.includes("featured media coverage")) {
+                            var section = h.closest('section') || h.closest('.elementor-section');
+                            if (section) section.id = 'cmr-in-news';
+                        }
+                        
+                        // "Reports" section
+                        if (text.includes("similar reports") || text.includes("browse latest reports") || text.includes("featured reports")) {
+                            var section = h.closest('section') || h.closest('.elementor-section');
+                            if (section) section.id = 'reports';
+                        }
+                        
+                        // "Market Updates" section
+                        if (text.includes("market intelligence &") || text.includes("market updates")) {
+                            var section = h.closest('section') || h.closest('.elementor-section');
+                            if (section) section.id = 'cmr-market-updates';
+                        }
+                        
+                        // "Newsroom" section
+                        if (text.includes("media releases") && !text.includes("featured")) {
+                            var section = h.closest('section') || h.closest('.elementor-section');
+                            // Only set if not already set by cmr-in-news
+                            if (section && section.id !== 'cmr-in-news') section.id = 'newsroom';
+                        }
+                    });
+                });
+                </script>
             <?php else : ?>
                 <p>No insights found.</p>
             <?php endif; ?>
