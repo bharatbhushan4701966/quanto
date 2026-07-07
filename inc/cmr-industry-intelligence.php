@@ -13,11 +13,11 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
 
         $atts = shortcode_atts( array(
             'posts_per_page'   => 6,
-            'nav_title'        => 'Automotive',
+            'nav_title'        => 'Industry Intelligence',
             'show_nav'         => 'true',
             'section_title'    => 'Latest Industry Intelligence',
             'section_subtitle' => 'Explore real-time insights and strategic analysis shaping industries and business decisions.',
-            'category'         => 'automotive',
+            'category'         => 'industry-connect',
             'link_overview'    => '#overview',
             'link_insights'    => '#insights',
             'link_reports'     => '#reports',
