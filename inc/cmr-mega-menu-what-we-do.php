@@ -348,7 +348,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
         <div class="cmr-mmw-left">
             <div class="cmr-mmw-label">WHAT WE DO</div>
             <div class="cmr-mmw-menu-list">
-                <a href="<?php echo esc_url( home_url( '/what-we-do/' ) ); ?>" class="cmr-mmw-item cmr-mmw-item-hover-trigger active" data-target="cmr-mmw-list-industry">
+                <a href="<?php echo esc_url( home_url( '/industry-intelligence/' ) ); ?>" class="cmr-mmw-item cmr-mmw-item-hover-trigger active" data-target="cmr-mmw-list-industry">
                     <div class="cmr-mmw-item-header">
                         <h4>
                             <span class="cmr-mmw-text-inner">Industry Intelligence

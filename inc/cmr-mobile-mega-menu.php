@@ -161,7 +161,7 @@ function cmr_inject_mobile_mega_menu() {
                 </button>
                 <div class="cmr-mobile-nav-content">
                     <div class="cmr-mobile-nav-label">OUR SERVICES</div>
-                    <a href="#" class="cmr-mobile-nav-link">
+                    <a href="<?php echo esc_url( home_url( '/industry-intelligence/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">Industry Intelligence</div>
                         <div class="cmr-mobile-nav-link-desc">Comprehensive market tracking and analysis</div>
                     </a>
