@@ -203,7 +203,7 @@ add_action('wp_footer', function() {
                             
                             // The nav bar itself will be sticky, so we add its height to the offset
                             const navHeight = navBar.offsetHeight || 60;
-                            const finalOffset = stickyOffset + navHeight + 20; // 20px extra breathing room
+                            const finalOffset = stickyOffset + navHeight + 100; // 100px extra breathing room
                             
                             const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
                             
