@@ -17,7 +17,7 @@ if ( ! function_exists( 'cmr_consulting_advisory_shortcode' ) ) {
             'show_nav'         => 'true',
             'section_title'    => 'Latest Consulting & Advisory',
             'section_subtitle' => 'Explore real-time insights and strategic analysis shaping industries and business decisions.',
-            'category'         => 'articles',
+            'category'         => 'industry-connect',
             'link_overview'    => '#top',
             'link_insights'    => '#overview',
             'link_trends'      => '#trends',

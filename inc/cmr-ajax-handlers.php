@@ -614,7 +614,7 @@ function cmr_load_more_consulting_ajax() {
             array(
                 'taxonomy' => 'category',
                 'field'    => 'slug',
-                'terms'    => 'articles',
+                'terms'    => 'industry-connect',
             ),
         ),
     );
