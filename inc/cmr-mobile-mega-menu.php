@@ -121,7 +121,7 @@ function cmr_inject_mobile_mega_menu() {
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </a>
                 <a href="javascript:void(0)" class="cmr-mobile-nav-item" data-target="panel-connect">
-                    Connect
+                    CMR Connect
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </a>
                 <a href="javascript:void(0)" class="cmr-mobile-nav-item" data-target="panel-newsroom">
@@ -238,7 +238,7 @@ function cmr_inject_mobile_mega_menu() {
             <div class="cmr-mobile-nav-panel cmr-mobile-nav-panel-sub" id="panel-connect">
                 <button class="cmr-mobile-nav-back" data-target="cmrPanelMain">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                    Connect
+                    CMR Connect
                 </button>
                 <div class="cmr-mobile-nav-content">
                     <div class="cmr-mobile-nav-label">CONNECT</div>

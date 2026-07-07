@@ -481,7 +481,7 @@ function cmr_inject_connect_mega_menu() {
                 var navLinks = document.querySelectorAll('.menu-item > a, .elementor-item');
                 navLinks.forEach(function(link) {
                     var text = link.innerText.trim().toLowerCase();
-                    if (text === 'connect') {
+                    if (text === 'connect' || text === 'cmr connect') {
                         var parentLi = link.closest('li, .menu-item');
                         if (parentLi && !parentLi.classList.contains('cmr-has-mega-menu-connect')) {
                             parentLi.classList.add('cmr-has-mega-menu-connect');
@@ -504,7 +504,7 @@ function cmr_inject_connect_mega_menu() {
                     var link = e.target.closest('a');
                     if (link) {
                         var text = link.innerText.trim().toLowerCase();
-                        if (text === 'connect') {
+                        if (text === 'connect' || text === 'cmr connect') {
                             var parentLi = link.closest('.cmr-has-mega-menu-connect');
                             if (parentLi) {
                                 e.preventDefault();
