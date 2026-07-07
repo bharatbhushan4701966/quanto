@@ -1003,6 +1003,13 @@ if ( ! function_exists('cmr_print_elementor_css') ) {
         if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
             $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
             $css_file->enqueue();
+            
+            // Force output the link tag since print_css() sometimes fails mid-body
+            $url = $css_file->get_url();
+            if ($url) {
+                echo '<link rel="stylesheet" id="elementor-post-'.$post_id.'-css" href="'.esc_url($url).'" type="text/css" media="all">';
+            }
+            
             $css_file->print_css();
         }
     }
