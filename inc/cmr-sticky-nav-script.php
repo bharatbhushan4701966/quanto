@@ -15,7 +15,7 @@ add_action('wp_footer', function() {
         left: 50% !important;
         transform: translateX(-50%);
         width: 100%;
-        max-width: 1200px;
+        max-width: 1280px;
         z-index: 999999;
         background: transparent !important;
         padding-left: 20px !important;
