@@ -51,21 +51,8 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
         ?>
         <div class="cmr-industry-intel-section" id="overview">
             
-            <?php if ( ! empty( $atts['section_title'] ) ) : ?>
-            <div class="cmr-intel-header" style="margin-bottom: 40px;">
-                <h2 style="font-size: 44px; font-weight: 600; color: #111; margin: 0 0 12px 0; letter-spacing: -1px; font-family: 'Instrument Sans', sans-serif; line-height: 1.2;">
-                    <?php echo esc_html( $atts['section_title'] ); ?>
-                </h2>
-                <?php if ( ! empty( $atts['section_subtitle'] ) ) : ?>
-                <p style="font-size: 16px; color: #333; margin: 0; font-family: 'Instrument Sans', sans-serif; max-width: 800px; line-height: 1.5;">
-                    <?php echo esc_html( $atts['section_subtitle'] ); ?>
-                </p>
-                <?php endif; ?>
-            </div>
-            <?php endif; ?>
-
             <?php if ( $atts['show_nav'] === 'true' ) : ?>
-            <div class="intel-nav-bar">
+            <div class="intel-nav-bar" style="margin-bottom: 40px;">
                 <div class="intel-nav-title">
                     <?php echo esc_html( $atts['nav_title'] ); ?>
                 </div>
@@ -82,6 +69,19 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                         <svg style="margin-left: 6px;" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                     </a>
                 </div>
+            </div>
+            <?php endif; ?>
+
+            <?php if ( ! empty( $atts['section_title'] ) ) : ?>
+            <div class="cmr-intel-header" style="margin-bottom: 40px;">
+                <h2 style="font-size: 44px; font-weight: 600; color: #111; margin: 0 0 12px 0; letter-spacing: -1px; font-family: 'Instrument Sans', sans-serif; line-height: 1.2;">
+                    <?php echo esc_html( $atts['section_title'] ); ?>
+                </h2>
+                <?php if ( ! empty( $atts['section_subtitle'] ) ) : ?>
+                <p style="font-size: 16px; color: #333; margin: 0; font-family: 'Instrument Sans', sans-serif; max-width: 800px; line-height: 1.5;">
+                    <?php echo esc_html( $atts['section_subtitle'] ); ?>
+                </p>
+                <?php endif; ?>
             </div>
             <?php endif; ?>
 
