@@ -134,7 +134,7 @@ function cmr_media_releases_general_shortcode( $atts ) {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            background-color: #f4f4f4;
+            background-color: #fff;
             position: absolute;
             top: 0;
             left: 0;
@@ -312,7 +312,7 @@ function cmr_media_releases_general_shortcode( $atts ) {
             width: 120px;
             flex-shrink: 0;
             position: relative;
-            background-color: #f4f4f4;
+            background-color: #fff;
             display: flex;
             align-items: stretch;
             justify-content: center;
@@ -325,7 +325,7 @@ function cmr_media_releases_general_shortcode( $atts ) {
             min-height: 100% !important;
             max-height: none !important;
             object-fit: contain !important;
-            background-color: #f4f4f4;
+            background-color: #fff;
             display: block;
             position: absolute;
             top: 0;
@@ -404,7 +404,7 @@ function cmr_media_releases_general_shortcode( $atts ) {
     <div class="cmr-mrg-section" id="cmr-mrg-app">
         <!-- Top Featured Area -->
         <div class="cmr-mrg-featured">
-            <div class="cmr-mrg-featured-img-wrap" style="background-color:#f4f4f4;">
+            <div class="cmr-mrg-featured-img-wrap" style="background-color:#fff;">
                 <svg class="cmr-mrg-placeholder-svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display: <?php echo $top_post['image'] ? 'none' : 'block'; ?>;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                 <img src="<?php echo esc_url($top_post['image']); ?>" alt="Featured Image" class="cmr-mrg-featured-img" id="cmr-mrg-main-img" style="display: <?php echo $top_post['image'] ? 'block' : 'none'; ?>;">
             </div>
