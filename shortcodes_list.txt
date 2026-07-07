@@ -1,0 +1,65 @@
+[cmr_breadcrumb] - Displays site breadcrumbs
+[cmr_breadcrumbs] - Displays site breadcrumbs (alternative version)
+[cmr_challenge] - Renders the "Your challenge. Our research. Your advantage." section dynamically
+[cmr_channel_connect_general] - Displays the Channel Connect general layout section
+[cmr_channel_connect_grid] - Displays the Channel Connect grid layout
+[cmr_checkout_ui] - Renders the custom WooCommerce checkout UI
+[cmr_custom_cart] - Renders the custom WooCommerce cart UI
+[cmr_custom_report_cta] - Displays a Call-to-Action for custom reports
+[cmr_dark_media_coverage] - Displays the media coverage section in dark mode
+[cmr_enterprise_connect_general] - Displays the Enterprise Connect general layout
+[cmr_enterprise_connect_grid] - Displays the Enterprise Connect grid layout
+[cmr_explore_sectors] - Renders the "Explore Sectors" component
+[cmr_featured_insight] - Displays a featured insight/article
+[cmr_featured_intelligence_carousel] - Displays a carousel of featured industry intelligence
+[cmr_featured_reports] - Displays a grid or carousel of featured reports
+[cmr_footer] - Renders the main site footer dynamically
+[cmr_footer_card] - Renders the blue footer cards section dynamically
+[cmr_foundation_scroll] - Displays the foundation scroll animation section
+[cmr_hero_banner] - Displays a hero banner
+[cmr_industry_intel_list] - Displays a list of industry intelligence items
+[cmr_industry_intelligence] - Displays the Industry Intelligence section
+[cmr_industry_intelligence_trends] - Displays trends in Industry Intelligence
+[cmr_industry_stack] - Displays the Industry Stack section
+[cmr_intro] - Renders introductory text
+[cmr_intro_tech] - Renders introductory text specifically for tech pages
+[cmr_investor_banner] - Displays a banner for investors
+[cmr_job_application_form] - Renders a job application form
+[cmr_latest_insights] - Displays the latest insights
+[cmr_latest_insights_tech] - Displays the latest tech insights
+[cmr_latest_reports] - Displays the latest reports
+[cmr_live] - Displays live updates or events
+[cmr_location_accordion] - Displays office locations in an accordion layout
+[cmr_market_updates] - Displays market updates
+[cmr_market_updates_hero] - Displays the market updates hero banner
+[cmr_market_updates_insights] - Displays market updates insights
+[cmr_media_contacts] - Displays media contact information
+[cmr_media_coverage] - Displays general media coverage
+[cmr_media_releases_general] - Displays general media releases
+[cmr_media_releases_grid] - Displays a grid of media releases
+[cmr_mega_menu_connect] - Renders the "Connect" mega menu
+[cmr_mega_menu_newsroom] - Renders the "Newsroom" mega menu
+[cmr_mega_menu_what_we_do] - Renders the "What We Do" mega menu
+[cmr_mega_menu_what_we_think] - Renders the "What We Think" mega menu
+[cmr_mega_menu_who_we_are] - Renders the "Who We Are" mega menu
+[cmr_mega_menu_who_we_serve] - Renders the "Who We Serve" mega menu
+[cmr_news_carousel] - Displays a carousel of news items
+[cmr_news_tabs] - Displays news items organized into tabs
+[cmr_performance_results] - Displays performance results
+[cmr_press_releases] - Displays press releases
+[cmr_quarterly_results] - Displays quarterly financial/performance results
+[cmr_research_hero] - Displays the hero section for research reports
+[cmr_slide_of_the_day] - Displays a "Slide of the Day" component
+[cmr_smb_connect_general] - Displays the SMB Connect general layout
+[cmr_smb_connect_grid] - Displays the SMB Connect grid layout
+[cmr_smb_tabs] - Displays SMB related content in tabs
+[cmr_spotlight] - Displays a spotlight feature section
+[cmr_stay_updated] - Displays a newsletter/stay updated subscription form
+[cmr_team_grid] - Displays team members in a grid
+[cmr_team_scroll] - Displays team members in a scrolling view
+[cmr_trending_now] - Displays currently trending topics/reports
+[cmr_viewpoints_hero] - Displays the hero section for viewpoints
+[cmr_viewpoints_insights] - Displays insights for viewpoints
+[cmr_what_we_think] - Displays the "What We Think" section
+[quanto-template] - Core shortcode to render arbitrary Elementor templates by ID
+[cmr_testimonials] - Renders the testimonials section dynamically

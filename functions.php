@@ -1042,7 +1042,32 @@ add_shortcode('cmr_challenge', function() {
     return ob_get_clean();
 });
 
-// Shortcode to display the Footer Card section by rendering the quanto_tab_build post
+// Shortcode to display the Testimonials section by rendering the quanto_tab_build post
+add_shortcode('cmr_testimonials', function() {
+    ob_start();
+    
+    // Find the post by slug
+    $posts = get_posts(array(
+        'name' => 'testimonials',
+        'post_type' => 'quanto_tab_build',
+        'posts_per_page' => 1,
+        'post_status' => 'publish'
+    ));
+    
+    if ( $posts && !empty($posts[0]) ) {
+        $post_id = $posts[0]->ID;
+        
+        // Print CSS link inline
+        cmr_print_elementor_css($post_id);
+        
+        // Render it
+        if ( class_exists( '\\Elementor\\Plugin' ) ) {
+            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
+        }
+    }
+    
+    return ob_get_clean();
+});// Shortcode to display the Footer Card section by rendering the quanto_tab_build post
 add_shortcode('cmr_footer_card', function() {
     ob_start();
     
