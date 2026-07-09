@@ -6,7 +6,7 @@
 
 // Attempt to find wp-load.php
 $wp_load_paths = array(
-    __DIR__ . '/../../../wp-load.php', // Assuming this is in wp-content/themes/quanto/
+    __DIR__ . '/../../../wp-load.php',
     __DIR__ . '/../../../../wp-load.php',
     __DIR__ . '/wp-load.php',
 );
@@ -43,13 +43,13 @@ function cmr_log($message) {
     flush();
 }
 
-cmr_log("Starting import script...");
+cmr_log("Starting import script (v2)...");
 
 // State Management
 $state = array(
-    'categories_done' => false,
-    'tags_done' => false,
-    'authors_done' => false,
+    'categories_done' => true, // Already done in previous run
+    'tags_done' => true,       // Already done in previous run
+    'authors_done' => true,
     'posts_page' => 1,
     'category_map' => array(),
     'tag_map' => array(),
@@ -61,6 +61,10 @@ if (file_exists($state_file)) {
     cmr_log("Resuming from state: Page " . $state['posts_page']);
 } else {
     cmr_log("Starting fresh import.");
+    // We must load category/tag maps from DB if we skip downloading them
+    // Actually, just let it re-download taxonomies on the first run, it's fast.
+    $state['categories_done'] = false;
+    $state['tags_done'] = false;
 }
 
 function fetch_api($url) {
@@ -140,7 +144,7 @@ $default_author_id = 1;
 
 // 3. Import Posts
 cmr_log("Importing posts from page " . $state['posts_page']);
-$max_pages_per_run = 1; // 1 page per run to ensure we don't timeout (20 posts + 20 images)
+$max_pages_per_run = 1; 
 
 $run_pages = 0;
 while ($run_pages < $max_pages_per_run) {
@@ -155,9 +159,14 @@ while ($run_pages < $max_pages_per_run) {
         break;
     }
     
+    global $wpdb;
+
     foreach ($posts as $post) {
-        $existing = get_page_by_title($post['title']['rendered'], OBJECT, 'post');
-        if ($existing) {
+        // Use raw SQL by slug to avoid get_page_by_title bugs and caching issues
+        $slug = $post['slug'];
+        $existing_id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_name = %s AND post_type = 'post' LIMIT 1", $slug));
+        
+        if ($existing_id) {
             cmr_log("Skipping existing post: " . $post['title']['rendered']);
             continue;
         }
