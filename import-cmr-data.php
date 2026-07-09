@@ -28,6 +28,19 @@ $api_base = $source_domain . '/wp-json/wp/v2';
 $log_file = __DIR__ . '/import-log.txt';
 $state_file = __DIR__ . '/import-state.json';
 
+function cmr_get_attachment_by_filename($url) {
+    global $wpdb;
+    $filename = basename($url);
+    // Get the name without extension
+    $name = preg_replace('/\.[^.]+$/', '', $filename);
+    $query = $wpdb->prepare("SELECT ID FROM {$wpdb->posts} WHERE post_type = 'attachment' AND post_name = %s LIMIT 1", $name);
+    $id = $wpdb->get_var($query);
+    if ($id) {
+        return wp_get_attachment_url($id);
+    }
+    return false;
+}
+
 function cmr_log($message) {
     global $log_file;
     $date = date('Y-m-d H:i:s');
@@ -165,12 +178,12 @@ function get_local_author_id($remote_author, &$state) {
 
 // 3. Import Posts
 cmr_log("Importing posts from page " . $state['posts_page']);
-$max_pages_per_run = 1; 
+$max_pages_per_run = 5; 
 
 $run_pages = 0;
 while ($run_pages < $max_pages_per_run) {
     $page = $state['posts_page'];
-    $posts = fetch_api($api_base . "/posts?per_page=20&page=$page&_embed=1");
+    $posts = fetch_api($api_base . "/posts?per_page=5&page=$page&_embed=1");
     
     if (empty($posts) || isset($posts['code'])) {
         cmr_log("No more posts found. Import complete.");
@@ -197,7 +210,33 @@ while ($run_pages < $max_pages_per_run) {
         $content = str_replace('data-srcset=', 'srcset=', $content);
         $content = str_replace('data-sizes=', 'sizes=', $content);
 
-        // Replace live domain with staging domain in content (links, images, etc.)
+        // Find all images in content and sideload them
+        preg_match_all('/<img[^>]+src=[\'"]([^\'"]+)[\'"][^>]*>/i', $content, $matches);
+        if (!empty($matches[1])) {
+            foreach (array_unique($matches[1]) as $img_url) {
+                if (strpos($img_url, 'cmrindia.com') !== false) {
+                    $local_url = cmr_get_attachment_by_filename($img_url);
+                    if (!$local_url) {
+                        cmr_log("Downloading inline image: $img_url");
+                        $attachment_id = media_sideload_image($img_url, 0, null, 'id');
+                        if (!is_wp_error($attachment_id)) {
+                            $local_url = wp_get_attachment_url($attachment_id);
+                        } else {
+                            cmr_log("Failed to download inline image: " . $attachment_id->get_error_message());
+                        }
+                    }
+                    if ($local_url) {
+                        $content = str_replace($img_url, $local_url, $content);
+                    }
+                }
+            }
+        }
+
+        // Remove srcset and sizes so it doesn't try to load missing thumbnails from live
+        $content = preg_replace('/ srcset=[\'"][^\'"]+[\'"]/i', '', $content);
+        $content = preg_replace('/ sizes=[\'"][^\'"]+[\'"]/i', '', $content);
+
+        // Replace live domain with staging domain in content (for normal text links)
         $content = str_replace('https://cmrindia.com', 'https://qai8358l95-staging.onrocket.site', $content);
 
         if ($existing_id) {
