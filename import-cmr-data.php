@@ -197,6 +197,9 @@ while ($run_pages < $max_pages_per_run) {
         $content = str_replace('data-srcset=', 'srcset=', $content);
         $content = str_replace('data-sizes=', 'sizes=', $content);
 
+        // Replace live domain with staging domain in content (links, images, etc.)
+        $content = str_replace('https://cmrindia.com', 'https://qai8358l95-staging.onrocket.site', $content);
+
         if ($existing_id) {
             cmr_log("Updating existing post: " . $post['title']['rendered']);
             wp_update_post(array(
