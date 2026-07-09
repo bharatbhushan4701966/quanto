@@ -1,16 +1,14 @@
 <?php
 /**
  * Script to import posts, categories, tags, authors, and media from cmrindia.com.
- * Run via HTTP request to this file or via CLI.
+ * Handles Category Hierarchy and Author mapping.
  */
 
-// Attempt to find wp-load.php
 $wp_load_paths = array(
     __DIR__ . '/../../../wp-load.php',
     __DIR__ . '/../../../../wp-load.php',
     __DIR__ . '/wp-load.php',
 );
-
 $wp_loaded = false;
 foreach ($wp_load_paths as $path) {
     if (file_exists($path)) {
@@ -19,19 +17,14 @@ foreach ($wp_load_paths as $path) {
         break;
     }
 }
+if (!$wp_loaded) die("Error: Could not find wp-load.php");
 
-if (!$wp_loaded) {
-    die("Error: Could not find wp-load.php. Run this script from the WordPress root or theme root.");
-}
-
-// Require admin dependencies for media_sideload_image
 require_once(ABSPATH . 'wp-admin/includes/media.php');
 require_once(ABSPATH . 'wp-admin/includes/file.php');
 require_once(ABSPATH . 'wp-admin/includes/image.php');
 
 $source_domain = 'https://cmrindia.com';
 $api_base = $source_domain . '/wp-json/wp/v2';
-
 $log_file = __DIR__ . '/import-log.txt';
 $state_file = __DIR__ . '/import-state.json';
 
@@ -43,13 +36,11 @@ function cmr_log($message) {
     flush();
 }
 
-cmr_log("Starting import script (v2)...");
+cmr_log("Starting import script (v3)...");
 
-// State Management
 $state = array(
-    'categories_done' => true, // Already done in previous run
-    'tags_done' => true,       // Already done in previous run
-    'authors_done' => true,
+    'categories_done' => false,
+    'tags_done' => false,
     'posts_page' => 1,
     'category_map' => array(),
     'tag_map' => array(),
@@ -61,49 +52,52 @@ if (file_exists($state_file)) {
     cmr_log("Resuming from state: Page " . $state['posts_page']);
 } else {
     cmr_log("Starting fresh import.");
-    // We must load category/tag maps from DB if we skip downloading them
-    // Actually, just let it re-download taxonomies on the first run, it's fast.
-    $state['categories_done'] = false;
-    $state['tags_done'] = false;
 }
 
 function fetch_api($url) {
     $response = wp_remote_get($url, array('timeout' => 60));
-    if (is_wp_error($response)) {
-        cmr_log("API Error for $url: " . $response->get_error_message());
-        return false;
-    }
-    
+    if (is_wp_error($response)) return false;
     $body = wp_remote_retrieve_body($response);
     return json_decode($body, true);
 }
 
-// 1. Import Categories
+// 1. Import Categories with Hierarchy
 if (!$state['categories_done']) {
     cmr_log("Importing categories...");
+    $all_cats = array();
     $page = 1;
     while (true) {
         $cats = fetch_api($api_base . "/categories?per_page=100&page=$page");
         if (empty($cats) || isset($cats['code'])) break;
-        
         foreach ($cats as $cat) {
-            $term = term_exists($cat['name'], 'category');
-            if (!$term) {
-                $term = wp_insert_term(
-                    $cat['name'],
-                    'category',
-                    array(
-                        'description' => $cat['description'],
-                        'slug' => $cat['slug']
-                    )
-                );
-            }
-            if (!is_wp_error($term) && isset($term['term_id'])) {
-                $state['category_map'][$cat['id']] = $term['term_id'];
-            }
+            $all_cats[] = $cat;
         }
         $page++;
     }
+    
+    // First pass: create all categories without parents
+    foreach ($all_cats as $cat) {
+        $term = term_exists($cat['name'], 'category');
+        if (!$term) {
+            $term = wp_insert_term($cat['name'], 'category', array(
+                'description' => $cat['description'],
+                'slug' => $cat['slug']
+            ));
+        }
+        if (!is_wp_error($term) && isset($term['term_id'])) {
+            $state['category_map'][$cat['id']] = $term['term_id'];
+        }
+    }
+    
+    // Second pass: assign parents
+    foreach ($all_cats as $cat) {
+        if ($cat['parent'] > 0 && isset($state['category_map'][$cat['parent']]) && isset($state['category_map'][$cat['id']])) {
+            wp_update_term($state['category_map'][$cat['id']], 'category', array(
+                'parent' => $state['category_map'][$cat['parent']]
+            ));
+        }
+    }
+    
     $state['categories_done'] = true;
     file_put_contents($state_file, json_encode($state));
     cmr_log("Categories imported.");
@@ -116,18 +110,13 @@ if (!$state['tags_done']) {
     while (true) {
         $tags = fetch_api($api_base . "/tags?per_page=100&page=$page");
         if (empty($tags) || isset($tags['code'])) break;
-        
         foreach ($tags as $tag) {
             $term = term_exists($tag['name'], 'post_tag');
             if (!$term) {
-                $term = wp_insert_term(
-                    $tag['name'],
-                    'post_tag',
-                    array(
-                        'description' => $tag['description'],
-                        'slug' => $tag['slug']
-                    )
-                );
+                $term = wp_insert_term($tag['name'], 'post_tag', array(
+                    'description' => $tag['description'],
+                    'slug' => $tag['slug']
+                ));
             }
             if (!is_wp_error($term) && isset($term['term_id'])) {
                 $state['tag_map'][$tag['id']] = $term['term_id'];
@@ -140,7 +129,39 @@ if (!$state['tags_done']) {
     cmr_log("Tags imported.");
 }
 
-$default_author_id = 1;
+// Helper to map author
+function get_local_author_id($remote_author, &$state) {
+    if (!isset($remote_author['id'])) return 1;
+    $remote_id = $remote_author['id'];
+    
+    if (isset($state['author_map'][$remote_id])) {
+        return $state['author_map'][$remote_id];
+    }
+    
+    $slug = $remote_author['slug'];
+    $name = $remote_author['name'];
+    $email = $slug . '@cmrindia.com';
+    
+    $user = get_user_by('slug', $slug);
+    if (!$user) {
+        $user_id = wp_insert_user(array(
+            'user_login' => $slug,
+            'user_pass'  => wp_generate_password(),
+            'user_email' => $email,
+            'display_name' => $name,
+            'nickname'   => $name,
+            'role'       => 'author'
+        ));
+        if (!is_wp_error($user_id)) {
+            $state['author_map'][$remote_id] = $user_id;
+            return $user_id;
+        }
+    } else {
+        $state['author_map'][$remote_id] = $user->ID;
+        return $user->ID;
+    }
+    return 1;
+}
 
 // 3. Import Posts
 cmr_log("Importing posts from page " . $state['posts_page']);
@@ -153,21 +174,40 @@ while ($run_pages < $max_pages_per_run) {
     
     if (empty($posts) || isset($posts['code'])) {
         cmr_log("No more posts found. Import complete.");
-        if (file_exists($state_file)) {
-            unlink($state_file);
-        }
+        if (file_exists($state_file)) unlink($state_file);
         break;
     }
     
     global $wpdb;
 
     foreach ($posts as $post) {
-        // Use raw SQL by slug to avoid get_page_by_title bugs and caching issues
         $slug = $post['slug'];
         $existing_id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_name = %s AND post_type = 'post' LIMIT 1", $slug));
         
+        // Get Author
+        $author_id = 1;
+        if (isset($post['_embedded']['author'][0])) {
+            $author_id = get_local_author_id($post['_embedded']['author'][0], $state);
+        }
+        
         if ($existing_id) {
             cmr_log("Skipping existing post: " . $post['title']['rendered']);
+            // We can optionally update the author of existing posts
+            wp_update_post(array(
+                'ID' => $existing_id,
+                'post_author' => $author_id
+            ));
+            
+            // Map Categories to existing post to fix hierarchy issues
+            $local_cats = array();
+            if (isset($post['categories']) && is_array($post['categories'])) {
+                foreach ($post['categories'] as $cat_id) {
+                    if (isset($state['category_map'][$cat_id])) {
+                        $local_cats[] = (int)$state['category_map'][$cat_id];
+                    }
+                }
+            }
+            if (!empty($local_cats)) wp_set_post_categories($existing_id, $local_cats);
             continue;
         }
         
@@ -176,7 +216,7 @@ while ($run_pages < $max_pages_per_run) {
             'post_content'  => $post['content']['rendered'],
             'post_excerpt'  => $post['excerpt']['rendered'],
             'post_status'   => 'publish',
-            'post_author'   => $default_author_id,
+            'post_author'   => $author_id,
             'post_type'     => 'post',
             'post_date'     => $post['date'],
             'post_date_gmt' => $post['date_gmt'],
