@@ -222,7 +222,22 @@ while ($run_pages < $max_pages_per_run) {
                     $local_url = cmr_get_attachment_by_filename($img_url);
                     if (!$local_url) {
                         cmr_log("Downloading inline image: $img_url");
+                        sleep(2); // Prevent 429 Too Many Requests
+                        
+                        // Temporarily bypass MIME type checks for sideloading
+                        add_filter('upload_mimes', function($mimes) {
+                            $mimes['svg'] = 'image/svg+xml';
+                            $mimes['webp'] = 'image/webp';
+                            $mimes['JPG'] = 'image/jpeg';
+                            $mimes['PNG'] = 'image/png';
+                            return $mimes;
+                        });
+                        add_filter('unfiltered_upload', '__return_true');
+
                         $attachment_id = media_sideload_image($img_url, 0, null, 'id');
+                        
+                        remove_filter('unfiltered_upload', '__return_true');
+
                         if (!is_wp_error($attachment_id)) {
                             $local_url = wp_get_attachment_url($attachment_id);
                         } else {
