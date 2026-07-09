@@ -295,6 +295,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
         }
 
         .cmr-mmw-bottom-bar a {
+            display: inline !important;
             color: #4e2ecf;
             font-weight: 600;
             text-decoration: none;
