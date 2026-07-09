@@ -210,6 +210,10 @@ while ($run_pages < $max_pages_per_run) {
         $content = str_replace('data-srcset=', 'srcset=', $content);
         $content = str_replace('data-sizes=', 'sizes=', $content);
 
+        // Remove unwanted Elementor blocks (Duplicated Post Title and Share This Post)
+        $content = preg_replace('/<section[^>]*elementor-top-section[^>]*>.*?theme-post-title\.default.*?<\/section>/is', '', $content);
+        $content = preg_replace('/<section[^>]*elementor-inner-section[^>]*>.*?Share This Post.*?<\/section>/is', '', $content);
+
         // Find all images in content and sideload them
         preg_match_all('/<img[^>]+src=[\'"]([^\'"]+)[\'"][^>]*>/i', $content, $matches);
         if (!empty($matches[1])) {
