@@ -412,9 +412,6 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
                     </a>
                 </div>
 
-                <div class="cmr-mmw-bottom-bar">
-                    <a href="<?php echo esc_url($tab_data['bottom_link_url']); ?>"><?php echo esc_html($tab_data['bottom_link_text']); ?></a>
-                </div>
             </div>
             <?php 
             $first_tab = false;
