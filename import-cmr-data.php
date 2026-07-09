@@ -190,12 +190,19 @@ while ($run_pages < $max_pages_per_run) {
             $author_id = get_local_author_id($post['_embedded']['author'][0], $state);
         }
         
+        $content = $post['content']['rendered'];
+        // Fix Smush lazy loaded images: remove dummy src, swap data-src to src
+        $content = preg_replace('/ src=[\'"][^\'"]+[\'"]/i', '', $content);
+        $content = str_replace('data-src=', 'src=', $content);
+        $content = str_replace('data-srcset=', 'srcset=', $content);
+        $content = str_replace('data-sizes=', 'sizes=', $content);
+
         if ($existing_id) {
-            cmr_log("Skipping existing post: " . $post['title']['rendered']);
-            // We can optionally update the author of existing posts
+            cmr_log("Updating existing post: " . $post['title']['rendered']);
             wp_update_post(array(
                 'ID' => $existing_id,
-                'post_author' => $author_id
+                'post_author' => $author_id,
+                'post_content' => $content
             ));
             
             // Map Categories to existing post to fix hierarchy issues
@@ -213,7 +220,7 @@ while ($run_pages < $max_pages_per_run) {
         
         $post_data = array(
             'post_title'    => $post['title']['rendered'],
-            'post_content'  => $post['content']['rendered'],
+            'post_content'  => $content,
             'post_excerpt'  => $post['excerpt']['rendered'],
             'post_status'   => 'publish',
             'post_author'   => $author_id,
