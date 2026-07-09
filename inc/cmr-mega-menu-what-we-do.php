@@ -289,9 +289,19 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
         .cmr-mmw-bottom-bar {
             margin-top: auto;
             padding-top: 15px;
-            font-size: 13px;
-            color: #555;
+            font-size: 14px;
             line-height: 1.4;
+        }
+
+        .cmr-mmw-bottom-bar a {
+            display: inline-block;
+            color: #4e2ecf !important;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .cmr-mmw-bottom-bar a:hover {
+            text-decoration: underline;
         }
 
         }
@@ -403,7 +413,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
                 </div>
 
                 <div class="cmr-mmw-bottom-bar">
-                    <?php echo esc_html($tab_data['bottom_text']); ?>
+                    <a href="<?php echo esc_url($tab_data['bottom_link_url']); ?>"><?php echo esc_html($tab_data['bottom_link_text']); ?></a>
                 </div>
             </div>
             <?php 
