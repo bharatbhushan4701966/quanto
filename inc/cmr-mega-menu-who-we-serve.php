@@ -48,7 +48,7 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
         .cmr-mms-col {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 28px;
         }
 
         .cmr-mms-label {
