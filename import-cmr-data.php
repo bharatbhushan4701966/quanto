@@ -213,6 +213,10 @@ while ($run_pages < $max_pages_per_run) {
         // Remove unwanted Elementor blocks (Duplicated Post Title and Share This Post)
         $content = preg_replace('/<section[^>]*elementor-top-section[^>]*>.*?theme-post-title\.default.*?<\/section>/is', '', $content);
         $content = preg_replace('/<section[^>]*elementor-inner-section[^>]*>.*?Share This Post.*?<\/section>/is', '', $content);
+        
+        // Extra cleanup just in case the outer section tags were missed
+        $content = preg_replace('/<h1 class="elementor-heading-title elementor-size-default">.*?<\/h1>/is', '', $content);
+        $content = preg_replace('/<h2 class="elementor-heading-title elementor-size-default">Share This Post<\/h2>/is', '', $content);
 
         // Find all images in content and sideload them
         preg_match_all('/<img[^>]+src=[\'"]([^\'"]+)[\'"][^>]*>/i', $content, $matches);
