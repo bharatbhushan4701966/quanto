@@ -230,7 +230,10 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
                     </div>
                     <p>Intelligence for connected supply chains</p>
                 </a>
-                
+            </div>
+            
+            <div class="cmr-mms-col">
+                <div class="cmr-mms-label" style="visibility: hidden;">&nbsp;</div>
                 <a href="<?php echo esc_url( home_url( '/it-telecom/' ) ); ?>" class="cmr-mms-item">
                     <div class="cmr-mms-item-header">
                         <h4>IT & Telecom</h4>
@@ -246,8 +249,6 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
                     <p>Tracking innovation and demand shifts</p>
                 </a>
             </div>
-            
-            
         </div>
 
         <div class="cmr-mms-bottom">
