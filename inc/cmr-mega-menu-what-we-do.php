@@ -272,7 +272,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
         .cmr-mmw-explore-link {
             font-size: 16px;
             font-weight: 600;
-            color: #4e2ecf;
+            color: #4e2ecf !important;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
@@ -294,17 +294,6 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             line-height: 1.4;
         }
 
-        .cmr-mmw-bottom-bar a {
-            display: inline !important;
-            color: #4e2ecf;
-            font-weight: 600;
-            text-decoration: none;
-            margin-left: 5px;
-            padding: 0 !important;
-        }
-
-        .cmr-mmw-bottom-bar a:hover {
-            text-decoration: underline;
         }
 
         @media (max-width: 768px) {
@@ -415,7 +404,6 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
 
                 <div class="cmr-mmw-bottom-bar">
                     <?php echo esc_html($tab_data['bottom_text']); ?>
-                    <a href="<?php echo esc_url($tab_data['bottom_link_url']); ?>"><?php echo esc_html($tab_data['bottom_link_text']); ?></a>
                 </div>
             </div>
             <?php 
