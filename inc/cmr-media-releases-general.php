@@ -14,16 +14,22 @@ function cmr_media_releases_general_shortcode( $atts ) {
 
     // Query 4 latest cmr_news posts (or press releases)
     $args = array(
-        'post_type'      => 'cmr_news',
+        'post_type'      => array('post', 'cmr_news'),
         'posts_per_page' => 4,
         'orderby'        => 'date',
         'order'          => 'DESC',
         'post_status'    => 'publish',
         'tax_query'      => array(
+            'relation' => 'OR',
             array(
                 'taxonomy' => 'cmr_news_category',
                 'field'    => 'slug',
-                'terms'    => array('media-release', 'media-releases', 'press-release', 'press-releases'),
+                'terms'    => array('media-release', 'media-releases', 'press-release', 'press-releases', 'pressreleases'),
+            ),
+            array(
+                'taxonomy' => 'category',
+                'field'    => 'slug',
+                'terms'    => array('media-release', 'media-releases', 'press-release', 'press-releases', 'pressreleases'),
             ),
         ),
     );
