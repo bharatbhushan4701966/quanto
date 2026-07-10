@@ -44,7 +44,8 @@ cmr_log("Starting pages-as-posts import script...");
 $state = array(
     'categories_done' => false,
     'posts_page' => 1,
-    'category_map' => array()
+    'category_map' => array(),
+    'author_map' => array()
 );
 
 if (file_exists($state_file)) {
@@ -95,6 +96,39 @@ if (!$state['categories_done']) {
     cmr_log("Categories mapped.");
 }
 
+function get_local_author_id($remote_author, &$state) {
+    if (!isset($remote_author['id'])) return 1;
+    $remote_id = $remote_author['id'];
+    
+    if (isset($state['author_map'][$remote_id])) {
+        return $state['author_map'][$remote_id];
+    }
+    
+    $slug = $remote_author['slug'];
+    $name = $remote_author['name'];
+    $email = $slug . '@cmrindia.com';
+    
+    $user = get_user_by('slug', $slug);
+    if (!$user) {
+        $user_id = wp_insert_user(array(
+            'user_login' => $slug,
+            'user_pass'  => wp_generate_password(),
+            'user_email' => $email,
+            'display_name' => $name,
+            'nickname'   => $name,
+            'role'       => 'author'
+        ));
+        if (!is_wp_error($user_id)) {
+            $state['author_map'][$remote_id] = $user_id;
+            return $user_id;
+        }
+    } else {
+        $state['author_map'][$remote_id] = $user->ID;
+        return $user->ID;
+    }
+    return 1;
+}
+
 // 2. Import Pages as Posts
 cmr_log("Importing pages from page " . $state['posts_page']);
 $max_pages_per_run = 5; 
@@ -120,6 +154,9 @@ while ($run_pages < $max_pages_per_run) {
         $existing_id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM $wpdb->posts WHERE post_name = %s AND post_type = 'post' LIMIT 1", $slug));
         
         $author_id = 1; // Default
+        if (isset($post['_embedded']['author'][0])) {
+            $author_id = get_local_author_id($post['_embedded']['author'][0], $state);
+        }
         
         $content = $post['content']['rendered'];
         
