@@ -204,9 +204,18 @@ while ($run_pages < $max_pages_per_run) {
         }
         
         $content = $post['content']['rendered'];
-        // Fix Smush lazy loaded images: remove dummy src, swap data-src to src
-        $content = preg_replace('/ src=[\'"][^\'"]+[\'"]/i', '', $content);
-        $content = str_replace('data-src=', 'src=', $content);
+        // Fix Smush lazy loaded images securely: only remove dummy src if data-src exists
+        $content = preg_replace_callback('/<img([^>]+)>/i', function($matches) {
+            $img = $matches[0];
+            if (preg_match('/data-src=[\'"]([^\'"]+)[\'"]/i', $img, $ds_match)) {
+                $real_url = $ds_match[1];
+                $img = preg_replace('/ src=[\'"][^\'"]+[\'"]/i', '', $img);
+                $img = preg_replace('/ data-src=[\'"][^\'"]+[\'"]/i', '', $img);
+                $img = str_replace('<img ', '<img src="' . $real_url . '" ', $img);
+            }
+            return $img;
+        }, $content);
+        
         $content = str_replace('data-srcset=', 'srcset=', $content);
         $content = str_replace('data-sizes=', 'sizes=', $content);
 
