@@ -298,7 +298,7 @@ while ($run_pages < $max_pages_per_run) {
             'post_excerpt'  => $post['excerpt']['rendered'],
             'post_status'   => 'publish',
             'post_author'   => $author_id,
-            'post_type'     => 'cmr_news', // Save directly as cmr_news
+            'post_type'     => 'post', // Save as standard post
             'post_date'     => $post['date'],
             'post_date_gmt' => $post['date_gmt'],
             'post_name'     => $post['slug']
@@ -310,8 +310,16 @@ while ($run_pages < $max_pages_per_run) {
             continue;
         }
         
-        // Map Categories to cmr_news_category
-        wp_set_object_terms($post_id, 'press-releases', 'cmr_news_category');
+        // Map Categories
+        $local_cats = array();
+        if (isset($post['categories']) && is_array($post['categories'])) {
+            foreach ($post['categories'] as $cat_id) {
+                if (isset($state['category_map'][$cat_id])) {
+                    $local_cats[] = (int)$state['category_map'][$cat_id];
+                }
+            }
+        }
+        if (!empty($local_cats)) wp_set_post_categories($post_id, $local_cats);
         $local_tags = array();
         if (isset($post['tags']) && is_array($post['tags'])) {
             foreach ($post['tags'] as $tag_id) {

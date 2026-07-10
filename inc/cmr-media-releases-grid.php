@@ -14,23 +14,17 @@ function cmr_media_releases_grid_shortcode() {
 
     // Initial query
     $args = array(
-        'post_type'      => array('post', 'cmr_news'),
+        'post_type'      => 'cmr_news',
         'posts_per_page' => 6,
         'post_status'    => 'publish',
         'orderby'        => 'date',
         'order'          => 'DESC',
         'offset'         => 4,
         'tax_query'      => array(
-            'relation' => 'OR',
             array(
                 'taxonomy' => 'cmr_news_category',
                 'field'    => 'slug',
-                'terms'    => array('media-release', 'media-releases', 'press-release', 'press-releases', 'pressreleases'),
-            ),
-            array(
-                'taxonomy' => 'category',
-                'field'    => 'slug',
-                'terms'    => array('media-release', 'media-releases', 'press-release', 'press-releases', 'pressreleases'),
+                'terms'    => array('media-release', 'media-releases', 'press-release', 'press-releases'),
             ),
         ),
     );
