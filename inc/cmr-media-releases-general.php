@@ -490,8 +490,8 @@ function cmr_media_releases_general_shortcode( $atts ) {
                         if(svg) svg.style.display = 'block';
                     }
                     mainTime.textContent = data.read_time;
-                    mainTitle.textContent = data.title;
-                    mainExcerpt.textContent = data.excerpt;
+                    mainTitle.innerHTML = data.title;
+                    mainExcerpt.innerHTML = data.excerpt;
                     mainLink.href = data.link;
                     
                     if (data.pdf_link) {
