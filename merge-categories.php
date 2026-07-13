@@ -5,64 +5,71 @@ if (!current_user_can('manage_options') && !isset($_GET['force'])) {
     die('Not allowed');
 }
 
-echo "<h1>Merging Categories...</h1>";
+echo "<h1>Merging and Deleting Duplicate Categories...</h1>";
 
-// 1. Merge standard 'category' taxonomy: 'Press Releases 2' -> 'Press Releases'
-$term_2 = get_term_by('name', 'Press Releases 2', 'category');
-if (!$term_2) $term_2 = get_term_by('name', 'Press Release 2', 'category');
+$taxonomies = array('category', 'cmr_news_category');
 
-$term_main = get_term_by('name', 'Press Releases', 'category');
-if (!$term_main) $term_main = get_term_by('name', 'Press Release', 'category');
-
-if ($term_2 && $term_main) {
-    $posts = get_posts(array(
-        'post_type' => 'post',
-        'posts_per_page' => -1,
-        'tax_query' => array(
-            array(
-                'taxonomy' => 'category',
-                'field' => 'term_id',
-                'terms' => $term_2->term_id
-            )
-        )
+foreach ($taxonomies as $tax) {
+    echo "<h3>Processing Taxonomy: $tax</h3>";
+    $terms = get_terms(array(
+        'taxonomy' => $tax,
+        'hide_empty' => false,
     ));
-    
-    echo "Found " . count($posts) . " standard posts in Press Releases 2.<br>";
-    foreach($posts as $p) {
-        wp_set_object_terms($p->ID, $term_main->term_id, 'category', true);
-        echo "Merged post: " . $p->post_title . "<br>";
+
+    if (is_wp_error($terms) || empty($terms)) {
+        continue;
     }
-} else {
-    echo "Could not find standard category terms.<br>";
-}
 
-// 2. Merge 'cmr_news_category' taxonomy: 'press-releases-2' -> 'press-releases'
-$news_term_2 = get_term_by('slug', 'press-releases-2', 'cmr_news_category');
-if (!$news_term_2) $news_term_2 = get_term_by('slug', 'press-release-2', 'cmr_news_category');
-
-$news_term_main = get_term_by('slug', 'press-releases', 'cmr_news_category');
-if (!$news_term_main) $news_term_main = get_term_by('slug', 'press-release', 'cmr_news_category');
-
-if ($news_term_2 && $news_term_main) {
-    $news_posts = get_posts(array(
-        'post_type' => 'cmr_news',
-        'posts_per_page' => -1,
-        'tax_query' => array(
-            array(
-                'taxonomy' => 'cmr_news_category',
-                'field' => 'term_id',
-                'terms' => $news_term_2->term_id
-            )
-        )
-    ));
-    
-    echo "Found " . count($news_posts) . " cmr_news posts in press-releases-2.<br>";
-    foreach($news_posts as $p) {
-        wp_set_object_terms($p->ID, $news_term_main->term_id, 'cmr_news_category', true);
-        echo "Merged cmr_news post: " . $p->post_title . "<br>";
+    foreach ($terms as $term) {
+        $name = $term->name;
+        
+        // Check if the category name ends with ' 2' or '2'
+        if (preg_match('/^(.*?)\s*2$/', $name, $matches)) {
+            $main_name = trim($matches[1]);
+            
+            // Try to find the main category
+            $main_term = get_term_by('name', $main_name, $tax);
+            
+            if ($main_term) {
+                echo "Found duplicate category: <strong>{$name}</strong>. Main category exists: <strong>{$main_name}</strong>.<br>";
+                
+                // Get all posts in the duplicate category
+                $post_types = ($tax === 'cmr_news_category') ? array('cmr_news') : array('post', 'cmr_news');
+                
+                $posts = get_posts(array(
+                    'post_type' => $post_types,
+                    'posts_per_page' => -1,
+                    'tax_query' => array(
+                        array(
+                            'taxonomy' => $tax,
+                            'field' => 'term_id',
+                            'terms' => $term->term_id
+                        )
+                    )
+                ));
+                
+                $moved = 0;
+                foreach($posts as $p) {
+                    // Reassign to main term (true means append, but it doesn't matter since the old term will be deleted)
+                    wp_set_object_terms($p->ID, $main_term->term_id, $tax, true);
+                    $moved++;
+                }
+                
+                echo "- Moved $moved posts to '{$main_name}'.<br>";
+                
+                // Now delete the duplicate term to prevent future duplication
+                $deleted = wp_delete_term($term->term_id, $tax);
+                if (is_wp_error($deleted)) {
+                    echo "- Failed to delete '{$name}'.<br>";
+                } else {
+                    echo "- Successfully deleted '{$name}'.<br>";
+                }
+                
+            } else {
+                echo "Skipping <strong>{$name}</strong> because main category '{$main_name}' could not be found.<br>";
+            }
+        }
     }
-} else {
-    echo "Could not find cmr_news_category terms.<br>";
 }
 
 echo "<h2>Done!</h2>";
