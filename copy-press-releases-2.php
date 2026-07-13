@@ -16,8 +16,8 @@ $args = array(
     'tax_query'      => array(
         array(
             'taxonomy' => 'category',
-            'field'    => 'slug',
-            'terms'    => array('press-release-2', 'press-releases-2'),
+            'field'    => 'name',
+            'terms'    => array('Press Releases 2', 'Press Release 2'),
         ),
     ),
 );

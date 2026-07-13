@@ -22,7 +22,9 @@ function cmr_sync_press_release_to_cmr_news($post_id, $post, $update) {
     $categories = wp_get_post_categories($post_id, array('fields' => 'all'));
     $is_press_release = false;
     foreach ($categories as $cat) {
-        if (in_array($cat->slug, array('media-release', 'media-releases', 'press-release', 'press-releases', 'pressreleases', 'press-release-2', 'press-releases-2'))) {
+        $allowed_slugs = array('media-release', 'media-releases', 'press-release', 'press-releases', 'pressreleases', 'press-release-2', 'press-releases-2');
+        $allowed_names = array('Press Releases 2', 'Press Release 2');
+        if (in_array($cat->slug, $allowed_slugs) || in_array($cat->name, $allowed_names)) {
             $is_press_release = true;
             break;
         }
