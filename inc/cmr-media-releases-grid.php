@@ -24,7 +24,7 @@ function cmr_media_releases_grid_shortcode() {
             array(
                 'taxonomy' => 'cmr_news_category',
                 'field'    => 'slug',
-                'terms'    => array('media-release', 'media-releases', 'press-release', 'press-releases'),
+                'terms'    => array('media-release', 'media-releases', 'press-release', 'press-releases', 'press-release-2', 'press-releases-2'),
             ),
         ),
     );
@@ -348,8 +348,15 @@ function cmr_media_releases_grid_shortcode() {
                 <button class="cmr-mrg-year-btn" data-year="2023">2023</button>
                 <button class="cmr-mrg-year-btn" data-year="2022">2022</button>
                 <button class="cmr-mrg-year-btn" data-year="2021">2021</button>
-                <div class="cmr-mrg-more-dropdown">
-                    <button class="cmr-mrg-more-btn">More <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                <div class="cmr-mrg-more-dropdown" style="position: relative;">
+                    <button class="cmr-mrg-more-btn" id="cmr-mrg-more-btn">More <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                    <div class="cmr-mrg-more-content" id="cmr-mrg-more-content" style="display: none; position: absolute; top: 100%; left: 0; background: #fff; border: 1px solid #eaeaea; border-radius: 8px; padding: 10px; z-index: 100; min-width: 120px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-top: 5px;">
+                        <button class="cmr-mrg-year-btn" data-year="2020" style="display:block; width:100%; text-align:left; border:none; border-radius:4px; padding:8px 12px; margin-bottom:4px; background:transparent;">2020</button>
+                        <button class="cmr-mrg-year-btn" data-year="2019" style="display:block; width:100%; text-align:left; border:none; border-radius:4px; padding:8px 12px; margin-bottom:4px; background:transparent;">2019</button>
+                        <button class="cmr-mrg-year-btn" data-year="2018" style="display:block; width:100%; text-align:left; border:none; border-radius:4px; padding:8px 12px; margin-bottom:4px; background:transparent;">2018</button>
+                        <button class="cmr-mrg-year-btn" data-year="2017" style="display:block; width:100%; text-align:left; border:none; border-radius:4px; padding:8px 12px; margin-bottom:4px; background:transparent;">2017</button>
+                        <button class="cmr-mrg-year-btn" data-year="2016" style="display:block; width:100%; text-align:left; border:none; border-radius:4px; padding:8px 12px; background:transparent;">2016</button>
+                    </div>
                 </div>
             </div>
             <div class="cmr-mrg-search">
@@ -483,9 +490,31 @@ function cmr_media_releases_grid_shortcode() {
                 yearBtns.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 currentYear = this.getAttribute('data-year');
+                if (moreContent) {
+                    moreContent.style.display = 'none';
+                }
                 fetchPosts(false);
             });
         });
+
+        // More Dropdown
+        const moreBtn = document.getElementById('cmr-mrg-more-btn');
+        const moreContent = document.getElementById('cmr-mrg-more-content');
+        if (moreBtn && moreContent) {
+            moreBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (moreContent.style.display === 'none') {
+                    moreContent.style.display = 'block';
+                } else {
+                    moreContent.style.display = 'none';
+                }
+            });
+            document.addEventListener('click', function(e) {
+                if (!moreContent.contains(e.target) && e.target !== moreBtn) {
+                    moreContent.style.display = 'none';
+                }
+            });
+        }
 
         // Search
         if (searchForm) {
