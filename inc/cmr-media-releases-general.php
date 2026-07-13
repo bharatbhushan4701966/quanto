@@ -103,7 +103,7 @@ function cmr_media_releases_general_shortcode( $atts ) {
     }
 
     $top_post = $posts_data[0];
-    $bottom_posts = array_slice($posts_data, 1, 3); // Take next 3 for the bottom tabs
+    $bottom_posts = $posts_data; // Use all 4 posts for the bottom tabs so the latest post isn't lost during rotation
     ?>
     <style>
         .cmr-mrg-section {
@@ -413,8 +413,8 @@ function cmr_media_releases_general_shortcode( $atts ) {
                     <span class="cmr-mrg-label">Press Release</span>
                     <span id="cmr-mrg-main-time"><?php echo esc_html($top_post['read_time']); ?></span>
                 </div>
-                <h2 class="cmr-mrg-title" id="cmr-mrg-main-title"><?php echo esc_html($top_post['title']); ?></h2>
-                <p class="cmr-mrg-excerpt" id="cmr-mrg-main-excerpt"><?php echo esc_html($top_post['excerpt']); ?></p>
+                <h2 class="cmr-mrg-title" id="cmr-mrg-main-title"><?php echo wp_kses_post($top_post['title']); ?></h2>
+                <p class="cmr-mrg-excerpt" id="cmr-mrg-main-excerpt"><?php echo wp_kses_post($top_post['excerpt']); ?></p>
                 
                 <div class="cmr-mrg-actions">
                     <a href="<?php echo esc_url($top_post['link']); ?>" class="cmr-mrg-btn-primary" id="cmr-mrg-main-link">
@@ -444,7 +444,7 @@ function cmr_media_releases_general_shortcode( $atts ) {
                 </div>
                 <div class="cmr-mrg-nav-content">
                     <div class="cmr-mrg-nav-label">Media Releases</div>
-                    <h4 class="cmr-mrg-nav-title"><?php echo esc_html($post['title']); ?></h4>
+                    <h4 class="cmr-mrg-nav-title"><?php echo wp_kses_post($post['title']); ?></h4>
                 </div>
             </div>
             <?php endforeach; ?>

@@ -1,0 +1,1 @@
+<?php require_once("../../../wp-load.php"); $terms = get_terms(array("taxonomy" => "category", "hide_empty" => false, "name__like" => "Press")); foreach($terms as $t) { echo $t->name . " | " . $t->slug . "<br>"; } ?>
