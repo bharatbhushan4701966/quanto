@@ -17,7 +17,7 @@ $args = array(
         array(
             'taxonomy' => 'category',
             'field'    => 'slug',
-            'terms'    => array('media-release', 'media-releases', 'press-release', 'press-releases', 'pressreleases', 'press-release-2', 'press-releases-2'),
+            'terms'    => array('press-release-2', 'press-releases-2'),
         ),
     ),
 );

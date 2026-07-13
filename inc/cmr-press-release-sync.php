@@ -22,7 +22,7 @@ function cmr_sync_press_release_to_cmr_news($post_id, $post, $update) {
     $categories = wp_get_post_categories($post_id, array('fields' => 'all'));
     $is_press_release = false;
     foreach ($categories as $cat) {
-        if (in_array($cat->slug, array('media-release', 'media-releases', 'press-release', 'press-releases', 'pressreleases'))) {
+        if (in_array($cat->slug, array('media-release', 'media-releases', 'press-release', 'press-releases', 'pressreleases', 'press-release-2', 'press-releases-2'))) {
             $is_press_release = true;
             break;
         }
@@ -30,8 +30,9 @@ function cmr_sync_press_release_to_cmr_news($post_id, $post, $update) {
 
     if (!$is_press_release) return;
 
-    // Remove the hook to prevent infinite loops during wp_insert_post/wp_update_post
-    remove_action('save_post', 'cmr_sync_press_release_to_cmr_news', 10, 3);
+    // Remove the hooks to prevent infinite loops during wp_insert_post/wp_update_post
+    remove_action('save_post', 'cmr_sync_press_release_to_cmr_news', 10);
+    remove_action('save_post', 'cmr_sync_cmr_news_to_press_release', 10);
 
     // Check if a clone already exists
     $clone_id = get_post_meta($post_id, '_cmr_news_clone_id', true);
@@ -74,6 +75,49 @@ function cmr_sync_press_release_to_cmr_news($post_id, $post, $update) {
         wp_set_object_terms($clone_id, 'press-releases', 'cmr_news_category');
     }
 
-    // Re-add hook
+    // Re-add hooks
     add_action('save_post', 'cmr_sync_press_release_to_cmr_news', 10, 3);
+    add_action('save_post', 'cmr_sync_cmr_news_to_press_release', 10, 3);
+}
+
+add_action('save_post', 'cmr_sync_cmr_news_to_press_release', 10, 3);
+
+function cmr_sync_cmr_news_to_press_release($post_id, $post, $update) {
+    // Prevent infinite loop if this function triggers save_post again
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+    if (wp_is_post_revision($post_id)) return;
+    
+    // Only act on 'cmr_news' type
+    if ($post->post_type !== 'cmr_news') return;
+
+    // Check if it has an original post linked
+    $original_id = get_post_meta($post_id, '_original_post_id', true);
+    if (!$original_id || get_post_type($original_id) !== 'post') return;
+
+    // Remove hooks to prevent infinite loops
+    remove_action('save_post', 'cmr_sync_press_release_to_cmr_news', 10);
+    remove_action('save_post', 'cmr_sync_cmr_news_to_press_release', 10);
+
+    $original_data = array(
+        'ID'           => $original_id,
+        'post_title'   => $post->post_title,
+        'post_content' => $post->post_content,
+        'post_excerpt' => $post->post_excerpt,
+        'post_status'  => $post->post_status,
+        'post_author'  => $post->post_author,
+    );
+
+    wp_update_post($original_data);
+
+    // Sync thumbnail
+    $thumbnail_id = get_post_thumbnail_id($post_id);
+    if ($thumbnail_id) {
+        set_post_thumbnail($original_id, $thumbnail_id);
+    } else {
+        delete_post_thumbnail($original_id);
+    }
+
+    // Re-add hooks
+    add_action('save_post', 'cmr_sync_press_release_to_cmr_news', 10, 3);
+    add_action('save_post', 'cmr_sync_cmr_news_to_press_release', 10, 3);
 }
