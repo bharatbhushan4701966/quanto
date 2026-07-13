@@ -25,6 +25,7 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
+            'category_name'  => 'automotive', // Fetching from Automotive category
         );
 
         $insights_query = new WP_Query( $query_args );
@@ -36,13 +37,18 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
                 <div class="intel-nav-title">
                     <?php echo esc_html( $atts['nav_title'] ); ?>
                 </div>
-                <div class="intel-nav-links">
-                    <a href="#">Overview</a>
-                    <a href="#">Insights</a>
-                    <a href="#">Reports</a>
+                <div class="intel-nav-links" style="display: flex; align-items: center;">
+                    <a href="#overview">Overview</a>
+                    <a href="#cmr-latest-insights">Insights</a>
+                    <a href="#reports">Reports</a>
                     <a href="#cmr-market-updates">Market Updates</a>
-                    <a href="#">Newsroom</a>
-                    <a href="#">CMR in news</a>
+                    <a href="#newsroom">Newsroom</a>
+                    <a href="#cmr-in-news">CMR in news</a>
+
+                    <a href="#cmr-footer-card-section" class="cmr-nav-btn-subscribe" style="display: none; align-items: center; justify-content: center; background: #fff; color: #111; font-weight: 600; font-size: 14px; padding: 8px 16px; border-radius: 40px; text-decoration: none; border: 1px solid #111; margin-left: 15px; line-height: 1; transition: all 0.3s ease;">
+                        Subscribe now
+                        <svg style="margin-left: 6px;" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                    </a>
                 </div>
             </div>
 
