@@ -246,7 +246,31 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
                         }
                     });
 
-                    if (sectionRect.top <= stickyOffset && sectionRect.bottom > (navBar.offsetHeight + stickyOffset)) {
+                    let boundaryBottom = sectionRect.bottom;
+                    
+                    let testimonialsSection = document.getElementById('cmr-testimonials-section') || 
+                                              document.getElementById('testimonials') || 
+                                              document.querySelector('.elementor-element-82ef444') ||
+                                              document.querySelector('.elementor-widget-testimonial-carousel') ||
+                                              document.querySelector('.elementor-widget-testimonial');
+                                              
+                    if (!testimonialsSection) {
+                        const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')).filter(h => h.textContent.toLowerCase().includes('testimonial'));
+                        if (headings.length > 0) {
+                            testimonialsSection = headings[0].closest('.elementor-section') || headings[0].closest('section') || headings[0].parentElement;
+                        }
+                    }
+
+                    if (testimonialsSection) {
+                        boundaryBottom = testimonialsSection.getBoundingClientRect().top;
+                    } else {
+                        const footer = document.querySelector('footer, .elementor-location-footer');
+                        if (footer) {
+                            boundaryBottom = footer.getBoundingClientRect().top;
+                        }
+                    }
+
+                    if (sectionRect.top <= stickyOffset && boundaryBottom > (navBar.offsetHeight + stickyOffset)) {
                         if (!navBar.classList.contains('intel-nav-fixed-js')) {
                             placeholder.style.height = navBar.offsetHeight + 'px';
                             const style = window.getComputedStyle(navBar);
@@ -255,8 +279,8 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
                             document.body.appendChild(navBar); 
                         }
                         
-                        if (sectionRect.bottom <= (navBar.offsetHeight + stickyOffset)) {
-                            navBar.style.top = (sectionRect.bottom - navBar.offsetHeight) + 'px';
+                        if (boundaryBottom <= (navBar.offsetHeight + stickyOffset)) {
+                            navBar.style.top = (boundaryBottom - navBar.offsetHeight) + 'px';
                         } else {
                             navBar.style.top = stickyOffset + 'px';
                         }
