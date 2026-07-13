@@ -20,12 +20,18 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
         ), $atts );
 
         $query_args = array(
-            'post_type'      => 'cmr_news',
+            'post_type'      => array( 'post', 'cmr_news' ),
             'posts_per_page' => $atts['posts_per_page'],
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
-            'category_name'  => 'automotive', // Fetching from Automotive category
+            'tax_query'      => array(
+                array(
+                    'taxonomy' => 'category',
+                    'field'    => 'slug',
+                    'terms'    => 'industry-connect',
+                ),
+            ),
         );
 
         $insights_query = new WP_Query( $query_args );
