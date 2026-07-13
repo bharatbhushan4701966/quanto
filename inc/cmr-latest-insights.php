@@ -7,10 +7,124 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+if ( ! function_exists( 'cmr_latest_insights_render_grid' ) ) {
+    function cmr_latest_insights_render_grid( $insights_query ) {
+        if ( $insights_query->have_posts() ) : ?>
+            <div class="cmr-insights-grid">
+                <?php
+                $post_count = 0;
+                while ( $insights_query->have_posts() ) : $insights_query->the_post();
+                    $post_count++;
+                    
+                    $post_title = get_the_title();
+                    $post_link = get_permalink();
+                    $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+                    if ( ! $thumbnail_url ) {
+                        $thumbnail_url = 'https://via.placeholder.com/800x600?text=No+Image';
+                    }
+                    
+                    // Categories / Tags (simulated as "Media Releases" based on mockup)
+                    $category_name = 'Media Releases';
+                    $terms = get_the_terms( get_the_ID(), 'category' );
+                    if ( $terms && ! is_wp_error( $terms ) ) {
+                        $category_name = $terms[0]->name;
+                    }
+
+                    if ( $post_count === 1 ) {
+                        // Featured Left Card
+                        ?>
+                        <div class="cmr-insights-featured">
+                            <a href="<?php echo esc_url( $post_link ); ?>" class="insights-featured-card" style="background-image: url('<?php echo esc_url( $thumbnail_url ); ?>');">
+                                <div class="insights-featured-overlay"></div>
+                                <div class="insights-featured-content">
+                                    <span class="insights-tag">&mdash; <?php echo esc_html( $category_name ); ?></span>
+                                    <h3 class="insights-title"><?php echo esc_html( $post_title ); ?></h3>
+                                    <span class="insights-more-link">More Details <i class="fa-solid fa-arrow-right" style="transform: rotate(-45deg);"></i></span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="cmr-insights-stack">
+                        <?php
+                    } else {
+                        // Stacked Right Cards
+                        ?>
+                            <a href="<?php echo esc_url( $post_link ); ?>" class="insights-stacked-card">
+                                <div class="insights-stacked-image">
+                                    <img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="<?php echo esc_attr( $post_title ); ?>" />
+                                </div>
+                                <div class="insights-stacked-content">
+                                    <span class="insights-tag">&mdash; <?php echo esc_html( $category_name ); ?></span>
+                                    <h4 class="insights-title"><?php echo esc_html( $post_title ); ?></h4>
+                                    <span class="insights-more-link">More Details <i class="fa-solid fa-arrow-right" style="transform: rotate(-45deg);"></i></span>
+                                </div>
+                            </a>
+                        <?php
+                    }
+
+                endwhile;
+                
+                if ( $post_count > 1 ) {
+                    echo '</div>'; // close cmr-insights-stack
+                }
+                ?>
+            </div>
+        <?php else : ?>
+            <p>No insights found.</p>
+        <?php endif; 
+        wp_reset_postdata();
+    }
+}
+
+if ( ! function_exists( 'cmr_latest_insights_ajax_handler' ) ) {
+    function cmr_latest_insights_ajax_handler() {
+        check_ajax_referer( 'cmr_insights_nonce', 'security' );
+        
+        $category_slug = isset( $_POST['category'] ) ? sanitize_text_field( $_POST['category'] ) : '';
+        
+        $query_args = array(
+            'post_type'      => array( 'post', 'cmr_news' ),
+            'posts_per_page' => 4,
+            'post_status'    => 'publish',
+            'orderby'        => 'date',
+            'order'          => 'DESC',
+        );
+        
+        if ( ! empty( $category_slug ) && $category_slug !== 'all' ) {
+            $query_args['tax_query'] = array(
+                array(
+                    'taxonomy' => 'category',
+                    'field'    => 'slug',
+                    'terms'    => $category_slug,
+                ),
+            );
+        } else {
+            // Default "All" falls back to industry-connect for now based on user request
+            $query_args['tax_query'] = array(
+                array(
+                    'taxonomy' => 'category',
+                    'field'    => 'slug',
+                    'terms'    => 'industry-connect',
+                ),
+            );
+        }
+        
+        $insights_query = new WP_Query( $query_args );
+        cmr_latest_insights_render_grid( $insights_query );
+        
+        wp_die();
+    }
+    
+    add_action( 'wp_ajax_cmr_filter_insights', 'cmr_latest_insights_ajax_handler' );
+    add_action( 'wp_ajax_nopriv_cmr_filter_insights', 'cmr_latest_insights_ajax_handler' );
+}
+
 if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
     function cmr_latest_insights_shortcode( $atts ) {
         // Enqueue the specific CSS for this shortcode
         wp_enqueue_style( 'cmr-latest-insights' );
+        
+        // Pass AJAX info to JS
+        wp_enqueue_script( 'jquery' );
 
         $atts = shortcode_atts( array(
             'posts_per_page' => 4,
@@ -35,6 +149,9 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
         );
 
         $insights_query = new WP_Query( $query_args );
+        
+        $nonce = wp_create_nonce( 'cmr_insights_nonce' );
+        $ajax_url = admin_url( 'admin-ajax.php' );
 
         ob_start();
         ?>
@@ -74,11 +191,11 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
 
             <div class="cmr-insights-filters-bar">
                 <div class="cmr-insights-filters">
-                    <button class="filter-btn active">All</button>
-                    <button class="filter-btn">EV Growth</button>
-                    <button class="filter-btn">Battery Innovation</button>
-                    <button class="filter-btn">OEM Strategy</button>
-                    <button class="filter-btn">Supply Chain</button>
+                    <button class="filter-btn active" data-category="all">All</button>
+                    <button class="filter-btn" data-category="ev-growth">EV Growth</button>
+                    <button class="filter-btn" data-category="battery-innovation">Battery Innovation</button>
+                    <button class="filter-btn" data-category="oem-strategy">OEM Strategy</button>
+                    <button class="filter-btn" data-category="supply-chain">Supply Chain</button>
                 </div>
                 <div class="cmr-insights-search">
                     <form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
@@ -91,82 +208,19 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
                 </div>
             </div>
 
-            <?php if ( $insights_query->have_posts() ) : ?>
-                <div class="cmr-insights-grid">
-                    <?php
-                    $post_count = 0;
-                    while ( $insights_query->have_posts() ) : $insights_query->the_post();
-                        $post_count++;
-                        
-                        $post_title = get_the_title();
-                        $post_link = get_permalink();
-                        $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
-                        if ( ! $thumbnail_url ) {
-                            $thumbnail_url = 'https://via.placeholder.com/800x600?text=No+Image';
-                        }
-                        
-                        // Categories / Tags (simulated as "Media Releases" based on mockup)
-                        $category_name = 'Media Releases';
-                        $terms = get_the_terms( get_the_ID(), 'category' );
-                        if ( $terms && ! is_wp_error( $terms ) ) {
-                            $category_name = $terms[0]->name;
-                        }
-
-                        if ( $post_count === 1 ) {
-                            // Featured Left Card
-                            ?>
-                            <div class="cmr-insights-featured">
-                                <a href="<?php echo esc_url( $post_link ); ?>" class="insights-featured-card" style="background-image: url('<?php echo esc_url( $thumbnail_url ); ?>');">
-                                    <div class="insights-featured-overlay"></div>
-                                    <div class="insights-featured-content">
-                                        <span class="insights-tag">&mdash; <?php echo esc_html( $category_name ); ?></span>
-                                        <h3 class="insights-title"><?php echo esc_html( $post_title ); ?></h3>
-                                        <span class="insights-more-link">More Details <i class="fa-solid fa-arrow-right" style="transform: rotate(-45deg);"></i></span>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="cmr-insights-stack">
-                            <?php
-                        } else {
-                            // Stacked Right Cards
-                            ?>
-                                <a href="<?php echo esc_url( $post_link ); ?>" class="insights-stacked-card">
-                                    <div class="insights-stacked-image">
-                                        <img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="<?php echo esc_attr( $post_title ); ?>" />
-                                    </div>
-                                    <div class="insights-stacked-content">
-                                        <span class="insights-tag">&mdash; <?php echo esc_html( $category_name ); ?></span>
-                                        <h4 class="insights-title"><?php echo esc_html( $post_title ); ?></h4>
-                                        <span class="insights-more-link">More Details <i class="fa-solid fa-arrow-right" style="transform: rotate(-45deg);"></i></span>
-                                    </div>
-                                </a>
-                            <?php
-                        }
-
-                    endwhile;
-                    
-                    if ( $post_count > 1 ) {
-                        echo '</div>'; // close cmr-insights-stack
-                    }
-                    ?>
-                </div>
-            <?php else : ?>
-                <p>No insights found.</p>
-            <?php endif; wp_reset_postdata(); ?>
+            <div class="cmr-insights-grid-container" style="transition: opacity 0.3s ease;">
+                <?php cmr_latest_insights_render_grid( $insights_query ); ?>
+            </div>
         </div>
-        
-        <style>
-        /* Reusing .intel-nav-fixed-js from cmr-sticky-nav-script.php for consistency */
-        </style>
         
         <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Sticky Nav logic
             const sections = document.querySelectorAll('.cmr-latest-insights-section');
             sections.forEach(section => {
                 const navBar = section.querySelector('.cmr-latest-nav-bar');
                 if (!navBar) return;
                 
-                // Create a placeholder to prevent grid jumping when bar becomes fixed
                 const placeholder = document.createElement('div');
                 placeholder.className = 'cmr-latest-nav-placeholder';
                 placeholder.style.height = '0px';
@@ -175,7 +229,6 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
                 
                 function updateSticky() {
                     const sectionRect = section.getBoundingClientRect();
-                    
                     let stickyOffset = 0;
                     const wpAdminBar = document.getElementById('wpadminbar');
                     if (wpAdminBar && window.getComputedStyle(wpAdminBar).position === 'fixed') {
@@ -193,16 +246,13 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
                         }
                     });
 
-                    // Trigger sticky as soon as the section touches the sticky offset
                     if (sectionRect.top <= stickyOffset && sectionRect.bottom > (navBar.offsetHeight + stickyOffset)) {
                         if (!navBar.classList.contains('intel-nav-fixed-js')) {
-                            // Save original height
                             placeholder.style.height = navBar.offsetHeight + 'px';
                             const style = window.getComputedStyle(navBar);
                             placeholder.style.marginBottom = style.marginBottom;
-                            
                             navBar.classList.add('intel-nav-fixed-js');
-                            document.body.appendChild(navBar); // Escaping elementor transform context
+                            document.body.appendChild(navBar); 
                         }
                         
                         if (sectionRect.bottom <= (navBar.offsetHeight + stickyOffset)) {
@@ -225,6 +275,46 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
                 window.addEventListener('resize', updateSticky, { passive: true });
                 setTimeout(updateSticky, 100);
             });
+            
+            // AJAX Filter Logic
+            const filterBtns = document.querySelectorAll('.cmr-insights-filters .filter-btn');
+            const gridContainer = document.querySelector('.cmr-insights-grid-container');
+            
+            if (filterBtns.length > 0 && gridContainer) {
+                filterBtns.forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        // Update active state
+                        filterBtns.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        const category = this.getAttribute('data-category');
+                        
+                        // Add loading state
+                        gridContainer.style.opacity = '0.5';
+                        
+                        const data = new URLSearchParams();
+                        data.append('action', 'cmr_filter_insights');
+                        data.append('category', category);
+                        data.append('security', '<?php echo esc_js($nonce); ?>');
+                        
+                        fetch('<?php echo esc_url($ajax_url); ?>', {
+                            method: 'POST',
+                            body: data
+                        })
+                        .then(response => response.text())
+                        .then(html => {
+                            gridContainer.innerHTML = html;
+                            gridContainer.style.opacity = '1';
+                        })
+                        .catch(error => {
+                            console.error('Error fetching insights:', error);
+                            gridContainer.style.opacity = '1';
+                        });
+                    });
+                });
+            }
         });
         </script>
 
