@@ -91,7 +91,7 @@ class Quanto_Logo_Carousel_Widget extends \Elementor\Widget_Base {
                 'type' => \Elementor\Controls_Manager::COLOR,
                 'default' => '#e5e7eb',
                 'selectors' => [
-                    '{{WRAPPER}} .quanto-logo-carousel-container' => 'border: 1px solid {{VALUE}}; border-right: none;',
+                    '{{WRAPPER}} .quanto-logo-carousel-container' => 'border: 1px solid {{VALUE}};',
                     '{{WRAPPER}} .quanto-logo-slide' => 'border-right: 1px solid {{VALUE}};',
                 ],
             ]
@@ -130,7 +130,6 @@ class Quanto_Logo_Carousel_Widget extends \Elementor\Widget_Base {
                 width: 100%;
                 /* Border defaults fall back to CSS from controls, but we set a default here */
                 border: 1px solid #e5e7eb;
-                border-right: none;
                 box-sizing: border-box;
             }
             .quanto-logo-carousel-wrapper {
