@@ -19,7 +19,7 @@ function cmr_media_releases_grid_shortcode() {
         'post_status'    => 'publish',
         'orderby'        => 'date',
         'order'          => 'DESC',
-        'offset'         => 3,
+        'offset'         => 0,
         'tax_query'      => array(
             array(
                 'taxonomy' => 'cmr_news_category',
@@ -29,7 +29,7 @@ function cmr_media_releases_grid_shortcode() {
         ),
     );
     $query = new WP_Query( $args );
-    $query->max_num_pages = ceil( max( 0, $query->found_posts - 3 ) / 6 );
+    $query->max_num_pages = ceil( max( 0, $query->found_posts ) / 6 );
 
     ?>
     <style>

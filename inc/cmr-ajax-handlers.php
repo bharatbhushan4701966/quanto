@@ -118,7 +118,7 @@ function cmr_load_more_media_releases_ajax() {
     $year  = isset( $_POST['year'] ) ? sanitize_text_field( $_POST['year'] ) : '';
     $search = isset( $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : '';
     
-    $offset_base = ( empty($year) && empty($search) ) ? 3 : 0;
+    $offset_base = 0;
     $offset = $offset_base + ( ($paged - 1) * 6 );
     
     $args = array(
