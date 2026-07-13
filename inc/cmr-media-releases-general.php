@@ -15,7 +15,7 @@ function cmr_media_releases_general_shortcode( $atts ) {
     // Query 4 latest cmr_news posts (or press releases)
     $args = array(
         'post_type'      => 'cmr_news',
-        'posts_per_page' => 4,
+        'posts_per_page' => 3,
         'orderby'        => 'date',
         'order'          => 'DESC',
         'post_status'    => 'publish',

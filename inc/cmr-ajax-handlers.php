@@ -118,7 +118,7 @@ function cmr_load_more_media_releases_ajax() {
     $year  = isset( $_POST['year'] ) ? sanitize_text_field( $_POST['year'] ) : '';
     $search = isset( $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : '';
     
-    $offset_base = ( empty($year) && empty($search) ) ? 4 : 0;
+    $offset_base = ( empty($year) && empty($search) ) ? 3 : 0;
     $offset = $offset_base + ( ($paged - 1) * 6 );
     
     $args = array(
@@ -185,9 +185,9 @@ function cmr_load_more_media_releases_ajax() {
                     <div class="cmr-mrg-card-time"><?php echo esc_html($read_time); ?> min read</div>
                 </div>
                 <h3 class="cmr-mrg-card-title">
-                    <a href="<?php echo esc_url($link); ?>"><?php echo esc_html($title); ?></a>
+                    <a href="<?php echo esc_url($link); ?>"><?php echo wp_kses_post($title); ?></a>
                 </h3>
-                <p class="cmr-mrg-card-excerpt"><?php echo esc_html($excerpt); ?></p>
+                <p class="cmr-mrg-card-excerpt"><?php echo wp_kses_post($excerpt); ?></p>
                 <a href="<?php echo esc_url($link); ?>" class="cmr-mrg-card-link">
                     Read full Release 
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>

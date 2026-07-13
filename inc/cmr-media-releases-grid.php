@@ -19,7 +19,7 @@ function cmr_media_releases_grid_shortcode() {
         'post_status'    => 'publish',
         'orderby'        => 'date',
         'order'          => 'DESC',
-        'offset'         => 4,
+        'offset'         => 3,
         'tax_query'      => array(
             array(
                 'taxonomy' => 'cmr_news_category',
@@ -29,7 +29,7 @@ function cmr_media_releases_grid_shortcode() {
         ),
     );
     $query = new WP_Query( $args );
-    $query->max_num_pages = ceil( max( 0, $query->found_posts - 4 ) / 6 );
+    $query->max_num_pages = ceil( max( 0, $query->found_posts - 3 ) / 6 );
 
     ?>
     <style>
@@ -407,9 +407,9 @@ function cmr_media_releases_grid_shortcode() {
                             <div class="cmr-mrg-card-time"><?php echo esc_html($read_time); ?> min read</div>
                         </div>
                         <h3 class="cmr-mrg-card-title">
-                            <a href="<?php echo esc_url($link); ?>"><?php echo esc_html($title); ?></a>
+                            <a href="<?php echo esc_url($link); ?>"><?php echo wp_kses_post($title); ?></a>
                         </h3>
-                        <p class="cmr-mrg-card-excerpt"><?php echo esc_html($excerpt); ?></p>
+                        <p class="cmr-mrg-card-excerpt"><?php echo wp_kses_post($excerpt); ?></p>
                         <a href="<?php echo esc_url($link); ?>" class="cmr-mrg-card-link">
                             Read full Release 
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
