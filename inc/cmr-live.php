@@ -71,6 +71,9 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                 color: #aaa;
                 margin: 0;
             }
+            .cmr-podcast-swiper {
+                overflow: visible !important;
+            }
             .cmr-podcast-pagination {
                 display: flex;
                 gap: 8px;
@@ -254,6 +257,10 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                     display: none;
                 }
             }
+            /* Add overflow hidden to body/section to prevent horizontal scrollbar on whole page */
+            .cmr-podcast-carousel-section {
+                overflow: hidden;
+            }
         </style>
 
         <div class="cmr-podcast-carousel-section">
@@ -268,13 +275,7 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                         <p>Browse premium research reports across industries, designed to deliver actionable insights and strategic clarity.</p>
                     </div>
                     <div class="cmr-podcast-nav-area" style="display: flex; align-items: center; gap: 15px;">
-                        <div class="swiper-button-prev-custom" style="cursor:pointer; width:30px; height:30px; border-radius:50%; background:#222; display:flex; align-items:center; justify-content:center; color:#fff;">
-                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                        </div>
                         <div class="cmr-podcast-pagination swiper-pagination-custom"></div>
-                        <div class="swiper-button-next-custom" style="cursor:pointer; width:30px; height:30px; border-radius:50%; background:#222; display:flex; align-items:center; justify-content:center; color:#fff;">
-                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                        </div>
                     </div>
                 </div>
 
@@ -370,10 +371,6 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                         pagination: {
                             el: '.cmr-podcast-pagination',
                             clickable: true,
-                        },
-                        navigation: {
-                            nextEl: '.swiper-button-next-custom',
-                            prevEl: '.swiper-button-prev-custom',
                         },
                         breakpoints: {
                             768: {
