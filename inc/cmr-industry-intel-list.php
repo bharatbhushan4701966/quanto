@@ -17,21 +17,27 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
         $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : ( isset($_GET['paged']) ? intval($_GET['paged']) : 1 );
 
         $query_args = array(
-            'post_type'      => 'cmr_news',
+            'post_type'      => array( 'post', 'cmr_news' ),
             'posts_per_page' => $atts['posts_per_page'],
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
             'paged'          => $paged,
-        );
-
-        if ( ! empty( $atts['category'] ) ) {
-            $query_args['tax_query'] = array(
+            'tax_query'      => array(
+                'relation' => 'AND',
                 array(
                     'taxonomy' => 'category',
                     'field'    => 'slug',
-                    'terms'    => sanitize_text_field( $atts['category'] ),
+                    'terms'    => 'industry-connect',
                 ),
+            ),
+        );
+
+        if ( ! empty( $atts['category'] ) ) {
+            $query_args['tax_query'][] = array(
+                'taxonomy' => 'category',
+                'field'    => 'slug',
+                'terms'    => sanitize_text_field( $atts['category'] ),
             );
         }
 
@@ -342,10 +348,12 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 // Generate Pagination
                 $pagination_html = '';
                 if ( $insights_query->max_num_pages > 1 ) {
+                    $big = 999999999; // need an unlikely integer
                     $pagination_html = paginate_links( array(
-                        'format'  => '?paged=%#%',
-                        'total'   => $insights_query->max_num_pages,
-                        'current' => $paged,
+                        'base'      => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+                        'format'    => '?paged=%#%',
+                        'total'     => $insights_query->max_num_pages,
+                        'current'   => $paged,
                         'prev_text' => '<svg width="12" height="18" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 1L1 7L7 13" stroke="#4B24B3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
                         'next_text' => '<svg width="12" height="18" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 13L7 7L1 1" stroke="#4B24B3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
                     ) );
@@ -397,8 +405,16 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                     .then(response => response.text())
                     .then(html => {
                         if (html.trim() !== '') {
+                            var htmlContent = html;
+                            var dynamicPagMatch = html.match(/<div class="cmr-dynamic-pagination" style="display:none;">(.*?)<\/div>/s);
+                            var dynamicPagHtml = '';
+                            if (dynamicPagMatch) {
+                                dynamicPagHtml = dynamicPagMatch[1];
+                                htmlContent = htmlContent.replace(dynamicPagMatch[0], '');
+                            }
+                            
                             var container = document.querySelector('.cmr-intel-list-items');
-                            container.insertAdjacentHTML('beforeend', html);
+                            container.insertAdjacentHTML('beforeend', htmlContent);
                             button.setAttribute('data-page', nextPage);
                             button.textContent = 'Load More';
                             button.disabled = false;
@@ -406,7 +422,10 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                             if (nextPage >= 3 || nextPage >= maxPage) {
                                 button.parentElement.style.display = 'none';
                                 var pag = document.querySelector('.cmr-pagination-wrapper');
-                                if (pag && nextPage < maxPage) {
+                                if (pag) {
+                                    if (dynamicPagHtml) {
+                                        pag.innerHTML = dynamicPagHtml;
+                                    }
                                     pag.style.display = 'block';
                                 }
                             }
@@ -435,22 +454,28 @@ add_action( 'wp_ajax_nopriv_cmr_industry_intel_list_load_more', 'cmr_industry_in
 function cmr_industry_intel_list_load_more_ajax() {
     $paged = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
     $query_args = array(
-        'post_type'      => 'cmr_news',
+        'post_type'      => array( 'post', 'cmr_news' ),
         'posts_per_page' => 3,
         'post_status'    => 'publish',
         'orderby'        => 'date',
         'order'          => 'DESC',
         'paged'          => $paged,
+        'tax_query'      => array(
+            'relation' => 'AND',
+            array(
+                'taxonomy' => 'category',
+                'field'    => 'slug',
+                'terms'    => 'industry-connect',
+            ),
+        ),
     );
     
     // Add category filter if provided
     if ( isset( $_POST['category'] ) && ! empty( $_POST['category'] ) ) {
-        $query_args['tax_query'] = array(
-            array(
-                'taxonomy' => 'category',
-                'field'    => 'slug',
-                'terms'    => sanitize_text_field( $_POST['category'] ),
-            )
+        $query_args['tax_query'][] = array(
+            'taxonomy' => 'category',
+            'field'    => 'slug',
+            'terms'    => sanitize_text_field( $_POST['category'] ),
         );
     }
     
@@ -513,5 +538,21 @@ function cmr_industry_intel_list_load_more_ajax() {
             <?php
         }
     }
+    
+    if ( $paged >= 3 || $paged >= $insights_query->max_num_pages ) {
+        $big = 999999999;
+        $pagination_html = paginate_links( array(
+            'base'      => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+            'format'    => '?paged=%#%',
+            'total'     => $insights_query->max_num_pages,
+            'current'   => $paged,
+            'prev_text' => '<svg width="12" height="18" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 1L1 7L7 13" stroke="#4B24B3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+            'next_text' => '<svg width="12" height="18" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 13L7 7L1 1" stroke="#4B24B3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        ) );
+        if ( $pagination_html ) {
+            echo '<div class="cmr-dynamic-pagination" style="display:none;">' . $pagination_html . '</div>';
+        }
+    }
+    
     wp_die();
 }
