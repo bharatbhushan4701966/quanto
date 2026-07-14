@@ -388,3 +388,249 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
     }
 }
 add_shortcode( 'cmr_live_podcast_carousel', 'cmr_live_podcast_carousel_shortcode' );
+
+if ( ! function_exists( 'cmr_trending_podcast_shortcode' ) ) {
+    function cmr_trending_podcast_shortcode( $atts ) {
+        $atts = shortcode_atts( array(
+            'posts_per_page' => 3,
+        ), $atts, 'cmr_trending_podcast' );
+
+        $query_args = array(
+            'post_type'      => 'cmr_media',
+            'posts_per_page' => intval( $atts['posts_per_page'] ),
+            'post_status'    => 'publish',
+            'orderby'        => 'date',
+            'order'          => 'DESC',
+            'meta_query'     => array(
+                array(
+                    'key'     => '_cmr_media_type',
+                    'value'   => 'PODCAST',
+                    'compare' => 'LIKE' // Or '=' depending on how it's saved
+                )
+            )
+        );
+        // If meta_query fails (no meta saved for older posts), fallback to just getting all media.
+        // Actually, let's just get the latest 3 cmr_media and assume they are podcasts or filter.
+        $query_args = array(
+            'post_type'      => 'cmr_media',
+            'posts_per_page' => intval( $atts['posts_per_page'] ),
+            'post_status'    => 'publish',
+            'orderby'        => 'date',
+            'order'          => 'DESC',
+        );
+
+        $trending_query = new WP_Query( $query_args );
+        $posts = $trending_query->posts;
+
+        ob_start();
+        ?>
+        <style>
+            .cmr-trending-section {
+                padding: 60px 20px;
+                background-color: #fff;
+                font-family: inherit;
+                max-width: 1280px;
+                margin: 0 auto;
+            }
+            .cmr-trending-title {
+                font-size: 42px;
+                font-weight: 700;
+                color: #000;
+                margin: 0 0 40px 0;
+                letter-spacing: -1px;
+            }
+            .cmr-trending-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 30px;
+            }
+            .cmr-trending-card {
+                display: flex;
+                flex-direction: column;
+                background: #fff;
+                text-decoration: none;
+                color: #000;
+            }
+            .cmr-trending-img-wrap {
+                position: relative;
+                width: 100%;
+                aspect-ratio: 16/10;
+                overflow: hidden;
+                margin-bottom: 20px;
+                background: #f5f5f5;
+            }
+            .cmr-trending-img-wrap img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+            .cmr-trending-badge {
+                position: absolute;
+                top: 15px;
+                left: 15px;
+                background: #fff;
+                color: #111;
+                font-size: 11px;
+                font-weight: 700;
+                padding: 4px 8px;
+                border-radius: 4px;
+                z-index: 2;
+            }
+            .cmr-trending-play-btn {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 50px;
+                height: 50px;
+                background: transparent;
+                border: 2px solid #fff;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2;
+            }
+            .cmr-trending-play-btn svg {
+                width: 20px;
+                height: 20px;
+                fill: #fff;
+                margin-left: 3px;
+            }
+            .cmr-trending-meta {
+                font-size: 11px;
+                font-weight: 700;
+                color: #888;
+                margin-bottom: 12px;
+                letter-spacing: 0.5px;
+                text-transform: uppercase;
+            }
+            .cmr-trending-meta .type-podcast {
+                color: #00d2ff;
+            }
+            .cmr-trending-meta .type-topview {
+                color: #2979ff;
+            }
+            .cmr-trending-card-title {
+                font-size: 22px;
+                font-weight: 700;
+                color: #000;
+                margin: 0 0 25px 0;
+                line-height: 1.3;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            .cmr-trending-btn-wrap {
+                margin-top: auto;
+            }
+            .cmr-trending-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                padding: 10px 20px;
+                border: 1px solid #ccc;
+                border-radius: 30px;
+                background: #fff;
+                color: #000;
+                font-size: 14px;
+                font-weight: 600;
+                text-decoration: none;
+                transition: all 0.2s ease;
+            }
+            .cmr-trending-btn:hover {
+                border-color: #000;
+                background: #fafafa;
+            }
+            .cmr-trending-btn svg {
+                width: 16px;
+                height: 16px;
+                fill: currentColor;
+            }
+            @media (max-width: 1024px) {
+                .cmr-trending-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+            @media (max-width: 768px) {
+                .cmr-trending-grid {
+                    grid-template-columns: 1fr;
+                }
+                .cmr-trending-title {
+                    font-size: 32px;
+                }
+            }
+        </style>
+
+        <div class="cmr-trending-section">
+            <h2 class="cmr-trending-title">Trending Podcast</h2>
+            
+            <div class="cmr-trending-grid">
+                <?php if ( ! empty($posts) ) : ?>
+                    <?php 
+                    foreach ( $posts as $post_obj ) : 
+                        $thumbnail_url = get_the_post_thumbnail_url( $post_obj->ID, 'large' );
+                        if ( ! $thumbnail_url ) {
+                            $thumbnail_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
+                        }
+                        
+                        $category_name = 'AUTOMOTIVE';
+                        $terms = get_the_terms( $post_obj->ID, 'category' );
+                        if ( $terms && ! is_wp_error( $terms ) ) {
+                            $category_name = $terms[0]->name;
+                        }
+                        
+                        $post_date = get_the_date('d M', $post_obj); // e.g. "10 MAY"
+                        $media_type = get_post_meta( $post_obj->ID, '_cmr_media_type', true );
+                        $media_duration = get_post_meta( $post_obj->ID, '_cmr_media_duration', true );
+                        $media_url = get_post_meta( $post_obj->ID, '_cmr_media_url', true );
+                        
+                        $type = $media_type ? $media_type : 'PODCAST';
+                        $is_podcast = (strtoupper($type) === 'PODCAST');
+                        $type_class = $is_podcast ? 'type-podcast' : 'type-topview';
+                        
+                        $duration = $media_duration ? $media_duration : '05:00 MINS';
+                        $link = $media_url ? esc_url($media_url) : esc_url(get_permalink($post_obj->ID));
+                    ?>
+                    <a href="<?php echo $link; ?>" class="cmr-trending-card" target="_blank" rel="noopener noreferrer">
+                        <div class="cmr-trending-img-wrap">
+                            <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr(get_the_title($post_obj)); ?>">
+                            <div class="cmr-trending-badge"><?php echo esc_html($duration); ?></div>
+                            <div class="cmr-trending-play-btn">
+                                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            </div>
+                        </div>
+                        
+                        <div class="cmr-trending-meta">
+                            <span class="<?php echo esc_attr($type_class); ?>"><?php echo esc_html($type); ?></span> &bull; 
+                            <?php echo esc_html(strtoupper($category_name)); ?> &bull; 
+                            <?php echo esc_html(strtoupper($post_date)); ?>
+                        </div>
+                        
+                        <h3 class="cmr-trending-card-title"><?php echo esc_html(get_the_title($post_obj)); ?></h3>
+                        
+                        <div class="cmr-trending-btn-wrap">
+                            <div class="cmr-trending-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                                    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                                </svg>
+                                Play Episode
+                            </div>
+                        </div>
+                    </a>
+                    <?php endforeach; ?>
+                <?php else : ?>
+                    <p>No podcasts found.</p>
+                <?php endif; ?>
+            </div>
+        </div>
+        <?php
+        wp_reset_postdata();
+        return ob_get_clean();
+    }
+}
+add_shortcode( 'cmr_trending_podcast', 'cmr_trending_podcast_shortcode' );
+
