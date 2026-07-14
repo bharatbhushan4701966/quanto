@@ -170,7 +170,27 @@ add_action('wp_footer', function() {
                         const targetId = href.substring(hashIndex + 1);
                         if (!targetId) return;
                         
-                        const targetElement = document.getElementById(targetId);
+                        let targetElement = document.getElementById(targetId);
+                        
+                        // Fallback for Elementor sections missing IDs (like #reports, #newsroom, etc.)
+                        if (!targetElement) {
+                            const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6'));
+                            let matchingHeading = null;
+                            if (targetId === 'reports') {
+                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('reports'));
+                            } else if (targetId === 'cmr-market-updates') {
+                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('market updates'));
+                            } else if (targetId === 'newsroom') {
+                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('newsroom'));
+                            } else if (targetId === 'cmr-in-news') {
+                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('cmr in news'));
+                            }
+                            
+                            if (matchingHeading) {
+                                targetElement = matchingHeading.closest('.elementor-section') || matchingHeading.closest('.e-con-parent') || matchingHeading.closest('.e-con-full') || matchingHeading.parentElement;
+                            }
+                        }
+
                         if (targetElement) {
                             e.preventDefault();
                             e.stopPropagation(); // Prevent Elementor from hijacking
