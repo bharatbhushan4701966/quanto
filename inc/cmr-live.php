@@ -356,10 +356,10 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                         },
                         breakpoints: {
                             768: {
-                                slidesPerView: 2,
+                                slidesPerView: 1.1,
                             },
                             1024: {
-                                slidesPerView: 2.2,
+                                slidesPerView: 1.3,
                             }
                         }
                     });
