@@ -183,7 +183,7 @@ add_action('wp_footer', function() {
                             } else if (targetId === 'newsroom') {
                                 matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('newsroom'));
                             } else if (targetId === 'cmr-in-news') {
-                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('cmr in news'));
+                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('featured media coverage'));
                             }
                             
                             if (matchingHeading) {
