@@ -634,3 +634,320 @@ if ( ! function_exists( 'cmr_trending_podcast_shortcode' ) ) {
 }
 add_shortcode( 'cmr_trending_podcast', 'cmr_trending_podcast_shortcode' );
 
+if ( ! function_exists( 'cmr_trending_topview_shortcode' ) ) {
+    function cmr_trending_topview_shortcode( $atts ) {
+        $atts = shortcode_atts( array(
+            'posts_per_page' => 5,
+        ), $atts, 'cmr_trending_topview' );
+
+        $query_args = array(
+            'post_type'      => 'cmr_media',
+            'posts_per_page' => intval( $atts['posts_per_page'] ),
+            'post_status'    => 'publish',
+            'orderby'        => 'date',
+            'order'          => 'DESC',
+        );
+
+        $topview_query = new WP_Query( $query_args );
+        $posts = $topview_query->posts;
+
+        ob_start();
+        ?>
+        <style>
+            .cmr-topview-section {
+                padding: 60px 20px;
+                background-color: #f8f9fa;
+                font-family: inherit;
+            }
+            .cmr-topview-container {
+                max-width: 1280px;
+                margin: 0 auto;
+            }
+            .cmr-topview-title {
+                font-size: 42px;
+                font-weight: 700;
+                color: #000;
+                margin: 0 0 30px 0;
+                letter-spacing: -1px;
+            }
+            .cmr-topview-layout {
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                gap: 30px;
+            }
+            
+            /* Left Column: Featured Video */
+            .cmr-topview-featured {
+                display: flex;
+                flex-direction: column;
+                text-decoration: none;
+                color: #000;
+            }
+            .cmr-topview-feat-img {
+                position: relative;
+                width: 100%;
+                aspect-ratio: 16/9;
+                background: #ccc;
+                margin-bottom: 20px;
+                overflow: hidden;
+            }
+            .cmr-topview-feat-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+            .cmr-topview-feat-badge {
+                position: absolute;
+                top: 15px;
+                left: 15px;
+                background: #fff;
+                color: #111;
+                font-size: 12px;
+                font-weight: 700;
+                padding: 5px 10px;
+                border-radius: 4px;
+                z-index: 2;
+            }
+            .cmr-topview-feat-play {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 70px;
+                height: 70px;
+                background: rgba(255, 255, 255, 0.25);
+                backdrop-filter: blur(5px);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2;
+                transition: transform 0.2s;
+            }
+            .cmr-topview-featured:hover .cmr-topview-feat-play {
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+            .cmr-topview-feat-play svg {
+                width: 24px;
+                height: 24px;
+                fill: #fff;
+                margin-left: 4px;
+            }
+            .cmr-topview-feat-meta {
+                font-size: 12px;
+                font-weight: 700;
+                color: #888;
+                margin-bottom: 15px;
+                letter-spacing: 0.5px;
+                text-transform: uppercase;
+            }
+            .cmr-topview-feat-meta .type-topview {
+                color: #2979ff;
+            }
+            .cmr-topview-feat-title {
+                font-size: 26px;
+                font-weight: 700;
+                color: #000;
+                margin: 0;
+                line-height: 1.3;
+            }
+
+            /* Right Column: Playlist */
+            .cmr-topview-playlist {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                max-height: 550px;
+                overflow-y: auto;
+                padding-right: 15px;
+            }
+            /* Custom Scrollbar */
+            .cmr-topview-playlist::-webkit-scrollbar {
+                width: 6px;
+            }
+            .cmr-topview-playlist::-webkit-scrollbar-track {
+                background: #e0e0e0;
+                border-radius: 3px;
+            }
+            .cmr-topview-playlist::-webkit-scrollbar-thumb {
+                background: #6f42c1;
+                border-radius: 3px;
+            }
+            
+            .cmr-topview-list-item {
+                display: flex;
+                gap: 15px;
+                text-decoration: none;
+                color: #000;
+                padding: 10px;
+                transition: background 0.2s;
+            }
+            .cmr-topview-list-item:hover {
+                background: #f0f0f0;
+            }
+            .cmr-topview-list-item.active {
+                border: 1px solid #6f42c1;
+                background: #fff;
+            }
+            .cmr-topview-list-img {
+                position: relative;
+                width: 140px;
+                flex-shrink: 0;
+                aspect-ratio: 16/9;
+                background: #ccc;
+                overflow: hidden;
+            }
+            .cmr-topview-list-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+            .cmr-topview-list-play {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 30px;
+                height: 30px;
+                border: 1.5px solid #fff;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2;
+                background: rgba(0,0,0,0.3);
+            }
+            .cmr-topview-list-play svg {
+                width: 12px;
+                height: 12px;
+                fill: #fff;
+                margin-left: 2px;
+            }
+            .cmr-topview-list-content {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .cmr-topview-list-date {
+                font-size: 10px;
+                color: #666;
+                margin-bottom: 5px;
+                font-weight: 600;
+            }
+            .cmr-topview-list-title {
+                font-size: 15px;
+                font-weight: 600;
+                color: #111;
+                margin: 0;
+                line-height: 1.3;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            @media (max-width: 991px) {
+                .cmr-topview-layout {
+                    grid-template-columns: 1fr;
+                }
+                .cmr-topview-playlist {
+                    max-height: 400px;
+                }
+            }
+            @media (max-width: 768px) {
+                .cmr-topview-title {
+                    font-size: 32px;
+                }
+                .cmr-topview-list-img {
+                    width: 120px;
+                }
+                .cmr-topview-feat-title {
+                    font-size: 20px;
+                }
+            }
+        </style>
+
+        <div class="cmr-topview-section">
+            <div class="cmr-topview-container">
+                <h2 class="cmr-topview-title">Trending Top View</h2>
+                
+                <div class="cmr-topview-layout">
+                    <?php 
+                    if ( ! empty($posts) ) : 
+                        // Featured Post (first item)
+                        $feat_post = $posts[0];
+                        $feat_thumb = get_the_post_thumbnail_url( $feat_post->ID, 'large' );
+                        if ( ! $feat_thumb ) $feat_thumb = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
+                        
+                        $feat_cat = 'AUTOMOTIVE';
+                        $terms = get_the_terms( $feat_post->ID, 'category' );
+                        if ( $terms && ! is_wp_error( $terms ) ) {
+                            $feat_cat = $terms[0]->name;
+                        }
+                        
+                        $feat_date = get_the_date('d M Y', $feat_post);
+                        $feat_type = get_post_meta( $feat_post->ID, '_cmr_media_type', true ) ?: 'TOP VIEW';
+                        $feat_dur = get_post_meta( $feat_post->ID, '_cmr_media_duration', true ) ?: '08:20 MINS';
+                        $feat_link = get_post_meta( $feat_post->ID, '_cmr_media_url', true ) ?: get_permalink($feat_post->ID);
+                    ?>
+                    
+                    <!-- Left: Featured -->
+                    <a href="<?php echo esc_url($feat_link); ?>" class="cmr-topview-featured" target="_blank" rel="noopener noreferrer">
+                        <div class="cmr-topview-feat-img">
+                            <img src="<?php echo esc_url($feat_thumb); ?>" alt="<?php echo esc_attr(get_the_title($feat_post)); ?>">
+                            <div class="cmr-topview-feat-badge"><?php echo esc_html($feat_dur); ?></div>
+                            <div class="cmr-topview-feat-play">
+                                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            </div>
+                        </div>
+                        <div class="cmr-topview-feat-meta">
+                            <span class="type-topview"><?php echo esc_html($feat_type); ?></span> &bull; 
+                            <?php echo esc_html(strtoupper($feat_cat)); ?> &bull; 
+                            <?php echo esc_html(strtoupper($feat_date)); ?> &bull; 100 VIEW
+                        </div>
+                        <h3 class="cmr-topview-feat-title"><?php echo esc_html(get_the_title($feat_post)); ?></h3>
+                    </a>
+
+                    <!-- Right: Playlist -->
+                    <div class="cmr-topview-playlist">
+                        <?php 
+                        foreach ( $posts as $index => $post_obj ) : 
+                            $thumb = get_the_post_thumbnail_url( $post_obj->ID, 'medium' );
+                            if ( ! $thumb ) $thumb = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
+                            
+                            $date = get_the_date('d M Y', $post_obj);
+                            $link = get_post_meta( $post_obj->ID, '_cmr_media_url', true ) ?: get_permalink($post_obj->ID);
+                            
+                            $active_class = ($index === 0) ? 'active' : '';
+                        ?>
+                        <a href="<?php echo esc_url($link); ?>" class="cmr-topview-list-item <?php echo $active_class; ?>" target="_blank" rel="noopener noreferrer">
+                            <div class="cmr-topview-list-img">
+                                <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr(get_the_title($post_obj)); ?>">
+                                <div class="cmr-topview-list-play">
+                                    <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                </div>
+                            </div>
+                            <div class="cmr-topview-list-content">
+                                <div class="cmr-topview-list-date">&bull; <?php echo esc_html(strtoupper($date)); ?></div>
+                                <h4 class="cmr-topview-list-title"><?php echo esc_html(get_the_title($post_obj)); ?></h4>
+                            </div>
+                        </a>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php else : ?>
+                        <p>No posts found.</p>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+        <?php
+        wp_reset_postdata();
+        return ob_get_clean();
+    }
+}
+add_shortcode( 'cmr_trending_topview', 'cmr_trending_topview_shortcode' );
+
+
