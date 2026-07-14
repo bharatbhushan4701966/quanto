@@ -164,15 +164,14 @@ add_action('wp_footer', function() {
                 setTimeout(updateSticky, 1000); // Failsafe for late render
                 
                 // Add smooth scrolling for anchor links inside this navBar
-                const links = navBar.querySelectorAll('.intel-nav-links a[href^="#"]');
+                const links = navBar.querySelectorAll('.intel-nav-links a');
                 links.forEach(link => {
                     link.addEventListener('click', function(e) {
-                        const targetId = this.getAttribute('href').substring(1);
+                        const href = this.getAttribute('href');
                         const linkText = this.innerText.toLowerCase().trim();
                         
-                        if (!targetId && linkText !== 'overview') return;
-                        
-                        if (targetId === 'top' || linkText === 'overview') {
+                        // Special handling for Overview to scroll to top
+                        if (linkText === 'overview' || href === '#top') {
                             e.preventDefault();
                             e.stopPropagation(); // Prevent Elementor from hijacking
                             window.scrollTo({
@@ -181,6 +180,12 @@ add_action('wp_footer', function() {
                             });
                             return;
                         }
+                        
+                        // For other links, only intercept if they are hash links
+                        if (!href || !href.startsWith('#')) return;
+                        
+                        const targetId = href.substring(1);
+                        if (!targetId) return;
                         
                         const targetElement = document.getElementById(targetId);
                         if (targetElement) {
