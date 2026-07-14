@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
     function cmr_industry_intel_list_shortcode( $atts ) {
         $atts = shortcode_atts( array(
-            'posts_per_page' => 4,
+            'posts_per_page' => 3,
         ), $atts );
 
         $query_args = array(
@@ -220,6 +220,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
 
         <div class="cmr-intel-list-wrapper">
             <?php if ( $insights_query->have_posts() ) : ?>
+                <div class="cmr-intel-list-items" style="display:flex; flex-direction:column; gap:40px; width: 100%;">
                 <?php
                 $count = 0;
                 while ( $insights_query->have_posts() ) : $insights_query->the_post();
@@ -299,16 +300,142 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                     <?php endif; ?>
 
                 <?php endwhile; ?>
+                </div> <!-- /.cmr-intel-list-items -->
                 
+                <?php if ( $insights_query->max_num_pages > 1 ) : ?>
                 <div class="cmr-intel-list-load-more">
-                    <button>Load More</button>
+                    <button data-page="1" data-max="<?php echo esc_attr( $insights_query->max_num_pages ); ?>" id="cmr-intel-load-more-btn">Load More</button>
                 </div>
+                <?php endif; ?>
             <?php else : ?>
                 <p>No insights found.</p>
             <?php endif; wp_reset_postdata(); ?>
         </div>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var loadMoreBtn = document.getElementById('cmr-intel-load-more-btn');
+            if (loadMoreBtn) {
+                loadMoreBtn.addEventListener('click', function() {
+                    var button = this;
+                    var currentPage = parseInt(button.getAttribute('data-page'));
+                    var maxPage = parseInt(button.getAttribute('data-max'));
+                    var nextPage = currentPage + 1;
+                    
+                    button.textContent = 'Loading...';
+                    button.disabled = true;
+                    
+                    var data = new FormData();
+                    data.append('action', 'cmr_load_more_intel');
+                    data.append('page', nextPage);
+                    
+                    fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+                        method: 'POST',
+                        body: data
+                    })
+                    .then(response => response.text())
+                    .then(html => {
+                        if (html.trim() !== '') {
+                            var container = document.querySelector('.cmr-intel-list-items');
+                            container.insertAdjacentHTML('beforeend', html);
+                            button.setAttribute('data-page', nextPage);
+                            button.textContent = 'Load More';
+                            button.disabled = false;
+                            
+                            if (nextPage >= maxPage) {
+                                button.parentElement.style.display = 'none';
+                            }
+                        } else {
+                            button.parentElement.style.display = 'none';
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Error loading more insights:', err);
+                        button.textContent = 'Load More';
+                        button.disabled = false;
+                    });
+                });
+            }
+        });
+        </script>
         <?php
         return ob_get_clean();
     }
 }
 add_shortcode( 'cmr_industry_intel_list', 'cmr_industry_intel_list_shortcode' );
+
+// AJAX Handler for Load More
+add_action( 'wp_ajax_cmr_load_more_intel', 'cmr_load_more_intel_ajax' );
+add_action( 'wp_ajax_nopriv_cmr_load_more_intel', 'cmr_load_more_intel_ajax' );
+function cmr_load_more_intel_ajax() {
+    $paged = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
+    $query_args = array(
+        'post_type'      => 'cmr_news',
+        'posts_per_page' => 3,
+        'post_status'    => 'publish',
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+        'paged'          => $paged,
+    );
+    
+    $insights_query = new WP_Query( $query_args );
+    if ( $insights_query->have_posts() ) {
+        while ( $insights_query->have_posts() ) {
+            $insights_query->the_post();
+            
+            $post_title = get_the_title();
+            $post_link = get_permalink();
+            $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+            if ( ! $thumbnail_url ) {
+                $thumbnail_url = 'https://via.placeholder.com/600x400?text=No+Image';
+            }
+            
+            $category_name = 'Industry Intelligence';
+            $terms = get_the_terms( get_the_ID(), 'category' );
+            if ( $terms && ! is_wp_error( $terms ) ) {
+                $category_name = $terms[0]->name;
+            }
+
+            $content = get_post_field( 'post_content', get_the_ID() );
+            $word_count = str_word_count( strip_tags( $content ) );
+            $read_time = ceil( $word_count / 200 );
+            if ($read_time < 1) $read_time = 1;
+            
+            $excerpt = get_the_excerpt();
+            if ( empty( $excerpt ) ) {
+                $excerpt = wp_trim_words( $content, 18 );
+            } else {
+                $excerpt = wp_trim_words( $excerpt, 18 );
+            }
+            ?>
+            <div class="cmr-intel-list-item">
+                <div class="cmr-intel-list-img">
+                    <a href="<?php echo esc_url( $post_link ); ?>">
+                        <img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="<?php echo esc_attr( $post_title ); ?>" />
+                    </a>
+                </div>
+                <div class="cmr-intel-list-content">
+                    <div class="cmr-intel-list-meta">
+                        <span class="cmr-intel-list-cat"><?php echo esc_html( $category_name ); ?></span>
+                        <span><?php echo esc_html( $read_time ); ?> min read</span>
+                    </div>
+                    <h3 class="cmr-intel-list-title">
+                        <a href="<?php echo esc_url( $post_link ); ?>"><?php echo esc_html( $post_title ); ?></a>
+                    </h3>
+                    <div class="cmr-intel-list-excerpt">
+                        <?php echo wp_kses_post( $excerpt ); ?>
+                    </div>
+                    <a href="<?php echo esc_url( $post_link ); ?>" class="cmr-intel-list-more">
+                        More Details 
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <?php
+        }
+    }
+    wp_die();
+}
