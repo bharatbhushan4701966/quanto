@@ -130,13 +130,7 @@ require_once get_theme_file_path( 'inc/cmr-what-we-think.php' );
 require_once get_theme_file_path( 'inc/cmr-slide-of-the-day.php' );
 require_once get_theme_file_path( 'inc/cmr-team-scroll.php' );
 require_once get_theme_file_path( 'inc/cmr-media-cpt.php' );
-add_action('admin_init', function() {
-    $flag_option = 'cmr_yt_import_run_2';
-    if ( ! get_option( $flag_option ) ) {
-        require_once get_theme_file_path( 'import-yt.php' );
-        update_option( $flag_option, true );
-    }
-});
+
 
 function cmr_get_unique_smb_post_ids() {
     global $wpdb;
