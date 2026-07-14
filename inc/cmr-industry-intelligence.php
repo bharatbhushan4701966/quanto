@@ -238,18 +238,25 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                     var allHeadings = document.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title');
                     
                     allHeadings.forEach(function(h) {
-                        var text = h.innerText.toLowerCase();
+                        var text = h.innerText.toLowerCase().trim();
                         var section = h.closest('section') || h.closest('.elementor-section') || h.closest('.e-con');
                         
                         if (!section) return; // Skip if no valid section container found
 
+                        // "Overview" section (page top) is usually handled by href="#top" or #overview
+
+                        // "Insights" section
+                        if (text.includes("latest insights")) {
+                            section.id = 'overview'; // Link for Insights uses #overview
+                        }
+
                         // "CMR in news" section
-                        if (text.includes("recognition of cmr in news") || text.includes("featured media coverage")) {
+                        if (text.includes("recognition of cmr in news") || text.includes("featured media coverage") || text === "cmr in news") {
                             section.id = 'cmr-in-news';
                         }
                         
                         // "Reports" section
-                        if (text.includes("similar reports") || text.includes("browse latest reports") || text.includes("featured reports")) {
+                        if (text.includes("similar reports") || text.includes("browse latest reports") || text.includes("featured reports") || text === "reports") {
                             section.id = 'reports';
                         }
                         
@@ -264,7 +271,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                         }
                         
                         // "Newsroom" (now "Featured") section
-                        if (text.includes("featured intelligence") || (text.includes("media releases") && !text.includes("featured media"))) {
+                        if (text.includes("featured intelligence") || (text.includes("media releases") && !text.includes("featured media")) || text === "newsroom") {
                             // Only set if not already set by cmr-in-news
                             if (section.id !== 'cmr-in-news') section.id = 'newsroom';
                         }
