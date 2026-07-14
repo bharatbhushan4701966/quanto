@@ -17,7 +17,7 @@ function cmr_news_automotive_shortcode( $atts ) {
 
     ob_start();
     ?>
-    <div class="cmr-news-container cmr-news-black-bg">
+    <div class="cmr-news-container cmr-news-black-bg" style="padding-bottom: 60px;">
         <!-- Tab Contents without tabs -->
         <div class="cmr-news-content-wrapper">
             <div class="cmr-news-tab-pane active" style="display: block;">
@@ -93,7 +93,7 @@ function cmr_news_automotive_shortcode( $atts ) {
                                             <?php endif; ?>
                                         </div>
                                         <h3 class="cmr-card-title"><?php the_title(); ?></h3>
-                                        <span class="cmr-read-coverage">Read Coverage <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg" class="cmr-arrow-icon" alt="Arrow"></span>
+                                        <span class="cmr-read-coverage">Read Coverage <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg" class="cmr-arrow-icon" alt="Arrow"></span>
                                     </div>
                                 </a>
                             </div>
