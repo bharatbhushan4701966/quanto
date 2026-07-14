@@ -226,3 +226,48 @@ function cmr_media_admin_scripts($hook) {
     }
 }
 add_action( 'admin_enqueue_scripts', 'cmr_media_admin_scripts' );
+
+// TEMPORARY: Auto import the youtube playlist videos on admin page load once
+add_action('admin_init', function() {
+    $flag = get_option('cmr_yt_hardcoded_imported');
+    if (!$flag) {
+        $videos = json_decode('[
+          {"title": "Democratizing EV Ownership: Making Electric Mobility Accessible for Bharat", "videoId": "lz4CV7QBsDo", "url": "https://www.youtube.com/watch?v=lz4CV7QBsDo"},
+          {"title": "Charging Confidence: How ChargeZone is Building the Backbone of India\'s EV Future", "videoId": "Nj79yA4cx9o", "url": "https://www.youtube.com/watch?v=Nj79yA4cx9o"},
+          {"title": "The Power Shift: How Reliable Charge is Fueling EV Growth", "videoId": "7Qje-ED9AiU", "url": "https://www.youtube.com/watch?v=7Qje-ED9AiU"},
+          {"title": "Plugging the Gaps: How Mindra Green Energy Is Making EV Adoption Practical, Not Just Possible", "videoId": "qGZam2gJPwY", "url": "https://www.youtube.com/watch?v=qGZam2gJPwY"},
+          {"title": "CMR Driveforward Podcast with Magenta Mobility", "videoId": "RYN2CO1ewmE", "url": "https://www.youtube.com/watch?v=RYN2CO1ewmE"},
+          {"title": "Powering India’s EV Backbone – A Conversation with Gigforce", "videoId": "QFLsJwN6y2k", "url": "https://www.youtube.com/watch?v=QFLsJwN6y2k"},
+          {"title": "From ideas to innovation - Exclusive conversations with the trailblazers of India’s EV journey", "videoId": "yEpbqug_P6U", "url": "https://www.youtube.com/watch?v=yEpbqug_P6U"}
+        ]', true);
+        
+        foreach ($videos as $v) {
+            $existing = get_posts(['post_type' => 'cmr_media', 'title' => $v['title'], 'post_status' => 'publish']);
+            if (empty($existing)) {
+                $post_id = wp_insert_post(['post_title' => $v['title'], 'post_type' => 'cmr_media', 'post_status' => 'publish', 'post_content' => '']);
+                if ($post_id && !is_wp_error($post_id)) {
+                    update_post_meta($post_id, '_cmr_media_type', 'TOP VIEW');
+                    update_post_meta($post_id, '_cmr_media_source', 'link');
+                    update_post_meta($post_id, '_cmr_media_url', $v['url']);
+                    update_post_meta($post_id, '_cmr_media_duration', '15:00 MINS');
+                    
+                    if ( ! function_exists( 'media_handle_sideload' ) ) {
+                        require_once(ABSPATH . 'wp-admin/includes/file.php');
+                        require_once(ABSPATH . 'wp-admin/includes/media.php');
+                        require_once(ABSPATH . 'wp-admin/includes/image.php');
+                    }
+                    
+                    $thumbnail_url = "https://i.ytimg.com/vi/{$v['videoId']}/maxresdefault.jpg";
+                    $tmp = download_url($thumbnail_url);
+                    if (!is_wp_error($tmp)) {
+                        $file_array = ['name' => $v['videoId'] . '.jpg', 'tmp_name' => $tmp];
+                        $thumb_id = media_handle_sideload($file_array, $post_id);
+                        if (!is_wp_error($thumb_id)) set_post_thumbnail($post_id, $thumb_id);
+                        else @unlink($tmp);
+                    }
+                }
+            }
+        }
+        update_option('cmr_yt_hardcoded_imported', true);
+    }
+});
