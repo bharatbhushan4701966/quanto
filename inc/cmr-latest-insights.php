@@ -165,7 +165,7 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
                     <a href="#cmr-latest-insights">Insights</a>
                     <a href="#reports">Reports</a>
                     <a href="#cmr-market-updates">Market Updates</a>
-                    <a href="#newsroom">Newsroom</a>
+                    <a href="#cmr-explore-section">Explore Industry Intelligence</a>
                     <a href="#cmr-in-news">CMR in news</a>
 
                     <a href="#cmr-footer-card-section" class="cmr-nav-btn-subscribe" style="display: none; align-items: center; justify-content: center; background: #fff; color: #111; font-weight: 600; font-size: 14px; padding: 8px 16px; border-radius: 40px; text-decoration: none; border: 1px solid #111; margin-left: 15px; line-height: 1; transition: all 0.3s ease;">
