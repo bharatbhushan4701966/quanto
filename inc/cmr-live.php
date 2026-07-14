@@ -95,11 +95,16 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                 background: transparent;
                 color: #fff;
                 text-decoration: none;
+                height: 638px; /* Fixed height as requested */
+            }
+            .cmr-podcast-swiper .swiper-slide {
+                width: 1210px; /* Fixed width as requested */
+                max-width: 90vw; /* Responsive fallback */
             }
             .cmr-podcast-img-wrap {
                 position: relative;
                 width: 100%;
-                aspect-ratio: 16/10;
+                flex: 1; /* Fill remaining height */
                 border-radius: 8px;
                 overflow: hidden;
                 margin-bottom: 20px;
@@ -356,7 +361,7 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
             document.addEventListener('DOMContentLoaded', function() {
                 if (typeof Swiper !== 'undefined') {
                     new Swiper('.cmr-podcast-swiper', {
-                        slidesPerView: 1,
+                        slidesPerView: 'auto',
                         spaceBetween: 30,
                         autoplay: {
                             delay: 4000,
@@ -372,10 +377,10 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                         },
                         breakpoints: {
                             768: {
-                                slidesPerView: 1.1,
+                                slidesPerView: 'auto',
                             },
                             1024: {
-                                slidesPerView: 1.12,
+                                slidesPerView: 'auto',
                             }
                         }
                     });
