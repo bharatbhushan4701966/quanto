@@ -307,17 +307,21 @@ function cmr_news_tabs_shortcode( $atts ) {
                 <button class="cmr-news-tab-btn <?php echo esc_attr( $active_class ); ?>" data-target="cmr-tab-<?php echo esc_attr( $term->term_id ); ?>">
                     <?php 
                     $icon_url = '';
-                    if ( $term->name == 'CMR In News' ) {
+                    $display_name = $term->name;
+                    
+                    if ( $term->slug === 'cmr-in-news' || $term->name == 'CMR In News' ) {
                         $icon_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/airdrop.svg';
-                    } elseif ( $term->name == 'Media Releases' ) {
+                    } elseif ( $term->slug === 'media-releases' || $term->slug === 'press-releases' || $term->name == 'Media Releases' || $term->name == 'Press Releases' ) {
                         $icon_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/Frame.svg';
-                    } elseif ( $term->name == 'Quarterly Results' ) {
+                        $display_name = 'Media Releases';
+                    } elseif ( $term->slug === 'quarterly-results' || $term->name == 'Quarterly Results' ) {
                         $icon_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/quterly.svg';
                     }
+                    
                     if ( $icon_url ) {
                         echo '<span class="cmr-tab-icon" style="-webkit-mask-image: url(' . esc_url($icon_url) . '); mask-image: url(' . esc_url($icon_url) . ');"></span> ';
                     }
-                    echo '<span>' . esc_html( $term->name ) . '</span>'; 
+                    echo '<span>' . esc_html( $display_name ) . '</span>'; 
                     ?>
                 </button>
             <?php 
