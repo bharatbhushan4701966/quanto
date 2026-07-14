@@ -11,6 +11,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
     function cmr_industry_intel_list_shortcode( $atts ) {
         $atts = shortcode_atts( array(
             'posts_per_page' => 3,
+            'category'       => '',
         ), $atts );
 
         $query_args = array(
@@ -20,6 +21,16 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
             'orderby'        => 'date',
             'order'          => 'DESC',
         );
+
+        if ( ! empty( $atts['category'] ) ) {
+            $query_args['tax_query'] = array(
+                array(
+                    'taxonomy' => 'category',
+                    'field'    => 'slug',
+                    'terms'    => sanitize_text_field( $atts['category'] ),
+                ),
+            );
+        }
 
         $insights_query = new WP_Query( $query_args );
 
@@ -304,7 +315,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 
                 <?php if ( $insights_query->max_num_pages > 1 ) : ?>
                 <div class="cmr-intel-list-load-more">
-                    <button data-page="1" data-max="<?php echo esc_attr( $insights_query->max_num_pages ); ?>" id="cmr-intel-load-more-btn">Load More</button>
+                    <button data-page="1" data-max="<?php echo esc_attr( $insights_query->max_num_pages ); ?>" data-category="<?php echo esc_attr( $atts['category'] ); ?>" id="cmr-intel-load-more-btn">Load More</button>
                 </div>
                 <?php endif; ?>
             <?php else : ?>
@@ -320,14 +331,18 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                     var button = this;
                     var currentPage = parseInt(button.getAttribute('data-page'));
                     var maxPage = parseInt(button.getAttribute('data-max'));
+                    var cat = button.getAttribute('data-category');
                     var nextPage = currentPage + 1;
                     
                     button.textContent = 'Loading...';
                     button.disabled = true;
                     
                     var data = new FormData();
-                    data.append('action', 'cmr_load_more_intel');
+                    data.append('action', 'cmr_industry_intel_list_load_more');
                     data.append('page', nextPage);
+                    if (cat) {
+                        data.append('category', cat);
+                    }
                     
                     fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
                         method: 'POST',
@@ -365,9 +380,9 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
 add_shortcode( 'cmr_industry_intel_list', 'cmr_industry_intel_list_shortcode' );
 
 // AJAX Handler for Load More
-add_action( 'wp_ajax_cmr_load_more_intel', 'cmr_load_more_intel_ajax' );
-add_action( 'wp_ajax_nopriv_cmr_load_more_intel', 'cmr_load_more_intel_ajax' );
-function cmr_load_more_intel_ajax() {
+add_action( 'wp_ajax_cmr_industry_intel_list_load_more', 'cmr_industry_intel_list_load_more_ajax' );
+add_action( 'wp_ajax_nopriv_cmr_industry_intel_list_load_more', 'cmr_industry_intel_list_load_more_ajax' );
+function cmr_industry_intel_list_load_more_ajax() {
     $paged = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
     $query_args = array(
         'post_type'      => 'cmr_news',
@@ -377,6 +392,17 @@ function cmr_load_more_intel_ajax() {
         'order'          => 'DESC',
         'paged'          => $paged,
     );
+    
+    // Add category filter if provided
+    if ( isset( $_POST['category'] ) && ! empty( $_POST['category'] ) ) {
+        $query_args['tax_query'] = array(
+            array(
+                'taxonomy' => 'category',
+                'field'    => 'slug',
+                'terms'    => sanitize_text_field( $_POST['category'] ),
+            )
+        );
+    }
     
     $insights_query = new WP_Query( $query_args );
     if ( $insights_query->have_posts() ) {
