@@ -11,7 +11,7 @@ if ( ! function_exists( 'cmr_live_shortcode' ) ) {
         ), $atts, 'cmr_live' );
 
         $query_args = array(
-            'post_type'      => 'post',
+            'post_type'      => 'cmr_media',
             'posts_per_page' => intval( $atts['posts_per_page'] ),
             'post_status'    => 'publish',
             'orderby'        => 'date',
@@ -219,16 +219,18 @@ if ( ! function_exists( 'cmr_live_shortcode' ) ) {
                         
                         $post_date = get_the_date('d M Y', $post_obj);
                         
-                        // Simulate video type/duration
-                        $types = array('TOP VIEW', 'PODCAST', 'WEBINAR');
-                        $type = $types[ $count % count($types) ];
-                        $mins = rand(3, 15);
-                        $secs = sprintf("%02d", rand(0, 59));
-                        $duration = $mins . ':' . $secs . ' MINS';
+                        // Fetch actual video type/duration from custom meta
+                        $media_type = get_post_meta( $post_obj->ID, '_cmr_media_type', true );
+                        $media_duration = get_post_meta( $post_obj->ID, '_cmr_media_duration', true );
+                        $media_url = get_post_meta( $post_obj->ID, '_cmr_media_url', true );
+                        
+                        $type = $media_type ? $media_type : 'PODCAST';
+                        $duration = $media_duration ? $media_duration : 'N/A';
+                        $link = $media_url ? esc_url($media_url) : esc_url(get_permalink($post_obj->ID));
                         
                         $count++;
                     ?>
-                    <a href="<?php echo esc_url(get_permalink($post_obj->ID)); ?>" class="cmr-live-card">
+                    <a href="<?php echo $link; ?>" class="cmr-live-card" target="_blank" rel="noopener noreferrer">
                         <div class="cmr-live-img-wrap">
                             <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr(get_the_title($post_obj)); ?>">
                             <div class="cmr-live-duration"><?php echo esc_html($duration); ?></div>
