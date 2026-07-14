@@ -967,6 +967,10 @@ add_action('elementor/widgets/register', function($widgets_manager) {
     // Register new Logo Carousel widget
     require_once get_template_directory() . '/inc/widgets/logo-carousel.php';
     $widgets_manager->register(new \Quanto_Logo_Carousel_Widget());
+
+    // Register Industry Intel List widget
+    require_once get_template_directory() . '/inc/widgets/industry-intel-list.php';
+    $widgets_manager->register(new \Quanto_Industry_Intel_List_Widget());
 }, 20); // Priority 20 to run after the plugin registers its widgets
 require_once get_template_directory() . '/inc/cmr-footer-css-fix.php';
 

@@ -14,12 +14,15 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
             'category'       => '',
         ), $atts );
 
+        $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : ( isset($_GET['paged']) ? intval($_GET['paged']) : 1 );
+
         $query_args = array(
             'post_type'      => 'cmr_news',
             'posts_per_page' => $atts['posts_per_page'],
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
+            'paged'          => $paged,
         );
 
         if ( ! empty( $atts['category'] ) ) {
@@ -212,6 +215,28 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 background: #fafafa;
                 border-color: #111;
             }
+            .cmr-pagination-style .page-numbers {
+                display: inline-block;
+                margin: 0 5px;
+                padding: 10px 15px;
+                background: #f5f5f5;
+                color: #111;
+                border-radius: 4px;
+                text-decoration: none;
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+            .cmr-pagination-style .page-numbers.current,
+            .cmr-pagination-style .page-numbers:hover {
+                background: #4B24B3;
+                color: #fff;
+            }
+            .cmr-pagination-style .page-numbers svg {
+                vertical-align: middle;
+            }
+            .cmr-pagination-style .page-numbers:hover svg path {
+                stroke: #fff;
+            }
             @media (max-width: 768px) {
                 .cmr-intel-list-item {
                     flex-direction: column;
@@ -313,10 +338,31 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 <?php endwhile; ?>
                 </div> <!-- /.cmr-intel-list-items -->
                 
-                <?php if ( $insights_query->max_num_pages > 1 ) : ?>
-                <div class="cmr-intel-list-load-more">
-                    <button data-page="1" data-max="<?php echo esc_attr( $insights_query->max_num_pages ); ?>" data-category="<?php echo esc_attr( $atts['category'] ); ?>" id="cmr-intel-load-more-btn">Load More</button>
-                </div>
+                <?php
+                // Generate Pagination
+                $pagination_html = '';
+                if ( $insights_query->max_num_pages > 1 ) {
+                    $pagination_html = paginate_links( array(
+                        'format'  => '?paged=%#%',
+                        'total'   => $insights_query->max_num_pages,
+                        'current' => $paged,
+                        'prev_text' => '<svg width="12" height="18" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 1L1 7L7 13" stroke="#4B24B3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+                        'next_text' => '<svg width="12" height="18" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 13L7 7L1 1" stroke="#4B24B3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+                    ) );
+                }
+                ?>
+
+                <?php if ( $paged < 3 && $insights_query->max_num_pages > 1 && $insights_query->max_num_pages > $paged ) : ?>
+                    <div class="cmr-intel-list-load-more">
+                        <button data-page="<?php echo esc_attr( $paged ); ?>" data-max="<?php echo esc_attr( $insights_query->max_num_pages ); ?>" data-category="<?php echo esc_attr( $atts['category'] ); ?>" id="cmr-intel-load-more-btn">Load More</button>
+                    </div>
+                    <div class="cmr-pagination-wrapper cmr-pagination-style" style="display:none; text-align:center; margin-top:40px;">
+                        <?php echo $pagination_html; ?>
+                    </div>
+                <?php elseif ( $insights_query->max_num_pages > 1 ) : ?>
+                    <div class="cmr-pagination-wrapper cmr-pagination-style" style="text-align:center; margin-top:40px;">
+                        <?php echo $pagination_html; ?>
+                    </div>
                 <?php endif; ?>
             <?php else : ?>
                 <p>No insights found.</p>
@@ -357,8 +403,12 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                             button.textContent = 'Load More';
                             button.disabled = false;
                             
-                            if (nextPage >= maxPage) {
+                            if (nextPage >= 3 || nextPage >= maxPage) {
                                 button.parentElement.style.display = 'none';
+                                var pag = document.querySelector('.cmr-pagination-wrapper');
+                                if (pag && nextPage < maxPage) {
+                                    pag.style.display = 'block';
+                                }
                             }
                         } else {
                             button.parentElement.style.display = 'none';
