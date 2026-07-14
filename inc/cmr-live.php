@@ -670,7 +670,7 @@ if ( ! function_exists( 'cmr_trending_topview_shortcode' ) ) {
                 font-weight: 700;
                 color: #000;
                 margin: 0 0 30px 0;
-                letter-spacing: -1px;
+                letter-spacing: 0 !important;
             }
             .cmr-topview-layout {
                 display: grid;
@@ -753,6 +753,8 @@ if ( ! function_exists( 'cmr_trending_topview_shortcode' ) ) {
                 color: #000;
                 margin: 0;
                 line-height: 1.3;
+                letter-spacing: 0 !important;
+                max-width: 600px;
             }
 
             /* Right Column: Playlist */
@@ -845,6 +847,7 @@ if ( ! function_exists( 'cmr_trending_topview_shortcode' ) ) {
                 color: #111;
                 margin: 0;
                 line-height: 1.3;
+                letter-spacing: 0 !important;
                 display: -webkit-box;
                 -webkit-line-clamp: 3;
                 -webkit-box-orient: vertical;
@@ -987,6 +990,7 @@ if ( ! function_exists( 'cmr_cta_banner_shortcode' ) ) {
                 line-height: 1.2;
                 letter-spacing: -1px;
                 white-space: nowrap;
+                color: #fff !important;
             }
             .cmr-cta-text {
                 font-size: 16px;
