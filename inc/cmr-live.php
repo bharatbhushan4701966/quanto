@@ -394,8 +394,11 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                 letter-spacing: 0.5px;
                 text-transform: uppercase;
             }
-            .cmr-podcast-meta .type {
+            .cmr-podcast-meta .type-podcast {
                 color: #00d2ff;
+            }
+            .cmr-podcast-meta .type-topview {
+                color: #2979ff;
             }
             .cmr-podcast-title {
                 font-size: 20px;
@@ -436,6 +439,19 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                 background: repeating-linear-gradient(90deg, #555, #555 2px, transparent 2px, transparent 4px);
                 opacity: 0.5;
             }
+            .cmr-podcast-player .progress-bar-wrap {
+                flex: 1;
+                height: 4px;
+                background: #555;
+                border-radius: 2px;
+                position: relative;
+            }
+            .cmr-podcast-player .progress-bar-inner {
+                width: 30%;
+                height: 100%;
+                background: #fff;
+                border-radius: 2px;
+            }
             .cmr-podcast-player .time {
                 font-size: 11px;
                 color: #aaa;
@@ -471,7 +487,7 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                     align-items: flex-start;
                     gap: 20px;
                 }
-                .cmr-podcast-player .waveform {
+                .cmr-podcast-player .waveform, .cmr-podcast-player .progress-bar-wrap {
                     display: none;
                 }
             }
@@ -513,6 +529,9 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                                 $media_url = get_post_meta( $post_obj->ID, '_cmr_media_url', true );
                                 
                                 $type = $media_type ? $media_type : 'PODCAST';
+                                $is_podcast = (strtoupper($type) === 'PODCAST');
+                                $type_class = $is_podcast ? 'type-podcast' : 'type-topview';
+                                
                                 $duration = $media_duration ? $media_duration : '05:00 MINS';
                                 $link = $media_url ? esc_url($media_url) : esc_url(get_permalink($post_obj->ID));
                             ?>
@@ -521,13 +540,15 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                                     <div class="cmr-podcast-img-wrap">
                                         <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr(get_the_title($post_obj)); ?>">
                                         <div class="cmr-podcast-badge"><?php echo esc_html($duration); ?></div>
+                                        <?php if ( ! $is_podcast ) : ?>
                                         <div class="cmr-podcast-play-btn">
                                             <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                                         </div>
+                                        <?php endif; ?>
                                     </div>
                                     
                                     <div class="cmr-podcast-meta">
-                                        <span class="type"><?php echo esc_html($type); ?></span> &bull; 
+                                        <span class="<?php echo esc_attr($type_class); ?>"><?php echo esc_html($type); ?></span> &bull; 
                                         <?php echo esc_html(strtoupper($category_name)); ?> &bull; 
                                         <?php echo esc_html(strtoupper($post_date)); ?> &bull; 100 VIEW
                                     </div>
@@ -538,8 +559,15 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                                         <div class="play-icon">
                                             <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                                         </div>
-                                        <div class="waveform"></div>
+                                        
+                                        <?php if ( $is_podcast ) : ?>
+                                            <div class="waveform"></div>
+                                        <?php else : ?>
+                                            <div class="progress-bar-wrap"><div class="progress-bar-inner"></div></div>
+                                        <?php endif; ?>
+                                        
                                         <div class="time">01:55 / 10:00</div>
+                                        <?php if ( $is_podcast ) : ?>
                                         <div class="controls">
                                             <svg viewBox="0 0 24 24"><path d="M10 21A10 10 0 1 1 21 10M10 21V16M10 21H15" /><text x="12" y="14" font-size="6" stroke="none" fill="currentColor" text-anchor="middle">10</text></svg>
                                             <svg viewBox="0 0 24 24"><path d="M14 21A10 10 0 1 0 3 10M14 21V16M14 21H9" /><text x="12" y="14" font-size="6" stroke="none" fill="currentColor" text-anchor="middle">10</text></svg>
@@ -548,6 +576,7 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                                             <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" stroke="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
                                             <div class="volume-bar"></div>
                                         </div>
+                                        <?php endif; ?>
                                     </div>
                                 </a>
                             </div>
