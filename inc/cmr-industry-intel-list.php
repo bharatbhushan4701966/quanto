@@ -450,7 +450,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                                     if (dynamicPagHtml) {
                                         pag.innerHTML = dynamicPagHtml;
                                     }
-                                    pag.style.display = 'block';
+                                    pag.style.display = 'flex';
                                 }
                             }
                         } else {
