@@ -181,10 +181,21 @@ add_action('wp_footer', function() {
                             return;
                         }
                         
-                        // For other links, only intercept if they are hash links
-                        if (!href || !href.startsWith('#')) return;
+                        // For other links, check if they have a hash and point to the current page
+                        if (!href) return;
                         
-                        const targetId = href.substring(1);
+                        const hashIndex = href.indexOf('#');
+                        if (hashIndex === -1) return;
+                        
+                        // If it's a full URL, check if the path matches the current page
+                        if (hashIndex > 0) {
+                            const linkUrl = new URL(href, window.location.href);
+                            if (linkUrl.pathname !== window.location.pathname) {
+                                return; // Different page, let the browser handle it
+                            }
+                        }
+                        
+                        const targetId = href.substring(hashIndex + 1);
                         if (!targetId) return;
                         
                         const targetElement = document.getElementById(targetId);
@@ -221,7 +232,7 @@ add_action('wp_footer', function() {
                                 behavior: 'smooth'
                             });
                         }
-                    });
+                    }, true); // Use capture phase to beat Elementor's native scroll
                 });
             });
         }
