@@ -38,14 +38,6 @@ function cmr_news_automotive_shortcode( $atts ) {
                         'posts_per_page' => 5,
                     );
                     
-                    if ( ! empty( $atts['category'] ) ) {
-                        $normal_args['tax_query'][] = array(
-                            'taxonomy' => 'category',
-                            'field'    => 'slug',
-                            'terms'    => $atts['category'],
-                        );
-                    }
-
                     $news_query = new WP_Query( $normal_args );
                     $all_posts = $news_query->posts;
 
