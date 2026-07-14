@@ -239,7 +239,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                     
                     allHeadings.forEach(function(h) {
                         var text = h.innerText.toLowerCase().trim();
-                        var section = h.closest('section') || h.closest('.elementor-section') || h.closest('.e-con');
+                        var section = h.closest('.elementor-top-section') || h.closest('section') || h.closest('.elementor-section') || h.closest('.e-con');
                         
                         if (!section) return; // Skip if no valid section container found
 

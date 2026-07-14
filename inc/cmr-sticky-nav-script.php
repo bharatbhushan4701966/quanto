@@ -168,10 +168,13 @@ add_action('wp_footer', function() {
                 links.forEach(link => {
                     link.addEventListener('click', function(e) {
                         const targetId = this.getAttribute('href').substring(1);
-                        if (!targetId) return;
+                        const linkText = this.innerText.toLowerCase().trim();
                         
-                        if (targetId === 'top') {
+                        if (!targetId && linkText !== 'overview') return;
+                        
+                        if (targetId === 'top' || linkText === 'overview') {
                             e.preventDefault();
+                            e.stopPropagation(); // Prevent Elementor from hijacking
                             window.scrollTo({
                                 top: 0,
                                 behavior: 'smooth'
@@ -182,6 +185,7 @@ add_action('wp_footer', function() {
                         const targetElement = document.getElementById(targetId);
                         if (targetElement) {
                             e.preventDefault();
+                            e.stopPropagation(); // Prevent Elementor from hijacking
                             
                             // Re-calculate the total sticky offset dynamically
                             let stickyOffset = 0;
