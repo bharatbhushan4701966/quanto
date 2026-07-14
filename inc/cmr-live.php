@@ -569,7 +569,7 @@ if ( ! function_exists( 'cmr_trending_podcast_shortcode' ) ) {
             }
         </style>
 
-        <div class="cmr-trending-section">
+        <div class="cmr-trending-section" id="podcasts">
             <h2 class="cmr-trending-title">Trending Podcast</h2>
             
             <div class="cmr-trending-grid">
@@ -878,7 +878,7 @@ if ( ! function_exists( 'cmr_trending_topview_shortcode' ) ) {
             }
         </style>
 
-        <div class="cmr-topview-section">
+        <div class="cmr-topview-section" id="top-view">
             <div class="cmr-topview-container">
                 <h2 class="cmr-topview-title">Trending Top View</h2>
                 

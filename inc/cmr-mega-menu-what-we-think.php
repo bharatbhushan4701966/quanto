@@ -281,14 +281,14 @@ function cmr_mega_menu_what_we_think_shortcode($atts) {
             <div class="cmr-mmt-col">
                 <div class="cmr-mmt-label">CMR LIVE</div>
                 <a href="<?php echo esc_url( home_url( '/cmr-live/' ) ); ?>" class="cmr-mmt-item">
-                    <h4>All Media</h4>
+                    <h4>CMR Live</h4>
                     <p>Exclusive podcasts and videos</p>
                 </a>
-                <a href="<?php echo esc_url( home_url( '/top-view/' ) ); ?>" class="cmr-mmt-item">
+                <a href="<?php echo esc_url( home_url( '/cmr-live/#top-view' ) ); ?>" class="cmr-mmt-item">
                     <h4>Top View</h4>
                     <p>Watch expert perspectives and industry conversations.</p>
                 </a>
-                <a href="<?php echo esc_url( home_url( '/podcasts/' ) ); ?>" class="cmr-mmt-item">
+                <a href="<?php echo esc_url( home_url( '/cmr-live/#podcasts' ) ); ?>" class="cmr-mmt-item">
                     <h4>Podcasts</h4>
                     <p>Expert conversations on trends and innovation.</p>
                 </a>
