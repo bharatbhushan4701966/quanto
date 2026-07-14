@@ -17,7 +17,7 @@ function cmr_news_automotive_shortcode( $atts ) {
 
     ob_start();
     ?>
-    <div class="cmr-news-container">
+    <div class="cmr-news-container cmr-news-black-bg">
         <!-- Tab Contents without tabs -->
         <div class="cmr-news-content-wrapper">
             <div class="cmr-news-tab-pane active" style="display: block;">
