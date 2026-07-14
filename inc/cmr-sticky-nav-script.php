@@ -50,55 +50,45 @@ add_action('wp_footer', function() {
     if (!window.cmrStickyNavInitialized) {
         window.cmrStickyNavInitialized = true;
         
-        function initStickyNav() {
-            const navBars = document.querySelectorAll('.cmr-industry-intel-section .intel-nav-bar');
-            navBars.forEach(navBar => {
-                const section = navBar.closest('.cmr-industry-intel-section');
+        function initStickyNav() {            // Sticky Nav logic for both Industry Intelligence and Latest Insights shortcodes
+            const sections = document.querySelectorAll('.cmr-industry-intelligence, .cmr-latest-insights-section');
+            sections.forEach(section => {
+                const navBar = section.querySelector('.cmr-industry-nav-bar, .cmr-latest-nav-bar');
+                if (!navBar) return;
                 
-                // Create a 0-height marker placeholder
                 const placeholder = document.createElement('div');
-                placeholder.className = 'intel-nav-placeholder';
+                placeholder.className = 'cmr-nav-placeholder';
                 placeholder.style.height = '0px';
-                placeholder.style.visibility = 'hidden';
+                placeholder.style.marginBottom = '0px';
                 navBar.parentNode.insertBefore(placeholder, navBar);
-
-                let originalNavHeight = navBar.offsetHeight || 60;
-                let originalMarginBottom = window.getComputedStyle(navBar).marginBottom;
-
+                
                 function updateSticky() {
                     const sectionRect = section.getBoundingClientRect();
-                    const placeholderRect = placeholder.getBoundingClientRect();
-                    
-                    let totalOffset = 0;
+                    let stickyOffset = 0;
                     const wpAdminBar = document.getElementById('wpadminbar');
                     if (wpAdminBar && window.getComputedStyle(wpAdminBar).position === 'fixed') {
-                        totalOffset = wpAdminBar.offsetHeight;
+                        stickyOffset = wpAdminBar.offsetHeight;
                     }
-
-                    // Dynamically find sticky headers
                     const headers = document.querySelectorAll('header, [data-elementor-type="header"], .elementor-location-header, .elementor-sticky--active');
                     headers.forEach(h => {
                         if (h === navBar || h.contains(navBar)) return;
-                        const hRect = h.getBoundingClientRect();
                         const hStyle = window.getComputedStyle(h);
-                        if ((hStyle.position === 'fixed' || hStyle.position === 'sticky' || h.classList.contains('elementor-sticky--active')) && hRect.top <= totalOffset + 10) {
-                            if (hRect.bottom > totalOffset && hRect.bottom < (window.innerHeight / 2)) {
-                                totalOffset = hRect.bottom;
+                        if (hStyle.position === 'fixed' || hStyle.position === 'sticky' || h.classList.contains('elementor-sticky--active')) {
+                            const hRect = h.getBoundingClientRect();
+                            if (hRect.top <= stickyOffset + 10 && hRect.bottom > stickyOffset && hRect.bottom < (window.innerHeight / 2)) {
+                                stickyOffset = hRect.bottom;
                             }
                         }
                     });
 
-                    // Determine the boundary for the sticky nav. 
                     let boundaryBottom = sectionRect.bottom;
                     
-                    // Try to find the testimonials section by various classes/IDs including its known Elementor ID
                     let testimonialsSection = document.getElementById('cmr-testimonials-section') || 
                                               document.getElementById('testimonials') || 
                                               document.querySelector('.elementor-element-82ef444') ||
                                               document.querySelector('.elementor-widget-testimonial-carousel') ||
                                               document.querySelector('.elementor-widget-testimonial');
                                               
-                    // Fallback: Find a heading with 'testimonial' and get its parent section
                     if (!testimonialsSection) {
                         const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')).filter(h => h.textContent.toLowerCase().includes('testimonial'));
                         if (headings.length > 0) {
@@ -107,57 +97,39 @@ add_action('wp_footer', function() {
                     }
 
                     if (testimonialsSection) {
-                        // The boundary is the TOP of the testimonials section
                         boundaryBottom = testimonialsSection.getBoundingClientRect().top;
                     } else {
-                        // If no testimonials section is found, extend it to the footer so it never unsticks early
                         const footer = document.querySelector('footer, .elementor-location-footer');
                         if (footer) {
                             boundaryBottom = footer.getBoundingClientRect().top;
-                        } else {
-                            // Ultimate fallback
-                            const marketUpdatesSection = document.getElementById('cmr-market-updates');
-                            if (marketUpdatesSection) {
-                                boundaryBottom = marketUpdatesSection.getBoundingClientRect().bottom;
-                            }
                         }
                     }
 
-                    // Trigger sticky as soon as the section touches the top offset!
-                    // Using sectionRect.top instead of placeholderRect.top means the user doesn't have 
-                    // to scroll past the title to activate it.
-                    if (sectionRect.top <= totalOffset && boundaryBottom > (originalNavHeight + totalOffset)) {
+                    if (sectionRect.top <= stickyOffset && boundaryBottom > (navBar.offsetHeight + stickyOffset)) {
                         if (!navBar.classList.contains('intel-nav-fixed-js')) {
-                            // Lock in the dimensions of the navBar into the placeholder before extracting it!
-                            placeholder.style.height = originalNavHeight + 'px';
-                            placeholder.style.marginBottom = originalMarginBottom;
-                            
+                            placeholder.style.height = navBar.offsetHeight + 'px';
+                            const style = window.getComputedStyle(navBar);
+                            placeholder.style.marginBottom = style.marginBottom;
                             navBar.classList.add('intel-nav-fixed-js');
-                            document.body.appendChild(navBar); // Move to body to escape Elementor transform context
+                            document.body.appendChild(navBar); 
                         }
                         
-                        // Push up if section is scrolling away
-                        if (boundaryBottom <= (originalNavHeight + totalOffset)) {
-                            navBar.style.top = (boundaryBottom - originalNavHeight) + 'px';
+                        if (boundaryBottom <= (navBar.offsetHeight + stickyOffset)) {
+                            navBar.style.top = (boundaryBottom - navBar.offsetHeight) + 'px';
                         } else {
-                            navBar.style.top = totalOffset + 'px';
+                            navBar.style.top = stickyOffset + 'px';
                         }
                     } else {
-                        // Remove sticky
                         if (navBar.classList.contains('intel-nav-fixed-js')) {
                             navBar.classList.remove('intel-nav-fixed-js');
                             navBar.style.top = '';
-                            
-                            // Re-insert navBar immediately after the placeholder
                             placeholder.parentNode.insertBefore(navBar, placeholder.nextSibling);
-                            
-                            // Reset placeholder to 0-height marker
                             placeholder.style.height = '0px';
                             placeholder.style.marginBottom = '0px';
                         }
                     }
                 }
-
+                
                 window.addEventListener('scroll', updateSticky, { passive: true });
                 window.addEventListener('resize', updateSticky, { passive: true });
                 setTimeout(updateSticky, 100);
