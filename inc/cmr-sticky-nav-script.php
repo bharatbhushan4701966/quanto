@@ -177,7 +177,7 @@ add_action('wp_footer', function() {
                             const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6'));
                             let matchingHeading = null;
                             if (targetId === 'reports') {
-                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('reports'));
+                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('similar reports'));
                             } else if (targetId === 'cmr-market-updates') {
                                 matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('market updates'));
                             } else if (targetId === 'newsroom') {
