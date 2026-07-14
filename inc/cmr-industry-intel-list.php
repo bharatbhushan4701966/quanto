@@ -221,27 +221,57 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 background: #fafafa;
                 border-color: #111;
             }
+            .cmr-pagination-style {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 15px;
+                margin-top: 40px;
+                margin-bottom: 20px;
+                font-family: 'Instrument Sans', sans-serif;
+            }
             .cmr-pagination-style .page-numbers {
-                display: inline-block;
-                margin: 0 5px;
-                padding: 10px 15px;
-                background: #f5f5f5;
-                color: #111;
-                border-radius: 4px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
                 text-decoration: none;
-                font-weight: 600;
+                color: #333;
+                font-size: 18px;
+                font-weight: 500;
                 transition: all 0.3s ease;
+                background: transparent;
             }
-            .cmr-pagination-style .page-numbers.current,
-            .cmr-pagination-style .page-numbers:hover {
-                background: #4B24B3;
+            .cmr-pagination-style .page-numbers.current {
+                background: #6A35FF;
                 color: #fff;
+                box-shadow: 0 4px 15px rgba(106, 53, 255, 0.3);
             }
-            .cmr-pagination-style .page-numbers svg {
-                vertical-align: middle;
+            .cmr-pagination-style a.page-numbers:hover {
+                background: #f5f5f5;
             }
-            .cmr-pagination-style .page-numbers:hover svg path {
-                stroke: #fff;
+            .cmr-pagination-style .page-numbers.dots {
+                width: auto;
+                background: transparent;
+                pointer-events: none;
+                letter-spacing: 2px;
+            }
+            .cmr-pagination-style .prev.page-numbers,
+            .cmr-pagination-style .next.page-numbers {
+                width: auto;
+                box-shadow: none;
+                padding: 0 15px;
+            }
+            .cmr-pagination-style .prev.page-numbers:hover,
+            .cmr-pagination-style .next.page-numbers:hover {
+                background: transparent;
+                opacity: 0.7;
+            }
+            .cmr-pagination-style .prev.page-numbers svg,
+            .cmr-pagination-style .next.page-numbers svg {
+                display: block;
             }
             @media (max-width: 768px) {
                 .cmr-intel-list-item {
