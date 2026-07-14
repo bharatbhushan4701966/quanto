@@ -65,6 +65,7 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                 font-weight: 700;
                 color: #fff;
                 margin: 0 0 10px 0;
+                letter-spacing: 0 !important;
             }
             .cmr-podcast-title-area p {
                 font-size: 16px;
@@ -168,10 +169,11 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
             }
             .cmr-podcast-title {
                 font-size: 20px;
-                font-weight: 600;
+                font-weight: 700; /* Bolder as requested */
                 color: #fff;
                 margin: 0 0 20px 0;
                 line-height: 1.4;
+                letter-spacing: 0 !important; /* Fix squishing */
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
@@ -439,7 +441,7 @@ if ( ! function_exists( 'cmr_trending_podcast_shortcode' ) ) {
                 font-weight: 700;
                 color: #000;
                 margin: 0 0 40px 0;
-                letter-spacing: -1px;
+                letter-spacing: 0 !important;
             }
             .cmr-trending-grid {
                 display: grid;
@@ -518,8 +520,9 @@ if ( ! function_exists( 'cmr_trending_podcast_shortcode' ) ) {
                 font-size: 22px;
                 font-weight: 700;
                 color: #000;
-                margin: 0 0 25px 0;
+                margin: 0 0 20px 0;
                 line-height: 1.3;
+                letter-spacing: 0 !important;
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
@@ -1179,7 +1182,7 @@ if ( ! function_exists( 'cmr_browse_recently_updated_shortcode' ) ) {
                 font-weight: 700;
                 color: #000;
                 margin: 0 0 30px 0;
-                letter-spacing: -1px;
+                letter-spacing: 0 !important;
             }
             .cmr-browse-controls {
                 display: flex;
@@ -1331,6 +1334,7 @@ if ( ! function_exists( 'cmr_browse_recently_updated_shortcode' ) ) {
                 color: #000;
                 margin: 0;
                 line-height: 1.3;
+                letter-spacing: 0 !important;
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
