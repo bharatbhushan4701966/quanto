@@ -1060,3 +1060,453 @@ if ( ! function_exists( 'cmr_cta_banner_shortcode' ) ) {
 }
 add_shortcode( 'cmr_cta_banner', 'cmr_cta_banner_shortcode' );
 
+// AJAX Handler for Browse Recently Updated
+if ( ! function_exists( 'cmr_filter_recently_updated_ajax' ) ) {
+    function cmr_filter_recently_updated_ajax() {
+        $paged = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 1;
+        $search = isset( $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : '';
+        $type = isset( $_POST['type'] ) ? sanitize_text_field( $_POST['type'] ) : 'all';
+        $posts_per_page = 9;
+
+        $query_args = array(
+            'post_type'      => 'cmr_media',
+            'posts_per_page' => $posts_per_page,
+            'paged'          => $paged,
+            'post_status'    => 'publish',
+            'orderby'        => 'date',
+            'order'          => 'DESC',
+        );
+
+        if ( ! empty( $search ) ) {
+            $query_args['s'] = $search;
+        }
+
+        if ( $type !== 'all' ) {
+            $query_args['meta_query'] = array(
+                array(
+                    'key'     => '_cmr_media_type',
+                    'value'   => strtoupper($type), // e.g., 'PODCAST' or 'TOP VIEW'
+                    'compare' => 'LIKE'
+                )
+            );
+        }
+
+        $query = new WP_Query( $query_args );
+
+        ob_start();
+        if ( $query->have_posts() ) {
+            while ( $query->have_posts() ) {
+                $query->the_post();
+                $post_obj = get_post();
+                
+                $thumbnail_url = get_the_post_thumbnail_url( $post_obj->ID, 'large' );
+                if ( ! $thumbnail_url ) {
+                    $thumbnail_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
+                }
+                
+                $category_name = 'AUTOMOTIVE';
+                $terms = get_the_terms( $post_obj->ID, 'category' );
+                if ( $terms && ! is_wp_error( $terms ) ) {
+                    $category_name = $terms[0]->name;
+                }
+                
+                $post_date = get_the_date('d M Y', $post_obj);
+                $media_type = get_post_meta( $post_obj->ID, '_cmr_media_type', true );
+                $media_duration = get_post_meta( $post_obj->ID, '_cmr_media_duration', true );
+                $media_url = get_post_meta( $post_obj->ID, '_cmr_media_url', true );
+                
+                $mtype = $media_type ? $media_type : 'PODCAST';
+                $is_podcast = (strtoupper($mtype) === 'PODCAST');
+                $type_class = $is_podcast ? 'type-podcast' : 'type-topview';
+                
+                $duration = $media_duration ? $media_duration : '05:00 MINS';
+                $link = $media_url ? esc_url($media_url) : esc_url(get_permalink($post_obj->ID));
+                ?>
+                <a href="<?php echo $link; ?>" class="cmr-browse-card" target="_blank" rel="noopener noreferrer">
+                    <div class="cmr-browse-img-wrap">
+                        <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+                        <div class="cmr-browse-badge"><?php echo esc_html($duration); ?></div>
+                        <div class="cmr-browse-play-btn">
+                            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        </div>
+                    </div>
+                    
+                    <div class="cmr-browse-meta">
+                        <span class="<?php echo esc_attr($type_class); ?>"><?php echo esc_html($mtype); ?></span> &bull; 
+                        <?php echo esc_html(strtoupper($category_name)); ?> &bull; 
+                        <?php echo esc_html(strtoupper($post_date)); ?>
+                    </div>
+                    
+                    <h3 class="cmr-browse-card-title"><?php echo esc_html(get_the_title()); ?></h3>
+                </a>
+                <?php
+            }
+        } else {
+            if ( $paged == 1 ) {
+                echo '<p style="grid-column: 1/-1; text-align: center;">No media found.</p>';
+            }
+        }
+        $html = ob_get_clean();
+
+        wp_send_json_success( array(
+            'html' => $html,
+            'max_pages' => $query->max_num_pages,
+            'paged' => $paged
+        ) );
+    }
+}
+add_action( 'wp_ajax_cmr_filter_recently_updated', 'cmr_filter_recently_updated_ajax' );
+add_action( 'wp_ajax_nopriv_cmr_filter_recently_updated', 'cmr_filter_recently_updated_ajax' );
+
+if ( ! function_exists( 'cmr_browse_recently_updated_shortcode' ) ) {
+    function cmr_browse_recently_updated_shortcode( $atts ) {
+        ob_start();
+        ?>
+        <style>
+            .cmr-browse-section {
+                padding: 60px 20px;
+                background-color: #fff;
+                font-family: inherit;
+                max-width: 1280px;
+                margin: 0 auto;
+            }
+            .cmr-browse-title {
+                font-size: 42px;
+                font-weight: 700;
+                color: #000;
+                margin: 0 0 30px 0;
+                letter-spacing: -1px;
+            }
+            .cmr-browse-controls {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 40px;
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+            .cmr-browse-filters {
+                display: flex;
+                gap: 15px;
+            }
+            .cmr-filter-btn {
+                background: #fff;
+                border: 1px solid #e0e0e0;
+                color: #333;
+                padding: 8px 24px;
+                border-radius: 30px;
+                font-size: 14px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+            .cmr-filter-btn:hover {
+                border-color: #999;
+            }
+            .cmr-filter-btn.active {
+                border-color: #111;
+                background: #111;
+                color: #fff;
+            }
+            .cmr-browse-search {
+                position: relative;
+                width: 300px;
+                max-width: 100%;
+            }
+            .cmr-browse-search input {
+                width: 100%;
+                padding: 10px 45px 10px 20px;
+                border: 1px solid #e0e0e0;
+                border-radius: 30px;
+                font-size: 14px;
+                outline: none;
+                transition: border-color 0.2s;
+            }
+            .cmr-browse-search input:focus {
+                border-color: #999;
+            }
+            .cmr-browse-search button {
+                position: absolute;
+                right: 5px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 32px;
+                height: 32px;
+                background: #6f42c1;
+                border: none;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+            }
+            .cmr-browse-search button svg {
+                width: 14px;
+                height: 14px;
+                stroke: #fff;
+                stroke-width: 2;
+                fill: none;
+            }
+            
+            .cmr-browse-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 30px;
+                margin-bottom: 50px;
+            }
+            .cmr-browse-card {
+                display: flex;
+                flex-direction: column;
+                text-decoration: none;
+                color: #000;
+            }
+            .cmr-browse-img-wrap {
+                position: relative;
+                width: 100%;
+                aspect-ratio: 16/10;
+                overflow: hidden;
+                margin-bottom: 20px;
+                background: #f5f5f5;
+            }
+            .cmr-browse-img-wrap img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+            .cmr-browse-badge {
+                position: absolute;
+                top: 15px;
+                left: 15px;
+                background: #fff;
+                color: #111;
+                font-size: 11px;
+                font-weight: 700;
+                padding: 4px 8px;
+                border-radius: 4px;
+                z-index: 2;
+            }
+            .cmr-browse-play-btn {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 50px;
+                height: 50px;
+                background: transparent;
+                border: 2px solid #fff;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2;
+            }
+            .cmr-browse-play-btn svg {
+                width: 20px;
+                height: 20px;
+                fill: #fff;
+                margin-left: 3px;
+            }
+            .cmr-browse-meta {
+                font-size: 11px;
+                font-weight: 700;
+                color: #888;
+                margin-bottom: 12px;
+                letter-spacing: 0.5px;
+                text-transform: uppercase;
+            }
+            .cmr-browse-meta .type-podcast {
+                color: #00d2ff;
+            }
+            .cmr-browse-meta .type-topview {
+                color: #2979ff;
+            }
+            .cmr-browse-card-title {
+                font-size: 22px;
+                font-weight: 700;
+                color: #000;
+                margin: 0;
+                line-height: 1.3;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            
+            .cmr-browse-loadmore-wrap {
+                text-align: center;
+            }
+            .cmr-loadmore-btn {
+                background: #fff;
+                border: 1px solid #ccc;
+                color: #111;
+                padding: 12px 35px;
+                border-radius: 30px;
+                font-size: 15px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+            .cmr-loadmore-btn:hover {
+                border-color: #111;
+                background: #f9f9f9;
+            }
+            .cmr-loadmore-btn:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+            
+            .cmr-browse-loading {
+                text-align: center;
+                padding: 40px;
+                display: none;
+                grid-column: 1/-1;
+            }
+
+            @media (max-width: 1024px) {
+                .cmr-browse-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+            @media (max-width: 768px) {
+                .cmr-browse-grid {
+                    grid-template-columns: 1fr;
+                }
+                .cmr-browse-title {
+                    font-size: 32px;
+                }
+                .cmr-browse-controls {
+                    flex-direction: column;
+                    align-items: stretch;
+                }
+                .cmr-browse-search {
+                    width: 100%;
+                }
+            }
+        </style>
+
+        <div class="cmr-browse-section">
+            <h2 class="cmr-browse-title">Browse by Recently updated</h2>
+            
+            <div class="cmr-browse-controls">
+                <div class="cmr-browse-filters">
+                    <button class="cmr-filter-btn active" data-type="all">All</button>
+                    <button class="cmr-filter-btn" data-type="podcast">Podcast</button>
+                    <button class="cmr-filter-btn" data-type="top view">Top View</button>
+                </div>
+                <div class="cmr-browse-search">
+                    <input type="text" id="cmr-browse-search-input" placeholder="Search by name">
+                    <button id="cmr-browse-search-btn">
+                        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="cmr-browse-grid" id="cmr-browse-grid">
+                <!-- Content will be loaded via AJAX -->
+            </div>
+            
+            <div class="cmr-browse-loading" id="cmr-browse-loading">Loading...</div>
+            
+            <div class="cmr-browse-loadmore-wrap">
+                <button class="cmr-loadmore-btn" id="cmr-loadmore-btn">Load More</button>
+            </div>
+        </div>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var grid = document.getElementById('cmr-browse-grid');
+                var loadMoreBtn = document.getElementById('cmr-loadmore-btn');
+                var searchInput = document.getElementById('cmr-browse-search-input');
+                var searchBtn = document.getElementById('cmr-browse-search-btn');
+                var filterBtns = document.querySelectorAll('.cmr-filter-btn');
+                var loadingEl = document.getElementById('cmr-browse-loading');
+                
+                var currentPage = 1;
+                var currentType = 'all';
+                var currentSearch = '';
+                var maxPages = 1;
+                var ajaxUrl = '<?php echo admin_url('admin-ajax.php'); ?>';
+                
+                function fetchMedia(reset = false) {
+                    if (reset) {
+                        currentPage = 1;
+                        grid.innerHTML = '';
+                    }
+                    
+                    loadingEl.style.display = 'block';
+                    loadMoreBtn.style.display = 'none';
+                    
+                    var formData = new FormData();
+                    formData.append('action', 'cmr_filter_recently_updated');
+                    formData.append('paged', currentPage);
+                    formData.append('type', currentType);
+                    formData.append('search', currentSearch);
+                    
+                    fetch(ajaxUrl, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        loadingEl.style.display = 'none';
+                        if (data.success) {
+                            if (reset) {
+                                grid.innerHTML = data.data.html;
+                            } else {
+                                grid.insertAdjacentHTML('beforeend', data.data.html);
+                            }
+                            maxPages = data.data.max_pages;
+                            
+                            if (currentPage < maxPages) {
+                                loadMoreBtn.style.display = 'inline-block';
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        loadingEl.style.display = 'none';
+                    });
+                }
+                
+                // Initial load
+                fetchMedia(true);
+                
+                // Load More click
+                loadMoreBtn.addEventListener('click', function() {
+                    currentPage++;
+                    fetchMedia();
+                });
+                
+                // Filter click
+                filterBtns.forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        filterBtns.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        currentType = this.getAttribute('data-type');
+                        fetchMedia(true);
+                    });
+                });
+                
+                // Search
+                var searchTimeout;
+                searchInput.addEventListener('input', function() {
+                    clearTimeout(searchTimeout);
+                    currentSearch = this.value;
+                    searchTimeout = setTimeout(function() {
+                        fetchMedia(true);
+                    }, 500);
+                });
+                
+                searchBtn.addEventListener('click', function() {
+                    currentSearch = searchInput.value;
+                    fetchMedia(true);
+                });
+            });
+        </script>
+        <?php
+        return ob_get_clean();
+    }
+}
+add_shortcode( 'cmr_browse_recently_updated', 'cmr_browse_recently_updated_shortcode' );
+
