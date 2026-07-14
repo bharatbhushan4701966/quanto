@@ -209,7 +209,7 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
             <div class="cmr-mms-col">
                 <div class="cmr-mms-label">WHO WE SERVE</div>
                 
-                <a href="<?php echo esc_url( home_url( '/Automotive/' ) ); ?>" class="cmr-mms-item">
+                <a href="<?php echo esc_url( home_url( '/automotive/' ) ); ?>" class="cmr-mms-item">
                     <div class="cmr-mms-item-header">
                         <h4>Automotive</h4>
                         <span class="cmr-mms-badge">New</span>
