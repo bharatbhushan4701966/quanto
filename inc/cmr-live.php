@@ -262,7 +262,15 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                         <h2>CMR Live Podcast and Top View</h2>
                         <p>Browse premium research reports across industries, designed to deliver actionable insights and strategic clarity.</p>
                     </div>
-                    <div class="cmr-podcast-pagination swiper-pagination-custom"></div>
+                    <div class="cmr-podcast-nav-area" style="display: flex; align-items: center; gap: 15px;">
+                        <div class="swiper-button-prev-custom" style="cursor:pointer; width:30px; height:30px; border-radius:50%; background:#222; display:flex; align-items:center; justify-content:center; color:#fff;">
+                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </div>
+                        <div class="cmr-podcast-pagination swiper-pagination-custom"></div>
+                        <div class="swiper-button-next-custom" style="cursor:pointer; width:30px; height:30px; border-radius:50%; background:#222; display:flex; align-items:center; justify-content:center; color:#fff;">
+                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="swiper cmr-podcast-swiper">
@@ -350,16 +358,24 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                     new Swiper('.cmr-podcast-swiper', {
                         slidesPerView: 1,
                         spaceBetween: 30,
+                        autoplay: {
+                            delay: 4000,
+                            disableOnInteraction: false,
+                        },
                         pagination: {
                             el: '.cmr-podcast-pagination',
                             clickable: true,
+                        },
+                        navigation: {
+                            nextEl: '.swiper-button-next-custom',
+                            prevEl: '.swiper-button-prev-custom',
                         },
                         breakpoints: {
                             768: {
                                 slidesPerView: 1.1,
                             },
                             1024: {
-                                slidesPerView: 1.3,
+                                slidesPerView: 1.12,
                             }
                         }
                     });
