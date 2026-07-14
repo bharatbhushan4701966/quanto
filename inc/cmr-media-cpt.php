@@ -182,6 +182,37 @@ function cmr_media_save_meta_box( $post_id ) {
     if ( isset( $_POST['cmr_media_duration'] ) ) {
         update_post_meta( $post_id, '_cmr_media_duration', sanitize_text_field( $_POST['cmr_media_duration'] ) );
     }
+
+    // Auto-fetch YouTube thumbnail if saving a YouTube link and no featured image is set
+    if ( isset( $_POST['cmr_media_url'] ) && ! has_post_thumbnail( $post_id ) ) {
+        $url = esc_url_raw( $_POST['cmr_media_url'] );
+        if ( strpos( $url, 'youtube.com' ) !== false || strpos( $url, 'youtu.be' ) !== false ) {
+            $video_id = '';
+            if ( preg_match( '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $url, $match ) ) {
+                $video_id = $match[1];
+            }
+            if ( $video_id ) {
+                $thumbnail_url = "https://i.ytimg.com/vi/{$video_id}/maxresdefault.jpg";
+                require_once( ABSPATH . 'wp-admin/includes/file.php' );
+                require_once( ABSPATH . 'wp-admin/includes/media.php' );
+                require_once( ABSPATH . 'wp-admin/includes/image.php' );
+                
+                $tmp = download_url( $thumbnail_url );
+                if ( ! is_wp_error( $tmp ) ) {
+                    $file_array = array(
+                        'name' => $video_id . '.jpg',
+                        'tmp_name' => $tmp
+                    );
+                    $thumb_id = media_handle_sideload( $file_array, $post_id );
+                    if ( ! is_wp_error( $thumb_id ) ) {
+                        set_post_thumbnail( $post_id, $thumb_id );
+                    } else {
+                        @unlink( $tmp );
+                    }
+                }
+            }
+        }
+    }
 }
 add_action( 'save_post_cmr_media', 'cmr_media_save_meta_box' );
 
