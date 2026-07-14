@@ -23,21 +23,15 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
             'orderby'        => 'date',
             'order'          => 'DESC',
             'paged'          => $paged,
-            'tax_query'      => array(
-                'relation' => 'AND',
-                array(
-                    'taxonomy' => 'category',
-                    'field'    => 'slug',
-                    'terms'    => 'industry-connect',
-                ),
-            ),
         );
 
         if ( ! empty( $atts['category'] ) ) {
-            $query_args['tax_query'][] = array(
-                'taxonomy' => 'category',
-                'field'    => 'slug',
-                'terms'    => sanitize_text_field( $atts['category'] ),
+            $query_args['tax_query'] = array(
+                array(
+                    'taxonomy' => 'category',
+                    'field'    => 'slug',
+                    'terms'    => sanitize_text_field( $atts['category'] ),
+                )
             );
         }
 
@@ -490,22 +484,15 @@ function cmr_industry_intel_list_load_more_ajax() {
         'orderby'        => 'date',
         'order'          => 'DESC',
         'paged'          => $paged,
-        'tax_query'      => array(
-            'relation' => 'AND',
+    );
+    
+    if ( isset( $_POST['category'] ) && ! empty( $_POST['category'] ) ) {
+        $query_args['tax_query'] = array(
             array(
                 'taxonomy' => 'category',
                 'field'    => 'slug',
-                'terms'    => 'industry-connect',
-            ),
-        ),
-    );
-    
-    // Add category filter if provided
-    if ( isset( $_POST['category'] ) && ! empty( $_POST['category'] ) ) {
-        $query_args['tax_query'][] = array(
-            'taxonomy' => 'category',
-            'field'    => 'slug',
-            'terms'    => sanitize_text_field( $_POST['category'] ),
+                'terms'    => sanitize_text_field( $_POST['category'] ),
+            )
         );
     }
     
