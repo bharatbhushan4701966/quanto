@@ -110,6 +110,7 @@ function cmr_breadcrumb_shortcode() {
 
 // CMR News & Media Releases Feature
 require_once QUANTO_DIR_PATH_INC . 'cmr-news.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-news-automotive.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-media-coverage.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-news-carousel.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-press-releases.php';
