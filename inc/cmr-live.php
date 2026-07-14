@@ -952,4 +952,111 @@ if ( ! function_exists( 'cmr_trending_topview_shortcode' ) ) {
 }
 add_shortcode( 'cmr_trending_topview', 'cmr_trending_topview_shortcode' );
 
+if ( ! function_exists( 'cmr_cta_banner_shortcode' ) ) {
+    function cmr_cta_banner_shortcode( $atts ) {
+        $atts = shortcode_atts( array(
+            'title' => 'Need deeper insights?',
+            'text' => 'Talk to our analysts for tailored recommendations across your sector.',
+            'button_text' => 'Get Industry Insights',
+            'button_link' => '#',
+        ), $atts, 'cmr_cta_banner' );
+
+        ob_start();
+        ?>
+        <style>
+            .cmr-cta-banner-wrapper {
+                padding: 40px 20px;
+                font-family: inherit;
+            }
+            .cmr-cta-banner {
+                max-width: 1280px;
+                margin: 0 auto;
+                background-color: #4a25aa; /* Deep purple */
+                border-radius: 4px;
+                padding: 40px 50px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 40px;
+                color: #fff;
+            }
+            .cmr-cta-title {
+                font-size: 42px;
+                font-weight: 700;
+                margin: 0;
+                line-height: 1.2;
+                letter-spacing: -1px;
+                white-space: nowrap;
+            }
+            .cmr-cta-text {
+                font-size: 16px;
+                line-height: 1.5;
+                margin: 0;
+                max-width: 350px;
+                color: rgba(255, 255, 255, 0.9);
+            }
+            .cmr-cta-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                background-color: #fff;
+                color: #4a25aa;
+                font-size: 15px;
+                font-weight: 600;
+                text-decoration: none;
+                padding: 15px 30px;
+                border-radius: 50px;
+                transition: all 0.3s ease;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+            .cmr-cta-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            }
+            .cmr-cta-btn svg {
+                width: 14px;
+                height: 14px;
+                stroke: currentColor;
+                stroke-width: 2;
+                fill: none;
+            }
+            
+            @media (max-width: 1024px) {
+                .cmr-cta-banner {
+                    flex-direction: column;
+                    text-align: center;
+                    gap: 30px;
+                    padding: 40px 30px;
+                }
+                .cmr-cta-text {
+                    max-width: 100%;
+                }
+                .cmr-cta-title {
+                    white-space: normal;
+                    font-size: 36px;
+                }
+            }
+        </style>
+
+        <div class="cmr-cta-banner-wrapper">
+            <div class="cmr-cta-banner">
+                <h3 class="cmr-cta-title"><?php echo esc_html( $atts['title'] ); ?></h3>
+                
+                <p class="cmr-cta-text"><?php echo esc_html( $atts['text'] ); ?></p>
+                
+                <a href="<?php echo esc_url( $atts['button_link'] ); ?>" class="cmr-cta-btn">
+                    <?php echo esc_html( $atts['button_text'] ); ?>
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <?php
+        return ob_get_clean();
+    }
+}
+add_shortcode( 'cmr_cta_banner', 'cmr_cta_banner_shortcode' );
 
