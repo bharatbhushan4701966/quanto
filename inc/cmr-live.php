@@ -99,16 +99,15 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                 background: transparent;
                 color: #fff;
                 text-decoration: none;
-                height: 638px; /* Fixed height as requested */
             }
             .cmr-podcast-swiper .swiper-slide {
-                width: 1210px; /* Fixed width as requested */
-                max-width: 90vw; /* Responsive fallback */
+                width: 910px;
+                max-width: 90vw;
             }
             .cmr-podcast-img-wrap {
                 position: relative;
                 width: 100%;
-                flex: 1; /* Fill remaining height */
+                aspect-ratio: 910 / 479;
                 border-radius: 8px;
                 overflow: hidden;
                 margin-bottom: 20px;
