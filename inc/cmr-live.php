@@ -74,6 +74,7 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
             }
             .cmr-podcast-swiper {
                 overflow: visible !important;
+                clip-path: inset(-100px -100vw -100px 0);
             }
             .cmr-podcast-pagination {
                 display: flex;
