@@ -84,15 +84,33 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                 width: auto;
             }
             .cmr-podcast-pagination .swiper-pagination-bullet {
+                position: relative;
                 width: 30px;
                 height: 3px;
                 background: #555;
                 border-radius: 0;
                 opacity: 1;
                 margin: 0;
+                overflow: hidden;
+            }
+            .cmr-podcast-pagination .swiper-pagination-bullet::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 0;
+                background: #fff;
             }
             .cmr-podcast-pagination .swiper-pagination-bullet-active {
-                background: #fff;
+                background: #555;
+            }
+            .cmr-podcast-pagination .swiper-pagination-bullet-active::after {
+                animation: bulletProgress 4s linear forwards;
+            }
+            @keyframes bulletProgress {
+                0% { width: 0; }
+                100% { width: 100%; }
             }
             .cmr-podcast-card {
                 display: flex;
