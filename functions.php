@@ -1276,3 +1276,43 @@ function cmr_bulk_update_woo_downloads() {
         die("Successfully updated $count WooCommerce products. Used base URL: " . esc_html($base_url));
     }
 }
+
+// Bulk delete duplicate WooCommerce products
+add_action('init', 'cmr_bulk_delete_duplicate_woo_products');
+function cmr_bulk_delete_duplicate_woo_products() {
+    if (isset($_GET['cmr_delete_duplicates']) && current_user_can('manage_options')) {
+        if (!function_exists('wc_get_products')) { die('WooCommerce not active.'); }
+        
+        // Get all products from oldest to newest
+        $products = wc_get_products([
+            'limit' => -1,
+            'status' => ['publish', 'draft', 'pending', 'private'],
+            'orderby' => 'date',
+            'order' => 'ASC'
+        ]);
+        
+        $seen_titles = [];
+        $deleted_count = 0;
+        
+        foreach ($products as $product) {
+            // Normalize title for matching
+            $title = trim(strtolower($product->get_name()));
+            
+            // Clean up trailing '- copy' or '- 1' sometimes added by duplicators
+            $title = preg_replace('/ - copy( \d+)?$/i', '', $title);
+            
+            if (empty($title)) continue;
+            
+            if (isset($seen_titles[$title])) {
+                // This is a duplicate, move it to trash
+                wp_trash_post($product->get_id());
+                $deleted_count++;
+            } else {
+                // First time seeing this title (the original/oldest)
+                $seen_titles[$title] = true;
+            }
+        }
+        
+        die("Successfully moved $deleted_count duplicate WooCommerce products to the Trash (kept the oldest original for each title).");
+    }
+}
