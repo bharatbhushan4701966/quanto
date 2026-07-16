@@ -287,6 +287,12 @@ while ( have_posts() ) :
                     <ul class="key-parts-list">
                         <?php 
                         $key_parts_text = get_post_meta( get_the_ID(), '_cmr_media_key_parts', true );
+                        
+                        // Fallback to dummy data if dashboard field is empty
+                        if ( empty( trim( $key_parts_text ) ) ) {
+                            $key_parts_text = "00:00 - Introduction & Welcome\n01:30 - Understanding the Core Topics\n05:15 - Deep Dive into Market Trends\n10:45 - Key Takeaways & Conclusion";
+                        }
+                        
                         if ( !empty($key_parts_text) ) :
                             $lines = explode("\n", str_replace("\r", "", $key_parts_text));
                             foreach ( $lines as $line ) :
@@ -322,6 +328,95 @@ while ( have_posts() ) :
                     </ul>
                 </div>
             </div>
+            
+            <!-- Insight Feedback Section -->
+            <div class="cmr-insight-feedback-section">
+                <div class="feedback-container">
+                    <h3 class="feedback-title">How helpful was this insight?</h3>
+                    <p class="feedback-subtitle">Your feedback helps us improve our research quality</p>
+                    <div class="feedback-actions">
+                        <button class="feedback-btn js-feedback-helpful">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg> 
+                            Yes, helpful
+                        </button>
+                        <button class="feedback-btn js-feedback-unhelpful">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: scaleY(-1);"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg> 
+                            Not really
+                        </button>
+                    </div>
+                    <div class="feedback-thanks" style="display: none;">
+                        <div class="thanks-msg">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> 
+                            <span>Thanks for your feedback!</span>
+                        </div>
+                        <div class="thanks-action">
+                            <span>Want deeper insights like this?</span> <a href="/contact">Talk to an Analyst ↗</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Related Top View Section -->
+<div class="cmr-related-media-section">
+    <div class="cmr-container">
+        <h2>Related Top View</h2>
+        <div class="cmr-media-grid-wrap">
+            <?php 
+            $related_args = array(
+                'post_type' => 'cmr_media',
+                'posts_per_page' => 6,
+                'post__not_in' => array(get_the_ID()),
+            );
+            $related_query = new WP_Query($related_args);
+            if ($related_query->have_posts()) :
+                while ($related_query->have_posts()) : $related_query->the_post();
+                    $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'large' );
+                    if ( ! $thumbnail_url ) {
+                        $thumbnail_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
+                    }
+                    
+                    $category_name = 'AUTOMOTIVE';
+                    $terms = get_the_terms( get_the_ID(), 'category' );
+                    if ( $terms && ! is_wp_error( $terms ) ) {
+                        $category_name = $terms[0]->name;
+                    }
+                    
+                    $post_date = get_the_date('d M Y');
+                    $media_type = get_post_meta( get_the_ID(), '_cmr_media_type', true );
+                    $media_duration = get_post_meta( get_the_ID(), '_cmr_media_duration', true );
+                    
+                    $mtype = $media_type ? $media_type : 'TOP VIEW';
+                    $is_podcast = (strtoupper($mtype) === 'PODCAST');
+                    $type_class = $is_podcast ? 'type-podcast' : 'type-topview';
+                    $duration = $media_duration ? $media_duration : '05:00 MINS';
+                    $link = esc_url(get_permalink(get_the_ID()));
+            ?>
+            <a href="<?php echo $link; ?>" class="cmr-browse-card" target="_blank" rel="noopener noreferrer">
+                <div class="cmr-browse-img-wrap">
+                    <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+                    <div class="cmr-browse-badge"><?php echo esc_html($duration); ?></div>
+                    <div class="cmr-browse-play-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                </div>
+                
+                <div class="cmr-browse-meta">
+                    <span class="<?php echo esc_attr($type_class); ?>"><?php echo esc_html($mtype); ?></span> &bull; 
+                    <?php echo esc_html(strtoupper($category_name)); ?> &bull; 
+                    <?php echo esc_html(strtoupper($post_date)); ?>
+                </div>
+                
+                <h3 class="cmr-browse-card-title"><?php echo esc_html(get_the_title()); ?></h3>
+            </a>
+            <?php
+                endwhile;
+                wp_reset_postdata();
+            endif;
+            ?>
         </div>
     </div>
 </div>
@@ -362,9 +457,7 @@ endwhile;
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
                 var time = parseInt(this.getAttribute('data-time'), 10);
-                if (isNaN(time)) return;
-
-                if (playerType === 'youtube' && player && typeof player.seekTo === 'function') {
+                if (playerType === 'youtube' && player && player.seekTo) {
                     player.seekTo(time, true);
                     player.playVideo();
                 } else if (playerType === 'html5' && player) {
@@ -380,8 +473,139 @@ endwhile;
                 }
             });
         });
+
+        // Feedback widget JS
+        const feedbackBtns = document.querySelectorAll('.feedback-btn');
+        const feedbackThanks = document.querySelector('.feedback-thanks');
+        
+        feedbackBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelector('.feedback-actions').style.display = 'none';
+                feedbackThanks.style.display = 'flex';
+            });
+        });
     });
 </script>
+
+<style>
+/* Insight Feedback Section */
+.cmr-insight-feedback-section {
+    margin-top: 50px;
+    padding: 30px 0;
+    border-top: 1px solid #eaeaea;
+}
+.feedback-container {
+    max-width: 800px;
+}
+.feedback-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #111;
+}
+.feedback-subtitle {
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 20px;
+}
+.feedback-actions {
+    display: flex;
+    gap: 15px;
+}
+.feedback-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    color: #444;
+    transition: all 0.3s;
+}
+.feedback-btn svg {
+    color: #FF3B30;
+}
+.feedback-btn.js-feedback-helpful svg {
+    color: #6A35FF;
+}
+.feedback-btn:hover {
+    opacity: 0.8;
+}
+.feedback-thanks {
+    background: #f7f7f9;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.thanks-msg {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #6A35FF;
+    font-weight: 700;
+    font-size: 18px;
+}
+.thanks-action {
+    background: #fff;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.thanks-action a {
+    color: #6A35FF;
+    text-decoration: none;
+}
+@media (max-width: 768px) {
+    .feedback-thanks {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+}
+
+/* Related Top View Section */
+.cmr-related-media-section {
+    padding: 60px 0;
+    background-color: #fff;
+    border-top: 1px solid #eaeaea;
+}
+.cmr-related-media-section .cmr-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.cmr-related-media-section h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    color: #111;
+}
+.cmr-media-grid-wrap {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+@media (max-width: 992px) {
+    .cmr-media-grid-wrap {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 768px) {
+    .cmr-media-grid-wrap {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
 
 <?php
 get_footer();
