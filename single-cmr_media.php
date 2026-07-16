@@ -275,7 +275,7 @@ while ( have_posts() ) :
     .cmr-audio-player-box {
         background: #fff;
         border: 4px solid #00A3FF;
-        padding: 20px 30px;
+        padding: 35px 30px;
         display: flex;
         align-items: center;
         gap: 25px;
