@@ -1162,4 +1162,46 @@ add_shortcode('cmr_global_brands', function() {
     return ob_get_clean();
 });
 
+// Helper function to get the post thumbnail, or fallback to scraping the og:image from the media URL, or a hardcoded fallback
+if ( ! function_exists( 'cmr_get_thumbnail_with_fallback' ) ) {
+    function cmr_get_thumbnail_with_fallback($post_id, $size = 'full') {
+        // 1. Check for standard WordPress Featured Image
+        $thumbnail_url = get_the_post_thumbnail_url($post_id, $size);
+        if ($thumbnail_url) {
+            return $thumbnail_url;
+        }
 
+        // 2. Check if there's a custom media URL and try to fetch og:image
+        $media_url = get_post_meta($post_id, '_cmr_media_url', true);
+        if ($media_url && filter_var($media_url, FILTER_VALIDATE_URL)) {
+            
+            // Check transient cache to avoid slowing down page load
+            $cache_key = 'cmr_og_image_' . md5($media_url);
+            $cached_img = get_transient($cache_key);
+            
+            if ($cached_img) {
+                if ($cached_img !== 'none') {
+                    return $cached_img;
+                }
+            } else {
+                // Fetch the URL
+                $response = wp_remote_get($media_url, array('timeout' => 5));
+                if (!is_wp_error($response)) {
+                    $body = wp_remote_retrieve_body($response);
+                    
+                    // Look for og:image
+                    if (preg_match('/<meta property="og:image" content="([^"]+)"/i', $body, $matches) || preg_match('/<meta name="og:image" content="([^"]+)"/i', $body, $matches)) {
+                        $scraped_img = $matches[1];
+                        set_transient($cache_key, $scraped_img, 24 * HOUR_IN_SECONDS);
+                        return $scraped_img;
+                    }
+                }
+                // Cache the 'none' result so we don't fetch it every time
+                set_transient($cache_key, 'none', 24 * HOUR_IN_SECONDS);
+            }
+        }
+
+        // 3. Absolute fallback image
+        return 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
+    }
+}

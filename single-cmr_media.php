@@ -20,7 +20,8 @@ while ( have_posts() ) :
     $date = get_the_date('d M Y');
     $author = 'CMR INDIA';
     
-    $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+    // Get thumbnail using our new smart fallback function
+    $thumbnail_url = function_exists('cmr_get_thumbnail_with_fallback') ? cmr_get_thumbnail_with_fallback(get_the_ID(), 'full') : get_the_post_thumbnail_url( get_the_ID(), 'full' );
     
     // For social sharing links
     $post_url = urlencode( get_permalink() );
@@ -622,10 +623,8 @@ if ($is_audio_post && !preg_match('/\.(mp3|wav|ogg|m4a)$/i', $media_url)) {
             $related_query = new WP_Query($related_args);
             if ($related_query->have_posts()) :
                 while ($related_query->have_posts()) : $related_query->the_post();
-                    $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'large' );
-                    if ( ! $thumbnail_url ) {
-                        $thumbnail_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
-                    }
+                    // Get thumbnail using our new smart fallback function
+                    $thumbnail_url = function_exists('cmr_get_thumbnail_with_fallback') ? cmr_get_thumbnail_with_fallback(get_the_ID(), 'large') : get_the_post_thumbnail_url( get_the_ID(), 'large' );
                     
                     $category_name = 'AUTOMOTIVE';
                     $terms = get_the_terms( get_the_ID(), 'category' );
