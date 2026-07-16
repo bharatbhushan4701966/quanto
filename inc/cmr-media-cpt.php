@@ -126,6 +126,14 @@ function cmr_media_meta_box_html( $post ) {
         <input type="text" name="cmr_media_duration" id="cmr_media_duration" value="<?php echo esc_attr( $media_duration ); ?>" />
     </div>
 
+    <div class="cmr-meta-row">
+        <label for="cmr_media_key_parts">Key Parts (Timestamps)</label>
+        <textarea name="cmr_media_key_parts" id="cmr_media_key_parts" rows="5" style="width:100%; max-width:800px;"><?php 
+            echo esc_textarea(get_post_meta( $post->ID, '_cmr_media_key_parts', true )); 
+        ?></textarea>
+        <p class="description">Enter one per line in format: <strong>MM:SS - Title</strong> (e.g., <code>00:05 - Introduction</code>)</p>
+    </div>
+
     <script>
     jQuery(document).ready(function($){
         // Toggle upload button visibility
@@ -181,6 +189,9 @@ function cmr_media_save_meta_box( $post_id ) {
     }
     if ( isset( $_POST['cmr_media_duration'] ) ) {
         update_post_meta( $post_id, '_cmr_media_duration', sanitize_text_field( $_POST['cmr_media_duration'] ) );
+    }
+    if ( isset( $_POST['cmr_media_key_parts'] ) ) {
+        update_post_meta( $post_id, '_cmr_media_key_parts', sanitize_textarea_field( $_POST['cmr_media_key_parts'] ) );
     }
 
     // Auto-fetch YouTube thumbnail if saving a YouTube link and no featured image is set

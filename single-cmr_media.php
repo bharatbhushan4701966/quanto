@@ -286,10 +286,20 @@ while ( have_posts() ) :
                     <h2>Key parts of <?php echo esc_html(get_the_title()); ?></h2>
                     <ul class="key-parts-list">
                         <?php 
-                        if ( function_exists('have_rows') && have_rows('key_parts') ) :
-                            while ( have_rows('key_parts') ) : the_row();
-                                $time_str = get_sub_field('time');
-                                $title_str = get_sub_field('title');
+                        $key_parts_text = get_post_meta( get_the_ID(), '_cmr_media_key_parts', true );
+                        if ( !empty($key_parts_text) ) :
+                            $lines = explode("\n", str_replace("\r", "", $key_parts_text));
+                            foreach ( $lines as $line ) :
+                                $line = trim($line);
+                                if ( empty($line) ) continue;
+                                
+                                // Format: "00:05 - Title"
+                                $parts = explode('-', $line, 2);
+                                $time_str = isset($parts[0]) ? trim($parts[0]) : '';
+                                $title_str = isset($parts[1]) ? trim($parts[1]) : '';
+                                
+                                if ( empty($time_str) || empty($title_str) ) continue;
+
                                 // Convert "MM:SS" or "HH:MM:SS" to seconds
                                 $time_parts = explode(':', $time_str);
                                 $seconds = 0;
@@ -304,7 +314,7 @@ while ( have_posts() ) :
                             <span><?php echo esc_html($time_str); ?> &ndash; <?php echo esc_html($title_str); ?></span>
                         </li>
                         <?php
-                            endwhile;
+                            endforeach;
                         else:
                         ?>
                             <!-- No key parts found for this media. Please add them in the WP Admin. -->
