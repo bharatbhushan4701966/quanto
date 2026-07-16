@@ -592,9 +592,14 @@ if ( ! function_exists( 'cmr_trending_podcast_shortcode' ) ) {
                 <?php if ( ! empty($posts) ) : ?>
                     <?php 
                     foreach ( $posts as $post_obj ) : 
-                        $thumbnail_url = get_the_post_thumbnail_url( $post_obj->ID, 'large' );
-                        if ( ! $thumbnail_url ) {
-                            $thumbnail_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
+                        $thumbnail_url = '';
+                        if ( function_exists('cmr_get_thumbnail_with_fallback') ) {
+                            $thumbnail_url = cmr_get_thumbnail_with_fallback($post_obj->ID, 'large');
+                        } else {
+                            $thumbnail_url = get_the_post_thumbnail_url( $post_obj->ID, 'large' );
+                            if ( ! $thumbnail_url ) {
+                                $thumbnail_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
+                            }
                         }
                         
                         $category_name = 'AUTOMOTIVE';
