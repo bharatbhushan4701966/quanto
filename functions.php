@@ -748,8 +748,32 @@ function cmr_global_font_style() {
     </style>';
 }
 
-
-
+// Shortcode to display the Single Media CTA Banner section by rendering the quanto_tab_build post
+add_shortcode('cmr_single_media_cta', function() {
+    ob_start();
+    
+    // Find the post by slug
+    $posts = get_posts(array(
+        'name' => 'your-next-big-decision-deserves-better-intelligence',
+        'post_type' => 'quanto_tab_build',
+        'posts_per_page' => 1,
+        'post_status' => 'publish'
+    ));
+    
+    if ( $posts && !empty($posts[0]) ) {
+        $post_id = $posts[0]->ID;
+        
+        // Print CSS link inline
+        cmr_print_elementor_css($post_id);
+        
+        // Render it
+        if ( class_exists( '\\Elementor\\Plugin' ) ) {
+            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
+        }
+    }
+    
+    return ob_get_clean();
+});
 
 // Temporary endpoint to migrate Press Releases to CMR News
 add_action( 'rest_api_init', function () {

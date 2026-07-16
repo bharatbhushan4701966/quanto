@@ -361,17 +361,8 @@ while ( have_posts() ) :
     </div> <!-- Closes cmr-container -->
 </div> <!-- Closes cmr-media-single-wrapper -->
 
-<!-- CTA Banner Section -->
-<div class="cmr-single-cta-banner">
-    <div class="cmr-single-cta-content">
-        <h2 class="cmr-single-cta-title">Get Deeper Insights on This Topic</h2>
-        <p class="cmr-single-cta-text">Access detailed reports, market forecasts, and analyst-led intelligence tailored to your business.</p>
-        <div class="cmr-single-cta-buttons">
-            <a href="/contact" class="cmr-btn-solid">Talk to an Analyst <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
-            <a href="/topview" class="cmr-btn-outline">Browse all topview <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
-        </div>
-    </div>
-</div>
+<!-- CTA Banner Section via Elementor Template -->
+<?php echo do_shortcode('[cmr_single_media_cta]'); ?>
 
 <!-- Related Media Section -->
 <div class="cmr-related-media-section">
@@ -599,82 +590,6 @@ endwhile;
         align-items: flex-start;
         gap: 15px;
     }
-}
-
-/* Single CTA Banner Section */
-.cmr-single-cta-banner {
-    background-color: #4C27AF;
-    padding: 70px 20px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    color: #fff;
-    margin-top: 40px;
-}
-.cmr-single-cta-content {
-    position: relative;
-    z-index: 2;
-    max-width: 800px;
-    margin: 0 auto;
-}
-.cmr-single-cta-title {
-    font-size: 38px;
-    font-weight: 700;
-    margin-bottom: 15px;
-    color: #fff;
-    letter-spacing: -1px !important;
-}
-.cmr-single-cta-text {
-    font-size: 16px;
-    margin-bottom: 35px;
-    color: #e0d4ff;
-    font-weight: 400;
-    letter-spacing: normal !important;
-}
-.cmr-single-cta-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-.cmr-btn-solid {
-    background: #fff;
-    color: #4C27AF;
-    padding: 12px 28px;
-    border-radius: 30px;
-    font-weight: 600;
-    font-size: 15px;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s;
-}
-.cmr-btn-outline {
-    background: transparent;
-    color: #fff;
-    border: 1px solid #fff;
-    padding: 12px 28px;
-    border-radius: 30px;
-    font-weight: 600;
-    font-size: 15px;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s;
-}
-.cmr-btn-solid svg, .cmr-btn-outline svg {
-    width: 14px;
-    height: 14px;
-}
-.cmr-btn-solid:hover {
-    background: #f0f0f0;
-    color: #4C27AF;
-}
-.cmr-btn-outline:hover {
-    background: rgba(255,255,255,0.1);
-    color: #fff;
 }
 
 /* Related Top View Section */
