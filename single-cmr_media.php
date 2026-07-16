@@ -608,19 +608,29 @@ if ($is_audio_post && !preg_match('/\.(mp3|wav|ogg|m4a)$/i', $media_url)) {
         <h2>Related <?php echo esc_html(ucwords(strtolower($media_type))); ?></h2>
         <div class="cmr-media-grid-wrap">
             <?php 
+            $category_ids = wp_get_post_categories(get_the_ID());
+            
             $related_args = array(
                 'post_type' => 'cmr_media',
                 'posts_per_page' => 3,
                 'post__not_in' => array(get_the_ID()),
-                'meta_query' => array(
-                    array(
-                        'key' => '_cmr_media_type',
-                        'value' => $media_type,
-                        'compare' => '='
-                    )
-                )
             );
+            
+            if (!empty($category_ids)) {
+                $related_args['category__in'] = $category_ids;
+            }
+            
             $related_query = new WP_Query($related_args);
+            
+            // Fallback to recent posts if no related category posts found
+            if (!$related_query->have_posts()) {
+                $related_args = array(
+                    'post_type' => 'cmr_media',
+                    'posts_per_page' => 3,
+                    'post__not_in' => array(get_the_ID()),
+                );
+                $related_query = new WP_Query($related_args);
+            }
             if ($related_query->have_posts()) :
                 while ($related_query->have_posts()) : $related_query->the_post();
                     // Get thumbnail using our new smart fallback function
@@ -738,14 +748,23 @@ endwhile;
                 if (iconPause) iconPause.style.display = 'block';
             });
             
+            var updateTotalTime = function() {
+                if (timeTotal && !isNaN(audioPlayer.duration) && audioPlayer.duration !== Infinity) {
+                    timeTotal.textContent = formatTime(audioPlayer.duration);
+                }
+            };
+            
             audioPlayer.addEventListener('pause', function() {
                 if (iconPlay) iconPlay.style.display = 'block';
                 if (iconPause) iconPause.style.display = 'none';
             });
             
-            audioPlayer.addEventListener('loadedmetadata', function() {
-                if (timeTotal) timeTotal.textContent = formatTime(audioPlayer.duration);
-            });
+            audioPlayer.addEventListener('loadedmetadata', updateTotalTime);
+            audioPlayer.addEventListener('durationchange', updateTotalTime);
+            
+            if (audioPlayer.readyState >= 1) {
+                updateTotalTime();
+            }
             
             audioPlayer.addEventListener('timeupdate', function() {
                 var percent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
