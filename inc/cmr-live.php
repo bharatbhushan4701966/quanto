@@ -921,20 +921,20 @@ if ( ! function_exists( 'cmr_trending_topview_shortcode' ) ) {
                     ?>
                     
                     <!-- Left: Featured -->
-                    <a href="<?php echo esc_url($feat_link); ?>" class="cmr-topview-featured" target="_blank" rel="noopener noreferrer">
+                    <a href="<?php echo esc_url($feat_link); ?>" class="cmr-topview-featured js-feat-link" target="_blank" rel="noopener noreferrer">
                         <div class="cmr-topview-feat-img">
-                            <img src="<?php echo esc_url($feat_thumb); ?>" alt="<?php echo esc_attr(get_the_title($feat_post)); ?>">
-                            <div class="cmr-topview-feat-badge"><?php echo esc_html($feat_dur); ?></div>
+                            <img class="js-feat-img" src="<?php echo esc_url($feat_thumb); ?>" alt="<?php echo esc_attr(get_the_title($feat_post)); ?>">
+                            <div class="cmr-topview-feat-badge js-feat-dur"><?php echo esc_html($feat_dur); ?></div>
                             <div class="cmr-topview-feat-play">
                                 <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                             </div>
                         </div>
                         <div class="cmr-topview-feat-meta">
-                            <span class="type-topview"><?php echo esc_html($feat_type); ?></span> &bull; 
-                            <?php echo esc_html(strtoupper($feat_cat)); ?> &bull; 
-                            <?php echo esc_html(strtoupper($feat_date)); ?> &bull; 100 VIEW
+                            <span class="type-topview js-feat-type"><?php echo esc_html($feat_type); ?></span> &bull; 
+                            <span class="js-feat-cat"><?php echo esc_html(strtoupper($feat_cat)); ?></span> &bull; 
+                            <span class="js-feat-date"><?php echo esc_html(strtoupper($feat_date)); ?></span> &bull; 100 VIEW
                         </div>
-                        <h3 class="cmr-topview-feat-title"><?php echo esc_html(get_the_title($feat_post)); ?></h3>
+                        <h3 class="cmr-topview-feat-title js-feat-title"><?php echo esc_html(get_the_title($feat_post)); ?></h3>
                     </a>
 
                     <!-- Right: Playlist -->
@@ -947,9 +947,23 @@ if ( ! function_exists( 'cmr_trending_topview_shortcode' ) ) {
                             $date = get_the_date('d M Y', $post_obj);
                             $link = esc_url(get_permalink($post_obj->ID));
                             
+                            // Get metadata for JS
+                            $full_thumb = get_the_post_thumbnail_url( $post_obj->ID, 'large' );
+                            if ( ! $full_thumb ) $full_thumb = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
+                            $dur = get_post_meta( $post_obj->ID, '_cmr_media_duration', true ) ?: '08:20 MINS';
+                            $type = get_post_meta( $post_obj->ID, '_cmr_media_type', true ) ?: 'TOP VIEW';
+                            $cat = 'AUTOMOTIVE';
+                            $terms = get_the_terms( $post_obj->ID, 'category' );
+                            if ( $terms && ! is_wp_error( $terms ) ) {
+                                $cat = $terms[0]->name;
+                            }
+                            $cat = strtoupper($cat);
+                            $date_upper = strtoupper($date);
+                            $title = esc_attr(get_the_title($post_obj));
+                            
                             $active_class = ($index === 0) ? 'active' : '';
                         ?>
-                        <a href="<?php echo esc_url($link); ?>" class="cmr-topview-list-item <?php echo $active_class; ?>" target="_blank" rel="noopener noreferrer">
+                        <a href="<?php echo esc_url($link); ?>" class="cmr-topview-list-item <?php echo $active_class; ?>" data-thumb="<?php echo esc_url($full_thumb); ?>" data-dur="<?php echo esc_attr($dur); ?>" data-type="<?php echo esc_attr($type); ?>" data-cat="<?php echo esc_attr($cat); ?>" data-date="<?php echo esc_attr($date_upper); ?>" data-title="<?php echo $title; ?>" data-link="<?php echo esc_url($link); ?>">
                             <div class="cmr-topview-list-img">
                                 <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr(get_the_title($post_obj)); ?>">
                                 <div class="cmr-topview-list-play">
@@ -969,6 +983,43 @@ if ( ! function_exists( 'cmr_trending_topview_shortcode' ) ) {
                 </div>
             </div>
         </div>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var topviewContainers = document.querySelectorAll('.cmr-topview-layout');
+                topviewContainers.forEach(function(container) {
+                    var listItems = container.querySelectorAll('.cmr-topview-list-item');
+                    var featLink = container.querySelector('.js-feat-link');
+                    var featImg = container.querySelector('.js-feat-img');
+                    var featDur = container.querySelector('.js-feat-dur');
+                    var featType = container.querySelector('.js-feat-type');
+                    var featCat = container.querySelector('.js-feat-cat');
+                    var featDate = container.querySelector('.js-feat-date');
+                    var featTitle = container.querySelector('.js-feat-title');
+                    
+                    if(!featLink) return;
+                    
+                    listItems.forEach(function(item) {
+                        item.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            
+                            // Update active state
+                            listItems.forEach(function(el) { el.classList.remove('active'); });
+                            this.classList.add('active');
+                            
+                            // Update featured area
+                            featLink.href = this.getAttribute('data-link');
+                            featImg.src = this.getAttribute('data-thumb');
+                            featDur.textContent = this.getAttribute('data-dur');
+                            featType.textContent = this.getAttribute('data-type');
+                            featCat.textContent = this.getAttribute('data-cat');
+                            featDate.textContent = this.getAttribute('data-date');
+                            featTitle.textContent = this.getAttribute('data-title');
+                        });
+                    });
+                });
+            });
+        </script>
         <?php
         wp_reset_postdata();
         return ob_get_clean();
