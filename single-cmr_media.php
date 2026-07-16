@@ -373,6 +373,7 @@ while ( have_posts() ) :
     }
 </style>
 
+<?php
 $audio_only = get_post_meta( get_the_ID(), '_cmr_media_audio_only', true );
 $is_audio_post = (strtoupper($media_type) === 'PODCAST') || preg_match('/\.(mp3|wav|ogg|m4a)$/i', $media_url) || $audio_only === '1';
 
