@@ -1251,10 +1251,11 @@ function cmr_bulk_update_woo_downloads() {
         if (!function_exists('wc_get_products')) { die('WooCommerce not active.'); }
         $products = wc_get_products(['limit' => -1]);
         $count = 0;
+        $base_url = isset($_GET['base_url']) ? esc_url_raw($_GET['base_url']) : 'https://qai8358l95-staging.onrocket.site/report/';
         foreach ($products as $product) {
             $slug = $product->get_slug();
             // Assumes file is named as {product_slug}.pdf in the /report/ directory
-            $file_url = 'https://qai8358l95-staging.onrocket.site/report/' . $slug . '.pdf';
+            $file_url = rtrim($base_url, '/') . '/' . $slug . '.pdf';
             
             $download_id = md5($file_url);
             $file = new WC_Product_Download();
@@ -1272,6 +1273,6 @@ function cmr_bulk_update_woo_downloads() {
             $product->save();
             $count++;
         }
-        die("Successfully updated $count WooCommerce products with new download URLs.");
+        die("Successfully updated $count WooCommerce products. Used base URL: " . esc_html($base_url));
     }
 }
