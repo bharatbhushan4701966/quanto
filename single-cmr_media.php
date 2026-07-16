@@ -207,43 +207,275 @@ while ( have_posts() ) :
             margin-bottom: 30px;
         }
     }
+    /* Audio Mode Styles */
+    .cmr-audio-banner {
+        width: 100%;
+        height: 60vh;
+        min-height: 400px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .cmr-audio-banner-overlay {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.65);
+    }
+    .cmr-audio-banner-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        color: #fff;
+        padding: 0 20px;
+        max-width: 900px;
+    }
+    .cmr-audio-breadcrumbs {
+        font-size: 11px;
+        font-weight: 600;
+        margin-bottom: 25px;
+        color: #ddd;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .cmr-audio-breadcrumbs a {
+        color: #ddd;
+        text-decoration: none;
+    }
+    .cmr-audio-title {
+        font-size: 52px;
+        font-weight: 700;
+        margin: 0 0 25px 0;
+        color: #fff;
+        line-height: 1.1;
+        letter-spacing: -1px;
+    }
+    .cmr-audio-meta {
+        font-size: 12px;
+        font-weight: 700;
+        color: #ddd;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+    .cmr-audio-meta .dot {
+        margin: 0 8px;
+        opacity: 0.5;
+    }
+    .cmr-audio-player-wrapper {
+        position: relative;
+        z-index: 10;
+        max-width: 900px;
+        margin: -50px auto 50px auto;
+        padding: 0 20px;
+    }
+    .cmr-audio-player-box {
+        background: #fff;
+        border: 4px solid #00A3FF;
+        padding: 20px 30px;
+        display: flex;
+        align-items: center;
+        gap: 25px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    }
+    .audio-play-btn {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: #000;
+        padding: 0;
+        display: flex;
+        transition: transform 0.2s;
+    }
+    .audio-play-btn:hover {
+        transform: scale(1.05);
+    }
+    .audio-play-btn svg {
+        width: 44px;
+        height: 44px;
+    }
+    .audio-progress-container {
+        flex: 1;
+        height: 6px;
+        background: #e0e0e0;
+        border-radius: 3px;
+        position: relative;
+        cursor: pointer;
+    }
+    .audio-progress-fill {
+        position: absolute;
+        top: 0; left: 0; bottom: 0;
+        background: #000;
+        width: 0%;
+        border-radius: 3px;
+        pointer-events: none;
+    }
+    .audio-progress-thumb {
+        position: absolute;
+        top: 50%;
+        left: 0%;
+        transform: translate(-50%, -50%);
+        width: 16px;
+        height: 16px;
+        background: #000;
+        border-radius: 50%;
+        pointer-events: none;
+    }
+    .audio-time {
+        font-size: 13px;
+        font-weight: 600;
+        color: #333;
+        min-width: 90px;
+        text-align: center;
+    }
+    .audio-secondary-ctrls {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+    .audio-ctrl-icon {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: #333;
+        padding: 0;
+        display: flex;
+        transition: color 0.2s;
+    }
+    .audio-ctrl-icon:hover {
+        color: #00A3FF;
+    }
+    .audio-ctrl-icon svg {
+        width: 22px;
+        height: 22px;
+    }
+    
+    @media (max-width: 768px) {
+        .cmr-audio-title {
+            font-size: 32px;
+        }
+        .cmr-audio-player-box {
+            flex-wrap: wrap;
+            padding: 15px;
+            gap: 15px;
+        }
+        .audio-progress-container {
+            order: 4;
+            min-width: 100%;
+            margin-top: 5px;
+        }
+        .audio-secondary-ctrls {
+            margin-left: auto;
+        }
+    }
 </style>
 
-<div class="cmr-media-single-wrapper">
-    <!-- Media Banner -->
-    <div class="cmr-media-banner">
-        <?php if($media_url): ?>
-            <?php 
-                $is_youtube = strpos($media_url, 'youtube.com') !== false || strpos($media_url, 'youtu.be') !== false;
-                if($is_youtube) {
-                    $video_id = '';
-                    if ( preg_match( '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $media_url, $match ) ) {
-                        $video_id = $match[1];
-                    }
-                    if($video_id) {
-                        echo '<iframe id="cmr-main-video-player" width="100%" height="100%" src="https://www.youtube.com/embed/'.$video_id.'?autoplay=0&enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-                    }
-                } else {
-                    echo '<video id="cmr-main-video-player" controls width="100%" poster="'.esc_url($thumbnail_url).'"><source src="'.esc_url($media_url).'" type="video/mp4"></video>';
-                }
-            ?>
-        <?php else: ?>
-            <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" style="width:100%; height:100%; object-fit:cover;">
-        <?php endif; ?>
-    </div>
+<?php
+$is_audio_post = (strtoupper($media_type) === 'PODCAST') || preg_match('/\.(mp3|wav|ogg|m4a)$/i', $media_url);
+?>
 
-    <div class="cmr-media-container">
-        <!-- Title and Meta -->
-        <h1 class="cmr-media-title"><?php the_title(); ?></h1>
-        <div class="cmr-media-meta">
-            <span><?php echo esc_html($views); ?></span>
-            <span class="dot">&bull;</span>
-            <span><?php echo esc_html($date); ?></span>
-            <span class="dot">&bull;</span>
-            <span><?php echo esc_html($media_duration); ?> <?php echo esc_html($media_type); ?></span>
-            <span class="dot">&bull;</span>
-            <span>BY <?php echo esc_html($author); ?></span>
+<div class="cmr-media-single-wrapper <?php echo $is_audio_post ? 'cmr-audio-mode' : ''; ?>">
+    <?php if ($is_audio_post): ?>
+        
+        <!-- Audio Banner -->
+        <div class="cmr-audio-banner" style="background-image: url('<?php echo esc_url($thumbnail_url); ?>');">
+            <div class="cmr-audio-banner-overlay"></div>
+            <div class="cmr-audio-banner-content">
+                <div class="cmr-audio-breadcrumbs">
+                    <a href="/">CMR Live</a> &rsaquo; <a href="#"><?php echo esc_html(ucwords(strtolower($media_type))); ?></a> &rsaquo; <?php the_title(); ?>
+                </div>
+                <h1 class="cmr-audio-title"><?php the_title(); ?></h1>
+                <div class="cmr-audio-meta">
+                    <span><?php echo esc_html(strtoupper($media_type)); ?></span> <span class="dot">&bull;</span> 
+                    <span><?php echo esc_html(strtoupper($date)); ?></span> <span class="dot">&bull;</span> 
+                    <span>BY <?php echo esc_html(strtoupper($author)); ?></span> <span class="dot">&bull;</span> 
+                    <span><?php echo esc_html(strtoupper($media_duration)); ?></span> <span class="dot">&bull;</span> 
+                    <span><?php echo esc_html(strtoupper($views)); ?></span>
+                </div>
+            </div>
         </div>
+        
+        <!-- Floating Audio Player -->
+        <div class="cmr-audio-player-wrapper">
+            <div class="cmr-audio-player-box">
+                <button id="cmr-audio-play-btn" class="audio-play-btn" aria-label="Play">
+                    <!-- Play icon by default -->
+                    <svg class="icon-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"></polygon></svg>
+                    <!-- Pause icon hidden by default -->
+                    <svg class="icon-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:none;"><circle cx="12" cy="12" r="10"></circle><line x1="10" y1="15" x2="10" y2="9"></line><line x1="14" y1="15" x2="14" y2="9"></line></svg>
+                </button>
+                <div class="audio-progress-container" id="cmr-audio-progress-container">
+                    <div class="audio-progress-fill" id="cmr-audio-progress-fill"></div>
+                    <div class="audio-progress-thumb" id="cmr-audio-progress-thumb"></div>
+                </div>
+                <div class="audio-time">
+                    <span id="cmr-audio-current">00:00</span> / <span id="cmr-audio-total"><?php echo esc_html($media_duration); ?></span>
+                </div>
+                <div class="audio-secondary-ctrls">
+                    <button class="audio-ctrl-icon" id="cmr-audio-rw" aria-label="Rewind 10s">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 17l-5-5 5-5"></path><path d="M18 17l-5-5 5-5"></path></svg>
+                    </button>
+                    <button class="audio-ctrl-icon" id="cmr-audio-ff" aria-label="Forward 10s">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 17l5-5-5-5"></path><path d="M6 17l5-5-5-5"></path></svg>
+                    </button>
+                    <button class="audio-ctrl-icon" aria-label="Volume">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                    </button>
+                    <button class="audio-ctrl-icon" aria-label="Share">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    </button>
+                    <button class="audio-ctrl-icon" aria-label="More">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="2"></circle><circle cx="12" cy="5" r="2"></circle><circle cx="12" cy="19" r="2"></circle></svg>
+                    </button>
+                </div>
+            </div>
+            <audio id="cmr-native-audio" src="<?php echo esc_url($media_url); ?>" preload="metadata"></audio>
+        </div>
+
+        <div class="cmr-media-container">
+            <!-- For Audio, we already have title/meta in the banner, skip them here -->
+
+    <?php else: ?>
+
+        <!-- Media Banner (Video) -->
+        <div class="cmr-media-banner">
+            <?php if($media_url): ?>
+                <?php 
+                    $is_youtube = strpos($media_url, 'youtube.com') !== false || strpos($media_url, 'youtu.be') !== false;
+                    if($is_youtube) {
+                        $video_id = '';
+                        if ( preg_match( '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $media_url, $match ) ) {
+                            $video_id = $match[1];
+                        }
+                        if($video_id) {
+                            echo '<iframe id="cmr-main-video-player" width="100%" height="100%" src="https://www.youtube.com/embed/'.$video_id.'?autoplay=0&enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                        }
+                    } else {
+                        echo '<video id="cmr-main-video-player" controls width="100%" poster="'.esc_url($thumbnail_url).'"><source src="'.esc_url($media_url).'" type="video/mp4"></video>';
+                    }
+                ?>
+            <?php else: ?>
+                <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" style="width:100%; height:100%; object-fit:cover;">
+            <?php endif; ?>
+        </div>
+
+        <div class="cmr-media-container">
+            <!-- Title and Meta -->
+            <h1 class="cmr-media-title"><?php the_title(); ?></h1>
+            <div class="cmr-media-meta">
+                <span><?php echo esc_html($views); ?></span>
+                <span class="dot">&bull;</span>
+                <span><?php echo esc_html($date); ?></span>
+                <span class="dot">&bull;</span>
+                <span><?php echo esc_html($media_duration); ?> <?php echo esc_html($media_type); ?></span>
+                <span class="dot">&bull;</span>
+                <span>BY <?php echo esc_html($author); ?></span>
+            </div>
+
+    <?php endif; ?>
+
         
         <div class="cmr-media-content-layout">
             <!-- Left Side: Share Icons -->
@@ -441,6 +673,7 @@ endwhile;
 <script>
     var player;
     var playerType = 'none';
+    var audioPlayer = document.getElementById('cmr-native-audio');
 
     function onYouTubeIframeAPIReady() {
         var iframe = document.getElementById('cmr-main-video-player');
@@ -455,12 +688,88 @@ endwhile;
             });
         }
     }
+    
+    function formatTime(seconds) {
+        if (isNaN(seconds)) return '00:00';
+        var m = Math.floor(seconds / 60);
+        var s = Math.floor(seconds % 60);
+        return (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+    }
 
     document.addEventListener('DOMContentLoaded', function() {
         var videoEl = document.getElementById('cmr-main-video-player');
         if (videoEl && videoEl.tagName.toLowerCase() === 'video') {
             playerType = 'html5';
             player = videoEl;
+        }
+
+        // Custom Audio Player Logic
+        if (audioPlayer) {
+            playerType = 'audio';
+            player = audioPlayer;
+            
+            var playBtn = document.getElementById('cmr-audio-play-btn');
+            var iconPlay = playBtn ? playBtn.querySelector('.icon-play') : null;
+            var iconPause = playBtn ? playBtn.querySelector('.icon-pause') : null;
+            var progressContainer = document.getElementById('cmr-audio-progress-container');
+            var progressFill = document.getElementById('cmr-audio-progress-fill');
+            var progressThumb = document.getElementById('cmr-audio-progress-thumb');
+            var timeCurrent = document.getElementById('cmr-audio-current');
+            var timeTotal = document.getElementById('cmr-audio-total');
+            var rwBtn = document.getElementById('cmr-audio-rw');
+            var ffBtn = document.getElementById('cmr-audio-ff');
+            
+            if (playBtn) {
+                playBtn.addEventListener('click', function() {
+                    if (audioPlayer.paused) {
+                        audioPlayer.play();
+                    } else {
+                        audioPlayer.pause();
+                    }
+                });
+            }
+            
+            audioPlayer.addEventListener('play', function() {
+                if (iconPlay) iconPlay.style.display = 'none';
+                if (iconPause) iconPause.style.display = 'block';
+            });
+            
+            audioPlayer.addEventListener('pause', function() {
+                if (iconPlay) iconPlay.style.display = 'block';
+                if (iconPause) iconPause.style.display = 'none';
+            });
+            
+            audioPlayer.addEventListener('loadedmetadata', function() {
+                if (timeTotal) timeTotal.textContent = formatTime(audioPlayer.duration);
+            });
+            
+            audioPlayer.addEventListener('timeupdate', function() {
+                var percent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                if (progressFill) progressFill.style.width = percent + '%';
+                if (progressThumb) progressThumb.style.left = percent + '%';
+                if (timeCurrent) timeCurrent.textContent = formatTime(audioPlayer.currentTime);
+            });
+            
+            if (progressContainer) {
+                progressContainer.addEventListener('click', function(e) {
+                    var rect = progressContainer.getBoundingClientRect();
+                    var clickX = e.clientX - rect.left;
+                    var percent = clickX / rect.width;
+                    audioPlayer.currentTime = percent * audioPlayer.duration;
+                });
+            }
+            
+            if (rwBtn) {
+                rwBtn.addEventListener('click', function() {
+                    audioPlayer.currentTime = Math.max(0, audioPlayer.currentTime - 10);
+                });
+            }
+            
+            if (ffBtn) {
+                ffBtn.addEventListener('click', function() {
+                    audioPlayer.currentTime = Math.min(audioPlayer.duration, audioPlayer.currentTime + 10);
+                });
+            }
         }
 
         var buttons = document.querySelectorAll('.play-part-btn');
@@ -474,9 +783,12 @@ endwhile;
                 } else if (playerType === 'html5' && player) {
                     player.currentTime = time;
                     player.play();
+                } else if (playerType === 'audio' && player) {
+                    player.currentTime = time;
+                    player.play();
                 }
                 
-                // Scroll to video
+                // Scroll to media
                 var banner = document.querySelector('.cmr-media-banner');
                 if (banner) {
                     var offset = banner.getBoundingClientRect().top + window.scrollY - 100; // Account for sticky header
@@ -489,12 +801,14 @@ endwhile;
         const feedbackBtns = document.querySelectorAll('.feedback-btn');
         const feedbackThanks = document.querySelector('.feedback-thanks');
         
-        feedbackBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelector('.feedback-actions').style.display = 'none';
-                feedbackThanks.style.display = 'flex';
+        if (feedbackBtns && feedbackThanks) {
+            feedbackBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelector('.feedback-actions').style.display = 'none';
+                    feedbackThanks.style.display = 'flex';
+                });
             });
-        });
+        }
     });
 </script>
 
