@@ -424,13 +424,13 @@ $is_audio_post = (strtoupper($media_type) === 'PODCAST') || preg_match('/\.(mp3|
                     <button class="audio-ctrl-icon" id="cmr-audio-ff" aria-label="Forward 10s">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 17l5-5-5-5"></path><path d="M6 17l5-5-5-5"></path></svg>
                     </button>
-                    <button class="audio-ctrl-icon" aria-label="Volume">
+                    <button class="audio-ctrl-icon" id="cmr-audio-mute" aria-label="Volume">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
                     </button>
-                    <button class="audio-ctrl-icon" aria-label="Share">
+                    <button class="audio-ctrl-icon" id="cmr-audio-share" aria-label="Share">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                     </button>
-                    <button class="audio-ctrl-icon" aria-label="More">
+                    <button class="audio-ctrl-icon" id="cmr-audio-download" aria-label="More">
                         <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="2"></circle><circle cx="12" cy="5" r="2"></circle><circle cx="12" cy="19" r="2"></circle></svg>
                     </button>
                 </div>
@@ -744,6 +744,9 @@ endwhile;
         var metaDuration = document.getElementById('cmr-meta-duration');
         var rwBtn = document.getElementById('cmr-audio-rw');
         var ffBtn = document.getElementById('cmr-audio-ff');
+        var muteBtn = document.getElementById('cmr-audio-mute');
+        var shareBtn = document.getElementById('cmr-audio-share');
+        var downloadBtn = document.getElementById('cmr-audio-download');
         
         var invisibleYtEl = document.getElementById('cmr-yt-invisible-player');
 
@@ -848,21 +851,40 @@ endwhile;
                     var clickX = e.clientX - rect.left;
                     var percent = clickX / rect.width;
                     if (ytAudioPlayer && ytDuration) {
-                        ytAudioPlayer.seekTo(percent * ytDuration, true);
+                        var newTime = percent * ytDuration;
+                        ytAudioPlayer.seekTo(newTime, true);
+                        uiUpdateProgress(newTime, ytDuration);
                     }
                 });
             }
             if (rwBtn) {
                 rwBtn.addEventListener('click', function() {
                     if (ytAudioPlayer && ytDuration) {
-                        ytAudioPlayer.seekTo(Math.max(0, ytAudioPlayer.getCurrentTime() - 10), true);
+                        var newTime = Math.max(0, ytAudioPlayer.getCurrentTime() - 10);
+                        ytAudioPlayer.seekTo(newTime, true);
+                        uiUpdateProgress(newTime, ytDuration);
                     }
                 });
             }
             if (ffBtn) {
                 ffBtn.addEventListener('click', function() {
                     if (ytAudioPlayer && ytDuration) {
-                        ytAudioPlayer.seekTo(Math.min(ytDuration, ytAudioPlayer.getCurrentTime() + 10), true);
+                        var newTime = Math.min(ytDuration, ytAudioPlayer.getCurrentTime() + 10);
+                        ytAudioPlayer.seekTo(newTime, true);
+                        uiUpdateProgress(newTime, ytDuration);
+                    }
+                });
+            }
+            if (muteBtn) {
+                muteBtn.addEventListener('click', function() {
+                    if (ytAudioPlayer) {
+                        if (ytAudioPlayer.isMuted()) {
+                            ytAudioPlayer.unMute();
+                            muteBtn.style.opacity = '1';
+                        } else {
+                            ytAudioPlayer.mute();
+                            muteBtn.style.opacity = '0.5';
+                        }
                     }
                 });
             }
@@ -906,20 +928,59 @@ endwhile;
                     var clickX = e.clientX - rect.left;
                     var percent = clickX / rect.width;
                     audioPlayer.currentTime = percent * audioPlayer.duration;
+                    uiUpdateProgress(audioPlayer.currentTime, audioPlayer.duration);
                 });
             }
             
             if (rwBtn) {
                 rwBtn.addEventListener('click', function() {
                     audioPlayer.currentTime = Math.max(0, audioPlayer.currentTime - 10);
+                    uiUpdateProgress(audioPlayer.currentTime, audioPlayer.duration);
                 });
             }
             
             if (ffBtn) {
                 ffBtn.addEventListener('click', function() {
                     audioPlayer.currentTime = Math.min(audioPlayer.duration, audioPlayer.currentTime + 10);
+                    uiUpdateProgress(audioPlayer.currentTime, audioPlayer.duration);
                 });
             }
+            
+            if (muteBtn) {
+                muteBtn.addEventListener('click', function() {
+                    audioPlayer.muted = !audioPlayer.muted;
+                    muteBtn.style.opacity = audioPlayer.muted ? '0.5' : '1';
+                });
+            }
+        }
+
+        var mediaUrl = "<?php echo esc_js($media_url); ?>";
+        if (shareBtn) {
+            shareBtn.addEventListener('click', function() {
+                var dummy = document.createElement('input'), text = window.location.href;
+                document.body.appendChild(dummy);
+                dummy.value = text;
+                dummy.select();
+                document.execCommand('copy');
+                document.body.removeChild(dummy);
+                alert("Link copied to clipboard!");
+            });
+        }
+        if (downloadBtn) {
+            downloadBtn.addEventListener('click', function() {
+                if (mediaUrl) {
+                    if (mediaUrl.indexOf('youtube.com') !== -1 || mediaUrl.indexOf('youtu.be') !== -1) {
+                        window.open(mediaUrl, '_blank');
+                    } else {
+                        var a = document.createElement('a');
+                        a.href = mediaUrl;
+                        a.download = mediaUrl.split('/').pop() || 'download';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    }
+                }
+            });
         }
 
         var buttons = document.querySelectorAll('.play-part-btn');
