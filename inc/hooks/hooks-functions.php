@@ -438,7 +438,10 @@
                 // Enqueue quanto_tab_build template CSS early so shortcodes have CSS in <head>
                 $tab_slugs = array(
                     'your-challenge-our-research-your-advantage',
-                    'fotter-card'
+                    'fotter-card',
+                    'testimonials',
+                    'we-worked-with-largest-global-brands',
+                    'your-next-big-decision-deserves-better-intelligence'
                 );
                 foreach ( $tab_slugs as $slug ) {
                     $tab_posts = get_posts(array(
