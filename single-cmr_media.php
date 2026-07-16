@@ -397,7 +397,7 @@ if ($is_audio_post && !preg_match('/\.(mp3|wav|ogg|m4a)$/i', $media_url)) {
                     <span><?php echo esc_html(strtoupper($media_type)); ?></span> <span class="dot">&bull;</span> 
                     <span><?php echo esc_html(strtoupper($date)); ?></span> <span class="dot">&bull;</span> 
                     <span>BY <?php echo esc_html(strtoupper($author)); ?></span> <span class="dot">&bull;</span> 
-                    <span><?php echo esc_html(strtoupper($media_duration)); ?></span> <span class="dot">&bull;</span> 
+                    <span id="cmr-meta-duration"><?php echo esc_html(strtoupper($media_duration)); ?></span> <span class="dot">&bull;</span> 
                     <span><?php echo esc_html(strtoupper($views)); ?></span>
                 </div>
             </div>
@@ -705,9 +705,15 @@ endwhile;
     
     function formatTime(seconds) {
         if (isNaN(seconds)) return '00:00';
-        var m = Math.floor(seconds / 60);
+        var h = Math.floor(seconds / 3600);
+        var m = Math.floor((seconds % 3600) / 60);
         var s = Math.floor(seconds % 60);
-        return (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+        
+        var formatted = (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+        if (h > 0) {
+            formatted = h + ':' + formatted;
+        }
+        return formatted;
     }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -730,6 +736,7 @@ endwhile;
             var progressThumb = document.getElementById('cmr-audio-progress-thumb');
             var timeCurrent = document.getElementById('cmr-audio-current');
             var timeTotal = document.getElementById('cmr-audio-total');
+            var metaDuration = document.getElementById('cmr-meta-duration');
             var rwBtn = document.getElementById('cmr-audio-rw');
             var ffBtn = document.getElementById('cmr-audio-ff');
             
@@ -749,8 +756,9 @@ endwhile;
             });
             
             var updateTotalTime = function() {
-                if (timeTotal && !isNaN(audioPlayer.duration) && audioPlayer.duration !== Infinity) {
-                    timeTotal.textContent = formatTime(audioPlayer.duration);
+                if (!isNaN(audioPlayer.duration) && audioPlayer.duration !== Infinity) {
+                    if (timeTotal) timeTotal.textContent = formatTime(audioPlayer.duration);
+                    if (metaDuration) metaDuration.textContent = Math.ceil(audioPlayer.duration / 60) + ' MIN';
                 }
             };
             
