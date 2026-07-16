@@ -70,7 +70,7 @@ while ( have_posts() ) :
     }
     .cmr-media-meta {
         font-size: 13px;
-        font-weight: 700;
+        font-weight: 600;
         color: #333;
         text-transform: uppercase;
         letter-spacing: 1px;
@@ -130,7 +130,7 @@ while ( have_posts() ) :
     }
     .cmr-media-content h2 {
         font-size: 32px;
-        font-weight: 700;
+        font-weight: 600;
         color: #000;
         margin: 0 0 25px 0;
         letter-spacing: -0.5px;

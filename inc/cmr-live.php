@@ -62,7 +62,7 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
             }
             .cmr-podcast-title-area h2 {
                 font-size: 42px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #fff;
                 margin: 0 0 10px 0;
                 letter-spacing: 0 !important;
@@ -145,7 +145,7 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                 background: #fff;
                 color: #111;
                 font-size: 11px;
-                font-weight: 700;
+                font-weight: 600;
                 padding: 4px 8px;
                 border-radius: 4px;
                 z-index: 2;
@@ -173,7 +173,7 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
             }
             .cmr-podcast-meta {
                 font-size: 11px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #888;
                 margin-bottom: 12px;
                 letter-spacing: 0.5px;
@@ -187,7 +187,7 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
             }
             .cmr-podcast-title {
                 font-size: 20px;
-                font-weight: 700; /* Bolder as requested */
+                font-weight: 600; /* Bolder as requested */
                 color: #fff;
                 margin: 0 0 20px 0;
                 line-height: 1.4;
@@ -456,7 +456,7 @@ if ( ! function_exists( 'cmr_trending_podcast_shortcode' ) ) {
             }
             .cmr-trending-title {
                 font-size: 42px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #000;
                 margin: 0 0 40px 0;
                 letter-spacing: 0 !important;
@@ -494,7 +494,7 @@ if ( ! function_exists( 'cmr_trending_podcast_shortcode' ) ) {
                 background: #fff;
                 color: #111;
                 font-size: 11px;
-                font-weight: 700;
+                font-weight: 600;
                 padding: 4px 8px;
                 border-radius: 4px;
                 z-index: 2;
@@ -522,7 +522,7 @@ if ( ! function_exists( 'cmr_trending_podcast_shortcode' ) ) {
             }
             .cmr-trending-meta {
                 font-size: 11px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #888;
                 margin-bottom: 12px;
                 letter-spacing: 0.5px;
@@ -536,7 +536,7 @@ if ( ! function_exists( 'cmr_trending_podcast_shortcode' ) ) {
             }
             .cmr-trending-card-title {
                 font-size: 22px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #000;
                 margin: 0 0 20px 0;
                 line-height: 1.3;
@@ -688,7 +688,7 @@ if ( ! function_exists( 'cmr_trending_topview_shortcode' ) ) {
             }
             .cmr-topview-title {
                 font-size: 42px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #000;
                 margin: 0 0 30px 0;
                 letter-spacing: 0 !important;
@@ -727,7 +727,7 @@ if ( ! function_exists( 'cmr_trending_topview_shortcode' ) ) {
                 background: #fff;
                 color: #111;
                 font-size: 12px;
-                font-weight: 700;
+                font-weight: 600;
                 padding: 5px 10px;
                 border-radius: 4px;
                 z-index: 2;
@@ -759,7 +759,7 @@ if ( ! function_exists( 'cmr_trending_topview_shortcode' ) ) {
             }
             .cmr-topview-feat-meta {
                 font-size: 12px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #888;
                 margin-bottom: 15px;
                 letter-spacing: 0.5px;
@@ -770,7 +770,7 @@ if ( ! function_exists( 'cmr_trending_topview_shortcode' ) ) {
             }
             .cmr-topview-feat-title {
                 font-size: 26px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #000;
                 margin: 0;
                 line-height: 1.3;
@@ -1006,7 +1006,7 @@ if ( ! function_exists( 'cmr_cta_banner_shortcode' ) ) {
             }
             .cmr-cta-title {
                 font-size: 42px;
-                font-weight: 700;
+                font-weight: 600;
                 margin: 0;
                 line-height: 1.2;
                 letter-spacing: -1px;
@@ -1197,7 +1197,7 @@ if ( ! function_exists( 'cmr_browse_recently_updated_shortcode' ) ) {
             }
             .cmr-browse-title {
                 font-size: 42px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #000;
                 margin: 0 0 30px 0;
                 letter-spacing: 0 !important;
@@ -1306,7 +1306,7 @@ if ( ! function_exists( 'cmr_browse_recently_updated_shortcode' ) ) {
                 background: #fff;
                 color: #111;
                 font-size: 11px;
-                font-weight: 700;
+                font-weight: 600;
                 padding: 4px 8px;
                 border-radius: 4px;
                 z-index: 2;
@@ -1334,7 +1334,7 @@ if ( ! function_exists( 'cmr_browse_recently_updated_shortcode' ) ) {
             }
             .cmr-browse-meta {
                 font-size: 11px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #888;
                 margin-bottom: 12px;
                 letter-spacing: 0.5px;
@@ -1348,7 +1348,7 @@ if ( ! function_exists( 'cmr_browse_recently_updated_shortcode' ) ) {
             }
             .cmr-browse-card-title {
                 font-size: 22px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #000;
                 margin: 0;
                 line-height: 1.3;
