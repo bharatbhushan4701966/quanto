@@ -1171,12 +1171,14 @@ if ( ! function_exists( 'cmr_get_thumbnail_with_fallback' ) ) {
             return $thumbnail_url;
         }
 
+        $fallback_img = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
+
         // 2. Check if there's a custom media URL and try to fetch og:image
         $media_url = get_post_meta($post_id, '_cmr_media_url', true);
         if ($media_url && filter_var($media_url, FILTER_VALIDATE_URL)) {
             
-            // Check transient cache to avoid slowing down page load
-            $cache_key = 'cmr_og_image_' . md5($media_url);
+            // Check transient cache to avoid slowing down page load (use v2 to bust cache)
+            $cache_key = 'cmr_og_image_v2_' . md5($media_url);
             $cached_img = get_transient($cache_key);
             
             if ($cached_img) {
@@ -1190,10 +1192,28 @@ if ( ! function_exists( 'cmr_get_thumbnail_with_fallback' ) ) {
                     $body = wp_remote_retrieve_body($response);
                     
                     // Look for og:image
-                    if (preg_match('/<meta property="og:image" content="([^"]+)"/i', $body, $matches) || preg_match('/<meta name="og:image" content="([^"]+)"/i', $body, $matches)) {
-                        $scraped_img = $matches[1];
-                        set_transient($cache_key, $scraped_img, 24 * HOUR_IN_SECONDS);
-                        return $scraped_img;
+                    if (preg_match('/<meta property="og:image" content="([^"]+)"/i', $body, $matches) || preg_match('/<meta name="og:image" content="([^"]+)"/i', $body, $matches) || preg_match('/<meta property="og:image:secure_url" content="([^"]+)"/i', $body, $matches) || preg_match('/<meta property="twitter:image" content="([^"]+)"/i', $body, $matches)) {
+                        
+                        $scraped_img = trim($matches[1]);
+                        
+                        // Handle relative URLs
+                        if (strpos($scraped_img, 'http') !== 0) {
+                            $parsed_url = parse_url($media_url);
+                            $scheme = isset($parsed_url['scheme']) ? $parsed_url['scheme'] : 'https';
+                            $host = isset($parsed_url['host']) ? $parsed_url['host'] : '';
+                            if (strpos($scraped_img, '//') === 0) {
+                                $scraped_img = $scheme . ':' . $scraped_img;
+                            } else if (strpos($scraped_img, '/') === 0) {
+                                $scraped_img = $scheme . '://' . $host . $scraped_img;
+                            } else {
+                                $scraped_img = $scheme . '://' . $host . '/' . $scraped_img;
+                            }
+                        }
+
+                        if (filter_var($scraped_img, FILTER_VALIDATE_URL)) {
+                            set_transient($cache_key, $scraped_img, 24 * HOUR_IN_SECONDS);
+                            return $scraped_img;
+                        }
                     }
                 }
                 // Cache the 'none' result so we don't fetch it every time
@@ -1202,6 +1222,6 @@ if ( ! function_exists( 'cmr_get_thumbnail_with_fallback' ) ) {
         }
 
         // 3. Absolute fallback image
-        return 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
+        return $fallback_img;
     }
 }
