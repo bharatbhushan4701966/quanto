@@ -1177,8 +1177,8 @@ if ( ! function_exists( 'cmr_get_thumbnail_with_fallback' ) ) {
         $media_url = get_post_meta($post_id, '_cmr_media_url', true);
         if ($media_url && filter_var($media_url, FILTER_VALIDATE_URL)) {
             
-            // Check transient cache to avoid slowing down page load (use v4 to bust cache)
-            $cache_key = 'cmr_og_image_v4_' . md5($media_url);
+            // Check transient cache to avoid slowing down page load (use v5 to bust cache)
+            $cache_key = 'cmr_og_image_v5_' . md5($media_url);
             $cached_img = get_transient($cache_key);
             
             if ($cached_img) {
@@ -1192,7 +1192,7 @@ if ( ! function_exists( 'cmr_get_thumbnail_with_fallback' ) ) {
                     $body = wp_remote_retrieve_body($response);
                     
                     // Look for preload image first (best for getpodcast.com covers), then og:image, etc.
-                    if (preg_match('/<link[^>]*rel="preload"[^>]*as="image"[^>]*href="([^"]+)"/i', $body, $matches) || preg_match('/<link[^>]*href="([^"]+)"[^>]*rel="preload"[^>]*as="image"/i', $body, $matches) || preg_match('/<meta property="og:image" content="([^"]+)"/i', $body, $matches) || preg_match('/<meta name="og:image" content="([^"]+)"/i', $body, $matches) || preg_match('/<meta property="og:image:secure_url" content="([^"]+)"/i', $body, $matches) || preg_match('/<meta property="twitter:image" content="([^"]+)"/i', $body, $matches)) {
+                    if (preg_match('/<link[^>]*rel="preload"[^>]*href="([^"]+)"[^>]*as="image"/i', $body, $matches) || preg_match('/<link[^>]*href="([^"]+)"[^>]*rel="preload"[^>]*as="image"/i', $body, $matches) || preg_match('/<meta property="og:image" content="([^"]+)"/i', $body, $matches) || preg_match('/<meta name="og:image" content="([^"]+)"/i', $body, $matches) || preg_match('/<meta property="og:image:secure_url" content="([^"]+)"/i', $body, $matches) || preg_match('/<meta property="twitter:image" content="([^"]+)"/i', $body, $matches)) {
                         
                         $scraped_img = trim($matches[1]);
                         
