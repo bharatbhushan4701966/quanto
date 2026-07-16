@@ -1316,3 +1316,42 @@ function cmr_bulk_delete_duplicate_woo_products() {
         die("Successfully moved $deleted_count duplicate WooCommerce products to the Trash (kept the oldest original for each title).");
     }
 }
+
+// Bulk replace domain in WooCommerce downloadable files
+add_action('init', 'cmr_bulk_replace_domain_woo_downloads');
+function cmr_bulk_replace_domain_woo_downloads() {
+    if (isset($_GET['cmr_fix_domains']) && current_user_can('manage_options')) {
+        if (!function_exists('wc_get_products')) { die('WooCommerce not active.'); }
+        
+        $products = wc_get_products(['limit' => -1, 'status' => 'any']);
+        $count = 0;
+        
+        foreach ($products as $product) {
+            $downloads = $product->get_downloads();
+            $updated = false;
+            
+            if ($downloads) {
+                foreach ($downloads as $download_id => $file) {
+                    $old_url = $file->get_file();
+                    if (strpos($old_url, 'cmrindia.com') !== false) {
+                        $new_url = str_replace(
+                            ['https://cmrindia.com', 'http://cmrindia.com'], 
+                            'https://qai8358l95-staging.onrocket.site', 
+                            $old_url
+                        );
+                        $file->set_file($new_url);
+                        $updated = true;
+                    }
+                }
+                
+                if ($updated) {
+                    $product->set_downloads($downloads);
+                    $product->save();
+                    $count++;
+                }
+            }
+        }
+        
+        die("Successfully updated domains from cmrindia.com to qai8358l95-staging in $count WooCommerce products.");
+    }
+}
