@@ -62,7 +62,7 @@ while ( have_posts() ) :
     /* Title and Meta */
     .cmr-media-title {
         font-size: 48px;
-        font-weight: 700;
+        font-weight: 600;
         color: #000;
         margin: 0 0 20px 0;
         line-height: 1.2;
