@@ -1177,8 +1177,8 @@ if ( ! function_exists( 'cmr_get_thumbnail_with_fallback' ) ) {
         $media_url = get_post_meta($post_id, '_cmr_media_url', true);
         if ($media_url && filter_var($media_url, FILTER_VALIDATE_URL)) {
             
-            // Check transient cache to avoid slowing down page load (use v5 to bust cache)
-            $cache_key = 'cmr_og_image_v5_' . md5($media_url);
+            // Check transient cache to avoid slowing down page load (use v6 to bust cache)
+            $cache_key = 'cmr_og_image_v6_' . md5($media_url);
             $cached_img = get_transient($cache_key);
             
             if ($cached_img) {
@@ -1191,10 +1191,23 @@ if ( ! function_exists( 'cmr_get_thumbnail_with_fallback' ) ) {
                 if (!is_wp_error($response)) {
                     $body = wp_remote_retrieve_body($response);
                     
+                    $candidates = [];
+                    
                     // Look for preload image first (best for getpodcast.com covers), then og:image, etc.
-                    if (preg_match('/<link[^>]*rel="preload"[^>]*href="([^"]+)"[^>]*as="image"/i', $body, $matches) || preg_match('/<link[^>]*href="([^"]+)"[^>]*rel="preload"[^>]*as="image"/i', $body, $matches) || preg_match('/<meta property="og:image" content="([^"]+)"/i', $body, $matches) || preg_match('/<meta name="og:image" content="([^"]+)"/i', $body, $matches) || preg_match('/<meta property="og:image:secure_url" content="([^"]+)"/i', $body, $matches) || preg_match('/<meta property="twitter:image" content="([^"]+)"/i', $body, $matches)) {
+                    if (preg_match_all('/<link[^>]*rel="preload"[^>]*href="([^"]+)"[^>]*as="image"/i', $body, $m)) { $candidates = array_merge($candidates, $m[1]); }
+                    if (preg_match_all('/<link[^>]*href="([^"]+)"[^>]*rel="preload"[^>]*as="image"/i', $body, $m)) { $candidates = array_merge($candidates, $m[1]); }
+                    if (preg_match_all('/<meta property="og:image:secure_url" content="([^"]+)"/i', $body, $m)) { $candidates = array_merge($candidates, $m[1]); }
+                    if (preg_match_all('/<meta property="og:image" content="([^"]+)"/i', $body, $m)) { $candidates = array_merge($candidates, $m[1]); }
+                    if (preg_match_all('/<meta name="og:image" content="([^"]+)"/i', $body, $m)) { $candidates = array_merge($candidates, $m[1]); }
+                    if (preg_match_all('/<meta property="twitter:image" content="([^"]+)"/i', $body, $m)) { $candidates = array_merge($candidates, $m[1]); }
+                    
+                    foreach ($candidates as $scraped_img) {
+                        $scraped_img = trim($scraped_img);
                         
-                        $scraped_img = trim($matches[1]);
+                        // Ignore tiny transparent square from getpodcast which breaks UI
+                        if (strpos($scraped_img, 'square.png') !== false) {
+                            continue;
+                        }
                         
                         // Fix double scheme from some buggy websites (like getpodcast.com)
                         $scraped_img = str_replace('https://https://', 'https://', $scraped_img);
@@ -1228,5 +1241,37 @@ if ( ! function_exists( 'cmr_get_thumbnail_with_fallback' ) ) {
 
         // 3. Absolute fallback image
         return $fallback_img;
+    }
+}
+
+// Bulk update WooCommerce downloadable files
+add_action('init', 'cmr_bulk_update_woo_downloads');
+function cmr_bulk_update_woo_downloads() {
+    if (isset($_GET['cmr_update_reports']) && current_user_can('manage_options')) {
+        if (!function_exists('wc_get_products')) { die('WooCommerce not active.'); }
+        $products = wc_get_products(['limit' => -1]);
+        $count = 0;
+        foreach ($products as $product) {
+            $slug = $product->get_slug();
+            // Assumes file is named as {product_slug}.pdf in the /report/ directory
+            $file_url = 'https://qai8358l95-staging.onrocket.site/report/' . $slug . '.pdf';
+            
+            $download_id = md5($file_url);
+            $file = new WC_Product_Download();
+            $file->set_id($download_id);
+            $file->set_name($product->get_title());
+            $file->set_file($file_url);
+            
+            $downloads = []; 
+            $downloads[$download_id] = $file;
+            
+            $product->set_downloads($downloads);
+            $product->set_downloadable(true);
+            $product->set_virtual(true);
+            
+            $product->save();
+            $count++;
+        }
+        die("Successfully updated $count WooCommerce products with new download URLs.");
     }
 }
