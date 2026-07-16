@@ -1155,201 +1155,6 @@ add_shortcode('cmr_global_brands', function() {
         
         // Render it
         if ( class_exists( '\\Elementor\\Plugin' ) ) {
-        width: 24px !important;
-        height: 24px !important;
-        color: #111 !important;
-        font-size: 18px !important;
-        text-decoration: none !important;
-        transition: all 0.3s !important;
-        background: transparent !important;
-    }
-    html body .quanto-team-box .team-content .custom-ul li a:hover {
-        color: #6A35FF !important;
-    }
-    html body .quanto-team-box .team-content .custom-ul li a svg {
-        width: 18px !important;
-        height: 18px !important;
-        fill: currentColor !important;
-    }
-    </style>
-    <?php
-});
-
-// Override the Elementor Services widget from the theme
-add_action('elementor/widgets/register', function($widgets_manager) {
-    // Unregister the plugin's original widget if it exists
-    $widgets_manager->unregister('quanto_services');
-    
-    // Register our theme's overridden widget
-    require_once get_template_directory() . '/inc/widgets/service.php';
-    $widgets_manager->register(new \Quanto_Service_Theme());
-
-    // Register new Logo Carousel widget
-    require_once get_template_directory() . '/inc/widgets/logo-carousel.php';
-    $widgets_manager->register(new \Quanto_Logo_Carousel_Widget());
-
-    // Register Industry Intel List widget
-    require_once get_template_directory() . '/inc/widgets/industry-intel-list.php';
-    $widgets_manager->register(new \Quanto_Industry_Intel_List_Widget());
-}, 20); // Priority 20 to run after the plugin registers its widgets
-require_once get_template_directory() . '/inc/cmr-footer-css-fix.php';
-
-// Shortcode to display the main Elementor footer by fetching the rendered URL
-add_shortcode('cmr_footer', function() {
-    $transient_key = 'cmr_footer_html_cache';
-    $cached_footer = get_transient( $transient_key );
-    
-    // Check if user is logged in (to force refresh) or if cache is empty
-    if ( false === $cached_footer || ( is_user_logged_in() && isset($_GET['refresh_footer']) ) ) {
-        $url = 'https://qai8358l95-staging.onrocket.site/?quanto_footer=main';
-        $response = wp_remote_get( $url, array('timeout' => 15) );
-        
-        if ( is_wp_error( $response ) ) {
-            return $cached_footer ? $cached_footer : '<!-- Error fetching footer -->';
-        }
-        
-        $body = wp_remote_retrieve_body( $response );
-        
-        // Extract everything from <footer class="footer"> to </footer>
-        // We'll also grab any inline styles right before it if they exist, but Elementor puts them inside.
-        if ( preg_match( '/<footer class="footer".*?<\/footer>/is', $body, $matches ) ) {
-            $cached_footer = $matches[0];
-            
-            // Extract ALL Elementor CSS links to ensure styles are loaded even if the footer post ID changes
-            if ( preg_match_all( '/<link[^>]*href="[^"]*elementor\/css\/post-\d+\.css[^"]*"[^>]*>/is', $body, $css_matches ) ) {
-                $cached_footer = implode("\n", $css_matches[0]) . "\n" . $cached_footer;
-            }
-            
-            set_transient( $transient_key, $cached_footer, 6 * HOUR_IN_SECONDS );
-        } else {
-            return '<!-- Footer tag not found in remote URL -->';
-        }
-    }
-    
-    return $cached_footer;
-});
-
-// Helper to force print Elementor CSS inline inside a shortcode
-if ( ! function_exists('cmr_print_elementor_css') ) {
-    function cmr_print_elementor_css($post_id) {
-        if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
-            $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
-            $css_file->enqueue();
-            
-            // Force output the link tag since print_css() sometimes fails mid-body
-            $url = $css_file->get_url();
-            if ($url) {
-                echo '<link rel="stylesheet" id="elementor-post-'.$post_id.'-css" href="'.esc_url($url).'" type="text/css" media="all">';
-            }
-            
-            $css_file->print_css();
-        }
-    }
-}
-
-// Shortcode to display the Challenge section by rendering the quanto_tab_build post
-add_shortcode('cmr_challenge', function() {
-    ob_start();
-    
-    // Find the post by slug
-    $posts = get_posts(array(
-        'name' => 'your-challenge-our-research-your-advantage',
-        'post_type' => 'quanto_tab_build',
-        'posts_per_page' => 1,
-        'post_status' => 'publish'
-    ));
-    
-    if ( $posts && !empty($posts[0]) ) {
-        $post_id = $posts[0]->ID;
-        
-        // Print CSS link inline
-        cmr_print_elementor_css($post_id);
-        
-        // Render it
-        if ( class_exists( '\\Elementor\\Plugin' ) ) {
-            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
-        }
-    }
-    
-    return ob_get_clean();
-});
-
-// Shortcode to display the Testimonials section by rendering the quanto_tab_build post
-add_shortcode('cmr_testimonials', function() {
-    ob_start();
-    
-    // Find the post by slug
-    $posts = get_posts(array(
-        'name' => 'testimonials',
-        'post_type' => 'quanto_tab_build',
-        'posts_per_page' => 1,
-        'post_status' => 'publish'
-    ));
-    
-    if ( $posts && !empty($posts[0]) ) {
-        $post_id = $posts[0]->ID;
-        
-        // Print CSS link inline
-        cmr_print_elementor_css($post_id);
-        
-        // Render it
-        if ( class_exists( '\\Elementor\\Plugin' ) ) {
-            echo '<div id="cmr-testimonials-section">';
-            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
-            echo '</div>';
-        }
-    }
-    
-    return ob_get_clean();
-});// Shortcode to display the Footer Card section by rendering the quanto_tab_build post
-add_shortcode('cmr_footer_card', function() {
-    ob_start();
-    
-    // Find the post by slug
-    $posts = get_posts(array(
-        'name' => 'fotter-card',
-        'post_type' => 'quanto_tab_build',
-        'posts_per_page' => 1,
-        'post_status' => 'publish'
-    ));
-    
-    if ( $posts && !empty($posts[0]) ) {
-        $post_id = $posts[0]->ID;
-        
-        // Print CSS link inline
-        cmr_print_elementor_css($post_id);
-        
-        // Render it
-        if ( class_exists( '\\Elementor\\Plugin' ) ) {
-            echo '<div id="cmr-footer-card-section">';
-            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
-            echo '</div>';
-        }
-    }
-    
-    return ob_get_clean();
-});
-
-// Shortcode to display the Global Brands section by rendering the quanto_tab_build post
-add_shortcode('cmr_global_brands', function() {
-    ob_start();
-    
-    // Find the post by slug
-    $posts = get_posts(array(
-        'name' => 'we-worked-with-largest-global-brands',
-        'post_type' => 'quanto_tab_build',
-        'posts_per_page' => 1,
-        'post_status' => 'publish'
-    ));
-    
-    if ( $posts && !empty($posts[0]) ) {
-        $post_id = $posts[0]->ID;
-        
-        // Print CSS link inline
-        cmr_print_elementor_css($post_id);
-        
-        // Render it
-        if ( class_exists( '\\Elementor\\Plugin' ) ) {
             echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
         }
     }
@@ -1366,14 +1171,12 @@ if ( ! function_exists( 'cmr_get_thumbnail_with_fallback' ) ) {
             return $thumbnail_url;
         }
 
-        $fallback_img = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
-
         // 2. Check if there's a custom media URL and try to fetch og:image
         $media_url = get_post_meta($post_id, '_cmr_media_url', true);
         if ($media_url && filter_var($media_url, FILTER_VALIDATE_URL)) {
             
-            // Check transient cache to avoid slowing down page load (use v2 to bust cache)
-            $cache_key = 'cmr_og_image_v2_' . md5($media_url);
+            // Check transient cache to avoid slowing down page load
+            $cache_key = 'cmr_og_image_' . md5($media_url);
             $cached_img = get_transient($cache_key);
             
             if ($cached_img) {
@@ -1387,28 +1190,10 @@ if ( ! function_exists( 'cmr_get_thumbnail_with_fallback' ) ) {
                     $body = wp_remote_retrieve_body($response);
                     
                     // Look for og:image
-                    if (preg_match('/<meta property="og:image" content="([^"]+)"/i', $body, $matches) || preg_match('/<meta name="og:image" content="([^"]+)"/i', $body, $matches) || preg_match('/<meta property="og:image:secure_url" content="([^"]+)"/i', $body, $matches) || preg_match('/<meta property="twitter:image" content="([^"]+)"/i', $body, $matches)) {
-                        
-                        $scraped_img = trim($matches[1]);
-                        
-                        // Handle relative URLs
-                        if (strpos($scraped_img, 'http') !== 0) {
-                            $parsed_url = parse_url($media_url);
-                            $scheme = isset($parsed_url['scheme']) ? $parsed_url['scheme'] : 'https';
-                            $host = isset($parsed_url['host']) ? $parsed_url['host'] : '';
-                            if (strpos($scraped_img, '//') === 0) {
-                                $scraped_img = $scheme . ':' . $scraped_img;
-                            } else if (strpos($scraped_img, '/') === 0) {
-                                $scraped_img = $scheme . '://' . $host . $scraped_img;
-                            } else {
-                                $scraped_img = $scheme . '://' . $host . '/' . $scraped_img;
-                            }
-                        }
-
-                        if (filter_var($scraped_img, FILTER_VALIDATE_URL)) {
-                            set_transient($cache_key, $scraped_img, 24 * HOUR_IN_SECONDS);
-                            return $scraped_img;
-                        }
+                    if (preg_match('/<meta property="og:image" content="([^"]+)"/i', $body, $matches) || preg_match('/<meta name="og:image" content="([^"]+)"/i', $body, $matches)) {
+                        $scraped_img = $matches[1];
+                        set_transient($cache_key, $scraped_img, 24 * HOUR_IN_SECONDS);
+                        return $scraped_img;
                     }
                 }
                 // Cache the 'none' result so we don't fetch it every time
@@ -1417,6 +1202,6 @@ if ( ! function_exists( 'cmr_get_thumbnail_with_fallback' ) ) {
         }
 
         // 3. Absolute fallback image
-        return $fallback_img;
+        return 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
     }
 }
