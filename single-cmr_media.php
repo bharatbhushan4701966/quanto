@@ -327,38 +327,38 @@ while ( have_posts() ) :
                         <?php endif; ?>
                     </ul>
                 </div>
-            </div>
             
-            <!-- Insight Feedback Section -->
-            <div class="cmr-insight-feedback-section">
-                <div class="feedback-container">
-                    <h3 class="feedback-title">How helpful was this insight?</h3>
-                    <p class="feedback-subtitle">Your feedback helps us improve our research quality</p>
-                    <div class="feedback-actions">
-                        <button class="feedback-btn js-feedback-helpful">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg> 
-                            Yes, helpful
-                        </button>
-                        <button class="feedback-btn js-feedback-unhelpful">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: scaleY(-1);"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg> 
-                            Not really
-                        </button>
-                    </div>
-                    <div class="feedback-thanks" style="display: none;">
-                        <div class="thanks-msg">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> 
-                            <span>Thanks for your feedback!</span>
+                <!-- Insight Feedback Section -->
+                <div class="cmr-insight-feedback-section">
+                    <div class="feedback-container">
+                        <h3 class="feedback-title">How helpful was this insight?</h3>
+                        <p class="feedback-subtitle">Your feedback helps us improve our research quality</p>
+                        <div class="feedback-actions">
+                            <button class="feedback-btn js-feedback-helpful">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg> 
+                                Yes, helpful
+                            </button>
+                            <button class="feedback-btn js-feedback-unhelpful">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: scaleY(-1);"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg> 
+                                Not really
+                            </button>
                         </div>
-                        <div class="thanks-action">
-                            <span>Want deeper insights like this?</span> <a href="/contact">Talk to an Analyst ↗</a>
+                        <div class="feedback-thanks" style="display: none;">
+                            <div class="thanks-msg">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> 
+                                <span>Thanks for your feedback!</span>
+                            </div>
+                            <div class="thanks-action">
+                                <span>Want deeper insights like this?</span> <a href="/contact">Talk to an Analyst ↗</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> <!-- Closes cmr-media-content -->
 
-        </div>
-    </div>
-</div>
+        </div> <!-- Closes cmr-media-content-layout -->
+    </div> <!-- Closes cmr-container -->
+</div> <!-- Closes cmr-media-single-wrapper -->
 
 <!-- Related Top View Section -->
 <div class="cmr-related-media-section">
