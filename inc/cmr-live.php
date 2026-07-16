@@ -325,7 +325,7 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                                 $type_class = $is_podcast ? 'type-podcast' : 'type-topview';
                                 
                                 $duration = $media_duration ? $media_duration : '05:00 MINS';
-                                $link = $media_url ? esc_url($media_url) : esc_url(get_permalink($post_obj->ID));
+                                $link = esc_url(get_permalink($post_obj->ID));
                             ?>
                             <div class="swiper-slide">
                                 <a href="<?php echo $link; ?>" class="cmr-podcast-card" target="_blank" rel="noopener noreferrer">
@@ -615,7 +615,7 @@ if ( ! function_exists( 'cmr_trending_podcast_shortcode' ) ) {
                         $type_class = $is_podcast ? 'type-podcast' : 'type-topview';
                         
                         $duration = $media_duration ? $media_duration : '05:00 MINS';
-                        $link = $media_url ? esc_url($media_url) : esc_url(get_permalink($post_obj->ID));
+                        $link = esc_url(get_permalink($post_obj->ID));
                     ?>
                     <a href="<?php echo $link; ?>" class="cmr-trending-card" target="_blank" rel="noopener noreferrer">
                         <div class="cmr-trending-img-wrap">
@@ -917,7 +917,7 @@ if ( ! function_exists( 'cmr_trending_topview_shortcode' ) ) {
                         $feat_date = get_the_date('d M Y', $feat_post);
                         $feat_type = get_post_meta( $feat_post->ID, '_cmr_media_type', true ) ?: 'TOP VIEW';
                         $feat_dur = get_post_meta( $feat_post->ID, '_cmr_media_duration', true ) ?: '08:20 MINS';
-                        $feat_link = get_post_meta( $feat_post->ID, '_cmr_media_url', true ) ?: get_permalink($feat_post->ID);
+                        $feat_link = esc_url(get_permalink($feat_post->ID));
                     ?>
                     
                     <!-- Left: Featured -->
@@ -945,7 +945,7 @@ if ( ! function_exists( 'cmr_trending_topview_shortcode' ) ) {
                             if ( ! $thumb ) $thumb = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
                             
                             $date = get_the_date('d M Y', $post_obj);
-                            $link = get_post_meta( $post_obj->ID, '_cmr_media_url', true ) ?: get_permalink($post_obj->ID);
+                            $link = esc_url(get_permalink($post_obj->ID));
                             
                             $active_class = ($index === 0) ? 'active' : '';
                         ?>
@@ -1145,7 +1145,7 @@ if ( ! function_exists( 'cmr_filter_recently_updated_ajax' ) ) {
                 $type_class = $is_podcast ? 'type-podcast' : 'type-topview';
                 
                 $duration = $media_duration ? $media_duration : '05:00 MINS';
-                $link = $media_url ? esc_url($media_url) : esc_url(get_permalink($post_obj->ID));
+                $link = esc_url(get_permalink($post_obj->ID));
                 ?>
                 <a href="<?php echo $link; ?>" class="cmr-browse-card" target="_blank" rel="noopener noreferrer">
                     <div class="cmr-browse-img-wrap">
