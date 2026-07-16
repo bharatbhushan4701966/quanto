@@ -376,10 +376,7 @@ while ( have_posts() ) :
 <?php
 $is_audio_post = (strtoupper($media_type) === 'PODCAST') || preg_match('/\.(mp3|wav|ogg|m4a)$/i', $media_url);
 
-// Provide a sample MP3 for testing if none is set but it's a podcast
-if ($is_audio_post && !preg_match('/\.(mp3|wav|ogg|m4a)$/i', $media_url)) {
-    $media_url = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
-}
+// Use the provided media url directly
 ?>
 
 <div class="cmr-media-single-wrapper <?php echo $is_audio_post ? 'cmr-audio-mode' : ''; ?>">
