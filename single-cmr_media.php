@@ -32,6 +32,7 @@ while ( have_posts() ) :
         font-family: inherit;
         background-color: #fff;
         padding-bottom: 80px;
+        margin-top: 120px;
     }
     
     /* Media Banner (Video Player Area) */

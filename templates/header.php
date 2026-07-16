@@ -15,7 +15,7 @@
     if ( class_exists( 'ReduxFramework' ) && defined( 'ELEMENTOR_VERSION' ) ) {
 
         // ✅ Handle archive, blog, Single Post and search pages first
-        if ( is_archive() || is_home() || is_search() || is_singular( ['post', 'cmr_news', 'cmr_media_release', 'cmr_quarterly', 'product', 'quanto_job', 'team', 'teams', 'quanto_team'] ) ) {
+        if ( is_archive() || is_home() || is_search() || is_singular( ['post', 'cmr_news', 'cmr_media', 'cmr_media_release', 'cmr_quarterly', 'product', 'quanto_job', 'team', 'teams', 'quanto_team'] ) ) {
 
             $header_post = get_page_by_path( 'blog-header', OBJECT, 'quanto_header' );
             
