@@ -605,6 +605,85 @@ endwhile;
         grid-template-columns: 1fr;
     }
 }
+.cmr-browse-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: #000;
+}
+.cmr-browse-img-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    margin-bottom: 20px;
+    background: #f5f5f5;
+}
+.cmr-browse-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.cmr-browse-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #fff;
+    color: #111;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+    z-index: 2;
+}
+.cmr-browse-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+.cmr-browse-play-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: #fff;
+    margin-left: 3px;
+}
+.cmr-browse-meta {
+    font-size: 11px;
+    font-weight: 600;
+    color: #888;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+.cmr-browse-meta .type-podcast {
+    color: #00d2ff;
+}
+.cmr-browse-meta .type-topview {
+    color: #2979ff;
+}
+.cmr-browse-card-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #000;
+    margin: 0;
+    line-height: 1.3;
+    letter-spacing: 0 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 </style>
 
 <?php
