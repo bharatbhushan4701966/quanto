@@ -1138,19 +1138,4 @@ add_shortcode('cmr_global_brands', function() {
     return ob_get_clean();
 });
 
-// Temporarily populate empty Key Parts with dummy data in the database
-add_action('init', function() {
-    // Only run on frontend to avoid slowing down admin unnecessarily, though it's quick
-    $args = array(
-        'post_type' => 'cmr_media',
-        'posts_per_page' => -1,
-    );
-    $media_posts = get_posts($args);
-    foreach ($media_posts as $p) {
-        $existing = get_post_meta($p->ID, '_cmr_media_key_parts', true);
-        if (empty(trim($existing))) {
-            $dummy = "00:00 - Introduction & Welcome\n01:30 - Understanding the Core Topics\n05:15 - Deep Dive into Market Trends\n10:45 - Key Takeaways & Conclusion";
-            update_post_meta($p->ID, '_cmr_media_key_parts', $dummy);
-        }
-    }
-});
+
