@@ -345,11 +345,12 @@ while ( have_posts() ) :
                         </div>
                         <div class="feedback-thanks" style="display: none;">
                             <div class="thanks-msg">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> 
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> 
                                 <span>Thanks for your feedback!</span>
                             </div>
                             <div class="thanks-action">
-                                <span>Want deeper insights like this?</span> <a href="/contact">Talk to an Analyst ↗</a>
+                                <span>Want deeper insights like this?</span> 
+                                <a href="/contact">Talk to an Analyst <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
                             </div>
                         </div>
                     </div>
@@ -502,11 +503,13 @@ endwhile;
     font-weight: 700;
     margin-bottom: 5px;
     color: #111;
+    letter-spacing: normal !important;
 }
 .feedback-subtitle {
     font-size: 15px;
     color: #555;
     margin-bottom: 20px;
+    letter-spacing: normal !important;
 }
 .feedback-actions {
     display: flex;
@@ -524,6 +527,7 @@ endwhile;
     font-weight: 600;
     color: #444;
     transition: all 0.3s;
+    letter-spacing: normal !important;
 }
 .feedback-btn svg {
     color: #FF3B30;
@@ -549,6 +553,7 @@ endwhile;
     color: #6A35FF;
     font-weight: 700;
     font-size: 18px;
+    letter-spacing: normal !important;
 }
 .thanks-action {
     background: #fff;
@@ -560,10 +565,14 @@ endwhile;
     align-items: center;
     gap: 10px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    letter-spacing: normal !important;
 }
 .thanks-action a {
     color: #6A35FF;
     text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
 }
 @media (max-width: 768px) {
     .feedback-thanks {
