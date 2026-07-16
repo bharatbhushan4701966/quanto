@@ -373,8 +373,8 @@ while ( have_posts() ) :
     }
 </style>
 
-<?php
-$is_audio_post = (strtoupper($media_type) === 'PODCAST') || preg_match('/\.(mp3|wav|ogg|m4a)$/i', $media_url);
+$audio_only = get_post_meta( get_the_ID(), '_cmr_media_audio_only', true );
+$is_audio_post = (strtoupper($media_type) === 'PODCAST') || preg_match('/\.(mp3|wav|ogg|m4a)$/i', $media_url) || $audio_only === '1';
 
 // Use the provided media url directly
 ?>
@@ -434,7 +434,18 @@ $is_audio_post = (strtoupper($media_type) === 'PODCAST') || preg_match('/\.(mp3|
                     </button>
                 </div>
             </div>
-            <audio id="cmr-native-audio" src="<?php echo esc_url($media_url); ?>" preload="metadata"></audio>
+            <?php 
+            $is_youtube = strpos($media_url, 'youtube.com') !== false || strpos($media_url, 'youtu.be') !== false;
+            if ($is_youtube && $audio_only === '1'): 
+                $video_id = '';
+                if ( preg_match( '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $media_url, $match ) ) {
+                    $video_id = $match[1];
+                }
+            ?>
+                <div id="cmr-yt-invisible-player" style="position:absolute; width:1px; height:1px; opacity:0; pointer-events:none; top:0; left:0;" data-ytid="<?php echo esc_attr($video_id); ?>"></div>
+            <?php else: ?>
+                <audio id="cmr-native-audio" src="<?php echo esc_url($media_url); ?>" preload="metadata"></audio>
+            <?php endif; ?>
         </div>
 
         <div class="cmr-media-container">
@@ -720,22 +731,147 @@ endwhile;
             player = videoEl;
         }
 
-        // Custom Audio Player Logic
-        if (audioPlayer) {
+        // Audio Player Controls & Elements
+        var playBtn = document.getElementById('cmr-audio-play-btn');
+        var iconPlay = playBtn ? playBtn.querySelector('.icon-play') : null;
+        var iconPause = playBtn ? playBtn.querySelector('.icon-pause') : null;
+        var progressContainer = document.getElementById('cmr-audio-progress-container');
+        var progressFill = document.getElementById('cmr-audio-progress-fill');
+        var progressThumb = document.getElementById('cmr-audio-progress-thumb');
+        var timeCurrent = document.getElementById('cmr-audio-current');
+        var timeTotal = document.getElementById('cmr-audio-total');
+        var metaDuration = document.getElementById('cmr-meta-duration');
+        var rwBtn = document.getElementById('cmr-audio-rw');
+        var ffBtn = document.getElementById('cmr-audio-ff');
+        
+        var invisibleYtEl = document.getElementById('cmr-yt-invisible-player');
+
+        // Common UI functions for audio player
+        var uiUpdatePlayState = function(playing) {
+            if (playing) {
+                if (iconPlay) iconPlay.style.display = 'none';
+                if (iconPause) iconPause.style.display = 'block';
+            } else {
+                if (iconPlay) iconPlay.style.display = 'block';
+                if (iconPause) iconPause.style.display = 'none';
+            }
+        };
+        var uiUpdateProgress = function(current, total) {
+            if (!isNaN(total) && total > 0) {
+                var percent = (current / total) * 100;
+                if (progressFill) progressFill.style.width = percent + '%';
+                if (progressThumb) progressThumb.style.left = percent + '%';
+                if (timeCurrent) timeCurrent.textContent = formatTime(current);
+            }
+        };
+        var uiUpdateTotalTime = function(total) {
+            if (!isNaN(total) && total > 0 && total !== Infinity) {
+                if (timeTotal) timeTotal.textContent = formatTime(total);
+                if (metaDuration) metaDuration.textContent = Math.ceil(total / 60) + ' MIN';
+            }
+        };
+
+        if (invisibleYtEl) {
+            // ============================================
+            // YOUTUBE AUDIO-ONLY LOGIC
+            // ============================================
+            playerType = 'youtube-audio';
+            var ytid = invisibleYtEl.getAttribute('data-ytid');
+            var ytAudioPlayer = null;
+            var ytDuration = 0;
+            var ytTimeUpdateInterval = null;
+            
+            // Ensure YT API is loaded
+            if (typeof YT === 'undefined' || typeof YT.Player === 'undefined') {
+                var tag = document.createElement('script');
+                tag.src = "https://www.youtube.com/iframe_api";
+                var firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+                window.onYouTubeIframeAPIReady = initInvisibleYt;
+            } else {
+                initInvisibleYt();
+            }
+
+            function initInvisibleYt() {
+                ytAudioPlayer = new YT.Player('cmr-yt-invisible-player', {
+                    height: '1',
+                    width: '1',
+                    videoId: ytid,
+                    playerVars: { 'playsinline': 1, 'controls': 0 },
+                    events: {
+                        'onReady': function(event) {
+                            player = ytAudioPlayer; // map to global player variable
+                            ytDuration = ytAudioPlayer.getDuration();
+                            uiUpdateTotalTime(ytDuration);
+                        },
+                        'onStateChange': function(event) {
+                            if (event.data == YT.PlayerState.PLAYING) {
+                                uiUpdatePlayState(true);
+                                if (!ytTimeUpdateInterval) {
+                                    ytTimeUpdateInterval = setInterval(function() {
+                                        uiUpdateProgress(ytAudioPlayer.getCurrentTime(), ytDuration);
+                                    }, 500);
+                                }
+                                // duration is sometimes 0 until playing
+                                if (ytDuration <= 0) {
+                                    ytDuration = ytAudioPlayer.getDuration();
+                                    uiUpdateTotalTime(ytDuration);
+                                }
+                            } else {
+                                uiUpdatePlayState(false);
+                                if (ytTimeUpdateInterval) {
+                                    clearInterval(ytTimeUpdateInterval);
+                                    ytTimeUpdateInterval = null;
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            if (playBtn) {
+                playBtn.addEventListener('click', function() {
+                    if (ytAudioPlayer && ytAudioPlayer.getPlayerState) {
+                        var state = ytAudioPlayer.getPlayerState();
+                        if (state == YT.PlayerState.PLAYING) {
+                            ytAudioPlayer.pauseVideo();
+                        } else {
+                            ytAudioPlayer.playVideo();
+                        }
+                    }
+                });
+            }
+            if (progressContainer) {
+                progressContainer.addEventListener('click', function(e) {
+                    var rect = progressContainer.getBoundingClientRect();
+                    var clickX = e.clientX - rect.left;
+                    var percent = clickX / rect.width;
+                    if (ytAudioPlayer && ytDuration) {
+                        ytAudioPlayer.seekTo(percent * ytDuration, true);
+                    }
+                });
+            }
+            if (rwBtn) {
+                rwBtn.addEventListener('click', function() {
+                    if (ytAudioPlayer && ytDuration) {
+                        ytAudioPlayer.seekTo(Math.max(0, ytAudioPlayer.getCurrentTime() - 10), true);
+                    }
+                });
+            }
+            if (ffBtn) {
+                ffBtn.addEventListener('click', function() {
+                    if (ytAudioPlayer && ytDuration) {
+                        ytAudioPlayer.seekTo(Math.min(ytDuration, ytAudioPlayer.getCurrentTime() + 10), true);
+                    }
+                });
+            }
+
+        } else if (audioPlayer) {
+            // ============================================
+            // NATIVE HTML5 AUDIO LOGIC
+            // ============================================
             playerType = 'audio';
             player = audioPlayer;
-            
-            var playBtn = document.getElementById('cmr-audio-play-btn');
-            var iconPlay = playBtn ? playBtn.querySelector('.icon-play') : null;
-            var iconPause = playBtn ? playBtn.querySelector('.icon-pause') : null;
-            var progressContainer = document.getElementById('cmr-audio-progress-container');
-            var progressFill = document.getElementById('cmr-audio-progress-fill');
-            var progressThumb = document.getElementById('cmr-audio-progress-thumb');
-            var timeCurrent = document.getElementById('cmr-audio-current');
-            var timeTotal = document.getElementById('cmr-audio-total');
-            var metaDuration = document.getElementById('cmr-meta-duration');
-            var rwBtn = document.getElementById('cmr-audio-rw');
-            var ffBtn = document.getElementById('cmr-audio-ff');
             
             if (playBtn) {
                 playBtn.addEventListener('click', function() {
@@ -747,35 +883,20 @@ endwhile;
                 });
             }
             
-            audioPlayer.addEventListener('play', function() {
-                if (iconPlay) iconPlay.style.display = 'none';
-                if (iconPause) iconPause.style.display = 'block';
-            });
+            audioPlayer.addEventListener('play', function() { uiUpdatePlayState(true); });
+            audioPlayer.addEventListener('pause', function() { uiUpdatePlayState(false); });
             
-            var updateTotalTime = function() {
-                if (!isNaN(audioPlayer.duration) && audioPlayer.duration !== Infinity) {
-                    if (timeTotal) timeTotal.textContent = formatTime(audioPlayer.duration);
-                    if (metaDuration) metaDuration.textContent = Math.ceil(audioPlayer.duration / 60) + ' MIN';
-                }
+            var handleNativeDuration = function() {
+                uiUpdateTotalTime(audioPlayer.duration);
             };
-            
-            audioPlayer.addEventListener('pause', function() {
-                if (iconPlay) iconPlay.style.display = 'block';
-                if (iconPause) iconPause.style.display = 'none';
-            });
-            
-            audioPlayer.addEventListener('loadedmetadata', updateTotalTime);
-            audioPlayer.addEventListener('durationchange', updateTotalTime);
-            
+            audioPlayer.addEventListener('loadedmetadata', handleNativeDuration);
+            audioPlayer.addEventListener('durationchange', handleNativeDuration);
             if (audioPlayer.readyState >= 1) {
-                updateTotalTime();
+                handleNativeDuration();
             }
             
             audioPlayer.addEventListener('timeupdate', function() {
-                var percent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-                if (progressFill) progressFill.style.width = percent + '%';
-                if (progressThumb) progressThumb.style.left = percent + '%';
-                if (timeCurrent) timeCurrent.textContent = formatTime(audioPlayer.currentTime);
+                uiUpdateProgress(audioPlayer.currentTime, audioPlayer.duration);
             });
             
             if (progressContainer) {

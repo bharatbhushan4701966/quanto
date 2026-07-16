@@ -83,6 +83,7 @@ function cmr_media_meta_box_html( $post ) {
     $media_source = get_post_meta( $post->ID, '_cmr_media_source', true );
     $media_url = get_post_meta( $post->ID, '_cmr_media_url', true );
     $media_duration = get_post_meta( $post->ID, '_cmr_media_duration', true );
+    $audio_only = get_post_meta( $post->ID, '_cmr_media_audio_only', true );
 
     if(empty($media_type)) $media_type = 'PODCAST';
     if(empty($media_source)) $media_source = 'link';
@@ -92,6 +93,8 @@ function cmr_media_meta_box_html( $post ) {
         .cmr-meta-row { margin-bottom: 15px; }
         .cmr-meta-row label { display: block; font-weight: bold; margin-bottom: 5px; }
         .cmr-meta-row select, .cmr-meta-row input[type="text"] { width: 100%; max-width: 400px; }
+        .cmr-meta-checkbox { display: flex; align-items: center; gap: 8px; }
+        .cmr-meta-checkbox label { font-weight: normal; margin: 0; display: inline-block; }
     </style>
     
     <div class="cmr-meta-row">
@@ -114,11 +117,15 @@ function cmr_media_meta_box_html( $post ) {
 
     <div class="cmr-meta-row">
         <label for="cmr_media_url">Media URL / File URL</label>
-        <div style="display: flex; gap: 10px;">
+        <div style="display: flex; gap: 10px; margin-bottom: 5px;">
             <input type="text" name="cmr_media_url" id="cmr_media_url" value="<?php echo esc_attr( $media_url ); ?>" />
             <button type="button" class="button cmr_media_upload_btn" id="cmr_media_upload_btn" style="<?php echo ($media_source == 'upload') ? '' : 'display:none;'; ?>">Upload / Select File</button>
         </div>
         <p class="description">Paste a link or upload a file. (Upload supports all standard WP media extensions like mp3, mp4, wav, ogg).</p>
+        <div class="cmr-meta-checkbox" style="margin-top: 10px;">
+            <input type="checkbox" name="cmr_media_audio_only" id="cmr_media_audio_only" value="1" <?php checked( $audio_only, '1' ); ?> />
+            <label for="cmr_media_audio_only"><strong>Play as Audio Only</strong> (Forces YouTube URLs to play in the custom Audio Player UI)</label>
+        </div>
     </div>
 
     <div class="cmr-meta-row">
@@ -187,6 +194,13 @@ function cmr_media_save_meta_box( $post_id ) {
     if ( isset( $_POST['cmr_media_url'] ) ) {
         update_post_meta( $post_id, '_cmr_media_url', esc_url_raw( $_POST['cmr_media_url'] ) );
     }
+    
+    if ( isset( $_POST['cmr_media_audio_only'] ) ) {
+        update_post_meta( $post_id, '_cmr_media_audio_only', '1' );
+    } else {
+        update_post_meta( $post_id, '_cmr_media_audio_only', '0' );
+    }
+    
     if ( isset( $_POST['cmr_media_duration'] ) ) {
         update_post_meta( $post_id, '_cmr_media_duration', sanitize_text_field( $_POST['cmr_media_duration'] ) );
     }
