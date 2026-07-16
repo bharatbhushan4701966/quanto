@@ -425,13 +425,14 @@ $is_audio_post = (strtoupper($media_type) === 'PODCAST') || preg_match('/\.(mp3|
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 17l5-5-5-5"></path><path d="M6 17l5-5-5-5"></path></svg>
                     </button>
                     <button class="audio-ctrl-icon" id="cmr-audio-mute" aria-label="Volume">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                        <svg class="icon-vol-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                        <svg class="icon-vol-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
                     </button>
                     <button class="audio-ctrl-icon" id="cmr-audio-share" aria-label="Share">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                     </button>
-                    <button class="audio-ctrl-icon" id="cmr-audio-download" aria-label="More">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="2"></circle><circle cx="12" cy="5" r="2"></circle><circle cx="12" cy="19" r="2"></circle></svg>
+                    <button class="audio-ctrl-icon" id="cmr-audio-download" aria-label="Download">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                     </button>
                 </div>
             </div>
@@ -748,6 +749,9 @@ endwhile;
         var shareBtn = document.getElementById('cmr-audio-share');
         var downloadBtn = document.getElementById('cmr-audio-download');
         
+        var iconMuteOn = muteBtn ? muteBtn.querySelector('.icon-vol-on') : null;
+        var iconMuteOff = muteBtn ? muteBtn.querySelector('.icon-vol-off') : null;
+        
         var invisibleYtEl = document.getElementById('cmr-yt-invisible-player');
 
         // Common UI functions for audio player
@@ -772,6 +776,15 @@ endwhile;
             if (!isNaN(total) && total > 0 && total !== Infinity) {
                 if (timeTotal) timeTotal.textContent = formatTime(total);
                 if (metaDuration) metaDuration.textContent = Math.ceil(total / 60) + ' MIN';
+            }
+        };
+        var uiUpdateMuteState = function(muted) {
+            if (muted) {
+                if (iconMuteOn) iconMuteOn.style.display = 'none';
+                if (iconMuteOff) iconMuteOff.style.display = 'block';
+            } else {
+                if (iconMuteOn) iconMuteOn.style.display = 'block';
+                if (iconMuteOff) iconMuteOff.style.display = 'none';
             }
         };
 
@@ -880,10 +893,10 @@ endwhile;
                     if (ytAudioPlayer) {
                         if (ytAudioPlayer.isMuted()) {
                             ytAudioPlayer.unMute();
-                            muteBtn.style.opacity = '1';
+                            uiUpdateMuteState(false);
                         } else {
                             ytAudioPlayer.mute();
-                            muteBtn.style.opacity = '0.5';
+                            uiUpdateMuteState(true);
                         }
                     }
                 });
@@ -949,7 +962,7 @@ endwhile;
             if (muteBtn) {
                 muteBtn.addEventListener('click', function() {
                     audioPlayer.muted = !audioPlayer.muted;
-                    muteBtn.style.opacity = audioPlayer.muted ? '0.5' : '1';
+                    uiUpdateMuteState(audioPlayer.muted);
                 });
             }
         }
