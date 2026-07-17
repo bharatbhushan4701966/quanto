@@ -29,46 +29,81 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
         grid-template-columns: 1fr !important;
     }
 }
-.woocommerce-billing-fields h3 {
-    display: none !important;
-}
-.woocommerce-billing-fields__field-wrapper {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 16px !important;
-    margin-bottom: 20px !important;
-    align-items: end !important;
-}
-/* Explicit Ordering & Column Spans */
-#billing_first_name_field { order: 1 !important; grid-column: 1 !important; }
-#billing_last_name_field  { order: 2 !important; grid-column: 2 !important; }
-#billing_address_1_field  { order: 3 !important; grid-column: 1 / -1 !important; }
-#billing_address_2_field  { display: none !important; }
-#billing_city_field       { order: 4 !important; grid-column: 1 !important; }
-#billing_state_field      { order: 5 !important; grid-column: 2 !important; }
-#billing_country_field    { order: 6 !important; grid-column: 1 !important; }
-#billing_postcode_field   { order: 7 !important; grid-column: 2 !important; }
-#billing_phone_field      { order: 8 !important; grid-column: 1 / -1 !important; }
-#billing_email_field      { order: 9 !important; grid-column: 1 / -1 !important; }
-
-.cmr-checkout-wrap .form-row {
+/* Custom Grouped Billing Form Styles */
+.cmr-custom-billing-wrapper {
     width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    float: none !important;
 }
-.cmr-label,
-.cmr-checkout-wrap .form-row label {
+.cmr-field-group {
+    margin-bottom: 24px !important;
+}
+.cmr-group-label {
     display: block !important;
-    font-size: 11px !important;
+    font-size: 13px !important;
     font-weight: 700 !important;
-    letter-spacing: 0.08em !important;
+    letter-spacing: 0.04em !important;
     color: #374151 !important;
     margin-bottom: 8px !important;
     text-transform: uppercase !important;
 }
-.cmr-checkout-wrap .optional {
+.cmr-grid-2 {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+}
+@media (max-width: 600px) {
+    .cmr-grid-2 {
+        grid-template-columns: 1fr !important;
+    }
+}
+.cmr-grid-2 .form-row,
+.cmr-field-group .form-row {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+}
+.cmr-custom-billing-wrapper input.input-text,
+.cmr-custom-billing-wrapper select,
+.cmr-custom-billing-wrapper textarea {
+    width: 100% !important;
+    height: 48px !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 6px !important;
+    padding: 0 16px !important;
+    font-size: 15px !important;
+    color: #111827 !important;
+    background: #fff !important;
+    box-sizing: border-box !important;
+    transition: border-color 0.2s, box-shadow 0.2s !important;
+}
+.cmr-custom-billing-wrapper input.input-text:focus,
+.cmr-custom-billing-wrapper select:focus {
+    border-color: #4820B0 !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(72, 32, 176, 0.1) !important;
+}
+.cmr-custom-billing-wrapper .form-row label {
     display: none !important;
+}
+.cmr-phone-row {
+    display: flex !important;
+    gap: 12px !important;
+    align-items: center !important;
+}
+.cmr-phone-prefix {
+    width: 76px !important;
+    height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 6px !important;
+    background: #f9fafb !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: #111827 !important;
+}
+.cmr-phone-input-wrap {
+    flex: 1 !important;
 }
 .woocommerce-shipping-fields {
     display: none !important;
@@ -444,31 +479,59 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 
 <script>
 jQuery(document).ready(function($) {
+    // Intercept Enter key inside coupon input field to prevent main order submit
+    $(document).on('keydown', '#coupon_code', function(e) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            e.preventDefault();
+            $('#apply_custom_coupon').trigger('click');
+            return false;
+        }
+    });
+
     // Make our custom coupon button work
-    $('#apply_custom_coupon').on('click', function(e) {
+    $(document).on('click', '#apply_custom_coupon', function(e) {
         e.preventDefault();
         var code = $('#coupon_code').val();
-        if(code) {
-            // Append a hidden coupon form inside the main checkout form and submit it
-            var data = {
-                security: wc_checkout_params.apply_coupon_nonce,
-                coupon_code: code
-            };
-            
-            $.ajax({
-                type: 'POST',
-                url: wc_checkout_params.wc_ajax_url.toString().replace( '%%endpoint%%', 'apply_coupon' ),
-                data: data,
-                success: function( code ) {
-                    $('.woocommerce-error, .woocommerce-message').remove();
-                    if ( code ) {
-                        $('form.checkout').before( code );
-                        $( document.body ).trigger( 'applied_coupon_in_checkout', [ $('#coupon_code').val() ] );
-                        $( document.body ).trigger( 'update_checkout', { update_shipping_method: false } );
-                    }
-                },
-                dataType: 'html'
-            });
+        if(!code) return;
+        
+        var $btn = $(this);
+        $btn.text('Applying...').prop('disabled', true);
+        
+        var data = {
+            security: wc_checkout_params.apply_coupon_nonce,
+            coupon_code: code
+        };
+        
+        $.ajax({
+            type: 'POST',
+            url: wc_checkout_params.wc_ajax_url.toString().replace( '%%endpoint%%', 'apply_coupon' ),
+            data: data,
+            success: function( response ) {
+                $('.woocommerce-error, .woocommerce-message').remove();
+                if ( response ) {
+                    $('form.checkout').before( response );
+                    $( document.body ).trigger( 'update_checkout', { update_shipping_method: false } );
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 500);
+                }
+            },
+            error: function() {
+                $btn.text('Apply').prop('disabled', false);
+            }
+        });
+    });
+
+    // Phone country code dynamic mapper
+    var phonePrefixes = {
+        'IN': '+91', 'US': '+1', 'GB': '+44', 'CA': '+1', 'AU': '+61', 'DE': '+49', 'FR': '+33', 'AE': '+971', 'SG': '+65', 'MY': '+60', 'SA': '+966', 'ID': '+62', 'TH': '+66', 'PH': '+63', 'VN': '+84', 'JP': '+81', 'KR': '+82', 'CN': '+86', 'HK': '+852', 'TW': '+886', 'NL': '+31', 'IT': '+39', 'ES': '+34', 'CH': '+41', 'SE': '+46', 'NO': '+47', 'DK': '+45', 'FI': '+358', 'ZA': '+27', 'BR': '+55', 'MX': '+52', 'NZ': '+64'
+    };
+    $(document).on('change', '#billing_country', function() {
+        var cc = $(this).val();
+        if (phonePrefixes[cc]) {
+            $('#cmr_phone_code').text(phonePrefixes[cc]);
+        } else if (cc) {
+            $('#cmr_phone_code').text('+91');
         }
     });
 });

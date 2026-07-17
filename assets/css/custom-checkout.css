@@ -13,10 +13,81 @@
     align-items: start !important;
 }
 
-@media (max-width: 900px) {
-    .cmr-checkout-wrap {
-        grid-template-columns: 1fr;
+/* Custom Grouped Billing Form Styles */
+.cmr-custom-billing-wrapper {
+    width: 100% !important;
+}
+.cmr-field-group {
+    margin-bottom: 24px !important;
+}
+.cmr-group-label {
+    display: block !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
+    color: #374151 !important;
+    margin-bottom: 8px !important;
+    text-transform: uppercase !important;
+}
+.cmr-grid-2 {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+}
+@media (max-width: 600px) {
+    .cmr-grid-2 {
+        grid-template-columns: 1fr !important;
     }
+}
+.cmr-grid-2 .form-row,
+.cmr-field-group .form-row {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+}
+.cmr-custom-billing-wrapper input.input-text,
+.cmr-custom-billing-wrapper select,
+.cmr-custom-billing-wrapper textarea {
+    width: 100% !important;
+    height: 48px !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 6px !important;
+    padding: 0 16px !important;
+    font-size: 15px !important;
+    color: #111827 !important;
+    background: #fff !important;
+    box-sizing: border-box !important;
+    transition: border-color 0.2s, box-shadow 0.2s !important;
+}
+.cmr-custom-billing-wrapper input.input-text:focus,
+.cmr-custom-billing-wrapper select:focus {
+    border-color: #4820B0 !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(72, 32, 176, 0.1) !important;
+}
+.cmr-custom-billing-wrapper .form-row label {
+    display: none !important;
+}
+.cmr-phone-row {
+    display: flex !important;
+    gap: 12px !important;
+    align-items: center !important;
+}
+.cmr-phone-prefix {
+    width: 76px !important;
+    height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 6px !important;
+    background: #f9fafb !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: #111827 !important;
+}
+.cmr-phone-input-wrap {
+    flex: 1 !important;
 }
 
 /* ---- LEFT COLUMN CARD ---- */
