@@ -13,7 +13,75 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 }
 ?>
 
+<style>
+/* Critical Inline Checkout Grid Rules (Bypasses all CDN/Browser CSS Caches) */
+.cmr-checkout-wrap {
+    display: grid !important;
+    grid-template-columns: 1fr 380px !important;
+    gap: 32px !important;
+    max-width: 1100px !important;
+    margin: 40px auto !important;
+    padding: 0 20px !important;
+    align-items: start !important;
+}
+@media (max-width: 900px) {
+    .cmr-checkout-wrap {
+        grid-template-columns: 1fr !important;
+    }
+}
+.woocommerce-billing-fields h3 {
+    display: none !important;
+}
+.woocommerce-billing-fields__field-wrapper {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+    margin-bottom: 20px !important;
+    align-items: end !important;
+}
+/* Explicit Ordering & Column Spans */
+#billing_first_name_field { order: 1 !important; grid-column: 1 !important; }
+#billing_last_name_field  { order: 2 !important; grid-column: 2 !important; }
+#billing_address_1_field  { order: 3 !important; grid-column: 1 / -1 !important; }
+#billing_address_2_field  { display: none !important; }
+#billing_city_field       { order: 4 !important; grid-column: 1 !important; }
+#billing_state_field      { order: 5 !important; grid-column: 2 !important; }
+#billing_country_field    { order: 6 !important; grid-column: 1 !important; }
+#billing_postcode_field   { order: 7 !important; grid-column: 2 !important; }
+#billing_phone_field      { order: 8 !important; grid-column: 1 / -1 !important; }
+#billing_email_field      { order: 9 !important; grid-column: 1 / -1 !important; }
+
+.cmr-checkout-wrap .form-row {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    float: none !important;
+}
+.cmr-label,
+.cmr-checkout-wrap .form-row label {
+    display: block !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    color: #374151 !important;
+    margin-bottom: 8px !important;
+    text-transform: uppercase !important;
+}
+.cmr-checkout-wrap .optional {
+    display: none !important;
+}
+.woocommerce-shipping-fields {
+    display: none !important;
+}
+/* Make sure Order Summary right column stays visible and styled */
+.cmr-checkout-right {
+    width: 100% !important;
+    background: #fff;
+}
+</style>
+
 <form name="checkout" method="post" class="cmr-checkout-wrap woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
+
 
     <div class="cmr-checkout-left">
         <div class="cmr-checkout-card">

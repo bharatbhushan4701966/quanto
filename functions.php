@@ -1403,6 +1403,30 @@ function cmr_custom_checkout_fields($fields) {
     return $fields;
 }
 
+// Override locale JS rules so WooCommerce address-i18n script doesn't overwrite our labels or layout
+add_filter('woocommerce_get_country_locale', 'cmr_override_country_locale');
+function cmr_override_country_locale($locales) {
+    foreach ($locales as $country => $fields) {
+        if (isset($locales[$country]['address_1'])) {
+            $locales[$country]['address_1']['label'] = 'ADDRESS';
+            $locales[$country]['address_1']['priority'] = 30;
+        }
+        if (isset($locales[$country]['city'])) {
+            $locales[$country]['city']['label'] = 'LOCATION';
+            $locales[$country]['city']['priority'] = 40;
+        }
+        if (isset($locales[$country]['state'])) {
+            $locales[$country]['state']['label'] = '';
+            $locales[$country]['state']['priority'] = 50;
+        }
+        if (isset($locales[$country]['postcode'])) {
+            $locales[$country]['postcode']['label'] = '';
+            $locales[$country]['postcode']['priority'] = 70;
+        }
+    }
+    return $locales;
+}
+
 // Change "Place Order" button text
 add_filter('woocommerce_order_button_text', 'cmr_custom_order_button_text');
 function cmr_custom_order_button_text() {
@@ -1418,11 +1442,11 @@ function cmr_redirect_to_cart_after_add() {
     return wc_get_cart_url();
 }
 
-// Enqueue custom checkout CSS
-add_action('wp_enqueue_scripts', 'cmr_enqueue_checkout_css');
+// Enqueue custom checkout CSS with cache busting
+add_action('wp_enqueue_scripts', 'cmr_enqueue_checkout_css', 99);
 function cmr_enqueue_checkout_css() {
     if (is_checkout() || is_cart()) {
-        wp_enqueue_style('cmr-custom-checkout', get_template_directory_uri() . '/assets/css/custom-checkout.css', array(), '1.0.0');
+        wp_enqueue_style('cmr-custom-checkout', get_template_directory_uri() . '/assets/css/custom-checkout.css', array(), time());
     }
 }
 
