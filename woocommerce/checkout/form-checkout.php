@@ -314,20 +314,23 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 }
 /* Trust Badges */
 .cmr-trust-badges {
-    text-align: center;
-    margin-top: 16px;
+    text-align: left !important;
+    margin-top: 24px !important;
+    padding-top: 20px !important;
+    border-top: 1px solid #e5e7eb !important;
 }
 .cmr-trust-label {
-    font-size: 13px;
-    font-weight: 600;
-    color: #111827;
-    margin-bottom: 12px;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #111827 !important;
+    margin-bottom: 12px !important;
+    text-align: left !important;
 }
 .cmr-trust-icons {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;
+    display: flex !important;
+    justify-content: flex-start !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
 }
 .cmr-icon-pill {
     background: #fff;
@@ -445,29 +448,29 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
             <div id="order_review" class="woocommerce-checkout-review-order">
                 <?php do_action( 'woocommerce_checkout_order_review' ); ?>
             </div>
-        </div>
 
-        <!-- Trust Badges -->
-        <div class="cmr-trust-badges">
-            <p class="cmr-trust-label">Guaranteed safe checkout</p>
-            <div class="cmr-trust-icons">
-                <div class="cmr-icon-pill">
-                    <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/ApplePay.svg" alt="Apple Pay">
-                </div>
-                <div class="cmr-icon-pill">
-                    <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/GooglePay.svg" alt="Google Pay">
-                </div>
-                <div class="cmr-icon-pill">
-                    <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/Mastercard.svg" alt="Mastercard">
-                </div>
-                <div class="cmr-icon-pill">
-                    <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/Amex.svg" alt="Amex">
-                </div>
-                <div class="cmr-icon-pill">
-                    <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/PayPal.svg" alt="PayPal">
-                </div>
-                <div class="cmr-icon-pill">
-                    <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/Visa.svg" alt="Visa">
+            <!-- Trust Badges moved inside cmr-order-box -->
+            <div class="cmr-trust-badges">
+                <p class="cmr-trust-label">Guaranteed safe checkout</p>
+                <div class="cmr-trust-icons">
+                    <div class="cmr-icon-pill">
+                        <img decoding="async" src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/ApplePay.svg" alt="Apple Pay">
+                    </div>
+                    <div class="cmr-icon-pill">
+                        <img decoding="async" src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/GooglePay.svg" alt="Google Pay">
+                    </div>
+                    <div class="cmr-icon-pill">
+                        <img decoding="async" src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/Mastercard.svg" alt="Mastercard">
+                    </div>
+                    <div class="cmr-icon-pill">
+                        <img decoding="async" src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/Amex.svg" alt="Amex">
+                    </div>
+                    <div class="cmr-icon-pill">
+                        <img decoding="async" src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/PayPal.svg" alt="PayPal">
+                    </div>
+                    <div class="cmr-icon-pill">
+                        <img decoding="async" src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/Visa.svg" alt="Visa">
+                    </div>
                 </div>
             </div>
         </div>

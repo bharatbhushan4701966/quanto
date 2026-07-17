@@ -440,6 +440,39 @@ button#place_order:hover,
     background: #3e1b99 !important;
 }
 
+/* Trust Badges */
+.cmr-trust-badges {
+    text-align: left !important;
+    margin-top: 24px !important;
+    padding-top: 20px !important;
+    border-top: 1px solid #e5e7eb !important;
+}
+.cmr-trust-label {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #111827 !important;
+    margin-bottom: 12px !important;
+    text-align: left !important;
+}
+.cmr-trust-icons {
+    display: flex !important;
+    justify-content: flex-start !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+}
+.cmr-icon-pill {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+}
+.cmr-icon-pill img {
+    height: 18px;
+    width: auto;
+}
+
 /* Back to Report Button */
 .cmr-back-link-wrap {
     margin-bottom: 16px !important;
