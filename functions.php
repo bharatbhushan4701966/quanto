@@ -1426,14 +1426,16 @@ function cmr_enqueue_checkout_css() {
 // Add cart icon to primary menu
 add_filter('wp_nav_menu_items', 'cmr_add_cart_to_menu', 10, 2);
 function cmr_add_cart_to_menu($items, $args) {
-    if ($args->theme_location == 'primary-menu') {
-        $cart_count = WC()->cart->get_cart_contents_count();
-        $cart_url = wc_get_cart_url();
+    // Apply to both primary-menu and any menu just in case the location name differs
+    if (isset($args->theme_location) && ($args->theme_location == 'primary-menu' || $args->theme_location == 'primary')) {
+        $cart_count = WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
+        $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : '';
         
-        $cart_html = '<li class="menu-item cmr-cart-menu-item">';
-        $cart_html .= '<a href="' . esc_url($cart_url) . '" class="cmr-cart-icon-link">';
-        $cart_html .= '<i class="fa-solid fa-cart-shopping"></i>';
-        $cart_html .= '<span class="cmr-cart-count">' . esc_html($cart_count) . '</span>';
+        $cart_html = '<li class="menu-item cmr-cart-menu-item" style="display:flex; align-items:center;">';
+        $cart_html .= '<a href="' . esc_url($cart_url) . '" class="cmr-cart-icon-link" style="display:flex; align-items:center; gap:5px;">';
+        // Inline SVG for the cart icon
+        $cart_html .= '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>';
+        $cart_html .= '<span class="cmr-cart-count" style="background:#4a148c; color:#fff; border-radius:50%; padding:2px 6px; font-size:12px; margin-left:4px;">' . esc_html($cart_count) . '</span>';
         $cart_html .= '</a>';
         $cart_html .= '</li>';
         
@@ -1447,7 +1449,7 @@ add_filter('woocommerce_add_to_cart_fragments', 'cmr_cart_count_fragments', 10, 
 function cmr_cart_count_fragments($fragments) {
     ob_start();
     ?>
-    <span class="cmr-cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
+    <span class="cmr-cart-count" style="background:#4a148c; color:#fff; border-radius:50%; padding:2px 6px; font-size:12px; margin-left:4px;"><?php echo WC()->cart ? WC()->cart->get_cart_contents_count() : 0; ?></span>
     <?php
     $fragments['span.cmr-cart-count'] = ob_get_clean();
     return $fragments;
