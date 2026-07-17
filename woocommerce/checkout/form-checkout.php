@@ -404,34 +404,30 @@ if ( WC()->cart && ! WC()->cart->is_empty() ) {
     <?php do_action( 'woocommerce_before_checkout_form', $checkout ); ?>
 </div>
 
-<form name="checkout" method="post" class="cmr-checkout-wrap woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
-
-    <div class="cmr-checkout-left">
-        <?php if ( ! is_user_logged_in() ) : ?>
+<?php if ( ! is_user_logged_in() ) : ?>
+    <div class="cmr-checkout-wrap" id="cmr-pre-checkout-login-grid">
+        <div class="cmr-checkout-left">
             <div class="cart-login-prompt" style="margin-bottom: 24px;">
                 <h3>Login to Continue Checkout</h3>
                 <p>Please sign in to save your cart and proceed to secure payment.</p>
                 
-                <?php
-                // Display WordPress Login Form
-                $args = array(
-                    'echo'           => true,
-                    'redirect'       => wc_get_checkout_url(),
-                    'form_id'        => 'checkout_loginform',
-                    'label_username' => __( 'EMAIL ADDRESS' ),
-                    'label_password' => __( 'PASSWORD' ),
-                    'label_remember' => __( 'Remember Me' ),
-                    'label_log_in'   => __( 'Sign In ↗' ),
-                    'id_username'    => 'checkout_user_login',
-                    'id_password'    => 'checkout_user_pass',
-                    'id_remember'    => 'checkout_rememberme',
-                    'id_submit'      => 'checkout_wp-submit',
-                    'remember'       => false,
-                    'value_username' => '',
-                    'value_remember' => false
-                );
-                wp_login_form( $args );
-                ?>
+                <form class="woocommerce-form woocommerce-form-login login" method="post" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" style="border: none !important; padding: 0 !important; margin: 0 !important;">
+                    <?php do_action( 'woocommerce_login_form_start' ); ?>
+
+                    <label for="checkout_username"><?php esc_html_e( 'EMAIL ADDRESS', 'woocommerce' ); ?></label>
+                    <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="checkout_username" autocomplete="username" required />
+
+                    <label for="checkout_password"><?php esc_html_e( 'PASSWORD', 'woocommerce' ); ?></label>
+                    <input class="woocommerce-Input woocommerce-Input--text input-text" type="password" name="password" id="checkout_password" autocomplete="current-password" required />
+
+                    <?php do_action( 'woocommerce_login_form' ); ?>
+
+                    <input type="hidden" name="redirect" value="<?php echo esc_url( wc_get_checkout_url() ); ?>" />
+                    <?php wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ); ?>
+                    <button type="submit" class="woocommerce-button button woocommerce-form-login__submit" name="login" value="<?php esc_attr_e( 'Log in', 'woocommerce' ); ?>"><?php esc_html_e( 'Sign In ↗', 'woocommerce' ); ?></button>
+
+                    <?php do_action( 'woocommerce_login_form_end' ); ?>
+                </form>
                 <div class="cart-login-links">
                     <a href="<?php echo esc_url( wp_lostpassword_url() ); ?>" class="forgot-password-link">Forgot Password?</a>
                 </div>
@@ -443,12 +439,28 @@ if ( WC()->cart && ! WC()->cart->is_empty() ) {
                 <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="create-account-btn">Create Account ↗</a>
                 
                 <div style="text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px dashed #e5e7eb;">
-                    <a href="#guest-shipping-address" onclick="document.getElementById('guest-shipping-address').style.display='block'; this.parentNode.style.display='none'; return false;" style="font-size: 14px; font-weight: 600; color: #4820B0; text-decoration: underline;">Or continue as guest without creating an account ↓</a>
+                    <a href="#guest-shipping-address" onclick="document.getElementById('cmr-checkout-main-form').style.display='grid'; document.getElementById('cmr-pre-checkout-login-grid').style.display='none'; return false;" style="font-size: 14px; font-weight: 600; color: #4820B0; text-decoration: underline;">Or continue as guest without creating an account ↓</a>
                 </div>
             </div>
-        <?php endif; ?>
+        </div>
+        <div class="cmr-checkout-right">
+            <div class="cmr-promo-box" style="margin-bottom: 24px;">
+                <div class="cmr-promo-header">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    Order Preview
+                </div>
+                <div style="font-size: 14px; color: #4b5563; margin-top: 12px; line-height: 1.6;">
+                    Sign in or continue as guest to review your items and complete secure payment.
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
 
-        <div class="cmr-checkout-card" id="guest-shipping-address" <?php if ( ! is_user_logged_in() ) echo 'style="display: none;"'; ?>>
+<form name="checkout" id="cmr-checkout-main-form" method="post" class="cmr-checkout-wrap woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data" <?php if ( ! is_user_logged_in() ) echo 'style="display: none;"'; ?>>
+
+    <div class="cmr-checkout-left">
+        <div class="cmr-checkout-card" id="guest-shipping-address">
             <h2 class="cmr-section-title">Shipping address</h2>
             
             <?php if ( $checkout->get_checkout_fields() ) : ?>

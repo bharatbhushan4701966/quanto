@@ -8,9 +8,20 @@
     grid-template-columns: 1fr 420px !important;
     gap: 40px !important;
     max-width: 1280px !important;
+    width: 100% !important;
     margin: 40px auto !important;
     padding: 0 24px !important;
     align-items: start !important;
+    box-sizing: border-box !important;
+}
+
+.cmr-checkout-left {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
 }
 
 /* Custom Grouped Billing Form Styles */
@@ -680,7 +691,12 @@ button#place_order:hover,
     box-sizing: border-box;
 }
 
-.cart-login-prompt input[type="submit"] {
+.cart-login-prompt input[type="submit"],
+.cart-login-prompt button[type="submit"],
+.cart-login-prompt .woocommerce-form-login__submit {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 48px;
     background: #4820B0 !important;
@@ -692,7 +708,9 @@ button#place_order:hover,
     cursor: pointer;
     transition: background 0.2s !important;
 }
-.cart-login-prompt input[type="submit"]:hover {
+.cart-login-prompt input[type="submit"]:hover,
+.cart-login-prompt button[type="submit"]:hover,
+.cart-login-prompt .woocommerce-form-login__submit:hover {
     background: #3e1b99 !important;
 }
 

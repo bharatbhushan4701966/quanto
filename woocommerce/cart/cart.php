@@ -117,26 +117,23 @@ do_action( 'woocommerce_before_cart' ); ?>
                 <h3>Login to Continue Checkout</h3>
                 <p>Please sign in to save your cart and proceed to secure payment.</p>
                 
-                <?php
-                // Display WordPress Login Form
-                $args = array(
-                    'echo'           => true,
-                    'redirect'       => wc_get_cart_url(),
-                    'form_id'        => 'loginform',
-                    'label_username' => __( 'EMAIL ADDRESS' ),
-                    'label_password' => __( 'PASSWORD' ),
-                    'label_remember' => __( 'Remember Me' ),
-                    'label_log_in'   => __( 'Sign In ↗' ),
-                    'id_username'    => 'user_login',
-                    'id_password'    => 'user_pass',
-                    'id_remember'    => 'rememberme',
-                    'id_submit'      => 'wp-submit',
-                    'remember'       => false,
-                    'value_username' => '',
-                    'value_remember' => false
-                );
-                wp_login_form( $args );
-                ?>
+                <form class="woocommerce-form woocommerce-form-login login" method="post" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" style="border: none !important; padding: 0 !important; margin: 0 !important;">
+                    <?php do_action( 'woocommerce_login_form_start' ); ?>
+
+                    <label for="username"><?php esc_html_e( 'EMAIL ADDRESS', 'woocommerce' ); ?></label>
+                    <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="username" autocomplete="username" required />
+
+                    <label for="password"><?php esc_html_e( 'PASSWORD', 'woocommerce' ); ?></label>
+                    <input class="woocommerce-Input woocommerce-Input--text input-text" type="password" name="password" id="password" autocomplete="current-password" required />
+
+                    <?php do_action( 'woocommerce_login_form' ); ?>
+
+                    <input type="hidden" name="redirect" value="<?php echo esc_url( wc_get_checkout_url() ); ?>" />
+                    <?php wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ); ?>
+                    <button type="submit" class="woocommerce-button button woocommerce-form-login__submit" name="login" value="<?php esc_attr_e( 'Log in', 'woocommerce' ); ?>"><?php esc_html_e( 'Sign In ↗', 'woocommerce' ); ?></button>
+
+                    <?php do_action( 'woocommerce_login_form_end' ); ?>
+                </form>
                 <div class="cart-login-links">
                     <a href="<?php echo esc_url( wp_lostpassword_url() ); ?>" class="forgot-password-link">Forgot Password?</a>
                 </div>
