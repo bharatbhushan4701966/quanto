@@ -17,11 +17,11 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 /* Critical Inline Checkout Grid Rules (Bypasses all CDN/Browser CSS Caches) */
 .cmr-checkout-wrap {
     display: grid !important;
-    grid-template-columns: 1fr 380px !important;
-    gap: 32px !important;
-    max-width: 1100px !important;
+    grid-template-columns: 1fr 420px !important;
+    gap: 40px !important;
+    max-width: 1280px !important;
     margin: 40px auto !important;
-    padding: 0 20px !important;
+    padding: 0 24px !important;
     align-items: start !important;
 }
 @media (max-width: 900px) {
@@ -259,7 +259,7 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 }
 #place_order, .button.alt.cmr-place-order-btn {
     width: 100% !important;
-    background: #4f46e5 !important;
+    background: #4820B0 !important;
     color: #fff !important;
     font-size: 16px !important;
     font-weight: 600 !important;
@@ -271,11 +271,11 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
     align-items: center !important;
     justify-content: center !important;
     cursor: pointer !important;
-    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3) !important;
+    box-shadow: 0 4px 14px rgba(72, 32, 176, 0.3) !important;
     transition: background 0.2s !important;
 }
 #place_order:hover, .button.alt.cmr-place-order-btn:hover {
-    background: #4338ca !important;
+    background: #3e1b99 !important;
 }
 /* Trust Badges */
 .cmr-trust-badges {
@@ -306,12 +306,48 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
     height: 18px;
     width: auto;
 }
+/* Back to Report Button */
+.cmr-back-link-wrap {
+    margin-bottom: 16px !important;
+}
+.cmr-back-to-report-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #4820B0 !important;
+    text-decoration: none !important;
+    transition: all 0.2s !important;
+}
+.cmr-back-to-report-btn:hover {
+    color: #3e1b99 !important;
+    transform: translateX(-3px) !important;
+}
 </style>
 
 <form name="checkout" method="post" class="cmr-checkout-wrap woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
 
 
     <div class="cmr-checkout-left">
+        <?php
+        $back_url = 'javascript:history.back()';
+        if ( WC()->cart && ! WC()->cart->is_empty() ) {
+            foreach ( WC()->cart->get_cart() as $cart_item ) {
+                if ( ! empty( $cart_item['product_id'] ) ) {
+                    $back_url = get_permalink( $cart_item['product_id'] );
+                    break;
+                }
+            }
+        }
+        ?>
+        <div class="cmr-back-link-wrap">
+            <a href="<?php echo esc_url( $back_url ); ?>" class="cmr-back-to-report-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                Back to Report
+            </a>
+        </div>
+
         <div class="cmr-checkout-card">
             <h2 class="cmr-section-title">Shipping address</h2>
             
