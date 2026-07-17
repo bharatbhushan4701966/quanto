@@ -832,3 +832,130 @@ body.logged-in .cart-collaterals .checkout-button:hover {
 }
 
 .cmr-trust-badges .trust-icons img { height: 20px; }
+
+/* Custom Sleek WooCommerce Warning & Alert Message Boxes */
+.cmr-checkout-wrap ul.woocommerce-error,
+.cmr-checkout-wrap div.woocommerce-error,
+.cmr-checkout-wrap ul.woocommerce-message,
+.cmr-checkout-wrap div.woocommerce-message,
+.cmr-checkout-wrap ul.woocommerce-info,
+.cmr-checkout-wrap div.woocommerce-info,
+ul.woocommerce-error,
+div.woocommerce-error,
+ul.woocommerce-message,
+div.woocommerce-message,
+ul.woocommerce-info,
+div.woocommerce-info {
+    list-style: none !important;
+    margin: 0 0 14px 0 !important;
+    padding: 12px 14px 12px 42px !important;
+    border-radius: 8px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    border-top: none !important;
+    border-right: 1px solid rgba(0,0,0,0.06) !important;
+    border-bottom: 1px solid rgba(0,0,0,0.06) !important;
+    border-left: 4px solid #ef4444 !important;
+    background: #fef2f2 !important;
+    color: #991b1b !important;
+    box-shadow: 0 2px 5px rgba(239, 68, 68, 0.08) !important;
+}
+
+.cmr-checkout-wrap ul.woocommerce-error li,
+.cmr-checkout-wrap ul.woocommerce-message li,
+.cmr-checkout-wrap ul.woocommerce-info li,
+ul.woocommerce-error li,
+ul.woocommerce-message li,
+ul.woocommerce-info li {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+.cmr-checkout-wrap ul.woocommerce-error li::before,
+.cmr-checkout-wrap ul.woocommerce-message li::before,
+.cmr-checkout-wrap ul.woocommerce-info li::before,
+ul.woocommerce-error li::before,
+ul.woocommerce-message li::before,
+ul.woocommerce-info li::before {
+    display: none !important;
+    content: none !important;
+}
+
+/* Alert Icons */
+.cmr-checkout-wrap ul.woocommerce-error::before,
+.cmr-checkout-wrap div.woocommerce-error::before,
+ul.woocommerce-error::before,
+div.woocommerce-error::before {
+    content: "⚠️" !important;
+    font-family: inherit !important;
+    position: absolute !important;
+    left: 14px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+    display: block !important;
+    background: none !important;
+    height: auto !important;
+    width: auto !important;
+}
+
+.cmr-checkout-wrap ul.woocommerce-message,
+.cmr-checkout-wrap div.woocommerce-message,
+ul.woocommerce-message,
+div.woocommerce-message {
+    border-left: 4px solid #10b981 !important;
+    background: #ecfdf5 !important;
+    color: #065f46 !important;
+    box-shadow: 0 2px 5px rgba(16, 185, 129, 0.08) !important;
+}
+.cmr-checkout-wrap ul.woocommerce-message::before,
+.cmr-checkout-wrap div.woocommerce-message::before,
+ul.woocommerce-message::before,
+div.woocommerce-message::before {
+    content: "✅" !important;
+    font-family: inherit !important;
+    position: absolute !important;
+    left: 14px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+    display: block !important;
+    background: none !important;
+    height: auto !important;
+    width: auto !important;
+}
+
+.cmr-checkout-wrap ul.woocommerce-info,
+.cmr-checkout-wrap div.woocommerce-info,
+ul.woocommerce-info,
+div.woocommerce-info {
+    border-left: 4px solid #3b82f6 !important;
+    background: #eff6ff !important;
+    color: #1e40af !important;
+    box-shadow: 0 2px 5px rgba(59, 130, 246, 0.08) !important;
+}
+.cmr-checkout-wrap ul.woocommerce-info::before,
+.cmr-checkout-wrap div.woocommerce-info::before,
+ul.woocommerce-info::before,
+div.woocommerce-info::before {
+    content: "ℹ️" !important;
+    font-family: inherit !important;
+    position: absolute !important;
+    left: 14px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+    display: block !important;
+    background: none !important;
+    height: auto !important;
+    width: auto !important;
+}

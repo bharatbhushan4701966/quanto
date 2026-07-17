@@ -530,9 +530,13 @@ jQuery(document).ready(function($) {
             url: wc_checkout_params.wc_ajax_url.toString().replace( '%%endpoint%%', 'apply_coupon' ),
             data: data,
             success: function( response ) {
-                $('.woocommerce-error, .woocommerce-message').remove();
+                $('.woocommerce-error, .woocommerce-message, .woocommerce-info').remove();
                 if ( response ) {
-                    $('.cmr-promo-box').before( response );
+                    if ($('.cmr-coupon-form').length) {
+                        $('.cmr-coupon-form').before( response );
+                    } else {
+                        $('.cmr-promo-box').before( response );
+                    }
                 }
                 
                 // Update Order Summary subtotal & discounts instantly
@@ -581,10 +585,7 @@ jQuery(document).ready(function($) {
             url: wc_checkout_params.wc_ajax_url.toString().replace( '%%endpoint%%', 'remove_coupon' ),
             data: data,
             success: function( response ) {
-                $('.woocommerce-error, .woocommerce-message').remove();
-                if ( response ) {
-                    $('.cmr-promo-box').before( response );
-                }
+                $('.woocommerce-error, .woocommerce-message, .woocommerce-info').remove();
                 $( document.body ).trigger( 'update_checkout', { update_shipping_method: false } );
                 
                 var formHtml = '<div class="cmr-coupon-form">' +
@@ -594,6 +595,10 @@ jQuery(document).ready(function($) {
                 '<div class="cmr-coupon-hints">Try: CMR10, CMRINDIA15, or FIRST20</div>';
                 
                 $('.cmr-promo-box').html(formHtml);
+                
+                if ( response ) {
+                    $('.cmr-coupon-form').before( response );
+                }
             }
         });
     });
