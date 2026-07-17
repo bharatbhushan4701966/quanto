@@ -439,7 +439,7 @@ if ( WC()->cart && ! WC()->cart->is_empty() ) {
                 <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="create-account-btn">Create Account ↗</a>
                 
                 <div style="text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px dashed #e5e7eb;">
-                    <a href="#guest-shipping-address" onclick="document.getElementById('cmr-checkout-main-form').style.display='grid'; document.getElementById('cmr-pre-checkout-login-grid').style.display='none'; return false;" style="font-size: 14px; font-weight: 600; color: #4820B0; text-decoration: underline;">Or continue as guest without creating an account ↓</a>
+                    <a href="#guest-shipping-address" onclick="document.getElementById('cmr-checkout-main-form').style.setProperty('display', 'grid', 'important'); document.getElementById('cmr-pre-checkout-login-grid').style.setProperty('display', 'none', 'important'); return false;" style="font-size: 14px; font-weight: 600; color: #4820B0; text-decoration: underline;">Or continue as guest without creating an account ↓</a>
                 </div>
             </div>
         </div>
@@ -457,7 +457,7 @@ if ( WC()->cart && ! WC()->cart->is_empty() ) {
     </div>
 <?php endif; ?>
 
-<form name="checkout" id="cmr-checkout-main-form" method="post" class="cmr-checkout-wrap woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data" <?php if ( ! is_user_logged_in() ) echo 'style="display: none;"'; ?>>
+<form name="checkout" id="cmr-checkout-main-form" method="post" class="cmr-checkout-wrap woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data" <?php if ( ! is_user_logged_in() ) echo 'style="display: none !important;"'; ?>>
 
     <div class="cmr-checkout-left">
         <div class="cmr-checkout-card" id="guest-shipping-address">

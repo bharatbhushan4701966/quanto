@@ -15,6 +15,12 @@
     box-sizing: border-box !important;
 }
 
+.cmr-checkout-wrap[style*="display: none"],
+#cmr-checkout-main-form[style*="display: none"],
+#cmr-pre-checkout-login-grid[style*="display: none"] {
+    display: none !important;
+}
+
 .cmr-checkout-left {
     display: flex !important;
     flex-direction: column !important;
