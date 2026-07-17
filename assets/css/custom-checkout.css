@@ -878,11 +878,41 @@ ul.woocommerce-info li {
 }
 
 .cmr-checkout-wrap ul.woocommerce-error li::before,
+.cmr-checkout-wrap ul.woocommerce-error li::after,
+.cmr-checkout-wrap ul.woocommerce-error li:before,
+.cmr-checkout-wrap ul.woocommerce-error li:after,
 .cmr-checkout-wrap ul.woocommerce-message li::before,
+.cmr-checkout-wrap ul.woocommerce-message li::after,
+.cmr-checkout-wrap ul.woocommerce-message li:before,
+.cmr-checkout-wrap ul.woocommerce-message li:after,
 .cmr-checkout-wrap ul.woocommerce-info li::before,
+.cmr-checkout-wrap ul.woocommerce-info li::after,
+.cmr-checkout-wrap ul.woocommerce-info li:before,
+.cmr-checkout-wrap ul.woocommerce-info li:after,
 ul.woocommerce-error li::before,
+ul.woocommerce-error li::after,
+ul.woocommerce-error li:before,
+ul.woocommerce-error li:after,
 ul.woocommerce-message li::before,
-ul.woocommerce-info li::before {
+ul.woocommerce-message li::after,
+ul.woocommerce-message li:before,
+ul.woocommerce-message li:after,
+ul.woocommerce-info li::before,
+ul.woocommerce-info li::after,
+ul.woocommerce-info li:before,
+ul.woocommerce-info li:after,
+.page--content .woocommerce ul > li:after,
+.page--content .woocommerce ul > li::after,
+.page--content .woocommerce ul > li:before,
+.page--content .woocommerce ul > li::before,
+.woocommerce-checkout ul > li:after,
+.woocommerce-checkout ul > li::after,
+.woocommerce-checkout ul > li:before,
+.woocommerce-checkout ul > li::before,
+.cmr-checkout-wrap ul > li:after,
+.cmr-checkout-wrap ul > li::after,
+.cmr-cart-menu-item:after,
+.cmr-cart-menu-item::after {
     display: none !important;
     content: none !important;
 }
