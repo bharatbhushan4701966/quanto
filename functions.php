@@ -1355,3 +1355,100 @@ function cmr_bulk_replace_domain_woo_downloads() {
         die("Successfully updated domains from cmrindia.com to qai8358l95-staging in $count WooCommerce products.");
     }
 }
+
+// Custom WooCommerce Checkout Fields
+add_filter('woocommerce_checkout_fields', 'cmr_custom_checkout_fields');
+function cmr_custom_checkout_fields($fields) {
+    // Modify Billing Fields
+    $fields['billing']['billing_first_name']['placeholder'] = 'First';
+    $fields['billing']['billing_first_name']['label'] = 'NAME';
+    $fields['billing']['billing_first_name']['class'] = array('form-row-first');
+    
+    $fields['billing']['billing_last_name']['placeholder'] = 'Last';
+    $fields['billing']['billing_last_name']['label'] = ''; // Hide label to align with First Name
+    $fields['billing']['billing_last_name']['class'] = array('form-row-last');
+    
+    $fields['billing']['billing_address_1']['placeholder'] = 'Street address, P.O. box, company name';
+    $fields['billing']['billing_address_1']['label'] = 'ADDRESS';
+    $fields['billing']['billing_address_1']['class'] = array('form-row-wide');
+    
+    // Remove Address 2 and Company
+    unset($fields['billing']['billing_address_2']);
+    unset($fields['billing']['billing_company']);
+    
+    $fields['billing']['billing_city']['placeholder'] = 'City';
+    $fields['billing']['billing_city']['label'] = 'LOCATION';
+    $fields['billing']['billing_city']['class'] = array('form-row-first');
+    
+    $fields['billing']['billing_state']['placeholder'] = 'State';
+    $fields['billing']['billing_state']['label'] = ''; // Hide label
+    $fields['billing']['billing_state']['class'] = array('form-row-last');
+    
+    $fields['billing']['billing_country']['placeholder'] = 'Country';
+    $fields['billing']['billing_country']['label'] = ''; // Hide label
+    $fields['billing']['billing_country']['class'] = array('form-row-first');
+    
+    $fields['billing']['billing_postcode']['placeholder'] = 'Pincode';
+    $fields['billing']['billing_postcode']['label'] = ''; // Hide label
+    $fields['billing']['billing_postcode']['class'] = array('form-row-last');
+    
+    $fields['billing']['billing_email']['placeholder'] = 'alexander@botanical.com';
+    $fields['billing']['billing_email']['label'] = 'EMAIL ADDRESS';
+    $fields['billing']['billing_email']['class'] = array('form-row-wide');
+    
+    $fields['billing']['billing_phone']['placeholder'] = '00000-00000';
+    $fields['billing']['billing_phone']['label'] = 'PHONE NUMBER';
+    $fields['billing']['billing_phone']['class'] = array('form-row-wide');
+
+    return $fields;
+}
+
+// Change "Place Order" button text
+add_filter('woocommerce_order_button_text', 'cmr_custom_order_button_text');
+function cmr_custom_order_button_text() {
+    return 'Proceed to Checkout'; 
+}
+
+// Redirect to cart immediately after adding to cart
+add_filter('woocommerce_add_to_cart_redirect', 'cmr_redirect_to_cart_after_add');
+function cmr_redirect_to_cart_after_add() {
+    return wc_get_cart_url();
+}
+
+// Enqueue custom checkout CSS
+add_action('wp_enqueue_scripts', 'cmr_enqueue_checkout_css');
+function cmr_enqueue_checkout_css() {
+    if (is_checkout()) {
+        wp_enqueue_style('cmr-custom-checkout', get_template_directory_uri() . '/assets/css/custom-checkout.css', array(), '1.0.0');
+    }
+}
+
+// Add cart icon to primary menu
+add_filter('wp_nav_menu_items', 'cmr_add_cart_to_menu', 10, 2);
+function cmr_add_cart_to_menu($items, $args) {
+    if ($args->theme_location == 'primary-menu') {
+        $cart_count = WC()->cart->get_cart_contents_count();
+        $cart_url = wc_get_cart_url();
+        
+        $cart_html = '<li class="menu-item cmr-cart-menu-item">';
+        $cart_html .= '<a href="' . esc_url($cart_url) . '" class="cmr-cart-icon-link">';
+        $cart_html .= '<i class="fa-solid fa-cart-shopping"></i>';
+        $cart_html .= '<span class="cmr-cart-count">' . esc_html($cart_count) . '</span>';
+        $cart_html .= '</a>';
+        $cart_html .= '</li>';
+        
+        $items .= $cart_html;
+    }
+    return $items;
+}
+
+// Ensure cart fragment updates via AJAX
+add_filter('woocommerce_add_to_cart_fragments', 'cmr_cart_count_fragments', 10, 1);
+function cmr_cart_count_fragments($fragments) {
+    ob_start();
+    ?>
+    <span class="cmr-cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
+    <?php
+    $fragments['span.cmr-cart-count'] = ob_get_clean();
+    return $fragments;
+}
