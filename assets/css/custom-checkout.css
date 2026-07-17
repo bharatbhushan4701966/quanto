@@ -328,8 +328,26 @@
     color: #111;
 }
 
-/* Checkout Button */
-.cmr-checkout-btn {
+/* Hide default payment box styling and payment method selection list */
+#payment, .woocommerce-checkout-payment {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+#payment ul.wc_payment_methods,
+#payment ul.payment_methods,
+.woocommerce-checkout-payment ul.wc_payment_methods,
+.woocommerce-checkout-payment ul.payment_methods,
+.woocommerce-terms-and-conditions-wrapper,
+.woocommerce-privacy-policy-text {
+    display: none !important;
+}
+
+/* Proceed to Checkout Button */
+#place_order,
+button#place_order,
+.cmr-checkout-wrap #place_order {
     display: flex;
     align-items: center;
     justify-content: center;

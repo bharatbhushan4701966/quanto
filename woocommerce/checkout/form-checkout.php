@@ -243,6 +243,20 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
     font-weight: 800 !important;
 }
 /* Proceed Button */
+#payment, .woocommerce-checkout-payment {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+#payment ul.wc_payment_methods,
+#payment ul.payment_methods,
+.woocommerce-checkout-payment ul.wc_payment_methods,
+.woocommerce-checkout-payment ul.payment_methods,
+.woocommerce-terms-and-conditions-wrapper,
+.woocommerce-privacy-policy-text {
+    display: none !important;
+}
 #place_order, .button.alt.cmr-place-order-btn {
     width: 100% !important;
     background: #4f46e5 !important;
