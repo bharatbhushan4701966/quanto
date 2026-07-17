@@ -506,6 +506,43 @@ function cmr_get_cart_html() {
                     ?>
                 </div>
             </div>
+            
+            <!-- Pre-Checkout Login Form -->
+            <div class="cart-login-prompt" id="cart-login-prompt" style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 4px; padding: 30px; margin-bottom: 30px; <?php if ( is_user_logged_in() ) echo 'display: none;'; ?>">
+                <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">Login to Continue Checkout</h3>
+                <p style="color: #6b7280; font-size: 14px; margin-bottom: 20px;">Please sign in to save your cart and proceed to secure payment.</p>
+                
+                <form class="woocommerce-form woocommerce-form-login login" method="post" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" style="border: none !important; padding: 0 !important; margin: 0 !important;">
+                    <?php do_action( 'woocommerce_login_form_start' ); ?>
+
+                    <label for="username"><?php esc_html_e( 'EMAIL ADDRESS', 'woocommerce' ); ?></label>
+                    <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="username" autocomplete="username" required style="width: 100%; padding: 12px 15px; border: 1px solid #d1d5db; border-radius: 4px; margin-bottom: 15px;" />
+
+                    <label for="password"><?php esc_html_e( 'PASSWORD', 'woocommerce' ); ?></label>
+                    <input class="woocommerce-Input woocommerce-Input--text input-text" type="password" name="password" id="password" autocomplete="current-password" required style="width: 100%; padding: 12px 15px; border: 1px solid #d1d5db; border-radius: 4px; margin-bottom: 15px;" />
+
+                    <?php do_action( 'woocommerce_login_form' ); ?>
+
+                    <input type="hidden" name="redirect" value="<?php echo esc_url( wc_get_checkout_url() ); ?>" />
+                    <?php wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ); ?>
+                    <button type="submit" class="woocommerce-button button woocommerce-form-login__submit" name="login" value="<?php esc_attr_e( 'Log in', 'woocommerce' ); ?>" style="background: #4b23a0; color: #fff; border: none; padding: 14px 25px; border-radius: 50px; font-weight: 600; width: 100%; cursor: pointer;"><?php esc_html_e( 'Sign In ↗', 'woocommerce' ); ?></button>
+
+                    <?php do_action( 'woocommerce_login_form_end' ); ?>
+                </form>
+                <div class="cart-login-links" style="margin-top: 15px; text-align: center;">
+                    <a href="<?php echo esc_url( wp_lostpassword_url() ); ?>" class="forgot-password-link" style="color: #6b46c1; text-decoration: none; font-size: 14px;">Forgot Password?</a>
+                </div>
+                
+                <div class="login-separator" style="display: flex; align-items: center; text-align: center; margin: 25px 0; color: #9ca3af;"><span style="flex: 1; border-bottom: 1px solid #e5e7eb;"></span><span style="padding: 0 10px; font-size: 13px; font-weight: 600;">OR</span><span style="flex: 1; border-bottom: 1px solid #e5e7eb;"></span></div>
+                
+                <p class="create-account-text" style="color: #6b7280; font-size: 14px; margin-bottom: 15px; text-align: center;">Create an account to gain instant access to your premium market reports and insights.</p>
+                
+                <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="create-account-btn" style="display: block; text-align: center; background: #ffffff; border: 2px solid #4b23a0; color: #4b23a0; padding: 12px 25px; border-radius: 50px; font-weight: 600; text-decoration: none;">Create Account ↗</a>
+                
+                <div style="text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px dashed #e5e7eb;">
+                    <a href="<?php echo esc_url( wc_get_checkout_url() ); ?>" onclick="var p=document.querySelectorAll('.wc-proceed-to-checkout a.checkout-button, .cart-collaterals .checkout-button, .cmr-checkout-btn'); p.forEach(function(b){ b.removeAttribute('disabled'); b.style.setProperty('opacity', '1', 'important'); b.style.setProperty('pointer-events', 'auto', 'important'); b.style.setProperty('cursor', 'pointer', 'important'); b.style.setProperty('filter', 'none', 'important'); }); document.getElementById('cart-login-prompt').style.setProperty('display', 'none', 'important'); window.location.href='<?php echo esc_url( wc_get_checkout_url() ); ?>'; return false;" style="font-size: 14px; font-weight: 600; color: #4820B0; text-decoration: underline;">Or continue as guest without creating an account ↓</a>
+                </div>
+            </div>
         </div>
 
         <!-- Right Column -->
@@ -594,6 +631,26 @@ function cmr_get_cart_html() {
 
         </div>
     </div>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var isLoggedOut = !document.body.classList.contains('logged-in') || <?php echo ! is_user_logged_in() ? 'true' : 'false'; ?>;
+        var promptBox = document.getElementById('cart-login-prompt');
+        var proceedBtns = document.querySelectorAll('.wc-proceed-to-checkout a.checkout-button, .cart-collaterals .checkout-button, .cmr-checkout-btn');
+        if (isLoggedOut && promptBox) {
+            promptBox.style.setProperty('display', 'block', 'important');
+            proceedBtns.forEach(function(btn) {
+                btn.setAttribute('disabled', 'disabled');
+                btn.style.setProperty('opacity', '0.5', 'important');
+                btn.style.setProperty('pointer-events', 'none', 'important');
+                btn.style.setProperty('cursor', 'not-allowed', 'important');
+                btn.style.setProperty('filter', 'grayscale(1)', 'important');
+            });
+        } else if (promptBox) {
+            promptBox.style.setProperty('display', 'none', 'important');
+        }
+    });
+    </script>
     <?php
     return ob_get_clean();
 }
