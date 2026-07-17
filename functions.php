@@ -1427,10 +1427,15 @@ function cmr_override_country_locale($locales) {
     return $locales;
 }
 
-// Change "Place Order" button text
+// Change "Place Order" button text and HTML
 add_filter('woocommerce_order_button_text', 'cmr_custom_order_button_text');
 function cmr_custom_order_button_text() {
     return 'Proceed to Checkout'; 
+}
+
+add_filter('woocommerce_order_button_html', 'cmr_custom_order_button_html');
+function cmr_custom_order_button_html($button) {
+    return '<button type="submit" class="button alt cmr-place-order-btn" name="woocommerce_checkout_place_order" id="place_order" value="Proceed to Checkout" data-value="Proceed to Checkout"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:8px; vertical-align:middle;"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg> Proceed to Checkout</button>';
 }
 
 // Force shipping to billing address only (removes shipping fields)

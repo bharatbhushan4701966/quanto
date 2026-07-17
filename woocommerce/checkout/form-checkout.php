@@ -76,7 +76,221 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 /* Make sure Order Summary right column stays visible and styled */
 .cmr-checkout-right {
     width: 100% !important;
+}
+.cmr-promo-box {
     background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+.cmr-promo-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 14px;
+}
+.cmr-applied-coupons-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+.cmr-applied-pill {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+    background: #f9fafb;
+}
+.cmr-status-badge {
+    color: #10b981;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.cmr-remove-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    background: #fff;
+    text-decoration: none;
+}
+.cmr-remove-pill-btn:hover {
+    background: #f3f4f6;
+    color: #111827;
+}
+.cmr-coupon-form {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+.cmr-coupon-input {
+    flex: 1;
+    border: 1px solid #d1d5db !important;
+    border-radius: 8px !important;
+    padding: 10px 14px !important;
+    font-size: 14px !important;
+}
+.cmr-coupon-apply {
+    background: #111827 !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 10px 18px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+}
+.cmr-coupon-hints {
+    font-size: 12px;
+    color: #6b7280;
+}
+.cmr-order-box {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+/* Product Card */
+.cmr-checkout-product-card {
+    display: flex !important;
+    gap: 16px !important;
+    align-items: flex-start !important;
+    padding-bottom: 20px !important;
+    border-bottom: 1px solid #f3f4f6 !important;
+    margin-bottom: 20px !important;
+}
+.cmr-product-thumb img {
+    width: 80px !important;
+    height: auto !important;
+    border-radius: 6px !important;
+    border: 1px solid #e5e7eb !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08) !important;
+}
+.cmr-product-name {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+    margin: 0 0 6px 0 !important;
+    line-height: 1.4 !important;
+}
+.cmr-product-brand {
+    font-size: 13px !important;
+    color: #6b7280 !important;
+    margin: 0 !important;
+}
+.cmr-summary-heading {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+    margin: 0 0 16px 0 !important;
+}
+.cmr-summary-list .cmr-summary-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 14px !important;
+    font-size: 14px !important;
+    color: #4b5563 !important;
+}
+.cmr-summary-list .nowrap,
+.cmr-summary-list .nowrap .amount,
+.cmr-summary-list .nowrap .woocommerce-Price-amount {
+    white-space: nowrap !important;
+    text-align: right !important;
+    font-weight: 600 !important;
+    color: #111827 !important;
+}
+.cmr-summary-list .coupon-discount .cmr-row-value,
+.cmr-summary-list .coupon-discount .nowrap,
+.cmr-summary-list .coupon-discount .amount {
+    color: #10b981 !important;
+    font-weight: 600 !important;
+}
+.cmr-summary-list .coupon-discount .woocommerce-remove-coupon {
+    display: none !important; /* Hide duplicate remove link inside order totals table */
+}
+.cmr-summary-list .total-row {
+    margin-top: 16px !important;
+    padding-top: 16px !important;
+    border-top: 1px solid #e5e7eb !important;
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    color: #111827 !important;
+}
+.cmr-summary-list .total-row .nowrap {
+    font-size: 20px !important;
+    font-weight: 800 !important;
+}
+/* Proceed Button */
+#place_order, .button.alt.cmr-place-order-btn {
+    width: 100% !important;
+    background: #4f46e5 !important;
+    color: #fff !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    padding: 15px 24px !important;
+    border-radius: 9999px !important;
+    border: none !important;
+    margin-top: 24px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3) !important;
+    transition: background 0.2s !important;
+}
+#place_order:hover, .button.alt.cmr-place-order-btn:hover {
+    background: #4338ca !important;
+}
+/* Trust Badges */
+.cmr-trust-badges {
+    text-align: center;
+    margin-top: 16px;
+}
+.cmr-trust-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 12px;
+}
+.cmr-trust-icons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.cmr-icon-pill {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+}
+.cmr-icon-pill img {
+    height: 18px;
+    width: auto;
 }
 </style>
 
@@ -105,30 +319,44 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
         <?php if ( wc_coupons_enabled() ) : ?>
         <div class="cmr-promo-box">
             <div class="cmr-promo-header">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
                 Promo Code
             </div>
             <?php
-            foreach ( WC()->cart->get_coupons() as $code => $coupon ) {
-                echo '<div class="cmr-applied-coupon">';
-                echo '<span class="cmr-coupon-code">' . esc_html( $code ) . '</span>';
-                echo '<span class="cmr-coupon-applied">Applied <span class="dot">&#9679;</span></span>';
-                echo '<a href="' . esc_url( add_query_arg( 'remove_coupon', rawurlencode( $code ), wc_get_cart_url() ) ) . '" class="cmr-remove-coupon">Remove &times;</a>';
-                echo '</div>';
+            $applied_coupons = WC()->cart->get_coupons();
+            if ( ! empty( $applied_coupons ) ) {
+                foreach ( $applied_coupons as $code => $coupon ) {
+                    ?>
+                    <div class="cmr-applied-coupons-wrap">
+                        <div class="cmr-applied-pill">
+                            <span><?php echo esc_html( strtoupper( $code ) ); ?></span>
+                            <span class="cmr-status-badge">
+                                Applied
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="#10b981"><circle cx="12" cy="12" r="10"/><path fill="#fff" d="M10 14.17l-2.59-2.58L6 13l4 4 8-8-1.41-1.42z"/></svg>
+                            </span>
+                        </div>
+                        <a href="<?php echo esc_url( add_query_arg( 'remove_coupon', rawurlencode( $code ), wc_get_checkout_url() ) ); ?>" class="cmr-remove-pill-btn">
+                            Remove &times;
+                        </a>
+                    </div>
+                    <div class="cmr-coupon-hints">Try: CMR10, CMRINDIA15, or FIRST20</div>
+                    <?php
+                }
+            } else {
+                ?>
+                <div class="cmr-coupon-form">
+                    <input type="text" name="coupon_code" class="cmr-coupon-input" placeholder="Enter coupon code" id="coupon_code">
+                    <button type="button" class="cmr-coupon-apply" id="apply_custom_coupon">Apply</button>
+                </div>
+                <div class="cmr-coupon-hints">Try: CMR10, CMRINDIA15, or FIRST20</div>
+                <?php
             }
             ?>
-            <div class="cmr-coupon-hints">Try: CMR10, CMRINDIA15, or FIRST20</div>
-            
-            <div class="cmr-coupon-form">
-                <input type="text" name="coupon_code" class="cmr-coupon-input" placeholder="Enter coupon code" id="coupon_code">
-                <button type="button" class="cmr-coupon-apply" id="apply_custom_coupon">Apply</button>
-            </div>
         </div>
         <?php endif; ?>
 
         <!-- Product Summary -->
         <div class="cmr-order-box">
-            <h4 class="cmr-summary-title">Order Summary</h4>
             <div id="order_review" class="woocommerce-checkout-review-order">
                 <?php do_action( 'woocommerce_checkout_order_review' ); ?>
             </div>
