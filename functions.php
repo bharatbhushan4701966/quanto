@@ -1539,8 +1539,8 @@ function cmr_header_cart_container_injection() {
             '<span class="cmr-cart-count" style="background:#4820B0; color:#fff; border-radius:50%; padding:2px 6px; font-size:11px; font-weight:700; line-height:1; min-width:18px; text-align:center;"><?php echo esc_js($cart_count); ?></span>' +
         '</a>';
 
-        // 1. Desktop: Place inside .elementor-element-219e18d right before download-btn or at start of container
-        var rightContainers = document.querySelectorAll('.elementor-element-219e18d, .quanto-header-right, .header-right-action');
+        // 1. Desktop: Place inside .elementor-element-219e18d or .elementor-element-200fa94 right before download-btn or at start of container
+        var rightContainers = document.querySelectorAll('.elementor-element-219e18d, .elementor-element-200fa94, .elementor-element-c3cee6b, .quanto-header-right, .header-right-action');
         rightContainers.forEach(function(container) {
             if (!container.querySelector('.cmr-header-cart-widget')) {
                 var widget = document.createElement('div');
