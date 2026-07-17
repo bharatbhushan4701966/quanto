@@ -787,22 +787,18 @@ button#place_order:hover,
     justify-content: center;
     width: 100%;
     height: 52px;
-    background: #ccc !important;
+    background: #4820B0 !important;
     color: #fff !important;
     border-radius: 30px !important;
     font-size: 15px;
     font-weight: 600;
-    pointer-events: none;
+    pointer-events: auto !important;
     text-decoration: none;
+    transition: background 0.2s !important;
 }
 
-body.logged-in .cart-collaterals .checkout-button {
-    background: #6b21a8 !important;
-    pointer-events: auto;
-}
-
-body.logged-in .cart-collaterals .checkout-button:hover {
-    background: #581c87 !important;
+.cart-collaterals .checkout-button:hover {
+    background: #3e1b99 !important;
 }
 
 .checkout-trust-badges {

@@ -407,7 +407,48 @@ if ( WC()->cart && ! WC()->cart->is_empty() ) {
 <form name="checkout" method="post" class="cmr-checkout-wrap woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
 
     <div class="cmr-checkout-left">
-        <div class="cmr-checkout-card">
+        <?php if ( ! is_user_logged_in() ) : ?>
+            <div class="cart-login-prompt" style="margin-bottom: 24px;">
+                <h3>Login to Continue Checkout</h3>
+                <p>Please sign in to save your cart and proceed to secure payment.</p>
+                
+                <?php
+                // Display WordPress Login Form
+                $args = array(
+                    'echo'           => true,
+                    'redirect'       => wc_get_checkout_url(),
+                    'form_id'        => 'checkout_loginform',
+                    'label_username' => __( 'EMAIL ADDRESS' ),
+                    'label_password' => __( 'PASSWORD' ),
+                    'label_remember' => __( 'Remember Me' ),
+                    'label_log_in'   => __( 'Sign In ↗' ),
+                    'id_username'    => 'checkout_user_login',
+                    'id_password'    => 'checkout_user_pass',
+                    'id_remember'    => 'checkout_rememberme',
+                    'id_submit'      => 'checkout_wp-submit',
+                    'remember'       => false,
+                    'value_username' => '',
+                    'value_remember' => false
+                );
+                wp_login_form( $args );
+                ?>
+                <div class="cart-login-links">
+                    <a href="<?php echo esc_url( wp_lostpassword_url() ); ?>" class="forgot-password-link">Forgot Password?</a>
+                </div>
+                
+                <div class="login-separator"><span>OR</span></div>
+                
+                <p class="create-account-text">Create an account to gain instant access to your premium market reports and insights.</p>
+                
+                <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="create-account-btn">Create Account ↗</a>
+                
+                <div style="text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px dashed #e5e7eb;">
+                    <a href="#guest-shipping-address" onclick="document.getElementById('guest-shipping-address').style.display='block'; this.parentNode.style.display='none'; return false;" style="font-size: 14px; font-weight: 600; color: #4820B0; text-decoration: underline;">Or continue as guest without creating an account ↓</a>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <div class="cmr-checkout-card" id="guest-shipping-address" <?php if ( ! is_user_logged_in() ) echo 'style="display: none;"'; ?>>
             <h2 class="cmr-section-title">Shipping address</h2>
             
             <?php if ( $checkout->get_checkout_fields() ) : ?>
