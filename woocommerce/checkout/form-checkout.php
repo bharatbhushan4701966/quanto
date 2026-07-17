@@ -3,9 +3,6 @@ defined( 'ABSPATH' ) || exit;
 
 // Remove the default coupon form at the top
 remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
-remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_login_form', 10 );
-
-do_action( 'woocommerce_before_checkout_form', $checkout );
 
 if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_required() && ! is_user_logged_in() ) {
     echo esc_html( apply_filters( 'woocommerce_checkout_must_be_logged_in_message', __( 'You must be logged in to checkout.', 'woocommerce' ) ) );
@@ -401,6 +398,10 @@ if ( WC()->cart && ! WC()->cart->is_empty() ) {
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
         Back to Report
     </a>
+</div>
+
+<div class="cmr-checkout-notices-container" style="max-width: 1280px; margin: 0 auto; padding: 0 24px; box-sizing: border-box;">
+    <?php do_action( 'woocommerce_before_checkout_form', $checkout ); ?>
 </div>
 
 <form name="checkout" method="post" class="cmr-checkout-wrap woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">

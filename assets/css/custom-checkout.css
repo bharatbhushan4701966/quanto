@@ -836,6 +836,7 @@ body.logged-in .cart-collaterals .checkout-button:hover {
 /* Custom Sleek WooCommerce Warning & Alert Message Boxes */
 .cmr-checkout-wrap ul.woocommerce-error,
 .cmr-checkout-wrap div.woocommerce-error,
+/* Alert Containers */
 .cmr-checkout-wrap ul.woocommerce-message,
 .cmr-checkout-wrap div.woocommerce-message,
 .cmr-checkout-wrap ul.woocommerce-info,
@@ -847,22 +848,24 @@ div.woocommerce-message,
 ul.woocommerce-info,
 div.woocommerce-info {
     list-style: none !important;
-    margin: 0 0 14px 0 !important;
-    padding: 12px 14px 12px 42px !important;
+    margin: 0 auto 16px auto !important;
+    padding: 14px 20px 14px 48px !important;
     border-radius: 8px !important;
-    font-size: 13px !important;
-    font-weight: 500 !important;
-    line-height: 1.4 !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    line-height: 1.5 !important;
     position: relative !important;
     box-sizing: border-box !important;
     width: 100% !important;
+    max-width: 1280px !important;
     border-top: none !important;
     border-right: 1px solid rgba(0,0,0,0.06) !important;
     border-bottom: 1px solid rgba(0,0,0,0.06) !important;
-    border-left: 4px solid #ef4444 !important;
-    background: #fef2f2 !important;
-    color: #991b1b !important;
-    box-shadow: 0 2px 5px rgba(239, 68, 68, 0.08) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: wrap !important;
+    gap: 12px !important;
 }
 
 .cmr-checkout-wrap ul.woocommerce-error li,
@@ -875,6 +878,7 @@ ul.woocommerce-info li {
     margin: 0 !important;
     padding: 0 !important;
     border: none !important;
+    flex: 1 1 250px !important;
 }
 
 .cmr-checkout-wrap ul.woocommerce-error li::before,
@@ -922,18 +926,30 @@ ul.woocommerce-info li:after,
 .cmr-checkout-wrap div.woocommerce-error::before,
 ul.woocommerce-error::before,
 div.woocommerce-error::before {
-    content: "⚠️" !important;
-    font-family: inherit !important;
+    content: '\f071' !important;
+    font-family: 'Font Awesome 5 Free' !important;
+    font-weight: 900 !important;
     position: absolute !important;
-    left: 14px !important;
+    left: 18px !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
     font-size: 16px !important;
     line-height: 1 !important;
-    display: block !important;
-    background: none !important;
-    height: auto !important;
-    width: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #ef4444 !important;
+    width: 20px !important;
+    height: 20px !important;
+}
+.cmr-checkout-wrap ul.woocommerce-error,
+.cmr-checkout-wrap div.woocommerce-error,
+ul.woocommerce-error,
+div.woocommerce-error {
+    border-left: 4px solid #ef4444 !important;
+    background: #fef2f2 !important;
+    color: #991b1b !important;
+    box-shadow: 0 2px 5px rgba(239, 68, 68, 0.08) !important;
 }
 
 .cmr-checkout-wrap ul.woocommerce-message,
@@ -949,18 +965,21 @@ div.woocommerce-message {
 .cmr-checkout-wrap div.woocommerce-message::before,
 ul.woocommerce-message::before,
 div.woocommerce-message::before {
-    content: "✅" !important;
-    font-family: inherit !important;
+    content: '\f00c' !important;
+    font-family: 'Font Awesome 5 Free' !important;
+    font-weight: 900 !important;
     position: absolute !important;
-    left: 14px !important;
+    left: 18px !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
     font-size: 16px !important;
     line-height: 1 !important;
-    display: block !important;
-    background: none !important;
-    height: auto !important;
-    width: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #10b981 !important;
+    width: 20px !important;
+    height: 20px !important;
 }
 
 .cmr-checkout-wrap ul.woocommerce-info,
@@ -976,16 +995,89 @@ div.woocommerce-info {
 .cmr-checkout-wrap div.woocommerce-info::before,
 ul.woocommerce-info::before,
 div.woocommerce-info::before {
-    content: "ℹ️" !important;
-    font-family: inherit !important;
+    content: '\f05a' !important;
+    font-family: 'Font Awesome 5 Free' !important;
+    font-weight: 900 !important;
     position: absolute !important;
-    left: 14px !important;
+    left: 18px !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
     font-size: 16px !important;
     line-height: 1 !important;
-    display: block !important;
-    background: none !important;
-    height: auto !important;
-    width: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #3b82f6 !important;
+    width: 20px !important;
+    height: 20px !important;
+}
+
+/* Button inside Message / Info */
+div.woocommerce-message .button,
+ul.woocommerce-message .button,
+div.woocommerce-info .button,
+ul.woocommerce-info .button,
+div.woocommerce-error .button,
+ul.woocommerce-error .button {
+    float: none !important;
+    margin: 0 0 0 auto !important;
+    background: #111827 !important;
+    color: #ffffff !important;
+    border-radius: 20px !important;
+    padding: 8px 18px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    line-height: 1.2 !important;
+    border: none !important;
+    transition: all 0.2s !important;
+    order: 2 !important;
+}
+div.woocommerce-message .button:hover,
+ul.woocommerce-message .button:hover,
+div.woocommerce-info .button:hover,
+ul.woocommerce-info .button:hover {
+    background: #4820B0 !important;
+    color: #ffffff !important;
+}
+
+/* Login Form Slide Down on Checkout */
+form.woocommerce-form-login {
+    max-width: 1280px !important;
+    margin: 0 auto 24px auto !important;
+    background: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 12px !important;
+    padding: 24px !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05) !important;
+    box-sizing: border-box !important;
+}
+form.woocommerce-form-login p {
+    margin-bottom: 16px !important;
+}
+form.woocommerce-form-login input.input-text {
+    width: 100% !important;
+    max-width: 450px !important;
+    height: 44px !important;
+    border: 1px solid #d1d5db !important;
+    border-radius: 8px !important;
+    padding: 0 14px !important;
+    font-size: 14px !important;
+}
+form.woocommerce-form-login input.input-text:focus {
+    border-color: #4820B0 !important;
+    outline: none !important;
+}
+form.woocommerce-form-login .button {
+    background: #4820B0 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 24px !important;
+    padding: 10px 24px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    margin-right: 12px !important;
+}
+form.woocommerce-form-login .button:hover {
+    background: #3e1b99 !important;
 }
