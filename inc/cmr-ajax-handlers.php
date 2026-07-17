@@ -176,8 +176,8 @@ function cmr_load_more_media_releases_ajax() {
             ?>
             <div class="cmr-mrg-card">
                 <div class="cmr-mrg-card-img-wrap">
-                    <a href="<?php echo esc_url($link); ?>">
-                        <img src="<?php echo esc_url($bg_image); ?>" alt="<?php echo esc_attr($title); ?>">
+                    <a href="<?php echo esc_url($link); ?>" style="display: block; width: 100%; height: 100%;">
+                        <img src="<?php echo esc_url($bg_image); ?>" alt="<?php echo esc_attr($title); ?>" style="width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important; margin: 0 !important; padding: 0 !important;">
                     </a>
                 </div>
                 <div class="cmr-mrg-card-meta">
@@ -304,8 +304,8 @@ function cmr_load_more_smb_connect_ajax() {
             ?>
             <div class="cmr-smbcgd-card">
                 <div class="cmr-smbcgd-card-img-wrap">
-                    <a href="<?php echo esc_url($link); ?>">
-                        <img src="<?php echo esc_url($bg_image); ?>" alt="<?php echo esc_attr($title); ?>">
+                    <a href="<?php echo esc_url($link); ?>" style="display: block; width: 100%; height: 100%;">
+                        <img src="<?php echo esc_url($bg_image); ?>" alt="<?php echo esc_attr($title); ?>" style="width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important; margin: 0 !important; padding: 0 !important;">
                     </a>
                 </div>
                 <div class="cmr-smbcgd-card-meta">
@@ -431,8 +431,8 @@ function cmr_load_more_enterprise_connect_ajax() {
             ?>
             <div class="cmr-enterprisecgd-card">
                 <div class="cmr-enterprisecgd-card-img-wrap">
-                    <a href="<?php echo esc_url($link); ?>">
-                        <img src="<?php echo esc_url($bg_image); ?>" alt="<?php echo esc_attr($title); ?>">
+                    <a href="<?php echo esc_url($link); ?>" style="display: block; width: 100%; height: 100%;">
+                        <img src="<?php echo esc_url($bg_image); ?>" alt="<?php echo esc_attr($title); ?>" style="width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important; margin: 0 !important; padding: 0 !important;">
                     </a>
                 </div>
                 <div class="cmr-enterprisecgd-card-meta">
@@ -558,8 +558,8 @@ function cmr_load_more_channel_connect_ajax() {
             ?>
             <div class="cmr-channelcgd-card">
                 <div class="cmr-channelcgd-card-img-wrap">
-                    <a href="<?php echo esc_url($link); ?>">
-                        <img src="<?php echo esc_url($bg_image); ?>" alt="<?php echo esc_attr($title); ?>">
+                    <a href="<?php echo esc_url($link); ?>" style="display: block; width: 100%; height: 100%;">
+                        <img src="<?php echo esc_url($bg_image); ?>" alt="<?php echo esc_attr($title); ?>" style="width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important; margin: 0 !important; padding: 0 !important;">
                     </a>
                 </div>
                 <div class="cmr-channelcgd-card-meta">
