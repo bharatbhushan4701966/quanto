@@ -204,9 +204,9 @@ function cmr_smb_connect_grid_shortcode() {
             justify-content: center;
         }
         .cmr-smbcgd-card-img-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
             transition: transform 0.5s ease;
         }
         .cmr-smbcgd-card:hover .cmr-smbcgd-card-img-wrap img {

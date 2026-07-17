@@ -57,9 +57,9 @@ function cmr_team_grid_shortcode($atts) {
             aspect-ratio: 3 / 4; /* Typical portrait aspect ratio */
         }
         .cmr-team-image-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
             display: block;
             transition: transform 0.4s ease;
         }

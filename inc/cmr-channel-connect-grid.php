@@ -204,9 +204,9 @@ function cmr_channel_connect_grid_shortcode() {
             justify-content: center;
         }
         .cmr-channelcgd-card-img-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
             transition: transform 0.5s ease;
         }
         .cmr-channelcgd-card:hover .cmr-channelcgd-card-img-wrap img {

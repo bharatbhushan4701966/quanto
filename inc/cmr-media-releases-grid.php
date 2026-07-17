@@ -203,9 +203,9 @@ function cmr_media_releases_grid_shortcode() {
             justify-content: center;
         }
         .cmr-mrg-card-img-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
             transition: transform 0.5s ease;
         }
         .cmr-mrg-card:hover .cmr-mrg-card-img-wrap img {
