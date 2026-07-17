@@ -125,15 +125,20 @@ function cmr_channel_connect_general_shortcode( $atts ) {
             flex: 0 0 50%;
             overflow: hidden;
             position: relative;
+            min-height: 380px;
+            align-self: stretch;
         }
 
         .cmr-cancg-featured-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            display: block !important;
+            margin: 0 !important;
+            padding: 0 !important;
             transition: opacity 0.4s ease;
         }
 
