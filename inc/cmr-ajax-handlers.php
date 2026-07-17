@@ -261,7 +261,7 @@ function cmr_load_more_smb_connect_ajax() {
         
         $args = array(
             'post_type'      => array( 'post', 'cmr_news', 'cmr_media' ),
-            'category_name'  => 'smb-connect',
+            'category_name'  => 'smb-connect,smb-connect-industry-connect,smb',
             'posts_per_page' => 6,
             'post_status'    => 'publish',
             'orderby'        => 'date',

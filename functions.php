@@ -140,7 +140,7 @@ function cmr_get_unique_smb_post_ids() {
         INNER JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
         WHERE p.post_type IN ('post', 'cmr_news', 'cmr_media') 
           AND p.post_status = 'publish' 
-          AND (t.slug IN ('smb-connect', 'smb', 'smb_connect', 'smb-connects') OR t.name LIKE '%SMB Connect%' OR t.name LIKE '%SMB%')
+          AND (t.slug IN ('smb-connect', 'smb-connect-industry-connect', 'smb', 'smb_connect', 'smb-connects') OR t.name LIKE '%SMB Connect%' OR t.name LIKE '%SMB%' OR t.name LIKE '%Industry Connect%')
         ORDER BY p.post_date DESC
         LIMIT 500
     ");

@@ -5,7 +5,7 @@ add_shortcode('cmr_mega_menu_connect', 'cmr_mega_menu_connect_shortcode');
 
 function cmr_get_mmc_posts($slug, $fallback_offset) {
     $args = array(
-        'post_type'      => 'post',
+        'post_type'      => array( 'post', 'cmr_news', 'cmr_media' ),
         'posts_per_page' => 20, // Fetch more to allow filtering
         'post_status'    => 'publish',
         'orderby'        => 'date',
@@ -45,7 +45,7 @@ function cmr_mega_menu_connect_shortcode($atts) {
 
     // Fetch 3 distinct sets of posts
     $posts_enterprise = cmr_get_mmc_posts('enterprise-connect', 0);
-    $posts_smb = cmr_get_mmc_posts('smb-connect', 3);
+    $posts_smb = cmr_get_mmc_posts('smb-connect,smb-connect-industry-connect,smb', 3);
     $posts_channel = cmr_get_mmc_posts('channel-connect', 6);
 
     ?>
