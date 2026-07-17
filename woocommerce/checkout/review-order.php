@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
             <div class="cmr-checkout-product-card <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
                 <div class="cmr-product-thumb">
                     <?php 
-                    $thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image( array( 85, 110 ) ), $cart_item, $cart_item_key );
+                    $thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image( array( 75, 104 ) ), $cart_item, $cart_item_key );
                     echo $thumbnail;
                     ?>
                 </div>

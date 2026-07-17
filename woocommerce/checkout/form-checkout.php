@@ -215,9 +215,15 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
     border-bottom: 1px solid #f3f4f6 !important;
     margin-bottom: 20px !important;
 }
+.cmr-product-thumb {
+    flex: 0 0 75px !important;
+    width: 75px !important;
+    height: 104.1px !important;
+}
 .cmr-product-thumb img {
-    width: 80px !important;
-    height: auto !important;
+    width: 75px !important;
+    height: 104.1px !important;
+    object-fit: cover !important;
     border-radius: 6px !important;
     border: 1px solid #e5e7eb !important;
     box-shadow: 0 2px 6px rgba(0,0,0,0.08) !important;
@@ -346,7 +352,10 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 }
 /* Back to Report Button */
 .cmr-back-link-wrap {
-    margin-bottom: 16px !important;
+    max-width: 1280px !important;
+    margin: 0 auto 16px auto !important;
+    padding: 0 !important;
+    text-align: left !important;
 }
 .cmr-back-to-report-btn {
     display: inline-flex !important;
@@ -364,28 +373,27 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 }
 </style>
 
+<?php
+$back_url = 'javascript:history.back()';
+if ( WC()->cart && ! WC()->cart->is_empty() ) {
+    foreach ( WC()->cart->get_cart() as $cart_item ) {
+        if ( ! empty( $cart_item['product_id'] ) ) {
+            $back_url = get_permalink( $cart_item['product_id'] );
+            break;
+        }
+    }
+}
+?>
+<div class="cmr-back-link-wrap">
+    <a href="<?php echo esc_url( $back_url ); ?>" class="cmr-back-to-report-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Back to Report
+    </a>
+</div>
+
 <form name="checkout" method="post" class="cmr-checkout-wrap woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
 
-
     <div class="cmr-checkout-left">
-        <?php
-        $back_url = 'javascript:history.back()';
-        if ( WC()->cart && ! WC()->cart->is_empty() ) {
-            foreach ( WC()->cart->get_cart() as $cart_item ) {
-                if ( ! empty( $cart_item['product_id'] ) ) {
-                    $back_url = get_permalink( $cart_item['product_id'] );
-                    break;
-                }
-            }
-        }
-        ?>
-        <div class="cmr-back-link-wrap">
-            <a href="<?php echo esc_url( $back_url ); ?>" class="cmr-back-to-report-btn">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                Back to Report
-            </a>
-        </div>
-
         <div class="cmr-checkout-card">
             <h2 class="cmr-section-title">Shipping address</h2>
             

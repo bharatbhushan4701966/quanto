@@ -336,11 +336,17 @@
     border-bottom: 1px solid #f3f4f6;
 }
 
+.cmr-product-thumb {
+    flex: 0 0 75px !important;
+    width: 75px !important;
+    height: 104.1px !important;
+}
+.cmr-product-thumb img,
 .cmr-order-item-img img {
-    width: 60px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 4px;
+    width: 75px !important;
+    height: 104.1px !important;
+    object-fit: cover !important;
+    border-radius: 6px !important;
 }
 
 .cmr-order-item-info {
