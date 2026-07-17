@@ -308,6 +308,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-custom-report-cta.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-latest-reports.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-custom-cart.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-press-release-sync.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-fix-downloads.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-checkout-ui.php';
 
 require_once QUANTO_DIR_PATH_INC . 'cmr-mega-menu-who-we-are.php';
