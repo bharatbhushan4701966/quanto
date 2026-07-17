@@ -132,16 +132,15 @@ require_once get_theme_file_path( 'inc/cmr-team-scroll.php' );
 require_once get_theme_file_path( 'inc/cmr-media-cpt.php' );
 function cmr_get_unique_smb_post_ids() {
     global $wpdb;
-    // We cache this query temporarily if needed, but a direct SQL fetch of 500 rows is extremely fast.
     $results = $wpdb->get_results("
         SELECT p.ID, p.post_title 
         FROM {$wpdb->posts} p
         INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
         INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
         INNER JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
-        WHERE p.post_type = 'post' 
+        WHERE p.post_type IN ('post', 'cmr_news', 'cmr_media') 
           AND p.post_status = 'publish' 
-          AND t.slug = 'smb-connect'
+          AND (t.slug IN ('smb-connect', 'smb', 'smb_connect', 'smb-connects') OR t.name LIKE '%SMB Connect%' OR t.name LIKE '%SMB%')
         ORDER BY p.post_date DESC
         LIMIT 500
     ");
@@ -157,6 +156,26 @@ function cmr_get_unique_smb_post_ids() {
             }
         }
     }
+
+    // Fallback to recent articles if fewer than 12 SMB posts found so grid/pagination always works
+    if ( count( $unique_ids ) < 12 ) {
+        $fallback = $wpdb->get_results("
+            SELECT ID, post_title FROM {$wpdb->posts}
+            WHERE post_type IN ('post', 'cmr_news', 'cmr_media') AND post_status = 'publish'
+            ORDER BY post_date DESC
+            LIMIT 30
+        ");
+        if ( $fallback ) {
+            foreach ( $fallback as $row ) {
+                $title = trim( $row->post_title );
+                if ( ! isset( $seen_titles[ $title ] ) && ! in_array( $row->ID, $unique_ids ) ) {
+                    $seen_titles[ $title ] = true;
+                    $unique_ids[] = $row->ID;
+                }
+            }
+        }
+    }
+
     return $unique_ids;
 }
 
@@ -168,9 +187,9 @@ function cmr_get_unique_enterprise_post_ids() {
         INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
         INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
         INNER JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
-        WHERE p.post_type = 'post' 
+        WHERE p.post_type IN ('post', 'cmr_news', 'cmr_media') 
           AND p.post_status = 'publish' 
-          AND t.slug = 'enterprise-connect'
+          AND (t.slug IN ('enterprise-connect', 'enterprise', 'enterprise_connect') OR t.name LIKE '%Enterprise Connect%' OR t.name LIKE '%Enterprise%')
         ORDER BY p.post_date DESC
         LIMIT 500
     ");
@@ -186,6 +205,25 @@ function cmr_get_unique_enterprise_post_ids() {
             }
         }
     }
+
+    if ( count( $unique_ids ) < 12 ) {
+        $fallback = $wpdb->get_results("
+            SELECT ID, post_title FROM {$wpdb->posts}
+            WHERE post_type IN ('post', 'cmr_news', 'cmr_media') AND post_status = 'publish'
+            ORDER BY post_date DESC
+            LIMIT 30
+        ");
+        if ( $fallback ) {
+            foreach ( $fallback as $row ) {
+                $title = trim( $row->post_title );
+                if ( ! isset( $seen_titles[ $title ] ) && ! in_array( $row->ID, $unique_ids ) ) {
+                    $seen_titles[ $title ] = true;
+                    $unique_ids[] = $row->ID;
+                }
+            }
+        }
+    }
+
     return $unique_ids;
 }
 
@@ -197,9 +235,9 @@ function cmr_get_unique_channel_post_ids() {
         INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
         INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
         INNER JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
-        WHERE p.post_type = 'post' 
+        WHERE p.post_type IN ('post', 'cmr_news', 'cmr_media') 
           AND p.post_status = 'publish' 
-          AND t.slug = 'channel-connect'
+          AND (t.slug IN ('channel-connect', 'channel', 'channel_connect') OR t.name LIKE '%Channel Connect%' OR t.name LIKE '%Channel%')
         ORDER BY p.post_date DESC
         LIMIT 500
     ");
@@ -215,6 +253,25 @@ function cmr_get_unique_channel_post_ids() {
             }
         }
     }
+
+    if ( count( $unique_ids ) < 12 ) {
+        $fallback = $wpdb->get_results("
+            SELECT ID, post_title FROM {$wpdb->posts}
+            WHERE post_type IN ('post', 'cmr_news', 'cmr_media') AND post_status = 'publish'
+            ORDER BY post_date DESC
+            LIMIT 30
+        ");
+        if ( $fallback ) {
+            foreach ( $fallback as $row ) {
+                $title = trim( $row->post_title );
+                if ( ! isset( $seen_titles[ $title ] ) && ! in_array( $row->ID, $unique_ids ) ) {
+                    $seen_titles[ $title ] = true;
+                    $unique_ids[] = $row->ID;
+                }
+            }
+        }
+    }
+
     return $unique_ids;
 }
 

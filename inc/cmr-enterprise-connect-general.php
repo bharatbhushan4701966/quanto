@@ -18,7 +18,7 @@ function cmr_enterprise_connect_general_shortcode( $atts ) {
     $query = new WP_Query(); // Empty default
     if ( ! empty( $sliced_ids ) ) {
         $args = array(
-            'post_type'      => 'post',
+            'post_type'      => array( 'post', 'cmr_news', 'cmr_media' ),
             'post__in'       => $sliced_ids,
             'orderby'        => 'post__in', // Maintain the correct date order from SQL
             'posts_per_page' => 4,

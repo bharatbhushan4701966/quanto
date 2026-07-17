@@ -14,11 +14,14 @@ function cmr_channel_connect_grid_shortcode() {
 
     $unique_ids = cmr_get_unique_channel_post_ids();
     $sliced_ids = array_slice( $unique_ids, 4, 6 );
+    if ( empty( $sliced_ids ) && ! empty( $unique_ids ) ) {
+        $sliced_ids = array_slice( $unique_ids, 0, 6 );
+    }
 
     $query = new WP_Query(); // Empty default
     if ( ! empty( $sliced_ids ) ) {
         $args = array(
-            'post_type'      => 'post',
+            'post_type'      => array( 'post', 'cmr_news', 'cmr_media' ),
             'post__in'       => $sliced_ids,
             'orderby'        => 'post__in', // Maintain the correct date order from SQL
             'posts_per_page' => 6,

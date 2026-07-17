@@ -238,13 +238,16 @@ function cmr_load_more_smb_connect_ajax() {
         $offset = $offset_base + ( ($paged - 1) * 6 );
         
         $sliced_ids = array_slice( $unique_ids, $offset, 6 );
+        if ( empty( $sliced_ids ) && $paged == 1 && ! empty( $unique_ids ) ) {
+            $sliced_ids = array_slice( $unique_ids, 0, 6 );
+        }
         
         if ( empty($sliced_ids) ) {
             wp_send_json_success(array('html' => '', 'has_more' => false));
         }
         
         $args = array(
-            'post_type'      => 'post',
+            'post_type'      => array( 'post', 'cmr_news', 'cmr_media' ),
             'post__in'       => $sliced_ids,
             'orderby'        => 'post__in',
             'posts_per_page' => 6,
@@ -257,7 +260,7 @@ function cmr_load_more_smb_connect_ajax() {
         $offset = $offset_base + ( ($paged - 1) * 6 );
         
         $args = array(
-            'post_type'      => 'post',
+            'post_type'      => array( 'post', 'cmr_news', 'cmr_media' ),
             'category_name'  => 'smb-connect',
             'posts_per_page' => 6,
             'post_status'    => 'publish',
@@ -362,13 +365,16 @@ function cmr_load_more_enterprise_connect_ajax() {
         $offset = $offset_base + ( ($paged - 1) * 6 );
         
         $sliced_ids = array_slice( $unique_ids, $offset, 6 );
+        if ( empty( $sliced_ids ) && $paged == 1 && ! empty( $unique_ids ) ) {
+            $sliced_ids = array_slice( $unique_ids, 0, 6 );
+        }
         
         if ( empty($sliced_ids) ) {
             wp_send_json_success(array('html' => '', 'has_more' => false));
         }
         
         $args = array(
-            'post_type'      => 'post',
+            'post_type'      => array( 'post', 'cmr_news', 'cmr_media' ),
             'post__in'       => $sliced_ids,
             'orderby'        => 'post__in',
             'posts_per_page' => 6,
@@ -381,7 +387,7 @@ function cmr_load_more_enterprise_connect_ajax() {
         $offset = $offset_base + ( ($paged - 1) * 6 );
         
         $args = array(
-            'post_type'      => 'post',
+            'post_type'      => array( 'post', 'cmr_news', 'cmr_media' ),
             'category_name'  => 'enterprise-connect',
             'posts_per_page' => 6,
             'post_status'    => 'publish',
@@ -486,13 +492,16 @@ function cmr_load_more_channel_connect_ajax() {
         $offset = $offset_base + ( ($paged - 1) * 6 );
         
         $sliced_ids = array_slice( $unique_ids, $offset, 6 );
+        if ( empty( $sliced_ids ) && $paged == 1 && ! empty( $unique_ids ) ) {
+            $sliced_ids = array_slice( $unique_ids, 0, 6 );
+        }
         
         if ( empty($sliced_ids) ) {
             wp_send_json_success(array('html' => '', 'has_more' => false));
         }
         
         $args = array(
-            'post_type'      => 'post',
+            'post_type'      => array( 'post', 'cmr_news', 'cmr_media' ),
             'post__in'       => $sliced_ids,
             'orderby'        => 'post__in',
             'posts_per_page' => 6,
@@ -505,7 +514,7 @@ function cmr_load_more_channel_connect_ajax() {
         $offset = $offset_base + ( ($paged - 1) * 6 );
         
         $args = array(
-            'post_type'      => 'post',
+            'post_type'      => array( 'post', 'cmr_news', 'cmr_media' ),
             'category_name'  => 'channel-connect',
             'posts_per_page' => 6,
             'post_status'    => 'publish',
