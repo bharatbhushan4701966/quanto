@@ -404,60 +404,7 @@ if ( WC()->cart && ! WC()->cart->is_empty() ) {
     <?php do_action( 'woocommerce_before_checkout_form', $checkout ); ?>
 </div>
 
-<?php if ( ! is_user_logged_in() ) : ?>
-    <div class="cmr-checkout-wrap" id="cmr-pre-checkout-login-grid">
-        <div class="cmr-checkout-left">
-            <div class="cart-login-prompt" style="margin-bottom: 24px;">
-                <h3>Login to Continue Checkout</h3>
-                <p>Please sign in to save your cart and proceed to secure payment.</p>
-                
-                <form class="woocommerce-form woocommerce-form-login login" method="post" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" style="border: none !important; padding: 0 !important; margin: 0 !important;">
-                    <?php do_action( 'woocommerce_login_form_start' ); ?>
-
-                    <label for="checkout_username"><?php esc_html_e( 'EMAIL ADDRESS', 'woocommerce' ); ?></label>
-                    <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="checkout_username" autocomplete="username" required />
-
-                    <label for="checkout_password"><?php esc_html_e( 'PASSWORD', 'woocommerce' ); ?></label>
-                    <input class="woocommerce-Input woocommerce-Input--text input-text" type="password" name="password" id="checkout_password" autocomplete="current-password" required />
-
-                    <?php do_action( 'woocommerce_login_form' ); ?>
-
-                    <input type="hidden" name="redirect" value="<?php echo esc_url( wc_get_checkout_url() ); ?>" />
-                    <?php wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ); ?>
-                    <button type="submit" class="woocommerce-button button woocommerce-form-login__submit" name="login" value="<?php esc_attr_e( 'Log in', 'woocommerce' ); ?>"><?php esc_html_e( 'Sign In ↗', 'woocommerce' ); ?></button>
-
-                    <?php do_action( 'woocommerce_login_form_end' ); ?>
-                </form>
-                <div class="cart-login-links">
-                    <a href="<?php echo esc_url( wp_lostpassword_url() ); ?>" class="forgot-password-link">Forgot Password?</a>
-                </div>
-                
-                <div class="login-separator"><span>OR</span></div>
-                
-                <p class="create-account-text">Create an account to gain instant access to your premium market reports and insights.</p>
-                
-                <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="create-account-btn">Create Account ↗</a>
-                
-                <div style="text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px dashed #e5e7eb;">
-                    <a href="#guest-shipping-address" onclick="document.getElementById('cmr-checkout-main-form').style.setProperty('display', 'grid', 'important'); document.getElementById('cmr-pre-checkout-login-grid').style.setProperty('display', 'none', 'important'); return false;" style="font-size: 14px; font-weight: 600; color: #4820B0; text-decoration: underline;">Or continue as guest without creating an account ↓</a>
-                </div>
-            </div>
-        </div>
-        <div class="cmr-checkout-right">
-            <div class="cmr-promo-box" style="margin-bottom: 24px;">
-                <div class="cmr-promo-header">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                    Order Preview
-                </div>
-                <div style="font-size: 14px; color: #4b5563; margin-top: 12px; line-height: 1.6;">
-                    Sign in or continue as guest to review your items and complete secure payment.
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif; ?>
-
-<form name="checkout" id="cmr-checkout-main-form" method="post" class="cmr-checkout-wrap woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data" <?php if ( ! is_user_logged_in() ) echo 'style="display: none !important;"'; ?>>
+<form name="checkout" id="cmr-checkout-main-form" method="post" class="cmr-checkout-wrap woocommerce-checkout" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
 
     <div class="cmr-checkout-left">
         <div class="cmr-checkout-card" id="guest-shipping-address">

@@ -143,6 +143,10 @@ do_action( 'woocommerce_before_cart' ); ?>
                 <p class="create-account-text">Create an account to gain instant access to your premium market reports and insights.</p>
                 
                 <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="create-account-btn">Create Account ↗</a>
+                
+                <div style="text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px dashed #e5e7eb;">
+                    <a href="<?php echo esc_url( wc_get_checkout_url() ); ?>" onclick="var p=document.querySelectorAll('.wc-proceed-to-checkout a.checkout-button, .cart-collaterals .checkout-button'); p.forEach(function(b){ b.removeAttribute('disabled'); b.style.setProperty('opacity', '1', 'important'); b.style.setProperty('pointer-events', 'auto', 'important'); b.style.setProperty('cursor', 'pointer', 'important'); b.style.setProperty('filter', 'none', 'important'); }); document.getElementById('cart-login-prompt').style.setProperty('display', 'none', 'important'); window.location.href='<?php echo esc_url( wc_get_checkout_url() ); ?>'; return false;" style="font-size: 14px; font-weight: 600; color: #4820B0; text-decoration: underline;">Or continue as guest without creating an account ↓</a>
+                </div>
             </div>
         <?php endif; ?>
     </div>
@@ -172,6 +176,25 @@ do_action( 'woocommerce_before_cart' ); ?>
                 do_action( 'woocommerce_cart_collaterals' );
             ?>
         </div>
+        <?php if ( ! is_user_logged_in() ) : ?>
+            <style>
+            .wc-proceed-to-checkout a.checkout-button,
+            .cart-collaterals .checkout-button {
+                opacity: 0.5 !important;
+                pointer-events: none !important;
+                cursor: not-allowed !important;
+                filter: grayscale(1);
+            }
+            </style>
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var proceedBtns = document.querySelectorAll('.wc-proceed-to-checkout a.checkout-button, .cart-collaterals .checkout-button');
+                proceedBtns.forEach(function(btn) {
+                    btn.setAttribute('disabled', 'disabled');
+                });
+            });
+            </script>
+        <?php endif; ?>
         
         <div class="checkout-trust-badges">
             <strong>Guaranteed safe checkout</strong>
