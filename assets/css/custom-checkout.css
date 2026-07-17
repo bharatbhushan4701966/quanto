@@ -40,26 +40,30 @@
 }
 
 .woocommerce-billing-fields__field-wrapper {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 16px;
     margin-bottom: 20px;
+    align-items: end; /* Aligns inputs to the bottom even if label is missing */
 }
 
+/* Force specific grid columns and order to override WooCommerce JS DOM manipulation */
+#billing_first_name_field { order: 1; grid-column: 1; }
+#billing_last_name_field  { order: 2; grid-column: 2; }
+#billing_address_1_field  { order: 3; grid-column: 1 / -1; }
+#billing_address_2_field  { display: none !important; }
+#billing_city_field       { order: 4; grid-column: 1; }
+#billing_state_field      { order: 5; grid-column: 2; }
+#billing_country_field    { order: 6; grid-column: 1; }
+#billing_postcode_field   { order: 7; grid-column: 2; }
+#billing_phone_field      { order: 8; grid-column: 1 / -1; }
+#billing_email_field      { order: 9; grid-column: 1 / -1; }
+
 .cmr-checkout-wrap .form-row {
-    width: 100%;
+    width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
     float: none !important;
-}
-
-.cmr-checkout-wrap .form-row-first,
-.cmr-checkout-wrap .form-row-last {
-    width: calc(50% - 8px) !important;
-}
-
-.cmr-checkout-wrap .form-row-wide {
-    width: 100% !important;
 }
 
 .cmr-label,
@@ -75,6 +79,11 @@
 
 /* Hide optional tag */
 .cmr-checkout-wrap .optional {
+    display: none !important;
+}
+
+/* Hide Shipping Fields Completely */
+.woocommerce-shipping-fields {
     display: none !important;
 }
 
