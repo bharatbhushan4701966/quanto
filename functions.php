@@ -1418,7 +1418,7 @@ function cmr_redirect_to_cart_after_add() {
 // Enqueue custom checkout CSS
 add_action('wp_enqueue_scripts', 'cmr_enqueue_checkout_css');
 function cmr_enqueue_checkout_css() {
-    if (is_checkout()) {
+    if (is_checkout() || is_cart()) {
         wp_enqueue_style('cmr-custom-checkout', get_template_directory_uri() . '/assets/css/custom-checkout.css', array(), '1.0.0');
     }
 }

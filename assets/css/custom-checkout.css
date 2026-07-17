@@ -166,3 +166,324 @@
     padding: 2px 6px;
     background: #fff;
 }
+
+/* -----------------------------
+   Custom Cart Page Layout
+   ----------------------------- */
+.custom-cart-grid {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 40px auto;
+    font-family: 'Inter', sans-serif;
+}
+
+@media (max-width: 991px) {
+    .custom-cart-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.cart-left-col {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.woocommerce-cart-form {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fff;
+    padding: 24px;
+}
+
+.cart-header-title h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Hide default coupon since we made a custom promo box */
+.woocommerce-cart-form .coupon {
+    display: none !important;
+}
+
+.shop_table.cart th {
+    display: none; /* Hide headers */
+}
+
+.shop_table.cart tr {
+    border-bottom: 1px solid #eee;
+}
+.shop_table.cart tr:last-child {
+    border-bottom: none;
+}
+
+.shop_table.cart td {
+    padding: 15px 0;
+    vertical-align: top;
+}
+
+.product-thumbnail img {
+    width: 80px;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.product-name a {
+    font-weight: 700;
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+}
+
+.cart-product-author {
+    color: #666;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.cart-product-sku {
+    color: #333;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.product-price {
+    font-size: 18px;
+    font-weight: 700;
+    text-align: right;
+}
+
+.product-remove a {
+    color: #d32f2f;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+/* Pre-Checkout Login Form */
+.cart-login-prompt {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fff;
+    padding: 30px;
+}
+
+.cart-login-prompt h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.cart-login-prompt p {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.cart-login-prompt label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.cart-login-prompt input[type="text"],
+.cart-login-prompt input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.cart-login-prompt input[type="submit"] {
+    width: 100%;
+    background: #5e35b1;
+    color: #fff;
+    padding: 14px;
+    border-radius: 30px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.cart-login-links {
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+.forgot-password-link {
+    color: #666;
+    text-decoration: none;
+}
+
+.login-separator {
+    text-align: center;
+    margin: 25px 0;
+    position: relative;
+}
+
+.login-separator::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+    background: #eee;
+    z-index: 1;
+}
+
+.login-separator span {
+    background: #fff;
+    padding: 0 10px;
+    color: #999;
+    font-size: 12px;
+    font-style: italic;
+    position: relative;
+    z-index: 2;
+}
+
+.create-account-text {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.create-account-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    border: 1px solid #333;
+    border-radius: 30px;
+    padding: 12px;
+    color: #333;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.create-account-btn:hover {
+    background: #f9f9f9;
+}
+
+/* Right Column Styles (Promo Code + Collaterals) */
+.cart-right-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cart-promo-box {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fff;
+    padding: 24px;
+}
+
+.cart-promo-box h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cart-promo-box .coupon {
+    display: flex;
+    gap: 10px;
+}
+
+.cart-promo-box input.input-text {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.cart-promo-box button {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cart-collaterals .cart_totals {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fff;
+    padding: 24px;
+    width: 100%;
+}
+
+.cart-collaterals .cart_totals h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.cart-collaterals table {
+    width: 100%;
+}
+
+.cart-collaterals th,
+.cart-collaterals td {
+    padding: 12px 0;
+    border: none;
+}
+
+.cart-collaterals th {
+    font-weight: normal;
+    color: #666;
+}
+
+.cart-collaterals .order-total th,
+.cart-collaterals .order-total td {
+    font-weight: 700;
+    font-size: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.cart-collaterals .wc-proceed-to-checkout {
+    margin-top: 20px;
+}
+
+.cart-collaterals .checkout-button {
+    background: #ccc !important;
+    color: #fff !important;
+    padding: 15px !important;
+    border-radius: 30px !important;
+    text-align: center;
+    display: block;
+    font-weight: 600;
+    text-decoration: none;
+    pointer-events: none; /* Disabled by default */
+}
+
+/* If user is logged in, activate the checkout button */
+body.logged-in .cart-collaterals .checkout-button {
+    background: #5e35b1 !important;
+    pointer-events: auto; /* Active */
+}
+
+body.logged-in .cart-collaterals .checkout-button:hover {
+    background: #4a148c !important;
+}
