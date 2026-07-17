@@ -113,7 +113,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 
         <!-- Pre-Checkout Login Form -->
         <?php if ( ! is_user_logged_in() ) : ?>
-            <div class="cart-login-prompt">
+            <div class="cart-login-prompt" id="cart-login-prompt">
                 <h3>Login to Continue Checkout</h3>
                 <p>Please sign in to save your cart and proceed to secure payment.</p>
                 
@@ -189,5 +189,29 @@ do_action( 'woocommerce_before_cart' ); ?>
         </div>
     </div>
 </div>
+
+<?php if ( ! is_user_logged_in() ) : ?>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var checkoutBtn = document.querySelector('.cart-collaterals .checkout-button');
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', function(e) {
+            var loginBox = document.getElementById('cart-login-prompt');
+            if (loginBox) {
+                e.preventDefault();
+                loginBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                loginBox.style.transition = 'box-shadow 0.3s ease, border-color 0.3s ease';
+                loginBox.style.boxShadow = '0 0 0 4px rgba(72, 32, 176, 0.25)';
+                loginBox.style.borderColor = '#4820B0';
+                setTimeout(function() {
+                    loginBox.style.boxShadow = '';
+                    loginBox.style.borderColor = '';
+                }, 1500);
+            }
+        });
+    }
+});
+</script>
+<?php endif; ?>
 
 <?php do_action( 'woocommerce_after_cart' ); ?>
