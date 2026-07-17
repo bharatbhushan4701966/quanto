@@ -301,22 +301,33 @@
 }
 
 .cmr-coupon-input {
-    flex: 1;
-    height: 40px;
-    border: 1px solid #e5e7eb;
-    border-radius: 6px;
-    padding: 0 12px;
-    font-size: 14px;
+    flex: 1 !important;
+    height: 44px !important;
+    border: 1px solid #d1d5db !important;
+    border-radius: 8px !important;
+    padding: 0 14px !important;
+    font-size: 14px !important;
+    box-sizing: border-box !important;
 }
 
-.cmr-coupon-apply {
-    height: 40px;
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 6px;
-    padding: 0 16px;
-    cursor: pointer;
-    font-size: 14px;
+.cmr-coupon-apply,
+button.cmr-coupon-apply,
+#apply_custom_coupon {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    height: 44px !important;
+    background: #111827 !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 0 20px !important;
+    line-height: 1 !important;
+    cursor: pointer !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    box-sizing: border-box !important;
 }
 
 /* ---- ORDER BOX ---- */

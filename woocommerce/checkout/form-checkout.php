@@ -182,17 +182,29 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
     flex: 1;
     border: 1px solid #d1d5db !important;
     border-radius: 8px !important;
-    padding: 10px 14px !important;
+    padding: 0 14px !important;
     font-size: 14px !important;
+    height: 44px !important;
+    box-sizing: border-box !important;
 }
-.cmr-coupon-apply {
+.cmr-coupon-apply,
+button.cmr-coupon-apply,
+#apply_custom_coupon {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
     background: #111827 !important;
     color: #fff !important;
     border: none !important;
     border-radius: 8px !important;
-    padding: 10px 18px !important;
+    padding: 0 20px !important;
+    height: 44px !important;
+    line-height: 1 !important;
+    font-size: 14px !important;
     font-weight: 600 !important;
     cursor: pointer !important;
+    box-sizing: border-box !important;
 }
 .cmr-coupon-hints {
     font-size: 12px;
