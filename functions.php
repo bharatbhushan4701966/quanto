@@ -1455,43 +1455,6 @@ function cmr_enqueue_checkout_css() {
     }
 }
 
-// Add cart icon to primary / main menu
-add_filter('wp_nav_menu_items', 'cmr_add_cart_to_menu', 10, 2);
-function cmr_add_cart_to_menu($items, $args) {
-    $loc = isset($args->theme_location) ? $args->theme_location : '';
-    $menu_slug = (isset($args->menu) && is_object($args->menu)) ? $args->menu->slug : (is_string(isset($args->menu) ? $args->menu : '') ? $args->menu : '');
-    $menu_id = isset($args->menu_id) ? $args->menu_id : '';
-    
-    // Ignore footer menus
-    if (strpos($menu_slug, 'footer') !== false || strpos($loc, 'footer') !== false || strpos($menu_id, 'footer') !== false) {
-        return $items;
-    }
-
-    // Check if this menu is the main navigation menu (or contains Newsroom / Who we are)
-    if (in_array($loc, array('primary-menu', 'primary', 'main-menu', 'main', 'header-menu', 'header', '')) || 
-        strpos($menu_slug, 'main') !== false || strpos($menu_slug, 'header') !== false || strpos($menu_slug, 'primary') !== false ||
-        strpos($menu_id, 'menu-main') !== false || strpos($items, 'Newsroom') !== false || strpos($items, 'Who we are') !== false) {
-        
-        // Prevent duplicate cart icon if filter runs twice on same menu string
-        if (strpos($items, 'cmr-cart-menu-item') !== false) {
-            return $items;
-        }
-
-        $cart_count = WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
-        $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : '/cart/';
-        
-        $cart_html = '<li class="menu-item cmr-cart-menu-item" style="display:inline-flex; align-items:center; margin-left:8px;">';
-        $cart_html .= '<a href="' . esc_url($cart_url) . '" class="cmr-cart-icon-link" style="display:flex; align-items:center; gap:6px; text-decoration:none; color:inherit; padding:6px 12px; border-radius:20px; transition:all 0.2s;">';
-        $cart_html .= '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>';
-        $cart_html .= '<span class="cmr-cart-count" style="background:#4820B0; color:#fff; border-radius:50%; padding:2px 6px; font-size:11px; font-weight:700; line-height:1; min-width:18px; text-align:center;">' . esc_html($cart_count) . '</span>';
-        $cart_html .= '</a>';
-        $cart_html .= '</li>';
-        
-        $items .= $cart_html;
-    }
-    return $items;
-}
-
 // Ensure cart fragment updates via AJAX
 add_filter('woocommerce_add_to_cart_fragments', 'cmr_cart_count_fragments', 10, 1);
 function cmr_cart_count_fragments($fragments) {
@@ -1503,30 +1466,55 @@ function cmr_cart_count_fragments($fragments) {
     return $fragments;
 }
 
-// Universal JS Fallback to ensure Cart Icon appears inside Elementor/Header navigation menus if not added by filter
-add_action('wp_footer', 'cmr_header_cart_js_fallback', 99);
-function cmr_header_cart_js_fallback() {
+// Universal JS to place Cart Icon neatly inside the right-side header action container (.elementor-element-219e18d) and next to mobile toggle
+add_action('wp_footer', 'cmr_header_cart_container_injection', 99);
+function cmr_header_cart_container_injection() {
     $cart_count = WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
     $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : '/cart/';
     ?>
     <script>
     document.addEventListener("DOMContentLoaded", function() {
-        var navLists = document.querySelectorAll('.main-menu ul, .elementor-nav-menu, ul#menu-main-1, header ul.menu');
-        if (navLists.length > 0) {
-            navLists.forEach(function(ul) {
-                // Check if cart already present or if it is a footer menu
-                if (!ul.querySelector('.cmr-cart-menu-item') && !ul.closest('.footer') && !ul.closest('footer')) {
-                    var li = document.createElement('li');
-                    li.className = 'menu-item cmr-cart-menu-item';
-                    li.style.cssText = 'display:inline-flex; align-items:center; margin-left:8px; list-style:none;';
-                    li.innerHTML = '<a href="<?php echo esc_url($cart_url); ?>" class="cmr-cart-icon-link" style="display:flex; align-items:center; gap:6px; text-decoration:none; color:inherit; padding:6px 12px; border-radius:20px; transition:all 0.2s;">' +
-                        '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>' +
-                        '<span class="cmr-cart-count" style="background:#4820B0; color:#fff; border-radius:50%; padding:2px 6px; font-size:11px; font-weight:700; line-height:1; min-width:18px; text-align:center;"><?php echo esc_js($cart_count); ?></span>' +
-                    '</a>';
-                    ul.appendChild(li);
+        // Remove any old li cart menu items if present
+        document.querySelectorAll('.cmr-cart-menu-item').forEach(function(el) { el.remove(); });
+        
+        var cartHtml = '<a href="<?php echo esc_url($cart_url); ?>" class="cmr-cart-icon-link" style="display:inline-flex; align-items:center; gap:6px; text-decoration:none; color:#111; padding:6px 14px; border-radius:24px; background:#f3f4f6; font-weight:600; font-size:13px; transition:all 0.2s; border:1px solid #e5e7eb;">' +
+            '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>' +
+            '<span>Cart</span>' +
+            '<span class="cmr-cart-count" style="background:#4820B0; color:#fff; border-radius:50%; padding:2px 6px; font-size:11px; font-weight:700; line-height:1; min-width:18px; text-align:center;"><?php echo esc_js($cart_count); ?></span>' +
+        '</a>';
+
+        // 1. Desktop: Place inside .elementor-element-219e18d right before download-btn or at start of container
+        var rightContainers = document.querySelectorAll('.elementor-element-219e18d, .quanto-header-right, .header-right-action');
+        rightContainers.forEach(function(container) {
+            if (!container.querySelector('.cmr-header-cart-widget')) {
+                var widget = document.createElement('div');
+                widget.className = 'cmr-header-cart-widget';
+                widget.style.cssText = 'display:inline-flex; align-items:center; margin-right:12px; z-index:99;';
+                widget.innerHTML = cartHtml;
+                
+                var downloadBtn = container.querySelector('.download-btn, .elementor-widget-button');
+                if (downloadBtn) {
+                    container.insertBefore(widget, downloadBtn);
+                } else {
+                    container.insertBefore(widget, container.firstChild);
                 }
-            });
-        }
+            }
+        });
+
+        // 2. Mobile/Tablet fallback: Place right before menuBar-toggle
+        var mobileToggles = document.querySelectorAll('.menuBar-toggle, .quanto-menu-toggle');
+        mobileToggles.forEach(function(toggle) {
+            if (!toggle.parentNode.querySelector('.cmr-mobile-cart-widget')) {
+                var widget = document.createElement('div');
+                widget.className = 'cmr-mobile-cart-widget d-inline-block d-lg-none';
+                widget.style.cssText = 'display:inline-flex; align-items:center; margin-right:10px; vertical-align:middle;';
+                widget.innerHTML = '<a href="<?php echo esc_url($cart_url); ?>" class="cmr-cart-icon-link" style="display:flex; align-items:center; gap:4px; text-decoration:none; color:#111; padding:5px 10px; border-radius:20px; background:#f3f4f6; font-weight:600; font-size:12px; border:1px solid #e5e7eb;">' +
+                    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>' +
+                    '<span class="cmr-cart-count" style="background:#4820B0; color:#fff; border-radius:50%; padding:2px 6px; font-size:11px; font-weight:700; line-height:1; min-width:18px; text-align:center;"><?php echo esc_js($cart_count); ?></span>' +
+                '</a>';
+                toggle.parentNode.insertBefore(widget, toggle);
+            }
+        });
     });
     </script>
     <?php
