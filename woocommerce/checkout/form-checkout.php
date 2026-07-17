@@ -499,10 +499,10 @@ jQuery(document).ready(function($) {
         }
     });
 
-    // Make our custom coupon button work
+    // Make our custom coupon button work via smooth AJAX (Zero Page Reload!)
     $(document).on('click', '#apply_custom_coupon', function(e) {
         e.preventDefault();
-        var code = $('#coupon_code').val();
+        var code = $('#coupon_code').val().trim();
         if(!code) return;
         
         var $btn = $(this);
@@ -520,15 +520,68 @@ jQuery(document).ready(function($) {
             success: function( response ) {
                 $('.woocommerce-error, .woocommerce-message').remove();
                 if ( response ) {
-                    $('form.checkout').before( response );
-                    $( document.body ).trigger( 'update_checkout', { update_shipping_method: false } );
-                    setTimeout(function() {
-                        window.location.reload();
-                    }, 500);
+                    $('.cmr-promo-box').before( response );
+                }
+                
+                // Update Order Summary subtotal & discounts instantly
+                $( document.body ).trigger( 'update_checkout', { update_shipping_method: false } );
+                
+                // Check if coupon applied successfully without error
+                if ( response && response.indexOf('woocommerce-error') === -1 && (response.indexOf('woocommerce-message') !== -1 || response.indexOf('applied successfully') !== -1) ) {
+                    var upperCode = code.toUpperCase();
+                    var removeUrl = wc_checkout_params.checkout_url + '?remove_coupon=' + encodeURIComponent(code);
+                    var pillHtml = '<div class="cmr-applied-coupons-wrap">' +
+                        '<div class="cmr-applied-pill">' +
+                            '<span>' + upperCode + '</span>' +
+                            '<span class="cmr-status-badge">Applied <svg width="16" height="16" viewBox="0 0 24 24" fill="#10b981"><circle cx="12" cy="12" r="10"/><path fill="#fff" d="M10 14.17l-2.59-2.58L6 13l4 4 8-8-1.41-1.42z"/></svg></span>' +
+                        '</div>' +
+                        '<a href="' + removeUrl + '" class="cmr-remove-pill-btn" data-code="' + upperCode + '">Remove &times;</a>' +
+                    '</div>' +
+                    '<div class="cmr-coupon-hints">Try: CMR10, CMRINDIA15, or FIRST20</div>';
+                    
+                    $('.cmr-promo-box').html(pillHtml);
+                } else {
+                    $btn.text('Apply').prop('disabled', false);
                 }
             },
             error: function() {
                 $btn.text('Apply').prop('disabled', false);
+            }
+        });
+    });
+
+    // Make Remove Coupon pill button work via smooth AJAX without page reload
+    $(document).on('click', '.cmr-remove-pill-btn', function(e) {
+        e.preventDefault();
+        var $btn = $(this);
+        var coupon = $btn.data('code') || ($btn.attr('href') ? $btn.attr('href').split('remove_coupon=')[1] : '');
+        if (!coupon) return;
+        
+        $btn.text('Removing...');
+        
+        var data = {
+            security: wc_checkout_params.remove_coupon_nonce,
+            coupon: decodeURIComponent(coupon)
+        };
+        
+        $.ajax({
+            type: 'POST',
+            url: wc_checkout_params.wc_ajax_url.toString().replace( '%%endpoint%%', 'remove_coupon' ),
+            data: data,
+            success: function( response ) {
+                $('.woocommerce-error, .woocommerce-message').remove();
+                if ( response ) {
+                    $('.cmr-promo-box').before( response );
+                }
+                $( document.body ).trigger( 'update_checkout', { update_shipping_method: false } );
+                
+                var formHtml = '<div class="cmr-coupon-form">' +
+                    '<input type="text" name="coupon_code" class="cmr-coupon-input" placeholder="Enter coupon code" id="coupon_code">' +
+                    '<button type="button" class="cmr-coupon-apply" id="apply_custom_coupon">Apply</button>' +
+                '</div>' +
+                '<div class="cmr-coupon-hints">Try: CMR10, CMRINDIA15, or FIRST20</div>';
+                
+                $('.cmr-promo-box').html(formHtml);
             }
         });
     });
