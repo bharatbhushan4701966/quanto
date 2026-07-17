@@ -1409,6 +1409,9 @@ function cmr_custom_order_button_text() {
     return 'Proceed to Checkout'; 
 }
 
+// Force shipping to billing address only (removes shipping fields)
+add_filter('wc_ship_to_billing_address_only', '__return_true');
+
 // Redirect to cart immediately after adding to cart
 add_filter('woocommerce_add_to_cart_redirect', 'cmr_redirect_to_cart_after_add');
 function cmr_redirect_to_cart_after_add() {

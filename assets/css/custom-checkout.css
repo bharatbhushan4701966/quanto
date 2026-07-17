@@ -35,30 +35,47 @@
 }
 
 /* ---- FIELD GROUPS ---- */
-.cmr-field-group {
+.woocommerce-billing-fields h3 {
+    display: none;
+}
+
+.woocommerce-billing-fields__field-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
     margin-bottom: 20px;
 }
 
-.cmr-label {
+.cmr-checkout-wrap .form-row {
+    width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    float: none !important;
+}
+
+.cmr-checkout-wrap .form-row-first,
+.cmr-checkout-wrap .form-row-last {
+    width: calc(50% - 8px) !important;
+}
+
+.cmr-checkout-wrap .form-row-wide {
+    width: 100% !important;
+}
+
+.cmr-label,
+.cmr-checkout-wrap .form-row label {
     display: block;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.08em;
     color: #374151;
     margin-bottom: 8px;
+    text-transform: uppercase;
 }
 
-.cmr-two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-}
-
-.cmr-two-col .form-row {
-    margin: 0 !important;
-    padding: 0 !important;
-    float: none !important;
-    width: 100% !important;
+/* Hide optional tag */
+.cmr-checkout-wrap .optional {
+    display: none !important;
 }
 
 /* Inputs */
