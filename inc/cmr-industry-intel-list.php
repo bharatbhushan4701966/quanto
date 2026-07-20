@@ -410,65 +410,100 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
         <script>
         document.addEventListener('DOMContentLoaded', function() {
             var loadMoreBtn = document.getElementById('cmr-intel-load-more-btn');
+            var container = document.querySelector('.cmr-intel-list-items');
+            var pag = document.querySelector('.cmr-pagination-wrapper');
+            var cat = '<?php echo esc_js($atts['category']); ?>';
+            var maxPage = <?php echo intval($insights_query->max_num_pages); ?>;
+            
+            function loadPage(page, append) {
+                var data = new FormData();
+                data.append('action', 'cmr_industry_intel_list_load_more');
+                data.append('page', page);
+                data.append('base_url', window.location.pathname);
+                if (cat) {
+                    data.append('category', cat);
+                }
+                
+                fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+                    method: 'POST',
+                    body: data
+                })
+                .then(response => response.text())
+                .then(html => {
+                    if (html.trim() !== '') {
+                        var htmlContent = html;
+                        var dynamicPagMatch = html.match(/<div class="cmr-dynamic-pagination" style="display:none;">(.*?)<\/div>/s);
+                        var dynamicPagHtml = '';
+                        if (dynamicPagMatch) {
+                            dynamicPagHtml = dynamicPagMatch[1];
+                            htmlContent = htmlContent.replace(dynamicPagMatch[0], '');
+                        }
+                        
+                        if (append) {
+                            container.insertAdjacentHTML('beforeend', htmlContent);
+                        } else {
+                            container.innerHTML = htmlContent;
+                            // Scroll back to top of container smoothly
+                            var wrapper = document.querySelector('.cmr-intel-list-wrapper');
+                            if (wrapper) wrapper.scrollIntoView({behavior: 'smooth', block: 'start'});
+                        }
+                        
+                        if (loadMoreBtn && append) {
+                            loadMoreBtn.setAttribute('data-page', page);
+                            loadMoreBtn.textContent = 'Load More';
+                            loadMoreBtn.disabled = false;
+                        }
+                        
+                        if (page >= 3 || page >= maxPage || !append) {
+                            if (loadMoreBtn) loadMoreBtn.parentElement.style.display = 'none';
+                            if (pag) {
+                                if (dynamicPagHtml) {
+                                    pag.innerHTML = dynamicPagHtml;
+                                }
+                                pag.style.display = 'flex';
+                            }
+                        }
+                    } else {
+                        if (loadMoreBtn) loadMoreBtn.parentElement.style.display = 'none';
+                    }
+                })
+                .catch(err => {
+                    console.error('Error loading insights:', err);
+                    if (loadMoreBtn) {
+                        loadMoreBtn.textContent = 'Load More';
+                        loadMoreBtn.disabled = false;
+                    }
+                });
+            }
+
             if (loadMoreBtn) {
                 loadMoreBtn.addEventListener('click', function() {
-                    var button = this;
-                    var currentPage = parseInt(button.getAttribute('data-page'));
-                    var maxPage = parseInt(button.getAttribute('data-max'));
-                    var cat = button.getAttribute('data-category');
+                    var currentPage = parseInt(this.getAttribute('data-page'));
                     var nextPage = currentPage + 1;
-                    
-                    button.textContent = 'Loading...';
-                    button.disabled = true;
-                    
-                    var data = new FormData();
-                    data.append('action', 'cmr_industry_intel_list_load_more');
-                    data.append('page', nextPage);
-                    data.append('base_url', window.location.pathname);
-                    if (cat) {
-                        data.append('category', cat);
-                    }
-                    
-                    fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
-                        method: 'POST',
-                        body: data
-                    })
-                    .then(response => response.text())
-                    .then(html => {
-                        if (html.trim() !== '') {
-                            var htmlContent = html;
-                            var dynamicPagMatch = html.match(/<div class="cmr-dynamic-pagination" style="display:none;">(.*?)<\/div>/s);
-                            var dynamicPagHtml = '';
-                            if (dynamicPagMatch) {
-                                dynamicPagHtml = dynamicPagMatch[1];
-                                htmlContent = htmlContent.replace(dynamicPagMatch[0], '');
-                            }
-                            
-                            var container = document.querySelector('.cmr-intel-list-items');
-                            container.insertAdjacentHTML('beforeend', htmlContent);
-                            button.setAttribute('data-page', nextPage);
-                            button.textContent = 'Load More';
-                            button.disabled = false;
-                            
-                            if (nextPage >= 3 || nextPage >= maxPage) {
-                                button.parentElement.style.display = 'none';
-                                var pag = document.querySelector('.cmr-pagination-wrapper');
-                                if (pag) {
-                                    if (dynamicPagHtml) {
-                                        pag.innerHTML = dynamicPagHtml;
-                                    }
-                                    pag.style.display = 'flex';
-                                }
-                            }
-                        } else {
-                            button.parentElement.style.display = 'none';
+                    this.textContent = 'Loading...';
+                    this.disabled = true;
+                    loadPage(nextPage, true);
+                });
+            }
+            
+            if (pag) {
+                pag.addEventListener('click', function(e) {
+                    var link = e.target.closest('a.page-numbers');
+                    if (link) {
+                        e.preventDefault();
+                        var href = link.getAttribute('href');
+                        var urlParams = new URLSearchParams(href.split('?')[1]);
+                        var page = urlParams.get('paged');
+                        
+                        if (!page) {
+                            var match = href.match(/\/page\/(\d+)/);
+                            if (match) page = match[1];
                         }
-                    })
-                    .catch(err => {
-                        console.error('Error loading more insights:', err);
-                        button.textContent = 'Load More';
-                        button.disabled = false;
-                    });
+                        
+                        if (page) {
+                            loadPage(parseInt(page), false);
+                        }
+                    }
                 });
             }
         });
