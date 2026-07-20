@@ -9,14 +9,14 @@ if (!current_user_can('administrator')) {
 
 global $wpdb;
 
-$old_string = 'qai8358l95-staging.onrocket.site/report/';
-$new_string = 'qai8358l95-staging.onrocket.site/wp-content/uploads/YOUR_FOLDER/';
+$old_string = 'wp-content/uploads/YOUR_FOLDER';
+$new_string = 'wp-content/uploads/report';
 
 // Also handle relative URLs if they existed
-$old_string_relative = '"/report/';
-$new_string_relative = '"/wp-content/uploads/YOUR_FOLDER/';
+$old_string_relative = '"/wp-content/uploads/YOUR_FOLDER';
+$new_string_relative = '"/wp-content/uploads/report';
 
-echo "<h2>Starting Database UNDO Search & Replace</h2>";
+echo "<h2>Starting Database Search & Replace</h2>";
 echo "Replacing: <strong>" . esc_html($old_string) . "</strong> <br>With: <strong>" . esc_html($new_string) . "</strong><br><br>";
 
 // 1. Replace in post_content (Absolute URLs)
