@@ -112,6 +112,8 @@ add_action('wp_footer', function() {
                             placeholder.style.marginBottom = style.marginBottom;
                             navBar.classList.add('intel-nav-fixed-js');
                             document.body.appendChild(navBar); 
+                            const subscribeBtn = navBar.querySelector('.cmr-nav-btn-subscribe');
+                            if (subscribeBtn) subscribeBtn.style.setProperty('display', 'flex', 'important');
                         }
                         
                         if (boundaryBottom <= (navBar.offsetHeight + stickyOffset)) {
@@ -126,6 +128,8 @@ add_action('wp_footer', function() {
                             placeholder.parentNode.insertBefore(navBar, placeholder.nextSibling);
                             placeholder.style.height = '0px';
                             placeholder.style.marginBottom = '0px';
+                            const subscribeBtn = navBar.querySelector('.cmr-nav-btn-subscribe');
+                            if (subscribeBtn) subscribeBtn.style.setProperty('display', 'none', 'important');
                         }
                     }
                 }
