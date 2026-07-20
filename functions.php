@@ -1578,3 +1578,12 @@ function cmr_header_cart_container_injection() {
     </script>
     <?php
 }
+
+// Redirect shop page to research reports page
+add_action( 'template_redirect', 'quanto_redirect_shop_to_research_reports' );
+function quanto_redirect_shop_to_research_reports() {
+    if ( function_exists('is_shop') && is_shop() && ! is_search() ) {
+        wp_safe_redirect( home_url( '/research-reports/' ) );
+        exit;
+    }
+}
