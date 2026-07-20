@@ -1577,6 +1577,21 @@ function cmr_header_cart_container_injection() {
                 toggle.parentNode.insertBefore(widget, toggle);
             }
         });
+        
+        // Target the Person / Account icon in the header and set its URL to the My Account page
+        // so it works with the newly added login plugin.
+        var accountUrl = '<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>';
+        var iconLinks = document.querySelectorAll('.elementor-widget-icon a, .cmr-header-user-icon');
+        iconLinks.forEach(function(link) {
+            var html = link.innerHTML.toLowerCase();
+            // Check if the icon contains 'user', 'person', or related paths
+            if (html.includes('fa-user') || html.includes('person') || html.includes('user') || html.includes('cx="12" cy="7"')) {
+                // cx="12" cy="7" is a common SVG coordinate for a user head circle
+                link.setAttribute('href', accountUrl);
+                // Also add a class in case the login plugin targets it
+                link.classList.add('lrm-login', 'xoo-el-login-tgr'); 
+            }
+        });
     });
     </script>
     <?php
