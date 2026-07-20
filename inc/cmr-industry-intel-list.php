@@ -495,11 +495,15 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                         
                         if (!page) {
                             var match = href.match(/\/page\/(\d+)/);
-                            if (match) page = match[1];
+                            if (match) {
+                                page = match[1];
+                            } else {
+                                page = 1;
+                            }
                         }
                         
                         if (page) {
-                            loadPage(parseInt(page), false);
+                            loadPage(parseInt(page), true);
                         }
                     }
                 });
