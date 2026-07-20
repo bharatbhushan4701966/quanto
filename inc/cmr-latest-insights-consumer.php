@@ -22,7 +22,7 @@ if ( ! function_exists( 'cmr_latest_insights_consumer_shortcode' ) ) {
             'link_insights'  => '#overview',
             'link_reports'   => '#reports',
             'link_market'    => '#cmr-market-updates',
-            'link_explore'   => '/what-we-do/industry-intelligence/',
+            'link_explore'   => '#explore-industry-intelligence',
             'link_cmr_news'  => '#cmr-in-news'
         ), $atts );
 
