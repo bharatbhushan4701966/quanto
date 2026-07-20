@@ -1728,3 +1728,16 @@ add_action( 'user_register', 'cmr_prewarm_elementor_caches' );
 
 // Trigger pre-warming when any WordPress cache is flushed
 add_action( 'wp_cache_flush', 'cmr_prewarm_elementor_caches' );
+
+/**
+ * Remove <br> tags from WooCommerce My Account navigation link labels.
+ */
+add_filter( 'woocommerce_account_menu_items', function( $items ) {
+    foreach ( $items as $endpoint => $label ) {
+        // Strip out any <br>, <br/>, or <br /> tags from the label text
+        $items[$endpoint] = str_ireplace( array( '<br>', '<br/>', '<br />', "\n", "\r", "\t" ), '', $label );
+        // Also trim extra whitespace that might have been left
+        $items[$endpoint] = trim( $items[$endpoint] );
+    }
+    return $items;
+}, 999 );
