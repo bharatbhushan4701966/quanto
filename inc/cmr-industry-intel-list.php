@@ -27,8 +27,14 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
 
         if ( ! empty( $atts['category'] ) ) {
             $query_args['tax_query'] = array(
+                'relation' => 'OR',
                 array(
                     'taxonomy' => 'category',
+                    'field'    => 'slug',
+                    'terms'    => sanitize_text_field( $atts['category'] ),
+                ),
+                array(
+                    'taxonomy' => 'cmr_news_category',
                     'field'    => 'slug',
                     'terms'    => sanitize_text_field( $atts['category'] ),
                 )
@@ -418,6 +424,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                     var data = new FormData();
                     data.append('action', 'cmr_industry_intel_list_load_more');
                     data.append('page', nextPage);
+                    data.append('base_url', window.location.pathname);
                     if (cat) {
                         data.append('category', cat);
                     }
@@ -488,8 +495,14 @@ function cmr_industry_intel_list_load_more_ajax() {
     
     if ( isset( $_POST['category'] ) && ! empty( $_POST['category'] ) ) {
         $query_args['tax_query'] = array(
+            'relation' => 'OR',
             array(
                 'taxonomy' => 'category',
+                'field'    => 'slug',
+                'terms'    => sanitize_text_field( $_POST['category'] ),
+            ),
+            array(
+                'taxonomy' => 'cmr_news_category',
                 'field'    => 'slug',
                 'terms'    => sanitize_text_field( $_POST['category'] ),
             )
@@ -557,9 +570,10 @@ function cmr_industry_intel_list_load_more_ajax() {
     }
     
     if ( $paged >= 3 || $paged >= $insights_query->max_num_pages ) {
-        $big = 999999999;
+        $base_url = isset( $_POST['base_url'] ) ? sanitize_text_field( wp_unslash( $_POST['base_url'] ) ) : '/';
+        $full_base = home_url( $base_url );
         $pagination_html = paginate_links( array(
-            'base'      => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+            'base'      => trailingslashit( $full_base ) . '%_%',
             'format'    => '?paged=%#%',
             'total'     => $insights_query->max_num_pages,
             'current'   => $paged,
