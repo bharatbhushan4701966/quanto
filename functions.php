@@ -1730,7 +1730,7 @@ add_action( 'user_register', 'cmr_prewarm_elementor_caches' );
 add_action( 'wp_cache_flush', 'cmr_prewarm_elementor_caches' );
 
 /**
- * Remove <br> tags from WooCommerce My Account navigation link labels.
+ * Remove <br> tags from WooCommerce My Account navigation link labels via filter.
  */
 add_filter( 'woocommerce_account_menu_items', function( $items ) {
     foreach ( $items as $endpoint => $label ) {
@@ -1741,3 +1741,11 @@ add_filter( 'woocommerce_account_menu_items', function( $items ) {
     }
     return $items;
 }, 999 );
+
+/**
+ * If the <br> tag is injected by Elementor/WooCommerce core outside the label,
+ * this CSS will force it to be hidden.
+ */
+add_action( 'wp_head', function() {
+    echo '<style>.woocommerce-MyAccount-navigation-link a br { display: none !important; }</style>';
+});
