@@ -121,6 +121,7 @@ require_once QUANTO_DIR_PATH_INC . 'author-meta.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-latest-insights.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-latest-insights-tech.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-latest-insights-consumer.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-latest-insights-supply.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-industry-intelligence.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-marketing-services.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-consulting-advisory.php';
