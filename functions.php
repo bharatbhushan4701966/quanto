@@ -1749,3 +1749,16 @@ add_filter( 'woocommerce_account_menu_items', function( $items ) {
 add_action( 'wp_head', function() {
     echo '<style>.woocommerce-MyAccount-navigation-link a br { display: none !important; }</style>';
 });
+
+/**
+ * Redirect to cart page after successful login or registration if the user has items in their cart.
+ * This ensures they can continue their purchase journey instead of landing on the My Account dashboard.
+ */
+function cmr_redirect_to_cart_if_not_empty( $redirect, $user = null ) {
+    if ( class_exists( 'WooCommerce' ) && WC()->cart && ! WC()->cart->is_empty() ) {
+        return wc_get_cart_url();
+    }
+    return $redirect;
+}
+add_filter( 'woocommerce_registration_redirect', 'cmr_redirect_to_cart_if_not_empty', 99, 2 );
+add_filter( 'woocommerce_login_redirect', 'cmr_redirect_to_cart_if_not_empty', 99, 2 );
