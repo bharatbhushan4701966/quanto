@@ -404,6 +404,9 @@
 
             if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
                 $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
+                if ( ! file_exists( $css_file->get_path() ) ) {
+                    $css_file->update();
+                }
                 $css_file->enqueue();
             }
         }

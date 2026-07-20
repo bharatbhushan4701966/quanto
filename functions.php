@@ -1099,6 +1099,9 @@ if ( ! function_exists('cmr_print_elementor_css') ) {
     function cmr_print_elementor_css($post_id) {
         if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
             $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
+            if ( ! file_exists( $css_file->get_path() ) ) {
+                $css_file->update();
+            }
             $css_file->enqueue();
             
             // Force output the link tag since print_css() sometimes fails mid-body
