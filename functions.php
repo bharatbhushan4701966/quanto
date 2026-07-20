@@ -1695,3 +1695,36 @@ add_action( 'save_post_quanto_footer', function() {
 add_action( 'save_post_quanto_tab_build', function() {
     delete_transient( 'cmr_footer_html_cache' );
 });
+
+/**
+ * Pre-warm Elementor CSS caches by hitting all the builder URLs in the background.
+ * Uses non-blocking HTTP requests so it doesn't slow down the user experience.
+ */
+function cmr_prewarm_elementor_caches() {
+    $urls = array(
+        home_url('/?quanto_tab_build=your-next-big-decision-deserves-better-intelligence'),
+        home_url('/?quanto_tab_build=we-worked-with-largest-global-brands'),
+        home_url('/?quanto_tab_build=testimonials'),
+        home_url('/?quanto_tab_build=fotter-card'),
+        home_url('/?quanto_tab_build=your-challenge-our-research-your-advantage'),
+        home_url('/?quanto_tab_build=who-we-serve'),
+        home_url('/?quanto_footer=main')
+    );
+
+    foreach ( $urls as $url ) {
+        wp_remote_get( $url, array(
+            'timeout'   => 0.01,
+            'blocking'  => false,
+            'sslverify' => false,
+        ) );
+    }
+}
+
+// Trigger pre-warming when Elementor cache is cleared
+add_action( 'elementor/core/files/clear_cache', 'cmr_prewarm_elementor_caches' );
+
+// Trigger pre-warming when a new user registers
+add_action( 'user_register', 'cmr_prewarm_elementor_caches' );
+
+// Trigger pre-warming when any WordPress cache is flushed
+add_action( 'wp_cache_flush', 'cmr_prewarm_elementor_caches' );
