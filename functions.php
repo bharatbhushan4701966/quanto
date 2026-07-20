@@ -1762,3 +1762,19 @@ function cmr_redirect_to_cart_if_not_empty( $redirect, $user = null ) {
 }
 add_filter( 'woocommerce_registration_redirect', 'cmr_redirect_to_cart_if_not_empty', 99, 2 );
 add_filter( 'woocommerce_login_redirect', 'cmr_redirect_to_cart_if_not_empty', 99, 2 );
+
+/**
+ * Fallback: If a third-party plugin (like Elementor) forces a redirect to My Account 
+ * with ?register=success, we intercept it here.
+ */
+add_action( 'template_redirect', 'cmr_force_cart_redirect_after_registration' );
+function cmr_force_cart_redirect_after_registration() {
+    // Check if we are on the My Account page and the URL has ?register=success
+    if ( is_account_page() && isset( $_GET['register'] ) && $_GET['register'] === 'success' ) {
+        // If the cart is not empty, redirect to the cart page
+        if ( class_exists( 'WooCommerce' ) && WC()->cart && ! WC()->cart->is_empty() ) {
+            wp_safe_redirect( wc_get_cart_url() );
+            exit;
+        }
+    }
+}
