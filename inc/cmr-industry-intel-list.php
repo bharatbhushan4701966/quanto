@@ -441,6 +441,11 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                         
                         container.insertAdjacentHTML('beforeend', htmlContent);
                         
+                        // Refresh ScrollTrigger to recalculate horizontal scroll layouts after DOM change
+                        if (typeof ScrollTrigger !== 'undefined') {
+                            ScrollTrigger.refresh();
+                        }
+                        
                         if (loadMoreBtn && append) {
                             loadMoreBtn.setAttribute('data-page', page);
                             loadMoreBtn.textContent = 'Load More';
