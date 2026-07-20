@@ -1535,7 +1535,7 @@ function cmr_header_cart_container_injection() {
         // Remove any old li cart menu items if present
         document.querySelectorAll('.cmr-cart-menu-item').forEach(function(el) { el.remove(); });
         
-        var cartHtml = '<a href="<?php echo esc_url($cart_url); ?>" class="cmr-cart-icon-link" style="display:inline-flex; align-items:center; gap:5px; text-decoration:none; color:#111; padding:7px 10px; border-radius:24px; background:#f3f4f6; font-weight:600; font-size:13px; transition:all 0.2s; border:1px solid #e5e7eb;" aria-label="Cart">' +
+        var cartHtml = '<a href="<?php echo esc_url($cart_url); ?>" class="cmr-cart-icon-link" style="display:inline-flex; align-items:center; gap:5px; text-decoration:none; color:#111; padding:7px 10px; border-radius:24px; background:#f3f4f6; font-weight:600; font-size:13px; transition:all 0.2s; border:1px solid #e5e7eb; height:40px; box-sizing:border-box;" aria-label="Cart">' +
             '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>' +
             '<span class="cmr-cart-count" style="background:#4820B0; color:#fff; border-radius:50%; padding:2px 6px; font-size:11px; font-weight:700; line-height:1; min-width:18px; text-align:center;"><?php echo esc_js($cart_count); ?></span>' +
         '</a>';
@@ -1565,7 +1565,7 @@ function cmr_header_cart_container_injection() {
                 var widget = document.createElement('div');
                 widget.className = 'cmr-mobile-cart-widget d-inline-block d-lg-none';
                 widget.style.cssText = 'display:inline-flex; align-items:center; margin-right:10px; vertical-align:middle;';
-                widget.innerHTML = '<a href="<?php echo esc_url($cart_url); ?>" class="cmr-cart-icon-link" style="display:flex; align-items:center; gap:4px; text-decoration:none; color:#111; padding:5px 10px; border-radius:20px; background:#f3f4f6; font-weight:600; font-size:12px; border:1px solid #e5e7eb;">' +
+                widget.innerHTML = '<a href="<?php echo esc_url($cart_url); ?>" class="cmr-cart-icon-link" style="display:flex; align-items:center; gap:4px; text-decoration:none; color:#111; padding:5px 10px; border-radius:20px; background:#f3f4f6; font-weight:600; font-size:12px; border:1px solid #e5e7eb; height:40px; box-sizing:border-box;">' +
                     '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>' +
                     '<span class="cmr-cart-count" style="background:#4820B0; color:#fff; border-radius:50%; padding:2px 6px; font-size:11px; font-weight:700; line-height:1; min-width:18px; text-align:center;"><?php echo esc_js($cart_count); ?></span>' +
                 '</a>';
