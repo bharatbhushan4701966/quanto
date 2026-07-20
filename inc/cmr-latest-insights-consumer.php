@@ -32,7 +32,19 @@ if ( ! function_exists( 'cmr_latest_insights_consumer_shortcode' ) ) {
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
-            'category_name'  => $atts['category'],
+            'tax_query'      => array(
+                'relation' => 'OR',
+                array(
+                    'taxonomy' => 'category',
+                    'field'    => 'slug',
+                    'terms'    => $atts['category'],
+                ),
+                array(
+                    'taxonomy' => 'cmr_news_category',
+                    'field'    => 'slug',
+                    'terms'    => $atts['category'],
+                ),
+            ),
         );
 
         $insights_query = new WP_Query( $query_args );
