@@ -404,8 +404,95 @@
 
             if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
                 $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
+                if ( ! file_exists( $css_file->get_path() ) ) {
+                    $css_file->update();
+                }
                 $css_file->enqueue();
             }
+        }
+    }
+
+    // Pre-generate missing Elementor CSS files BEFORE any output starts.
+    // This runs on template_redirect (before wp_head) so CSS files exist
+    // by the time wp_enqueue_scripts tries to enqueue them.
+    if ( ! function_exists( 'cmr_pregenerate_missing_elementor_css' ) ) {
+        function cmr_pregenerate_missing_elementor_css() {
+            if ( ! class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) || ! class_exists( '\\Elementor\\Plugin' ) ) {
+                return;
+            }
+
+            $post_ids_to_check = array();
+
+            // Footer template
+            if ( function_exists( 'quanto_get_resolved_footer_id' ) ) {
+                $footer_id = quanto_get_resolved_footer_id();
+                if ( $footer_id ) {
+                    $post_ids_to_check[] = $footer_id;
+                }
+            }
+
+            // Tab builder templates
+            $tab_slugs = array(
+                'your-challenge-our-research-your-advantage',
+                'fotter-card',
+                'testimonials',
+                'we-worked-with-largest-global-brands',
+                'your-next-big-decision-deserves-better-intelligence'
+            );
+            foreach ( $tab_slugs as $slug ) {
+                $tab_posts = get_posts(array(
+                    'name'           => $slug,
+                    'post_type'      => 'quanto_tab_build',
+                    'posts_per_page' => 1,
+                    'post_status'    => 'publish',
+                ));
+                if ( $tab_posts && ! empty( $tab_posts[0] ) ) {
+                    $post_ids_to_check[] = $tab_posts[0]->ID;
+                }
+            }
+
+            // Homepage
+            $homepage_id = get_option( 'page_on_front' );
+            if ( ! $homepage_id ) {
+                $homepage_id = 14;
+            }
+            $post_ids_to_check[] = $homepage_id;
+
+            // Similar reports page
+            $target_page = get_page_by_path( 'similar-reports-by-industry' );
+            if ( ! $target_page ) {
+                $target_page = get_page_by_path( 'test' );
+            }
+            if ( $target_page ) {
+                $post_ids_to_check[] = $target_page->ID;
+            }
+
+            // Check each and generate missing CSS files
+            foreach ( array_unique( $post_ids_to_check ) as $pid ) {
+                $css_file = new \Elementor\Core\Files\CSS\Post( $pid );
+                if ( ! file_exists( $css_file->get_path() ) ) {
+                    $css_file->update();
+                }
+            }
+        }
+    }
+    add_action( 'template_redirect', 'cmr_pregenerate_missing_elementor_css', 1 );
+
+    // Helper: read an Elementor post CSS file and return its content for inline output
+    if ( ! function_exists( 'cmr_get_elementor_css_inline' ) ) {
+        function cmr_get_elementor_css_inline( $post_id ) {
+            if ( ! class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+                return '';
+            }
+            $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
+            $path = $css_file->get_path();
+            if ( file_exists( $path ) ) {
+                $content = file_get_contents( $path );
+                if ( ! empty( $content ) ) {
+                    return $content;
+                }
+            }
+            return '';
         }
     }
 
@@ -458,6 +545,47 @@
             }
         }
     }
+
+    // Inject inline CSS for tab templates directly into <head> as a bulletproof fallback.
+    // This runs after wp_enqueue_scripts but before body, so even if the external CSS
+    // file is 404'd by CDN/server cache, the inline styles guarantee correct rendering.
+    if ( ! function_exists( 'cmr_inject_tab_css_inline_in_head' ) ) {
+        function cmr_inject_tab_css_inline_in_head() {
+            $tab_slugs = array(
+                'your-challenge-our-research-your-advantage',
+                'fotter-card',
+                'testimonials',
+                'we-worked-with-largest-global-brands',
+                'your-next-big-decision-deserves-better-intelligence'
+            );
+            foreach ( $tab_slugs as $slug ) {
+                $tab_posts = get_posts(array(
+                    'name'           => $slug,
+                    'post_type'      => 'quanto_tab_build',
+                    'posts_per_page' => 1,
+                    'post_status'    => 'publish',
+                ));
+                if ( $tab_posts && ! empty( $tab_posts[0] ) ) {
+                    $css = cmr_get_elementor_css_inline( $tab_posts[0]->ID );
+                    if ( ! empty( $css ) ) {
+                        echo '<style id="cmr-tab-' . esc_attr( $tab_posts[0]->ID ) . '-inline-css">' . $css . '</style>' . "\n";
+                    }
+                }
+            }
+
+            // Also inject footer CSS inline
+            if ( function_exists( 'quanto_get_resolved_footer_id' ) ) {
+                $footer_id = quanto_get_resolved_footer_id();
+                if ( $footer_id ) {
+                    $css = cmr_get_elementor_css_inline( $footer_id );
+                    if ( ! empty( $css ) ) {
+                        echo '<style id="cmr-footer-' . esc_attr( $footer_id ) . '-inline-css">' . $css . '</style>' . "\n";
+                    }
+                }
+            }
+        }
+    }
+    add_action( 'wp_head', 'cmr_inject_tab_css_inline_in_head', 99 );
 
     if ( ! function_exists( 'quanto_render_elementor_footer' ) ) {
         function quanto_render_elementor_footer( $post_id, $class = 'footer' ) {

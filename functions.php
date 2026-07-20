@@ -1099,14 +1099,30 @@ if ( ! function_exists('cmr_print_elementor_css') ) {
     function cmr_print_elementor_css($post_id) {
         if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
             $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
-            $css_file->enqueue();
             
-            // Force output the link tag since print_css() sometimes fails mid-body
+            // Ensure the CSS file exists on disk
+            if ( ! file_exists( $css_file->get_path() ) ) {
+                $css_file->update();
+            }
+            
+            // Read the CSS file content from disk and output inline.
+            // This bypasses CDN/server caching issues where the external CSS file
+            // URL returns a cached 404 even though the file now exists on disk.
+            $css_path = $css_file->get_path();
+            if ( file_exists( $css_path ) ) {
+                $css_content = file_get_contents( $css_path );
+                if ( ! empty( $css_content ) ) {
+                    echo '<style id="elementor-post-' . $post_id . '-inline-css">' . $css_content . '</style>';
+                    return;
+                }
+            }
+            
+            // Fallback: output link tag to external file
+            $css_file->enqueue();
             $url = $css_file->get_url();
             if ($url) {
                 echo '<link rel="stylesheet" id="elementor-post-'.$post_id.'-css" href="'.esc_url($url).'" type="text/css" media="all">';
             }
-            
             $css_file->print_css();
         }
     }
