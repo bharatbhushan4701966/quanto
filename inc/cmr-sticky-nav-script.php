@@ -186,6 +186,8 @@ add_action('wp_footer', function() {
                                 matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('market updates'));
                             } else if (targetId === 'newsroom') {
                                 matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('newsroom'));
+                            } else if (targetId === 'explore-industry-intelligence') {
+                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('explore industry intelligence'));
                             } else if (targetId === 'cmr-in-news') {
                                 matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('featured media coverage'));
                             }
