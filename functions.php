@@ -1099,22 +1099,15 @@ if ( ! function_exists('cmr_print_elementor_css') ) {
     function cmr_print_elementor_css($post_id) {
         if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
             $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
+            $css_file->enqueue();
             
-            // Generate the raw CSS content directly from the post data.
-            // This runs safely mid-body when all Elementor widgets are fully registered,
-            // preventing the issue of empty CSS files caused by generating too early.
-            $css = $css_file->get_content();
-            
-            if ( ! empty( $css ) ) {
-                echo '<style id="elementor-post-'.$post_id.'-css-inline">' . wp_strip_all_tags( $css ) . '</style>';
-            } else {
-                // Fallback to enqueuing the file if generating raw CSS fails
-                $css_file->enqueue();
-                $url = $css_file->get_url();
-                if ($url) {
-                    echo '<link rel="stylesheet" id="elementor-post-'.$post_id.'-css" href="'.esc_url($url).'" type="text/css" media="all">';
-                }
+            // Force output the link tag since print_css() sometimes fails mid-body
+            $url = $css_file->get_url();
+            if ($url) {
+                echo '<link rel="stylesheet" id="elementor-post-'.$post_id.'-css" href="'.esc_url($url).'" type="text/css" media="all">';
             }
+            
+            $css_file->print_css();
         }
     }
 }
