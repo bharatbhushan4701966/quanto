@@ -17,6 +17,12 @@ if ( ! function_exists( 'cmr_latest_insights_tech_shortcode' ) ) {
             'nav_title'      => 'Automotive',
             'section_title'  => 'Latest Insights',
             'section_desc'   => 'Explore expert analysis, research reports, and real-time market signals shaping industries and business strategy.',
+            'link_overview'  => '#top',
+            'link_insights'  => '#overview',
+            'link_reports'   => '#reports',
+            'link_market'    => '#cmr-market-updates',
+            'link_newsroom'  => '#newsroom',
+            'link_cmr_news'  => '#cmr-in-news'
         ), $atts );
 
         $query_args = array(
@@ -38,16 +44,16 @@ if ( ! function_exists( 'cmr_latest_insights_tech_shortcode' ) ) {
                     <?php echo esc_html( $atts['nav_title'] ); ?>
                 </div>
                 <div class="intel-nav-links">
-                    <a href="#">Overview</a>
-                    <a href="#">Insights</a>
-                    <a href="#">Reports</a>
-                    <a href="#cmr-market-updates">Market Updates</a>
-                    <a href="#">Newsroom</a>
-                    <a href="#">CMR in news</a>
+                    <a href="<?php echo esc_attr( $atts['link_overview'] ); ?>">Overview</a>
+                    <a href="<?php echo esc_attr( $atts['link_insights'] ); ?>">Insights</a>
+                    <a href="<?php echo esc_attr( $atts['link_reports'] ); ?>">Reports</a>
+                    <a href="<?php echo esc_attr( $atts['link_market'] ); ?>">Market Updates</a>
+                    <a href="<?php echo esc_attr( $atts['link_newsroom'] ); ?>">Newsroom</a>
+                    <a href="<?php echo esc_attr( $atts['link_cmr_news'] ); ?>">CMR in news</a>
                 </div>
             </div>
 
-            <div class="cmr-latest-insights-header" style="margin-bottom: 40px; margin-top: 50px;">
+            <div id="overview" class="cmr-latest-insights-header" style="margin-bottom: 40px; margin-top: 50px;">
                 <?php if ( ! empty( $atts['section_title'] ) ) : ?>
                     <h2 class="cmr-latest-insights-title" style="font-size: 42px; font-weight: 600; color: #111; margin: 0 0 15px 0; letter-spacing: -1px;">
                         <?php echo esc_html( $atts['section_title'] ); ?>
