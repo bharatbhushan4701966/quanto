@@ -112,6 +112,12 @@ do_action( 'woocommerce_before_cart' ); ?>
         </form>
 
         <!-- Pre-Checkout Login Form -->
+        <?php 
+        // Ensure registration is enabled on My Account page
+        if ( get_option( 'woocommerce_enable_myaccount_registration' ) !== 'yes' ) {
+            update_option( 'woocommerce_enable_myaccount_registration', 'yes' );
+        }
+        ?>
         <div class="cart-login-prompt" id="cart-login-prompt" style="<?php if ( is_user_logged_in() ) echo 'display: none;'; ?>">
             <h3>Login to Continue Checkout</h3>
             <p>Please sign in to save your cart and proceed to secure payment.</p>
@@ -129,7 +135,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 
                 <input type="hidden" name="redirect" value="<?php echo esc_url( wc_get_checkout_url() ); ?>" />
                 <?php wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ); ?>
-                <button type="submit" class="woocommerce-button button woocommerce-form-login__submit" name="login" value="<?php esc_attr_e( 'Log in', 'woocommerce' ); ?>"><?php esc_html_e( 'Sign In ↗', 'woocommerce' ); ?></button>
+                <button type="submit" class="woocommerce-button button woocommerce-form-login__submit" name="login" value="<?php esc_attr_e( 'Log in', 'woocommerce' ); ?>"><?php esc_html_e( 'Sign In', 'woocommerce' ); ?> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 5px;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></button>
 
                 <?php do_action( 'woocommerce_login_form_end' ); ?>
             </form>
@@ -141,7 +147,7 @@ do_action( 'woocommerce_before_cart' ); ?>
             
             <p class="create-account-text">Create an account to gain instant access to your premium market reports and insights.</p>
             
-            <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="create-account-btn">Create Account ↗</a>
+            <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>?action=register" class="create-account-btn">Create Account <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 5px;"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></a>
             
             <div style="text-align: center; margin-top: 24px; padding-top: 20px; border-top: 1px dashed #e5e7eb;">
                 <a href="<?php echo esc_url( wc_get_checkout_url() ); ?>" onclick="var p=document.querySelectorAll('.wc-proceed-to-checkout a.checkout-button, .cart-collaterals .checkout-button, .cmr-checkout-btn'); p.forEach(function(b){ b.removeAttribute('disabled'); b.style.setProperty('opacity', '1', 'important'); b.style.setProperty('pointer-events', 'auto', 'important'); b.style.setProperty('cursor', 'pointer', 'important'); b.style.setProperty('filter', 'none', 'important'); }); document.getElementById('cart-login-prompt').style.setProperty('display', 'none', 'important'); window.location.href='<?php echo esc_url( wc_get_checkout_url() ); ?>'; return false;" style="font-size: 14px; font-weight: 600; color: #4820B0; text-decoration: underline;">Or continue as guest without creating an account ↓</a>
