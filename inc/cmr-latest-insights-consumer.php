@@ -21,7 +21,7 @@ if ( ! function_exists( 'cmr_latest_insights_consumer_shortcode' ) ) {
         ), $atts );
 
         $query_args = array(
-            'post_type'      => 'cmr_news',
+            'post_type'      => array( 'post', 'cmr_news' ),
             'posts_per_page' => $atts['posts_per_page'],
             'post_status'    => 'publish',
             'orderby'        => 'date',
