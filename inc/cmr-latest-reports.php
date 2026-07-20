@@ -320,8 +320,9 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
                 }
             }
         </style>
+        <?php $uid = uniqid(); ?>
 
-        <section class="cmr-latest-section" id="reports">
+        <section class="cmr-latest-section" id="reports-<?php echo $uid; ?>">
             <div class="cmr-latest-header">
                 <h2 class="cmr-latest-title"><?php echo esc_html( $atts['title'] ); ?></h2>
                 <div class="cmr-filter-bar">
@@ -332,25 +333,25 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
                         <?php endforeach; ?>
                     </div>
                     <div class="cmr-search-wrapper">
-                        <input type="text" id="cmr-lr-search" placeholder="Search by name">
-                        <button id="cmr-lr-search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <input type="text" id="cmr-lr-search-<?php echo $uid; ?>" placeholder="Search by name">
+                        <button id="cmr-lr-search-btn-<?php echo $uid; ?>"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
                 </div>
             </div>
             
-            <div class="cmr-latest-grid" id="cmr-latest-grid">
+            <div class="cmr-latest-grid" id="cmr-latest-grid-<?php echo $uid; ?>">
                 <!-- Products will be loaded here via AJAX -->
             </div>
 
-            <div class="cmr-loading-spinner" id="cmr-loading-spinner">
+            <div class="cmr-loading-spinner" id="cmr-loading-spinner-<?php echo $uid; ?>">
                 <i class="fa-solid fa-circle-notch fa-spin fa-2x" style="color: #6b46c1;"></i>
             </div>
 
             <div class="cmr-load-more-wrap">
-                <button class="cmr-load-more-btn" id="cmr-load-more-btn" style="display: none;">Load More</button>
+                <button class="cmr-load-more-btn" id="cmr-load-more-btn-<?php echo $uid; ?>" style="display: none;">Load More</button>
             </div>
             
-            <div class="cmr-pagination-wrap" id="cmr-pagination-wrap"></div>
+            <div class="cmr-pagination-wrap" id="cmr-pagination-wrap-<?php echo $uid; ?>"></div>
         </section>
 
         <script>
@@ -359,13 +360,13 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
                 let currentCategory = '';
                 let currentSearch = '';
                 let loadMoreCount = 0;
-                const grid = document.getElementById('cmr-latest-grid');
-                const loadMoreBtn = document.getElementById('cmr-load-more-btn');
-                const paginationWrap = document.getElementById('cmr-pagination-wrap');
-                const spinner = document.getElementById('cmr-loading-spinner');
-                const searchInput = document.getElementById('cmr-lr-search');
-                const searchBtn = document.getElementById('cmr-lr-search-btn');
-                const filterPills = document.querySelectorAll('.cmr-filter-pill');
+                const grid = document.getElementById('cmr-latest-grid-<?php echo $uid; ?>');
+                const loadMoreBtn = document.getElementById('cmr-load-more-btn-<?php echo $uid; ?>');
+                const paginationWrap = document.getElementById('cmr-pagination-wrap-<?php echo $uid; ?>');
+                const spinner = document.getElementById('cmr-loading-spinner-<?php echo $uid; ?>');
+                const searchInput = document.getElementById('cmr-lr-search-<?php echo $uid; ?>');
+                const searchBtn = document.getElementById('cmr-lr-search-btn-<?php echo $uid; ?>');
+                const filterPills = document.getElementById('reports-<?php echo $uid; ?>').querySelectorAll('.cmr-filter-pill');
 
                 function loadProducts( reset = false, pageNum = null ) {
                     if ( reset ) {
@@ -439,7 +440,7 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
                             const page = urlParams.get('paged') || 1;
                             loadProducts(true, parseInt(page));
                             // Scroll back to top of section
-                            document.querySelector('.cmr-latest-section').scrollIntoView({ behavior: 'smooth' });
+                            document.getElementById('reports-<?php echo $uid; ?>').scrollIntoView({ behavior: 'smooth' });
                         });
                     });
                 }
