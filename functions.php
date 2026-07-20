@@ -1602,3 +1602,34 @@ function quanto_redirect_shop_to_research_reports() {
         exit;
     }
 }
+
+// Force Elementor to regenerate the CSS files for our global shortcode tabs 
+// whenever Elementor clears its cache, so they are never missing on the frontend.
+add_action( 'elementor/core/files/clear_cache', 'cmr_regenerate_tab_css_on_cache_clear' );
+function cmr_regenerate_tab_css_on_cache_clear() {
+    $tab_slugs = array(
+        'your-challenge-our-research-your-advantage',
+        'fotter-card',
+        'testimonials',
+        'we-worked-with-largest-global-brands',
+        'your-next-big-decision-deserves-better-intelligence'
+    );
+    foreach ( $tab_slugs as $slug ) {
+        $tab_posts = get_posts(array(
+            'name'           => $slug,
+            'post_type'      => 'quanto_tab_build',
+            'posts_per_page' => 1,
+            'post_status'    => 'publish',
+        ));
+        if ( $tab_posts && !empty($tab_posts[0]) ) {
+            $post_id = $tab_posts[0]->ID;
+            if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) && class_exists( '\\Elementor\\Plugin' ) ) {
+                $document = \Elementor\Plugin::$instance->documents->get( $post_id );
+                if ( $document ) {
+                    $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
+                    $css_file->update();
+                }
+            }
+        }
+    }
+}
