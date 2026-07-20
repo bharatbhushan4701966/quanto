@@ -439,14 +439,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                             htmlContent = htmlContent.replace(dynamicPagMatch[0], '');
                         }
                         
-                        if (append) {
-                            container.insertAdjacentHTML('beforeend', htmlContent);
-                        } else {
-                            container.innerHTML = htmlContent;
-                            // Scroll back to top of container smoothly
-                            var wrapper = document.querySelector('.cmr-intel-list-wrapper');
-                            if (wrapper) wrapper.scrollIntoView({behavior: 'smooth', block: 'start'});
-                        }
+                        container.insertAdjacentHTML('beforeend', htmlContent);
                         
                         if (loadMoreBtn && append) {
                             loadMoreBtn.setAttribute('data-page', page);
