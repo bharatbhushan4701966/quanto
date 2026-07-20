@@ -1123,7 +1123,11 @@ if ( ! function_exists('cmr_print_elementor_css') ) {
             
             // Ensure the CSS file exists on disk
             if ( ! file_exists( $css_file->get_path() ) ) {
-                $css_file->update();
+                // $css_file->update() generates empty CSS for custom post types.
+                // We MUST use the full rendering pipeline to generate the CSS file.
+                if ( class_exists( '\\Elementor\\Plugin' ) ) {
+                    \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
+                }
             }
             
             // Read the CSS file content from disk and output inline.

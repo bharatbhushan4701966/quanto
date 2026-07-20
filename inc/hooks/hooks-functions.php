@@ -611,17 +611,34 @@
             // Enqueue elementor core assets if needed
             quanto_enqueue_elementor_post_assets( $post_id );
             
+            // Generate the content FIRST so Elementor creates the CSS file on disk if missing.
+            // If we try to print CSS before rendering, the CSS file won't exist yet!
+            $content = '';
+            if ( class_exists( '\\Elementor\\Plugin' ) ) {
+                $content = \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
+            }
+            
             echo '<footer class="' . esc_attr( $class ) . '">';
             
             // Force Elementor to print its CSS inline just in case
             if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
                 $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
-                $css_file->enqueue();
-                $css_file->print_css();
+                
+                // Read CSS from disk and output inline to prevent CDN caching issues
+                $css_path = $css_file->get_path();
+                if ( file_exists( $css_path ) ) {
+                    $css_content = file_get_contents( $css_path );
+                    if ( ! empty( $css_content ) ) {
+                        echo '<style id="elementor-post-' . $post_id . '-inline-css">' . $css_content . '</style>';
+                    }
+                } else {
+                    $css_file->enqueue();
+                    $css_file->print_css();
+                }
             }
             
             echo '<div data-elementor-type="wp-post" data-elementor-id="' . esc_attr( $post_id ) . '" class="elementor elementor-' . esc_attr( $post_id ) . '">';
-            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
+            echo $content;
             echo '</div>';
             echo '</footer>';
         }
