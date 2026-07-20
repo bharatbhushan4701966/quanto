@@ -415,6 +415,12 @@
     // Pre-generate missing Elementor CSS files BEFORE any output starts.
     // This runs on template_redirect (before wp_head) so CSS files exist
     // by the time wp_enqueue_scripts tries to enqueue them.
+    // 
+    // IMPORTANT: We use get_builder_content_for_display() instead of
+    // $css_file->update() because update() generates EMPTY CSS for custom
+    // document types like quanto_tab_build. The full rendering pipeline
+    // is the only reliable way to generate CSS - this is exactly what
+    // happens when you "view" the page in the browser.
     if ( ! function_exists( 'cmr_pregenerate_missing_elementor_css' ) ) {
         function cmr_pregenerate_missing_elementor_css() {
             if ( ! class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) || ! class_exists( '\\Elementor\\Plugin' ) ) {
@@ -467,12 +473,25 @@
                 $post_ids_to_check[] = $target_page->ID;
             }
 
-            // Check each and generate missing CSS files
+            // Check each and generate missing CSS files using FULL Elementor rendering
+            global $post;
+            $original_post = $post;
+            
             foreach ( array_unique( $post_ids_to_check ) as $pid ) {
                 $css_file = new \Elementor\Core\Files\CSS\Post( $pid );
                 if ( ! file_exists( $css_file->get_path() ) ) {
-                    $css_file->update();
+                    // Use Elementor's full rendering pipeline to generate CSS.
+                    // This is the SAME thing that happens when you "view" the page -
+                    // it renders all widgets and generates the CSS as a side effect.
+                    // We discard the HTML output; we only need the CSS file on disk.
+                    \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $pid, true );
                 }
+            }
+            
+            // Restore global post state
+            $post = $original_post;
+            if ( $original_post ) {
+                setup_postdata( $original_post );
             }
         }
     }

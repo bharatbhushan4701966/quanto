@@ -1066,7 +1066,7 @@ add_shortcode('cmr_footer', function() {
     
     // Check if user is logged in (to force refresh) or if cache is empty
     if ( false === $cached_footer || ( is_user_logged_in() && isset($_GET['refresh_footer']) ) ) {
-        $url = 'https://qai8358l95-staging.onrocket.site/?quanto_footer=main';
+        $url = home_url( '/?quanto_footer=main' );
         $response = wp_remote_get( $url, array('timeout' => 15) );
         
         if ( is_wp_error( $response ) ) {
@@ -1076,14 +1076,35 @@ add_shortcode('cmr_footer', function() {
         $body = wp_remote_retrieve_body( $response );
         
         // Extract everything from <footer class="footer"> to </footer>
-        // We'll also grab any inline styles right before it if they exist, but Elementor puts them inside.
         if ( preg_match( '/<footer class="footer".*?<\/footer>/is', $body, $matches ) ) {
             $cached_footer = $matches[0];
             
-            // Extract ALL Elementor CSS links to ensure styles are loaded even if the footer post ID changes
-            if ( preg_match_all( '/<link[^>]*href="[^"]*elementor\/css\/post-\d+\.css[^"]*"[^>]*>/is', $body, $css_matches ) ) {
-                $cached_footer = implode("\n", $css_matches[0]) . "\n" . $cached_footer;
+            // Instead of caching <link> tags (which can 404 when Elementor cache
+            // is cleared), read the CSS directly from disk and embed it inline.
+            // This makes the cached footer completely self-contained.
+            $inline_css = '';
+            
+            // Extract post IDs from Elementor CSS link tags in the response
+            if ( preg_match_all( '/elementor\/css\/post-(\d+)\.css/i', $body, $id_matches ) ) {
+                $post_ids = array_unique( $id_matches[1] );
+                foreach ( $post_ids as $pid ) {
+                    if ( function_exists( 'cmr_get_elementor_css_inline' ) ) {
+                        $css = cmr_get_elementor_css_inline( (int) $pid );
+                        if ( ! empty( $css ) ) {
+                            $inline_css .= '<style id="cmr-footer-cached-' . $pid . '-css">' . $css . '</style>' . "\n";
+                        }
+                    }
+                }
             }
+            
+            // If we couldn't get inline CSS, fall back to link tags
+            if ( empty( $inline_css ) ) {
+                if ( preg_match_all( '/<link[^>]*href="[^"]*elementor\/css\/post-\d+\.css[^"]*"[^>]*>/is', $body, $css_matches ) ) {
+                    $inline_css = implode("\n", $css_matches[0]) . "\n";
+                }
+            }
+            
+            $cached_footer = $inline_css . $cached_footer;
             
             set_transient( $transient_key, $cached_footer, 6 * HOUR_IN_SECONDS );
         } else {
@@ -1621,8 +1642,14 @@ function quanto_redirect_shop_to_research_reports() {
 
 // Force Elementor to regenerate the CSS files for our global shortcode tabs 
 // whenever Elementor clears its cache, so they are never missing on the frontend.
+// CRITICAL: Also delete the footer HTML transient so the footer shortcode
+// re-fetches from ?quanto_footer=main on the next page load, which triggers
+// Elementor to regenerate the CSS files as a side effect.
 add_action( 'elementor/core/files/clear_cache', 'cmr_regenerate_tab_css_on_cache_clear' );
 function cmr_regenerate_tab_css_on_cache_clear() {
+    // Delete the cached footer HTML so it gets re-fetched with fresh CSS links
+    delete_transient( 'cmr_footer_html_cache' );
+    
     $tab_slugs = array(
         'your-challenge-our-research-your-advantage',
         'fotter-card',
@@ -1649,3 +1676,18 @@ function cmr_regenerate_tab_css_on_cache_clear() {
         }
     }
 }
+
+// Also delete the footer transient whenever post cache or object cache is flushed
+add_action( 'wp_cache_flush', function() {
+    delete_transient( 'cmr_footer_html_cache' );
+});
+
+// Also delete the footer transient when any quanto_footer post is saved
+add_action( 'save_post_quanto_footer', function() {
+    delete_transient( 'cmr_footer_html_cache' );
+});
+
+// Also delete the footer transient when any quanto_tab_build post is saved
+add_action( 'save_post_quanto_tab_build', function() {
+    delete_transient( 'cmr_footer_html_cache' );
+});
