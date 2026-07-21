@@ -1395,23 +1395,12 @@
             if( $quanto_blog_admin || !empty( $quanto_blog_readmore_setting ) ){
                 if( !empty( $quanto_blog_readmore_setting ) ){
                     echo '<!-- Button -->';
-                        if( class_exists( 'ReduxFramework' )){
-                            $quanto_blog_style = quanto_opt('quanto_blog_style');
-
-                            if('blog_style_one' == $quanto_blog_style ){
-                                echo '<a href="'.esc_url( get_permalink() ).'" class="quanto-link-btn btn-pill">';
-                            }elseif('blog_style_two' == $quanto_blog_style ){
-                                echo '<a href="'.esc_url( get_permalink() ).'" class="quanto-link-btn">';
-                            }
-                        }else{
-                            echo '<a href="'.esc_url( get_permalink() ).'" class="quanto-link-btn btn-pill">';
-                        }
-                            echo esc_html( $quanto_blog_readmore_setting );
-                            echo '<span>';
-                                echo '<i class="fa-solid fa-arrow-right arry1"></i>';
-                                echo '<i class="fa-solid fa-arrow-right arry2"></i>';
-                            echo '</span>';
+                        echo '<div class="related-article-more-details" style="margin-top:15px;">';
+                        echo '<a href="'.esc_url( get_permalink() ).'" class="custom-related-details-btn">';
+                        echo esc_html( $quanto_blog_readmore_setting );
+                        echo ' <svg class="arrow-up-right" viewBox="0 0 15 15" width="14" height="14" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline-block; vertical-align: middle; margin-left: 4px;"><path d="M2.04895 4.52205V3.54978C2.07104 3.12993 2.4025 2.79848 2.80025 2.79848L11.396 2.77638C11.8159 2.79848 12.1473 3.12993 12.1473 3.52768V12.1455C12.1473 12.5433 11.8159 12.8747 11.396 12.8968H10.4237C10.0039 12.8747 9.67244 12.5433 9.65035 12.1234L9.78293 6.90853L3.44106 13.2504C3.1317 13.5598 2.68976 13.5598 2.3804 13.2504L1.6733 12.5433C1.38603 12.256 1.36394 11.792 1.6733 11.4826L8.01516 5.14077L2.82234 5.29545C2.4025 5.27335 2.04895 4.96399 2.04895 4.52205Z" fill="currentColor"></path></svg>';
                         echo '</a>';
+                        echo '</div>';
                     echo '<!-- End Button -->';
                 }
             }
