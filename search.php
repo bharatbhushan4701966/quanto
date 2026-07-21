@@ -20,6 +20,7 @@ $query = get_search_query();
 .cmr-search-page {
     text-align: center;
     padding: 80px 20px;
+    margin-top: 120px;
     background: #fff;
     min-height: 70vh;
 }
