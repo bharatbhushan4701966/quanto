@@ -8440,7 +8440,7 @@ h1.custom-product-title {
 .single-product .custom-download-button-wrapper form.cart button.button.single_add_to_cart_button:hover,
 .single-product .custom-download-button-wrapper form.cart button.single_add_to_cart_button:hover,
 .custom-download-button-wrapper form.cart button.single_add_to_cart_button:hover {
-    background-color: #5132b8 !important;
+    background-color: #6241ca !important;
     color: #ffffff !important;
     transform: translateY(-2px) !important;
     box-shadow: 0 4px 12px rgba(98, 65, 202, 0.25) !important;
@@ -8947,7 +8947,7 @@ h1.custom-product-title {
 
 /* Container - purple background */
 [data-id="0193dcd"] {
-    background-color: #6C22DA !important;
+    background-color: #6241ca !important;
     border-radius: 20px !important;
     padding: 30px !important;
     margin-bottom: 20px !important;
@@ -9039,7 +9039,7 @@ h1.custom-product-title {
 
 /* Container - purple background */
 [data-id="0193dcd"] {
-    background-color: #6C22DA !important;
+    background-color: #6241ca !important;
     border-radius: 20px !important;
     padding: 30px !important;
     margin-bottom: 20px !important;
@@ -9115,7 +9115,7 @@ h1.custom-product-title {
 
 /* Container - purple background */
 .cmr-dynamic-challenge-container {
-    background-color: #6C22DA !important;
+    background-color: #6241ca !important;
     border-radius: 20px !important;
     padding: 30px !important;
     margin-bottom: 20px !important;

@@ -232,8 +232,8 @@ function cmr_media_releases_general_shortcode( $atts ) {
         }
         
         .cmr-mrg-btn-primary:hover {
-            background-color: #5132b8 !important;
-            border-color: #5132b8 !important;
+            background-color: #6241ca !important;
+            border-color: #6241ca !important;
         }
 
         .cmr-mrg-btn-outline {
