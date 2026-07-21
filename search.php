@@ -26,7 +26,7 @@ $query = get_search_query();
 }
 .cmr-search-title {
     font-size: 60px;
-    font-weight: 700;
+    font-weight: 600;
     color: #111;
     margin-bottom: 20px;
     line-height: 1.2;
