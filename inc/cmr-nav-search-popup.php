@@ -151,6 +151,15 @@ function cmr_nav_search_shortcode() {
         box-shadow: none;
         outline: none;
     }
+    
+    /* Hide native browser search cross icon */
+    .cmr-custom-popup-form input[type="search"]::-webkit-search-decoration,
+    .cmr-custom-popup-form input[type="search"]::-webkit-search-cancel-button,
+    .cmr-custom-popup-form input[type="search"]::-webkit-search-results-button,
+    .cmr-custom-popup-form input[type="search"]::-webkit-search-results-decoration {
+        -webkit-appearance: none;
+        display: none;
+    }
 
     .cmr-search-overlay-close {
         background: transparent;
@@ -246,6 +255,19 @@ function cmr_nav_search_shortcode() {
                 trigger.style.setProperty('color', '#fff', 'important');
             }
         });
+    });
+
+    // Close search overlay when clicking outside
+    document.addEventListener('click', function(event) {
+        var overlay = document.getElementById('cmr-search-overlay');
+        var topBar = overlay.querySelector('.cmr-search-top-bar');
+        
+        if (overlay && overlay.classList.contains('active')) {
+            // Check if the click is outside the top bar AND not on the trigger button
+            if (topBar && !topBar.contains(event.target) && !event.target.closest('.cmr-nav-search-trigger')) {
+                overlay.classList.remove('active');
+            }
+        }
     });
     </script>
     <?php
