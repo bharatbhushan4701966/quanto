@@ -166,6 +166,44 @@ $query = get_search_query();
 }
 .cmr-search-results-list .quanto-blog-box {
     margin-bottom: 40px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+.cmr-search-results-list .quanto-blog-box > div {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    align-items: center;
+}
+.cmr-search-results-list .quanto-blog-thumb,
+.cmr-search-results-list .post-thumb {
+    flex: 0 0 350px;
+    margin-bottom: 0 !important;
+}
+.cmr-search-results-list .quanto-blog-thumb img,
+.cmr-search-results-list .post-thumb img {
+    border-radius: 8px;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+.cmr-search-results-list .quanto-blog-content {
+    flex: 1;
+    padding: 0 !important;
+}
+
+@media (max-width: 768px) {
+    .cmr-search-results-list .quanto-blog-box > div {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .cmr-search-results-list .quanto-blog-thumb,
+    .cmr-search-results-list .post-thumb {
+        flex: 0 0 auto;
+        width: 100%;
+    }
 }
 
 /* Pagination Styles to Match Design */
