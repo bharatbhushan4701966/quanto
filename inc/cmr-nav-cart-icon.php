@@ -13,7 +13,8 @@ function cmr_nav_cart_shortcode() {
         align-items: center;
         justify-content: center;
         text-decoration: none;
-        padding: 5px;
+        width: 40px;
+        height: 40px;
         color: #fff; /* White on load */
         transition: color 0.3s ease;
     }
@@ -36,8 +37,8 @@ function cmr_nav_cart_shortcode() {
 
     .cmr-nav-cart-badge {
         position: absolute;
-        bottom: -2px;
-        right: -6px;
+        bottom: 5px;
+        right: 4px;
         background: #4820B0; /* purple */
         color: #fff; /* white */
         font-size: 11px;
