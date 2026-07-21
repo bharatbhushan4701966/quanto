@@ -34,11 +34,11 @@ function cmr_nav_search_shortcode() {
         left: 0;
         width: 100%;
         height: 100vh;
-        background: rgba(255, 255, 255, 0.95);
+        background: rgba(0, 0, 0, 0.6);
         z-index: 999999;
         display: flex;
+        flex-direction: column;
         align-items: center;
-        justify-content: center;
         opacity: 0;
         visibility: hidden;
         transition: all 0.3s ease;
@@ -49,33 +49,49 @@ function cmr_nav_search_shortcode() {
         visibility: visible;
     }
     
+    .cmr-search-top-bar {
+        width: 100%;
+        background: #fff;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .cmr-search-overlay-content {
+        width: 100%;
+        max-width: 900px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
     .cmr-search-overlay-close {
-        position: absolute;
-        top: 40px;
-        right: 40px;
         background: #fff;
         border: 1px solid #e2e8f0;
-        width: 50px;
-        height: 50px;
+        width: 48px;
+        height: 48px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        font-size: 24px;
+        font-size: 20px;
         color: #333;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        flex-shrink: 0;
     }
     .cmr-search-overlay-close:hover {
         border-color: #7c3aed;
         color: #7c3aed;
     }
     
-    .cmr-search-overlay-content {
-        width: 100%;
-        max-width: 800px;
-        padding: 0 20px;
+    /* Make the form fill the available space */
+    .cmr-search-overlay-content form.cmr-navbar-search-form {
+        margin: 0;
+        max-width: none;
+        flex-grow: 1;
     }
     </style>
     
@@ -91,12 +107,13 @@ function cmr_nav_search_shortcode() {
     
     <!-- The Overlay -->
     <div id="cmr-search-overlay" class="cmr-search-overlay-wrapper">
-        <button class="cmr-search-overlay-close" onclick="document.getElementById('cmr-search-overlay').classList.remove('active');">
-            <i class="ri-close-line"></i>
-        </button>
-        
-        <div class="cmr-search-overlay-content">
-            <?php get_search_form(); ?>
+        <div class="cmr-search-top-bar">
+            <div class="cmr-search-overlay-content">
+                <?php get_search_form(); ?>
+                <button class="cmr-search-overlay-close" onclick="document.getElementById('cmr-search-overlay').classList.remove('active');">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
         </div>
     </div>
     
