@@ -46,7 +46,7 @@ function cmr_nav_cart_shortcode() {
         position: absolute;
         bottom: 5px;
         right: 4px;
-        background: #4820B0; /* purple */
+        background: #00BFBC; /* Cyan/teal */
         color: #fff; /* white */
         font-size: 11px;
         font-family: Arial, sans-serif;
