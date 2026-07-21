@@ -48,6 +48,17 @@ function cmr_nav_search_shortcode() {
         z-index: 99999999;
         display: none;
     }
+    
+    /* Fix for WordPress Admin Bar */
+    .admin-bar .cmr-search-overlay-wrapper {
+        top: 32px;
+    }
+    @media screen and (max-width: 782px) {
+        .admin-bar .cmr-search-overlay-wrapper {
+            top: 46px;
+        }
+    }
+
     .cmr-search-overlay-wrapper.active {
         display: block;
     }
