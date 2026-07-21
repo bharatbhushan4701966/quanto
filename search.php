@@ -193,6 +193,12 @@ $query = get_search_query();
     flex: 1;
     padding: 0 !important;
 }
+.cmr-search-results-list .blog-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 
 @media (max-width: 768px) {
     .cmr-search-results-list .quanto-blog-box > div {
