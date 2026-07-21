@@ -26,13 +26,27 @@ if ( ! function_exists( 'cmr_latest_insights_it_telecom_shortcode' ) ) {
             'link_cmr_news'  => '#cmr-in-news'
         ), $atts );
 
+        $category_slug = sanitize_title( $atts['category'] );
+
         $query_args = array(
-            'post_type'      => 'cmr_news',
+            'post_type'      => array( 'post', 'cmr_news' ),
             'posts_per_page' => $atts['posts_per_page'],
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
-            'category_name'  => sanitize_title( $atts['category'] ), // Convert name to slug
+            'tax_query'      => array(
+                'relation' => 'OR',
+                array(
+                    'taxonomy' => 'category',
+                    'field'    => 'slug',
+                    'terms'    => $category_slug,
+                ),
+                array(
+                    'taxonomy' => 'cmr_news_category',
+                    'field'    => 'slug',
+                    'terms'    => $category_slug,
+                ),
+            ),
         );
 
         $insights_query = new WP_Query( $query_args );
