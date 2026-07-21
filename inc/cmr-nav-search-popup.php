@@ -7,57 +7,56 @@ function cmr_nav_search_shortcode() {
     <style>
     .cmr-nav-search-container {
         position: relative;
-        display: inline-block;
-    }
-    .cmr-nav-search-trigger {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         background: transparent;
         border: none;
         cursor: pointer;
+        padding: 5px;
+        color: #fff; /* White on load */
+    }
+    
+    .cmr-nav-search-trigger {
+        background: transparent;
+        border: none;
+        color: inherit;
+        cursor: pointer;
+        padding: 0;
         display: flex;
         align-items: center;
-        justify-content: center;
-        padding: 10px;
-        color: #fff;
         transition: color 0.3s ease;
     }
     
-    /* Change to black when header is sticky */
-    .elementor-sticky--effects .cmr-nav-search-trigger,
-    .is-sticky .cmr-nav-search-trigger,
-    header.sticky .cmr-nav-search-trigger,
-    .intel-nav-fixed-js .cmr-nav-search-trigger {
-        color: #333;
-    }
-
     .cmr-nav-search-trigger:hover {
         color: #7c3aed;
     }
-    .cmr-nav-search-trigger svg {
-        width: 24px;
-        height: 24px;
-    }
     
+    /* Change to black when header is sticky */
+    .elementor-sticky--effects .cmr-nav-search-container,
+    .is-sticky .cmr-nav-search-container,
+    header.sticky .cmr-nav-search-container,
+    .intel-nav-fixed-js .cmr-nav-search-container {
+        color: #333;
+    }
+
     .cmr-search-overlay-wrapper {
         position: fixed;
         top: 0;
         left: 0;
-        width: 100%;
+        width: 100vw;
         height: 100vh;
-        background: rgba(0, 0, 0, 0.6);
-        z-index: 2147483647; /* Max z-index */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        background: rgba(255, 255, 255, 0.95);
+        z-index: 999999;
         opacity: 0;
         visibility: hidden;
         transition: all 0.3s ease;
     }
-    
     .cmr-search-overlay-wrapper.active {
         opacity: 1;
         visibility: visible;
     }
-    
+
     .cmr-search-top-bar {
         width: 100%;
         background: #fff;
@@ -73,46 +72,95 @@ function cmr_nav_search_shortcode() {
         max-width: 1280px;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 30px;
+        justify-content: space-between;
     }
     
-    .cmr-search-overlay-close {
+    .cmr-search-logo {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+    }
+    .cmr-search-logo img {
+        height: 35px; /* Adjust based on their actual logo proportions */
+        width: auto;
+    }
+
+    /* Form Styles matching the screenshot */
+    .cmr-custom-popup-form {
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
         background: #fff;
-        border: 1px solid #e2e8f0;
-        width: 40px;
-        height: 40px;
+        border-radius: 50px;
+        padding: 4px;
+        position: relative;
+        /* Gradient Border Trick */
+        background-clip: padding-box;
+        border: 1px solid transparent;
+    }
+    
+    .cmr-custom-popup-form::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50px;
+        padding: 1.5px; /* border thickness */
+        background: linear-gradient(90deg, #6b21a8, #06b6d4);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+    }
+
+    .cmr-custom-popup-form .submit-btn {
+        background: #6b21a8; /* Purple matching design */
+        color: #fff;
+        border: none;
         border-radius: 50%;
+        width: 38px;
+        height: 38px;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        font-size: 18px;
-        color: #333;
-        transition: all 0.3s ease;
+        font-size: 16px;
         flex-shrink: 0;
-    }
-    .cmr-search-overlay-close:hover {
-        border-color: #7c3aed;
-        color: #7c3aed;
+        margin-left: 2px;
+        z-index: 2;
     }
     
-    /* Make the form fill the available space */
-    .cmr-search-overlay-content form.cmr-navbar-search-form {
-        margin: 0;
-        max-width: none;
+    .cmr-custom-popup-form input {
+        border: none;
+        outline: none;
         flex-grow: 1;
-        padding: 4px;
-    }
-    .cmr-search-overlay-content form.cmr-navbar-search-form input {
-        padding: 6px 15px;
-    }
-    .cmr-search-overlay-content form.cmr-navbar-search-form .submit-btn {
-        width: 36px;
-        height: 36px;
+        padding: 10px 15px;
         font-size: 16px;
+        background: transparent;
+        box-shadow: none;
+        color: #333;
+        z-index: 2;
     }
-    .cmr-search-overlay-content form.cmr-navbar-search-form .cat-icon {
-        padding-left: 15px;
+    .cmr-custom-popup-form input:focus {
+        box-shadow: none;
+        outline: none;
+    }
+
+    .cmr-search-overlay-close {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: #666;
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+        padding: 0 15px;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .cmr-search-overlay-close:hover {
+        color: #000;
     }
     </style>
     
@@ -130,10 +178,35 @@ function cmr_nav_search_shortcode() {
     <div id="cmr-search-overlay" class="cmr-search-overlay-wrapper">
         <div class="cmr-search-top-bar">
             <div class="cmr-search-overlay-content">
-                <?php get_search_form(); ?>
-                <button class="cmr-search-overlay-close" onclick="document.getElementById('cmr-search-overlay').classList.remove('active');">
-                    <i class="ri-close-line"></i>
-                </button>
+                
+                <?php 
+                // Get the site logo for the left side
+                $custom_logo_id = get_theme_mod( 'custom_logo' );
+                $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
+                if ( has_custom_logo() ) {
+                    echo '<div class="cmr-search-logo"><img src="' . esc_url( $logo[0] ) . '" alt="' . get_bloginfo( 'name' ) . '"></div>';
+                } else {
+                    echo '<div class="cmr-search-logo"><h2>CMR</h2></div>';
+                }
+                ?>
+                
+                <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="cmr-custom-popup-form">
+                    <button type="submit" class="submit-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2.5"/>
+                            <path d="M20 20L17 17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <input name="s" required value="<?php echo esc_html( get_search_query() ); ?>" type="search" placeholder="Search...">
+                    
+                    <button type="button" class="cmr-search-overlay-close" onclick="document.getElementById('cmr-search-overlay').classList.remove('active');">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M6 6L18 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </form>
+
             </div>
         </div>
     </div>
@@ -159,7 +232,7 @@ function cmr_nav_search_shortcode() {
         
         // Focus input
         setTimeout(function() {
-            var input = overlay.querySelector('input[name="s"]');
+            var input = overlay.querySelector('.cmr-custom-popup-form input[name="s"]');
             if (input) input.focus();
         }, 100);
     }
@@ -176,7 +249,6 @@ function cmr_nav_search_shortcode() {
         });
     });
     </script>
-    
     <?php
     return ob_get_clean();
 }
