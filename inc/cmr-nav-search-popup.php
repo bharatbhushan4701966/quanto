@@ -130,7 +130,7 @@ function cmr_nav_search_shortcode($atts = array()) {
             inset: 0;
             border-radius: 50px;
             padding: 1.5px; /* border thickness */
-            background: linear-gradient(90deg, #6b21a8, #06b6d4);
+            background: linear-gradient(90deg, #6241ca, #06b6d4);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
@@ -138,7 +138,7 @@ function cmr_nav_search_shortcode($atts = array()) {
         }
 
         .cmr-custom-popup-form .submit-btn {
-            background: #6b21a8; /* Purple matching design */
+            background: #6241ca; /* Purple matching design */
             color: #fff;
             border: none;
             border-radius: 50%;

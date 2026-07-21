@@ -192,7 +192,7 @@
 
 .cmr-checkout-card input.input-text:focus,
 .cmr-checkout-card select:focus {
-    border-color: #6b21a8;
+    border-color: #6241ca;
     color: #111;
     outline: none;
 }
