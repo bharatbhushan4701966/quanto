@@ -45,21 +45,16 @@ function cmr_nav_search_shortcode() {
         top: 0;
         left: 0;
         width: 100vw;
-        height: 100vh;
-        background: rgba(255, 255, 255, 0.95);
-        z-index: 999999;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
+        z-index: 99999999;
+        display: none;
     }
     .cmr-search-overlay-wrapper.active {
-        opacity: 1;
-        visibility: visible;
+        display: block;
     }
 
     .cmr-search-top-bar {
         width: 100%;
-        background: #fff;
+        background: #ffffff;
         padding: 0 20px;
         display: flex;
         justify-content: center;
