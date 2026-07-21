@@ -293,7 +293,7 @@ $query = get_search_query();
         <div class="cmr-search-form-wrapper">
             <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
                 <div class="cat-icon">
-                    <i class="ri-instance-line"></i> Consumer tech
+                    <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/cmrlogo-with-oly-c.svg" alt="CMR" style="height: 24px; width: auto;">
                 </div>
                 <input type="search" name="s" value="<?php echo esc_attr($query); ?>" placeholder="Search...">
                 <button type="submit"><i class="ri-search-line"></i></button>
