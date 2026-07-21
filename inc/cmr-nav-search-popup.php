@@ -44,7 +44,7 @@ function cmr_nav_search_shortcode() {
         width: 100%;
         height: 100vh;
         background: rgba(0, 0, 0, 0.6);
-        z-index: 999999;
+        z-index: 2147483647; /* Max z-index */
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -61,7 +61,7 @@ function cmr_nav_search_shortcode() {
     .cmr-search-top-bar {
         width: 100%;
         background: #fff;
-        padding: 20px;
+        padding: 10px 20px;
         display: flex;
         justify-content: center;
         align-items: flex-start;
@@ -73,20 +73,20 @@ function cmr_nav_search_shortcode() {
         max-width: 900px;
         display: flex;
         align-items: center;
-        gap: 15px;
+        gap: 10px;
     }
     
     .cmr-search-overlay-close {
         background: #fff;
         border: 1px solid #e2e8f0;
-        width: 48px;
-        height: 48px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        font-size: 20px;
+        font-size: 18px;
         color: #333;
         transition: all 0.3s ease;
         flex-shrink: 0;
@@ -101,12 +101,24 @@ function cmr_nav_search_shortcode() {
         margin: 0;
         max-width: none;
         flex-grow: 1;
+        padding: 4px;
+    }
+    .cmr-search-overlay-content form.cmr-navbar-search-form input {
+        padding: 6px 15px;
+    }
+    .cmr-search-overlay-content form.cmr-navbar-search-form .submit-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+    .cmr-search-overlay-content form.cmr-navbar-search-form .cat-icon {
+        padding-left: 15px;
     }
     </style>
     
     <div class="cmr-nav-search-container">
         <!-- The trigger icon -->
-        <button type="button" class="cmr-nav-search-trigger" onclick="document.getElementById('cmr-search-overlay').classList.add('active');">
+        <button type="button" class="cmr-nav-search-trigger" onclick="cmrOpenNavSearch()">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
                 <path d="M20 20L17 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -125,6 +137,23 @@ function cmr_nav_search_shortcode() {
             </div>
         </div>
     </div>
+
+    <script>
+    function cmrOpenNavSearch() {
+        var overlay = document.getElementById('cmr-search-overlay');
+        // Move overlay to body to prevent stacking context z-index issues (like cart icon overlapping)
+        if (overlay.parentNode !== document.body) {
+            document.body.appendChild(overlay);
+        }
+        overlay.classList.add('active');
+        
+        // Focus input
+        setTimeout(function() {
+            var input = overlay.querySelector('input[name="s"]');
+            if (input) input.focus();
+        }, 100);
+    }
+    </script>
     
     <?php
     return ob_get_clean();
