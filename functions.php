@@ -1782,3 +1782,6 @@ function cmr_force_cart_redirect_after_registration() {
 
 // Include Nav Search Popup
 require_once QUANTO_DIR_PATH_INC . 'cmr-nav-search-popup.php';
+
+// Include Nav Cart Icon
+require_once QUANTO_DIR_PATH_INC . 'cmr-nav-cart-icon.php';
