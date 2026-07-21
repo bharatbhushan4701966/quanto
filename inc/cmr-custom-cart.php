@@ -350,7 +350,12 @@ if ( ! function_exists( 'cmr_custom_cart_shortcode' ) ) {
         </style>
 
         <div class="cmr-cart-wrapper" id="cmr-custom-cart-app">
-            <?php echo cmr_get_cart_html(); ?>
+            <?php 
+            if ( function_exists( 'wc_print_notices' ) ) {
+                wc_print_notices(); 
+            }
+            echo cmr_get_cart_html(); 
+            ?>
         </div>
 
         <script>
