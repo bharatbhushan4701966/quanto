@@ -396,10 +396,12 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
                 const filterPills = document.getElementById('reports-<?php echo $uid; ?>').querySelectorAll('.cmr-filter-pill');
 
                 function loadProducts( reset = false, pageNum = null ) {
+                    if ( pageNum ) {
+                        currentPage = pageNum;
+                    }
+
                     if ( reset ) {
-                        if (pageNum) {
-                            currentPage = pageNum;
-                        } else {
+                        if (!pageNum) {
                             currentPage = 1;
                             loadMoreCount = 0;
                         }
