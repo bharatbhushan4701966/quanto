@@ -9227,3 +9227,22 @@ h1.custom-product-title {
     height: 0 !important;
     margin: 0 !important;
 }
+
+/* Make whole blog box clickable */
+.quanto-blog-box {
+    position: relative;
+}
+.quanto-blog-box h5 a::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.quanto-blog-box .blog-meta a,
+.quanto-blog-box .custom-related-details-btn {
+    position: relative;
+    z-index: 2;
+}
