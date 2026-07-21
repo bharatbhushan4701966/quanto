@@ -38,8 +38,8 @@ function cmr_nav_cart_shortcode() {
         position: absolute;
         bottom: -2px;
         right: -6px;
-        background: #fbbf24; /* yellow matching screenshot */
-        color: #000;
+        background: #4820B0; /* purple */
+        color: #fff; /* white */
         font-size: 11px;
         font-family: Arial, sans-serif;
         font-weight: 800;
