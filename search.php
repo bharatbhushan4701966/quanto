@@ -237,10 +237,10 @@ $query = get_search_query();
 <?php 
 // Output requested Elementor templates at the bottom of the search page
 $search_bottom_templates = array(
+    'testimonials',
+    'we-worked-with-largest-global-brands',
     'your-challenge-our-research-your-advantage',
     'fotter-card',
-    'testimonials',
-    'we-worked-with-largest-global-brands'
 );
 
 foreach ($search_bottom_templates as $slug) {
