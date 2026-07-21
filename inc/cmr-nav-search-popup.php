@@ -17,9 +17,18 @@ function cmr_nav_search_shortcode() {
         align-items: center;
         justify-content: center;
         padding: 10px;
-        color: #333;
+        color: #fff;
         transition: color 0.3s ease;
     }
+    
+    /* Change to black when header is sticky */
+    .elementor-sticky--effects .cmr-nav-search-trigger,
+    .is-sticky .cmr-nav-search-trigger,
+    header.sticky .cmr-nav-search-trigger,
+    .intel-nav-fixed-js .cmr-nav-search-trigger {
+        color: #333;
+    }
+
     .cmr-nav-search-trigger:hover {
         color: #7c3aed;
     }
