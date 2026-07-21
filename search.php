@@ -223,6 +223,7 @@ $query = get_search_query();
     justify-content: center;
     align-items: center;
     gap: 8px;
+    width: 100%;
 }
 .cmr-pagination .page-numbers {
     display: inline-flex;
@@ -320,12 +321,12 @@ $query = get_search_query();
                 </div>
 
                 <?php if ($total_search_posts > 10): ?>
-                    <div class="text-center mt-5 mb-5" id="cmr-search-load-more-wrap">
+                    <div class="text-center mt-5 mb-5" id="cmr-search-load-more-wrap" style="width: 100%;">
                         <button id="cmr-search-load-more" class="cmr-search-load-more-btn">Load More</button>
                     </div>
                 <?php endif; ?>
 
-                <div class="cmr-pagination text-center" id="cmr-search-pagination-wrap" style="display: <?php echo ($total_search_posts > 10) ? 'none' : 'block'; ?>;">
+                <div class="cmr-pagination mt-4" id="cmr-search-pagination-wrap" style="display: <?php echo ($total_search_posts > 10) ? 'none' : 'flex'; ?>; justify-content: center; width: 100%;">
                     <?php 
                     the_posts_pagination( array(
                         'prev_text' => '<i class="ri-arrow-left-s-line"></i>',
@@ -336,10 +337,10 @@ $query = get_search_query();
 
                 <script>
                 document.addEventListener('DOMContentLoaded', function() {
-                    var loadMoreBtn = document.getElementById('cmr-search-load-more');
-                    var paginationWrap = document.getElementById('cmr-search-pagination-wrap');
-                    if (loadMoreBtn) {
-                        loadMoreBtn.addEventListener('click', function() {
+                    document.addEventListener('click', function(e) {
+                        // Load More functionality
+                        if (e.target && e.target.id === 'cmr-search-load-more') {
+                            e.preventDefault();
                             var hiddenItems = document.querySelectorAll('.cmr-search-item.cmr-search-item-hidden');
                             var itemsToShow = 10;
                             for (var i = 0; i < hiddenItems.length; i++) {
@@ -350,13 +351,50 @@ $query = get_search_query();
                             
                             var remainingHidden = document.querySelectorAll('.cmr-search-item.cmr-search-item-hidden');
                             if (remainingHidden.length === 0) {
-                                document.getElementById('cmr-search-load-more-wrap').style.display = 'none';
+                                var loadWrap = document.getElementById('cmr-search-load-more-wrap');
+                                if (loadWrap) loadWrap.style.display = 'none';
+                                
+                                var paginationWrap = document.getElementById('cmr-search-pagination-wrap');
                                 if (paginationWrap) {
-                                    paginationWrap.style.display = 'block';
+                                    paginationWrap.style.display = 'flex';
                                 }
                             }
-                        });
-                    }
+                        }
+
+                        // AJAX Pagination functionality
+                        var pageLink = e.target.closest('.cmr-pagination a.page-numbers');
+                        if (pageLink) {
+                            e.preventDefault();
+                            var url = pageLink.href;
+                            
+                            var listContainer = document.querySelector('.cmr-search-results-list');
+                            if (listContainer) {
+                                listContainer.style.opacity = '0.5';
+                                
+                                fetch(url)
+                                    .then(function(res) { return res.text(); })
+                                    .then(function(html) {
+                                        var parser = new DOMParser();
+                                        var doc = parser.parseFromString(html, 'text/html');
+                                        
+                                        var newList = doc.querySelector('.cmr-search-results-list');
+                                        if (newList) {
+                                            listContainer.innerHTML = newList.innerHTML;
+                                            listContainer.style.opacity = '1';
+                                            
+                                            // Scroll to top of results smoothly
+                                            var scrollTarget = document.querySelector('.cmr-search-form-wrapper');
+                                            if (scrollTarget) {
+                                                window.scrollTo({
+                                                    top: scrollTarget.getBoundingClientRect().top + window.scrollY - 100,
+                                                    behavior: 'smooth'
+                                                });
+                                            }
+                                        }
+                                    });
+                            }
+                        }
+                    });
                 });
                 </script>
             </div>
