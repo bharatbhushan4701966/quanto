@@ -1800,3 +1800,25 @@ function cmr_modify_search_query($query) {
     }
 }
 add_action( 'pre_get_posts', 'cmr_modify_search_query' );
+
+// Shortcode for Account Icon
+function cmr_account_icon_shortcode() {
+    $url = home_url('/my-account/');
+    $icon_html = '';
+    
+    if ( is_user_logged_in() ) {
+        $current_user = wp_get_current_user();
+        $name = $current_user->display_name;
+        if ( empty( trim( $name ) ) ) {
+            $name = $current_user->user_login;
+        }
+        $initial = mb_substr( trim( $name ), 0, 1 );
+        
+        $icon_html = '<div class="cmr-account-initial" style="width:35px; height:35px; border-radius:50%; background:#4d148c; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:18px; line-height:1;">' . esc_html( strtoupper( $initial ) ) . '</div>';
+    } else {
+        $icon_html = '<i class="ri-user-line" style="font-size:24px; color:#111;"></i>';
+    }
+    
+    return '<a href="' . esc_url( $url ) . '" class="cmr-account-link" style="display:flex; align-items:center; justify-content:center; text-decoration:none;">' . $icon_html . '</a>';
+}
+add_shortcode( 'cmr_account_icon', 'cmr_account_icon_shortcode' );
