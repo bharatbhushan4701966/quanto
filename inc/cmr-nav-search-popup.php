@@ -179,16 +179,9 @@ function cmr_nav_search_shortcode() {
         <div class="cmr-search-top-bar">
             <div class="cmr-search-overlay-content">
                 
-                <?php 
-                // Get the site logo for the left side
-                $custom_logo_id = get_theme_mod( 'custom_logo' );
-                $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
-                if ( has_custom_logo() ) {
-                    echo '<div class="cmr-search-logo"><img src="' . esc_url( $logo[0] ) . '" alt="' . get_bloginfo( 'name' ) . '"></div>';
-                } else {
-                    echo '<div class="cmr-search-logo"><h2>CMR</h2></div>';
-                }
-                ?>
+                <div class="cmr-search-logo">
+                    <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/cmrheaderlogo.svg" alt="CMR">
+                </div>
                 
                 <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="cmr-custom-popup-form">
                     <button type="submit" class="submit-btn">
