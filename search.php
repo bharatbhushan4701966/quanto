@@ -160,7 +160,7 @@ $query = get_search_query();
 .cmr-search-results-list {
     text-align: left;
     margin-top: 40px;
-    max-width: 900px;
+    max-width: 1280px;
     margin-left: auto;
     margin-right: auto;
 }
