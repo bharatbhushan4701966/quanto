@@ -25,10 +25,12 @@ $query = get_search_query();
     min-height: 70vh;
 }
 .cmr-search-title {
-    font-size: 48px;
+    font-size: 60px;
     font-weight: 700;
-    margin-bottom: 40px;
-    color: #1a1a1a;
+    color: #111;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    letter-spacing: 2px;
     font-family: inherit;
 }
 .cmr-search-form-wrapper {
