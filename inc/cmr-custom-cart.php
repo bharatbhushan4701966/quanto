@@ -512,7 +512,7 @@ function cmr_get_cart_html() {
                 <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">Login to Continue Checkout</h3>
                 <p style="color: #6b7280; font-size: 14px; margin-bottom: 20px;">Please sign in to save your cart and proceed to secure payment.</p>
                 
-                <form class="woocommerce-form woocommerce-form-login login" method="post" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" style="border: none !important; padding: 0 !important; margin: 0 !important;">
+                <form class="woocommerce-form woocommerce-form-login login" method="post" action="<?php echo esc_url( wc_get_cart_url() ); ?>" style="border: none !important; padding: 0 !important; margin: 0 !important;">
                     <?php do_action( 'woocommerce_login_form_start' ); ?>
 
                     <label for="username"><?php esc_html_e( 'EMAIL ADDRESS', 'woocommerce' ); ?></label>
