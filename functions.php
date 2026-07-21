@@ -1792,3 +1792,11 @@ function cmr_inject_cart_into_menu( $items, $args ) {
     }
     return $items;
 }
+
+// Modify Search Query to load 30 items at once for the "Load More" functionality
+function cmr_modify_search_query($query) {
+    if ( ! is_admin() && $query->is_main_query() && $query->is_search() ) {
+        $query->set( 'posts_per_page', 30 );
+    }
+}
+add_action( 'pre_get_posts', 'cmr_modify_search_query' );
