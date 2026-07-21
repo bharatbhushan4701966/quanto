@@ -228,9 +228,31 @@ if ( ! function_exists( 'cmr_research_reports_hero_shortcode' ) ) {
                     <a href="<?php echo esc_url( home_url('/product-category/digital-supply-chain/') ); ?>">Digital Supply Chain</a>
                     <a href="<?php echo esc_url( home_url('/product-category/it-telecom/') ); ?>">IT & Telecom</a>
                 </div>
-
             </div>
         </section>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const heroForm = document.getElementById('cmr-vp-hero-search-form');
+                if (heroForm) {
+                    heroForm.addEventListener('submit', function(e) {
+                        const latestSearchInput = document.querySelector('input[id^="cmr-lr-search-"]');
+                        const latestSearchBtn = document.querySelector('button[id^="cmr-lr-search-btn-"]');
+                        const latestSection = document.querySelector('.cmr-latest-section');
+                        
+                        if (latestSearchInput && latestSearchBtn && latestSection) {
+                            e.preventDefault();
+                            latestSearchInput.value = heroForm.querySelector('input[name="s"]').value;
+                            latestSearchBtn.click();
+                            
+                            // Scroll down so they can see the results
+                            const yOffset = -80; // offset for sticky header
+                            const y = latestSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                            window.scrollTo({top: y, behavior: 'smooth'});
+                        }
+                    });
+                }
+            });
+        </script>
         <?php
         return ob_get_clean();
     }
