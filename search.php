@@ -211,6 +211,30 @@ $query = get_search_query();
     background: transparent;
     transform: scale(1.1);
 }
+
+/* Load More Button for Search */
+.cmr-search-load-more-btn {
+    background: transparent;
+    border: 1px solid #ccc;
+    color: #111;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 288px;
+    height: 54px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+.cmr-search-load-more-btn:hover {
+    border-color: #7c3aed;
+    color: #7c3aed;
+}
+.cmr-search-item-hidden {
+    display: none !important;
+}
 </style>
 
 <div class="cmr-search-page">
@@ -233,15 +257,29 @@ $query = get_search_query();
         <?php if ( have_posts() ) : ?>
             <div class="cmr-search-results-list">
                 <div class="row">
-                    <?php while ( have_posts() ) : the_post(); ?>
-                        <div class="col-12">
+                    <?php 
+                    global $wp_query;
+                    $total_search_posts = $wp_query->post_count;
+                    $search_i = 0;
+                    while ( have_posts() ) : the_post(); 
+                        $search_i++;
+                        $hidden_class = ($search_i > 10) ? ' cmr-search-item-hidden' : '';
+                    ?>
+                        <div class="col-12 cmr-search-item<?php echo $hidden_class; ?>">
                             <div class="quanto-blog-box fade-anim" data-delay="0.30" data-direction="right">
                                 <?php get_template_part('templates/content', get_post_format()); ?>
                             </div>
                         </div>
                     <?php endwhile; ?>
                 </div>
-                <div class="cmr-pagination mt-5 text-center">
+
+                <?php if ($total_search_posts > 10): ?>
+                    <div class="text-center mt-5 mb-5" id="cmr-search-load-more-wrap">
+                        <button id="cmr-search-load-more" class="cmr-search-load-more-btn">Load More</button>
+                    </div>
+                <?php endif; ?>
+
+                <div class="cmr-pagination text-center" id="cmr-search-pagination-wrap" style="display: <?php echo ($total_search_posts > 10) ? 'none' : 'block'; ?>;">
                     <?php 
                     the_posts_pagination( array(
                         'prev_text' => '<i class="ri-arrow-left-s-line"></i>',
@@ -249,6 +287,32 @@ $query = get_search_query();
                     ) ); 
                     ?>
                 </div>
+
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var loadMoreBtn = document.getElementById('cmr-search-load-more');
+                    var paginationWrap = document.getElementById('cmr-search-pagination-wrap');
+                    if (loadMoreBtn) {
+                        loadMoreBtn.addEventListener('click', function() {
+                            var hiddenItems = document.querySelectorAll('.cmr-search-item.cmr-search-item-hidden');
+                            var itemsToShow = 10;
+                            for (var i = 0; i < hiddenItems.length; i++) {
+                                if (i < itemsToShow) {
+                                    hiddenItems[i].classList.remove('cmr-search-item-hidden');
+                                }
+                            }
+                            
+                            var remainingHidden = document.querySelectorAll('.cmr-search-item.cmr-search-item-hidden');
+                            if (remainingHidden.length === 0) {
+                                document.getElementById('cmr-search-load-more-wrap').style.display = 'none';
+                                if (paginationWrap) {
+                                    paginationWrap.style.display = 'block';
+                                }
+                            }
+                        });
+                    }
+                });
+                </script>
             </div>
         <?php else : ?>
             <div class="cmr-search-empty-state">
