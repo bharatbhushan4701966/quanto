@@ -481,7 +481,7 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
                                 }
                             }
                             
-                            loadProducts(true, parseInt(page));
+                            loadProducts(false, parseInt(page));
                         });
                     });
                 }
