@@ -1785,3 +1785,16 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-nav-search-popup.php';
 
 // Include Nav Cart Icon
 require_once QUANTO_DIR_PATH_INC . 'cmr-nav-cart-icon.php';
+
+/**
+ * Inject Custom Cart Icon into Main Menu
+ */
+add_filter( 'wp_nav_menu_items', 'cmr_inject_cart_into_menu', 10, 2 );
+function cmr_inject_cart_into_menu( $items, $args ) {
+    // Only add to the primary menu
+    if ( $args->theme_location == 'primary-menu' || $args->theme_location == 'primary' || $args->theme_location == 'main-menu' ) {
+        $cart_html = do_shortcode( '[cmr_nav_cart]' );
+        $items .= '<li class="menu-item cmr-menu-cart-icon" style="display:flex; align-items:center; margin-left:15px;">' . $cart_html . '</li>';
+    }
+    return $items;
+}
