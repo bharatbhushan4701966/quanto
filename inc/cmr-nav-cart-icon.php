@@ -26,7 +26,7 @@ function cmr_nav_cart_shortcode() {
     }
 
     .cmr-nav-cart-container:hover {
-        color: #facc15 !important; /* Yellow on hover */
+        color: #4820B0 !important; /* Purple on hover */
     }
     
     /* Force black when header is sticky (overrides home page white) */

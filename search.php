@@ -155,10 +155,60 @@ $query = get_search_query();
     color: #7c3aed;
 }
 
-/* Results Grid Styles */
-.cmr-search-results-grid {
+/* Results List Styles */
+.cmr-search-results-list {
     text-align: left;
-    margin-top: 20px;
+    margin-top: 40px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.cmr-search-results-list .quanto-blog-box {
+    margin-bottom: 40px;
+}
+
+/* Pagination Styles to Match Design */
+.cmr-pagination {
+    margin-top: 60px;
+}
+.cmr-pagination .nav-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+.cmr-pagination .page-numbers {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+.cmr-pagination .page-numbers.current {
+    background: #4820B0; /* Purple background for active */
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(72, 32, 176, 0.2);
+}
+.cmr-pagination .page-numbers:not(.current):hover {
+    color: #4820B0;
+    background: #f8fafc;
+}
+.cmr-pagination .page-numbers.prev,
+.cmr-pagination .page-numbers.next {
+    color: #7c3aed; /* Purple arrows */
+    font-size: 24px;
+    background: transparent;
+}
+.cmr-pagination .page-numbers.prev:hover,
+.cmr-pagination .page-numbers.next:hover {
+    background: transparent;
+    transform: scale(1.1);
 }
 </style>
 
@@ -180,10 +230,10 @@ $query = get_search_query();
         </div>
 
         <?php if ( have_posts() ) : ?>
-            <div class="cmr-search-results-grid">
-                <div class="row gx-4 gy-5">
+            <div class="cmr-search-results-list">
+                <div class="row">
                     <?php while ( have_posts() ) : the_post(); ?>
-                        <div class="col-md-6 col-lg-4">
+                        <div class="col-12">
                             <div class="quanto-blog-box fade-anim" data-delay="0.30" data-direction="right">
                                 <?php get_template_part('templates/content', get_post_format()); ?>
                             </div>
