@@ -384,18 +384,24 @@ $query = get_search_query();
                                             for(var i=0; i<anims.length; i++) {
                                                 anims[i].classList.remove('fade-anim');
                                             }
-                                            
-                                            listContainer.innerHTML = newList.innerHTML;
-                                            listContainer.style.opacity = '1';
-                                            
-                                            // Scroll to top of results smoothly using scrollIntoView
-                                            var scrollTarget = document.querySelector('.cmr-search-page');
-                                            if (scrollTarget) {
-                                                scrollTarget.scrollIntoView({
-                                                    behavior: 'smooth',
-                                                    block: 'start'
-                                                });
+                                            // Append new items to the existing row
+                                            var currentRow = listContainer.querySelector('.row');
+                                            var newItems = newList.querySelectorAll('.cmr-search-item');
+                                            for(var i=0; i<newItems.length; i++) {
+                                                newItems[i].classList.remove('cmr-search-item-hidden');
+                                                currentRow.appendChild(newItems[i]);
                                             }
+                                            
+                                            // Replace the pagination wrapper with the new one
+                                            var currentPagination = listContainer.querySelector('#cmr-search-pagination-wrap');
+                                            var newPagination = newList.querySelector('#cmr-search-pagination-wrap');
+                                            if (currentPagination && newPagination) {
+                                                currentPagination.innerHTML = newPagination.innerHTML;
+                                            } else if (currentPagination && !newPagination) {
+                                                currentPagination.style.display = 'none';
+                                            }
+                                            
+                                            listContainer.style.opacity = '1';
                                         } else {
                                             // If no results list found in fetch (e.g. empty page 2), just restore opacity
                                             listContainer.style.opacity = '1';
