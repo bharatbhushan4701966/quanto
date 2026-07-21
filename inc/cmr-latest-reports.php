@@ -319,6 +319,31 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
                     grid-template-columns: 1fr;
                 }
             }
+
+            .cmr-typing-indicator {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                padding: 20px;
+            }
+            .cmr-typing-indicator span {
+                width: 12px;
+                height: 12px;
+                background-color: #6b46c1;
+                border-radius: 50%;
+                animation: cmr-typing 1.4s infinite ease-in-out both;
+            }
+            .cmr-typing-indicator span:nth-child(1) {
+                animation-delay: -0.32s;
+            }
+            .cmr-typing-indicator span:nth-child(2) {
+                animation-delay: -0.16s;
+            }
+            @keyframes cmr-typing {
+                0%, 80%, 100% { transform: scale(0); }
+                40% { transform: scale(1); }
+            }
         </style>
         <?php $uid = uniqid(); ?>
 
@@ -344,7 +369,9 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
             </div>
 
             <div class="cmr-loading-spinner" id="cmr-loading-spinner-<?php echo $uid; ?>">
-                <i class="fa-solid fa-circle-notch fa-spin fa-2x" style="color: #6b46c1;"></i>
+                <div class="cmr-typing-indicator">
+                    <span></span><span></span><span></span>
+                </div>
             </div>
 
             <div class="cmr-load-more-wrap">
@@ -435,12 +462,23 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
                         link.addEventListener('click', function(e) {
                             e.preventDefault();
                             const href = this.getAttribute('href');
-                            // Extract paged query param
-                            const urlParams = new URLSearchParams(href.split('?')[1]);
-                            const page = urlParams.get('paged') || 1;
+                            
+                            let page = 1;
+                            const pagedMatch = href.match(/paged=(\d+)/);
+                            const pageMatch = href.match(/\/page\/(\d+)/);
+                            
+                            if ( pagedMatch ) {
+                                page = pagedMatch[1];
+                            } else if ( pageMatch ) {
+                                page = pageMatch[1];
+                            } else {
+                                const textVal = parseInt(this.innerText);
+                                if ( !isNaN(textVal) ) {
+                                    page = textVal;
+                                }
+                            }
+                            
                             loadProducts(true, parseInt(page));
-                            // Scroll back to top of section
-                            document.getElementById('reports-<?php echo $uid; ?>').scrollIntoView({ behavior: 'smooth' });
                         });
                     });
                 }
