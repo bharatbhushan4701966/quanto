@@ -68,17 +68,22 @@ function cmr_nav_search_shortcode($atts = array()) {
             top: 0;
             left: 0;
             width: 100vw;
-            z-index: 99999999;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 2147483647 !important;
             display: none;
         }
         
         /* Fix for WordPress Admin Bar */
         .admin-bar .cmr-search-overlay-wrapper {
             top: 32px;
+            height: calc(100vh - 32px);
         }
         @media screen and (max-width: 782px) {
             .admin-bar .cmr-search-overlay-wrapper {
                 top: 46px;
+                height: calc(100vh - 46px);
             }
         }
 
@@ -89,11 +94,11 @@ function cmr_nav_search_shortcode($atts = array()) {
         .cmr-search-top-bar {
             width: 100%;
             background: #ffffff;
-            padding: 0 20px;
+            padding: 25px 40px;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
 
         .cmr-search-overlay-content {
@@ -253,15 +258,6 @@ function cmr_nav_search_shortcode($atts = array()) {
         function cmrOpenNavSearch() {
             var overlay = document.getElementById('cmr-search-overlay');
             
-            // Dynamically get the height of the current header
-            var header = document.querySelector('header') || document.querySelector('.elementor-location-header') || document.getElementById('intel-nav-bar');
-            var headerHeight = header ? header.offsetHeight : 80;
-            
-            var topBar = overlay.querySelector('.cmr-search-top-bar');
-            if (topBar) {
-                topBar.style.height = headerHeight + 'px';
-            }
-
             // Move overlay to body to prevent stacking context z-index issues
             if (overlay.parentNode !== document.body) {
                 document.body.appendChild(overlay);
