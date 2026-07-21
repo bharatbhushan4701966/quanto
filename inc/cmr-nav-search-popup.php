@@ -52,7 +52,7 @@ function cmr_nav_search_shortcode($atts = array()) {
         }
         
         .cmr-nav-search-trigger:hover {
-            color: #7c3aed;
+            color: #6241ca;
         }
         
         /* Change to black when header is sticky */

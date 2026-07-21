@@ -16,7 +16,7 @@
 .cmr-navbar-search-form {
     display: flex;
     align-items: center;
-    border: 1px solid #7c3aed; /* Gradient-like border in design, using solid purple for now */
+    border: 1px solid #6241ca; /* Gradient-like border in design, using solid purple for now */
     border-radius: 50px;
     padding: 6px;
     background: #fff;
@@ -38,7 +38,7 @@
 .cmr-navbar-search-form .cat-icon i {
     width: 20px;
     height: 20px;
-    color: #7c3aed;
+    color: #6241ca;
 }
 .cmr-navbar-search-form input {
     border: none;
@@ -66,7 +66,7 @@
 }
 .cmr-navbar-search-form .results-badge {
     background: #ede9fe;
-    color: #7c3aed;
+    color: #6241ca;
     font-size: 12px;
     font-weight: 600;
     padding: 6px 12px;
@@ -75,7 +75,7 @@
     white-space: nowrap;
 }
 .cmr-navbar-search-form .submit-btn {
-    background: #7c3aed;
+    background: #6241ca;
     color: #fff;
     border: none;
     border-radius: 50%;
@@ -89,7 +89,7 @@
     transition: all 0.3s ease;
 }
 .cmr-navbar-search-form .submit-btn:hover {
-    background: #6d28d9;
+    background: #6241ca;
     transform: scale(1.05);
 }
 </style>
@@ -98,9 +98,9 @@
     <div class="cat-icon">
         <!-- Logo SVG -->
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M2 17L12 22L22 17" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M2 12L12 17L22 12" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#6241ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 17L12 22L22 17" stroke="#6241ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 12L12 17L22 12" stroke="#6241ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <span>Vehicle</span>
     </div>
