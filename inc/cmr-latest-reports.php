@@ -403,7 +403,9 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
                             currentPage = 1;
                             loadMoreCount = 0;
                         }
-                        grid.innerHTML = '';
+                        grid.style.opacity = '0.5';
+                    } else {
+                        grid.style.opacity = '1';
                     }
 
                     spinner.style.display = 'block';
@@ -424,6 +426,7 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
                     .then(response => response.json())
                     .then(data => {
                         spinner.style.display = 'none';
+                        grid.style.opacity = '1';
                         if ( data.success ) {
                             if ( reset ) {
                                 grid.innerHTML = data.data.html;
