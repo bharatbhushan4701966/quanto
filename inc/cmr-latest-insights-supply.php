@@ -26,6 +26,8 @@ if ( ! function_exists( 'cmr_latest_insights_supply_shortcode' ) ) {
             'link_cmr_news'  => '#cmr-in-news'
         ), $atts );
 
+        $category_slug = sanitize_title( $atts['category'] );
+
         $query_args = array(
             'post_type'      => array( 'post', 'cmr_news' ),
             'posts_per_page' => $atts['posts_per_page'],
@@ -37,12 +39,12 @@ if ( ! function_exists( 'cmr_latest_insights_supply_shortcode' ) ) {
                 array(
                     'taxonomy' => 'category',
                     'field'    => 'slug',
-                    'terms'    => $atts['category'],
+                    'terms'    => $category_slug,
                 ),
                 array(
                     'taxonomy' => 'cmr_news_category',
                     'field'    => 'slug',
-                    'terms'    => $atts['category'],
+                    'terms'    => $category_slug,
                 ),
             ),
         );

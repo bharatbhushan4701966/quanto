@@ -17,6 +17,7 @@ if ( ! function_exists( 'cmr_latest_insights_tech_shortcode' ) ) {
             'nav_title'      => 'Automotive',
             'section_title'  => 'Latest Insights',
             'section_desc'   => 'Explore expert analysis, research reports, and real-time market signals shaping industries and business strategy.',
+            'category'       => 'infotech,consumer-tech',
             'link_overview'  => '#top',
             'link_insights'  => '#overview',
             'link_reports'   => '#reports',
@@ -31,7 +32,7 @@ if ( ! function_exists( 'cmr_latest_insights_tech_shortcode' ) ) {
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
-            'category_name'  => 'infotech,consumer-tech', // Fetching from InfoTech and Consumer Tech categories
+            'category_name'  => implode(',', array_map('sanitize_title', explode(',', $atts['category']))),
         );
 
         $insights_query = new WP_Query( $query_args );
