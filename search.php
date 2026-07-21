@@ -234,4 +234,25 @@ $query = get_search_query();
     </div>
 </div>
 
+<?php 
+// Output requested Elementor templates at the bottom of the search page
+$search_bottom_templates = array(
+    'your-challenge-our-research-your-advantage',
+    'fotter-card',
+    'testimonials',
+    'we-worked-with-largest-global-brands'
+);
+
+foreach ($search_bottom_templates as $slug) {
+    $template_post = get_page_by_path($slug, OBJECT, 'quanto_tab_build');
+    if ($template_post) {
+        if (class_exists('\Elementor\Plugin')) {
+            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display($template_post->ID);
+        } else {
+            echo apply_filters('the_content', $template_post->post_content);
+        }
+    }
+}
+?>
+
 <?php get_footer(); ?>
