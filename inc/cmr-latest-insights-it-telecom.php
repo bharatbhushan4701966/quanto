@@ -32,7 +32,7 @@ if ( ! function_exists( 'cmr_latest_insights_it_telecom_shortcode' ) ) {
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
-            'category_name'  => $atts['category'], // Fetching from specified category
+            'category_name'  => sanitize_title( $atts['category'] ), // Convert name to slug
         );
 
         $insights_query = new WP_Query( $query_args );
