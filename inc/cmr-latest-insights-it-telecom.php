@@ -17,6 +17,7 @@ if ( ! function_exists( 'cmr_latest_insights_it_telecom_shortcode' ) ) {
             'nav_title'      => 'IT & Telecom',
             'section_title'  => 'Latest Insights',
             'section_desc'   => 'Explore expert analysis, research reports, and real-time market signals shaping industries and business strategy.',
+            'category'       => 'it-telecom',
             'link_overview'  => '#top',
             'link_insights'  => '#overview',
             'link_reports'   => '#reports',
@@ -31,7 +32,7 @@ if ( ! function_exists( 'cmr_latest_insights_it_telecom_shortcode' ) ) {
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
-            'category_name'  => 'it-telecom', // Fetching from IT & Telecom category
+            'category_name'  => $atts['category'], // Fetching from specified category
         );
 
         $insights_query = new WP_Query( $query_args );
@@ -146,7 +147,7 @@ if ( ! function_exists( 'cmr_latest_insights_it_telecom_shortcode' ) ) {
                     ?>
                 </div>
             <?php else : ?>
-                <p>No insights found for IT & Telecom.</p>
+                <p>No insights found for <?php echo esc_html( $atts['nav_title'] ); ?>.</p>
             <?php endif; wp_reset_postdata(); ?>
         </div>
         
