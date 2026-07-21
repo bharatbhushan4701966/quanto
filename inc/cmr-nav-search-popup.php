@@ -70,7 +70,7 @@ function cmr_nav_search_shortcode() {
 
     .cmr-search-overlay-content {
         width: 100%;
-        max-width: 900px;
+        max-width: 1280px;
         display: flex;
         align-items: center;
         gap: 10px;
