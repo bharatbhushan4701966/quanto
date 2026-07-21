@@ -379,17 +379,26 @@ $query = get_search_query();
                                         
                                         var newList = doc.querySelector('.cmr-search-results-list');
                                         if (newList) {
+                                            // Remove animation classes so they show up instantly without scroll trigger
+                                            var anims = newList.querySelectorAll('.fade-anim');
+                                            for(var i=0; i<anims.length; i++) {
+                                                anims[i].classList.remove('fade-anim');
+                                            }
+                                            
                                             listContainer.innerHTML = newList.innerHTML;
                                             listContainer.style.opacity = '1';
                                             
-                                            // Scroll to top of results smoothly
-                                            var scrollTarget = document.querySelector('.cmr-search-form-wrapper');
+                                            // Scroll to top of results smoothly using scrollIntoView
+                                            var scrollTarget = document.querySelector('.cmr-search-page');
                                             if (scrollTarget) {
-                                                window.scrollTo({
-                                                    top: scrollTarget.getBoundingClientRect().top + window.scrollY - 100,
-                                                    behavior: 'smooth'
+                                                scrollTarget.scrollIntoView({
+                                                    behavior: 'smooth',
+                                                    block: 'start'
                                                 });
                                             }
+                                        } else {
+                                            // If no results list found in fetch (e.g. empty page 2), just restore opacity
+                                            listContainer.style.opacity = '1';
                                         }
                                     });
                             }
