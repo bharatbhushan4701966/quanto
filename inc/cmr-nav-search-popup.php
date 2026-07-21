@@ -109,16 +109,6 @@ function cmr_nav_search_shortcode($atts = array()) {
             gap: 30px;
             justify-content: space-between;
         }
-        
-        .cmr-search-logo {
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-        }
-        .cmr-search-logo img {
-            height: 35px; /* Adjust based on their actual logo proportions */
-            width: auto;
-        }
 
         /* Form Styles matching the screenshot */
         .cmr-custom-popup-form {
@@ -228,11 +218,7 @@ function cmr_nav_search_shortcode($atts = array()) {
         <div id="cmr-search-overlay" class="cmr-search-overlay-wrapper">
             <div class="cmr-search-top-bar">
                 <div class="cmr-search-overlay-content">
-                    
-                    <div class="cmr-search-logo">
-                        <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/cmrheaderlogo.svg" alt="CMR">
-                    </div>
-                    
+
                     <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="cmr-custom-popup-form">
                         <button type="submit" class="submit-btn">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
