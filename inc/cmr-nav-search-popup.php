@@ -153,6 +153,18 @@ function cmr_nav_search_shortcode() {
             if (input) input.focus();
         }, 100);
     }
+
+    // Change icon color on scroll (fallback if sticky classes are different)
+    window.addEventListener('scroll', function() {
+        var triggers = document.querySelectorAll('.cmr-nav-search-trigger');
+        triggers.forEach(function(trigger) {
+            if (window.scrollY > 50) {
+                trigger.style.setProperty('color', '#333', 'important');
+            } else {
+                trigger.style.setProperty('color', '#fff', 'important');
+            }
+        });
+    });
     </script>
     
     <?php
