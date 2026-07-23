@@ -83,9 +83,34 @@ function cmr_nav_cart_shortcode() {
             }
         });
     });
+
+    // Force badge update on WooCommerce cart events
+    jQuery(document).ready(function($) {
+        $(document.body).on('added_to_cart removed_from_cart updated_cart_totals updated_wc_div', function() {
+            $.post(
+                '<?php echo admin_url('admin-ajax.php'); ?>',
+                { action: 'cmr_get_cart_count' },
+                function(response) {
+                    if (response.success) {
+                        $('.cmr-nav-cart-badge-count').text(response.data.count);
+                    }
+                }
+            );
+        });
+    });
     </script>
     <?php
     return ob_get_clean();
+}
+
+// Custom AJAX endpoint to get cart count instantly
+add_action('wp_ajax_cmr_get_cart_count', 'cmr_ajax_get_cart_count');
+add_action('wp_ajax_nopriv_cmr_get_cart_count', 'cmr_ajax_get_cart_count');
+function cmr_ajax_get_cart_count() {
+    if (class_exists('WooCommerce') && WC()->cart) {
+        wp_send_json_success(array('count' => count(WC()->cart->get_cart())));
+    }
+    wp_send_json_error();
 }
 
 // Add fragment for AJAX update so the cart count updates when items are added
@@ -150,6 +175,21 @@ function cmr_nav_cart_black_shortcode() {
             <span class="cmr-nav-cart-badge-count"><?php echo esc_html($cart_count); ?></span>
         </div>
     </a>
+    <script>
+    jQuery(document).ready(function($) {
+        $(document.body).on('added_to_cart removed_from_cart updated_cart_totals updated_wc_div', function() {
+            $.post(
+                '<?php echo admin_url('admin-ajax.php'); ?>',
+                { action: 'cmr_get_cart_count' },
+                function(response) {
+                    if (response.success) {
+                        $('.cmr-nav-cart-badge-count').text(response.data.count);
+                    }
+                }
+            );
+        });
+    });
+    </script>
     <?php
     return ob_get_clean();
 }
