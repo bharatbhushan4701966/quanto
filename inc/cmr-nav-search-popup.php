@@ -283,7 +283,7 @@ function cmr_nav_search_shortcode($atts = array()) {
             left: 0;
             width: 100%;
             background: #fff;
-            border-radius: 20px;
+            border-radius: 0;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             margin-top: 15px;
             padding: 20px 0;
@@ -388,20 +388,17 @@ function cmr_nav_search_shortcode($atts = array()) {
             <div class="cmr-search-top-bar">
                 <div class="cmr-search-overlay-content">
 
-                    <button type="button" class="cmr-search-overlay-close" onclick="document.getElementById('cmr-search-overlay').classList.remove('active');">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M18 6L6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M6 6L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
-
                     <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="cmr-custom-popup-form">
                         <div class="cat-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#6241ca" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M2 17L12 22L22 17" stroke="#6241ca" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M2 12L12 17L22 12" stroke="#6241ca" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+                            <?php
+                            $custom_logo_id = get_theme_mod( 'custom_logo' );
+                            if ( $custom_logo_id ) {
+                                $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
+                                echo '<img src="' . esc_url( $logo[0] ) . '" alt="CMR Logo" style="max-height: 24px;">';
+                            } else {
+                                echo '<img src="https://cmrindia.com/wp-content/uploads/2021/11/CMR-Logo-1.png" alt="CMR Logo" style="max-height: 24px;">';
+                            }
+                            ?>
                         </div>
 
                         <input name="s" required value="<?php echo esc_html( get_search_query() ); ?>" type="search" placeholder="Type here...">
@@ -427,6 +424,13 @@ function cmr_nav_search_shortcode($atts = array()) {
                         
                         <div class="cmr-search-dropdown" id="cmr-popup-search-dropdown"></div>
                     </form>
+
+                    <button type="button" class="cmr-search-overlay-close" onclick="document.getElementById('cmr-search-overlay').classList.remove('active');">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M6 6L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
 
                 </div>
             </div>
