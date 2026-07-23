@@ -153,23 +153,48 @@ function cmr_nav_cart_badge_js() {
     ?>
     <script>
     (function() {
-        // Fix cached badge count on every page load
+        // Read cart count from the cart page title and sync to badge
+        function syncBadgeFromTitle() {
+            var title = document.querySelector('.cmr-cart-box-title');
+            if (title) {
+                var match = title.textContent.match(/\((\d+)\s*items?\)/i);
+                if (match) {
+                    var count = match[1];
+                    var badges = document.querySelectorAll('.cmr-nav-cart-badge-count');
+                    badges.forEach(function(b) { b.textContent = count; });
+                }
+            }
+            // If cart is empty (no title or "empty" message visible)
+            if (document.querySelector('.cart-empty')) {
+                var badges = document.querySelectorAll('.cmr-nav-cart-badge-count');
+                badges.forEach(function(b) { b.textContent = '0'; });
+            }
+        }
+
+        // Run on page load
+        syncBadgeFromTitle();
+        document.addEventListener('DOMContentLoaded', syncBadgeFromTitle);
+
+        // Watch for ANY changes on the page (catches WooCommerce AJAX updates)
+        var observer = new MutationObserver(function() {
+            syncBadgeFromTitle();
+        });
+        function startObserving() {
+            var body = document.querySelector('body');
+            if (body) {
+                observer.observe(body, { childList: true, subtree: true, characterData: true });
+            }
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', startObserving);
+        } else {
+            startObserving();
+        }
+
+        // Also fix badge on initial load (bypasses Elementor cache)
         var liveCount = <?php echo intval($live_count); ?>;
         var badges = document.querySelectorAll('.cmr-nav-cart-badge-count');
         badges.forEach(function(b) { b.textContent = liveCount; });
-
-        // Reload page when Remove button is clicked on cart page
-        if (typeof jQuery !== 'undefined') {
-            jQuery(function($) {
-                // Intercept click on Remove links in the cart
-                $(document).on('click', 'a.remove[data-product_id]', function(e) {
-                    e.preventDefault();
-                    var removeUrl = $(this).attr('href');
-                    // Navigate to the remove URL (full page reload)
-                    window.location.href = removeUrl;
-                });
-            });
-        }
 
         // Scroll color change for home page cart icon
         window.addEventListener('scroll', function() {
