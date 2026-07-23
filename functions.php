@@ -1558,18 +1558,6 @@ function cmr_enqueue_checkout_css() {
     }
 }
 
-// Ensure cart fragment updates via AJAX
-add_filter('woocommerce_add_to_cart_fragments', 'cmr_cart_count_fragments', 10, 1);
-function cmr_cart_count_fragments($fragments) {
-    ob_start();
-    ?>
-    <span class="cmr-cart-count" style="background:#4820B0; color:#fff; border-radius:50%; padding:2px 6px; font-size:11px; font-weight:700; line-height:1; min-width:18px; text-align:center;"><?php echo WC()->cart ? count(WC()->cart->get_cart()) : 0; ?></span>
-    <?php
-    $fragments['span.cmr-cart-count'] = ob_get_clean();
-    return $fragments;
-}
-
-
 
 // Redirect shop page to research reports page
 add_action( 'template_redirect', 'quanto_redirect_shop_to_research_reports' );
