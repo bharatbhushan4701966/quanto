@@ -9436,3 +9436,14 @@ Single Product - Custom Sections (Related, Rating)
     color: #111827;
 }
 
+
+
+#tab-panel-industry-reports {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    background: #fff; /* Ensure it has a background if needed */
+}
