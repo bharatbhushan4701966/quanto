@@ -257,7 +257,7 @@ function cmr_nav_search_shortcode($atts = array()) {
             font-size: 18px;
             cursor: pointer;
             padding: 0 10px;
-            display: flex;
+            display: none;
             align-items: center;
             z-index: 2;
         }
@@ -394,7 +394,7 @@ function cmr_nav_search_shortcode($atts = array()) {
 
                         <input name="s" required value="<?php echo esc_html( get_search_query() ); ?>" type="search" placeholder="Type here...">
                         
-                        <button type="button" class="clear-btn" onclick="this.previousElementSibling.value=''; this.previousElementSibling.focus();">
+                        <button type="button" class="clear-btn" style="<?php echo get_search_query() ? 'display:flex;' : 'display:none;'; ?>" onclick="var el=this.previousElementSibling; el.value=''; this.style.display='none'; el.focus(); el.dispatchEvent(new Event('input'));">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M18 6L6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M6 6L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -447,11 +447,17 @@ function cmr_nav_search_shortcode($atts = array()) {
             var badge = document.getElementById('cmr-popup-results-badge');
             var btnIcon = document.querySelector('#cmr-popup-search-btn .search-icon');
             var btnSpinner = document.querySelector('#cmr-popup-search-btn .spinner-icon');
+            var clearBtn = document.querySelector('.cmr-custom-popup-form .clear-btn');
             var typingTimer;
             
             if (input) {
                 input.addEventListener('input', function() {
                     clearTimeout(typingTimer);
+                    
+                    if (clearBtn) {
+                        clearBtn.style.display = input.value.length > 0 ? 'flex' : 'none';
+                    }
+
                     var val = input.value.trim();
                     if (val.length < 2) {
                         dropdown.classList.remove('active');
