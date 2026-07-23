@@ -1814,7 +1814,7 @@ function cmr_account_icon_shortcode() {
         }
         $initial = mb_substr( trim( $name ), 0, 1 );
         
-        $icon_html = '<div class="cmr-account-initial" style="width:35px; height:35px; border-radius:50%; background:#6241ca; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:18px; line-height:1;">' . esc_html( strtoupper( $initial ) ) . '</div>';
+        $icon_html = '<div class="cmr-account-initial" style="width:35px; height:35px; border-radius:50%; background:#00bfbc; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:18px; line-height:1;">' . esc_html( strtoupper( $initial ) ) . '</div>';
     } else {
         $icon_html = '<i class="ri-user-line" style="font-size:24px; color:#111;"></i>';
     }
