@@ -1198,9 +1198,7 @@ add_shortcode('cmr_similar_reports', function() {
         $post_id = $posts[0]->ID;
         
         // Print CSS link inline
-        if (function_exists('cmr_print_elementor_css')) {
-            cmr_print_elementor_css($post_id);
-        }
+        cmr_print_elementor_css($post_id);
         
         // Render it
         if ( class_exists( '\Elementor\Plugin' ) ) {
