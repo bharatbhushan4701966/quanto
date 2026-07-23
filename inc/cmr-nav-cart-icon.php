@@ -2,7 +2,7 @@
 // Shortcode for Nav Cart Icon
 add_shortcode('cmr_nav_cart', 'cmr_nav_cart_shortcode');
 function cmr_nav_cart_shortcode() {
-    $cart_count = class_exists('WooCommerce') ? count(WC()->cart->get_cart()) : 0;
+    $cart_count = class_exists('WooCommerce') ? WC()->cart->get_cart_contents_count() : 0;
     
     ob_start();
     ?>
@@ -44,8 +44,8 @@ function cmr_nav_cart_shortcode() {
 
     .cmr-nav-cart-badge {
         position: absolute;
-        bottom: -2px;
-        right: -4px;
+        bottom: 2px;
+        right: 0px;
         background: #00BFBC; /* Cyan/teal */
         color: #fff; /* white */
         font-size: 11px;
@@ -91,7 +91,7 @@ function cmr_nav_cart_shortcode() {
 // Add fragment for AJAX update so the cart count updates when items are added
 add_filter('woocommerce_add_to_cart_fragments', 'cmr_nav_cart_fragment_badge');
 function cmr_nav_cart_fragment_badge($fragments) {
-    $cart_count = class_exists('WooCommerce') ? count(WC()->cart->get_cart()) : 0;
+    $cart_count = class_exists('WooCommerce') ? WC()->cart->get_cart_contents_count() : 0;
     $fragments['span.cmr-nav-cart-badge-count'] = '<span class="cmr-nav-cart-badge-count">' . esc_html($cart_count) . '</span>';
     return $fragments;
 }
@@ -99,7 +99,7 @@ function cmr_nav_cart_fragment_badge($fragments) {
 // Shortcode for Nav Cart Icon (Always Black)
 add_shortcode('cmr_nav_cart_black', 'cmr_nav_cart_black_shortcode');
 function cmr_nav_cart_black_shortcode() {
-    $cart_count = class_exists('WooCommerce') ? count(WC()->cart->get_cart()) : 0;
+    $cart_count = class_exists('WooCommerce') ? WC()->cart->get_cart_contents_count() : 0;
     
     ob_start();
     ?>
@@ -124,8 +124,8 @@ function cmr_nav_cart_black_shortcode() {
     }
     .cmr-nav-cart-badge {
         position: absolute;
-        bottom: -2px;
-        right: -4px;
+        bottom: 2px;
+        right: 0px;
         background: #00BFBC; /* Cyan/teal */
         color: #fff; /* white */
         font-size: 11px;
