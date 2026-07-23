@@ -171,6 +171,13 @@ $query = get_search_query();
     background: #fff;
     border-radius: 12px;
     padding: 20px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+.cmr-search-results-list .quanto-blog-box:hover {
+    border-color: rgba(98, 65, 202, 0.3);
+    background: rgba(98, 65, 202, 0.03);
+    box-shadow: 0 4px 25px rgba(98, 65, 202, 0.06);
 }
 .cmr-search-results-list .quanto-blog-box > div {
     display: flex;
