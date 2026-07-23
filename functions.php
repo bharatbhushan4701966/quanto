@@ -1677,8 +1677,16 @@ function cmr_prewarm_elementor_caches() {
 // Trigger pre-warming when Elementor cache is cleared
 add_action( 'elementor/core/files/clear_cache', 'cmr_prewarm_elementor_caches' );
 
-// Trigger pre-warming when a new user registers
+// Trigger pre-warming when a new user registers (WordPress & WooCommerce)
 add_action( 'user_register', 'cmr_prewarm_elementor_caches' );
+add_action( 'woocommerce_created_customer', 'cmr_prewarm_elementor_caches' );
+
+// Trigger pre-warming when a user logs in
+add_action( 'wp_login', 'cmr_prewarm_elementor_caches' );
+
+// Trigger pre-warming when a quanto_tab_build template is saved or published
+add_action( 'save_post_quanto_tab_build', 'cmr_prewarm_elementor_caches' );
+add_action( 'publish_quanto_tab_build', 'cmr_prewarm_elementor_caches' );
 
 // Trigger pre-warming when any WordPress cache is flushed
 add_action( 'wp_cache_flush', 'cmr_prewarm_elementor_caches' );
