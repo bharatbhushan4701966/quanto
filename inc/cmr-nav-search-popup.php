@@ -195,7 +195,7 @@ function cmr_nav_search_shortcode($atts = array()) {
             cursor: pointer;
             font-size: 16px;
             flex-shrink: 0;
-            margin-left: 2px;
+            margin-right: 7px;
             z-index: 2;
         }
         
@@ -237,7 +237,6 @@ function cmr_nav_search_shortcode($atts = array()) {
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
         .cmr-search-overlay-close:hover {
             border-color: #cbd5e1;
