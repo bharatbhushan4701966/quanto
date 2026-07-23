@@ -11,7 +11,7 @@ function cmr_popup_search_ajax_handler() {
     $args = array(
         's' => $search,
         'post_type' => array('post', 'cmr_news'),
-        'posts_per_page' => 20,
+        'posts_per_page' => 5,
         'post_status' => 'publish'
     );
     $q = new WP_Query($args);
@@ -394,7 +394,7 @@ function cmr_nav_search_shortcode($atts = array()) {
                             <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/cmrlogo-with-oly-c.svg" alt="CMR Logo" style="max-height: 24px;">
                         </div>
 
-                        <input name="s" required value="<?php echo esc_html( get_search_query() ); ?>" type="search" placeholder="Type here...">
+                        <input name="s" required value="<?php echo esc_html( get_search_query() ); ?>" type="search" placeholder="Type here..." autocomplete="off">
                         
                         <button type="button" class="clear-btn" style="<?php echo get_search_query() ? 'display:flex;' : 'display:none;'; ?>" onclick="var el=this.previousElementSibling; el.value=''; this.style.display='none'; el.focus(); el.dispatchEvent(new Event('input'));">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
