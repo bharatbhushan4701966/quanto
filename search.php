@@ -179,6 +179,15 @@ $query = get_search_query();
     background: rgba(98, 65, 202, 0.03);
     box-shadow: 0 4px 25px rgba(98, 65, 202, 0.06);
 }
+.cmr-search-results-list .quanto-blog-box:hover .quanto-blog-content h5 a,
+.cmr-search-results-list .quanto-blog-box:hover .quanto-blog-content p,
+.cmr-search-results-list .quanto-blog-box:hover .quanto-blog-content .blog-text,
+.cmr-search-results-list .quanto-blog-box:hover .quanto-blog-content .read-more-btn,
+.cmr-search-results-list .quanto-blog-box:hover .post-meta,
+.cmr-search-results-list .quanto-blog-box:hover .post-meta a,
+.cmr-search-results-list .quanto-blog-box:hover .post-meta span {
+    color: #6241ca !important;
+}
 .cmr-search-results-list .quanto-blog-box > div {
     display: flex;
     flex-direction: row;
