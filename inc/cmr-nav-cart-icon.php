@@ -44,9 +44,9 @@ function cmr_nav_cart_shortcode() {
 
     .cmr-nav-cart-badge {
         position: absolute;
-        top: -2px;
+        bottom: -2px;
         right: -4px;
-        background: #4820B0; /* purple */
+        background: #00BFBC; /* Cyan/teal */
         color: #fff; /* white */
         font-size: 11px;
         font-family: Arial, sans-serif;
@@ -124,9 +124,9 @@ function cmr_nav_cart_black_shortcode() {
     }
     .cmr-nav-cart-badge {
         position: absolute;
-        top: -2px;
+        bottom: -2px;
         right: -4px;
-        background: #4820B0; /* purple */
+        background: #00BFBC; /* Cyan/teal */
         color: #fff; /* white */
         font-size: 11px;
         font-family: Arial, sans-serif;
