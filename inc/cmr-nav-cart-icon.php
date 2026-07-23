@@ -44,8 +44,9 @@ function cmr_nav_cart_shortcode() {
 
     .cmr-nav-cart-badge {
         position: absolute;
-        bottom: 5px;
-        right: 4px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         background: #00BFBC; /* Cyan/teal */
         color: #fff; /* white */
         font-size: 11px;
