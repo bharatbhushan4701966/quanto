@@ -147,61 +147,27 @@ function cmr_nav_cart_black_shortcode() {
 // ============================================================
 add_action('wp_footer', 'cmr_nav_cart_badge_js', 99);
 function cmr_nav_cart_badge_js() {
-    // Only load on pages where WooCommerce is active
     if (!class_exists('WooCommerce')) return;
     
-    // Pass the LIVE cart count from PHP to JS (this runs outside Elementor cache)
     $live_count = WC()->cart ? count(WC()->cart->get_cart()) : 0;
     ?>
     <script>
     (function() {
-        // 1. Immediately set the correct count from PHP (bypasses Elementor cache)
+        // Fix cached badge count on every page load
         var liveCount = <?php echo intval($live_count); ?>;
         var badges = document.querySelectorAll('.cmr-nav-cart-badge-count');
         badges.forEach(function(b) { b.textContent = liveCount; });
 
-        // 2. On cart page: count items from DOM after WooCommerce updates the table
-        function updateBadgeFromCartPage() {
-            var rows = document.querySelectorAll('.woocommerce-cart-form .cart_item, .woocommerce-cart-form__cart-item, tr.cart_item');
-            var count = rows.length;
-            // If we're on the cart page and there's an empty cart notice, count is 0
-            if (document.querySelector('.cart-empty, .woocommerce-cart-form') !== null) {
-                if (document.querySelector('.cart-empty')) {
-                    count = 0;
-                }
-                var allBadges = document.querySelectorAll('.cmr-nav-cart-badge-count');
-                allBadges.forEach(function(b) { b.textContent = count; });
-            }
-        }
-
-        // 3. Listen for WooCommerce jQuery events
+        // Reload page when Remove button is clicked on cart page
         if (typeof jQuery !== 'undefined') {
             jQuery(function($) {
-                // These fire when items are added/removed/updated
-                $(document.body).on('added_to_cart removed_from_cart updated_wc_div updated_cart_totals wc_cart_emptied wc_fragments_refreshed', function() {
-                    setTimeout(updateBadgeFromCartPage, 500);
+                $(document.body).on('removed_from_cart', function() {
+                    location.reload();
                 });
             });
         }
 
-        // 4. MutationObserver on the main content area as ultimate fallback
-        function startObserving() {
-            var target = document.querySelector('.woocommerce') || document.querySelector('#content') || document.querySelector('main');
-            if (target) {
-                var observer = new MutationObserver(function() {
-                    setTimeout(updateBadgeFromCartPage, 500);
-                });
-                observer.observe(target, { childList: true, subtree: true });
-            }
-        }
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', startObserving);
-        } else {
-            startObserving();
-        }
-
-        // 5. Scroll color change for home page cart icon
+        // Scroll color change for home page cart icon
         window.addEventListener('scroll', function() {
             var carts = document.querySelectorAll('.cmr-nav-cart-container');
             carts.forEach(function(cart) {
@@ -216,3 +182,4 @@ function cmr_nav_cart_badge_js() {
     </script>
     <?php
 }
+
