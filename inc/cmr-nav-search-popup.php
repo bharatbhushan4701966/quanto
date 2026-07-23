@@ -180,20 +180,54 @@ function cmr_nav_search_shortcode($atts = array()) {
         }
 
         .cmr-search-overlay-close {
-            background: transparent;
-            border: none;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 50%;
+            width: 46px;
+            height: 46px;
             cursor: pointer;
-            color: #666;
+            color: #000;
             transition: all 0.3s ease;
             flex-shrink: 0;
-            padding: 0 15px;
-            z-index: 2;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
         .cmr-search-overlay-close:hover {
+            border-color: #cbd5e1;
+            background: #f8fafc;
+        }
+
+        .cmr-custom-popup-form .cat-icon {
+            padding-left: 20px;
+            display: flex;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .cmr-custom-popup-form .clear-btn {
+            background: transparent;
+            border: none;
             color: #000;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 0 10px;
+            display: flex;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .cmr-custom-popup-form .results-badge {
+            background: #ede9fe;
+            color: #6241ca;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin: 0 10px;
+            white-space: nowrap;
+            z-index: 2;
         }
         </style>
         <?php
@@ -219,19 +253,37 @@ function cmr_nav_search_shortcode($atts = array()) {
             <div class="cmr-search-top-bar">
                 <div class="cmr-search-overlay-content">
 
+                    <button type="button" class="cmr-search-overlay-close" onclick="document.getElementById('cmr-search-overlay').classList.remove('active');">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M6 6L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+
                     <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="cmr-custom-popup-form">
-                        <button type="submit" class="submit-btn">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2.5"/>
-                                <path d="M20 20L17 17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        <div class="cat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#6241ca" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 17L12 22L22 17" stroke="#6241ca" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 12L12 17L22 12" stroke="#6241ca" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+
+                        <input name="s" required value="<?php echo esc_html( get_search_query() ); ?>" type="search" placeholder="Type here...">
+                        
+                        <button type="button" class="clear-btn" onclick="this.previousElementSibling.value=''; this.previousElementSibling.focus();">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 6L6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M6 6L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </button>
-                        <input name="s" required value="<?php echo esc_html( get_search_query() ); ?>" type="search" placeholder="Search...">
                         
-                        <button type="button" class="cmr-search-overlay-close" onclick="document.getElementById('cmr-search-overlay').classList.remove('active');">
+                        <div class="results-badge">17 Results</div>
+
+                        <button type="submit" class="submit-btn">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M18 6L6 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M6 6L18 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+                                <path d="M20 20L17 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                             </svg>
                         </button>
                     </form>
