@@ -461,7 +461,7 @@ function cmr_get_cart_html() {
     ob_start();
     $cart_count = count(WC()->cart->get_cart());
     ?>
-    <a href="/reports/" class="cmr-back-link">&larr; Back to Reports</a>
+    <a href="/research-reports/" class="cmr-back-link">&larr; Back to Reports</a>
     
     <div class="cmr-cart-grid">
         <div class="cmr-cart-loading"><i class="fa-solid fa-circle-notch fa-spin fa-2x" style="color: #6b46c1;"></i></div>
