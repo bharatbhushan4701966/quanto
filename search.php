@@ -171,7 +171,22 @@ $query = get_search_query();
     background: #fff;
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+.cmr-search-results-list .quanto-blog-box:hover {
+    border-color: rgba(98, 65, 202, 0.3);
+    background: rgba(98, 65, 202, 0.03);
+    box-shadow: 0 4px 25px rgba(98, 65, 202, 0.06);
+}
+.cmr-search-results-list .quanto-blog-box:hover .quanto-blog-content h5 a,
+.cmr-search-results-list .quanto-blog-box:hover .quanto-blog-content p,
+.cmr-search-results-list .quanto-blog-box:hover .quanto-blog-content .blog-text,
+.cmr-search-results-list .quanto-blog-box:hover .quanto-blog-content .read-more-btn,
+.cmr-search-results-list .quanto-blog-box:hover .post-meta,
+.cmr-search-results-list .quanto-blog-box:hover .post-meta a,
+.cmr-search-results-list .quanto-blog-box:hover .post-meta span {
+    color: #6241ca !important;
 }
 .cmr-search-results-list .quanto-blog-box > div {
     display: flex;
@@ -194,6 +209,17 @@ $query = get_search_query();
 .cmr-search-results-list .quanto-blog-content {
     flex: 1;
     padding: 0 !important;
+}
+.cmr-search-results-list .quanto-blog-content h5 {
+    font-size: 18px !important;
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+.cmr-search-results-list .quanto-blog-content p,
+.cmr-search-results-list .quanto-blog-content .blog-text {
+    font-size: 14px !important;
+    line-height: 1.6;
+    margin-bottom: 15px;
 }
 .cmr-search-results-list .blog-text {
     display: -webkit-box;
@@ -321,12 +347,12 @@ $query = get_search_query();
                 </div>
 
                 <?php if ($total_search_posts > 10): ?>
-                    <div class="text-center mt-5 mb-5" id="cmr-search-load-more-wrap" style="width: 100%;">
+                    <div class="text-center mt-5 mb-5" id="cmr-search-load-more-wrap" style="width: 100%; display: none;">
                         <button id="cmr-search-load-more" class="cmr-search-load-more-btn">Load More</button>
                     </div>
                 <?php endif; ?>
 
-                <div class="cmr-pagination mt-4" id="cmr-search-pagination-wrap" style="display: <?php echo ($total_search_posts > 10) ? 'none' : 'flex'; ?>; justify-content: center; width: 100%;">
+                <div class="cmr-pagination mt-4" id="cmr-search-pagination-wrap" style="display: flex; justify-content: center; width: 100%;">
                     <?php 
                     the_posts_pagination( array(
                         'prev_text' => '<i class="ri-arrow-left-s-line"></i>',
@@ -335,83 +361,6 @@ $query = get_search_query();
                     ?>
                 </div>
 
-                <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    document.addEventListener('click', function(e) {
-                        // Load More functionality
-                        if (e.target && e.target.id === 'cmr-search-load-more') {
-                            e.preventDefault();
-                            var hiddenItems = document.querySelectorAll('.cmr-search-item.cmr-search-item-hidden');
-                            var itemsToShow = 10;
-                            for (var i = 0; i < hiddenItems.length; i++) {
-                                if (i < itemsToShow) {
-                                    hiddenItems[i].classList.remove('cmr-search-item-hidden');
-                                }
-                            }
-                            
-                            var remainingHidden = document.querySelectorAll('.cmr-search-item.cmr-search-item-hidden');
-                            if (remainingHidden.length === 0) {
-                                var loadWrap = document.getElementById('cmr-search-load-more-wrap');
-                                if (loadWrap) loadWrap.style.display = 'none';
-                                
-                                var paginationWrap = document.getElementById('cmr-search-pagination-wrap');
-                                if (paginationWrap) {
-                                    paginationWrap.style.display = 'flex';
-                                }
-                            }
-                        }
-
-                        // AJAX Pagination functionality
-                        var pageLink = e.target.closest('.cmr-pagination a.page-numbers');
-                        if (pageLink) {
-                            e.preventDefault();
-                            var url = pageLink.href;
-                            
-                            var listContainer = document.querySelector('.cmr-search-results-list');
-                            if (listContainer) {
-                                listContainer.style.opacity = '0.5';
-                                
-                                fetch(url)
-                                    .then(function(res) { return res.text(); })
-                                    .then(function(html) {
-                                        var parser = new DOMParser();
-                                        var doc = parser.parseFromString(html, 'text/html');
-                                        
-                                        var newList = doc.querySelector('.cmr-search-results-list');
-                                        if (newList) {
-                                            // Remove animation classes so they show up instantly without scroll trigger
-                                            var anims = newList.querySelectorAll('.fade-anim');
-                                            for(var i=0; i<anims.length; i++) {
-                                                anims[i].classList.remove('fade-anim');
-                                            }
-                                            // Append new items to the existing row
-                                            var currentRow = listContainer.querySelector('.row');
-                                            var newItems = newList.querySelectorAll('.cmr-search-item');
-                                            for(var i=0; i<newItems.length; i++) {
-                                                newItems[i].classList.remove('cmr-search-item-hidden');
-                                                currentRow.appendChild(newItems[i]);
-                                            }
-                                            
-                                            // Replace the pagination wrapper with the new one
-                                            var currentPagination = listContainer.querySelector('#cmr-search-pagination-wrap');
-                                            var newPagination = newList.querySelector('#cmr-search-pagination-wrap');
-                                            if (currentPagination && newPagination) {
-                                                currentPagination.innerHTML = newPagination.innerHTML;
-                                            } else if (currentPagination && !newPagination) {
-                                                currentPagination.style.display = 'none';
-                                            }
-                                            
-                                            listContainer.style.opacity = '1';
-                                        } else {
-                                            // If no results list found in fetch (e.g. empty page 2), just restore opacity
-                                            listContainer.style.opacity = '1';
-                                        }
-                                    });
-                            }
-                        }
-                    });
-                });
-                </script>
             </div>
         <?php else : ?>
             <div class="cmr-search-empty-state">
