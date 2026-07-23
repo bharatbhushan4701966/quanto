@@ -1783,5 +1783,36 @@ add_action('wp_enqueue_scripts', function() {
         if ( $kit_id ) {
             wp_enqueue_style( 'elementor-post-' . $kit_id, wp_upload_dir()['baseurl'] . '/elementor/css/post-' . $kit_id . '.css' );
         }
+        
+        // Enqueue Similar Reports Post CSS
+        $posts = get_posts(array(
+            'name' => 'similar-reports-by-industry',
+            'post_type' => 'quanto_tab_build',
+            'posts_per_page' => 1,
+            'post_status' => 'publish'
+        ));
+        if ( $posts && !empty($posts[0]) ) {
+            $post_id = $posts[0]->ID;
+            if ( class_exists( '\Elementor\Core\Files\CSS\Post' ) ) {
+                $css_file = new \Elementor\Core\Files\CSS\Post($post_id);
+                $css_file->enqueue();
+            }
+        }
     }
+});
+
+
+add_shortcode('cmr_debug_css', function() {
+    \ = get_posts(array(
+        'name' => 'similar-reports-by-industry',
+        'post_type' => 'quanto_tab_build',
+        'posts_per_page' => 1,
+        'post_status' => 'publish'
+    ));
+    if (\) {
+        \ = \[0]->ID;
+        \ = new \Elementor\Core\Files\CSS\Post(\);
+        return 'CSS PATH: ' . \->get_path() . ' EXISTS: ' . (file_exists(\->get_path()) ? 'YES' : 'NO');
+    }
+    return 'NO POST';
 });
