@@ -335,23 +335,47 @@ if ( post_password_required() ) {
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 	var tabNavItems = document.querySelectorAll('.custom-tabs-nav .tab-nav-item');
-	var tabPanels = document.querySelectorAll('.custom-tabs-content .tab-content-panel');
-
+	
+	// Add smooth scrolling click event
 	tabNavItems.forEach(function(item) {
 		item.addEventListener('click', function() {
 			var targetTab = this.getAttribute('data-tab');
-
-			// Remove active class from all tabs & panels
-			tabNavItems.forEach(function(nav) { nav.classList.remove('active'); });
-			tabPanels.forEach(function(panel) { panel.classList.remove('active'); });
-
-			// Add active class to selected tab & panel
-			this.classList.add('active');
-			var activePanel = document.getElementById('tab-panel-' + targetTab);
-			if (activePanel) {
-				activePanel.classList.add('active');
+			var targetSection = document.getElementById('tab-panel-' + targetTab);
+			
+			if (targetSection) {
+			    // Calculate sticky header offset if needed, roughly 100px
+				var offsetTop = targetSection.getBoundingClientRect().top + window.pageYOffset - 120;
+				window.scrollTo({
+					top: offsetTop,
+					behavior: 'smooth'
+				});
 			}
 		});
+	});
+
+	// Intersection Observer to highlight active nav item on scroll
+	var observerOptions = {
+		root: null,
+		rootMargin: '-130px 0px -70% 0px',
+		threshold: 0
+	};
+	
+	var observer = new IntersectionObserver(function(entries) {
+		entries.forEach(function(entry) {
+			if (entry.isIntersecting) {
+				var id = entry.target.getAttribute('id').replace('tab-panel-', '');
+				tabNavItems.forEach(function(nav) {
+					nav.classList.remove('active');
+					if (nav.getAttribute('data-tab') === id) {
+						nav.classList.add('active');
+					}
+				});
+			}
+		});
+	}, observerOptions);
+
+	document.querySelectorAll('.tab-content-panel').forEach(function(section) {
+		observer.observe(section);
 	});
 });
 </script>

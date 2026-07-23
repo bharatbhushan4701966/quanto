@@ -8598,11 +8598,15 @@ h1.custom-product-title {
     display: flex;
     gap: 40px;
     list-style: none;
-    padding: 0;
+    padding: 10px 0 0 0;
     margin: 0 0 40px 0;
     border-bottom: 1.5px solid #f1f5f9;
     overflow-x: auto;
     scrollbar-width: none;
+    position: sticky;
+    top: 70px;
+    background: #fff;
+    z-index: 100;
 }
 
 .custom-tabs-nav::-webkit-scrollbar {
@@ -8642,7 +8646,8 @@ h1.custom-product-title {
 
 /* Tab Panel Styling */
 .tab-content-panel {
-    display: none;
+    display: block;
+    margin-bottom: 60px;
 }
 
 .tab-content-panel.active {
