@@ -171,22 +171,7 @@ $query = get_search_query();
     background: #fff;
     border-radius: 12px;
     padding: 20px;
-    transition: all 0.3s ease;
-    border: 1px solid transparent;
-}
-.cmr-search-results-list .quanto-blog-box:hover {
-    border-color: rgba(98, 65, 202, 0.3);
-    background: rgba(98, 65, 202, 0.03);
-    box-shadow: 0 4px 25px rgba(98, 65, 202, 0.06);
-}
-.cmr-search-results-list .quanto-blog-box:hover .quanto-blog-content h5 a,
-.cmr-search-results-list .quanto-blog-box:hover .quanto-blog-content p,
-.cmr-search-results-list .quanto-blog-box:hover .quanto-blog-content .blog-text,
-.cmr-search-results-list .quanto-blog-box:hover .quanto-blog-content .read-more-btn,
-.cmr-search-results-list .quanto-blog-box:hover .post-meta,
-.cmr-search-results-list .quanto-blog-box:hover .post-meta a,
-.cmr-search-results-list .quanto-blog-box:hover .post-meta span {
-    color: #6241ca !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
 }
 .cmr-search-results-list .quanto-blog-box > div {
     display: flex;
@@ -209,17 +194,6 @@ $query = get_search_query();
 .cmr-search-results-list .quanto-blog-content {
     flex: 1;
     padding: 0 !important;
-}
-.cmr-search-results-list .quanto-blog-content h5 {
-    font-size: 18px !important;
-    line-height: 1.4;
-    margin-bottom: 12px;
-}
-.cmr-search-results-list .quanto-blog-content p,
-.cmr-search-results-list .quanto-blog-content .blog-text {
-    font-size: 14px !important;
-    line-height: 1.6;
-    margin-bottom: 15px;
 }
 .cmr-search-results-list .blog-text {
     display: -webkit-box;
@@ -346,34 +320,56 @@ $query = get_search_query();
                     <?php endwhile; ?>
                 </div>
 
-                <?php
-                global $wp_query;
-                $max_pages = $wp_query->max_num_pages;
-                if ($max_pages > 1): 
-                ?>
+                <?php if ($total_search_posts > 10): ?>
                     <div class="text-center mt-5 mb-5" id="cmr-search-load-more-wrap" style="width: 100%;">
-                        <button id="cmr-search-load-more" class="cmr-search-load-more-btn" data-page="1" data-max="<?php echo esc_attr($max_pages); ?>" data-search="<?php echo esc_attr($query); ?>">Load More</button>
+                        <button id="cmr-search-load-more" class="cmr-search-load-more-btn">Load More</button>
                     </div>
                 <?php endif; ?>
+
+                <div class="cmr-pagination mt-4" id="cmr-search-pagination-wrap" style="display: <?php echo ($total_search_posts > 10) ? 'none' : 'flex'; ?>; justify-content: center; width: 100%;">
+                    <?php 
+                    the_posts_pagination( array(
+                        'prev_text' => '<i class="ri-arrow-left-s-line"></i>',
+                        'next_text' => '<i class="ri-arrow-right-s-line"></i>',
+                    ) ); 
+                    ?>
+                </div>
 
                 <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     document.addEventListener('click', function(e) {
-                        // AJAX Load More functionality
+                        // Load More functionality
                         if (e.target && e.target.id === 'cmr-search-load-more') {
                             e.preventDefault();
-                            var btn = e.target;
-                            var currentPage = parseInt(btn.getAttribute('data-page'));
-                            var maxPage = parseInt(btn.getAttribute('data-max'));
-                            var searchQuery = btn.getAttribute('data-search');
+                            var hiddenItems = document.querySelectorAll('.cmr-search-item.cmr-search-item-hidden');
+                            var itemsToShow = 10;
+                            for (var i = 0; i < hiddenItems.length; i++) {
+                                if (i < itemsToShow) {
+                                    hiddenItems[i].classList.remove('cmr-search-item-hidden');
+                                }
+                            }
                             
-                            if (currentPage < maxPage) {
-                                var nextPage = currentPage + 1;
-                                btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Loading...';
-                                btn.disabled = true;
+                            var remainingHidden = document.querySelectorAll('.cmr-search-item.cmr-search-item-hidden');
+                            if (remainingHidden.length === 0) {
+                                var loadWrap = document.getElementById('cmr-search-load-more-wrap');
+                                if (loadWrap) loadWrap.style.display = 'none';
                                 
-                                // Construct url for the next page
-                                var url = '<?php echo home_url('/'); ?>page/' + nextPage + '/?s=' + encodeURIComponent(searchQuery);
+                                var paginationWrap = document.getElementById('cmr-search-pagination-wrap');
+                                if (paginationWrap) {
+                                    paginationWrap.style.display = 'flex';
+                                }
+                            }
+                        }
+
+                        // AJAX Pagination functionality
+                        var pageLink = e.target.closest('.cmr-pagination a.page-numbers');
+                        if (pageLink) {
+                            e.preventDefault();
+                            var url = pageLink.href;
+                            
+                            var listContainer = document.querySelector('.cmr-search-results-list');
+                            if (listContainer) {
+                                listContainer.style.opacity = '0.5';
                                 
                                 fetch(url)
                                     .then(function(res) { return res.text(); })
@@ -381,35 +377,35 @@ $query = get_search_query();
                                         var parser = new DOMParser();
                                         var doc = parser.parseFromString(html, 'text/html');
                                         
-                                        var newList = doc.querySelector('.cmr-search-results-list .row');
+                                        var newList = doc.querySelector('.cmr-search-results-list');
                                         if (newList) {
-                                            var currentRow = document.querySelector('.cmr-search-results-list .row');
+                                            // Remove animation classes so they show up instantly without scroll trigger
+                                            var anims = newList.querySelectorAll('.fade-anim');
+                                            for(var i=0; i<anims.length; i++) {
+                                                anims[i].classList.remove('fade-anim');
+                                            }
+                                            // Append new items to the existing row
+                                            var currentRow = listContainer.querySelector('.row');
                                             var newItems = newList.querySelectorAll('.cmr-search-item');
-                                            
                                             for(var i=0; i<newItems.length; i++) {
-                                                // Remove animations so they show up immediately
-                                                var animItem = newItems[i].querySelector('.fade-anim');
-                                                if (animItem) {
-                                                    animItem.classList.remove('fade-anim');
-                                                }
                                                 newItems[i].classList.remove('cmr-search-item-hidden');
                                                 currentRow.appendChild(newItems[i]);
                                             }
                                             
-                                            btn.setAttribute('data-page', nextPage);
-                                            btn.innerHTML = 'Load More';
-                                            btn.disabled = false;
-                                            
-                                            if (nextPage >= maxPage) {
-                                                document.getElementById('cmr-search-load-more-wrap').style.display = 'none';
+                                            // Replace the pagination wrapper with the new one
+                                            var currentPagination = listContainer.querySelector('#cmr-search-pagination-wrap');
+                                            var newPagination = newList.querySelector('#cmr-search-pagination-wrap');
+                                            if (currentPagination && newPagination) {
+                                                currentPagination.innerHTML = newPagination.innerHTML;
+                                            } else if (currentPagination && !newPagination) {
+                                                currentPagination.style.display = 'none';
                                             }
+                                            
+                                            listContainer.style.opacity = '1';
                                         } else {
-                                            btn.innerHTML = 'No more results';
+                                            // If no results list found in fetch (e.g. empty page 2), just restore opacity
+                                            listContainer.style.opacity = '1';
                                         }
-                                    })
-                                    .catch(function() {
-                                        btn.innerHTML = 'Error loading. Try again';
-                                        btn.disabled = false;
                                     });
                             }
                         }
