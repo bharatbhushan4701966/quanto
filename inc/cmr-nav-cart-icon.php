@@ -161,8 +161,12 @@ function cmr_nav_cart_badge_js() {
         // Reload page when Remove button is clicked on cart page
         if (typeof jQuery !== 'undefined') {
             jQuery(function($) {
-                $(document.body).on('removed_from_cart', function() {
-                    location.reload();
+                // Intercept click on Remove links in the cart
+                $(document).on('click', 'a.remove[data-product_id]', function(e) {
+                    e.preventDefault();
+                    var removeUrl = $(this).attr('href');
+                    // Navigate to the remove URL (full page reload)
+                    window.location.href = removeUrl;
                 });
             });
         }
