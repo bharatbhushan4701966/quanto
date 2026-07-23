@@ -325,33 +325,7 @@ if ( post_password_required() ) {
 			<!-- Tab Panel: Similar Reports by Industry -->
 			<div id="tab-panel-industry-reports" class="tab-content-panel">
 				<div class="cmr-product-section">
-					<?php
-					// Render the Elementor template 'similar-reports-by-industry'
-					$similar_posts = get_posts(array(
-						'name'           => 'similar-reports-by-industry',
-						'post_type'      => 'quanto_tab_build',
-						'posts_per_page' => 1,
-						'post_status'    => 'publish'
-					));
-					
-					if ( $similar_posts && !empty($similar_posts[0]) ) {
-						$sim_post_id = $similar_posts[0]->ID;
-						
-						// Print CSS link inline
-						if (function_exists('cmr_print_elementor_css')) {
-							cmr_print_elementor_css($sim_post_id);
-						}
-						
-						// Render Elementor Content
-						if ( class_exists( '\Elementor\Plugin' ) ) {
-							echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $sim_post_id, true );
-						} else {
-							echo apply_filters('the_content', $similar_posts[0]->post_content);
-						}
-					} else {
-						echo '<p>Similar reports template not found.</p>';
-					}
-					?>
+					<?php echo do_shortcode('[cmr_similar_reports]'); ?>
 				</div>
 			</div>
 		</div>

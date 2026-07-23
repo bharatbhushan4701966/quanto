@@ -1182,6 +1182,35 @@ add_shortcode('cmr_challenge', function() {
     return ob_get_clean();
 });
 
+// Shortcode to display the Similar Reports by Industry section by rendering the quanto_tab_build post
+add_shortcode('cmr_similar_reports', function() {
+    ob_start();
+    
+    // Find the post by slug
+    $posts = get_posts(array(
+        'name' => 'similar-reports-by-industry',
+        'post_type' => 'quanto_tab_build',
+        'posts_per_page' => 1,
+        'post_status' => 'publish'
+    ));
+    
+    if ( $posts && !empty($posts[0]) ) {
+        $post_id = $posts[0]->ID;
+        
+        // Print CSS link inline
+        if (function_exists('cmr_print_elementor_css')) {
+            cmr_print_elementor_css($post_id);
+        }
+        
+        // Render it
+        if ( class_exists( '\\Elementor\\Plugin' ) ) {
+            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
+        }
+    }
+    
+    return ob_get_clean();
+});
+
 // Shortcode to display the Testimonials section by rendering the quanto_tab_build post
 add_shortcode('cmr_testimonials', function() {
     ob_start();
@@ -1632,6 +1661,7 @@ function cmr_prewarm_elementor_caches() {
         home_url('/?quanto_tab_build=fotter-card'),
         home_url('/?quanto_tab_build=your-challenge-our-research-your-advantage'),
         home_url('/?quanto_tab_build=who-we-serve'),
+        home_url('/?quanto_tab_build=similar-reports-by-industry'),
         home_url('/?quanto_footer=main')
     );
 
