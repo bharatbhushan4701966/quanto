@@ -44,8 +44,8 @@ function cmr_nav_cart_shortcode() {
 
     .cmr-nav-cart-badge {
         position: absolute;
-        bottom: 2px;
-        right: 0px;
+        bottom: 5px;
+        right: 4px;
         background: #00BFBC; /* Cyan/teal */
         color: #fff; /* white */
         font-size: 11px;
@@ -92,7 +92,7 @@ function cmr_nav_cart_shortcode() {
 add_filter('woocommerce_add_to_cart_fragments', 'cmr_nav_cart_fragment_badge');
 function cmr_nav_cart_fragment_badge($fragments) {
     $cart_count = class_exists('WooCommerce') ? WC()->cart->get_cart_contents_count() : 0;
-    $fragments['span.cmr-nav-cart-badge-count'] = '<span class="cmr-nav-cart-badge-count">' . esc_html($cart_count) . '</span>';
+    $fragments['div.cmr-nav-cart-badge'] = '<div class="cmr-nav-cart-badge"><span class="cmr-nav-cart-badge-count">' . esc_html($cart_count) . '</span></div>';
     return $fragments;
 }
 
@@ -124,8 +124,8 @@ function cmr_nav_cart_black_shortcode() {
     }
     .cmr-nav-cart-badge {
         position: absolute;
-        bottom: 2px;
-        right: 0px;
+        bottom: 5px;
+        right: 4px;
         background: #00BFBC; /* Cyan/teal */
         color: #fff; /* white */
         font-size: 11px;
