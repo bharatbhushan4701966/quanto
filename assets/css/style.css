@@ -5005,7 +5005,8 @@ ins {
 
 .quanto-blog-box .quanto-blog-content h5,
 .quanto-blog-box .quanto-blog-content h5 a {
-    font-size: 16px !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
 }
 
 .quanto-blog-box.style-2 .quanto-blog-content h5 a {
@@ -8922,7 +8923,8 @@ h1.custom-product-title {
 /* Desktop paragraph */
 [data-id="8834a3c"] {
     color: #FFFFFF !important;
-    font-size: 16px !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
     line-height: 1.6 !important;
     opacity: 0.9;
     margin-bottom: 30px !important;
@@ -8941,7 +8943,8 @@ h1.custom-product-title {
 }
 [data-id="6101dd4"] .elementor-icon-list-text {
     color: #FFFFFF !important;
-    font-size: 16px !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
     font-weight: 500 !important;
 }
 /* Keep desktop/mobile visibility rules */
@@ -8993,7 +8996,8 @@ h1.custom-product-title {
 /* Paragraph */
 [data-id="7c84f17"] {
     color: #FFFFFF !important;
-    font-size: 16px !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
     line-height: 1.6 !important;
     opacity: 0.9;
     margin-bottom: 30px !important;
@@ -9007,7 +9011,8 @@ h1.custom-product-title {
 [data-id="5184662"] .elementor-icon-list-text,
 [data-id="c1e30ed"] .elementor-icon-list-text {
     color: #FFFFFF !important;
-    font-size: 16px !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
     font-weight: 500 !important;
 }
 
@@ -9085,7 +9090,8 @@ h1.custom-product-title {
 /* Paragraph */
 [data-id="7c84f17"] {
     color: #FFFFFF !important;
-    font-size: 16px !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
     line-height: 1.6 !important;
     opacity: 0.9;
     margin-bottom: 30px !important;
@@ -9099,7 +9105,8 @@ h1.custom-product-title {
 [data-id="5184662"] .elementor-icon-list-text,
 [data-id="c1e30ed"] .elementor-icon-list-text {
     color: #FFFFFF !important;
-    font-size: 16px !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
     font-weight: 500 !important;
 }
 
@@ -9161,7 +9168,8 @@ h1.custom-product-title {
 /* Paragraph */
 .cmr-dynamic-challenge-text .elementor-widget-container {
     color: #FFFFFF !important;
-    font-size: 16px !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
     line-height: 1.6 !important;
     opacity: 0.9;
     margin-bottom: 30px !important;
@@ -9173,7 +9181,8 @@ h1.custom-product-title {
 }
 .cmr-dynamic-challenge-icon-list .elementor-icon-list-text {
     color: #FFFFFF !important;
-    font-size: 16px !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
     font-weight: 500 !important;
 }
 
@@ -9596,7 +9605,8 @@ Single Product - Custom Sections (Related, Rating)
     letter-spacing: -0.5px !important;
 }
 #tab-panel-industry-reports .elementor-widget-text-editor {
-    font-size: 16px !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
     line-height: 1.6 !important;
     color: #475569 !important;
 }
