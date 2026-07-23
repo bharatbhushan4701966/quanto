@@ -505,7 +505,7 @@ function cmr_nav_search_shortcode($atts = array()) {
                                 });
                                 
                                 if (data.total > data.results.length) {
-                                    html += '<a href="javascript:void(0)" onclick="document.querySelector(\'.cmr-custom-popup-form\').submit()" class="cmr-search-dropdown-item" style="justify-content:center; padding: 20px; color: #6241ca; font-weight: 600;">View all ' + data.total + ' results</a>';
+                                    html += '<a href="javascript:void(0)" onclick="document.querySelector(\'.cmr-custom-popup-form\').submit()" class="cmr-search-dropdown-item" style="justify-content:center; padding: 20px; color: #6241ca; font-weight: 600; font-size: 18px;">View all ' + data.total + ' results</a>';
                                 }
                                 
                                 dropdown.innerHTML = html;
