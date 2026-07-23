@@ -84,37 +84,55 @@ function cmr_nav_cart_shortcode() {
         });
     });
 
-    // Force badge update on WooCommerce cart events
-    jQuery(document).ready(function($) {
-        $(document.body).on('added_to_cart removed_from_cart updated_cart_totals updated_wc_div', function() {
-            $.ajax({
-                url: '<?php echo esc_js(home_url('/?wc-ajax=cmr_get_cart_count')); ?>',
-                type: 'GET',
-                cache: false,
-                data: {
-                    t: new Date().getTime()
-                },
-                success: function(response) {
-                    if (response && response.success) {
-                        $('.cmr-nav-cart-badge-count').text(response.data.count);
-                    }
-                }
+    // Bulletproof badge updater - counts items directly from the DOM
+    (function() {
+        function updateBadgeFromDOM() {
+            // Count cart item rows in the WooCommerce cart table
+            var rows = document.querySelectorAll('.woocommerce-cart-form .cart_item, .woocommerce-cart-form__cart-item, tr.cart_item');
+            if (rows.length > 0) {
+                var badges = document.querySelectorAll('.cmr-nav-cart-badge-count');
+                badges.forEach(function(b) { b.textContent = rows.length; });
+            }
+        }
+
+        // Update on page load (fixes cached shortcode output)
+        document.addEventListener('DOMContentLoaded', updateBadgeFromDOM);
+
+        // Update when WooCommerce refreshes the cart div (after remove/update)
+        if (typeof jQuery !== 'undefined') {
+            jQuery(function($) {
+                $(document.body).on('updated_wc_div updated_cart_totals wc_cart_emptied', function() {
+                    setTimeout(updateBadgeFromDOM, 300);
+                });
+
+                // Also watch for cart being emptied entirely
+                $(document.body).on('wc_cart_emptied', function() {
+                    $('.cmr-nav-cart-badge-count').text('0');
+                });
             });
+        }
+
+        // MutationObserver as final safety net - watches the cart form for changes
+        var cartObserver = new MutationObserver(function() {
+            setTimeout(updateBadgeFromDOM, 300);
         });
-    });
+        document.addEventListener('DOMContentLoaded', function() {
+            var cartForm = document.querySelector('.woocommerce-cart-form');
+            if (cartForm) {
+                cartObserver.observe(cartForm, { childList: true, subtree: true });
+            }
+            // Also observe the main cart wrapper
+            var cartWrapper = document.querySelector('.woocommerce-cart');
+            if (cartWrapper) {
+                cartObserver.observe(cartWrapper, { childList: true, subtree: true });
+            }
+        });
+    })();
     </script>
     <?php
     return ob_get_clean();
 }
 
-// Custom AJAX endpoint to get cart count instantly
-add_action('wc_ajax_cmr_get_cart_count', 'cmr_ajax_get_cart_count');
-function cmr_ajax_get_cart_count() {
-    if (class_exists('WooCommerce') && WC()->cart) {
-        wp_send_json_success(array('count' => count(WC()->cart->get_cart())));
-    }
-    wp_send_json_error();
-}
 
 // Add fragment for AJAX update so the cart count updates when items are added
 add_filter('woocommerce_add_to_cart_fragments', 'cmr_nav_cart_fragment_badge');
@@ -179,23 +197,35 @@ function cmr_nav_cart_black_shortcode() {
         </div>
     </a>
     <script>
-    jQuery(document).ready(function($) {
-        $(document.body).on('added_to_cart removed_from_cart updated_cart_totals updated_wc_div', function() {
-            $.ajax({
-                url: '<?php echo esc_js(home_url('/?wc-ajax=cmr_get_cart_count')); ?>',
-                type: 'GET',
-                cache: false,
-                data: {
-                    t: new Date().getTime()
-                },
-                success: function(response) {
-                    if (response && response.success) {
-                        $('.cmr-nav-cart-badge-count').text(response.data.count);
-                    }
-                }
+    (function() {
+        function updateBadgeFromDOM() {
+            var rows = document.querySelectorAll('.woocommerce-cart-form .cart_item, .woocommerce-cart-form__cart-item, tr.cart_item');
+            if (rows.length > 0) {
+                var badges = document.querySelectorAll('.cmr-nav-cart-badge-count');
+                badges.forEach(function(b) { b.textContent = rows.length; });
+            }
+        }
+        document.addEventListener('DOMContentLoaded', updateBadgeFromDOM);
+        if (typeof jQuery !== 'undefined') {
+            jQuery(function($) {
+                $(document.body).on('updated_wc_div updated_cart_totals wc_cart_emptied', function() {
+                    setTimeout(updateBadgeFromDOM, 300);
+                });
+                $(document.body).on('wc_cart_emptied', function() {
+                    $('.cmr-nav-cart-badge-count').text('0');
+                });
             });
+        }
+        var cartObserver = new MutationObserver(function() {
+            setTimeout(updateBadgeFromDOM, 300);
         });
-    });
+        document.addEventListener('DOMContentLoaded', function() {
+            var cartForm = document.querySelector('.woocommerce-cart-form');
+            if (cartForm) { cartObserver.observe(cartForm, { childList: true, subtree: true }); }
+            var cartWrapper = document.querySelector('.woocommerce-cart');
+            if (cartWrapper) { cartObserver.observe(cartWrapper, { childList: true, subtree: true }); }
+        });
+    })();
     </script>
     <?php
     return ob_get_clean();
