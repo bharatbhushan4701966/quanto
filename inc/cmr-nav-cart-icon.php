@@ -44,10 +44,9 @@ function cmr_nav_cart_shortcode() {
 
     .cmr-nav-cart-badge {
         position: absolute;
-        bottom: 0px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #00BFBC; /* Cyan/teal */
+        top: -2px;
+        right: -4px;
+        background: #4820B0; /* purple */
         color: #fff; /* white */
         font-size: 11px;
         font-family: Arial, sans-serif;
@@ -58,7 +57,7 @@ function cmr_nav_cart_shortcode() {
         display: flex;
         align-items: center;
         justify-content: center;
-        border: 2px solid transparent; /* Outline to separate if needed */
+        border: 2px solid transparent;
         line-height: 1;
     }
     </style>
@@ -125,10 +124,9 @@ function cmr_nav_cart_black_shortcode() {
     }
     .cmr-nav-cart-badge {
         position: absolute;
-        bottom: 0px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #00BFBC; /* Cyan/teal */
+        top: -2px;
+        right: -4px;
+        background: #4820B0; /* purple */
         color: #fff; /* white */
         font-size: 11px;
         font-family: Arial, sans-serif;
