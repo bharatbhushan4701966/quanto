@@ -3,6 +3,51 @@
 add_shortcode('cmr_nav_search', 'cmr_nav_search_shortcode');
 add_shortcode('cmr_nav_search_black', 'cmr_nav_search_black_shortcode');
 
+add_action('wp_ajax_cmr_popup_search_ajax', 'cmr_popup_search_ajax_handler');
+add_action('wp_ajax_nopriv_cmr_popup_search_ajax', 'cmr_popup_search_ajax_handler');
+function cmr_popup_search_ajax_handler() {
+    $search = isset($_POST['s']) ? sanitize_text_field($_POST['s']) : '';
+    if (empty($search)) wp_die();
+    $args = array(
+        's' => $search,
+        'post_type' => array('post', 'cmr_news'),
+        'posts_per_page' => 5,
+        'post_status' => 'publish'
+    );
+    $q = new WP_Query($args);
+    $results = array();
+    $total = $q->found_posts;
+    if ($q->have_posts()) {
+        while($q->have_posts()){
+            $q->the_post();
+            
+            $type = 'Post';
+            if (get_post_type() === 'cmr_news') {
+                $type = 'Press Release';
+            } else {
+                $cats = get_the_category();
+                if (!empty($cats)) {
+                    $type = $cats[0]->name;
+                }
+            }
+            
+            $thumb = get_the_post_thumbnail_url(get_the_ID(), 'thumbnail');
+            if (!$thumb) {
+                $thumb = 'https://via.placeholder.com/150?text=No+Image';
+            }
+            
+            $results[] = array(
+                'title' => get_the_title(),
+                'url' => get_permalink(),
+                'thumbnail' => $thumb,
+                'type' => $type
+            );
+        }
+    }
+    wp_send_json(array('results' => $results, 'total' => $total));
+}
+add_shortcode('cmr_nav_search_black', 'cmr_nav_search_black_shortcode');
+
 function cmr_nav_search_black_shortcode() {
     return cmr_nav_search_shortcode(array('color' => 'black'));
 }
@@ -228,6 +273,96 @@ function cmr_nav_search_shortcode($atts = array()) {
             margin: 0 10px;
             white-space: nowrap;
             z-index: 2;
+            display: none; /* hidden initially */
+        }
+        
+        /* Dropdown Styles */
+        .cmr-search-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 15px;
+            padding: 20px 0;
+            display: none;
+            max-height: 60vh;
+            overflow-y: auto;
+            z-index: 10;
+        }
+        
+        .cmr-search-dropdown.active {
+            display: block;
+        }
+        
+        .cmr-search-dropdown-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background 0.3s;
+        }
+        
+        .cmr-search-dropdown-item:hover {
+            background: #f8fafc;
+        }
+        
+        .cmr-search-dropdown-item:last-child {
+            border-bottom: none;
+        }
+        
+        .cmr-search-dropdown-item img {
+            width: 100px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-right: 20px;
+        }
+        
+        .cmr-search-dropdown-content {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .cmr-search-dropdown-type {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 5px;
+        }
+        
+        .cmr-search-dropdown-title {
+            font-size: 16px;
+            color: #0f172a;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        
+        .cmr-search-dropdown-title span.highlight {
+            color: #6241ca;
+        }
+
+        .cmr-spinner {
+            animation: cmr-spin 1s linear infinite;
+        }
+        @keyframes cmr-spin { 100% { transform: rotate(360deg); } }
+        
+        /* Custom Scrollbar for dropdown */
+        .cmr-search-dropdown::-webkit-scrollbar {
+            width: 6px;
+        }
+        .cmr-search-dropdown::-webkit-scrollbar-track {
+            background: #f1f5f9; 
+            border-radius: 10px;
+        }
+        .cmr-search-dropdown::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 10px;
+        }
+        .cmr-search-dropdown::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
         }
         </style>
         <?php
@@ -278,14 +413,19 @@ function cmr_nav_search_shortcode($atts = array()) {
                             </svg>
                         </button>
                         
-                        <div class="results-badge">17 Results</div>
+                        <div class="results-badge" id="cmr-popup-results-badge">0 Results</div>
 
-                        <button type="submit" class="submit-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <button type="submit" class="submit-btn" id="cmr-popup-search-btn">
+                            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
                                 <path d="M20 20L17 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                             </svg>
+                            <svg class="spinner-icon cmr-spinner" style="display:none;" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-dasharray="32" stroke-linecap="round"/>
+                            </svg>
                         </button>
+                        
+                        <div class="cmr-search-dropdown" id="cmr-popup-search-dropdown"></div>
                     </form>
 
                 </div>
@@ -295,21 +435,98 @@ function cmr_nav_search_shortcode($atts = array()) {
         <script>
         function cmrOpenNavSearch() {
             var overlay = document.getElementById('cmr-search-overlay');
-            
-            // Move overlay to body to prevent stacking context z-index issues
             if (overlay.parentNode !== document.body) {
                 document.body.appendChild(overlay);
             }
             overlay.classList.add('active');
             
-            // Focus input
-            setTimeout(function() {
-                var input = overlay.querySelector('.cmr-custom-popup-form input[name="s"]');
-                if (input) input.focus();
-            }, 100);
+            var input = overlay.querySelector('input[type="search"]');
+            if (input) {
+                setTimeout(function() { input.focus(); }, 100);
+            }
         }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            var input = document.querySelector('.cmr-custom-popup-form input[name="s"]');
+            var dropdown = document.getElementById('cmr-popup-search-dropdown');
+            var badge = document.getElementById('cmr-popup-results-badge');
+            var btnIcon = document.querySelector('#cmr-popup-search-btn .search-icon');
+            var btnSpinner = document.querySelector('#cmr-popup-search-btn .spinner-icon');
+            var typingTimer;
+            
+            if (input) {
+                input.addEventListener('input', function() {
+                    clearTimeout(typingTimer);
+                    var val = input.value.trim();
+                    if (val.length < 2) {
+                        dropdown.classList.remove('active');
+                        badge.style.display = 'none';
+                        return;
+                    }
+                    
+                    // Show spinner
+                    btnIcon.style.display = 'none';
+                    btnSpinner.style.display = 'block';
+                    
+                    typingTimer = setTimeout(function() {
+                        var formData = new FormData();
+                        formData.append('action', 'cmr_popup_search_ajax');
+                        formData.append('s', val);
+                        
+                        fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            // Hide spinner
+                            btnIcon.style.display = 'block';
+                            btnSpinner.style.display = 'none';
+                            
+                            if (data.results && data.results.length > 0) {
+                                badge.textContent = data.total + " Results";
+                                badge.style.display = 'block';
+                                
+                                var html = '';
+                                // Escape regex
+                                var regex = new RegExp('(' + val.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + ')', 'gi');
+                                
+                                data.results.forEach(function(item) {
+                                    var titleHTML = item.title.replace(regex, '<span class="highlight">$1</span>');
+                                    html += '<a href="' + item.url + '" class="cmr-search-dropdown-item">';
+                                    html += '<img src="' + item.thumbnail + '" alt="">';
+                                    html += '<div class="cmr-search-dropdown-content">';
+                                    html += '<div class="cmr-search-dropdown-type">' + item.type + '</div>';
+                                    html += '<div class="cmr-search-dropdown-title">' + titleHTML + '</div>';
+                                    html += '</div></a>';
+                                });
+                                dropdown.innerHTML = html;
+                                dropdown.classList.add('active');
+                            } else {
+                                dropdown.innerHTML = '<div style="padding: 20px 30px; color:#666;">No results found.</div>';
+                                dropdown.classList.add('active');
+                                badge.style.display = 'none';
+                            }
+                        });
+                    }, 500);
+                });
+            }
+        });
 
-        // Change icon color on scroll (fallback if sticky classes are different)
+        // Close search overlay when clicking outside
+        document.addEventListener('click', function(event) {
+            var overlay = document.getElementById('cmr-search-overlay');
+            var topBar = overlay ? overlay.querySelector('.cmr-search-top-bar') : null;
+            
+            if (overlay && overlay.classList.contains('active')) {
+                // Check if the click is outside the top bar AND not on the trigger button
+                if (topBar && !topBar.contains(event.target) && !event.target.closest('.cmr-nav-search-trigger')) {
+                    overlay.classList.remove('active');
+                }
+            }
+        });
+        
+        // Window scroll for icon color (kept from previous code)
         window.addEventListener('scroll', function() {
             var triggers = document.querySelectorAll('.cmr-nav-search-trigger');
             triggers.forEach(function(trigger) {
@@ -324,19 +541,6 @@ function cmr_nav_search_shortcode($atts = array()) {
                     trigger.style.setProperty('color', '#fff', 'important');
                 }
             });
-        });
-
-        // Close search overlay when clicking outside
-        document.addEventListener('click', function(event) {
-            var overlay = document.getElementById('cmr-search-overlay');
-            var topBar = overlay.querySelector('.cmr-search-top-bar');
-            
-            if (overlay && overlay.classList.contains('active')) {
-                // Check if the click is outside the top bar AND not on the trigger button
-                if (topBar && !topBar.contains(event.target) && !event.target.closest('.cmr-nav-search-trigger')) {
-                    overlay.classList.remove('active');
-                }
-            }
         });
         </script>
         <?php
