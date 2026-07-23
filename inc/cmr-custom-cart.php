@@ -417,6 +417,17 @@ if ( ! function_exists( 'cmr_custom_cart_shortcode' ) ) {
                         if ( data.success ) {
                             cartApp.innerHTML = data.data.html;
                             bindCartEvents();
+                            // Update nav badge count from new cart title
+                            var titleEl = cartApp.querySelector('.cmr-cart-box-title');
+                            if (titleEl) {
+                                var m = titleEl.textContent.match(/\((\d+)\s*items?\)/i);
+                                if (m) {
+                                    document.querySelectorAll('.cmr-nav-cart-badge-count').forEach(function(b) { b.textContent = m[1]; });
+                                }
+                            } else {
+                                // Cart is empty
+                                document.querySelectorAll('.cmr-nav-cart-badge-count').forEach(function(b) { b.textContent = '0'; });
+                            }
                             // Dispatch standard woo event so fragments (like header cart count) update
                             jQuery(document.body).trigger('wc_fragment_refresh');
                         } else {
