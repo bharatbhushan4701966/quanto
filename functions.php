@@ -1800,19 +1800,3 @@ add_action('wp_enqueue_scripts', function() {
         }
     }
 });
-
-
-add_shortcode('cmr_debug_css', function() {
-    \ = get_posts(array(
-        'name' => 'similar-reports-by-industry',
-        'post_type' => 'quanto_tab_build',
-        'posts_per_page' => 1,
-        'post_status' => 'publish'
-    ));
-    if (\) {
-        \ = \[0]->ID;
-        \ = new \Elementor\Core\Files\CSS\Post(\);
-        return 'CSS PATH: ' . \->get_path() . ' EXISTS: ' . (file_exists(\->get_path()) ? 'YES' : 'NO');
-    }
-    return 'NO POST';
-});

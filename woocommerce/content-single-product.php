@@ -341,12 +341,7 @@ if ( post_password_required() ) {
 			<!-- Tab Panel: Similar Reports by Industry -->
 			<div id="tab-panel-industry-reports" class="tab-content-panel">
 				<div class="cmr-product-section">
-					<?php
-					echo "<!-- DEBUG CSS START -->";
-					echo do_shortcode('[cmr_debug_css]');
-					echo "<!-- DEBUG CSS END -->";
-					echo do_shortcode('[cmr_similar_reports]'); 
-					?>
+					<?php echo do_shortcode('[cmr_similar_reports]'); ?>
 				</div>
 			</div>
 		</div>
