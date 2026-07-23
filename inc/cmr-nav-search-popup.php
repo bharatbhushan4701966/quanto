@@ -289,6 +289,8 @@ function cmr_nav_search_shortcode($atts = array()) {
             display: none;
             max-height: 60vh;
             overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
             z-index: 10;
         }
         
