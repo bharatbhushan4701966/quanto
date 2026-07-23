@@ -1184,8 +1184,33 @@ add_shortcode('cmr_challenge', function() {
 
 // Shortcode to display the Similar Reports by Industry section by rendering the quanto_tab_build post
 add_shortcode('cmr_similar_reports', function() {
-    // Embed the URL using an iframe
-    return '<iframe src="https://qai8358l95-staging.onrocket.site/?quanto_tab_build=similar-reports-by-industry" width="100%" style="border:none; width:100%; min-height:800px; overflow:hidden;" scrolling="no"></iframe>';
+    ob_start();
+    
+    // Find the post by slug
+    $posts = get_posts(array(
+        'name' => 'similar-reports-by-industry',
+        'post_type' => 'quanto_tab_build',
+        'posts_per_page' => 1,
+        'post_status' => 'publish'
+    ));
+    
+    if ( $posts && !empty($posts[0]) ) {
+        $post_id = $posts[0]->ID;
+        
+        // Print CSS link inline
+        if (function_exists('cmr_print_elementor_css')) {
+            cmr_print_elementor_css($post_id);
+        }
+        
+        // Render it
+        if ( class_exists( '\Elementor\Plugin' ) ) {
+            echo '<div id="cmr-similar-reports-section">';
+            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
+            echo '</div>';
+        }
+    }
+    
+    return ob_get_clean();
 });
 
 // Shortcode to display the Testimonials section by rendering the quanto_tab_build post
