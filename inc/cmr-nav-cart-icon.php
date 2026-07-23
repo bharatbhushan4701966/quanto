@@ -88,11 +88,10 @@ function cmr_nav_cart_shortcode() {
     jQuery(document).ready(function($) {
         $(document.body).on('added_to_cart removed_from_cart updated_cart_totals updated_wc_div', function() {
             $.ajax({
-                url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                url: '<?php echo esc_js(home_url('/?wc-ajax=cmr_get_cart_count')); ?>',
                 type: 'GET',
                 cache: false,
                 data: {
-                    action: 'cmr_get_cart_count',
                     t: new Date().getTime()
                 },
                 success: function(response) {
@@ -109,8 +108,7 @@ function cmr_nav_cart_shortcode() {
 }
 
 // Custom AJAX endpoint to get cart count instantly
-add_action('wp_ajax_cmr_get_cart_count', 'cmr_ajax_get_cart_count');
-add_action('wp_ajax_nopriv_cmr_get_cart_count', 'cmr_ajax_get_cart_count');
+add_action('wc_ajax_cmr_get_cart_count', 'cmr_ajax_get_cart_count');
 function cmr_ajax_get_cart_count() {
     if (class_exists('WooCommerce') && WC()->cart) {
         wp_send_json_success(array('count' => count(WC()->cart->get_cart())));
@@ -184,11 +182,10 @@ function cmr_nav_cart_black_shortcode() {
     jQuery(document).ready(function($) {
         $(document.body).on('added_to_cart removed_from_cart updated_cart_totals updated_wc_div', function() {
             $.ajax({
-                url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                url: '<?php echo esc_js(home_url('/?wc-ajax=cmr_get_cart_count')); ?>',
                 type: 'GET',
                 cache: false,
                 data: {
-                    action: 'cmr_get_cart_count',
                     t: new Date().getTime()
                 },
                 success: function(response) {
