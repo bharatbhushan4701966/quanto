@@ -443,7 +443,8 @@
                 'fotter-card',
                 'testimonials',
                 'we-worked-with-largest-global-brands',
-                'your-next-big-decision-deserves-better-intelligence'
+                'your-next-big-decision-deserves-better-intelligence',
+                'similar-reports-by-industry'
             );
             foreach ( $tab_slugs as $slug ) {
                 $tab_posts = get_posts(array(
@@ -549,7 +550,8 @@
                 'fotter-card',
                 'testimonials',
                 'we-worked-with-largest-global-brands',
-                'your-next-big-decision-deserves-better-intelligence'
+                'your-next-big-decision-deserves-better-intelligence',
+                'similar-reports-by-industry'
             );
             foreach ( $tab_slugs as $slug ) {
                 $tab_posts = get_posts(array(
@@ -575,7 +577,8 @@
                 'fotter-card',
                 'testimonials',
                 'we-worked-with-largest-global-brands',
-                'your-next-big-decision-deserves-better-intelligence'
+                'your-next-big-decision-deserves-better-intelligence',
+                'similar-reports-by-industry'
             );
             foreach ( $tab_slugs as $slug ) {
                 $tab_posts = get_posts(array(
