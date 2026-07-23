@@ -1776,12 +1776,12 @@ require_once get_template_directory() . '/inc/cmr-product-card.php';
 
 // Ensure Elementor CSS is loaded on single product pages since we use Elementor templates there
 add_action('wp_enqueue_scripts', function() {
-    if ( is_product() && class_exists( '\\Elementor\\Plugin' ) ) {
-        \\Elementor\\Plugin::instance()->frontend->enqueue_styles();
+    if ( is_product() && class_exists( '\Elementor\Plugin' ) ) {
+        \Elementor\Plugin::instance()->frontend->enqueue_styles();
         // Also enqueue the global kit CSS if possible
-        \ = get_option( 'elementor_active_kit' );
-        if ( \ ) {
-            wp_enqueue_style( 'elementor-post-' . \, wp_upload_dir()['baseurl'] . '/elementor/css/post-' . \ . '.css' );
+        $kit_id = get_option( 'elementor_active_kit' );
+        if ( $kit_id ) {
+            wp_enqueue_style( 'elementor-post-' . $kit_id, wp_upload_dir()['baseurl'] . '/elementor/css/post-' . $kit_id . '.css' );
         }
     }
 });
