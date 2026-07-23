@@ -33,7 +33,7 @@ function cmr_popup_search_ajax_handler() {
             
             $thumb = get_the_post_thumbnail_url(get_the_ID(), 'thumbnail');
             if (!$thumb) {
-                $thumb = 'https://via.placeholder.com/150?text=No+Image';
+                $thumb = '';
             }
             
             $results[] = array(
@@ -323,6 +323,21 @@ function cmr_nav_search_shortcode($atts = array()) {
             margin-right: 20px;
         }
         
+        .cmr-search-dropdown-item .cmr-skeleton-img {
+            width: 100px;
+            height: 60px;
+            border-radius: 6px;
+            margin-right: 20px;
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+            background-size: 200% 100%;
+            animation: cmr-skeleton-loading 1.5s infinite;
+            flex-shrink: 0;
+        }
+        @keyframes cmr-skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
         .cmr-search-dropdown-content {
             display: flex;
             flex-direction: column;
@@ -497,7 +512,11 @@ function cmr_nav_search_shortcode($atts = array()) {
                                 data.results.forEach(function(item) {
                                     var titleHTML = item.title.replace(regex, '<span class="highlight">$1</span>');
                                     html += '<a href="' + item.url + '" class="cmr-search-dropdown-item">';
-                                    html += '<img src="' + item.thumbnail + '" alt="">';
+                                    if (item.thumbnail) {
+                                        html += '<img src="' + item.thumbnail + '" alt="">';
+                                    } else {
+                                        html += '<div class="cmr-skeleton-img"></div>';
+                                    }
                                     html += '<div class="cmr-search-dropdown-content">';
                                     html += '<div class="cmr-search-dropdown-type">' + item.type + '</div>';
                                     html += '<div class="cmr-search-dropdown-title">' + titleHTML + '</div>';
