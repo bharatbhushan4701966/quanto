@@ -7,13 +7,13 @@ if ( ! function_exists( 'cmr_live_shortcode' ) ) {
     function cmr_live_shortcode( $atts ) {
         $atts = shortcode_atts( array(
             'posts_per_page' => 10,
-        ), $atts, 'cmr_live' );
+        ), $atts, 'cmr_live_page' );
         
         // Call the new shortcode function to return identical HTML
         return cmr_live_podcast_carousel_shortcode($atts);
     }
 }
-add_shortcode( 'cmr_live', 'cmr_live_shortcode' );
+add_shortcode( 'cmr_live_page', 'cmr_live_shortcode' );
 
 if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
     function cmr_live_podcast_carousel_shortcode( $atts ) {

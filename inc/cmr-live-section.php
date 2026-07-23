@@ -253,4 +253,4 @@ if ( ! function_exists( 'cmr_live_section_shortcode' ) ) {
         return ob_get_clean();
     }
 }
-add_shortcode( 'cmr_live_section', 'cmr_live_section_shortcode' );
+add_shortcode( 'cmr_live', 'cmr_live_section_shortcode' );
