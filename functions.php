@@ -1563,7 +1563,7 @@ add_filter('woocommerce_add_to_cart_fragments', 'cmr_cart_count_fragments', 10, 
 function cmr_cart_count_fragments($fragments) {
     ob_start();
     ?>
-    <span class="cmr-cart-count" style="background:#4820B0; color:#fff; border-radius:50%; padding:2px 6px; font-size:11px; font-weight:700; line-height:1; min-width:18px; text-align:center;"><?php echo WC()->cart ? WC()->cart->get_cart_contents_count() : 0; ?></span>
+    <span class="cmr-cart-count" style="background:#4820B0; color:#fff; border-radius:50%; padding:2px 6px; font-size:11px; font-weight:700; line-height:1; min-width:18px; text-align:center;"><?php echo WC()->cart ? count(WC()->cart->get_cart()) : 0; ?></span>
     <?php
     $fragments['span.cmr-cart-count'] = ob_get_clean();
     return $fragments;
@@ -1572,7 +1572,7 @@ function cmr_cart_count_fragments($fragments) {
 // Universal JS to place Cart Icon neatly inside the right-side header action container (.elementor-element-219e18d) and next to mobile toggle
 add_action('wp_footer', 'cmr_header_cart_container_injection', 99);
 function cmr_header_cart_container_injection() {
-    $cart_count = WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
+    $cart_count = WC()->cart ? count(WC()->cart->get_cart()) : 0;
     $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : '/cart/';
     ?>
     <script>

@@ -459,7 +459,7 @@ function cmr_get_cart_html() {
     }
 
     ob_start();
-    $cart_count = WC()->cart->get_cart_contents_count();
+    $cart_count = count(WC()->cart->get_cart());
     ?>
     <a href="/reports/" class="cmr-back-link">&larr; Back to Reports</a>
     
