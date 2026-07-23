@@ -1291,7 +1291,12 @@
                 if ( ! is_single() ) {
                     echo '<div class="quanto-blog-thumb">';
                     echo '<a href="' . esc_url( get_permalink() ) . '" class="post-thumbnail" style="display: block; width: 100%; height: 100%;">';
-                    echo '<div class="cmr-skeleton-image" style="background: #f8fafc; border: 1px solid #e2e8f0; width: 100%; min-height: 250px; height: 100%; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center;"><i class="ri-image-line" style="font-size: 48px; color: #cbd5e1; margin-bottom: 10px;"></i><span style="color: #94a3b8; font-size: 14px; font-weight: 500;">No Image Available</span></div>';
+                    echo '<div class="cmr-skeleton-image" style="width: 100%; min-height: 250px; height: 100%; border-radius: 8px; overflow: hidden; display: block;">';
+                    echo '<svg viewBox="0 0 400 250" preserveAspectRatio="none" style="width: 100%; height: 100%; display: block; background: #ced6dc;">';
+                    echo '<circle cx="140" cy="110" r="25" fill="#f1f4f5"/>';
+                    echo '<path d="M -20 250 Q 60 120 160 250 Q 280 20 420 250 Z" fill="#f1f4f5"/>';
+                    echo '</svg>';
+                    echo '</div>';
                     echo '</a></div>';
                 }
             }
