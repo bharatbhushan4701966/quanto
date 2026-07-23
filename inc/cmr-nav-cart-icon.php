@@ -87,15 +87,20 @@ function cmr_nav_cart_shortcode() {
     // Force badge update on WooCommerce cart events
     jQuery(document).ready(function($) {
         $(document.body).on('added_to_cart removed_from_cart updated_cart_totals updated_wc_div', function() {
-            $.post(
-                '<?php echo admin_url('admin-ajax.php'); ?>',
-                { action: 'cmr_get_cart_count' },
-                function(response) {
-                    if (response.success) {
+            $.ajax({
+                url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                type: 'GET',
+                cache: false,
+                data: {
+                    action: 'cmr_get_cart_count',
+                    t: new Date().getTime()
+                },
+                success: function(response) {
+                    if (response && response.success) {
                         $('.cmr-nav-cart-badge-count').text(response.data.count);
                     }
                 }
-            );
+            });
         });
     });
     </script>
@@ -178,15 +183,20 @@ function cmr_nav_cart_black_shortcode() {
     <script>
     jQuery(document).ready(function($) {
         $(document.body).on('added_to_cart removed_from_cart updated_cart_totals updated_wc_div', function() {
-            $.post(
-                '<?php echo admin_url('admin-ajax.php'); ?>',
-                { action: 'cmr_get_cart_count' },
-                function(response) {
-                    if (response.success) {
+            $.ajax({
+                url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                type: 'GET',
+                cache: false,
+                data: {
+                    action: 'cmr_get_cart_count',
+                    t: new Date().getTime()
+                },
+                success: function(response) {
+                    if (response && response.success) {
                         $('.cmr-nav-cart-badge-count').text(response.data.count);
                     }
                 }
-            );
+            });
         });
     });
     </script>
