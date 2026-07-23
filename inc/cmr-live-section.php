@@ -178,6 +178,8 @@ if ( ! function_exists( 'cmr_live_section_shortcode' ) ) {
                 color: #111;
                 margin: 0;
                 line-height: 1.4;
+                letter-spacing: normal !important;
+                word-spacing: normal !important;
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
