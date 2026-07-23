@@ -145,55 +145,28 @@ function cmr_nav_cart_black_shortcode() {
 // the shortcodes, because Elementor caches shortcode output
 // and would prevent updated JS from ever reaching the browser.
 // ============================================================
-add_action('wp_footer', 'cmr_nav_cart_badge_js', 99);
+// Enqueue external JS for badge sync
+add_action('wp_enqueue_scripts', 'cmr_nav_cart_badge_js', 99);
 function cmr_nav_cart_badge_js() {
+    if (!class_exists('WooCommerce')) return;
+    
+    // Add cache busting version
+    $version = filemtime( get_stylesheet_directory() . '/assets/js/cmr-cart-badge-sync.js' );
+    wp_enqueue_script( 'cmr-cart-badge-sync', get_stylesheet_directory_uri() . '/assets/js/cmr-cart-badge-sync.js', array(), $version, true );
+}
+
+add_action('wp_footer', 'cmr_nav_cart_initial_count', 99);
+function cmr_nav_cart_initial_count() {
     if (!class_exists('WooCommerce')) return;
     
     $live_count = WC()->cart ? count(WC()->cart->get_cart()) : 0;
     ?>
     <script>
     (function() {
-        var lastCount = null;
-        var debounceTimer = null;
-
-        function syncBadgeFromTitle() {
-            var title = document.querySelector('.cmr-cart-box-title');
-            var count = null;
-            if (title) {
-                var match = title.textContent.match(/\((\d+)\s*items?\)/i);
-                if (match) count = match[1];
-            }
-            if (document.querySelector('.cart-empty')) count = '0';
-            
-            // Only update if count changed (prevents infinite loop)
-            if (count !== null && count !== lastCount) {
-                lastCount = count;
-                var badges = document.querySelectorAll('.cmr-nav-cart-badge-count');
-                badges.forEach(function(b) { b.textContent = count; });
-            }
-        }
-
-        // Run on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set initial count from PHP
-            var liveCount = <?php echo intval($live_count); ?>;
-            lastCount = String(liveCount);
-            var badges = document.querySelectorAll('.cmr-nav-cart-badge-count');
-            badges.forEach(function(b) { b.textContent = liveCount; });
-
-            // Then sync from title if on cart page
-            syncBadgeFromTitle();
-
-            // Watch only the main content area for changes (not header/badge)
-            var cartContent = document.querySelector('.woocommerce') || document.querySelector('#content') || document.querySelector('main');
-            if (cartContent) {
-                var observer = new MutationObserver(function() {
-                    clearTimeout(debounceTimer);
-                    debounceTimer = setTimeout(syncBadgeFromTitle, 300);
-                });
-                observer.observe(cartContent, { childList: true, subtree: true });
-            }
-        });
+        // Fix cached badge count on every page load
+        var liveCount = <?php echo intval($live_count); ?>;
+        var badges = document.querySelectorAll('.cmr-nav-cart-badge-count');
+        badges.forEach(function(b) { b.textContent = liveCount; });
 
         // Scroll color change for home page cart icon
         window.addEventListener('scroll', function() {
@@ -210,4 +183,3 @@ function cmr_nav_cart_badge_js() {
     </script>
     <?php
 }
-
