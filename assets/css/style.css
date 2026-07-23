@@ -9589,7 +9589,8 @@ Single Product - Custom Sections (Related, Rating)
 #tab-panel-industry-reports .elementor-widget-heading h2,
 #tab-panel-industry-reports .elementor-heading-title,
 #tab-panel-industry-reports .e-heading-base {
-    font-size: 36px !important;
+    font-size: 46px !important;
+    font-weight: 600 !important;
     line-height: 1.2 !important;
     margin-bottom: 15px !important;
     letter-spacing: -0.5px !important;
