@@ -176,165 +176,210 @@ if ( post_password_required() ) {
 
 	<!-- Bottom Section: Custom Tabs -->
 
-	<!-- Bottom Section: Stacked Layout -->
-	<div class="cmr-product-sections-wrapper" style="margin-top: 50px;">
-		
-		<!-- Report Highlights -->
-		<div class="cmr-product-section">
-			<?php the_content(); ?>
-		</div>
+	<!-- Bottom Section: Custom Tabs -->
+	<div class="custom-product-tabs-wrapper" style="margin-top: 50px;">
+		<ul class="custom-tabs-nav">
+			<li class="tab-nav-item active" data-tab="report-highlights">Report Highlights</li>
+			<li class="tab-nav-item" data-tab="related-reports">Related Reports</li>
+			<li class="tab-nav-item" data-tab="reviews">Reviews (<?php echo esc_html( $review_count ); ?>)</li>
+			<li class="tab-nav-item" data-tab="industry-reports">Similar Reports by Industry</li>
+		</ul>
 
-		<!-- Related Reports -->
-		<div class="cmr-product-section" style="margin-top: 60px;">
-			<h2 class="cmr-section-title" style="font-size: 28px; font-weight: 700; margin-bottom: 10px;">Related Reports</h2>
-			<p class="cmr-section-subtitle" style="color: #64748b; margin-bottom: 30px;">Expand your perspective with these additional resources tailored to your professional interests</p>
-			
-			<div class="cmr-reports-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px;">
-				<?php
-				$related_ids = wc_get_related_products( $product->get_id(), 3 );
-				if ( ! empty( $related_ids ) ) {
-					$related_query = new WP_Query( array(
-						'post_type'      => 'product',
-						'post__in'       => $related_ids,
-						'posts_per_page' => 3,
-					) );
-					if ( $related_query->have_posts() ) {
-						while ( $related_query->have_posts() ) {
-							$related_query->the_post();
-							if (function_exists('cmr_render_custom_product_card')) {
-								cmr_render_custom_product_card();
-							}
-						}
-					}
-					wp_reset_postdata();
-				} else {
-					echo '<p>No related reports found.</p>';
-				}
-				?>
+		<div class="custom-tabs-content">
+			<!-- Tab Panel: Report Highlights -->
+			<div id="tab-panel-report-highlights" class="tab-content-panel active">
+				<div class="report-highlights-content-wrapper cmr-product-section">
+					<h2 class="cmr-section-title" style="font-size: 28px; font-weight: 700; margin-bottom: 30px;">Report Highlights</h2>
+					<?php the_content(); ?>
+				</div>
 			</div>
-		</div>
 
-		<!-- Rating & Reviews -->
-		<div class="cmr-product-section" style="margin-top: 60px;">
-			<h2 class="cmr-section-title" style="font-size: 28px; font-weight: 700; margin-bottom: 30px;">Rating</h2>
-			
-			<div class="cmr-rating-container" style="display: flex; gap: 40px; margin-bottom: 40px;">
-				<div class="cmr-rating-summary" style="display: flex; flex-direction: column;">
-					<?php
-					$rating_count = $product->get_rating_count();
-					$review_count = $product->get_review_count();
-					$average      = $product->get_average_rating();
+			<!-- Tab Panel: Related Reports -->
+			<div id="tab-panel-related-reports" class="tab-content-panel">
+				<div class="cmr-product-section">
+					<h2 class="cmr-section-title" style="font-size: 28px; font-weight: 700; margin-bottom: 10px;">Related Reports</h2>
+					<p class="cmr-section-subtitle" style="color: #64748b; margin-bottom: 30px;">Expand your perspective with these additional resources tailored to your professional interests</p>
 					
-					// Calculate distribution
-					$ratings = array(5 => 0, 4 => 0, 3 => 0, 2 => 0, 1 => 0);
-					$comments = get_comments(array('post_id' => $product->get_id(), 'status' => 'approve'));
-					foreach ($comments as $comment) {
-						$rate = intval(get_comment_meta($comment->comment_ID, 'rating', true));
-						if ($rate >= 1 && $rate <= 5) {
-							$ratings[$rate]++;
-						}
-					}
-					?>
-					<div style="font-size: 48px; font-weight: 700; line-height: 1;"><?php echo esc_html( number_format($average, 1) ); ?></div>
-					<div class="cmr-lr-stars" style="color: #f59e0b; margin: 10px 0;">
-						<?php 
-						$avg_f = floatval($average);
-						for ( $s = 1; $s <= 5; $s++ ) {
-							if ( $s <= $avg_f ) echo '<i class="fa-solid fa-star"></i>';
-							elseif ( $s - 0.5 <= $avg_f ) echo '<i class="fa-solid fa-star-half-stroke"></i>';
-							else echo '<i class="fa-regular fa-star"></i>';
+					<div class="cmr-reports-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px;">
+						<?php
+						$related_ids = wc_get_related_products( $product->get_id(), 3 );
+						if ( ! empty( $related_ids ) ) {
+							$related_query = new WP_Query( array(
+								'post_type'      => 'product',
+								'post__in'       => $related_ids,
+								'posts_per_page' => 3,
+							) );
+							if ( $related_query->have_posts() ) {
+								while ( $related_query->have_posts() ) {
+									$related_query->the_post();
+									if (function_exists('cmr_render_custom_product_card')) {
+										cmr_render_custom_product_card();
+									}
+								}
+							}
+							wp_reset_postdata();
+						} else {
+							echo '<p>No related reports found.</p>';
 						}
 						?>
 					</div>
-					<div style="color: #64748b; font-size: 14px;"><?php echo esc_html($review_count); ?> Reviews</div>
-				</div>
-				
-				<div class="cmr-rating-bars" style="flex: 1; max-width: 400px;">
-					<?php for ($i = 5; $i >= 1; $i--): 
-						$percent = $review_count > 0 ? ($ratings[$i] / $review_count) * 100 : 0;
-					?>
-					<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-						<span style="width: 15px; font-weight: 600; color: #475569;"><?php echo $i; ?></span>
-						<i class="fa-solid fa-star" style="color: #f59e0b; font-size: 12px;"></i>
-						<div style="flex: 1; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden;">
-							<div style="width: <?php echo $percent; ?>%; height: 100%; background: #22c55e; border-radius: 4px;"></div>
-						</div>
-					</div>
-					<?php endfor; ?>
 				</div>
 			</div>
-			
-			<div class="cmr-reviews-list">
-				<?php 
-				if ($comments) {
-					foreach ($comments as $comment) {
-						$rate = intval(get_comment_meta($comment->comment_ID, 'rating', true));
-				?>
-				<div class="cmr-review-item" style="display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid #f1f5f9;">
-					<div class="cmr-review-avatar">
-						<?php echo get_avatar($comment, 50, '', '', array('class' => 'cmr-avatar-img', 'extra_attr' => 'style="border-radius:50%;"')); ?>
-					</div>
-					<div class="cmr-review-content">
-						<h4 style="margin: 0 0 5px 0; font-size: 16px; font-weight: 600;"><?php echo get_comment_author($comment); ?></h4>
-						<div style="font-size: 12px; color: #94a3b8; margin-bottom: 10px;"><?php echo get_comment_date('', $comment); ?></div>
-						<div class="cmr-lr-stars" style="color: #f59e0b; margin-bottom: 10px; font-size: 12px;">
-							<?php 
-							for ( $s = 1; $s <= 5; $s++ ) {
-								if ( $s <= $rate ) echo '<i class="fa-solid fa-star"></i>';
-								else echo '<i class="fa-regular fa-star"></i>';
+
+			<!-- Tab Panel: Reviews -->
+			<div id="tab-panel-reviews" class="tab-content-panel">
+				<div class="cmr-product-section">
+					<h2 class="cmr-section-title" style="font-size: 28px; font-weight: 700; margin-bottom: 30px;">Rating</h2>
+					
+					<div class="cmr-rating-container" style="display: flex; gap: 40px; margin-bottom: 40px;">
+						<div class="cmr-rating-summary" style="display: flex; flex-direction: column;">
+							<?php
+							$rating_count = $product->get_rating_count();
+							$review_count = $product->get_review_count();
+							$average      = $product->get_average_rating();
+							
+							// Calculate distribution
+							$ratings = array(5 => 0, 4 => 0, 3 => 0, 2 => 0, 1 => 0);
+							$comments = get_comments(array('post_id' => $product->get_id(), 'status' => 'approve'));
+							foreach ($comments as $comment) {
+								$rate = intval(get_comment_meta($comment->comment_ID, 'rating', true));
+								if ($rate >= 1 && $rate <= 5) {
+									$ratings[$rate]++;
+								}
 							}
 							?>
+							<div style="font-size: 48px; font-weight: 700; line-height: 1;"><?php echo esc_html( number_format($average, 1) ); ?></div>
+							<div class="cmr-lr-stars" style="color: #f59e0b; margin: 10px 0;">
+								<?php 
+								$avg_f = floatval($average);
+								for ( $s = 1; $s <= 5; $s++ ) {
+									if ( $s <= $avg_f ) echo '<i class="fa-solid fa-star"></i>';
+									elseif ( $s - 0.5 <= $avg_f ) echo '<i class="fa-solid fa-star-half-stroke"></i>';
+									else echo '<i class="fa-regular fa-star"></i>';
+								}
+								?>
+							</div>
+							<div style="color: #64748b; font-size: 14px;"><?php echo esc_html($review_count); ?> Reviews</div>
+							
+							<div style="margin-top: 20px;">
+								<a href="#review_form_wrapper" class="cmr-lr-btn" style="background: #111827; color: #fff; padding: 10px 20px; display: inline-block; border-radius: 5px;" onclick="document.getElementById('review_form_wrapper').style.display='block';">Write a Review</a>
+							</div>
 						</div>
-						<p style="margin: 0; color: #475569; font-size: 15px; line-height: 1.6;"><?php echo get_comment_text($comment); ?></p>
+						
+						<div class="cmr-rating-bars" style="flex: 1; max-width: 400px;">
+							<?php for ($i = 5; $i >= 1; $i--): 
+								$percent = $review_count > 0 ? ($ratings[$i] / $review_count) * 100 : 0;
+							?>
+							<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+								<span style="width: 15px; font-weight: 600; color: #475569;"><?php echo $i; ?></span>
+								<i class="fa-solid fa-star" style="color: #f59e0b; font-size: 12px;"></i>
+								<div style="flex: 1; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden;">
+									<div style="width: <?php echo $percent; ?>%; height: 100%; background: #22c55e; border-radius: 4px;"></div>
+								</div>
+							</div>
+							<?php endfor; ?>
+						</div>
+					</div>
+					
+					<div id="review_form_wrapper" style="display: none; margin-bottom: 40px; padding: 20px; background: #f8fafc; border-radius: 8px;">
+						<?php 
+						// Load the standard WooCommerce review form
+						comments_template( 'woocommerce/single-product-reviews' ); 
+						?>
+					</div>
+
+					<div class="cmr-reviews-list">
+						<?php 
+						if ($comments) {
+							foreach ($comments as $comment) {
+								$rate = intval(get_comment_meta($comment->comment_ID, 'rating', true));
+						?>
+						<div class="cmr-review-item" style="display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid #f1f5f9;">
+							<div class="cmr-review-avatar">
+								<?php echo get_avatar($comment, 50, '', '', array('class' => 'cmr-avatar-img', 'extra_attr' => 'style="border-radius:50%;"')); ?>
+							</div>
+							<div class="cmr-review-content">
+								<h4 style="margin: 0 0 5px 0; font-size: 16px; font-weight: 600;"><?php echo get_comment_author($comment); ?></h4>
+								<div style="font-size: 12px; color: #94a3b8; margin-bottom: 10px;"><?php echo get_comment_date('', $comment); ?></div>
+								<div class="cmr-lr-stars" style="color: #f59e0b; margin-bottom: 10px; font-size: 12px;">
+									<?php 
+									for ( $s = 1; $s <= 5; $s++ ) {
+										if ( $s <= $rate ) echo '<i class="fa-solid fa-star"></i>';
+										else echo '<i class="fa-regular fa-star"></i>';
+									}
+									?>
+								</div>
+								<p style="margin: 0; color: #475569; font-size: 15px; line-height: 1.6;"><?php echo get_comment_text($comment); ?></p>
+							</div>
+						</div>
+						<?php 
+							}
+						} else {
+							echo '<p>No reviews yet.</p>';
+						}
+						?>
 					</div>
 				</div>
-				<?php 
-					}
-				} else {
-					echo '<p>No reviews yet.</p>';
-				}
-				?>
 			</div>
-		</div>
 
-		<!-- Similar Reports by Industry -->
-		<div class="cmr-product-section" style="margin-top: 60px;">
-			<h2 class="cmr-section-title" style="font-size: 28px; font-weight: 700; margin-bottom: 10px;">Similar Reports by Industry</h2>
-			<p class="cmr-section-subtitle" style="color: #64748b; margin-bottom: 30px;">Comprehensive analysis and data-driven insights to help you navigate the evolving global market landscape.</p>
-			
-			<div class="cmr-reports-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px;">
-				<?php
-				$cat_ids = wp_get_post_terms( $product->get_id(), 'product_cat', array( 'fields' => 'ids' ) );
-				if ( ! empty( $cat_ids ) ) {
-					$similar_args = array(
-						'post_type'      => 'product',
-						'posts_per_page' => 3,
-						'post__not_in'   => array( $product->get_id() ),
-						'tax_query'      => array(
-							array(
-								'taxonomy' => 'product_cat',
-								'field'    => 'term_id',
-								'terms'    => $cat_ids,
-							),
-						),
-					);
-					$similar_loop = new WP_Query( $similar_args );
-					if ( $similar_loop->have_posts() ) {
-						while ( $similar_loop->have_posts() ) {
-							$similar_loop->the_post();
-							if (function_exists('cmr_render_custom_product_card')) {
-								cmr_render_custom_product_card();
-							}
+			<!-- Tab Panel: Similar Reports by Industry -->
+			<div id="tab-panel-industry-reports" class="tab-content-panel">
+				<div class="cmr-product-section">
+					<?php
+					// Render the Elementor template 'similar-reports-by-industry'
+					$similar_posts = get_posts(array(
+						'name'           => 'similar-reports-by-industry',
+						'post_type'      => 'quanto_tab_build',
+						'posts_per_page' => 1,
+						'post_status'    => 'publish'
+					));
+					
+					if ( $similar_posts && !empty($similar_posts[0]) ) {
+						$sim_post_id = $similar_posts[0]->ID;
+						
+						// Print CSS link inline
+						if (function_exists('cmr_print_elementor_css')) {
+							cmr_print_elementor_css($sim_post_id);
+						}
+						
+						// Render Elementor Content
+						if ( class_exists( '\Elementor\Plugin' ) ) {
+							echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $sim_post_id, true );
+						} else {
+							echo apply_filters('the_content', $similar_posts[0]->post_content);
 						}
 					} else {
-						echo '<p class="no-reports-msg">' . esc_html__( 'No similar reports found.', 'quanto' ) . '</p>';
+						echo '<p>Similar reports template not found.</p>';
 					}
-					wp_reset_postdata();
-				}
-				?>
+					?>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+	var tabNavItems = document.querySelectorAll('.custom-tabs-nav .tab-nav-item');
+	var tabPanels = document.querySelectorAll('.custom-tabs-content .tab-content-panel');
+
+	tabNavItems.forEach(function(item) {
+		item.addEventListener('click', function() {
+			var targetTab = this.getAttribute('data-tab');
+
+			// Remove active class from all tabs & panels
+			tabNavItems.forEach(function(nav) { nav.classList.remove('active'); });
+			tabPanels.forEach(function(panel) { panel.classList.remove('active'); });
+
+			// Add active class to selected tab & panel
+			this.classList.add('active');
+			var activePanel = document.getElementById('tab-panel-' + targetTab);
+			if (activePanel) {
+				activePanel.classList.add('active');
+			}
+		});
+	});
+});
+</script>
 
 <?php do_action( 'woocommerce_after_single_product' ); ?>
