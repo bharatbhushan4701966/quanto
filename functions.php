@@ -1740,3 +1740,5 @@ function cmr_account_icon_shortcode() {
     return '<a href="' . esc_url( $url ) . '" class="cmr-account-link" style="display:flex; align-items:center; justify-content:center; text-decoration:none;">' . $icon_html . '</a>';
 }
 add_shortcode( 'cmr_account_icon', 'cmr_account_icon_shortcode' );
+
+require_once get_template_directory() . '/inc/cmr-product-card.php';
