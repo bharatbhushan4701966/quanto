@@ -171,7 +171,6 @@ $query = get_search_query();
     background: #fff;
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
 }
 .cmr-search-results-list .quanto-blog-box > div {
     display: flex;
@@ -194,6 +193,17 @@ $query = get_search_query();
 .cmr-search-results-list .quanto-blog-content {
     flex: 1;
     padding: 0 !important;
+}
+.cmr-search-results-list .quanto-blog-content h5 {
+    font-size: 18px !important;
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+.cmr-search-results-list .quanto-blog-content p,
+.cmr-search-results-list .quanto-blog-content .blog-text {
+    font-size: 14px !important;
+    line-height: 1.6;
+    margin-bottom: 15px;
 }
 .cmr-search-results-list .blog-text {
     display: -webkit-box;
