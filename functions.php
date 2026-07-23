@@ -1569,67 +1569,7 @@ function cmr_cart_count_fragments($fragments) {
     return $fragments;
 }
 
-// Universal JS to place Cart Icon neatly inside the right-side header action container (.elementor-element-219e18d) and next to mobile toggle
-add_action('wp_footer', 'cmr_header_cart_container_injection', 99);
-function cmr_header_cart_container_injection() {
-    $cart_count = WC()->cart ? count(WC()->cart->get_cart()) : 0;
-    $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : '/cart/';
-    ?>
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Remove any old li cart menu items if present
-        document.querySelectorAll('.cmr-cart-menu-item').forEach(function(el) { el.remove(); });
-        
-        var cartHtml = <?php echo wp_json_encode( do_shortcode('[cmr_nav_cart]') ); ?>;
 
-        // 1. Desktop: Place inside .elementor-element-219e18d or .elementor-element-200fa94 right before download-btn or at start of container
-        var rightContainers = document.querySelectorAll('.elementor-element-219e18d, .elementor-element-200fa94, .elementor-element-c3cee6b, .quanto-header-right, .header-right-action');
-        rightContainers.forEach(function(container) {
-            if (!container.querySelector('.cmr-header-cart-widget')) {
-                var widget = document.createElement('div');
-                widget.className = 'cmr-header-cart-widget';
-                widget.style.cssText = 'display:inline-flex; align-items:center; margin-right:12px; z-index:99;';
-                widget.innerHTML = cartHtml;
-                
-                var downloadBtn = container.querySelector('.download-btn, .elementor-widget-button');
-                if (downloadBtn) {
-                    container.insertBefore(widget, downloadBtn);
-                } else {
-                    container.insertBefore(widget, container.firstChild);
-                }
-            }
-        });
-
-        // 2. Mobile/Tablet fallback: Place right before menuBar-toggle
-        var mobileToggles = document.querySelectorAll('.menuBar-toggle, .quanto-menu-toggle');
-        mobileToggles.forEach(function(toggle) {
-            if (!toggle.parentNode.querySelector('.cmr-mobile-cart-widget')) {
-                var widget = document.createElement('div');
-                widget.className = 'cmr-mobile-cart-widget d-inline-block d-lg-none';
-                widget.style.cssText = 'display:inline-flex; align-items:center; margin-right:10px; vertical-align:middle;';
-                widget.innerHTML = cartHtml;
-                toggle.parentNode.insertBefore(widget, toggle);
-            }
-        });
-        
-        // Target the Person / Account icon in the header and set its URL to the My Account page
-        // so it works with the newly added login plugin.
-        var accountUrl = '<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>';
-        var iconLinks = document.querySelectorAll('.elementor-widget-icon a, .cmr-header-user-icon');
-        iconLinks.forEach(function(link) {
-            var html = link.innerHTML.toLowerCase();
-            // Check if the icon contains 'user', 'person', or related paths
-            if (html.includes('fa-user') || html.includes('person') || html.includes('user') || html.includes('cx="12" cy="7"')) {
-                // cx="12" cy="7" is a common SVG coordinate for a user head circle
-                link.setAttribute('href', accountUrl);
-                // Also add a class in case the login plugin targets it
-                link.classList.add('lrm-login', 'xoo-el-login-tgr'); 
-            }
-        });
-    });
-    </script>
-    <?php
-}
 
 // Redirect shop page to research reports page
 add_action( 'template_redirect', 'quanto_redirect_shop_to_research_reports' );
@@ -1781,18 +1721,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-nav-search-popup.php';
 // Include Nav Cart Icon
 require_once QUANTO_DIR_PATH_INC . 'cmr-nav-cart-icon.php';
 
-/**
- * Inject Custom Cart Icon into Main Menu
- */
-add_filter( 'wp_nav_menu_items', 'cmr_inject_cart_into_menu', 10, 2 );
-function cmr_inject_cart_into_menu( $items, $args ) {
-    // Only add to the primary menu
-    if ( $args->theme_location == 'primary-menu' || $args->theme_location == 'primary' || $args->theme_location == 'main-menu' ) {
-        $cart_html = do_shortcode( '[cmr_nav_cart]' );
-        $items .= '<li class="menu-item cmr-menu-cart-icon" style="display:flex; align-items:center; margin-left:15px;">' . $cart_html . '</li>';
-    }
-    return $items;
-}
+
 
 // Modify Search Query to load 30 items at once for the "Load More" functionality
 function cmr_modify_search_query($query) {
