@@ -390,15 +390,7 @@ function cmr_nav_search_shortcode($atts = array()) {
 
                     <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="cmr-custom-popup-form">
                         <div class="cat-icon">
-                            <?php
-                            $custom_logo_id = get_theme_mod( 'custom_logo' );
-                            if ( $custom_logo_id ) {
-                                $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
-                                echo '<img src="' . esc_url( $logo[0] ) . '" alt="CMR Logo" style="max-height: 24px;">';
-                            } else {
-                                echo '<img src="https://cmrindia.com/wp-content/uploads/2021/11/CMR-Logo-1.png" alt="CMR Logo" style="max-height: 24px;">';
-                            }
-                            ?>
+                            <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/cmrlogo-with-oly-c.svg" alt="CMR Logo" style="max-height: 24px;">
                         </div>
 
                         <input name="s" required value="<?php echo esc_html( get_search_query() ); ?>" type="search" placeholder="Type here...">
