@@ -282,7 +282,7 @@ if ( post_password_required() ) {
 					</div>
 					
 					<!-- Review Modal -->
-					<div id="cmr-review-modal" class="cmr-modal-overlay">
+					<div id="cmr-review-modal" class="cmr-modal-overlay" style="display: none;">
 						<div class="cmr-modal-content">
 							<div class="cmr-modal-close" onclick="document.getElementById('cmr-review-modal').style.display='none';">&times; Close</div>
 							
