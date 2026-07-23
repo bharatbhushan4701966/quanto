@@ -1800,3 +1800,11 @@ add_action('wp_enqueue_scripts', function() {
         }
     }
 });
+
+add_action('init', function() {
+    if ( isset($_GET['clear_elementor_cache']) && class_exists( '\Elementor\Plugin' ) ) {
+        \Elementor\Plugin::instance()->files_manager->clear_cache();
+        echo 'Elementor CSS Cache Cleared!';
+        exit;
+    }
+});

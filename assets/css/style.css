@@ -604,7 +604,7 @@ body::-webkit-scrollbar-thumb {
   position: fixed;
   width: 100%;
   height: 100vh;
-  z-index: 99999;
+  z-index: 9999999 !important;
   background: var(--color-black);
   top: 0;
   left: 0;
@@ -667,7 +667,7 @@ body::-webkit-scrollbar-thumb {
   border-radius: 50%;
   mix-blend-mode: exclusion;
   transition: transform 0.3s ease, opacity 0.4s ease;
-  z-index: 99999;
+  z-index: 9999999 !important;
   transform: translate(-50%, -50%) scale(1);
 }
 
@@ -9459,7 +9459,7 @@ Single Product - Custom Sections (Related, Rating)
     width: 100%;
     height: 100%;
     background: rgba(241, 245, 249, 0.95);
-    z-index: 99999;
+    z-index: 9999999 !important;
     align-items: center;
     justify-content: center;
 }
@@ -9581,4 +9581,21 @@ Single Product - Custom Sections (Related, Rating)
 }
 .cmr-modal-form-wrapper .form-submit input[type="submit"]:hover {
     background: #000;
+}
+
+
+/* Fix Similar Reports typography */
+#tab-panel-industry-reports .elementor-widget-heading h1,
+#tab-panel-industry-reports .elementor-widget-heading h2,
+#tab-panel-industry-reports .elementor-heading-title,
+#tab-panel-industry-reports .e-heading-base {
+    font-size: 36px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 15px !important;
+    letter-spacing: -0.5px !important;
+}
+#tab-panel-industry-reports .elementor-widget-text-editor {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+    color: #475569 !important;
 }
