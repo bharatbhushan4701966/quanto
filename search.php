@@ -320,56 +320,34 @@ $query = get_search_query();
                     <?php endwhile; ?>
                 </div>
 
-                <?php if ($total_search_posts > 10): ?>
+                <?php
+                global $wp_query;
+                $max_pages = $wp_query->max_num_pages;
+                if ($max_pages > 1): 
+                ?>
                     <div class="text-center mt-5 mb-5" id="cmr-search-load-more-wrap" style="width: 100%;">
-                        <button id="cmr-search-load-more" class="cmr-search-load-more-btn">Load More</button>
+                        <button id="cmr-search-load-more" class="cmr-search-load-more-btn" data-page="1" data-max="<?php echo esc_attr($max_pages); ?>" data-search="<?php echo esc_attr($query); ?>">Load More</button>
                     </div>
                 <?php endif; ?>
-
-                <div class="cmr-pagination mt-4" id="cmr-search-pagination-wrap" style="display: <?php echo ($total_search_posts > 10) ? 'none' : 'flex'; ?>; justify-content: center; width: 100%;">
-                    <?php 
-                    the_posts_pagination( array(
-                        'prev_text' => '<i class="ri-arrow-left-s-line"></i>',
-                        'next_text' => '<i class="ri-arrow-right-s-line"></i>',
-                    ) ); 
-                    ?>
-                </div>
 
                 <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     document.addEventListener('click', function(e) {
-                        // Load More functionality
+                        // AJAX Load More functionality
                         if (e.target && e.target.id === 'cmr-search-load-more') {
                             e.preventDefault();
-                            var hiddenItems = document.querySelectorAll('.cmr-search-item.cmr-search-item-hidden');
-                            var itemsToShow = 10;
-                            for (var i = 0; i < hiddenItems.length; i++) {
-                                if (i < itemsToShow) {
-                                    hiddenItems[i].classList.remove('cmr-search-item-hidden');
-                                }
-                            }
+                            var btn = e.target;
+                            var currentPage = parseInt(btn.getAttribute('data-page'));
+                            var maxPage = parseInt(btn.getAttribute('data-max'));
+                            var searchQuery = btn.getAttribute('data-search');
                             
-                            var remainingHidden = document.querySelectorAll('.cmr-search-item.cmr-search-item-hidden');
-                            if (remainingHidden.length === 0) {
-                                var loadWrap = document.getElementById('cmr-search-load-more-wrap');
-                                if (loadWrap) loadWrap.style.display = 'none';
+                            if (currentPage < maxPage) {
+                                var nextPage = currentPage + 1;
+                                btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Loading...';
+                                btn.disabled = true;
                                 
-                                var paginationWrap = document.getElementById('cmr-search-pagination-wrap');
-                                if (paginationWrap) {
-                                    paginationWrap.style.display = 'flex';
-                                }
-                            }
-                        }
-
-                        // AJAX Pagination functionality
-                        var pageLink = e.target.closest('.cmr-pagination a.page-numbers');
-                        if (pageLink) {
-                            e.preventDefault();
-                            var url = pageLink.href;
-                            
-                            var listContainer = document.querySelector('.cmr-search-results-list');
-                            if (listContainer) {
-                                listContainer.style.opacity = '0.5';
+                                // Construct url for the next page
+                                var url = '<?php echo home_url('/'); ?>page/' + nextPage + '/?s=' + encodeURIComponent(searchQuery);
                                 
                                 fetch(url)
                                     .then(function(res) { return res.text(); })
@@ -377,35 +355,35 @@ $query = get_search_query();
                                         var parser = new DOMParser();
                                         var doc = parser.parseFromString(html, 'text/html');
                                         
-                                        var newList = doc.querySelector('.cmr-search-results-list');
+                                        var newList = doc.querySelector('.cmr-search-results-list .row');
                                         if (newList) {
-                                            // Remove animation classes so they show up instantly without scroll trigger
-                                            var anims = newList.querySelectorAll('.fade-anim');
-                                            for(var i=0; i<anims.length; i++) {
-                                                anims[i].classList.remove('fade-anim');
-                                            }
-                                            // Append new items to the existing row
-                                            var currentRow = listContainer.querySelector('.row');
+                                            var currentRow = document.querySelector('.cmr-search-results-list .row');
                                             var newItems = newList.querySelectorAll('.cmr-search-item');
+                                            
                                             for(var i=0; i<newItems.length; i++) {
+                                                // Remove animations so they show up immediately
+                                                var animItem = newItems[i].querySelector('.fade-anim');
+                                                if (animItem) {
+                                                    animItem.classList.remove('fade-anim');
+                                                }
                                                 newItems[i].classList.remove('cmr-search-item-hidden');
                                                 currentRow.appendChild(newItems[i]);
                                             }
                                             
-                                            // Replace the pagination wrapper with the new one
-                                            var currentPagination = listContainer.querySelector('#cmr-search-pagination-wrap');
-                                            var newPagination = newList.querySelector('#cmr-search-pagination-wrap');
-                                            if (currentPagination && newPagination) {
-                                                currentPagination.innerHTML = newPagination.innerHTML;
-                                            } else if (currentPagination && !newPagination) {
-                                                currentPagination.style.display = 'none';
-                                            }
+                                            btn.setAttribute('data-page', nextPage);
+                                            btn.innerHTML = 'Load More';
+                                            btn.disabled = false;
                                             
-                                            listContainer.style.opacity = '1';
+                                            if (nextPage >= maxPage) {
+                                                document.getElementById('cmr-search-load-more-wrap').style.display = 'none';
+                                            }
                                         } else {
-                                            // If no results list found in fetch (e.g. empty page 2), just restore opacity
-                                            listContainer.style.opacity = '1';
+                                            btn.innerHTML = 'No more results';
                                         }
+                                    })
+                                    .catch(function() {
+                                        btn.innerHTML = 'Error loading. Try again';
+                                        btn.disabled = false;
                                     });
                             }
                         }
