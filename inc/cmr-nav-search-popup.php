@@ -11,7 +11,7 @@ function cmr_popup_search_ajax_handler() {
     $args = array(
         's' => $search,
         'post_type' => array('post', 'cmr_news'),
-        'posts_per_page' => 5,
+        'posts_per_page' => 20,
         'post_status' => 'publish'
     );
     $q = new WP_Query($args);
@@ -503,6 +503,11 @@ function cmr_nav_search_shortcode($atts = array()) {
                                     html += '<div class="cmr-search-dropdown-title">' + titleHTML + '</div>';
                                     html += '</div></a>';
                                 });
+                                
+                                if (data.total > data.results.length) {
+                                    html += '<a href="javascript:void(0)" onclick="document.querySelector(\'.cmr-custom-popup-form\').submit()" class="cmr-search-dropdown-item" style="justify-content:center; padding: 20px; color: #6241ca; font-weight: 600;">View all ' + data.total + ' results</a>';
+                                }
+                                
                                 dropdown.innerHTML = html;
                                 dropdown.classList.add('active');
                             } else {
