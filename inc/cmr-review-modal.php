@@ -1,9 +1,9 @@
 <?php
 add_action('wp_footer', function() {
     if (is_product()) {
-        global ;
-        if (!) {
-             = wc_get_product(get_the_ID());
+        global $product;
+        if (!$product) {
+            $product = wc_get_product(get_the_ID());
         }
 ?>
 <!-- Review Modal (Full Page) -->
