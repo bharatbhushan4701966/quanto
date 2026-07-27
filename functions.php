@@ -1816,3 +1816,7 @@ add_action('init', function() {
         exit;
     }
 });
+
+
+// Include Review Modal
+require_once get_template_directory() . '/inc/cmr-review-modal.php';
