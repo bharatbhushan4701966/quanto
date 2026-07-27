@@ -394,7 +394,25 @@ document.addEventListener('DOMContentLoaded', function() {
 	document.querySelectorAll('.tab-content-panel').forEach(function(section) {
 		observer.observe(section);
 	});
+
+	// Move the review modal to the body to ensure it sits on top of everything
+	// and isn't constrained by any parent containers with transform/overflow properties.
+	var reviewModal = document.getElementById('cmr-review-modal');
+	if (reviewModal) {
+		document.body.appendChild(reviewModal);
+	}
 });
 </script>
+
+<style>
+/* Hide the default WooCommerce reviews list inside the modal since we only want the form */
+#cmr-review-modal #comments {
+    display: none !important;
+}
+#cmr-review-modal .cmr-modal-content {
+	/* Ensure modal is centered nicely */
+	margin: 0 auto;
+}
+</style>
 
 <?php do_action( 'woocommerce_after_single_product' ); ?>

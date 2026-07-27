@@ -9532,7 +9532,7 @@ Single Product - Custom Sections (Related, Rating)
 .cmr-modal-form-wrapper #respond {
     margin: 0;
 }
-.cmr-modal-form-wrapper h3#reply-title {
+.cmr-modal-form-wrapper #reply-title {
     display: none;
 }
 .cmr-modal-form-wrapper .comment-form-rating label {
