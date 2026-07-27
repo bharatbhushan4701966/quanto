@@ -29,6 +29,15 @@ add_action('wp_footer', function() {
 	</div>
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var modal = document.getElementById("cmr-review-modal");
+        if (modal && modal.parentNode !== document.body) {
+            document.body.appendChild(modal);
+        }
+    });
+</script>
+
 <?php
     }
 });
