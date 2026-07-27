@@ -417,16 +417,9 @@ if ( ! function_exists( 'cmr_custom_cart_shortcode' ) ) {
                         if ( data.success ) {
                             cartApp.innerHTML = data.data.html;
                             bindCartEvents();
-                            // Update nav badge count from new cart title
-                            var titleEl = cartApp.querySelector('.cmr-cart-box-title');
-                            if (titleEl) {
-                                var m = titleEl.textContent.match(/\((\d+)\s*items?\)/i);
-                                if (m) {
-                                    document.querySelectorAll('.cmr-nav-cart-badge-count').forEach(function(b) { b.textContent = m[1]; });
-                                }
-                            } else {
-                                // Cart is empty
-                                document.querySelectorAll('.cmr-nav-cart-badge-count').forEach(function(b) { b.textContent = '0'; });
+                            // Update nav badge count from AJAX response
+                            if (typeof data.data.cart_count !== 'undefined') {
+                                document.querySelectorAll('.cmr-nav-cart-badge-count').forEach(function(b) { b.textContent = data.data.cart_count; });
                             }
                             // Dispatch standard woo event so fragments (like header cart count) update
                             jQuery(document.body).trigger('wc_fragment_refresh');
@@ -713,7 +706,8 @@ function cmr_cart_action_handler() {
         WC()->cart->calculate_totals();
 
         wp_send_json_success( array(
-            'html' => cmr_get_cart_html()
+            'html' => cmr_get_cart_html(),
+            'cart_count' => count( WC()->cart->get_cart() )
         ) );
     } catch ( Exception $e ) {
         wp_send_json_error( array( 'message' => $e->getMessage() ) );
