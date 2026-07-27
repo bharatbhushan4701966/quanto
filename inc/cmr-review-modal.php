@@ -100,8 +100,12 @@ add_action('wp_footer', function() {
 }
 #cmr-review-modal-box .comment-form-rating { margin-bottom: 22px; }
 #cmr-review-modal-box .stars { font-size: 30px; }
+#cmr-review-modal-box .stars span {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+}
 #cmr-review-modal-box .stars a { 
-    color: #f59e0b; 
     margin-right: 4px; 
     display: inline-block;
     position: relative;
@@ -118,6 +122,7 @@ add_action('wp_footer', function() {
     line-height: 1;
     font-family: star !important;
     content: "\73" !important;
+    color: #cbd5e1 !important; /* Light gray for empty stars */
     text-indent: 0;
     font-variant: normal;
     text-transform: none;
@@ -128,10 +133,12 @@ add_action('wp_footer', function() {
 #cmr-review-modal-box .stars.selected a.active::before,
 #cmr-review-modal-box .stars.selected a:not(.active)::before {
     content: "\53" !important;
+    color: #f59e0b !important; /* Orange for solid stars */
 }
 #cmr-review-modal-box .stars a:hover ~ a::before,
 #cmr-review-modal-box .stars.selected a.active ~ a::before {
     content: "\73" !important;
+    color: #cbd5e1 !important;
 }
 #cmr-review-modal-box .comment-form-comment textarea {
     width: 100%;
