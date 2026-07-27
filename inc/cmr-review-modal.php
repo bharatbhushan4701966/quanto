@@ -148,6 +148,13 @@ add_action('wp_footer', function() {
     font-family: inherit;
 }
 #cmr-review-modal-box .form-submit input[type="submit"]:hover { background: #000; }
+
+#cmr-review-modal-box .stars a::before,
+#cmr-review-modal-box .stars a:hover::before,
+#cmr-review-modal-box .stars a:focus::before,
+#cmr-review-modal-box .stars a.active::before {
+    font-family: star !important;
+}
 </style>
 
 <div id="cmr-review-modal-overlay">
