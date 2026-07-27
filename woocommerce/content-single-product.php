@@ -322,7 +322,7 @@ if ( post_password_required() ) {
 
                     <div class="cmr-reviews-footer" style="display: flex; align-items: center; gap: 30px; margin-top: 60px; padding-top: 0;">
                         <div style="font-size: 15px; font-weight: 600; color: #000;">View all <?php echo esc_html($review_count); ?> reviews</div>
-                        <a href="javascript:void(0);" onclick="cmrOpenReviewModal();" style="color: #6d28d9; font-weight: 500; font-size: 15px; text-decoration: none;">Add a Review ↗</a>
+                        <a href="javascript:void(0);" onclick="cmrOpenReviewModal();" style="color: #6d28d9; font-weight: 500; font-size: 15px; text-decoration: none; display: flex; align-items: center; gap: 4px;">Add a Review <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
                     </div>
 				</div>
 			</div>
