@@ -229,10 +229,10 @@ if ( post_password_required() ) {
 			<!-- Tab Panel: Reviews -->
 			<div id="tab-panel-reviews" class="tab-content-panel">
 				<div class="cmr-product-section">
-					<h2 class="cmr-section-title" style="font-size: 28px; font-weight: 700; margin-bottom: 30px;">Rating</h2>
+					<h2 class="cmr-section-title" style="font-size: 28px; font-weight: 700; margin-bottom: 40px; color: #000;">Rating</h2>
 					
-					<div class="cmr-rating-container" style="display: flex; gap: 40px; margin-bottom: 40px;">
-						<div class="cmr-rating-summary" style="display: flex; flex-direction: column;">
+					<div class="cmr-rating-container" style="display: flex; gap: 60px; margin-bottom: 50px;">
+						<div class="cmr-rating-summary" style="display: flex; flex-direction: column; align-items: flex-start; min-width: 140px;">
 							<?php
 							$rating_count = $product->get_rating_count();
 							$review_count = $product->get_review_count();
@@ -248,8 +248,8 @@ if ( post_password_required() ) {
 								}
 							}
 							?>
-							<div style="font-size: 48px; font-weight: 700; line-height: 1;"><?php echo esc_html( number_format($average, 1) ); ?></div>
-							<div class="cmr-lr-stars" style="color: #f59e0b; margin: 10px 0;">
+							<div style="font-size: 64px; font-weight: 600; line-height: 1; color: #1e293b; letter-spacing: -1px;"><?php echo esc_html( number_format($average, 1) ); ?></div>
+							<div class="cmr-lr-stars" style="color: #f59e0b; margin: 15px 0 10px 0; font-size: 14px; letter-spacing: 2px;">
 								<?php 
 								$avg_f = floatval($average);
 								for ( $s = 1; $s <= 5; $s++ ) {
@@ -259,22 +259,26 @@ if ( post_password_required() ) {
 								}
 								?>
 							</div>
-							<div style="color: #64748b; font-size: 14px;"><?php echo esc_html($review_count); ?> Reviews</div>
-							
-							<div style="margin-top: 20px;">
-								<a href="javascript:void(0);" class="cmr-lr-btn" style="background: #111827; color: #fff; padding: 10px 20px; display: inline-block; border-radius: 5px;" onclick="cmrOpenReviewModal();">Write a Review</a>
-							</div>
+							<div style="color: #64748b; font-size: 15px;"><?php echo esc_html($review_count); ?> Reviews</div>
 						</div>
 						
-						<div class="cmr-rating-bars" style="flex: 1; max-width: 400px;">
-							<?php for ($i = 5; $i >= 1; $i--): 
+						<div class="cmr-rating-bars" style="flex: 1; max-width: 320px; display: flex; flex-direction: column; gap: 12px; justify-content: flex-start; padding-top: 5px;">
+							<?php 
+                            $bar_colors = array(
+                                5 => '#22c55e',
+                                4 => '#22c55e',
+                                3 => '#facc15',
+                                2 => '#f59e0b',
+                                1 => '#ea580c'
+                            );
+                            for ($i = 5; $i >= 1; $i--): 
 								$percent = $review_count > 0 ? ($ratings[$i] / $review_count) * 100 : 0;
+                                $color = $bar_colors[$i];
 							?>
-							<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-								<span style="width: 15px; font-weight: 600; color: #475569;"><?php echo $i; ?></span>
-								<i class="fa-solid fa-star" style="color: #f59e0b; font-size: 12px;"></i>
-								<div style="flex: 1; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden;">
-									<div style="width: <?php echo $percent; ?>%; height: 100%; background: #22c55e; border-radius: 4px;"></div>
+							<div style="display: flex; align-items: center; gap: 15px;">
+								<span style="width: 10px; font-weight: 700; color: #0f172a; font-size: 16px;"><?php echo $i; ?></span>
+								<div style="flex: 1; height: 8px; background: #f8fafc; border-radius: 4px; overflow: hidden;">
+									<div style="width: <?php echo $percent; ?>%; height: 100%; background: <?php echo $color; ?>; border-radius: 4px;"></div>
 								</div>
 							</div>
 							<?php endfor; ?>
@@ -282,28 +286,30 @@ if ( post_password_required() ) {
 					</div>
 					
 
-					<div class="cmr-reviews-list">
+					<div class="cmr-reviews-list" style="display: flex; flex-direction: column; gap: 50px;">
 						<?php 
 						if ($comments) {
 							foreach ($comments as $comment) {
 								$rate = intval(get_comment_meta($comment->comment_ID, 'rating', true));
 						?>
-						<div class="cmr-review-item" style="display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid #f1f5f9;">
-							<div class="cmr-review-avatar">
-								<?php echo get_avatar($comment, 50, '', '', array('class' => 'cmr-avatar-img', 'extra_attr' => 'style="border-radius:50%;"')); ?>
+						<div class="cmr-review-item" style="display: flex; gap: 24px;">
+							<div class="cmr-review-avatar" style="padding-top: 5px;">
+								<?php echo get_avatar($comment, 56, '', '', array('class' => 'cmr-avatar-img', 'extra_attr' => 'style="border-radius:50%;"')); ?>
 							</div>
-							<div class="cmr-review-content">
-								<h4 style="margin: 0 0 5px 0; font-size: 16px; font-weight: 600;"><?php echo get_comment_author($comment); ?></h4>
-								<div style="font-size: 12px; color: #94a3b8; margin-bottom: 10px;"><?php echo get_comment_date('', $comment); ?></div>
-								<div class="cmr-lr-stars" style="color: #f59e0b; margin-bottom: 10px; font-size: 12px;">
-									<?php 
-									for ( $s = 1; $s <= 5; $s++ ) {
-										if ( $s <= $rate ) echo '<i class="fa-solid fa-star"></i>';
-										else echo '<i class="fa-regular fa-star"></i>';
-									}
-									?>
-								</div>
-								<p style="margin: 0; color: #475569; font-size: 15px; line-height: 1.6;"><?php echo get_comment_text($comment); ?></p>
+							<div class="cmr-review-content" style="flex: 1;">
+                                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 6px;">
+								    <h4 style="margin: 0; font-size: 18px; font-weight: 700; color: #000;"><?php echo get_comment_author($comment); ?></h4>
+                                    <div class="cmr-lr-stars" style="color: #f59e0b; font-size: 14px; letter-spacing: 1px;">
+                                        <?php 
+                                        for ( $s = 1; $s <= 5; $s++ ) {
+                                            if ( $s <= $rate ) echo '<i class="fa-solid fa-star"></i>';
+                                            else echo '<i class="fa-regular fa-star"></i>';
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+								<div style="font-size: 14px; color: #000; margin-bottom: 18px;"><?php echo get_comment_date('M d, Y', $comment); ?> | <?php echo get_comment_time('g:i a', $comment); ?></div>
+								<p style="margin: 0; color: #1e293b; font-size: 16px; line-height: 1.6; max-width: 900px;"><?php echo get_comment_text($comment); ?></p>
 							</div>
 						</div>
 						<?php 
@@ -313,6 +319,11 @@ if ( post_password_required() ) {
 						}
 						?>
 					</div>
+
+                    <div class="cmr-reviews-footer" style="display: flex; align-items: center; gap: 30px; margin-top: 60px; padding-top: 0;">
+                        <div style="font-size: 15px; font-weight: 600; color: #000;">View all <?php echo esc_html($review_count); ?> reviews</div>
+                        <a href="javascript:void(0);" onclick="cmrOpenReviewModal();" style="color: #6d28d9; font-weight: 500; font-size: 15px; text-decoration: none;">Add a Review ↗</a>
+                    </div>
 				</div>
 			</div>
 
