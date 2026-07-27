@@ -296,10 +296,10 @@ if ( post_password_required() ) {
 							<div class="cmr-review-avatar" style="padding-top: 5px;">
 								<?php echo get_avatar($comment, 56, '', '', array('class' => 'cmr-avatar-img', 'extra_attr' => 'style="border-radius:50%;"')); ?>
 							</div>
-							<div class="cmr-review-content" style="flex: 1;">
+                            <div class="cmr-review-content" style="flex: 1;">
                                 <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 6px;">
-								    <h4 style="margin: 0; font-size: 18px; font-weight: 700; color: #000;"><?php echo get_comment_author($comment); ?></h4>
-                                    <div class="cmr-lr-stars" style="color: #f59e0b; font-size: 14px; letter-spacing: 1px;">
+								    <h4 style="margin: 0; font-size: 18px; font-weight: 700; color: #000; letter-spacing: 0.2px; line-height: 1;"><?php echo get_comment_author($comment); ?></h4>
+                                    <div class="cmr-lr-stars" style="color: #f59e0b; font-size: 14px; letter-spacing: 1px; display: flex; align-items: center;">
                                         <?php 
                                         for ( $s = 1; $s <= 5; $s++ ) {
                                             if ( $s <= $rate ) echo '<i class="fa-solid fa-star"></i>';
