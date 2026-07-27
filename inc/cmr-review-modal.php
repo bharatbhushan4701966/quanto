@@ -100,7 +100,39 @@ add_action('wp_footer', function() {
 }
 #cmr-review-modal-box .comment-form-rating { margin-bottom: 22px; }
 #cmr-review-modal-box .stars { font-size: 30px; }
-#cmr-review-modal-box .stars a { color: #f59e0b; margin-right: 4px; }
+#cmr-review-modal-box .stars a { 
+    color: #f59e0b; 
+    margin-right: 4px; 
+    display: inline-block;
+    position: relative;
+    text-indent: -9999px;
+    width: 20px;
+}
+#cmr-review-modal-box .stars a::before {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    line-height: 1;
+    font-family: star !important;
+    content: "\73" !important;
+    text-indent: 0;
+    font-variant: normal;
+    text-transform: none;
+    font-weight: 400;
+}
+#cmr-review-modal-box .stars a:hover::before,
+#cmr-review-modal-box .stars:hover a::before,
+#cmr-review-modal-box .stars.selected a.active::before,
+#cmr-review-modal-box .stars.selected a:not(.active)::before {
+    content: "\53" !important;
+}
+#cmr-review-modal-box .stars a:hover ~ a::before,
+#cmr-review-modal-box .stars.selected a.active ~ a::before {
+    content: "\73" !important;
+}
 #cmr-review-modal-box .comment-form-comment textarea {
     width: 100%;
     background: #f8fafc;
