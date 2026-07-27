@@ -262,7 +262,7 @@ if ( post_password_required() ) {
 							<div style="color: #64748b; font-size: 14px;"><?php echo esc_html($review_count); ?> Reviews</div>
 							
 							<div style="margin-top: 20px;">
-								<a href="javascript:void(0);" class="cmr-lr-btn" style="background: #111827; color: #fff; padding: 10px 20px; display: inline-block; border-radius: 5px;" onclick="document.getElementById('cmr-review-modal').style.display='flex';">Write a Review</a>
+								<a href="javascript:void(0);" class="cmr-lr-btn" style="background: #111827; color: #fff; padding: 10px 20px; display: inline-block; border-radius: 5px;" onclick="cmrOpenReviewModal();">Write a Review</a>
 							</div>
 						</div>
 						
