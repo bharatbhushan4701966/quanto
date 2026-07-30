@@ -2902,6 +2902,23 @@ html body .quanto-link-btn {
     --flex-wrap-mobile: wrap;
     --gap: 0px 0px;
     --row-gap: 0px;
+/* Fix for Huge H1 text in Similar Reports by Industry */
+.quanto-similar-reports-section h1,
+.quanto-similar-reports-section h1.elementor-heading-title,
+.quanto-similar-reports-section h1.e-heading-base {
+    font-size: 56px !important;
+    line-height: 1.2 !important;
+    letter-spacing: -1px !important;
+}
+
+@media (max-width: 768px) {
+    .quanto-similar-reports-section h1,
+    .quanto-similar-reports-section h1.elementor-heading-title,
+    .quanto-similar-reports-section h1.e-heading-base {
+        font-size: 36px !important;
+    }
+}
+
 .quanto-similar-reports-section .e-con > .e-con-inner > .e-con:nth-child(2) .elementor-heading-title,
 .quanto-similar-reports-section .e-con > .e-con-inner > .e-con:nth-child(2) .e-heading-base {
     font-size: 16px !important;
