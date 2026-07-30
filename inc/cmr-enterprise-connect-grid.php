@@ -9,7 +9,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 add_shortcode( 'cmr_enterprise_connect_grid', 'cmr_enterprise_connect_grid_shortcode' );
 
-function cmr_enterprise_connect_grid_shortcode() {
+function cmr_enterprise_connect_grid_shortcode( $atts ) {
+    $atts = shortcode_atts( array(
+        'link_enterprise'   => '#enterprise-connect',
+        'link_featured'     => '#featured',
+        'link_latest'       => '#latest',
+        'link_media_res'    => '#media-resources',
+        'link_media_con'    => '#media-contacts',
+        'link_market'       => '#market-updates',
+        'link_reports'      => '#reports',
+        'link_cmr_news'     => '#cmr-in-news'
+    ), $atts, 'cmr_enterprise_connect_grid' );
+
     ob_start();
 
     $unique_ids = cmr_get_unique_enterprise_post_ids();
@@ -349,14 +360,14 @@ function cmr_enterprise_connect_grid_shortcode() {
         
         <!-- Top Nav -->
         <div class="cmr-enterprisecgd-top-nav">
-            <a href="#" class="active">Enterprise Connect</a>
-            <a href="#">Featured</a>
-            <a href="#">Latest</a>
-            <a href="#">Media Resources</a>
-            <a href="#">Media Contacts</a>
-            <a href="#">Market Updates</a>
-            <a href="#">Reports</a>
-            <a href="#">CMR in news</a>
+            <a href="<?php echo esc_attr($atts['link_enterprise']); ?>" class="active">Enterprise Connect</a>
+            <a href="<?php echo esc_attr($atts['link_featured']); ?>">Featured</a>
+            <a href="<?php echo esc_attr($atts['link_latest']); ?>">Latest</a>
+            <a href="<?php echo esc_attr($atts['link_media_res']); ?>">Media Resources</a>
+            <a href="<?php echo esc_attr($atts['link_media_con']); ?>">Media Contacts</a>
+            <a href="<?php echo esc_attr($atts['link_market']); ?>">Market Updates</a>
+            <a href="<?php echo esc_attr($atts['link_reports']); ?>">Reports</a>
+            <a href="<?php echo esc_attr($atts['link_cmr_news']); ?>">CMR in news</a>
         </div>
 
         <!-- Header -->
