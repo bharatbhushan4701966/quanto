@@ -191,6 +191,7 @@ function cmr_scrape_single_handler() {
         'post_type'     => $post_type,
         'meta_input'    => array(
             '_scraped_from_table' => $tid,
+            '_wp_page_template'   => 'elementor_header_footer', // Elementor Full Width
         )
     );
 
