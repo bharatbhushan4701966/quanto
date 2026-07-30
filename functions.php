@@ -1882,4 +1882,52 @@ add_action( 'rest_api_init', function () {
         },
         'permission_callback' => '__return_true',
     ) );
+    
+    register_rest_route( 'quanto/v1', '/fetch_page', array(
+        'methods' => 'GET',
+        'callback' => function( $request ) {
+            $url = $request->get_param( 'url' );
+            if ( empty( $url ) || ! filter_var( $url, FILTER_VALIDATE_URL ) ) {
+                return new WP_Error( 'invalid_url', 'Missing or invalid URL', array( 'status' => 400 ) );
+            }
+            
+            $response = wp_remote_get( $url, array( 'timeout' => 30 ) );
+            if ( is_wp_error( $response ) ) {
+                return new WP_Error( 'fetch_failed', 'Failed to fetch the URL: ' . $response->get_error_message(), array( 'status' => 500 ) );
+            }
+            
+            $html = wp_remote_retrieve_body( $response );
+            if ( empty( $html ) ) {
+                return new WP_Error( 'empty_content', 'The URL returned an empty response', array( 'status' => 500 ) );
+            }
+            
+            // Basic parsing to try to extract just the body or main content
+            $content = $html;
+            $title = '';
+            
+            if ( class_exists('DOMDocument') ) {
+                $dom = new DOMDocument();
+                @$dom->loadHTML( mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8') );
+                
+                $title_nodes = $dom->getElementsByTagName('title');
+                if ( $title_nodes->length > 0 ) {
+                    $title = $title_nodes->item(0)->nodeValue;
+                }
+                
+                // For a dynamic fetch, just returning the body is usually safest if no selector is given
+                $body_nodes = $dom->getElementsByTagName('body');
+                if ( $body_nodes->length > 0 ) {
+                    $content = $dom->saveHTML( $body_nodes->item(0) );
+                }
+            }
+            
+            return rest_ensure_response( array(
+                'success' => true,
+                'url' => $url,
+                'title' => $title,
+                'content' => $content
+            ) );
+        },
+        'permission_callback' => '__return_true',
+    ) );
 } );
