@@ -249,7 +249,7 @@ if ( post_password_required() ) {
 							}
 							?>
 							<div style="font-size: 64px; font-weight: 600; line-height: 1; color: #1e293b; letter-spacing: -1px;"><?php echo esc_html( number_format($average, 1) ); ?></div>
-							<div class="cmr-lr-stars" style="color: #f59e0b; margin: 15px 0 10px 0; font-size: 14px; letter-spacing: 2px;">
+							<div class="cmr-lr-stars" style="color: #f59e0b; margin: 15px 0 0 0; font-size: 13px; letter-spacing: 2px;">
 								<?php 
 								$avg_f = floatval($average);
 								for ( $s = 1; $s <= 5; $s++ ) {
@@ -298,8 +298,8 @@ if ( post_password_required() ) {
 							</div>
                             <div class="cmr-review-content" style="flex: 1;">
                                 <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 6px;">
-								    <h4 style="margin: 0; font-size: 18px; font-weight: 700; color: #000; letter-spacing: 0.2px; line-height: 1;"><?php echo get_comment_author($comment); ?></h4>
-                                    <div class="cmr-lr-stars" style="color: #f59e0b; font-size: 14px; letter-spacing: 1px; display: flex; align-items: center; margin-top: 3px;">
+								    <h4 style="margin: 0; font-size: 18px; font-weight: 700; color: #000; letter-spacing: 0.2px;"><?php echo get_comment_author($comment); ?></h4>
+                                    <div class="cmr-lr-stars" style="color: #f59e0b; font-size: 14px; letter-spacing: 1px; display: flex; align-items: center; margin-top: 0;">
                                         <?php 
                                         for ( $s = 1; $s <= 5; $s++ ) {
                                             if ( $s <= $rate ) echo '<i class="fa-solid fa-star"></i>';
