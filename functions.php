@@ -1185,31 +1185,85 @@ add_shortcode('cmr_challenge', function() {
 
 // Shortcode to display the Similar Reports by Industry section by rendering the quanto_tab_build post
 add_shortcode('cmr_similar_reports', function() {
-    ob_start();
-    
-    // Find the post by slug
-    $posts = get_posts(array(
-        'name' => 'similar-reports-by-industry',
-        'post_type' => 'quanto_tab_build',
-        'posts_per_page' => 1,
-        'post_status' => 'publish'
-    ));
-    
-    if ( $posts && !empty($posts[0]) ) {
-        $post_id = $posts[0]->ID;
-        
-        // Print CSS link inline
-        cmr_print_elementor_css($post_id);
-        
-        // Render it
-        if ( class_exists( '\Elementor\Plugin' ) ) {
-            echo '<div id="cmr-similar-reports-section">';
-            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
-            echo '</div>';
-        }
+    $is_elementor_page = false;
+    if ( class_exists( '\Elementor\Plugin' ) ) {
+        $is_elementor_page = \Elementor\Plugin::$instance->db->is_built_with_elementor( get_the_ID() );
     }
     
-    return ob_get_clean();
+    // If we are already on an Elementor page (like the Product page), we can just render natively
+    // because Elementor has already loaded its core structural CSS in the head.
+    if ( $is_elementor_page ) {
+        ob_start();
+        $posts = get_posts(array(
+            'name' => 'similar-reports-by-industry',
+            'post_type' => 'quanto_tab_build',
+            'posts_per_page' => 1,
+            'post_status' => 'publish'
+        ));
+        
+        if ( $posts && !empty($posts[0]) ) {
+            $post_id = $posts[0]->ID;
+            cmr_print_elementor_css($post_id);
+            if ( class_exists( '\Elementor\Plugin' ) ) {
+                echo '<div id="cmr-similar-reports-section">';
+                echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
+                echo '</div>';
+            }
+        }
+        return ob_get_clean();
+    } else {
+        // NON-Elementor page (like default blog template): Elementor's core grid/layout CSS is missing!
+        // We fetch the standalone preview URL and extract its complete CSS links to inject here.
+        $transient_key = 'cmr_similar_reports_html_cache';
+        $cached_html = get_transient( $transient_key );
+        
+        if ( false === $cached_html || ( is_user_logged_in() && isset($_GET['refresh_cache']) ) ) {
+            $posts = get_posts(array(
+                'name' => 'similar-reports-by-industry',
+                'post_type' => 'quanto_tab_build',
+                'posts_per_page' => 1,
+                'post_status' => 'publish'
+            ));
+            
+            if ( ! $posts || empty($posts[0]) ) {
+                return '<!-- Similar reports post not found -->';
+            }
+            $post_id = $posts[0]->ID;
+            
+            $url = home_url( '/?quanto_tab_build=similar-reports-by-industry' );
+            $response = wp_remote_get( $url, array('timeout' => 15) );
+            
+            if ( is_wp_error( $response ) ) {
+                return $cached_html ? $cached_html : '<!-- Error fetching similar reports -->';
+            }
+            
+            $body = wp_remote_retrieve_body( $response );
+            
+            $inline_css = '';
+            // Extract external Elementor CSS files (including globals)
+            if ( preg_match_all( '/<link[^>]*href=["\'][^"\']*elementor\/css\/post-\d+\.css[^"\']*["\'][^>]*>/i', $body, $link_matches ) ) {
+                $inline_css .= implode("\n", $link_matches[0]) . "\n";
+            }
+            // Extract inline styles
+            if ( preg_match_all( '/<style[^>]*id="elementor-post-[^"]*"[^>]*>.*?<\/style>/is', $body, $style_matches ) ) {
+                $inline_css .= implode("\n", $style_matches[0]) . "\n";
+            }
+            if ( preg_match_all( '/<style[^>]*id="elementor-frontend-[^"]*"[^>]*>.*?<\/style>/is', $body, $style_matches ) ) {
+                $inline_css .= implode("\n", $style_matches[0]) . "\n";
+            }
+            
+            $content_html = '';
+            if ( class_exists( '\Elementor\Plugin' ) ) {
+                $content_html = \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
+            }
+            
+            $cached_html = '<div id="cmr-similar-reports-section">' . $inline_css . $content_html . '</div>';
+            
+            set_transient( $transient_key, $cached_html, 6 * HOUR_IN_SECONDS );
+        }
+        
+        return $cached_html;
+    }
 });
 
 // Shortcode to display the Testimonials section by rendering the quanto_tab_build post
