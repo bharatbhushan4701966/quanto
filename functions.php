@@ -1185,7 +1185,7 @@ add_shortcode('cmr_challenge', function() {
 
 add_action( 'wp_enqueue_scripts', function() {
     global $post;
-    if ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'cmr_similar_reports' ) ) {
+    if ( (is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'cmr_similar_reports' )) || is_single() ) {
         if ( class_exists( '\Elementor\Plugin' ) ) {
             // Enqueue Elementor core frontend CSS
             \Elementor\Plugin::$instance->frontend->enqueue_styles();

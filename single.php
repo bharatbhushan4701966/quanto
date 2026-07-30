@@ -99,10 +99,8 @@ add_filter('body_class', function($classes) {
     */
     do_action( 'quanto_blog_details_related_post' );
 
-    // Render the Similar Reports by Industry section from the "test" page
-    if ( function_exists( 'quanto_render_test_page_similar_reports_section' ) ) {
-        quanto_render_test_page_similar_reports_section();
-    }
+    // Render the Similar Reports by Industry section dynamically via shortcode
+    echo do_shortcode('[cmr_similar_reports]');
     // Render specific homepage sections as requested
     if ( function_exists( 'quanto_render_homepage_who_we_serve_section' ) ) {
         quanto_render_homepage_who_we_serve_section();
