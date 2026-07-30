@@ -181,7 +181,7 @@ function cmr_scrape_single_handler() {
 
     // Full width table with Elementor Full Width template + blog header via meta
     $extracted_content = '<style>
-    .cmr-table-container { width: 100%; display: block; padding: 60px 20px 20px; box-sizing: border-box; }
+    .cmr-table-container { width: 100%; display: block; margin-top: 100px; padding: 0 20px 40px 20px; box-sizing: border-box; }
     .cmr-table-container table { font-size: 11px !important; width: 100% !important; table-layout: fixed !important; }
     .cmr-table-container table th, .cmr-table-container table td { padding: 6px 5px !important; line-height: 1.3 !important; word-wrap: break-word !important; overflow-wrap: break-word !important; white-space: normal !important; }
     </style>';
