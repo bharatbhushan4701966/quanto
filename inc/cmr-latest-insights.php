@@ -131,7 +131,10 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
             'nav_title'      => 'Automotive',
             'section_title'  => 'Latest Insights',
             'section_desc'   => 'Explore expert analysis, research reports, and real-time market signals shaping industries and business strategy.',
+            'category'       => 'industry-connect', // Dynamic category option
         ), $atts );
+
+        $category_slug = sanitize_title( $atts['category'] );
 
         $query_args = array(
             'post_type'      => array( 'post', 'cmr_news' ),
@@ -140,10 +143,16 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
             'orderby'        => 'date',
             'order'          => 'DESC',
             'tax_query'      => array(
+                'relation' => 'OR',
                 array(
                     'taxonomy' => 'category',
                     'field'    => 'slug',
-                    'terms'    => 'industry-connect',
+                    'terms'    => $category_slug,
+                ),
+                array(
+                    'taxonomy' => 'cmr_news_category',
+                    'field'    => 'slug',
+                    'terms'    => $category_slug,
                 ),
             ),
         );
