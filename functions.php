@@ -1185,31 +1185,66 @@ add_shortcode('cmr_challenge', function() {
 
 // Shortcode to display the Similar Reports by Industry section by rendering the quanto_tab_build post
 add_shortcode('cmr_similar_reports', function() {
-    ob_start();
+    $transient_key = 'cmr_similar_reports_html_cache';
+    $cached_html = get_transient( $transient_key );
     
-    // Find the post by slug
-    $posts = get_posts(array(
-        'name' => 'similar-reports-by-industry',
-        'post_type' => 'quanto_tab_build',
-        'posts_per_page' => 1,
-        'post_status' => 'publish'
-    ));
-    
-    if ( $posts && !empty($posts[0]) ) {
+    if ( false === $cached_html || ( is_user_logged_in() && isset($_GET['refresh_cache']) ) ) {
+        // Find the post by slug to get the post ID for targeting
+        $posts = get_posts(array(
+            'name' => 'similar-reports-by-industry',
+            'post_type' => 'quanto_tab_build',
+            'posts_per_page' => 1,
+            'post_status' => 'publish'
+        ));
+        
+        if ( ! $posts || empty($posts[0]) ) {
+            return '<!-- Similar reports post not found -->';
+        }
         $post_id = $posts[0]->ID;
         
-        // Print CSS link inline
-        cmr_print_elementor_css($post_id);
+        $url = home_url( '/?quanto_tab_build=similar-reports-by-industry' );
+        $response = wp_remote_get( $url, array('timeout' => 15) );
         
-        // Render it
-        if ( class_exists( '\Elementor\Plugin' ) ) {
-            echo '<div id="cmr-similar-reports-section">';
-            echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
-            echo '</div>';
+        if ( is_wp_error( $response ) ) {
+            return $cached_html ? $cached_html : '<!-- Error fetching similar reports -->';
         }
+        
+        $body = wp_remote_retrieve_body( $response );
+        
+        // Extract the inline CSS tags from Elementor
+        $inline_css = '';
+        if ( preg_match_all( '/elementor\/css\/post-(\d+)\.css/i', $body, $id_matches ) ) {
+            $post_ids = array_unique( $id_matches[1] );
+            foreach ( $post_ids as $pid ) {
+                if ( function_exists( 'cmr_get_elementor_css_inline' ) ) {
+                    $css = cmr_get_elementor_css_inline( (int) $pid );
+                    if ( ! empty( $css ) ) {
+                        $inline_css .= '<style id="cmr-similar-reports-cached-' . $pid . '-css">' . $css . '</style>' . "\n";
+                    }
+                }
+            }
+        }
+        
+        // Extract the actual HTML content
+        $content_html = '';
+        
+        if ( preg_match( '/<div data-elementor-type="[^"]+" data-elementor-id="' . $post_id . '".*?<\/div>\s*<!-- \.elementor -->/is', $body, $matches ) ) {
+            $content_html = $matches[0];
+        } else {
+            // Fallback regex without the comment
+            if ( preg_match( '/<div data-elementor-type="[^"]+" data-elementor-id="' . $post_id . '".*?(<\/main>|<\/div>\s*<\/div>\s*<\/div>)/is', $body, $matches ) ) {
+                $content_html = $matches[0];
+            } else {
+                $content_html = '<!-- Could not find Elementor wrapper for similar reports -->';
+            }
+        }
+        
+        $cached_html = '<div id="cmr-similar-reports-section">' . $inline_css . $content_html . '</div>';
+        
+        set_transient( $transient_key, $cached_html, 6 * HOUR_IN_SECONDS );
     }
     
-    return ob_get_clean();
+    return $cached_html;
 });
 
 // Shortcode to display the Testimonials section by rendering the quanto_tab_build post
