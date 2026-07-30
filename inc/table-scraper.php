@@ -177,6 +177,8 @@ function cmr_scrape_single_handler() {
         wp_send_json_error('Empty Table ID');
     }
 
+    $title = $name ? $name : 'Table ' . $tid;
+
     // Full width container (98%) and reduced table font size to match live site
     $extracted_content = '<style>
     .cmr-table-container { max-width: 98%; margin: 50px auto; width: 100%; display: block; overflow-x: auto; }
