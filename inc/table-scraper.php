@@ -179,14 +179,9 @@ function cmr_scrape_single_handler() {
 
     $title = $name ? $name : 'Table ' . $tid;
 
-    // Full width table that breaks out of container, with blog header
+    // Full width table with Elementor Full Width template + blog header via meta
     $extracted_content = '<style>
-    /* Break out of the theme container to go full width */
-    .quanto-page-section .container { max-width: 100% !important; padding: 0 !important; }
-    .quanto-page-section .row { margin: 0 !important; }
-    .quanto-page-section .col-lg-12 { padding: 0 !important; }
-    .cmr-table-container { width: 100%; display: block; padding: 0 10px; box-sizing: border-box; }
-    /* Force ALL columns to fit on screen by scaling down font + padding */
+    .cmr-table-container { width: 100%; display: block; padding: 60px 20px 20px; box-sizing: border-box; }
     .cmr-table-container table { font-size: 11px !important; width: 100% !important; table-layout: fixed !important; }
     .cmr-table-container table th, .cmr-table-container table td { padding: 6px 5px !important; line-height: 1.3 !important; word-wrap: break-word !important; overflow-wrap: break-word !important; white-space: normal !important; }
     </style>';
@@ -200,7 +195,9 @@ function cmr_scrape_single_handler() {
         'post_status'   => 'publish',
         'post_type'     => $post_type,
         'meta_input'    => array(
-            '_scraped_from_table' => $tid,
+            '_scraped_from_table'  => $tid,
+            '_wp_page_template'    => 'elementor_header_footer', // Elementor Full Width = no container
+            '_cmr_use_blog_header' => '1',                       // Forces blog-header via header.php
         )
     );
 

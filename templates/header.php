@@ -53,6 +53,19 @@
         elseif ( is_page() || is_page_template('template-builder.php') ) {
 
             $quanto_post_id = get_the_ID();
+
+            // ✅ CMR Scraper: force blog-header for table pages
+            if ( get_post_meta( $quanto_post_id, '_cmr_use_blog_header', true ) == '1' ) {
+                $header_post = get_page_by_path( 'blog-header', OBJECT, 'quanto_header' );
+                if ( $header_post ) {
+                    echo '<header class="header">';
+                    echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $header_post->ID, true );
+                    echo '</header>';
+                }
+                // Skip the rest of page header logic
+                goto end_header_logic;
+            }
+
             $settings_manager = \Elementor\Core\Settings\Manager::get_settings_managers( 'page' );
             $settings_model = $settings_manager->get_model( $quanto_post_id );
             $header_style = $settings_model->get_settings( 'quanto_header_style' );
@@ -115,6 +128,7 @@
                 }
             }
 
+            end_header_logic:
         }  
         // ✅ Fallback for all others
         else {
