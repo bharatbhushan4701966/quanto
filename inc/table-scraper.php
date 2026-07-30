@@ -40,7 +40,6 @@ function cmr_table_scraper_page() {
     if ( isset( $_POST['prepare_scraper'] ) && check_admin_referer( 'run_scraper_action', 'run_scraper_nonce' ) ) {
         $table_id = sanitize_text_field( $_POST['table_id'] );
         $post_type = sanitize_text_field( $_POST['post_type'] );
-        $css_selector = sanitize_text_field( $_POST['css_selector'] );
         
         if ( class_exists( 'TablePress' ) ) {
             $tables_to_process = [];
@@ -53,18 +52,11 @@ function cmr_table_scraper_page() {
             foreach ( $tables_to_process as $tid ) {
                 try {
                     $table = TablePress::$model_table->load( $tid );
-                    if ( $table && ! empty( $table['data'] ) ) {
-                        foreach ( $table['data'] as $index => $row ) {
-                            if ( $index === 0 ) continue; // Skip header
-                            foreach ( $row as $cell ) {
-                                if ( preg_match( '/https?:\/\/[^\s"\'<>]+/', $cell, $matches ) ) {
-                                    $urls_to_scrape[] = [
-                                        'url' => $matches[0],
-                                        'tid' => $tid
-                                    ];
-                                }
-                            }
-                        }
+                    if ( $table ) {
+                        $urls_to_scrape[] = [
+                            'tid' => $tid,
+                            'name' => $table['name']
+                        ];
                     }
                 } catch (Exception $e) {}
             }
@@ -73,8 +65,8 @@ function cmr_table_scraper_page() {
 
     ?>
     <div class="wrap">
-        <h1>AJAX Table Scraper Automation</h1>
-        <p>This tool reads a TablePress table, finds URLs in the rows, fetches the live URL content, and creates pages automatically. It uses AJAX to prevent Cloudflare timeouts.</p>
+        <h1>Batch Create Table Pages</h1>
+        <p>This tool reads your TablePress tables and automatically creates 1 WordPress page for each table, with the shortcode embedded inside.</p>
         
         <?php if ( empty($urls_to_scrape) ) : ?>
         <form method="post" action="">
@@ -85,7 +77,7 @@ function cmr_table_scraper_page() {
                     <th scope="row"><label for="table_id">TablePress Table ID</label></th>
                     <td>
                         <input name="table_id" type="text" id="table_id" value="all" class="regular-text" required>
-                        <p class="description">Enter the ID of the TablePress table (e.g. 12), or type <code>all</code> to scrape all tables.</p>
+                        <p class="description">Enter the ID of the TablePress table (e.g. 12), or type <code>all</code> to create pages for all tables.</p>
                     </td>
                 </tr>
                 <tr>
@@ -95,24 +87,17 @@ function cmr_table_scraper_page() {
                         <p class="description">Examples: page, post, record, etc.</p>
                     </td>
                 </tr>
-                <tr>
-                    <th scope="row"><label for="css_selector">CSS Selector to Extract</label></th>
-                    <td>
-                        <input name="css_selector" type="text" id="css_selector" value="body" class="regular-text">
-                        <p class="description">Enter a CSS class or ID (e.g., <code>.entry-content</code> or <code>#main</code>) to extract specific content. Leave as <code>body</code> to get everything.</p>
-                    </td>
-                </tr>
             </table>
             
             <p class="submit">
-                <input type="submit" name="prepare_scraper" id="submit" class="button button-primary" value="Prepare Scraper">
+                <input type="submit" name="prepare_scraper" id="submit" class="button button-primary" value="Create Pages">
             </p>
         </form>
         <?php else: ?>
             
             <div id="scraper-progress-container" style="max-width: 600px; margin-top: 20px; padding: 20px; background: #fff; border: 1px solid #ccd0d4; border-radius: 4px;">
-                <h3>Scraping Progress</h3>
-                <p>Found <strong><?php echo count($urls_to_scrape); ?></strong> URLs. Do not close this page.</p>
+                <h3>Page Creation Progress</h3>
+                <p>Found <strong><?php echo count($urls_to_scrape); ?></strong> tables. Do not close this page.</p>
                 <div style="width: 100%; background: #e2e4e7; border-radius: 3px; height: 20px; margin-bottom: 10px;">
                     <div id="scraper-progress-bar" style="width: 0%; background: #2271b1; height: 20px; border-radius: 3px; transition: width 0.3s;"></div>
                 </div>
@@ -128,7 +113,6 @@ function cmr_table_scraper_page() {
                 var total = urls.length;
                 var current = 0;
                 var postType = "<?php echo esc_js($post_type); ?>";
-                var cssSelector = "<?php echo esc_js($css_selector); ?>";
 
                 function logMessage(msg, isError = false) {
                     var color = isError ? 'red' : 'green';
@@ -137,28 +121,27 @@ function cmr_table_scraper_page() {
 
                 function processNext() {
                     if (current >= total) {
-                        $('#scraper-status').html('<strong>Finished! All pages processed.</strong>');
+                        $('#scraper-status').html('<strong>Finished! All pages created.</strong>');
                         return;
                     }
 
                     var item = urls[current];
-                    $('#scraper-status').text('Processing (' + (current+1) + '/' + total + '): ' + item.url);
+                    $('#scraper-status').text('Processing (' + (current+1) + '/' + total + '): Table ' + item.tid + ' - ' + item.name);
 
                     $.post(ajaxurl, {
                         action: 'cmr_scrape_single',
-                        url: item.url,
                         tid: item.tid,
+                        name: item.name,
                         post_type: postType,
-                        css_selector: cssSelector,
                         _ajax_nonce: '<?php echo wp_create_nonce("cmr_scrape_single_nonce"); ?>'
                     }, function(response) {
                         if (response.success) {
-                            logMessage('✅ Created page for ' + item.url);
+                            logMessage('✅ Created page for Table ' + item.tid + ' ("' + item.name + '")');
                         } else {
-                            logMessage('❌ Failed for ' + item.url + ': ' + (response.data || 'Unknown error'), true);
+                            logMessage('❌ Failed for Table ' + item.tid + ': ' + (response.data || 'Unknown error'), true);
                         }
                     }).fail(function(xhr) {
-                        logMessage('❌ Server error for ' + item.url + ': ' + xhr.statusText, true);
+                        logMessage('❌ Server error for Table ' + item.tid + ': ' + xhr.statusText, true);
                     }).always(function() {
                         current++;
                         var percent = Math.round((current / total) * 100);
@@ -186,63 +169,16 @@ function cmr_scrape_single_handler() {
         wp_send_json_error('Permission denied');
     }
 
-    $url = esc_url_raw($_POST['url']);
     $tid = intval($_POST['tid']);
+    $name = sanitize_text_field($_POST['name']);
     $post_type = sanitize_text_field($_POST['post_type']);
-    $css_selector = sanitize_text_field($_POST['css_selector']);
 
-    if (empty($url)) {
-        wp_send_json_error('Empty URL');
+    if (empty($tid)) {
+        wp_send_json_error('Empty Table ID');
     }
 
-    $response = wp_remote_get( $url, ['timeout' => 30] );
-    if ( is_wp_error( $response ) ) {
-        wp_send_json_error("Failed to fetch: " . $response->get_error_message());
-    }
-
-    $html = wp_remote_retrieve_body( $response );
-    if ( empty( $html ) ) {
-        wp_send_json_error("Empty response from URL");
-    }
-
-    $title = 'Scraped Page ' . time() . rand(10,99);
-    $extracted_content = $html; // Fallback
-
-    if ( class_exists('DOMDocument') ) {
-        $dom = new DOMDocument();
-        @$dom->loadHTML( mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8') );
-        
-        $title_nodes = $dom->getElementsByTagName('title');
-        if ( $title_nodes->length > 0 ) {
-            $title = $title_nodes->item(0)->nodeValue;
-        }
-
-        if ( $css_selector === 'body' ) {
-            $body_nodes = $dom->getElementsByTagName('body');
-            if ( $body_nodes->length > 0 ) {
-                $extracted_content = $dom->saveHTML( $body_nodes->item(0) );
-            }
-        } else {
-            $xpath = new DOMXPath($dom);
-            $query = '';
-            if ( strpos($css_selector, '#') === 0 ) {
-                $id = substr($css_selector, 1);
-                $query = "//*[@id='$id']";
-            } elseif ( strpos($css_selector, '.') === 0 ) {
-                $class = substr($css_selector, 1);
-                $query = "//*[contains(concat(' ', normalize-space(@class), ' '), ' $class ')]";
-            } else {
-                $query = "//" . $css_selector; // Just tag name
-            }
-
-            $elements = $xpath->query($query);
-            if ( $elements && $elements->length > 0 ) {
-                $extracted_content = $dom->saveHTML( $elements->item(0) );
-            } else {
-                wp_send_json_error("Could not find selector '$css_selector'");
-            }
-        }
-    }
+    $title = $name ? $name : 'Table ' . $tid;
+    $extracted_content = '[table id=' . $tid . ' /]'; 
 
     $post_data = array(
         'post_title'    => wp_strip_all_tags( $title ),
@@ -250,7 +186,6 @@ function cmr_scrape_single_handler() {
         'post_status'   => 'publish',
         'post_type'     => $post_type,
         'meta_input'    => array(
-            '_scraped_source_url' => $url,
             '_scraped_from_table' => $tid,
         )
     );
