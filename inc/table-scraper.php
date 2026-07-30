@@ -179,11 +179,9 @@ function cmr_scrape_single_handler() {
 
     $title = $name ? $name : 'Table ' . $tid;
     
-    // Add margin-top 100px, a responsive scrolling wrapper, hide any blog sidebar, and prevent table squishing!
+    // Add a 1280px centered wrapper, responsive scrolling, and prevent table squishing
     $extracted_content = '<style>
-    .blog-detail-page .widget-area, .blog-detail-page aside, .blog-detail-page .col-lg-4 { display: none !important; } 
-    .blog-detail-page .col-lg-8, .blog-detail-page .col-md-8 { flex: 0 0 100% !important; max-width: 100% !important; }
-    .cmr-table-container { margin-top: 100px; width: 100%; overflow-x: auto; display: block; }
+    .cmr-table-container { max-width: 1280px; margin: 100px auto; width: 100%; overflow-x: auto; display: block; }
     .cmr-table-container table th, .cmr-table-container table td { white-space: nowrap !important; }
     </style>';
     $extracted_content .= '<div class="cmr-table-container">';
@@ -197,6 +195,7 @@ function cmr_scrape_single_handler() {
         'post_type'     => $post_type,
         'meta_input'    => array(
             '_scraped_from_table' => $tid,
+            '_wp_page_template'   => 'elementor_header_footer',
         )
     );
 
