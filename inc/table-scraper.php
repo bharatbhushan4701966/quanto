@@ -7,12 +7,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Add menu page
 add_action( 'admin_menu', 'cmr_table_scraper_menu' );
 function cmr_table_scraper_menu() {
-    add_management_page(
+    add_menu_page(
         'Table Scraper',
         'Table Scraper',
         'manage_options',
         'cmr-table-scraper',
-        'cmr_table_scraper_page'
+        'cmr_table_scraper_page',
+        'dashicons-download',
+        20
     );
 }
 
@@ -25,7 +27,7 @@ function cmr_table_scraper_page() {
     $message = '';
 
     if ( isset( $_POST['run_scraper'] ) && check_admin_referer( 'run_scraper_action', 'run_scraper_nonce' ) ) {
-        $table_id = intval( $_POST['table_id'] );
+        $table_id = sanitize_text_field( $_POST['table_id'] );
         $post_type = sanitize_text_field( $_POST['post_type'] );
         $css_selector = sanitize_text_field( $_POST['css_selector'] );
         
@@ -48,8 +50,8 @@ function cmr_table_scraper_page() {
                 <tr>
                     <th scope="row"><label for="table_id">TablePress Table ID</label></th>
                     <td>
-                        <input name="table_id" type="number" id="table_id" value="1" class="regular-text" required>
-                        <p class="description">Enter the ID of the TablePress table (e.g. 12).</p>
+                        <input name="table_id" type="text" id="table_id" value="all" class="regular-text" required>
+                        <p class="description">Enter the ID of the TablePress table (e.g. 12), or type <code>all</code> to scrape all tables.</p>
                     </td>
                 </tr>
                 <tr>
@@ -82,21 +84,31 @@ function cmr_run_table_scraper( $table_id, $post_type, $css_selector ) {
         return 'Error: TablePress is not active.';
     }
 
-    try {
-        $table = TablePress::$model_table->load( $table_id );
-    } catch ( Exception $e ) {
-        return 'Error loading table: ' . $e->getMessage();
-    }
-
-    if ( ! $table || empty( $table['data'] ) ) {
-        return 'Table is empty or not found.';
+    $tables_to_process = [];
+    if ( $table_id === 'all' ) {
+        $tables_to_process = TablePress::$model_table->load_all();
+    } else {
+        $tables_to_process = [ intval( $table_id ) ];
     }
 
     $created_count = 0;
     $errors = [];
 
-    // Loop through table data (skipping header row)
-    foreach ( $table['data'] as $index => $row ) {
+    foreach ( $tables_to_process as $tid ) {
+        try {
+            $table = TablePress::$model_table->load( $tid );
+        } catch ( Exception $e ) {
+            $errors[] = "Error loading table $tid: " . $e->getMessage();
+            continue;
+        }
+
+        if ( ! $table || empty( $table['data'] ) ) {
+            $errors[] = "Table $tid is empty or not found.";
+            continue;
+        }
+
+        // Loop through table data (skipping header row)
+        foreach ( $table['data'] as $index => $row ) {
         if ( $index === 0 ) continue; // Skip header
 
         // Find URL in row
@@ -187,6 +199,7 @@ function cmr_run_table_scraper( $table_id, $post_type, $css_selector ) {
             $created_count++;
         } else {
             $errors[] = "Failed to create post for $url: " . $post_id->get_error_message();
+        }
         }
     }
 
