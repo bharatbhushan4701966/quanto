@@ -1834,6 +1834,9 @@ add_action('init', function() {
 // Include Review Modal
 require_once get_template_directory() . '/inc/cmr-review-modal.php';
 
+// Include Table Scraper Tool
+require_once get_template_directory() . '/inc/table-scraper.php';
+
 add_action( 'rest_api_init', function () {
     register_rest_route( 'quanto/v1', '/tablepress/(?P<id>\d+)', array(
         'methods' => 'GET',
