@@ -1838,6 +1838,32 @@ require_once get_template_directory() . '/inc/cmr-review-modal.php';
 require_once get_template_directory() . '/inc/table-scraper.php';
 
 add_action( 'rest_api_init', function () {
+    register_rest_route( 'quanto/v1', '/import_page', array(
+        'methods' => 'POST',
+        'callback' => function( $request ) {
+            $params = $request->get_json_params();
+            if ( empty($params['title']) || empty($params['content']) ) {
+                return new WP_Error( 'missing_data', 'Missing title or content', array('status' => 400) );
+            }
+            
+            $post_data = array(
+                'post_title'    => wp_strip_all_tags( $params['title'] ),
+                'post_content'  => wp_kses_post( $params['content'] ),
+                'post_status'   => 'publish',
+                'post_type'     => !empty($params['post_type']) ? sanitize_text_field($params['post_type']) : 'page',
+                'meta_input'    => array(
+                    '_scraped_source_url' => esc_url_raw( $params['url'] ?? '' ),
+                )
+            );
+
+            $post_id = wp_insert_post( $post_data );
+            if ( is_wp_error( $post_id ) ) {
+                return $post_id;
+            }
+            return rest_ensure_response( array('success' => true, 'post_id' => $post_id) );
+        },
+        'permission_callback' => '__return_true',
+    ) );
     register_rest_route( 'quanto/v1', '/tablepress/(?P<id>\d+)', array(
         'methods' => 'GET',
         'callback' => function( $request ) {
