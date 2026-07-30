@@ -4,6 +4,24 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+// =====================================================================
+// Dynamically inject CSS for scraper-created table pages (via wp_head)
+// This means CSS changes take effect immediately without recreating pages
+// =====================================================================
+add_action( 'wp_head', 'cmr_table_scraper_styles' );
+function cmr_table_scraper_styles() {
+    if ( ! is_singular() ) return;
+    $post_id = get_the_ID();
+    if ( ! get_post_meta( $post_id, '_scraped_from_table', true ) ) return;
+    ?>
+    <style>
+    .cmr-table-container { width: 100%; display: block; margin-top: 120px; padding: 0 20px 40px 20px; box-sizing: border-box; }
+    .cmr-table-container table { font-size: 11px !important; width: 100% !important; table-layout: fixed !important; border-right: 1px solid #333 !important; }
+    .cmr-table-container table th, .cmr-table-container table td { padding: 6px 5px !important; line-height: 1.3 !important; word-wrap: break-word !important; overflow-wrap: break-word !important; white-space: normal !important; }
+    </style>
+    <?php
+}
+
 // Add menu page
 add_action( 'admin_menu', 'cmr_table_scraper_menu' );
 function cmr_table_scraper_menu() {
@@ -179,13 +197,8 @@ function cmr_scrape_single_handler() {
 
     $title = $name ? $name : 'Table ' . $tid;
 
-    // Full width table with Elementor Full Width template + blog header via meta
-    $extracted_content = '<style>
-    .cmr-table-container { width: 100%; display: block; margin-top: 120px; padding: 0 20px 40px 20px; box-sizing: border-box; }
-    .cmr-table-container table { font-size: 11px !important; width: 100% !important; table-layout: fixed !important; border-right: 1px solid #000 !important; }
-    .cmr-table-container table th, .cmr-table-container table td { padding: 6px 5px !important; line-height: 1.3 !important; word-wrap: break-word !important; overflow-wrap: break-word !important; white-space: normal !important; }
-    </style>';
-    $extracted_content .= '<div class="cmr-table-container">';
+    // No inline CSS needed — styles are injected via wp_head hook above
+    $extracted_content = '<div class="cmr-table-container">';
     $extracted_content .= '[table id=' . $tid . ' responsive="scroll" /]';
     $extracted_content .= '</div>';
 
