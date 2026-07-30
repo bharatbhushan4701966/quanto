@@ -185,9 +185,10 @@ function cmr_scrape_single_handler() {
     .quanto-page-section .container { max-width: 100% !important; padding: 0 !important; }
     .quanto-page-section .row { margin: 0 !important; }
     .quanto-page-section .col-lg-12 { padding: 0 !important; }
-    .cmr-table-container { width: 100%; overflow-x: auto; display: block; padding: 0 20px; box-sizing: border-box; }
-    .cmr-table-container table { font-size: 13px !important; width: 100% !important; }
-    .cmr-table-container table th, .cmr-table-container table td { padding: 10px 8px !important; line-height: 1.4 !important; }
+    .cmr-table-container { width: 100%; display: block; padding: 0 10px; box-sizing: border-box; }
+    /* Force ALL columns to fit on screen by scaling down font + padding */
+    .cmr-table-container table { font-size: 11px !important; width: 100% !important; table-layout: fixed !important; }
+    .cmr-table-container table th, .cmr-table-container table td { padding: 6px 5px !important; line-height: 1.3 !important; word-wrap: break-word !important; overflow-wrap: break-word !important; white-space: normal !important; }
     </style>';
     $extracted_content .= '<div class="cmr-table-container">';
     $extracted_content .= '[table id=' . $tid . ' responsive="scroll" /]';
