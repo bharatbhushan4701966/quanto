@@ -361,13 +361,10 @@ function cmr_load_more_enterprise_connect_ajax() {
     
     if ( empty($year) && empty($search) ) {
         $unique_ids = cmr_get_unique_enterprise_post_ids();
-        $offset_base = 4;
+        $offset_base = 0;
         $offset = $offset_base + ( ($paged - 1) * 6 );
         
         $sliced_ids = array_slice( $unique_ids, $offset, 6 );
-        if ( empty( $sliced_ids ) && $paged == 1 && ! empty( $unique_ids ) ) {
-            $sliced_ids = array_slice( $unique_ids, 0, 6 );
-        }
         
         if ( empty($sliced_ids) ) {
             wp_send_json_success(array('html' => '', 'has_more' => false));
@@ -381,7 +378,7 @@ function cmr_load_more_enterprise_connect_ajax() {
         );
         $query = new WP_Query( $args );
         
-        $total_pages = ceil( max( 0, count( $unique_ids ) - 4 ) / 6 );
+        $total_pages = ceil( max( 0, count( $unique_ids ) ) / 6 );
     } else {
         $offset_base = 0;
         $offset = $offset_base + ( ($paged - 1) * 6 );
