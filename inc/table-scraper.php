@@ -179,10 +179,14 @@ function cmr_scrape_single_handler() {
 
     $title = $name ? $name : 'Table ' . $tid;
 
-    // Full width container (98%) and reduced table font size to match live site
+    // Full width table that breaks out of container, with blog header
     $extracted_content = '<style>
-    .cmr-table-container { max-width: 98%; margin: 50px auto; width: 100%; display: block; overflow-x: auto; }
-    .cmr-table-container table { font-size: 13px !important; }
+    /* Break out of the theme container to go full width */
+    .quanto-page-section .container { max-width: 100% !important; padding: 0 !important; }
+    .quanto-page-section .row { margin: 0 !important; }
+    .quanto-page-section .col-lg-12 { padding: 0 !important; }
+    .cmr-table-container { width: 100%; overflow-x: auto; display: block; padding: 0 20px; box-sizing: border-box; }
+    .cmr-table-container table { font-size: 13px !important; width: 100% !important; }
     .cmr-table-container table th, .cmr-table-container table td { padding: 10px 8px !important; line-height: 1.4 !important; }
     </style>';
     $extracted_content .= '<div class="cmr-table-container">';
@@ -196,7 +200,6 @@ function cmr_scrape_single_handler() {
         'post_type'     => $post_type,
         'meta_input'    => array(
             '_scraped_from_table' => $tid,
-            '_wp_page_template'   => 'elementor_header_footer',
         )
     );
 
