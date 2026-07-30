@@ -83,8 +83,8 @@ function cmr_table_scraper_page() {
                 <tr>
                     <th scope="row"><label for="post_type">Create As (Post Type)</label></th>
                     <td>
-                        <input name="post_type" type="text" id="post_type" value="page" class="regular-text" required>
-                        <p class="description">Examples: page, post, record, etc.</p>
+                        <input name="post_type" type="text" id="post_type" value="post" class="regular-text" required>
+                        <p class="description">Examples: post, page, record, etc. (Using 'post' gives it the blog header style!)</p>
                     </td>
                 </tr>
             </table>
@@ -178,7 +178,11 @@ function cmr_scrape_single_handler() {
     }
 
     $title = $name ? $name : 'Table ' . $tid;
-    $extracted_content = '[table id=' . $tid . ' /]'; 
+    
+    // Add margin-top 100px and a responsive scrolling wrapper for the table
+    $extracted_content = '<div style="margin-top: 100px; overflow-x: auto; width: 100%;">';
+    $extracted_content .= '[table id=' . $tid . ' responsive="scroll" /]';
+    $extracted_content .= '</div>';
 
     $post_data = array(
         'post_title'    => wp_strip_all_tags( $title ),
