@@ -190,6 +190,13 @@ add_action('wp_footer', function() {
                                 matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('explore industry intelligence'));
                             } else if (targetId === 'cmr-in-news') {
                                 matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('featured media coverage'));
+                            } else if (targetId === 'cmr-footer-card-section') {
+                                // Search for headings or widgets containing "CMR Connect" or "Subscribe Now"
+                                const possibleCards = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title, .elementor-button-text'));
+                                matchingHeading = possibleCards.find(el => {
+                                    const txt = el.textContent.toLowerCase();
+                                    return txt.includes('cmr connect') || txt.includes('monthly digest') || (txt.includes('subscribe now') && !el.closest('.intel-nav-bar'));
+                                });
                             }
                             
                             if (matchingHeading) {
