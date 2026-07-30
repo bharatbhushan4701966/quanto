@@ -1833,3 +1833,24 @@ add_action('init', function() {
 
 // Include Review Modal
 require_once get_template_directory() . '/inc/cmr-review-modal.php';
+
+add_action( 'rest_api_init', function () {
+    register_rest_route( 'quanto/v1', '/tablepress/(?P<id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => function( $request ) {
+            if ( ! class_exists( 'TablePress' ) ) return new WP_Error( 'no_tp', 'TablePress not active' );
+            $id = $request['id'];
+            $table = TablePress::$model_table->load( $id );
+            return rest_ensure_response( $table );
+        },
+        'permission_callback' => '__return_true',
+    ) );
+    register_rest_route( 'quanto/v1', '/tablepress/all', array(
+        'methods' => 'GET',
+        'callback' => function() {
+            if ( ! class_exists( 'TablePress' ) ) return new WP_Error( 'no_tp', 'TablePress not active' );
+            return rest_ensure_response( TablePress::$model_table->load_all() );
+        },
+        'permission_callback' => '__return_true',
+    ) );
+} );
