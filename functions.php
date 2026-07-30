@@ -1183,6 +1183,18 @@ add_shortcode('cmr_challenge', function() {
     return ob_get_clean();
 });
 
+add_action( 'wp_enqueue_scripts', function() {
+    global $post;
+    if ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'cmr_similar_reports' ) ) {
+        if ( class_exists( '\Elementor\Plugin' ) ) {
+            // Enqueue Elementor core frontend CSS
+            \Elementor\Plugin::$instance->frontend->enqueue_styles();
+            // Also ensure WooCommerce widget CSS is enqueued for the products grid
+            wp_enqueue_style( 'widget-woocommerce-products' );
+        }
+    }
+}, 99 );
+
 // Shortcode to display the Similar Reports by Industry section by rendering the quanto_tab_build post
 add_shortcode('cmr_similar_reports', function() {
     ob_start();
