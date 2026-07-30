@@ -177,9 +177,11 @@ function cmr_scrape_single_handler() {
         wp_send_json_error('Empty Table ID');
     }
 
-    // Add a 1280px centered wrapper
+    // Full width container (98%) and reduced table font size to match live site
     $extracted_content = '<style>
-    .cmr-table-container { max-width: 1280px; margin: 100px auto; width: 100%; display: block; }
+    .cmr-table-container { max-width: 98%; margin: 50px auto; width: 100%; display: block; overflow-x: auto; }
+    .cmr-table-container table { font-size: 13px !important; }
+    .cmr-table-container table th, .cmr-table-container table td { padding: 10px 8px !important; line-height: 1.4 !important; }
     </style>';
     $extracted_content .= '<div class="cmr-table-container">';
     $extracted_content .= '[table id=' . $tid . ' responsive="scroll" /]';
@@ -192,6 +194,7 @@ function cmr_scrape_single_handler() {
         'post_type'     => $post_type,
         'meta_input'    => array(
             '_scraped_from_table' => $tid,
+            '_wp_page_template'   => 'elementor_header_footer',
         )
     );
 
