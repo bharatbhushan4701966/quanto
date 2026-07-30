@@ -177,12 +177,9 @@ function cmr_scrape_single_handler() {
         wp_send_json_error('Empty Table ID');
     }
 
-    $title = $name ? $name : 'Table ' . $tid;
-    
-    // Add a 1280px centered wrapper, responsive scrolling, and prevent table squishing
+    // Add a 1280px centered wrapper
     $extracted_content = '<style>
-    .cmr-table-container { max-width: 1280px; margin: 100px auto; width: 100%; overflow-x: auto; display: block; }
-    .cmr-table-container table th, .cmr-table-container table td { white-space: nowrap !important; }
+    .cmr-table-container { max-width: 1280px; margin: 100px auto; width: 100%; display: block; }
     </style>';
     $extracted_content .= '<div class="cmr-table-container">';
     $extracted_content .= '[table id=' . $tid . ' responsive="scroll" /]';
@@ -195,7 +192,6 @@ function cmr_scrape_single_handler() {
         'post_type'     => $post_type,
         'meta_input'    => array(
             '_scraped_from_table' => $tid,
-            '_wp_page_template'   => 'elementor_header_footer',
         )
     );
 
