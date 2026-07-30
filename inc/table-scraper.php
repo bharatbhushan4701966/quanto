@@ -113,18 +113,27 @@ function cmr_run_table_scraper( $table_id, $post_type, $css_selector ) {
 
         // Find URL in row
         $url = '';
-        $title = 'Scraped Page ' . time() . rand(10,99);
+        $title = '';
         
         foreach ( $row as $cell ) {
-            // Very basic URL detection
-            if ( filter_var( $cell, FILTER_VALIDATE_URL ) ) {
-                $url = $cell;
+            // Improved URL detection using Regex
+            if ( preg_match( '/https?:\/\/[^\s"\'<>]+/', $cell, $matches ) ) {
+                $url = $matches[0];
             } elseif ( !empty($cell) && empty($title) ) {
-                $title = sanitize_text_field( $cell );
+                // Try to set title from the first non-empty text cell
+                $title = sanitize_text_field( wp_strip_all_tags( $cell ) );
             }
         }
 
-        if ( empty( $url ) ) continue;
+        if ( empty( $title ) ) {
+            $title = 'Scraped Page ' . time() . rand(10,99);
+        }
+
+        if ( empty( $url ) ) {
+            $first_cell = isset($row[0]) ? substr(wp_strip_all_tags($row[0]), 0, 80) : '';
+            $errors[] = "No URL found in row $index of table $tid. Sample data: '$first_cell'";
+            continue;
+        }
 
         // Fetch URL content
         $response = wp_remote_get( $url );
