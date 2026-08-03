@@ -495,9 +495,11 @@ function cmr_media_releases_grid_shortcode() {
         const searchForm = document.getElementById('cmr-mrg-search-form');
         const searchInput = document.getElementById('cmr-mrg-search-input');
 
-        function fetchPosts(isLoadMore = false) {
-            if (!isLoadMore) {
+        function fetchPosts(isLoadMore = false, resetPage = false) {
+            if (resetPage) {
                 currentPage = 1;
+            }
+            if (!isLoadMore) {
                 grid.innerHTML = '<p>Loading...</p>';
             }
             
@@ -555,7 +557,7 @@ function cmr_media_releases_grid_shortcode() {
                 if (moreContent) {
                     moreContent.style.display = 'none';
                 }
-                fetchPosts(false);
+                fetchPosts(false, true);
             });
         });
 
@@ -583,7 +585,7 @@ function cmr_media_releases_grid_shortcode() {
             searchForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 currentSearch = searchInput.value.trim();
-                fetchPosts(false);
+                fetchPosts(false, true);
             });
         }
 
