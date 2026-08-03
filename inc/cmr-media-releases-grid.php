@@ -616,13 +616,8 @@ function cmr_media_releases_grid_shortcode() {
                             currentPage = 1;
                         }
                     }
-                    fetchPosts(false);
-                    // Scroll up slightly
-                    const gridElement = document.getElementById('cmr-mrg-grid');
-                    if (gridElement) {
-                        const y = gridElement.getBoundingClientRect().top + window.scrollY - 150;
-                        window.scrollTo({top: y, behavior: 'smooth'});
-                    }
+                    // Fetch as Load More (append data instead of replacing)
+                    fetchPosts(true);
                 }
             });
         }
