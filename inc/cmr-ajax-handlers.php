@@ -485,7 +485,7 @@ function cmr_load_more_channel_connect_ajax() {
     
     if ( empty($year) && empty($search) ) {
         $unique_ids = cmr_get_unique_channel_post_ids();
-        $offset_base = 4;
+        $offset_base = 0;
         $offset = $offset_base + ( ($paged - 1) * 6 );
         
         $sliced_ids = array_slice( $unique_ids, $offset, 6 );
@@ -505,7 +505,7 @@ function cmr_load_more_channel_connect_ajax() {
         );
         $query = new WP_Query( $args );
         
-        $total_pages = ceil( max( 0, count( $unique_ids ) - 4 ) / 6 );
+        $total_pages = ceil( max( 0, count( $unique_ids ) ) / 6 );
     } else {
         global $wpdb;
 
