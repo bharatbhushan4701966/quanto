@@ -74,27 +74,29 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
             </div>
             <?php endif; ?>
 
-            <?php if ( ! empty( $atts['section_title'] ) ) : ?>
-            <div class="cmr-intel-header" style="margin-bottom: 40px;">
-                <h2 style="font-size: 44px; font-weight: 600; color: #111; margin: 0 0 12px 0; letter-spacing: -1px; font-family: 'Instrument Sans', sans-serif; line-height: 1.2;">
-                    <?php echo esc_html( $atts['section_title'] ); ?>
-                </h2>
-                <?php if ( ! empty( $atts['section_subtitle'] ) ) : ?>
-                <p style="font-size: 16px; color: #333; margin: 0; font-family: 'Instrument Sans', sans-serif; max-width: 800px; line-height: 1.5;">
-                    <?php echo esc_html( $atts['section_subtitle'] ); ?>
-                </p>
+            <div class="cmr-intel-header-wrapper" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; flex-wrap: wrap; gap: 20px;">
+                <?php if ( ! empty( $atts['section_title'] ) ) : ?>
+                <div class="cmr-intel-header">
+                    <h2 style="font-size: 44px; font-weight: 600; color: #111; margin: 0 0 12px 0; letter-spacing: -1px; font-family: 'Instrument Sans', sans-serif; line-height: 1.2;">
+                        <?php echo esc_html( $atts['section_title'] ); ?>
+                    </h2>
+                    <?php if ( ! empty( $atts['section_subtitle'] ) ) : ?>
+                    <p style="font-size: 16px; color: #333; margin: 0; font-family: 'Instrument Sans', sans-serif; max-width: 800px; line-height: 1.5;">
+                        <?php echo esc_html( $atts['section_subtitle'] ); ?>
+                    </p>
+                    <?php endif; ?>
+                </div>
                 <?php endif; ?>
-            </div>
-            <?php endif; ?>
 
-            <div class="intel-controls" style="display: flex; justify-content: flex-end; margin-bottom: 30px;">
-                <div class="intel-search">
-                    <form id="intel-search-form" onsubmit="return false;" style="position: relative; display: flex; align-items: center; background: #fff; border: 1px solid #eaeaea; border-radius: 40px; padding: 5px 15px; width: 300px;">
-                        <input type="text" id="intel-search-input" placeholder="Search by name" style="border: none; background: transparent; flex: 1; outline: none; font-size: 14px; color: #111; padding: 5px 0;">
-                        <button type="submit" class="intel-search-btn" style="background: transparent; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; color: #6A35FF;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                        </button>
-                    </form>
+                <div class="intel-controls" style="display: flex; justify-content: flex-end;">
+                    <div class="intel-search">
+                        <form id="intel-search-form" onsubmit="return false;" style="position: relative; display: flex; align-items: center; background: #fff; border: 1px solid #eaeaea; border-radius: 40px; padding: 5px 15px; width: 300px;">
+                            <input type="text" id="intel-search-input" placeholder="Search by name" style="border: none; background: transparent; flex: 1; outline: none; font-size: 14px; color: #111; padding: 5px 0;">
+                            <button type="submit" class="intel-search-btn" style="background: transparent; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; color: #6A35FF;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
 
