@@ -683,6 +683,7 @@ add_action( 'wp_ajax_nopriv_cmr_load_more_consulting', 'cmr_load_more_consulting
 function cmr_load_more_consulting_ajax() {
     $paged = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
     $base_url = isset( $_POST['base_url'] ) ? sanitize_text_field( $_POST['base_url'] ) : '/';
+    $search = isset( $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : '';
     
     $query_args = array(
         'post_type'      => array( 'post', 'cmr_news' ),
@@ -699,6 +700,10 @@ function cmr_load_more_consulting_ajax() {
             ),
         ),
     );
+
+    if ( !empty($search) ) {
+        $query_args['s'] = $search;
+    }
 
     $insights_query = new WP_Query( $query_args );
 
@@ -775,6 +780,7 @@ add_action( 'wp_ajax_nopriv_cmr_load_more_marketing', 'cmr_load_more_marketing_a
 function cmr_load_more_marketing_ajax() {
     $paged = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
     $base_url = isset( $_POST['base_url'] ) ? sanitize_text_field( $_POST['base_url'] ) : '/';
+    $search = isset( $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : '';
     
     $query_args = array(
         'post_type'      => array( 'post', 'cmr_news' ),
@@ -791,6 +797,10 @@ function cmr_load_more_marketing_ajax() {
             ),
         ),
     );
+
+    if ( !empty($search) ) {
+        $query_args['s'] = $search;
+    }
 
     $insights_query = new WP_Query( $query_args );
 

@@ -74,18 +74,31 @@ if ( ! function_exists( 'cmr_marketing_services_shortcode' ) ) {
             </div>
             <?php endif; ?>
 
-            <?php if ( ! empty( $atts['section_title'] ) ) : ?>
-            <div class="cmr-intel-header" style="margin-bottom: 40px;">
-                <h2 style="font-size: 44px; font-weight: 600; color: #111; margin: 0 0 12px 0; letter-spacing: -1px; font-family: 'Instrument Sans', sans-serif; line-height: 1.2;">
-                    <?php echo esc_html( $atts['section_title'] ); ?>
-                </h2>
-                <?php if ( ! empty( $atts['section_subtitle'] ) ) : ?>
-                <p style="font-size: 16px; color: #333; margin: 0; font-family: 'Instrument Sans', sans-serif; max-width: 800px; line-height: 1.5;">
-                    <?php echo esc_html( $atts['section_subtitle'] ); ?>
-                </p>
+            <div class="cmr-intel-header-wrapper" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; flex-wrap: wrap; gap: 20px;">
+                <?php if ( ! empty( $atts['section_title'] ) ) : ?>
+                <div class="cmr-intel-header">
+                    <h2 style="font-size: 44px; font-weight: 600; color: #111; margin: 0 0 12px 0; letter-spacing: -1px; font-family: 'Instrument Sans', sans-serif; line-height: 1.2;">
+                        <?php echo esc_html( $atts['section_title'] ); ?>
+                    </h2>
+                    <?php if ( ! empty( $atts['section_subtitle'] ) ) : ?>
+                    <p style="font-size: 16px; color: #333; margin: 0; font-family: 'Instrument Sans', sans-serif; max-width: 800px; line-height: 1.5;">
+                        <?php echo esc_html( $atts['section_subtitle'] ); ?>
+                    </p>
+                    <?php endif; ?>
+                </div>
                 <?php endif; ?>
+
+                <div class="intel-controls" style="display: flex; justify-content: flex-end;">
+                    <div class="intel-search">
+                        <form id="intel-search-form" onsubmit="return false;" style="position: relative; display: flex; align-items: center; background: #fff; border: 1px solid #eaeaea; border-radius: 40px; padding: 4px 4px 4px 20px; width: 300px; height: 48px; box-sizing: border-box;">
+                            <input type="text" id="intel-search-input" placeholder="Search by name" style="border: none; background: transparent; flex: 1; outline: none; font-size: 15px; color: #111; padding: 0;">
+                            <button type="submit" class="intel-search-btn" style="background: #5c24d3; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; color: #fff; width: 34px; height: 34px; border-radius: 50%; margin-left: 10px; flex-shrink: 0;">
+                                <i class="fa-solid fa-magnifying-glass" style="font-size: 14px;"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <?php endif; ?>
 
             <?php if ( $insights_query->have_posts() ) : ?>
                 <div class="intel-grid" id="insights">
@@ -183,48 +196,89 @@ if ( ! function_exists( 'cmr_marketing_services_shortcode' ) ) {
                 <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const btn = document.querySelector('.intel-load-more-btn');
-                    if (btn) {
-                        let clickCount = 0;
-                        btn.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            let page = parseInt(btn.getAttribute('data-page'));
-                            let max = parseInt(btn.getAttribute('data-max'));
-                            let ajaxurl = btn.getAttribute('data-ajaxurl');
-                            let nextPage = page + 1;
-                            
+                    const searchForm = document.getElementById('intel-search-form');
+                    const searchInput = document.getElementById('intel-search-input');
+                    let currentSearch = '';
+                    let clickCount = 0;
+
+                    function fetchMarketing(page, isSearch = false) {
+                        let max = btn ? parseInt(btn.getAttribute('data-max')) : 1;
+                        let ajaxurl = '<?php echo esc_url(admin_url("admin-ajax.php")); ?>';
+                        
+                        if (isSearch) {
+                            document.querySelector('.intel-grid').innerHTML = '<p>Loading...</p>';
+                            page = 1;
+                        } else if (btn) {
                             btn.innerText = 'Loading...';
                             btn.disabled = true;
+                        }
 
-                            fetch(ajaxurl, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded'
-                                },
-                                body: 'action=cmr_load_more_marketing&page=' + nextPage + '&base_url=' + encodeURIComponent(window.location.pathname)
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.success) {
+                        fetch(ajaxurl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            body: 'action=cmr_load_more_marketing&page=' + page + '&search=' + encodeURIComponent(currentSearch) + '&base_url=' + encodeURIComponent(window.location.pathname)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                if (isSearch) {
+                                    document.querySelector('.intel-grid').innerHTML = data.data.html || '<p>No results found.</p>';
+                                    clickCount = 0;
+                                    if (btn) btn.setAttribute('data-page', 1);
+                                    
+                                    const paginationWrap = document.querySelector('.intel-pagination-wrap');
+                                    if (paginationWrap) {
+                                        if (data.data.pagination) {
+                                            paginationWrap.innerHTML = '<div class="intel-numeric-pagination" style="text-align: center; margin-top: 30px; display: flex; justify-content: center; gap: 10px;">' + data.data.pagination + '</div>';
+                                        } else if (data.data.has_more && btn) {
+                                            paginationWrap.innerHTML = '<div class="intel-load-more-wrap" style="text-align: center; margin-top: 30px;"><button class="intel-load-more-btn" data-page="1" data-max="'+max+'" data-ajaxurl="'+ajaxurl+'" style="background: transparent; border: 1px solid #ccc; color: #111; font-size: 14px; font-weight: 600; border-radius: 40px; cursor: pointer; transition: all 0.3s ease; width: 288px; height: 54px; display: inline-flex; justify-content: center; align-items: center;">Load More</button></div>';
+                                        } else {
+                                            paginationWrap.innerHTML = '';
+                                        }
+                                    }
+                                } else {
                                     document.querySelector('.intel-grid').insertAdjacentHTML('beforeend', data.data.html);
-                                    btn.setAttribute('data-page', nextPage);
+                                    if (btn) btn.setAttribute('data-page', page);
                                     clickCount++;
                                     
-                                    if (nextPage >= max || clickCount >= 2) {
-                                        // Replace with pagination
+                                    if (page >= max || clickCount >= 2) {
                                         document.querySelector('.intel-pagination-wrap').innerHTML = '<div class="intel-numeric-pagination" style="text-align: center; margin-top: 30px; display: flex; justify-content: center; gap: 10px;">' + data.data.pagination + '</div>';
-                                    } else {
+                                    } else if (btn) {
                                         btn.innerText = 'Load More';
                                         btn.disabled = false;
                                     }
-                                } else {
-                                    btn.innerText = 'No more posts';
                                 }
-                            })
-                            .catch(error => {
-                                console.error('Error:', error);
+                            } else {
+                                if (btn && !isSearch) btn.innerText = 'No more posts';
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            if (btn && !isSearch) {
                                 btn.innerText = 'Load More';
                                 btn.disabled = false;
-                            });
+                            }
+                        });
+                    }
+
+                    if (btn) {
+                        document.addEventListener('click', function(e) {
+                            if (e.target && e.target.classList.contains('intel-load-more-btn')) {
+                                e.preventDefault();
+                                const activeBtn = e.target;
+                                let page = parseInt(activeBtn.getAttribute('data-page')) + 1;
+                                fetchMarketing(page, false);
+                            }
+                        });
+                    }
+
+                    if (searchForm) {
+                        searchForm.addEventListener('submit', function(e) {
+                            e.preventDefault();
+                            currentSearch = searchInput.value.trim();
+                            fetchMarketing(1, true);
                         });
                     }
                 });
