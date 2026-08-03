@@ -15,7 +15,7 @@ function cmr_table_scraper_styles() {
     if ( ! get_post_meta( $post_id, '_scraped_from_table', true ) ) return;
     ?>
     <style>
-    .cmr-table-container { width: 100%; display: block; margin-top: 180px !important; padding: 0 20px 40px 20px; box-sizing: border-box; }
+    .cmr-table-container { width: 100%; display: block; margin-top: 140px !important; padding: 0 20px 40px 20px; box-sizing: border-box; }
     .cmr-table-container table { font-size: 11px !important; width: 100% !important; table-layout: fixed !important; border-right: 1px solid #333 !important; }
     .cmr-table-container table th, .cmr-table-container table td { padding: 6px 5px !important; line-height: 1.3 !important; word-wrap: break-word !important; overflow-wrap: break-word !important; white-space: normal !important; }
     </style>
