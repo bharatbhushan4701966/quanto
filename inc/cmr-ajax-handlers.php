@@ -13,6 +13,7 @@ add_action( 'wp_ajax_nopriv_cmr_load_more_intel', 'cmr_load_more_intel_ajax' );
 function cmr_load_more_intel_ajax() {
     $paged = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
     $base_url = isset( $_POST['base_url'] ) ? sanitize_text_field( $_POST['base_url'] ) : '/';
+    $search = isset( $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : '';
     
     $query_args = array(
         'post_type'      => array( 'post', 'cmr_news' ),
@@ -25,10 +26,14 @@ function cmr_load_more_intel_ajax() {
             array(
                 'taxonomy' => 'category',
                 'field'    => 'slug',
-                'terms'    => 'infotech',
+                'terms'    => 'industry-connect', // Ensure this uses industry-connect to match the shortcode
             ),
         ),
     );
+
+    if ( !empty($search) ) {
+        $query_args['s'] = $search;
+    }
 
     $insights_query = new WP_Query( $query_args );
 

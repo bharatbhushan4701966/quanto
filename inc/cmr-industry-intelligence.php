@@ -87,6 +87,17 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
             </div>
             <?php endif; ?>
 
+            <div class="intel-controls" style="display: flex; justify-content: flex-end; margin-bottom: 30px;">
+                <div class="intel-search">
+                    <form id="intel-search-form" onsubmit="return false;" style="position: relative; display: flex; align-items: center; background: #fff; border: 1px solid #eaeaea; border-radius: 40px; padding: 5px 15px; width: 300px;">
+                        <input type="text" id="intel-search-input" placeholder="Search by name" style="border: none; background: transparent; flex: 1; outline: none; font-size: 14px; color: #111; padding: 5px 0;">
+                        <button type="submit" class="intel-search-btn" style="background: transparent; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; color: #6A35FF;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
             <?php if ( $insights_query->have_posts() ) : ?>
                 <div class="intel-grid" id="insights">
                     <?php
@@ -183,48 +194,89 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                 <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const btn = document.querySelector('.intel-load-more-btn');
-                    if (btn) {
-                        let clickCount = 0;
-                        btn.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            let page = parseInt(btn.getAttribute('data-page'));
-                            let max = parseInt(btn.getAttribute('data-max'));
-                            let ajaxurl = btn.getAttribute('data-ajaxurl');
-                            let nextPage = page + 1;
-                            
+                    const searchForm = document.getElementById('intel-search-form');
+                    const searchInput = document.getElementById('intel-search-input');
+                    let currentSearch = '';
+                    let clickCount = 0;
+
+                    function fetchIntel(page, isSearch = false) {
+                        let max = btn ? parseInt(btn.getAttribute('data-max')) : 1;
+                        let ajaxurl = '<?php echo esc_url(admin_url("admin-ajax.php")); ?>';
+                        
+                        if (isSearch) {
+                            document.querySelector('.intel-grid').innerHTML = '<p>Loading...</p>';
+                            page = 1;
+                        } else if (btn) {
                             btn.innerText = 'Loading...';
                             btn.disabled = true;
+                        }
 
-                            fetch(ajaxurl, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded'
-                                },
-                                body: 'action=cmr_load_more_intel&page=' + nextPage + '&base_url=' + encodeURIComponent(window.location.pathname)
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.success) {
+                        fetch(ajaxurl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            body: 'action=cmr_load_more_intel&page=' + page + '&search=' + encodeURIComponent(currentSearch) + '&base_url=' + encodeURIComponent(window.location.pathname)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                if (isSearch) {
+                                    document.querySelector('.intel-grid').innerHTML = data.data.html || '<p>No results found.</p>';
+                                    clickCount = 0;
+                                    if (btn) btn.setAttribute('data-page', 1);
+                                    
+                                    const paginationWrap = document.querySelector('.intel-pagination-wrap');
+                                    if (paginationWrap) {
+                                        if (data.data.pagination) {
+                                            paginationWrap.innerHTML = '<div class="intel-numeric-pagination" style="text-align: center; margin-top: 30px; display: flex; justify-content: center; gap: 10px;">' + data.data.pagination + '</div>';
+                                        } else if (data.data.has_more && btn) {
+                                            paginationWrap.innerHTML = '<div class="intel-load-more-wrap" style="text-align: center; margin-top: 30px;"><button class="intel-load-more-btn" data-page="1" data-max="'+max+'" data-ajaxurl="'+ajaxurl+'" style="background: transparent; border: 1px solid #ccc; color: #111; font-size: 14px; font-weight: 600; border-radius: 40px; cursor: pointer; transition: all 0.3s ease; width: 288px; height: 54px; display: inline-flex; justify-content: center; align-items: center;">Load More</button></div>';
+                                        } else {
+                                            paginationWrap.innerHTML = '';
+                                        }
+                                    }
+                                } else {
                                     document.querySelector('.intel-grid').insertAdjacentHTML('beforeend', data.data.html);
-                                    btn.setAttribute('data-page', nextPage);
+                                    if (btn) btn.setAttribute('data-page', page);
                                     clickCount++;
                                     
-                                    if (nextPage >= max || clickCount >= 2) {
-                                        // Replace with pagination
+                                    if (page >= max || clickCount >= 2) {
                                         document.querySelector('.intel-pagination-wrap').innerHTML = '<div class="intel-numeric-pagination" style="text-align: center; margin-top: 30px; display: flex; justify-content: center; gap: 10px;">' + data.data.pagination + '</div>';
-                                    } else {
+                                    } else if (btn) {
                                         btn.innerText = 'Load More';
                                         btn.disabled = false;
                                     }
-                                } else {
-                                    btn.innerText = 'No more posts';
                                 }
-                            })
-                            .catch(error => {
-                                console.error('Error:', error);
+                            } else {
+                                if (btn && !isSearch) btn.innerText = 'No more posts';
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            if (btn && !isSearch) {
                                 btn.innerText = 'Load More';
                                 btn.disabled = false;
-                            });
+                            }
+                        });
+                    }
+
+                    if (btn) {
+                        document.addEventListener('click', function(e) {
+                            if (e.target && e.target.classList.contains('intel-load-more-btn')) {
+                                e.preventDefault();
+                                const activeBtn = e.target;
+                                let page = parseInt(activeBtn.getAttribute('data-page')) + 1;
+                                fetchIntel(page, false);
+                            }
+                        });
+                    }
+
+                    if (searchForm) {
+                        searchForm.addEventListener('submit', function(e) {
+                            e.preventDefault();
+                            currentSearch = searchInput.value.trim();
+                            fetchIntel(1, true);
                         });
                     }
                 });
