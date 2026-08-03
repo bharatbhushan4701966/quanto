@@ -201,7 +201,19 @@ function cmr_load_more_media_releases_ajax() {
     $total_pages = ceil( max( 0, $query->found_posts - $offset_base ) / 6 );
     $has_more = $paged < $total_pages;
 
-    $pagination = ''; // Pagination disabled in favor of infinite Load More
+    $base_url = isset( $_POST['base_url'] ) ? sanitize_text_field( $_POST['base_url'] ) : '/';
+    $pagination = '';
+    if ( $paged >= 3 || $paged >= $total_pages ) {
+        $full_base = home_url( $base_url );
+        $pagination = paginate_links( array(
+            'base'    => trailingslashit( $full_base ) . '%_%',
+            'format'  => '?paged=%#%',
+            'total'   => $total_pages,
+            'current' => $paged,
+            'prev_text' => '<svg width="12" height="18" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 1L1 7L7 13" stroke="#6A35FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+            'next_text' => '<svg width="12" height="18" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L7 7L1 13" stroke="#6A35FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+        ) );
+    }
 
     wp_reset_postdata();
 

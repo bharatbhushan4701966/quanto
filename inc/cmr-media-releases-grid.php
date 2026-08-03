@@ -453,19 +453,33 @@ function cmr_media_releases_grid_shortcode() {
                 echo '<p>No media releases found.</p>';
             }
             $total_pages = ceil( max( 0, $query->found_posts ) / 6 );
-            $has_more = $paged < $total_pages;
+            $has_more = $paged < $total_pages && $paged < 3;
+            $show_pagination = $paged >= 3 || $paged >= $total_pages;
+
+            $pagination = '';
+            if ( $show_pagination ) {
+                $pagination = paginate_links( array(
+                    'base'    => @add_query_arg('paged','%#%'),
+                    'format'  => '?paged=%#%',
+                    'total'   => $total_pages,
+                    'current' => $paged,
+                    'prev_text' => '<svg width="12" height="18" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 1L1 7L7 13" stroke="#6A35FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+                    'next_text' => '<svg width="12" height="18" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L7 7L1 13" stroke="#6A35FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+                ) );
+            }
             
             wp_reset_postdata();
             ?>
         </div>
 
         <!-- Load More -->
-        <div class="cmr-mrg-load-more-wrap" style="display: <?php echo $has_more ? 'block' : 'none'; ?>;">
+        <div class="cmr-mrg-load-more-wrap" style="display: <?php echo $has_more && !$show_pagination ? 'block' : 'none'; ?>;">
             <button class="cmr-mrg-load-more" id="cmr-mrg-load-more-btn">Load More</button>
         </div>
         
-        <!-- Pagination (Disabled in favor of infinite Load More) -->
-        <div class="cmr-mrg-pagination" id="cmr-mrg-pagination" style="display: none;">
+        <!-- Pagination -->
+        <div class="cmr-mrg-pagination" id="cmr-mrg-pagination" style="display: <?php echo $pagination ? 'block' : 'none'; ?>;">
+            <?php echo $pagination; ?>
         </div>
     </div>
 
@@ -578,6 +592,36 @@ function cmr_media_releases_grid_shortcode() {
             loadMoreBtn.addEventListener('click', function() {
                 currentPage++;
                 fetchPosts(true);
+            });
+        }
+
+        // AJAX Pagination
+        const paginationWrap = document.getElementById('cmr-mrg-pagination');
+        if (paginationWrap) {
+            paginationWrap.addEventListener('click', function(e) {
+                const link = e.target.closest('a.page-numbers');
+                if (link) {
+                    e.preventDefault();
+                    const href = link.getAttribute('href');
+                    const match = href.match(/paged=(\d+)/);
+                    if (match) {
+                        currentPage = parseInt(match[1], 10);
+                    } else {
+                        const pathMatch = href.match(/\/page\/(\d+)/);
+                        if (pathMatch) {
+                            currentPage = parseInt(pathMatch[1], 10);
+                        } else if (href.indexOf('?') === -1 && href.indexOf('page') === -1) {
+                            currentPage = 1;
+                        }
+                    }
+                    fetchPosts(false);
+                    // Scroll up slightly
+                    const gridElement = document.getElementById('cmr-mrg-grid');
+                    if (gridElement) {
+                        const y = gridElement.getBoundingClientRect().top + window.scrollY - 150;
+                        window.scrollTo({top: y, behavior: 'smooth'});
+                    }
+                }
             });
         }
 
