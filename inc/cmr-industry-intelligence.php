@@ -90,10 +90,10 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
 
                 <div class="intel-controls" style="display: flex; justify-content: flex-end;">
                     <div class="intel-search">
-                        <form id="intel-search-form" onsubmit="return false;" style="position: relative; display: flex; align-items: center; background: #fff; border: 1px solid #eaeaea; border-radius: 40px; padding: 5px 15px; width: 300px;">
-                            <input type="text" id="intel-search-input" placeholder="Search by name" style="border: none; background: transparent; flex: 1; outline: none; font-size: 14px; color: #111; padding: 5px 0;">
-                            <button type="submit" class="intel-search-btn" style="background: transparent; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; color: #6A35FF;">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <form id="intel-search-form" onsubmit="return false;" style="position: relative; display: flex; align-items: center; background: #fff; border: 1px solid #eaeaea; border-radius: 40px; padding: 4px 4px 4px 20px; width: 300px; height: 48px; box-sizing: border-box;">
+                            <input type="text" id="intel-search-input" placeholder="Search by name" style="border: none; background: transparent; flex: 1; outline: none; font-size: 15px; color: #111; padding: 0;">
+                            <button type="submit" class="intel-search-btn" style="background: #5c24d3; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; color: #fff; width: 40px; height: 40px; border-radius: 50%; margin-left: 10px; flex-shrink: 0;">
+                                <i class="fa-solid fa-magnifying-glass" style="font-size: 14px;"></i>
                             </button>
                         </form>
                     </div>
