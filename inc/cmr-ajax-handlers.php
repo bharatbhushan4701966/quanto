@@ -507,35 +507,61 @@ function cmr_load_more_channel_connect_ajax() {
         
         $total_pages = ceil( max( 0, count( $unique_ids ) - 4 ) / 6 );
     } else {
-        $offset_base = 0;
-        $offset = $offset_base + ( ($paged - 1) * 6 );
-        
-        $args = array(
-            'post_type'      => 'cmr_news',
-            'posts_per_page' => 6,
-            'post_status'    => 'publish',
-            'orderby'        => 'date',
-            'order'          => 'DESC',
-            'offset'         => $offset,
-            'tax_query'      => array(
-                'relation' => 'AND',
-                array(
-                    'taxonomy' => 'cmr_news_category',
-                    'field'    => 'slug',
-                    'terms'    => array('channel-connect', 'channel-connects'),
-                ),
-            ),
-        );
+        global $wpdb;
 
+        // Build the same SQL as cmr_get_unique_channel_post_ids() but with year/search filtering
+        $where_extra = '';
         if ( !empty($year) ) {
-            $args['year'] = $year;
+            $where_extra .= $wpdb->prepare( " AND YEAR(p.post_date) = %d", intval($year) );
         }
         if ( !empty($search) ) {
-            $args['s'] = $search;
+            $where_extra .= $wpdb->prepare( " AND p.post_title LIKE %s", '%' . $wpdb->esc_like($search) . '%' );
         }
-        
+
+        $sql = "
+            SELECT p.ID, p.post_title
+            FROM {$wpdb->posts} p
+            INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
+            INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+            INNER JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
+            WHERE p.post_type IN ('post', 'cmr_news', 'cmr_media')
+              AND p.post_status = 'publish'
+              AND (t.slug IN ('channel-connect', 'channel', 'channel_connect') OR t.name LIKE '%Channel Connect%' OR t.name LIKE '%Channel%')
+              {$where_extra}
+            ORDER BY p.post_date DESC
+            LIMIT 500
+        ";
+
+        $results = $wpdb->get_results( $sql );
+
+        $unique_ids = array();
+        $seen_titles = array();
+        if ( $results ) {
+            foreach ( $results as $row ) {
+                $title = trim( $row->post_title );
+                if ( ! isset( $seen_titles[$title] ) ) {
+                    $seen_titles[$title] = true;
+                    $unique_ids[] = intval( $row->ID );
+                }
+            }
+        }
+
+        $total_posts  = count( $unique_ids );
+        $offset       = ( $paged - 1 ) * 6;
+        $total_pages  = ceil( $total_posts / 6 );
+        $sliced_ids   = array_slice( $unique_ids, $offset, 6 );
+
+        if ( empty($sliced_ids) ) {
+            wp_send_json_success( array( 'html' => '', 'has_more' => false, 'pagination' => '' ) );
+        }
+
+        $args = array(
+            'post_type'      => array( 'post', 'cmr_news', 'cmr_media' ),
+            'post__in'       => $sliced_ids,
+            'orderby'        => 'post__in',
+            'posts_per_page' => 6,
+        );
         $query = new WP_Query( $args );
-        $total_pages = ceil( max( 0, $query->found_posts - $offset_base ) / 6 );
     }
 
     ob_start();
