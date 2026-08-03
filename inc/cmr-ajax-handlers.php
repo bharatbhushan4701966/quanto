@@ -383,25 +383,62 @@ function cmr_load_more_enterprise_connect_ajax() {
         $offset_base = 0;
         $offset = $offset_base + ( ($paged - 1) * 6 );
         
-        $args = array(
-            'post_type'      => array( 'post', 'cmr_news', 'cmr_media' ),
-            'category_name'  => 'enterprise-connect',
-            'posts_per_page' => 6,
-            'post_status'    => 'publish',
-            'orderby'        => 'date',
-            'order'          => 'DESC',
-            'offset'         => $offset
-        );
+        global $wpdb;
 
+        $year_cond = '';
         if ( !empty($year) ) {
-            $args['year'] = $year;
-        }
-        if ( !empty($search) ) {
-            $args['s'] = $search;
+            $year_cond = $wpdb->prepare( " AND YEAR(p.post_date) = %d ", $year );
         }
         
+        $search_cond = '';
+        if ( !empty($search) ) {
+            $search_like = '%' . $wpdb->esc_like( $search ) . '%';
+            $search_cond = $wpdb->prepare( " AND (p.post_title LIKE %s OR p.post_content LIKE %s) ", $search_like, $search_like );
+        }
+
+        $sql = "
+            SELECT p.ID, p.post_title 
+            FROM {$wpdb->posts} p
+            INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
+            INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+            INNER JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
+            WHERE p.post_type IN ('post', 'cmr_news', 'cmr_media') 
+              AND p.post_status = 'publish' 
+              AND (t.slug IN ('enterprise-connect', 'enterprise', 'enterprise_connect') OR t.name LIKE '%Enterprise Connect%' OR t.name LIKE '%Enterprise%')
+              $year_cond
+              $search_cond
+            ORDER BY p.post_date DESC
+            LIMIT 500
+        ";
+        
+        $results = $wpdb->get_results($sql);
+        $filtered_ids = array();
+        $seen_titles = array();
+        if ( $results ) {
+            foreach ( $results as $row ) {
+                $title = trim( $row->post_title );
+                if ( ! isset( $seen_titles[ $title ] ) ) {
+                    $seen_titles[ $title ] = true;
+                    $filtered_ids[] = $row->ID;
+                }
+            }
+        }
+        
+        $sliced_ids = array_slice( $filtered_ids, $offset, 6 );
+        
+        if ( empty($sliced_ids) ) {
+            wp_send_json_success(array('html' => '', 'has_more' => false));
+        }
+        
+        $args = array(
+            'post_type'      => array( 'post', 'cmr_news', 'cmr_media' ),
+            'post__in'       => $sliced_ids,
+            'orderby'        => 'post__in',
+            'posts_per_page' => 6,
+        );
         $query = new WP_Query( $args );
-        $total_pages = ceil( max( 0, $query->found_posts - $offset_base ) / 6 );
+        
+        $total_pages = ceil( max( 0, count( $filtered_ids ) ) / 6 );
     }
 
     ob_start();

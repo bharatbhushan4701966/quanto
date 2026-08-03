@@ -386,8 +386,15 @@ function cmr_enterprise_connect_grid_shortcode( $atts ) {
                 <button class="cmr-enterprisecgd-year-btn" data-year="2023">2023</button>
                 <button class="cmr-enterprisecgd-year-btn" data-year="2022">2022</button>
                 <button class="cmr-enterprisecgd-year-btn" data-year="2021">2021</button>
-                <div class="cmr-enterprisecgd-more-dropdown">
-                    <button class="cmr-enterprisecgd-more-btn">More <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                <div class="cmr-enterprisecgd-more-dropdown" style="position: relative;">
+                    <button class="cmr-enterprisecgd-more-btn" id="cmr-enterprisecgd-more-btn">More <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                    <div class="cmr-enterprisecgd-more-content" id="cmr-enterprisecgd-more-content" style="display: none; position: absolute; top: 100%; left: 0; background: #fff; border: 1px solid #eaeaea; border-radius: 8px; padding: 10px; z-index: 100; min-width: 120px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-top: 5px;">
+                        <button class="cmr-enterprisecgd-year-btn" data-year="2020" style="display:block; width:100%; text-align:left; border:none; border-radius:4px; padding:8px 12px; margin-bottom:4px; background:transparent;">2020</button>
+                        <button class="cmr-enterprisecgd-year-btn" data-year="2019" style="display:block; width:100%; text-align:left; border:none; border-radius:4px; padding:8px 12px; margin-bottom:4px; background:transparent;">2019</button>
+                        <button class="cmr-enterprisecgd-year-btn" data-year="2018" style="display:block; width:100%; text-align:left; border:none; border-radius:4px; padding:8px 12px; margin-bottom:4px; background:transparent;">2018</button>
+                        <button class="cmr-enterprisecgd-year-btn" data-year="2017" style="display:block; width:100%; text-align:left; border:none; border-radius:4px; padding:8px 12px; margin-bottom:4px; background:transparent;">2017</button>
+                        <button class="cmr-enterprisecgd-year-btn" data-year="2016" style="display:block; width:100%; text-align:left; border:none; border-radius:4px; padding:8px 12px; background:transparent;">2016</button>
+                    </div>
                 </div>
             </div>
             <div class="cmr-enterprisecgd-search">
@@ -476,9 +483,11 @@ function cmr_enterprise_connect_grid_shortcode( $atts ) {
         const searchForm = document.getElementById('cmr-enterprisecgd-search-form');
         const searchInput = document.getElementById('cmr-enterprisecgd-search-input');
 
-        function fetchPosts(isLoadMore = false) {
-            if (!isLoadMore) {
+        function fetchPosts(isLoadMore = false, resetPage = false) {
+            if (resetPage) {
                 currentPage = 1;
+            }
+            if (!isLoadMore) {
                 grid.innerHTML = '<p>Loading...</p>';
             }
             
@@ -532,16 +541,41 @@ function cmr_enterprise_connect_grid_shortcode( $atts ) {
                 yearBtns.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 currentYear = this.getAttribute('data-year');
-                fetchPosts(false);
+                
+                const moreContent = document.getElementById('cmr-enterprisecgd-more-content');
+                if (moreContent) {
+                    moreContent.style.display = 'none';
+                }
+                
+                fetchPosts(false, true);
             });
         });
+
+        // More Dropdown
+        const moreBtn = document.getElementById('cmr-enterprisecgd-more-btn');
+        const moreContent = document.getElementById('cmr-enterprisecgd-more-content');
+        if (moreBtn && moreContent) {
+            moreBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (moreContent.style.display === 'none') {
+                    moreContent.style.display = 'block';
+                } else {
+                    moreContent.style.display = 'none';
+                }
+            });
+            document.addEventListener('click', function(e) {
+                if (!moreContent.contains(e.target) && e.target !== moreBtn) {
+                    moreContent.style.display = 'none';
+                }
+            });
+        }
 
         // Search
         if (searchForm) {
             searchForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 currentSearch = searchInput.value.trim();
-                fetchPosts(false);
+                fetchPosts(false, true);
             });
         }
 
@@ -550,6 +584,30 @@ function cmr_enterprise_connect_grid_shortcode( $atts ) {
             loadMoreBtn.addEventListener('click', function() {
                 currentPage++;
                 fetchPosts(true);
+            });
+        }
+
+        // AJAX Pagination
+        const paginationWrap = document.querySelector('.cmr-enterprisecgd-pagination-wrap');
+        if (paginationWrap) {
+            paginationWrap.addEventListener('click', function(e) {
+                const link = e.target.closest('a.page-numbers');
+                if (link) {
+                    e.preventDefault();
+                    const href = link.getAttribute('href');
+                    const match = href.match(/paged=(\d+)/);
+                    if (match) {
+                        currentPage = parseInt(match[1], 10);
+                    } else {
+                        const pathMatch = href.match(/\/page\/(\d+)/);
+                        if (pathMatch) {
+                            currentPage = parseInt(pathMatch[1], 10);
+                        } else if (href.indexOf('?') === -1 && href.indexOf('page') === -1) {
+                            currentPage = 1;
+                        }
+                    }
+                    fetchPosts(true);
+                }
             });
         }
 
