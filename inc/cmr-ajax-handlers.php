@@ -511,13 +511,20 @@ function cmr_load_more_channel_connect_ajax() {
         $offset = $offset_base + ( ($paged - 1) * 6 );
         
         $args = array(
-            'post_type'      => array( 'post', 'cmr_news', 'cmr_media' ),
-            'category_name'  => 'channel-connect',
+            'post_type'      => 'cmr_news',
             'posts_per_page' => 6,
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
-            'offset'         => $offset
+            'offset'         => $offset,
+            'tax_query'      => array(
+                'relation' => 'AND',
+                array(
+                    'taxonomy' => 'cmr_news_category',
+                    'field'    => 'slug',
+                    'terms'    => array('channel-connect', 'channel-connects'),
+                ),
+            ),
         );
 
         if ( !empty($year) ) {
