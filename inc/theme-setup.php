@@ -111,6 +111,22 @@ function quanto_custom_loop_add_to_cart_text() {
 }
 
 /**
+ * Redirect to Cart page after adding to cart from the loop (Download Report button)
+ */
+add_filter( 'woocommerce_loop_add_to_cart_args', 'quanto_remove_ajax_add_to_cart_class', 10, 2 );
+function quanto_remove_ajax_add_to_cart_class( $args, $product ) {
+    if ( isset( $args['class'] ) ) {
+        $args['class'] = str_replace( 'ajax_add_to_cart', '', $args['class'] );
+    }
+    return $args;
+}
+
+add_filter( 'woocommerce_add_to_cart_redirect', 'quanto_force_cart_redirect_after_add' );
+function quanto_force_cart_redirect_after_add( $url ) {
+    return wc_get_cart_url();
+}
+
+/**
  * Change WooCommerce Loop Product Title from h2 to h5
  */
 remove_action( 'woocommerce_shop_loop_item_title', 'woocommerce_template_loop_product_title', 10 );
