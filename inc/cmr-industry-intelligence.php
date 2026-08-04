@@ -291,12 +291,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                                     page = parseInt(pathMatch[1], 10);
                                 }
                             }
-                            fetchIntel(page, true); // true acts like search, replacing the content instead of appending
-                            // Optional: scroll to top of section
-                            const section = document.getElementById('insights');
-                            if (section) {
-                                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                            }
+                            fetchIntel(page, false); // append content like Load More
                         }
                     });
 
