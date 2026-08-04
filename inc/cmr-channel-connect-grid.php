@@ -280,15 +280,21 @@ function cmr_channel_connect_grid_shortcode() {
         }
         .cmr-channelcgd-load-more {
             background: transparent;
-            border: 1px solid #eaeaea;
+            border: 1px solid #ccc;
             border-radius: 40px;
-            padding: 14px 40px;
-            font-size: 15px;
+            width: 260px;
+            height: 44px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
             font-weight: 600;
             color: #111;
             cursor: pointer;
             transition: all 0.3s;
             font-family: inherit;
+            box-sizing: border-box;
         }
         .cmr-channelcgd-load-more:hover {
             border-color: #6B3FA0;
