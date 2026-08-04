@@ -173,24 +173,15 @@ if ( ! function_exists( 'cmr_consulting_advisory_shortcode' ) ) {
                     <?php endwhile; wp_reset_postdata(); ?>
                 </div>
                 
+                <?php
+                $cat_slug_val = !empty($atts['category']) ? $atts['category'] : 'consulting-advisory';
+                $cat_obj_val  = get_category_by_slug( $cat_slug_val );
+                $cat_url_val  = $cat_obj_val ? get_category_link( $cat_obj_val->term_id ) : home_url( '/category/' . $cat_slug_val . '/' );
+                ?>
                 <div class="intel-pagination-wrap">
-                    <?php if ( $paged == 1 && $insights_query->max_num_pages > 1 ) : ?>
-                        <div class="intel-load-more-wrap" style="text-align: center; margin-top: 30px;">
-                            <button class="intel-load-more-btn" data-page="1" data-max="<?php echo esc_attr($insights_query->max_num_pages); ?>" data-ajaxurl="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" style="background: transparent; border: 1px solid #ccc; color: #111; font-size: 14px; font-weight: 600; border-radius: 40px; cursor: pointer; transition: all 0.3s ease; width: 288px; height: 54px; display: inline-flex; justify-content: center; align-items: center;">Load More</button>
-                        </div>
-                    <?php elseif ( $insights_query->max_num_pages > 1 ) : ?>
-                        <div class="intel-numeric-pagination" style="text-align: center; margin-top: 30px; display: flex; justify-content: center; gap: 10px;">
-                            <?php 
-                            echo paginate_links( array(
-                                'total'   => $insights_query->max_num_pages,
-                                'current' => $paged,
-                                'format'  => '?paged=%#%',
-                                'prev_text' => '<svg width="12" height="18" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 1L1 7L7 13" stroke="#6A35FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-                                'next_text' => '<svg width="12" height="18" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L7 7L1 13" stroke="#6A35FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-                            ) ); 
-                            ?>
-                        </div>
-                    <?php endif; ?>
+                    <div class="intel-load-more-wrap" style="text-align: center; margin-top: 30px;">
+                        <a href="<?php echo esc_url($cat_url_val); ?>" class="intel-load-more-btn" style="background: transparent; border: 1px solid #ccc; color: #111; font-size: 14px; font-weight: 600; border-radius: 40px; text-decoration: none; transition: all 0.3s ease; width: 288px; height: 54px; display: inline-flex; justify-content: center; align-items: center;">View All</a>
+                    </div>
                 </div>
 
                 <script>
