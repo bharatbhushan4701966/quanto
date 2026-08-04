@@ -480,9 +480,13 @@ function cmr_media_releases_grid_shortcode() {
 
         <!-- Load More -->
         <?php
-        $mr_cat_obj = get_category_by_slug('press-releases');
-        if ( !$mr_cat_obj ) $mr_cat_obj = get_category_by_slug('media-releases');
-        $mr_cat_url = $mr_cat_obj ? get_category_link($mr_cat_obj->term_id) : home_url('/category/press-releases/');
+        $mr_cat_obj = get_category_by_slug('media-releases');
+        if ( !$mr_cat_obj ) $mr_cat_obj = get_category_by_slug('media-release');
+        if ( !$mr_cat_obj ) $mr_cat_obj = get_category_by_slug('press-releases');
+        if ( !$mr_cat_obj ) $mr_cat_obj = get_category_by_slug('press-release');
+        if ( !$mr_cat_obj ) $mr_cat_obj = get_term_by('name', 'Media Releases', 'category');
+        if ( !$mr_cat_obj ) $mr_cat_obj = get_term_by('name', 'Press Releases', 'category');
+        $mr_cat_url = $mr_cat_obj ? get_category_link($mr_cat_obj->term_id) : home_url('/category/media-releases/');
         ?>
         <div class="cmr-mrg-load-more-wrap">
             <a href="<?php echo esc_url($mr_cat_url); ?>" class="cmr-mrg-load-more" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">View All</a>

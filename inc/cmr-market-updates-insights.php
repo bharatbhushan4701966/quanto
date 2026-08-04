@@ -451,6 +451,9 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
             $mui_cat_slug = !empty($atts['category']) ? $atts['category'] : 'market-updates';
             $mui_cat_obj  = get_category_by_slug( $mui_cat_slug );
             if ( ! $mui_cat_obj ) $mui_cat_obj = get_category_by_slug( 'market-update' );
+            if ( ! $mui_cat_obj ) $mui_cat_obj = get_category_by_slug( 'market-updates' );
+            if ( ! $mui_cat_obj ) $mui_cat_obj = get_term_by( 'name', 'Market Updates', 'category' );
+            if ( ! $mui_cat_obj ) $mui_cat_obj = get_term_by( 'name', 'Market Update', 'category' );
             $mui_cat_url  = $mui_cat_obj ? get_category_link( $mui_cat_obj->term_id ) : home_url( '/category/market-updates/' );
             ?>
             <div class="cmr-mui-actions" style="text-align: center; margin-top: 40px;">
