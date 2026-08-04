@@ -213,12 +213,13 @@ if ( ! function_exists( 'cmr_marketing_services_shortcode' ) ) {
                             btn.disabled = true;
                         }
 
+                        const categorySlug = '<?php echo esc_js( $atts["category"] ); ?>';
                         fetch(ajaxurl, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/x-www-form-urlencoded'
                             },
-                            body: 'action=cmr_load_more_marketing&page=' + page + '&search=' + encodeURIComponent(currentSearch) + '&base_url=' + encodeURIComponent(window.location.pathname)
+                            body: 'action=cmr_load_more_marketing&page=' + page + '&search=' + encodeURIComponent(currentSearch) + '&category=' + encodeURIComponent(categorySlug) + '&base_url=' + encodeURIComponent(window.location.pathname)
                         })
                         .then(response => response.json())
                         .then(data => {
@@ -273,6 +274,23 @@ if ( ! function_exists( 'cmr_marketing_services_shortcode' ) ) {
                             }
                         });
                     }
+
+                    document.addEventListener('click', function(e) {
+                        const link = e.target.closest('.intel-pagination-wrap a.page-numbers');
+                        if (link) {
+                            e.preventDefault();
+                            const href = link.getAttribute('href');
+                            let page = 1;
+                            const match = href.match(/paged=(\d+)/);
+                            if (match) {
+                                page = parseInt(match[1], 10);
+                            } else {
+                                const pathMatch = href.match(/\/page\/(\d+)/);
+                                if (pathMatch) page = parseInt(pathMatch[1], 10);
+                            }
+                            fetchMarketing(page, false); // append like Load More
+                        }
+                    });
 
                     if (searchForm) {
                         searchForm.addEventListener('submit', function(e) {

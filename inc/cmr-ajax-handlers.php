@@ -685,6 +685,8 @@ function cmr_load_more_consulting_ajax() {
     $base_url = isset( $_POST['base_url'] ) ? sanitize_text_field( $_POST['base_url'] ) : '/';
     $search = isset( $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : '';
     
+    $category = isset( $_POST['category'] ) ? sanitize_text_field( $_POST['category'] ) : 'industry-connect';
+    
     $query_args = array(
         'post_type'      => array( 'post', 'cmr_news' ),
         'posts_per_page' => 6,
@@ -696,7 +698,7 @@ function cmr_load_more_consulting_ajax() {
             array(
                 'taxonomy' => 'category',
                 'field'    => 'slug',
-                'terms'    => 'industry-connect',
+                'terms'    => $category,
             ),
         ),
     );
@@ -782,6 +784,8 @@ function cmr_load_more_marketing_ajax() {
     $base_url = isset( $_POST['base_url'] ) ? sanitize_text_field( $_POST['base_url'] ) : '/';
     $search = isset( $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : '';
     
+    $category = isset( $_POST['category'] ) ? sanitize_text_field( $_POST['category'] ) : 'industry-connect';
+    
     $query_args = array(
         'post_type'      => array( 'post', 'cmr_news' ),
         'posts_per_page' => 6,
@@ -793,7 +797,7 @@ function cmr_load_more_marketing_ajax() {
             array(
                 'taxonomy' => 'category',
                 'field'    => 'slug',
-                'terms'    => 'industry-connect', // default for now, same as advisory
+                'terms'    => $category,
             ),
         ),
     );
