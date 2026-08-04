@@ -52,7 +52,7 @@ get_header();
 
     .cmr-cat-title {
         font-size: 48px;
-        font-weight: 700;
+        font-weight: 600;
         color: #111;
         margin: 0 0 14px 0;
         letter-spacing: -1px;
