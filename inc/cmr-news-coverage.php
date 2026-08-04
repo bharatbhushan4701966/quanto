@@ -127,7 +127,7 @@ function cmr_get_media_coverage_query_args( $page = 1, $publisher = 'all', $sear
             array(
                 'taxonomy' => 'cmr_news_category',
                 'field'    => 'slug',
-                'terms'    => array('media-releases', 'media-release', 'media_releases', 'media_release'),
+                'terms'    => array('media-releases', 'media-release', 'media_releases', 'media_release', 'press-releases', 'press-release', 'pressreleases', 'press-releases-2', 'press-release-2'),
                 'operator' => 'NOT IN'
             ),
         ),
