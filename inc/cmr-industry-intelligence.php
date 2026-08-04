@@ -201,13 +201,15 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                     let currentSearch = '';
                     let clickCount = 0;
 
-                    function fetchIntel(page, isSearch = false) {
+                    function fetchIntel(page, isReplace = false, resetPage = false) {
                         let max = btn ? parseInt(btn.getAttribute('data-max')) : 1;
                         let ajaxurl = '<?php echo esc_url(admin_url("admin-ajax.php")); ?>';
                         
-                        if (isSearch) {
+                        if (isReplace) {
                             document.querySelector('.intel-grid').innerHTML = '<p>Loading...</p>';
-                            page = 1;
+                            if (resetPage) {
+                                page = 1;
+                            }
                         } else if (btn) {
                             btn.innerText = 'Loading...';
                             btn.disabled = true;
@@ -223,10 +225,10 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                if (isSearch) {
+                                if (isReplace) {
                                     document.querySelector('.intel-grid').innerHTML = data.data.html || '<p>No results found.</p>';
                                     clickCount = 0;
-                                    if (btn) btn.setAttribute('data-page', 1);
+                                    if (btn) btn.setAttribute('data-page', page);
                                     
                                     const paginationWrap = document.querySelector('.intel-pagination-wrap');
                                     if (paginationWrap) {
@@ -274,11 +276,35 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                         });
                     }
 
+                    document.addEventListener('click', function(e) {
+                        const link = e.target.closest('.intel-pagination-wrap a.page-numbers');
+                        if (link) {
+                            e.preventDefault();
+                            const href = link.getAttribute('href');
+                            let page = 1;
+                            const match = href.match(/paged=(\d+)/);
+                            if (match) {
+                                page = parseInt(match[1], 10);
+                            } else {
+                                const pathMatch = href.match(/\/page\/(\d+)/);
+                                if (pathMatch) {
+                                    page = parseInt(pathMatch[1], 10);
+                                }
+                            }
+                            fetchIntel(page, true); // true acts like search, replacing the content instead of appending
+                            // Optional: scroll to top of section
+                            const section = document.getElementById('insights');
+                            if (section) {
+                                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        }
+                    });
+
                     if (searchForm) {
                         searchForm.addEventListener('submit', function(e) {
                             e.preventDefault();
                             currentSearch = searchInput.value.trim();
-                            fetchIntel(1, true);
+                            fetchIntel(1, true, true);
                         });
                     }
                 });
