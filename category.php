@@ -448,6 +448,7 @@ get_header();
                     <div class="cmr-cat-card-meta">
                         <span class="cmr-cat-card-meta-dash"></span>
                         <span class="cmr-cat-card-tag"><?php echo esc_html( $tag_name ); ?></span>
+                        <span class="cmr-cat-card-date"> | <?php echo esc_html( get_the_date( 'd M Y' ) ); ?></span>
                         <span class="cmr-cat-card-read-time"><?php echo esc_html( $read_time ); ?> min read</span>
                     </div>
                     <h3 class="cmr-cat-card-title">
@@ -469,10 +470,14 @@ get_header();
         <!-- Pagination -->
         <div class="cmr-cat-pagination">
             <?php
-            echo paginate_links( array(
+            $paginate_args = array(
                 'prev_text' => '<svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M7 1L1 7L7 13" stroke="#6A35FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
                 'next_text' => '<svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1L7 7L1 13" stroke="#6A35FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-            ) );
+            );
+            if ( ! empty($active_year) ) {
+                $paginate_args['add_args'] = array( 'y' => $active_year );
+            }
+            echo paginate_links( $paginate_args );
             ?>
         </div>
 

@@ -1772,7 +1772,7 @@ add_action( 'pre_get_posts', 'cmr_modify_search_query' );
 
 // Set 9 posts per page & handle year filter on Category Archives
 function cmr_category_posts_per_page($query) {
-    if ( ! is_admin() && $query->is_main_query() && $query->is_category() ) {
+    if ( ! is_admin() && $query->is_main_query() && ( $query->is_category() || $query->is_archive() ) ) {
         $query->set( 'posts_per_page', 9 );
 
         $selected_year = 0;
@@ -1783,6 +1783,7 @@ function cmr_category_posts_per_page($query) {
         }
 
         if ( $selected_year > 0 ) {
+            $query->set( 'year', $selected_year );
             $query->set( 'date_query', array(
                 array(
                     'year' => $selected_year,
