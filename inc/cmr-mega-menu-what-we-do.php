@@ -82,10 +82,9 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             position: relative;
             font-family: 'Instrument Sans', sans-serif;
             width: 900px !important;
-            max-width: none !important;
+            max-width: 100vw !important;
             border-radius: 12px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-            background: #fff;
             background: #fff;
             display: flex;
         }
@@ -230,6 +229,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             color: #111;
             margin: 10px 0 15px 0;
             letter-spacing: -0.5px;
+            max-width: 420px;
         }
 
         .cmr-mmw-desc {
@@ -237,6 +237,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             color: #444;
             line-height: 1.5;
             margin-bottom: 25px;
+            max-width: 480px;
         }
 
         .cmr-mmw-features {
