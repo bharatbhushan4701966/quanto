@@ -464,8 +464,12 @@ function cmr_enterprise_connect_grid_shortcode( $atts ) {
         </div>
 
         <!-- Load More -->
-        <div class="cmr-enterprisecgd-load-more-wrap" style="display: <?php echo $has_more ? 'block' : 'none'; ?>;">
-            <button class="cmr-enterprisecgd-load-more" id="cmr-enterprisecgd-load-more-btn">Load More</button>
+        <?php
+        $ec_cat_obj = get_category_by_slug('enterprise-connect');
+        $ec_cat_url = $ec_cat_obj ? get_category_link($ec_cat_obj->term_id) : home_url('/category/enterprise-connect/');
+        ?>
+        <div class="cmr-enterprisecgd-load-more-wrap">
+            <a href="<?php echo esc_url($ec_cat_url); ?>" class="cmr-enterprisecgd-load-more" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">View All</a>
         </div>
         <!-- Pagination -->
         <div class="cmr-enterprisecgd-pagination-wrap" style="display: none;"></div>

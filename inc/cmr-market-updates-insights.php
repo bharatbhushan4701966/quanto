@@ -447,11 +447,14 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                 <?php endif; ?>
             </div>
 
-            <?php if ( ! empty($posts) && count($posts) > 9 ) : ?>
-                <div class="cmr-mui-actions" style="text-align: center; margin-top: 40px;">
-                    <button type="button" id="cmr-mui-load-more" class="cmr-mui-btn">Load More</button>
-                </div>
-            <?php endif; ?>
+            <?php
+            $mui_cat_slug = !empty($atts['category']) ? $atts['category'] : 'market-update';
+            $mui_cat_obj  = get_category_by_slug( $mui_cat_slug );
+            $mui_cat_url  = $mui_cat_obj ? get_category_link( $mui_cat_obj->term_id ) : home_url( '/category/' . $mui_cat_slug . '/' );
+            ?>
+            <div class="cmr-mui-actions" style="text-align: center; margin-top: 40px;">
+                <a href="<?php echo esc_url( $mui_cat_url ); ?>" class="cmr-mui-btn" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">View All</a>
+            </div>
             
             <?php if ( $max_pages > 1 ) : ?>
                 <div id="cmr-mui-pagination-wrap" class="cmr-mui-pagination" style="display: <?php echo (!empty($posts) && count($posts) > 9) ? 'none' : 'block'; ?>; margin-top: 40px;">

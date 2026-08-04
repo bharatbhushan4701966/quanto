@@ -473,8 +473,13 @@ function cmr_media_releases_grid_shortcode() {
         </div>
 
         <!-- Load More -->
-        <div class="cmr-mrg-load-more-wrap" style="display: <?php echo $has_more && !$show_pagination ? 'block' : 'none'; ?>;">
-            <button class="cmr-mrg-load-more" id="cmr-mrg-load-more-btn">Load More</button>
+        <?php
+        $mr_cat_obj = get_category_by_slug('press-releases');
+        if ( !$mr_cat_obj ) $mr_cat_obj = get_category_by_slug('media-releases');
+        $mr_cat_url = $mr_cat_obj ? get_category_link($mr_cat_obj->term_id) : home_url('/category/press-releases/');
+        ?>
+        <div class="cmr-mrg-load-more-wrap">
+            <a href="<?php echo esc_url($mr_cat_url); ?>" class="cmr-mrg-load-more" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">View All</a>
         </div>
         
         <!-- Pagination -->

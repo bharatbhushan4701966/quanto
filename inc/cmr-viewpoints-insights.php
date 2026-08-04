@@ -447,11 +447,14 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
                 <?php endif; ?>
             </div>
 
-            <?php if ( ! empty($posts) && count($posts) > 9 ) : ?>
-                <div class="cmr-vpi-actions" style="text-align: center; margin-top: 40px;">
-                    <button type="button" id="cmr-vpi-load-more" class="cmr-vpi-btn">Load More</button>
-                </div>
-            <?php endif; ?>
+            <?php
+            $vpi_cat_slug = !empty($atts['category']) ? $atts['category'] : 'viewpoint';
+            $vpi_cat_obj  = get_category_by_slug( $vpi_cat_slug );
+            $vpi_cat_url  = $vpi_cat_obj ? get_category_link( $vpi_cat_obj->term_id ) : home_url( '/category/' . $vpi_cat_slug . '/' );
+            ?>
+            <div class="cmr-vpi-actions" style="text-align: center; margin-top: 40px;">
+                <a href="<?php echo esc_url( $vpi_cat_url ); ?>" class="cmr-vpi-btn" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">View All</a>
+            </div>
             
             <?php if ( $max_pages > 1 ) : ?>
                 <div id="cmr-vpi-pagination-wrap" class="cmr-vpi-pagination" style="display: <?php echo (!empty($posts) && count($posts) > 9) ? 'none' : 'block'; ?>; margin-top: 40px;">

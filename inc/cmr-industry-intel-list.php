@@ -390,18 +390,14 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 }
                 ?>
 
-                <?php if ( $paged < 3 && $insights_query->max_num_pages > 1 && $insights_query->max_num_pages > $paged ) : ?>
-                    <div class="cmr-intel-list-load-more">
-                        <button data-page="<?php echo esc_attr( $paged ); ?>" data-max="<?php echo esc_attr( $insights_query->max_num_pages ); ?>" data-category="<?php echo esc_attr( $atts['category'] ); ?>" id="cmr-intel-load-more-btn">Load More</button>
-                    </div>
-                    <div class="cmr-pagination-wrapper cmr-pagination-style" style="display:none; text-align:center; margin-top:40px;">
-                        <?php echo $pagination_html; ?>
-                    </div>
-                <?php elseif ( $insights_query->max_num_pages > 1 ) : ?>
-                    <div class="cmr-pagination-wrapper cmr-pagination-style" style="text-align:center; margin-top:40px;">
-                        <?php echo $pagination_html; ?>
-                    </div>
-                <?php endif; ?>
+                <?php
+                $intel_cat_slug = !empty($atts['category']) ? $atts['category'] : 'industry-connect';
+                $intel_cat_obj  = get_category_by_slug( $intel_cat_slug );
+                $intel_cat_url  = $intel_cat_obj ? get_category_link( $intel_cat_obj->term_id ) : home_url( '/category/' . $intel_cat_slug . '/' );
+                ?>
+                <div class="cmr-intel-list-load-more">
+                    <a href="<?php echo esc_url( $intel_cat_url ); ?>" id="cmr-intel-load-more-btn" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">View All</a>
+                </div>
             <?php else : ?>
                 <p>No insights found.</p>
             <?php endif; wp_reset_postdata(); ?>

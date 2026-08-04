@@ -453,8 +453,12 @@ function cmr_channel_connect_grid_shortcode() {
         </div>
 
         <!-- Load More -->
-        <div class="cmr-channelcgd-load-more-wrap" style="display: <?php echo $has_more ? 'block' : 'none'; ?>;">
-            <button class="cmr-channelcgd-load-more" id="cmr-channelcgd-load-more-btn">Load More</button>
+        <?php
+        $cc_cat_obj = get_category_by_slug('channel-connect');
+        $cc_cat_url = $cc_cat_obj ? get_category_link($cc_cat_obj->term_id) : home_url('/category/channel-connect/');
+        ?>
+        <div class="cmr-channelcgd-load-more-wrap">
+            <a href="<?php echo esc_url($cc_cat_url); ?>" class="cmr-channelcgd-load-more" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">View All</a>
         </div>
         <!-- Pagination -->
         <div class="cmr-channelcgd-pagination-wrap" style="display: none;"></div>

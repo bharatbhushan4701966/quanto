@@ -456,8 +456,12 @@ function cmr_smb_connect_grid_shortcode() {
         </div>
 
         <!-- Load More -->
-        <div class="cmr-smbcgd-load-more-wrap" style="display: <?php echo $has_more ? 'block' : 'none'; ?>;">
-            <button class="cmr-smbcgd-load-more" id="cmr-smbcgd-load-more-btn">Load More</button>
+        <?php
+        $smb_cat_obj = get_category_by_slug('smb-connect');
+        $smb_cat_url = $smb_cat_obj ? get_category_link($smb_cat_obj->term_id) : home_url('/category/smb-connect/');
+        ?>
+        <div class="cmr-smbcgd-load-more-wrap">
+            <a href="<?php echo esc_url($smb_cat_url); ?>" class="cmr-smbcgd-load-more" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">View All</a>
         </div>
         <!-- Pagination -->
         <div class="cmr-smbcgd-pagination-wrap" style="display: none;"></div>
