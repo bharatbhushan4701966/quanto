@@ -170,15 +170,15 @@ get_header();
     }
 
     .cmr-cat-card-title {
-        font-size: 20px;
-        font-weight: 500;
+        font-size: 18px;
+        font-weight: 600;
         color: #111;
-        line-height: 1.35;
-        margin: 0 0 14px 0;
+        line-height: 1.4;
         letter-spacing: -0.3px;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
+        margin: 0px 0px 15px;
         overflow: hidden;
     }
 
