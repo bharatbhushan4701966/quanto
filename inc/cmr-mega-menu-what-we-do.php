@@ -81,7 +81,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
         .cmr-mmw-wrapper {
             position: relative;
             font-family: 'Instrument Sans', sans-serif;
-            width: 900px !important;
+            width: 800px !important;
             max-width: 100% !important;
             border-radius: 12px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.08);
@@ -93,7 +93,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             content: '';
             position: absolute;
             top: -8px;
-            left: 50%;
+            left: 30%;
             transform: translateX(-50%) rotate(45deg);
             width: 16px;
             height: 16px;
@@ -449,7 +449,7 @@ function cmr_inject_what_we_do_mega_menu() {
             position: absolute !important;
             top: 60px;
             left: 50% !important;
-            transform: translateX(-50%) !important;
+            transform: translateX(-30%) !important;
             width: max-content !important;
             max-width: none !important;
             opacity: 0;
