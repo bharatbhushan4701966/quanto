@@ -448,12 +448,13 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
             </div>
 
             <?php
-            $vpi_cat_slug = !empty($atts['category']) ? $atts['category'] : 'viewpoint';
+            $vpi_cat_slug = !empty($atts['category']) ? $atts['category'] : 'viewpoints';
             $vpi_cat_obj  = get_category_by_slug( $vpi_cat_slug );
-            $vpi_cat_url  = $vpi_cat_obj ? get_category_link( $vpi_cat_obj->term_id ) : home_url( '/category/' . $vpi_cat_slug . '/' );
+            if ( ! $vpi_cat_obj ) $vpi_cat_obj = get_category_by_slug( 'viewpoint' );
+            $vpi_cat_url  = $vpi_cat_obj ? get_category_link( $vpi_cat_obj->term_id ) : home_url( '/category/viewpoints/' );
             ?>
             <div class="cmr-vpi-actions" style="text-align: center; margin-top: 40px;">
-                <a href="<?php echo esc_url( $vpi_cat_url ); ?>" class="cmr-vpi-btn" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">View All</a>
+                <a href="<?php echo esc_url( $vpi_cat_url ); ?>" class="cmr-vpi-btn" style="background: transparent; border: 1px solid #ccc; color: #111; font-size: 14px; font-weight: 600; border-radius: 40px; text-decoration: none; transition: all 0.3s ease; width: 260px; height: 44px; display: inline-flex; justify-content: center; align-items: center; box-sizing: border-box;">View All</a>
             </div>
             
             <?php if ( $max_pages > 1 ) : ?>
