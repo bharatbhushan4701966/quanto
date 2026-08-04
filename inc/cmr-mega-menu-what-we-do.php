@@ -82,7 +82,7 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             position: relative;
             font-family: 'Instrument Sans', sans-serif;
             width: 900px !important;
-            max-width: 100vw !important;
+            max-width: 100% !important;
             border-radius: 12px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.08);
             background: #fff;
@@ -451,7 +451,7 @@ function cmr_inject_what_we_do_mega_menu() {
             left: 50% !important;
             transform: translateX(-50%) !important;
             width: max-content !important;
-            max-width: none !important;
+            max-width: 100vw !important;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
