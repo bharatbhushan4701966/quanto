@@ -171,11 +171,15 @@ get_header();
 
     .cmr-cat-card-title {
         font-size: 20px;
-        font-weight: 700;
+        font-weight: 500;
         color: #111;
         line-height: 1.35;
         margin: 0 0 14px 0;
         letter-spacing: -0.3px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     .cmr-cat-card-title a {
@@ -194,6 +198,10 @@ get_header();
         line-height: 1.65;
         margin: 0 0 20px 0;
         flex: 1;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     .cmr-cat-read-more {
