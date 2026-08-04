@@ -24,7 +24,6 @@ get_header();
     .cmr-cat-header {
         margin-bottom: 50px;
         padding-bottom: 40px;
-        border-bottom: 1px solid #eaeaea;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -68,47 +67,59 @@ get_header();
         line-height: 1.6;
     }
 
+    /* Search Bar */
     .cmr-cat-search-form {
-        margin-top: 24px;
-        display: flex;
-        align-items: center;
-        max-width: 500px;
-        width: 100%;
         position: relative;
+        max-width: 800px;
+        margin: 24px auto 30px auto;
+        width: 100%;
     }
 
     .cmr-cat-search-field {
         width: 100%;
-        padding: 12px 20px;
-        padding-right: 50px;
-        border: 1px solid #ddd;
+        height: 60px;
+        padding: 0 70px;
+        border: 1px solid #6B3FA0;
         border-radius: 40px;
-        font-size: 15px;
+        font-size: 16px;
+        color: #333;
+        background: #fff;
+        box-sizing: border-box;
         outline: none;
-        transition: border-color 0.2s;
     }
 
-    .cmr-cat-search-field:focus {
-        border-color: #6A35FF;
+    .cmr-cat-search-field::placeholder {
+        color: #aaa;
+    }
+
+    .cmr-cat-search-icon-left {
+        position: absolute;
+        left: 25px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6B3FA0;
+        display: flex;
     }
 
     .cmr-cat-search-submit {
         position: absolute;
         right: 8px;
-        top: 50%;
-        transform: translateY(-50%);
-        background: none;
+        top: 8px;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: #6B3FA0;
         border: none;
-        color: #888;
-        cursor: pointer;
-        padding: 8px;
+        color: #fff;
         display: flex;
         align-items: center;
         justify-content: center;
+        cursor: pointer;
+        transition: background 0.3s ease;
     }
 
     .cmr-cat-search-submit:hover {
-        color: #6A35FF;
+        background: #502e7a;
     }
 
     .cmr-cat-count {
@@ -362,17 +373,18 @@ get_header();
             <span><?php echo esc_html( $cat_name ); ?></span>
         </div>
         <span class="cmr-cat-count"><?php echo esc_html( $cat_count ); ?> Articles</span>
+        <span style="font-size: 13px; font-weight: 700; text-transform: uppercase; color: #888; letter-spacing: 1.5px; margin-bottom: 8px;">Category</span>
         <h1 class="cmr-cat-title">&quot;<?php echo esc_html( $cat_name ); ?>&quot;</h1>
-        <?php if ( $cat_desc ) : ?>
-            <p class="cmr-cat-description"><?php echo esc_html( $cat_desc ); ?></p>
-        <?php endif; ?>
         <form role="search" method="get" class="cmr-cat-search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
-            <input type="search" class="cmr-cat-search-field" placeholder="Search in <?php echo esc_attr( $cat_name ); ?>..." value="<?php echo get_search_query(); ?>" name="s" />
+            <div class="cmr-cat-search-icon-left">
+                <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/cmrlogo-with-oly-c.svg" alt="CMR Logo" style="width: 24px; height: auto;">
+            </div>
+            <input type="search" class="cmr-cat-search-field" placeholder="Search..." value="<?php echo get_search_query(); ?>" name="s" />
             <?php if ( $current_cat ) : ?>
                 <input type="hidden" name="cat" value="<?php echo esc_attr( $current_cat->term_id ); ?>" />
             <?php endif; ?>
             <button type="submit" class="cmr-cat-search-submit">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             </button>
         </form>
     </div>
