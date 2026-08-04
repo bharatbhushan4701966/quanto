@@ -122,16 +122,6 @@ get_header();
         background: #502e7a;
     }
 
-    .cmr-cat-count {
-        display: inline-block;
-        background: #f4f0ff;
-        color: #6A35FF;
-        font-size: 13px;
-        font-weight: 600;
-        padding: 4px 12px;
-        border-radius: 40px;
-        margin-bottom: 16px;
-    }
 
     /* 3-column grid */
     .cmr-cat-grid {
@@ -372,7 +362,6 @@ get_header();
             <svg width="6" height="10" viewBox="0 0 6 10" fill="none"><path d="M1 1L5 5L1 9" stroke="#ccc" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span><?php echo esc_html( $cat_name ); ?></span>
         </div>
-        <span class="cmr-cat-count"><?php echo esc_html( $cat_count ); ?> Articles</span>
         <span style="font-size: 13px; font-weight: 700; text-transform: uppercase; color: #888; letter-spacing: 1.5px; margin-bottom: 8px;">Category</span>
         <h1 class="cmr-cat-title">&quot;<?php echo esc_html( $cat_name ); ?>&quot;</h1>
         <form role="search" method="get" class="cmr-cat-search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
