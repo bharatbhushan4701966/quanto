@@ -180,7 +180,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                 ?>
                 <div class="intel-pagination-wrap">
                     <div class="intel-load-more-wrap" style="text-align: center; margin-top: 30px;">
-                        <a href="<?php echo esc_url($cat_url_val); ?>" class="intel-load-more-btn" style="background: transparent; border: 1px solid #ccc; color: #111; font-size: 14px; font-weight: 600; border-radius: 40px; text-decoration: none; transition: all 0.3s ease; width: 288px; height: 54px; display: inline-flex; justify-content: center; align-items: center;">View All</a>
+                        <a href="<?php echo esc_url($cat_url_val); ?>" class="intel-load-more-btn" style="background: transparent; border: 1px solid #ccc; color: #111; font-size: 14px; font-weight: 600; border-radius: 40px; text-decoration: none; transition: all 0.3s ease; width: 260px; height: 44px; display: inline-flex; justify-content: center; align-items: center; box-sizing: border-box;">View All</a>
                     </div>
                 </div>
 
@@ -256,16 +256,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                         });
                     }
 
-                    if (btn) {
-                        document.addEventListener('click', function(e) {
-                            if (e.target && e.target.classList.contains('intel-load-more-btn')) {
-                                e.preventDefault();
-                                const activeBtn = e.target;
-                                let page = parseInt(activeBtn.getAttribute('data-page')) + 1;
-                                fetchIntel(page, false);
-                            }
-                        });
-                    }
+
 
                     document.addEventListener('click', function(e) {
                         const link = e.target.closest('.intel-pagination-wrap a.page-numbers');
