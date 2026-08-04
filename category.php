@@ -70,7 +70,7 @@ get_header();
     .cmr-cat-search-form {
         position: relative;
         max-width: 800px;
-        margin: 24px auto 30px auto;
+        margin: 24px auto 10px auto;
         width: 100%;
     }
 
@@ -119,6 +119,35 @@ get_header();
 
     .cmr-cat-search-submit:hover {
         background: #502e7a;
+    }
+
+    /* Year Filter */
+    .cmr-cat-years-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 16px;
+    }
+
+    .cmr-cat-year-pill {
+        padding: 6px 18px;
+        border-radius: 30px;
+        border: 1px solid #e0e0e0;
+        background: #fff;
+        color: #555;
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .cmr-cat-year-pill:hover,
+    .cmr-cat-year-pill.active {
+        background: #6A35FF;
+        border-color: #6A35FF;
+        color: #fff;
     }
 
 
@@ -372,10 +401,27 @@ get_header();
             <?php if ( $current_cat ) : ?>
                 <input type="hidden" name="cat" value="<?php echo esc_attr( $current_cat->term_id ); ?>" />
             <?php endif; ?>
+            <?php
+            $active_year = isset($_GET['y']) ? sanitize_text_field($_GET['y']) : (isset($_GET['year']) ? sanitize_text_field($_GET['year']) : '');
+            if ( ! empty($active_year) ) : ?>
+                <input type="hidden" name="y" value="<?php echo esc_attr( $active_year ); ?>" />
+            <?php endif; ?>
             <button type="submit" class="cmr-cat-search-submit">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             </button>
         </form>
+
+        <?php
+        $years_list    = array('2026', '2025', '2024', '2023', '2022', '2021');
+        $cat_link_base = $current_cat ? get_category_link($current_cat->term_id) : home_url('/');
+        ?>
+        <div class="cmr-cat-years-wrap">
+            <a href="<?php echo esc_url( remove_query_arg( array('y', 'year', 'paged'), $cat_link_base ) ); ?>" class="cmr-cat-year-pill <?php echo empty($active_year) ? 'active' : ''; ?>">All</a>
+            <?php foreach ( $years_list as $yr ) : ?>
+                <?php $yr_url = add_query_arg( 'y', $yr, remove_query_arg( 'paged', $cat_link_base ) ); ?>
+                <a href="<?php echo esc_url( $yr_url ); ?>" class="cmr-cat-year-pill <?php echo ($active_year == $yr) ? 'active' : ''; ?>"><?php echo esc_html( $yr ); ?></a>
+            <?php endforeach; ?>
+        </div>
     </div>
 
     <!-- Article Grid -->

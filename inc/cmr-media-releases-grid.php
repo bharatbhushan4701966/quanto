@@ -559,6 +559,17 @@ function cmr_media_releases_grid_shortcode() {
                 yearBtns.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 currentYear = this.getAttribute('data-year');
+                
+                const viewAllLink = document.querySelector('.cmr-mrg-load-more');
+                if (viewAllLink) {
+                    let baseUrl = viewAllLink.getAttribute('href').split('?')[0];
+                    if (currentYear) {
+                        viewAllLink.setAttribute('href', baseUrl + '?y=' + currentYear);
+                    } else {
+                        viewAllLink.setAttribute('href', baseUrl);
+                    }
+                }
+                
                 if (moreContent) {
                     moreContent.style.display = 'none';
                 }

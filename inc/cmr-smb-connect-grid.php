@@ -538,6 +538,16 @@ function cmr_smb_connect_grid_shortcode() {
                 this.classList.add('active');
                 currentYear = this.getAttribute('data-year');
                 
+                const viewAllLink = document.querySelector('.cmr-smbcgd-load-more');
+                if (viewAllLink) {
+                    let baseUrl = viewAllLink.getAttribute('href').split('?')[0];
+                    if (currentYear) {
+                        viewAllLink.setAttribute('href', baseUrl + '?y=' + currentYear);
+                    } else {
+                        viewAllLink.setAttribute('href', baseUrl);
+                    }
+                }
+                
                 const moreContent = document.getElementById('cmr-smbcgd-more-content');
                 if (moreContent) {
                     moreContent.style.display = 'none';
