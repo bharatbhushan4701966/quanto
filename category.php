@@ -306,7 +306,7 @@ get_header();
         justify-content: center;
         width: 40px;
         height: 40px;
-        border-radius: 8px;
+        border-radius: 50%;
         border: 1px solid #eaeaea;
         font-size: 14px;
         font-weight: 500;

@@ -1770,6 +1770,14 @@ function cmr_modify_search_query($query) {
 }
 add_action( 'pre_get_posts', 'cmr_modify_search_query' );
 
+// Set 9 posts per page on Category Archives (for 3x3 grid)
+function cmr_category_posts_per_page($query) {
+    if ( ! is_admin() && $query->is_main_query() && $query->is_category() ) {
+        $query->set( 'posts_per_page', 9 );
+    }
+}
+add_action( 'pre_get_posts', 'cmr_category_posts_per_page' );
+
 // Shortcode for Account Icon
 function cmr_account_icon_shortcode() {
     $url = home_url('/my-account/');
