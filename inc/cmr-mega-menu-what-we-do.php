@@ -451,7 +451,7 @@ function cmr_inject_what_we_do_mega_menu() {
             left: 50% !important;
             transform: translateX(-50%) !important;
             width: max-content !important;
-            max-width: 100vw !important;
+            max-width: none !important;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
