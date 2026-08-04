@@ -10,7 +10,7 @@ function cmr_mega_menu_who_we_are_shortcode($atts) {
         .cmr-mm-wrapper {
             position: relative;
             font-family: 'Instrument Sans', sans-serif;
-            width: 900px !important;
+            width: 800px !important;
             max-width: none !important;
             border-radius: 12px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.08);
@@ -24,7 +24,7 @@ function cmr_mega_menu_who_we_are_shortcode($atts) {
             content: '';
             position: absolute;
             top: -8px;
-            left: 50%;
+            left: 30%;
             transform: translateX(-50%) rotate(45deg);
             width: 16px;
             height: 16px;
@@ -306,8 +306,8 @@ function cmr_inject_who_we_are_mega_menu() {
             position: absolute !important;
             top: 60px;
             left: 50%;
-            transform: translateX(-50%);
-            width: max-content !important;
+            transform: translateX(-30%);
+            width: 800px !important;
             max-width: none !important;
             opacity: 0;
             visibility: hidden;
@@ -329,7 +329,7 @@ function cmr_inject_who_we_are_mega_menu() {
         .cmr-has-mega-menu:hover .cmr-mm-wrapper {
             opacity: 1;
             visibility: visible;
-            transform: translateX(-50%) translateY(0);
+            transform: translateX(-30%) translateY(0);
         }
 
         /* Hide the default submenu arrow if there is one */
