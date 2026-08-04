@@ -15,8 +15,8 @@ get_header();
     /* Force full width - hide sidebar, remove constraints */
     .cmr-category-page-wrap {
         max-width: 1280px;
-        margin: 120px auto 100px;
-        padding: 0 24px;
+        margin: 120px auto 0;
+        padding: 0 24px 120px;
         font-family: 'Instrument Sans', sans-serif;
     }
 
@@ -294,7 +294,7 @@ get_header();
     /* Pagination */
     .cmr-cat-pagination {
         margin-top: 60px;
-        margin-bottom: 60px;
+        margin-bottom: 80px;
         display: flex;
         justify-content: center;
         gap: 8px;
