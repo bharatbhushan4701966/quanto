@@ -346,9 +346,9 @@ get_header();
                         <span class="cmr-cat-card-tag"><?php echo esc_html( $tag_name ); ?></span>
                         <span class="cmr-cat-card-read-time"><?php echo esc_html( $read_time ); ?> min read</span>
                     </div>
-                    <h2 class="cmr-cat-card-title">
+                    <h3 class="cmr-cat-card-title">
                         <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                    </h2>
+                    </h3>
                     <p class="cmr-cat-card-excerpt"><?php echo esc_html( $excerpt ); ?></p>
                     <a href="<?php the_permalink(); ?>" class="cmr-cat-read-more">
                         More Details
