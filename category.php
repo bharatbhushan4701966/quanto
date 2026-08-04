@@ -15,8 +15,8 @@ get_header();
     /* Force full width - hide sidebar, remove constraints */
     .cmr-category-page-wrap {
         max-width: 1280px;
-        margin: 0 auto;
-        padding: 60px 24px 80px;
+        margin: 100px auto 0;
+        padding: 0 24px 100px;
         font-family: 'Instrument Sans', sans-serif;
     }
 
@@ -78,7 +78,7 @@ get_header();
     .cmr-cat-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 32px;
+        gap: 40px;
     }
 
     @media (max-width: 1024px) {
@@ -94,28 +94,26 @@ get_header();
         .cmr-cat-title {
             font-size: 32px;
         }
+        .cmr-category-page-wrap {
+            margin-top: 40px;
+        }
     }
 
-    /* Article Card */
+    /* Article Card - Intel style */
     .cmr-cat-card {
         background: #fff;
-        border-radius: 12px;
-        border: 1px solid #f0f0f0;
+        border: none;
         overflow: hidden;
-        transition: box-shadow 0.3s ease, transform 0.3s ease;
         display: flex;
         flex-direction: column;
     }
 
-    .cmr-cat-card:hover {
-        box-shadow: 0 12px 40px rgba(0,0,0,0.10);
-        transform: translateY(-4px);
-    }
-
     .cmr-cat-card-img {
+        width: 100%;
         aspect-ratio: 16/9;
         overflow: hidden;
         background: #f4f4f4;
+        margin-bottom: 18px;
     }
 
     .cmr-cat-card-img img {
@@ -131,42 +129,52 @@ get_header();
     }
 
     .cmr-cat-card-body {
-        padding: 24px;
         display: flex;
         flex-direction: column;
         flex: 1;
     }
 
+    /* Meta row: dash + category + read time */
     .cmr-cat-card-meta {
         display: flex;
         align-items: center;
         gap: 10px;
-        margin-bottom: 12px;
-        flex-wrap: wrap;
+        margin-bottom: 14px;
+        font-size: 13px;
+        color: #888;
+        font-weight: 500;
+    }
+
+    .cmr-cat-card-meta-dash {
+        width: 24px;
+        height: 1px;
+        background: #ccc;
+        flex-shrink: 0;
     }
 
     .cmr-cat-card-tag {
-        font-size: 11px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.8px;
-        color: #6A35FF;
-        background: #f4f0ff;
-        padding: 3px 10px;
-        border-radius: 40px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #555;
+        letter-spacing: 0;
     }
 
-    .cmr-cat-card-date {
-        font-size: 12px;
-        color: #aaa;
+    .cmr-cat-card-meta-sep {
+        color: #ddd;
+    }
+
+    .cmr-cat-card-read-time {
+        font-size: 13px;
+        color: #888;
+        margin-left: auto;
     }
 
     .cmr-cat-card-title {
-        font-size: 18px;
-        font-weight: 600;
+        font-size: 20px;
+        font-weight: 700;
         color: #111;
-        line-height: 1.4;
-        margin: 0 0 12px 0;
+        line-height: 1.35;
+        margin: 0 0 14px 0;
         letter-spacing: -0.3px;
     }
 
@@ -182,44 +190,36 @@ get_header();
 
     .cmr-cat-card-excerpt {
         font-size: 14px;
-        color: #666;
-        line-height: 1.6;
+        color: #555;
+        line-height: 1.65;
         margin: 0 0 20px 0;
         flex: 1;
-    }
-
-    .cmr-cat-card-footer {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-top: auto;
-        padding-top: 16px;
-        border-top: 1px solid #f0f0f0;
-    }
-
-    .cmr-cat-read-time {
-        font-size: 12px;
-        color: #aaa;
     }
 
     .cmr-cat-read-more {
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        font-size: 13px;
+        font-size: 14px;
         font-weight: 600;
-        color: #6A35FF;
+        color: #111;
         text-decoration: none;
-        transition: gap 0.2s;
+        border-bottom: 1.5px solid #111;
+        padding-bottom: 2px;
+        width: fit-content;
+        transition: color 0.2s, border-color 0.2s, gap 0.2s;
+        margin-top: auto;
     }
 
     .cmr-cat-read-more:hover {
+        color: #6A35FF;
+        border-color: #6A35FF;
         gap: 10px;
     }
 
     .cmr-cat-read-more svg {
-        width: 14px;
-        height: 14px;
+        width: 13px;
+        height: 13px;
     }
 
     /* No posts */
@@ -334,23 +334,21 @@ get_header();
                 </div>
                 <div class="cmr-cat-card-body">
                     <div class="cmr-cat-card-meta">
+                        <span class="cmr-cat-card-meta-dash"></span>
                         <span class="cmr-cat-card-tag"><?php echo esc_html( $tag_name ); ?></span>
-                        <span class="cmr-cat-card-date"><?php echo get_the_date( 'M j, Y' ); ?></span>
+                        <span class="cmr-cat-card-read-time"><?php echo esc_html( $read_time ); ?> min read</span>
                     </div>
                     <h2 class="cmr-cat-card-title">
                         <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                     </h2>
                     <p class="cmr-cat-card-excerpt"><?php echo esc_html( $excerpt ); ?></p>
-                    <div class="cmr-cat-card-footer">
-                        <span class="cmr-cat-read-time"><?php echo esc_html( $read_time ); ?> min read</span>
-                        <a href="<?php the_permalink(); ?>" class="cmr-cat-read-more">
-                            Read more
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="7" y1="17" x2="17" y2="7"></line>
-                                <polyline points="7 7 17 7 17 17"></polyline>
-                            </svg>
-                        </a>
-                    </div>
+                    <a href="<?php the_permalink(); ?>" class="cmr-cat-read-more">
+                        More Details
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="7" y1="17" x2="17" y2="7"></line>
+                            <polyline points="7 7 17 7 17 17"></polyline>
+                        </svg>
+                    </a>
                 </div>
             </article>
             <?php endwhile; ?>
