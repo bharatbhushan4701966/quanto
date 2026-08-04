@@ -22,8 +22,7 @@ get_header();
 
     /* Category Header */
     .cmr-cat-header {
-        margin-bottom: 50px;
-        padding-bottom: 40px;
+        padding-bottom: 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
