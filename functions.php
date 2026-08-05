@@ -1672,33 +1672,36 @@ function cmr_prewarm_elementor_caches() {
         home_url( '/?quanto_footer=main' ),
     );
 
-    // Fetch all published quanto_tab_build templates dynamically (leaves zero blind spots)
-    $tab_posts = get_posts( array(
-        'post_type'      => 'quanto_tab_build',
+    // List of all Quanto Builder post types
+    $builder_types = array(
+        'quanto_tab_build',
+        'quanto_footer',
+        'quanto_header',
+        'quanto_off_canvas',
+        'quanto_offcanvas',
+        'quanto_archive',
+        'quanto_builder',
+        'quanto_single',
+    );
+
+    // Fetch all published builder templates dynamically (leaves zero blind spots)
+    $builder_posts = get_posts( array(
+        'post_type'      => $builder_types,
         'post_status'    => 'publish',
         'posts_per_page' => -1,
     ) );
 
-    if ( ! empty( $tab_posts ) ) {
-        foreach ( $tab_posts as $p ) {
-            $urls[] = home_url( '/?quanto_tab_build=' . $p->post_name );
+    if ( ! empty( $builder_posts ) ) {
+        foreach ( $builder_posts as $bp ) {
+            $urls[] = home_url( '/?' . $bp->post_type . '=' . $bp->post_name );
+            $permalink = get_permalink( $bp->ID );
+            if ( $permalink ) {
+                $urls[] = $permalink;
+            }
         }
     }
 
-    // Fetch all published quanto_footer templates dynamically
-    $footer_posts = get_posts( array(
-        'post_type'      => 'quanto_footer',
-        'post_status'    => 'publish',
-        'posts_per_page' => -1,
-    ) );
-
-    if ( ! empty( $footer_posts ) ) {
-        foreach ( $footer_posts as $fp ) {
-            $urls[] = home_url( '/?quanto_footer=' . $fp->post_name );
-        }
-    }
-
-    $urls = array_unique( $urls );
+    $urls = array_unique( array_filter( $urls ) );
 
     // Fire non-blocking HTTP requests with timeout = 3 so cURL completes connection handshake
     foreach ( $urls as $url ) {
@@ -1720,12 +1723,12 @@ add_action( 'woocommerce_created_customer', 'cmr_prewarm_elementor_caches' );
 // Trigger pre-warming when any user logs in (or re-logs in)
 add_action( 'wp_login', 'cmr_prewarm_elementor_caches' );
 
-// Trigger pre-warming when a quanto_tab_build or quanto_footer template is saved or published
-add_action( 'save_post_quanto_tab_build', 'cmr_prewarm_elementor_caches' );
-add_action( 'publish_quanto_tab_build', 'cmr_prewarm_elementor_caches' );
-add_action( 'save_post_quanto_footer', 'cmr_prewarm_elementor_caches' );
-add_action( 'publish_quanto_footer', 'cmr_prewarm_elementor_caches' );
-add_action( 'save_post_page', 'cmr_prewarm_elementor_caches' );
+// Trigger pre-warming when any builder template or page is saved/published
+$all_builder_types = array( 'quanto_tab_build', 'quanto_footer', 'quanto_header', 'quanto_off_canvas', 'quanto_offcanvas', 'quanto_archive', 'quanto_builder', 'quanto_single', 'page' );
+foreach ( $all_builder_types as $btype ) {
+    add_action( 'save_post_' . $btype, 'cmr_prewarm_elementor_caches' );
+    add_action( 'publish_' . $btype, 'cmr_prewarm_elementor_caches' );
+}
 
 // Trigger pre-warming when any WordPress cache is flushed
 add_action( 'wp_cache_flush', 'cmr_prewarm_elementor_caches' );

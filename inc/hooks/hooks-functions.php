@@ -437,15 +437,15 @@
                 }
             }
 
-            // Tab builder templates - fetch ALL published quanto_tab_build templates dynamically
-            $all_tab_posts = get_posts( array(
-                'post_type'      => 'quanto_tab_build',
+            // All Quanto Builder templates - fetch ALL published templates dynamically
+            $all_builder_posts = get_posts( array(
+                'post_type'      => array( 'quanto_tab_build', 'quanto_footer', 'quanto_header', 'quanto_off_canvas', 'quanto_offcanvas', 'quanto_archive', 'quanto_builder', 'quanto_single' ),
                 'posts_per_page' => -1,
                 'post_status'    => 'publish',
             ) );
-            if ( ! empty( $all_tab_posts ) ) {
-                foreach ( $all_tab_posts as $tab_p ) {
-                    $post_ids_to_check[] = $tab_p->ID;
+            if ( ! empty( $all_builder_posts ) ) {
+                foreach ( $all_builder_posts as $bp ) {
+                    $post_ids_to_check[] = $bp->ID;
                 }
             }
 
@@ -535,15 +535,15 @@
                 quanto_enqueue_elementor_post_assets( $target_page->ID );
             }
             
-            // Enqueue ALL quanto_tab_build template CSS early so shortcodes have CSS in <head>
-            $all_tab_posts = get_posts( array(
-                'post_type'      => 'quanto_tab_build',
+            // Enqueue ALL Quanto Builder template CSS early so shortcodes have CSS in <head>
+            $all_builder_posts = get_posts( array(
+                'post_type'      => array( 'quanto_tab_build', 'quanto_footer', 'quanto_header', 'quanto_off_canvas', 'quanto_offcanvas', 'quanto_archive', 'quanto_builder', 'quanto_single' ),
                 'posts_per_page' => -1,
                 'post_status'    => 'publish',
             ) );
-            if ( ! empty( $all_tab_posts ) ) {
-                foreach ( $all_tab_posts as $tab_p ) {
-                    quanto_enqueue_elementor_post_assets( $tab_p->ID );
+            if ( ! empty( $all_builder_posts ) ) {
+                foreach ( $all_builder_posts as $bp ) {
+                    quanto_enqueue_elementor_post_assets( $bp->ID );
                 }
             }
         }
@@ -554,16 +554,16 @@
     // file is 404'd by CDN/server cache, the inline styles guarantee correct rendering.
     if ( ! function_exists( 'cmr_inject_tab_css_inline_in_head' ) ) {
         function cmr_inject_tab_css_inline_in_head() {
-            $all_tab_posts = get_posts( array(
-                'post_type'      => 'quanto_tab_build',
+            $all_builder_posts = get_posts( array(
+                'post_type'      => array( 'quanto_tab_build', 'quanto_footer', 'quanto_header', 'quanto_off_canvas', 'quanto_offcanvas', 'quanto_archive', 'quanto_builder', 'quanto_single' ),
                 'posts_per_page' => -1,
                 'post_status'    => 'publish',
             ) );
-            if ( ! empty( $all_tab_posts ) ) {
-                foreach ( $all_tab_posts as $tab_p ) {
-                    $css = cmr_get_elementor_css_inline( $tab_p->ID );
+            if ( ! empty( $all_builder_posts ) ) {
+                foreach ( $all_builder_posts as $bp ) {
+                    $css = cmr_get_elementor_css_inline( $bp->ID );
                     if ( ! empty( $css ) ) {
-                        echo '<style id="cmr-tab-' . esc_attr( $tab_p->ID ) . '-inline-css">' . $css . '</style>' . "\n";
+                        echo '<style id="cmr-tab-' . esc_attr( $bp->ID ) . '-inline-css">' . $css . '</style>' . "\n";
                     }
                 }
             }
