@@ -1663,24 +1663,47 @@ add_action( 'save_post_quanto_tab_build', function() {
 });
 
 /**
- * Pre-warm Elementor CSS caches by hitting all the builder URLs in the background.
+ * Pre-warm Elementor CSS & HTML caches by hitting all template & builder URLs in the background.
  * Uses non-blocking HTTP requests so it doesn't slow down the user experience.
  */
 function cmr_prewarm_elementor_caches() {
     $urls = array(
-        home_url('/?quanto_tab_build=your-next-big-decision-deserves-better-intelligence'),
-        home_url('/?quanto_tab_build=we-worked-with-largest-global-brands'),
-        home_url('/?quanto_tab_build=testimonials'),
-        home_url('/?quanto_tab_build=fotter-card'),
-        home_url('/?quanto_tab_build=your-challenge-our-research-your-advantage'),
-        home_url('/?quanto_tab_build=who-we-serve'),
-        home_url('/?quanto_tab_build=similar-reports-by-industry'),
-        home_url('/?quanto_footer=main')
+        home_url( '/' ),
+        home_url( '/?quanto_footer=main' ),
     );
 
+    // Fetch all published quanto_tab_build templates dynamically (leaves zero blind spots)
+    $tab_posts = get_posts( array(
+        'post_type'      => 'quanto_tab_build',
+        'post_status'    => 'publish',
+        'posts_per_page' => -1,
+    ) );
+
+    if ( ! empty( $tab_posts ) ) {
+        foreach ( $tab_posts as $p ) {
+            $urls[] = home_url( '/?quanto_tab_build=' . $p->post_name );
+        }
+    }
+
+    // Fetch all published quanto_footer templates dynamically
+    $footer_posts = get_posts( array(
+        'post_type'      => 'quanto_footer',
+        'post_status'    => 'publish',
+        'posts_per_page' => -1,
+    ) );
+
+    if ( ! empty( $footer_posts ) ) {
+        foreach ( $footer_posts as $fp ) {
+            $urls[] = home_url( '/?quanto_footer=' . $fp->post_name );
+        }
+    }
+
+    $urls = array_unique( $urls );
+
+    // Fire non-blocking HTTP requests with timeout = 3 so cURL completes connection handshake
     foreach ( $urls as $url ) {
         wp_remote_get( $url, array(
-            'timeout'   => 0.01,
+            'timeout'   => 3,
             'blocking'  => false,
             'sslverify' => false,
         ) );
@@ -1694,12 +1717,15 @@ add_action( 'elementor/core/files/clear_cache', 'cmr_prewarm_elementor_caches' )
 add_action( 'user_register', 'cmr_prewarm_elementor_caches' );
 add_action( 'woocommerce_created_customer', 'cmr_prewarm_elementor_caches' );
 
-// Trigger pre-warming when a user logs in
+// Trigger pre-warming when any user logs in (or re-logs in)
 add_action( 'wp_login', 'cmr_prewarm_elementor_caches' );
 
-// Trigger pre-warming when a quanto_tab_build template is saved or published
+// Trigger pre-warming when a quanto_tab_build or quanto_footer template is saved or published
 add_action( 'save_post_quanto_tab_build', 'cmr_prewarm_elementor_caches' );
 add_action( 'publish_quanto_tab_build', 'cmr_prewarm_elementor_caches' );
+add_action( 'save_post_quanto_footer', 'cmr_prewarm_elementor_caches' );
+add_action( 'publish_quanto_footer', 'cmr_prewarm_elementor_caches' );
+add_action( 'save_post_page', 'cmr_prewarm_elementor_caches' );
 
 // Trigger pre-warming when any WordPress cache is flushed
 add_action( 'wp_cache_flush', 'cmr_prewarm_elementor_caches' );

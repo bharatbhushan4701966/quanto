@@ -437,24 +437,15 @@
                 }
             }
 
-            // Tab builder templates
-            $tab_slugs = array(
-                'your-challenge-our-research-your-advantage',
-                'fotter-card',
-                'testimonials',
-                'we-worked-with-largest-global-brands',
-                'your-next-big-decision-deserves-better-intelligence',
-                'similar-reports-by-industry'
-            );
-            foreach ( $tab_slugs as $slug ) {
-                $tab_posts = get_posts(array(
-                    'name'           => $slug,
-                    'post_type'      => 'quanto_tab_build',
-                    'posts_per_page' => 1,
-                    'post_status'    => 'publish',
-                ));
-                if ( $tab_posts && ! empty( $tab_posts[0] ) ) {
-                    $post_ids_to_check[] = $tab_posts[0]->ID;
+            // Tab builder templates - fetch ALL published quanto_tab_build templates dynamically
+            $all_tab_posts = get_posts( array(
+                'post_type'      => 'quanto_tab_build',
+                'posts_per_page' => -1,
+                'post_status'    => 'publish',
+            ) );
+            if ( ! empty( $all_tab_posts ) ) {
+                foreach ( $all_tab_posts as $tab_p ) {
+                    $post_ids_to_check[] = $tab_p->ID;
                 }
             }
 
@@ -544,24 +535,15 @@
                 quanto_enqueue_elementor_post_assets( $target_page->ID );
             }
             
-            // Enqueue quanto_tab_build template CSS early so shortcodes have CSS in <head>
-            $tab_slugs = array(
-                'your-challenge-our-research-your-advantage',
-                'fotter-card',
-                'testimonials',
-                'we-worked-with-largest-global-brands',
-                'your-next-big-decision-deserves-better-intelligence',
-                'similar-reports-by-industry'
-            );
-            foreach ( $tab_slugs as $slug ) {
-                $tab_posts = get_posts(array(
-                    'name'           => $slug,
-                    'post_type'      => 'quanto_tab_build',
-                    'posts_per_page' => 1,
-                    'post_status'    => 'publish',
-                ));
-                if ( $tab_posts && !empty($tab_posts[0]) ) {
-                    quanto_enqueue_elementor_post_assets( $tab_posts[0]->ID );
+            // Enqueue ALL quanto_tab_build template CSS early so shortcodes have CSS in <head>
+            $all_tab_posts = get_posts( array(
+                'post_type'      => 'quanto_tab_build',
+                'posts_per_page' => -1,
+                'post_status'    => 'publish',
+            ) );
+            if ( ! empty( $all_tab_posts ) ) {
+                foreach ( $all_tab_posts as $tab_p ) {
+                    quanto_enqueue_elementor_post_assets( $tab_p->ID );
                 }
             }
         }
@@ -572,25 +554,16 @@
     // file is 404'd by CDN/server cache, the inline styles guarantee correct rendering.
     if ( ! function_exists( 'cmr_inject_tab_css_inline_in_head' ) ) {
         function cmr_inject_tab_css_inline_in_head() {
-            $tab_slugs = array(
-                'your-challenge-our-research-your-advantage',
-                'fotter-card',
-                'testimonials',
-                'we-worked-with-largest-global-brands',
-                'your-next-big-decision-deserves-better-intelligence',
-                'similar-reports-by-industry'
-            );
-            foreach ( $tab_slugs as $slug ) {
-                $tab_posts = get_posts(array(
-                    'name'           => $slug,
-                    'post_type'      => 'quanto_tab_build',
-                    'posts_per_page' => 1,
-                    'post_status'    => 'publish',
-                ));
-                if ( $tab_posts && ! empty( $tab_posts[0] ) ) {
-                    $css = cmr_get_elementor_css_inline( $tab_posts[0]->ID );
+            $all_tab_posts = get_posts( array(
+                'post_type'      => 'quanto_tab_build',
+                'posts_per_page' => -1,
+                'post_status'    => 'publish',
+            ) );
+            if ( ! empty( $all_tab_posts ) ) {
+                foreach ( $all_tab_posts as $tab_p ) {
+                    $css = cmr_get_elementor_css_inline( $tab_p->ID );
                     if ( ! empty( $css ) ) {
-                        echo '<style id="cmr-tab-' . esc_attr( $tab_posts[0]->ID ) . '-inline-css">' . $css . '</style>' . "\n";
+                        echo '<style id="cmr-tab-' . esc_attr( $tab_p->ID ) . '-inline-css">' . $css . '</style>' . "\n";
                     }
                 }
             }
