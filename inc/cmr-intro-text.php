@@ -86,13 +86,13 @@ function cmr_intro_text_shortcode() {
         }
     </style>
     <div class="cmr-intro-text-section">
-        <p>The automotive industry isn't just evolving, it's being remade from the ground up. Electrification, connectivity, autonomy, shared mobility and sustainability (the 5 RACES) are no longer emerging concepts. They are here, accelerating simultaneously and demanding strategic clarity.</p>
-        <p>Companies that treat these shifts as isolated product decisions will fall behind. Those that recognise them as organisation-wide transformation imperatives — reorienting around customer needs, deploying AI with purpose and rethinking everything from the C-suite to the factory floor will lead.</p>
-        <p>The question is no longer whether to respond. It's where to differentiate and who to partner with.</p>
+        <p>The automotive industry is undergoing its most profound transformation in a century. Electrification, software-defined vehicles, connected ecosystems, autonomous technologies, and evolving consumer expectations are fundamentally reshaping how vehicles are designed, manufactured, sold, and experienced. At the same time, new business models, regulatory shifts, supply chain realignment, and the rise of intelligent mobility services are creating unprecedented opportunities and challenges.</p>
         
         <div class="cmr-intro-hidden-content">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>CMR helps automotive and mobility leaders navigate this complexity with confidence. Combining independent research, market intelligence, strategic advisory, and deep industry expertise, we deliver the insights needed to anticipate market shifts, understand customer expectations, benchmark competitive performance, and identify emerging growth opportunities.</p>
+            <p>Whether you are an OEM, Tier-1 supplier, technology provider, semiconductor company, charging infrastructure player, software platform, or mobility services provider, CMR equips you with the intelligence to make informed investments, refine market strategies, accelerate innovation, and stay ahead of an increasingly dynamic mobility ecosystem.</p>
+            <p>Our research spans the entire mobility landscape, including electric vehicles (EVs), connected and software-defined vehicles, autonomous technologies, shared mobility, automotive AI, digital cockpits, telematics, charging infrastructure, batteries, mobility services, and the broader ACES transformation.</p>
+            <p>From understanding what's changing to defining what comes next, CMR helps you turn market intelligence into strategic advantage.</p>
         </div>
 
         <div class="cmr-intro-read-more">
