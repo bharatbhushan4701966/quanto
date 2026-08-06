@@ -507,9 +507,54 @@
         }
     }
 
-    // Early footer CSS enqueue: runs during wp_enqueue_scripts so CSS lands in <head>
+    if ( ! function_exists( 'quanto_get_resolved_header_id' ) ) {
+        function quanto_get_resolved_header_id() {
+            if ( ! class_exists( '\\Elementor\\Plugin' ) ) {
+                return false;
+            }
+
+            $current_path = isset($_SERVER['REQUEST_URI']) ? trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/') : '';
+            $is_home_page = is_front_page() || is_home() || (is_page() && (get_the_title() == 'Home' || $current_path == '' || $current_path == 'home'));
+
+            if ( $is_home_page ) {
+                $header_post = get_page_by_path( 'main', OBJECT, 'quanto_header' );
+                if ( ! $header_post && function_exists('quanto_opt') ) {
+                    $global_header_id = quanto_opt('quanto_header_select_options');
+                    if ( ! empty( $global_header_id ) ) {
+                        $header_post = get_post( $global_header_id );
+                    }
+                }
+            } else {
+                $header_post = get_page_by_path( 'blog-header', OBJECT, 'quanto_header' );
+                if ( ! $header_post && function_exists('quanto_opt') ) {
+                    $archive_header_id = quanto_opt('quanto_archive_header_select_options');
+                    if ( ! empty( $archive_header_id ) ) {
+                        $header_post = get_post( $archive_header_id );
+                    }
+                }
+                if ( ! $header_post ) {
+                    $header_post = get_page_by_path( 'main', OBJECT, 'quanto_header' );
+                    if ( ! $header_post && function_exists('quanto_opt') ) {
+                        $global_header_id = quanto_opt('quanto_header_select_options');
+                        if ( ! empty( $global_header_id ) ) {
+                            $header_post = get_post( $global_header_id );
+                        }
+                    }
+                }
+            }
+
+            return ! empty( $header_post ) ? (int) $header_post->ID : false;
+        }
+    }
+
+    // Early footer/header CSS enqueue: runs during wp_enqueue_scripts so CSS lands in <head>
     if ( ! function_exists( 'quanto_enqueue_footer_css_early' ) ) {
         function quanto_enqueue_footer_css_early() {
+            $header_id = quanto_get_resolved_header_id();
+            if ( $header_id ) {
+                quanto_enqueue_elementor_post_assets( $header_id );
+            }
+
             $footer_id = quanto_get_resolved_footer_id();
             if ( $footer_id ) {
                 quanto_enqueue_elementor_post_assets( $footer_id );
