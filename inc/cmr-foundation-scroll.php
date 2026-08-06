@@ -150,18 +150,18 @@ function cmr_foundation_scroll_shortcode($atts) {
                     
                     <div class="cmr-foundation-right">
                         <div class="cmr-foundation-block show" data-index="0">
-                            <h3 class="cmr-foundation-block-title">Driving Confident<br>Decisions</h3>
-                            <p class="cmr-foundation-block-desc">We help organizations navigate change with confidence. By delivering data-driven intelligence and meaningful engagement, we enable leaders to identify opportunity, manage risk and make informed strategic decisions that drive sustainable growth.</p>
+                            <h3 class="cmr-foundation-block-title">Empowering Better Decisions</h3>
+                            <p class="cmr-foundation-block-desc">We exist to help organizations navigate change with confidence by delivering trusted intelligence, strategic guidance, and meaningful industry engagement that enable leaders to seize opportunity, manage risk, and achieve sustainable growth.</p>
                         </div>
                         
                         <div class="cmr-foundation-block" data-index="1">
-                            <h3 class="cmr-foundation-block-title">Empowering the Future</h3>
-                            <p class="cmr-foundation-block-desc">We believe the future belongs to intelligent, interconnected ecosystems. As data, AI and emerging technologies reshape markets, organizations that act on real-time insights and predictive intelligence will lead. Our vision is to empower businesses of all sizes to unlock this advantage and build long-term, data-driven success.</p>
+                            <h3 class="cmr-foundation-block-title">Empowering What's Next</h3>
+                            <p class="cmr-foundation-block-desc">We envision a world where every organization can anticipate change with confidence, powered by trusted intelligence, strategic foresight, and AI-enabled insights that transform complexity into competitive advantage.</p>
                         </div>
                         
                         <div class="cmr-foundation-block" data-index="2">
-                            <h3 class="cmr-foundation-block-title">Delivering Excellence</h3>
-                            <p class="cmr-foundation-block-desc">We create the future by equipping leaders to act ahead of change. Through high-impact research, AI-powered analytics and strategic advisory, we anticipate market shifts, translate complex data into foresight and enable confident adoption, growth and differentiation. By combining intelligence with influence - through our thought leadership and executive forums, we turn insight into decisions that shape what comes next.</p>
+                            <h3 class="cmr-foundation-block-title">Excellence in Action</h3>
+                            <p class="cmr-foundation-block-desc">We deliver independent research, AI-powered intelligence, strategic advisory, and meaningful industry engagement that help organizations anticipate change, make confident decisions, and accelerate sustainable growth.</p>
                         </div>
                     </div>
                 </div>
