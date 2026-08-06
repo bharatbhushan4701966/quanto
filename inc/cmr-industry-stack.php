@@ -144,11 +144,11 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
                         <div class="cmr-stack-number">01</div>
                     </div>
                     <h3 class="cmr-stack-title">Industry<br>Intelligence</h3>
-                    <p class="cmr-stack-desc">In-depth data, real-time signals, and expert insights to understand market trends and competitive dynamics.</p>
+                    <p class="cmr-stack-desc">Actionable intelligence on markets, technologies, competitors, and emerging trends to help organizations anticipate change, identify opportunities, and make confident strategic decisions.</p>
                     <ul class="cmr-stack-list">
-                        <li>Market & product performance trackers</li>
-                        <li>Sector trends & competitive landscape</li>
-                        <li>Actionable intelligence for strategic decisions</li>
+                        <li>Performance Intelligence - Market, product, and brand performance tracking </li>
+                        <li>Competitive Intelligence - Market landscape, benchmarking, and competitive positioning </li>
+                        <li>Strategic Intelligence - Forward-looking insights to guide business and investment decisions</li>
                     </ul>
                 </div>
 
@@ -161,11 +161,11 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
                         <div class="cmr-stack-number">02</div>
                     </div>
                     <h3 class="cmr-stack-title">Consulting &<br>Advisory</h3>
-                    <p class="cmr-stack-desc">Expert-led strategies and future-ready roadmaps that drive growth through actionable market intelligence.</p>
+                    <p class="cmr-stack-desc">Evidence-based consulting that transforms consumer and enterprise research into actionable intelligence, enabling organizations to innovate, differentiate, and grow with confidence.</p>
                     <ul class="cmr-stack-list">
-                        <li>Advisory support</li>
-                        <li>Market entry & growth strategy</li>
-                        <li>Data-driven decision frameworks</li>
+                        <li>Consumer Intelligence - Market, customer, and brand insights </li>
+                        <li>Enterprise Intelligence - B2B decision-maker, partner, and ecosystem research </li>
+                        <li>Strategic Advisory - Research-backed recommendations and growth strategiesData-driven decision frameworks</li>
                     </ul>
                 </div>
 
@@ -178,11 +178,11 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
                         <div class="cmr-stack-number">03</div>
                     </div>
                     <h3 class="cmr-stack-title">Marketing<br>Services</h3>
-                    <p class="cmr-stack-desc">Actionable intelligence and trusted analyst guidance designed to drive faster, smarter, and more confident business decisions.</p>
+                    <p class="cmr-stack-desc">Intelligence-powered marketing that helps organizations build credibility, engage decision-makers, and accelerate growth through analyst-led programs and strategic market engagement.</p>
                     <ul class="cmr-stack-list">
-                        <li>Advisory support</li>
-                        <li>Market entry & growth strategy</li>
-                        <li>Data-driven decision frameworks</li>
+                        <li>Engagement-Led - Executive forums, roundtables, communities, and ecosystem programs Advisory support</li>
+                        <li>Campaign-Led - Integrated campaigns, demand generation, and content-led marketing Market entry & growth strategy</li>
+                        <li>Visibility-Led - Thought leadership, webinars, digital outreach, media engagement, and industry recognition</li>
                     </ul>
                 </div>
             </div>
