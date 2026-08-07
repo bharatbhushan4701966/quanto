@@ -461,7 +461,11 @@ function cmr_channel_connect_grid_shortcode() {
         <!-- Load More -->
         <?php
         $cc_cat_obj = get_category_by_slug('channel-connect');
-        $cc_cat_url = $cc_cat_obj ? get_category_link($cc_cat_obj->term_id) : home_url('/channel-connect/');
+        if ( !$cc_cat_obj ) $cc_cat_obj = get_category_by_slug('channel');
+        if ( !$cc_cat_obj ) $cc_cat_obj = get_category_by_slug('channel_connect');
+        if ( !$cc_cat_obj ) $cc_cat_obj = get_term_by('name', 'Channel Connect', 'category');
+        if ( !$cc_cat_obj ) $cc_cat_obj = get_term_by('name', 'Channel', 'category');
+        $cc_cat_url = $cc_cat_obj ? get_category_link($cc_cat_obj->term_id) : home_url('/category/channel-connect/');
         ?>
         <div class="cmr-channelcgd-load-more-wrap">
             <a href="<?php echo esc_url($cc_cat_url); ?>" class="cmr-channelcgd-load-more" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">View All</a>
