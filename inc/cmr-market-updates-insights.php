@@ -454,7 +454,7 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
             if ( ! $mui_cat_obj ) $mui_cat_obj = get_category_by_slug( 'market-updates' );
             if ( ! $mui_cat_obj ) $mui_cat_obj = get_term_by( 'name', 'Market Updates', 'category' );
             if ( ! $mui_cat_obj ) $mui_cat_obj = get_term_by( 'name', 'Market Update', 'category' );
-            $mui_cat_url  = $mui_cat_obj ? get_category_link( $mui_cat_obj->term_id ) : home_url( '/category/market-updates/' );
+            $mui_cat_url  = $mui_cat_obj ? get_category_link( $mui_cat_obj->term_id ) : home_url( '/market-updates/' );
             ?>
             <div class="cmr-mui-actions" style="text-align: center; margin-top: 40px;">
                 <a href="<?php echo esc_url( $mui_cat_url ); ?>" class="cmr-mui-btn" style="background: transparent; border: 1px solid #ccc; color: #111; font-size: 14px; font-weight: 600; border-radius: 40px; text-decoration: none; transition: all 0.3s ease; width: 260px; height: 44px; display: inline-flex; justify-content: center; align-items: center; box-sizing: border-box;">View All</a>

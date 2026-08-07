@@ -464,7 +464,7 @@ function cmr_smb_connect_grid_shortcode() {
         <!-- Load More -->
         <?php
         $smb_cat_obj = get_category_by_slug('smb-connect');
-        $smb_cat_url = $smb_cat_obj ? get_category_link($smb_cat_obj->term_id) : home_url('/category/smb-connect/');
+        $smb_cat_url = $smb_cat_obj ? get_category_link($smb_cat_obj->term_id) : home_url('/smb-connect/');
         ?>
         <div class="cmr-smbcgd-load-more-wrap">
             <a href="<?php echo esc_url($smb_cat_url); ?>" class="cmr-smbcgd-load-more" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">View All</a>

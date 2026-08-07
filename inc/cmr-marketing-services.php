@@ -176,7 +176,7 @@ if ( ! function_exists( 'cmr_marketing_services_shortcode' ) ) {
                 <?php
                 $cat_slug_val = !empty($atts['category']) ? $atts['category'] : 'marketing-services';
                 $cat_obj_val  = get_category_by_slug( $cat_slug_val );
-                $cat_url_val  = $cat_obj_val ? get_category_link( $cat_obj_val->term_id ) : home_url( '/category/' . $cat_slug_val . '/' );
+                $cat_url_val  = $cat_obj_val ? get_category_link( $cat_obj_val->term_id ) : home_url( '/' . $cat_slug_val . '/' );
                 ?>
                 <div class="intel-pagination-wrap">
                     <div class="intel-load-more-wrap" style="text-align: center; margin-top: 30px;">

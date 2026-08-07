@@ -472,7 +472,7 @@ function cmr_enterprise_connect_grid_shortcode( $atts ) {
         <!-- Load More -->
         <?php
         $ec_cat_obj = get_category_by_slug('enterprise-connect');
-        $ec_cat_url = $ec_cat_obj ? get_category_link($ec_cat_obj->term_id) : home_url('/category/enterprise-connect/');
+        $ec_cat_url = $ec_cat_obj ? get_category_link($ec_cat_obj->term_id) : home_url('/enterprise-connect/');
         ?>
         <div class="cmr-enterprisecgd-load-more-wrap">
             <a href="<?php echo esc_url($ec_cat_url); ?>" class="cmr-enterprisecgd-load-more" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">View All</a>

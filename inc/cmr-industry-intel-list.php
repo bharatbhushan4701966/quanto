@@ -398,7 +398,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 <?php
                 $intel_cat_slug = !empty($atts['category']) ? $atts['category'] : 'industry-connect';
                 $intel_cat_obj  = get_category_by_slug( $intel_cat_slug );
-                $intel_cat_url  = $intel_cat_obj ? get_category_link( $intel_cat_obj->term_id ) : home_url( '/category/' . $intel_cat_slug . '/' );
+                $intel_cat_url  = $intel_cat_obj ? get_category_link( $intel_cat_obj->term_id ) : home_url( '/' . $intel_cat_slug . '/' );
                 ?>
                 <div class="cmr-intel-list-load-more">
                     <a href="<?php echo esc_url( $intel_cat_url ); ?>" id="cmr-intel-load-more-btn" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">View All</a>
