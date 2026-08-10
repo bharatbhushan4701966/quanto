@@ -92,7 +92,7 @@ function cmr_intro_text_shortcode() {
             <p>CMR helps automotive and mobility leaders navigate this complexity with confidence. Combining independent research, market intelligence, strategic advisory, and deep industry expertise, we deliver the insights needed to anticipate market shifts, understand customer expectations, benchmark competitive performance, and identify emerging growth opportunities.</p>
             <p>Whether you are an OEM, Tier-1 supplier, technology provider, semiconductor company, charging infrastructure player, software platform, or mobility services provider, CMR equips you with the intelligence to make informed investments, refine market strategies, accelerate innovation, and stay ahead of an increasingly dynamic mobility ecosystem.</p>
             <p>Our research spans the entire mobility landscape, including electric vehicles (EVs), connected and software-defined vehicles, autonomous technologies, shared mobility, automotive AI, digital cockpits, telematics, charging infrastructure, batteries, mobility services, and the broader ACES transformation.</p>
-            <p>From understanding what's changing to defining what comes next, CMR helps you turn market intelligence into strategic advantage.</p>
+            <p><strong>From understanding what's changing to defining what comes next, CMR helps you turn market intelligence into strategic advantage.</strong></p>
         </div>
 
         <div class="cmr-intro-read-more">
