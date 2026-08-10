@@ -670,14 +670,25 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                             const targetId = href.substring(href.indexOf('#') + 1);
                             if (!targetId) return;
                             
-                            let targetElement = document.getElementById(targetId);
+                            let targetElement = null;
                             
-                            if (!targetElement && targetId === 'cmr-latest-reports') {
-                                const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6'));
-                                const matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('reports'));
-                                if (matchingHeading) {
-                                    targetElement = matchingHeading.closest('.elementor-section') || matchingHeading.parentElement;
+                            if (targetId === 'cmr-latest-reports') {
+                                const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title'));
+                                let matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('reports by industry'));
+                                if (!matchingHeading) {
+                                    // Fallback to any heading with 'reports'
+                                    matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('reports') && !h.closest('.intel-nav-bar'));
                                 }
+                                
+                                if (matchingHeading) {
+                                    targetElement = matchingHeading.closest('.elementor-section') || matchingHeading.closest('.e-con') || matchingHeading.parentElement;
+                                }
+                                
+                                if (!targetElement) {
+                                    targetElement = document.getElementById(targetId);
+                                }
+                            } else {
+                                targetElement = document.getElementById(targetId);
                             }
                             
                             if (targetElement) {
