@@ -85,7 +85,7 @@ function cmr_smb_connect_grid_shortcode() {
             opacity: 1;
         }
 
-        .cmr-smbcgd-fixed-js {
+        .intel-nav-fixed-js {
             position: fixed !important;
             left: 0;
             right: 0;
@@ -632,92 +632,38 @@ function cmr_smb_connect_grid_shortcode() {
             });
         }
 
-        // AJAX Pagination
-        const paginationWrap = document.querySelector('.cmr-smbcgd-pagination-wrap');
-        if (paginationWrap) {
-            paginationWrap.addEventListener('click', function(e) {
-                const link = e.target.closest('a.page-numbers');
-                if (link) {
-                    e.preventDefault();
+        // Fetch posts on click
+        const navLinks = document.querySelectorAll('.intel-nav-links a:not(.cmr-nav-btn-subscribe)');
+        if (navLinks.length > 0) {
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Check if it's an anchor link
                     const href = link.getAttribute('href');
-                    const match = href.match(/paged=(\d+)/);
-                    if (match) {
-                        currentPage = parseInt(match[1], 10);
-                    } else {
-                        const pathMatch = href.match(/\/page\/(\d+)/);
-                        if (pathMatch) {
-                            currentPage = parseInt(pathMatch[1], 10);
-                        } else if (href.indexOf('?') === -1 && href.indexOf('page') === -1) {
-                            currentPage = 1;
-                        }
-                    }
-                    fetchPosts(true);
-                }
-            });
-        }
-
-        // Sticky Nav Logic
-        const sections = document.querySelectorAll('.cmr-smbcgd-wrapper');
-        sections.forEach(section => {
-            const navBar = section.querySelector('.cmr-smbcgd-top-nav');
-            if (!navBar) return;
-            
-            const placeholder = document.createElement('div');
-            placeholder.className = 'cmr-smbcgd-top-nav-placeholder';
-            placeholder.style.height = '0px';
-            placeholder.style.marginBottom = '0px';
-            navBar.parentNode.insertBefore(placeholder, navBar);
-            
-            function updateSticky() {
-                const sectionRect = section.getBoundingClientRect();
-                
-                let stickyOffset = 0;
-                const wpAdminBar = document.getElementById('wpadminbar');
-                if (wpAdminBar && window.getComputedStyle(wpAdminBar).position === 'fixed') {
-                    stickyOffset = wpAdminBar.offsetHeight;
-                }
-                const headers = document.querySelectorAll('header, [data-elementor-type="header"], .elementor-location-header, .elementor-sticky--active');
-                headers.forEach(h => {
-                    if (h === navBar || h.contains(navBar)) return;
-                    const hStyle = window.getComputedStyle(h);
-                    if (hStyle.position === 'fixed' || hStyle.position === 'sticky' || h.classList.contains('elementor-sticky--active')) {
-                        const hRect = h.getBoundingClientRect();
-                        if (hRect.top <= stickyOffset + 10 && hRect.bottom > stickyOffset && hRect.bottom < (window.innerHeight / 2)) {
-                            stickyOffset = hRect.bottom;
-                        }
-                    }
-                });
-
-                if (sectionRect.top <= stickyOffset && sectionRect.bottom > (navBar.offsetHeight + stickyOffset)) {
-                    if (!navBar.classList.contains('cmr-smbcgd-fixed-js')) {
-                        placeholder.style.height = navBar.offsetHeight + 'px';
-                        const style = window.getComputedStyle(navBar);
-                        placeholder.style.marginBottom = style.marginBottom;
-                        
-                        navBar.classList.add('cmr-smbcgd-fixed-js');
-                        document.body.appendChild(navBar); 
+                    if (href && href.startsWith('#') && href !== '#') {
+                        // Let cmr-sticky-nav-script handle the smooth scroll
+                        return;
                     }
                     
-                    if (sectionRect.bottom <= (navBar.offsetHeight + stickyOffset)) {
-                        navBar.style.top = (sectionRect.bottom - navBar.offsetHeight) + 'px';
+                    if (href === '#' || !href) {
+                        e.preventDefault();
                     } else {
-                        navBar.style.top = stickyOffset + 'px';
+                        e.preventDefault();
+                        const match = href.match(/paged=(\d+)/);
+                        if (match) {
+                            currentPage = parseInt(match[1], 10);
+                        } else {
+                            const pathMatch = href.match(/\/page\/(\d+)/);
+                            if (pathMatch) {
+                                currentPage = parseInt(pathMatch[1], 10);
+                            } else if (href.indexOf('?') === -1 && href.indexOf('page') === -1) {
+                                currentPage = 1;
+                            }
+                        }
+                        fetchPosts(true);
                     }
-                } else {
-                    if (navBar.classList.contains('cmr-smbcgd-fixed-js')) {
-                        navBar.classList.remove('cmr-smbcgd-fixed-js');
-                        navBar.style.top = '';
-                        placeholder.parentNode.insertBefore(navBar, placeholder.nextSibling);
-                        placeholder.style.height = '0px';
-                        placeholder.style.marginBottom = '0px';
-                    }
-                }
-            }
-            
-            window.addEventListener('scroll', updateSticky, { passive: true });
-            window.addEventListener('resize', updateSticky, { passive: true });
-            setTimeout(updateSticky, 100);
-        });
+                });
+            });
+        }
     });
     </script>
     <?php
