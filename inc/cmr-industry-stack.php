@@ -165,7 +165,7 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
                     <ul class="cmr-stack-list">
                         <li>Consumer Intelligence - Market, customer, and brand insights </li>
                         <li>Enterprise Intelligence - B2B decision-maker, partner, and ecosystem research </li>
-                        <li>Strategic Advisory - Research-backed recommendations and growth strategiesData-driven decision frameworks</li>
+                        <li>Strategic Advisory - Research-backed recommendations and growth strategies</li>
                     </ul>
                 </div>
 
