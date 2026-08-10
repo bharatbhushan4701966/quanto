@@ -14,8 +14,6 @@ function cmr_enterprise_connect_grid_shortcode( $atts ) {
         'link_enterprise'   => '#enterprise-connect',
         'link_featured'     => '#featured',
         'link_latest'       => '#latest',
-        'link_media_res'    => '#media-resources',
-        'link_media_con'    => '#media-contacts',
         'link_market'       => '#cmr-market-updates',
         'link_reports'      => '#reports',
         'link_cmr_news'     => '#cmr-in-news'
@@ -386,8 +384,6 @@ function cmr_enterprise_connect_grid_shortcode( $atts ) {
                 <div class="intel-nav-links">
                     <a href="<?php echo esc_attr($atts['link_featured']); ?>">Featured</a>
                     <a href="<?php echo esc_attr($atts['link_latest']); ?>">Latest</a>
-                    <a href="<?php echo esc_attr($atts['link_media_res']); ?>">Media Resources</a>
-                    <a href="<?php echo esc_attr($atts['link_media_con']); ?>">Media Contacts</a>
                     <a href="<?php echo esc_attr($atts['link_market']); ?>">Market Updates</a>
                     <a href="<?php echo esc_attr($atts['link_reports']); ?>">Reports</a>
                     <a href="<?php echo esc_attr($atts['link_cmr_news']); ?>">CMR in news</a>

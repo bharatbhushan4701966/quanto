@@ -187,6 +187,14 @@ add_action('wp_footer', function() {
                                 matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('insight'));
                             } else if (targetId.includes('market-update') || targetId.includes('market')) {
                                 matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('market updates') || h.textContent.toLowerCase().includes('updates'));
+                            } else if (targetId.includes('featured')) {
+                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('featured'));
+                            } else if (targetId.includes('latest')) {
+                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('latest'));
+                            } else if (targetId.includes('media-resource')) {
+                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('media resource'));
+                            } else if (targetId.includes('media-contact')) {
+                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('media contact') || h.textContent.toLowerCase().includes('contact us'));
                             } else if (targetId.includes('newsroom') || targetId.includes('news')) {
                                 matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('newsroom') || h.textContent.toLowerCase().includes('media coverage') || h.textContent.toLowerCase().includes('news'));
                             } else if (targetId.includes('explore')) {
