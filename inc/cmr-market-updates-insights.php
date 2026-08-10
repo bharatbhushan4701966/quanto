@@ -605,8 +605,31 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                             }
                         });
 
+                        let boundaryBottom = sectionRect.bottom;
+                        
+                        let testimonialsSection = document.getElementById('cmr-testimonials-section') || 
+                                                  document.getElementById('testimonials') || 
+                                                  document.querySelector('.elementor-widget-testimonial-carousel') ||
+                                                  document.querySelector('.elementor-widget-testimonial');
+                                                  
+                        if (!testimonialsSection) {
+                            const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')).filter(h => h.textContent.toLowerCase().includes('testimonial'));
+                            if (headings.length > 0) {
+                                testimonialsSection = headings[0].closest('.elementor-section') || headings[0].closest('section') || headings[0].parentElement;
+                            }
+                        }
+
+                        if (testimonialsSection) {
+                            boundaryBottom = testimonialsSection.getBoundingClientRect().top;
+                        } else {
+                            const footer = document.querySelector('footer, .elementor-location-footer');
+                            if (footer) {
+                                boundaryBottom = footer.getBoundingClientRect().top;
+                            }
+                        }
+
                         // Trigger sticky as soon as the section touches the sticky offset
-                        if (sectionRect.top <= stickyOffset && sectionRect.bottom > (navBar.offsetHeight + stickyOffset)) {
+                        if (sectionRect.top <= stickyOffset && boundaryBottom > (navBar.offsetHeight + stickyOffset)) {
                             if (!navBar.classList.contains('intel-nav-fixed-js')) {
                                 // Save original height
                                 placeholder.style.height = navBar.offsetHeight + 'px';
@@ -617,8 +640,8 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                                 document.body.appendChild(navBar); // Escaping elementor transform context
                             }
                             
-                            if (sectionRect.bottom <= (navBar.offsetHeight + stickyOffset)) {
-                                navBar.style.top = (sectionRect.bottom - navBar.offsetHeight) + 'px';
+                            if (boundaryBottom <= (navBar.offsetHeight + stickyOffset)) {
+                                navBar.style.top = (boundaryBottom - navBar.offsetHeight) + 'px';
                             } else {
                                 navBar.style.top = stickyOffset + 'px';
                             }
@@ -636,6 +659,45 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                     window.addEventListener('scroll', updateSticky, { passive: true });
                     window.addEventListener('resize', updateSticky, { passive: true });
                     setTimeout(updateSticky, 100);
+                    
+                    // Add smooth scrolling logic
+                    const navLinks = navBar.querySelectorAll('.cmr-mui-nav-links a');
+                    navLinks.forEach(link => {
+                        link.addEventListener('click', function(e) {
+                            const href = this.getAttribute('href');
+                            if (!href || href.indexOf('#') === -1) return;
+                            
+                            const targetId = href.substring(href.indexOf('#') + 1);
+                            if (!targetId) return;
+                            
+                            let targetElement = document.getElementById(targetId);
+                            
+                            if (!targetElement && targetId === 'cmr-latest-reports') {
+                                const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6'));
+                                const matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('reports'));
+                                if (matchingHeading) {
+                                    targetElement = matchingHeading.closest('.elementor-section') || matchingHeading.parentElement;
+                                }
+                            }
+                            
+                            if (targetElement) {
+                                e.preventDefault();
+                                
+                                let stickyOffset = 0;
+                                const wpAdminBar = document.getElementById('wpadminbar');
+                                if (wpAdminBar && window.getComputedStyle(wpAdminBar).position === 'fixed') {
+                                    stickyOffset = wpAdminBar.offsetHeight;
+                                }
+                                
+                                const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - stickyOffset - 80;
+                                
+                                window.scrollTo({
+                                    top: targetPosition,
+                                    behavior: 'smooth'
+                                });
+                            }
+                        });
+                    });
                 });
             });
         </script>
