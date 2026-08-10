@@ -196,7 +196,7 @@ add_action('wp_footer', function() {
                             } else if (targetId.includes('media-contact')) {
                                 matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('media contact') || h.textContent.toLowerCase().includes('contact us'));
                             } else if (targetId.includes('newsroom') || targetId.includes('news')) {
-                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('newsroom') || h.textContent.toLowerCase().includes('media coverage') || h.textContent.toLowerCase().includes('news'));
+                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('newsroom') || h.textContent.toLowerCase().includes('media coverage') || h.textContent.toLowerCase().includes('news') || h.textContent.toLowerCase().includes('cmr live'));
                             } else if (targetId.includes('explore')) {
                                 matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('explore industry intelligence') || h.textContent.toLowerCase().includes('intelligence'));
                             } else if (targetId === 'cmr-footer-card-section' || targetId.includes('subscribe')) {
