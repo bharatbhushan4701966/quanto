@@ -178,19 +178,20 @@ add_action('wp_footer', function() {
                         
                         // Fallback for Elementor sections missing IDs (like #reports, #newsroom, etc.)
                         if (!targetElement) {
-                            const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6'));
+                            const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title'));
                             let matchingHeading = null;
-                            if (targetId === 'reports') {
-                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('similar reports'));
-                            } else if (targetId === 'cmr-market-updates') {
-                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('market updates'));
-                            } else if (targetId === 'newsroom') {
-                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('newsroom'));
-                            } else if (targetId === 'explore-industry-intelligence') {
-                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('explore industry intelligence'));
-                            } else if (targetId === 'cmr-in-news') {
-                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('featured media coverage'));
-                            } else if (targetId === 'cmr-footer-card-section') {
+                            
+                            if (targetId.includes('report')) {
+                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('reports'));
+                            } else if (targetId.includes('insight')) {
+                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('insight'));
+                            } else if (targetId.includes('market-update') || targetId.includes('market')) {
+                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('market updates') || h.textContent.toLowerCase().includes('updates'));
+                            } else if (targetId.includes('newsroom') || targetId.includes('news')) {
+                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('newsroom') || h.textContent.toLowerCase().includes('media coverage') || h.textContent.toLowerCase().includes('news'));
+                            } else if (targetId.includes('explore')) {
+                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('explore industry intelligence') || h.textContent.toLowerCase().includes('intelligence'));
+                            } else if (targetId === 'cmr-footer-card-section' || targetId.includes('subscribe')) {
                                 // Search for headings or widgets containing "CMR Connect" or "Subscribe Now"
                                 const possibleCards = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title, .elementor-button-text'));
                                 matchingHeading = possibleCards.find(el => {
