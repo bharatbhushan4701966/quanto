@@ -146,8 +146,8 @@ add_action('wp_footer', function() {
                         const href = this.getAttribute('href');
                         const linkText = this.innerText.toLowerCase().trim();
                         
-                        // Special handling for Overview to scroll to top
-                        if (linkText === 'overview' || href === '#top') {
+                        // Special handling for Overview / Featured to scroll to top
+                        if (linkText === 'overview' || linkText === 'featured' || href === '#top') {
                             e.preventDefault();
                             e.stopPropagation(); // Prevent Elementor from hijacking
                             window.scrollTo({
