@@ -347,6 +347,7 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
         </style>
         <?php $uid = uniqid(); ?>
 
+        <div id="cmr-latest-reports" style="position: relative; top: -100px;"></div>
         <section class="cmr-latest-section" id="reports-<?php echo $uid; ?>">
             <div class="cmr-latest-header">
                 <h2 class="cmr-latest-title"><?php echo esc_html( $atts['title'] ); ?></h2>

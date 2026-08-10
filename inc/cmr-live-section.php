@@ -187,7 +187,7 @@ if ( ! function_exists( 'cmr_live_section_shortcode' ) ) {
             }
         </style>
 
-        <div class="cmr-ls-section">
+        <div class="cmr-ls-section" id="cmr-live-section">
             <div class="cmr-ls-container">
                 <div class="cmr-ls-header">
                     <div class="cmr-ls-title-area">
