@@ -4,11 +4,11 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-// CMR Intro Connected Tech Shortcode
-function cmr_register_intro_connected_tech_shortcode() {
-    add_shortcode('cmr_intro_connected_tech', 'cmr_intro_connected_tech_shortcode');
+// CMR Intro IT & Telecom Shortcode
+function cmr_register_intro_it_telecom_shortcode() {
+    add_shortcode('cmr_intro_it_telecom', 'cmr_intro_connected_tech_shortcode');
 }
-add_action('init', 'cmr_register_intro_connected_tech_shortcode');
+add_action('init', 'cmr_register_intro_it_telecom_shortcode');
 
 function cmr_intro_connected_tech_shortcode() {
     ob_start(); ?>
