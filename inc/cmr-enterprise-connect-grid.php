@@ -16,7 +16,7 @@ function cmr_enterprise_connect_grid_shortcode( $atts ) {
         'link_latest'       => '#latest',
         'link_media_res'    => '#media-resources',
         'link_media_con'    => '#media-contacts',
-        'link_market'       => '#market-updates',
+        'link_market'       => '#cmr-market-updates',
         'link_reports'      => '#reports',
         'link_cmr_news'     => '#cmr-in-news'
     ), $atts, 'cmr_enterprise_connect_grid' );

@@ -9,8 +9,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 add_shortcode( 'cmr_smb_connect_grid', 'cmr_smb_connect_grid_shortcode' );
 
-function cmr_smb_connect_grid_shortcode() {
+function cmr_smb_connect_grid_shortcode( $atts = array() ) {
     ob_start();
+
+    $atts = shortcode_atts( array(
+        'link_featured'     => '#featured',
+        'link_latest'       => '#latest',
+        'link_media_res'    => '#media-resources',
+        'link_media_con'    => '#media-contacts',
+        'link_market'       => '#cmr-market-updates',
+        'link_reports'      => '#reports',
+        'link_cmr_news'     => '#cmr-in-news'
+    ), $atts, 'cmr_smb_connect_grid' );
 
     $unique_ids = cmr_get_unique_smb_post_ids();
     $sliced_ids = array_slice( $unique_ids, 4, 6 );

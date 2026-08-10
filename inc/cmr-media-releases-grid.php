@@ -9,8 +9,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 add_shortcode( 'cmr_media_releases_grid', 'cmr_media_releases_grid_shortcode' );
 
-function cmr_media_releases_grid_shortcode() {
+function cmr_media_releases_grid_shortcode( $atts = array() ) {
     ob_start();
+
+    $atts = shortcode_atts( array(
+        'link_featured'     => '#featured',
+        'link_latest'       => '#latest',
+        'link_media_res'    => '#media-resources',
+        'link_media_con'    => '#media-contacts',
+        'link_market'       => '#cmr-market-updates',
+        'link_reports'      => '#reports',
+        'link_cmr_news'     => '#cmr-in-news'
+    ), $atts, 'cmr_media_releases_grid' );
 
     $paged = max(1, get_query_var('paged'), get_query_var('page'), isset($_GET['paged']) ? intval($_GET['paged']) : 1);
 
