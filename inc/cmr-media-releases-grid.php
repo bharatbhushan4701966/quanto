@@ -42,17 +42,46 @@ function cmr_media_releases_grid_shortcode() {
             color: #111;
         }
 
-        /* Top Navigation */
+        /* Top Navigation Pill Style */
         .cmr-mrg-top-nav {
             display: flex;
             align-items: center;
-            gap: 40px;
-            padding: 20px 0;
-            border-bottom: 1px solid #eaeaea;
-            overflow-x: auto;
-            white-space: nowrap;
-            background: #fff;
-            transition: box-shadow 0.3s ease;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #e0e0e0;
+            border-radius: 50px;
+            padding: 15px 30px;
+            margin: 0 auto;
+            max-width: 1200px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            z-index: 99999;
+            backdrop-filter: blur(10px);
+            justify-content: space-between;
+        }
+        .cmr-mrg-nav-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #111;
+        }
+        .intel-nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+        .intel-nav-links a {
+            color: #111;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+        .intel-nav-links a:hover {
+            opacity: 0.7;
+        }
+        .intel-nav-links a.cmr-nav-btn-subscribe:hover {
+            background: #111 !important;
+            color: #fff !important;
+            opacity: 1;
         }
 
         .cmr-mrg-fixed-js {
@@ -61,23 +90,15 @@ function cmr_media_releases_grid_shortcode() {
             right: 0;
             width: 100% !important;
             z-index: 999999 !important;
-            background: #fff;
+            background: rgba(255, 255, 255, 0.95);
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            padding-left: max(20px, calc(50vw - 640px)) !important;
-            padding-right: max(20px, calc(50vw - 640px)) !important;
+            padding: 15px max(20px, calc(50vw - 640px)) !important;
             margin: 0 !important;
-            transition: none !important;
-        }
-        .cmr-mrg-top-nav a {
-            text-decoration: none;
-            color: #111;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        .cmr-mrg-top-nav a:hover,
-        .cmr-mrg-top-nav a.active {
-            font-weight: 600;
+            transition: top 0.2s ease-out !important;
+            border-radius: 0;
+            border-left: none;
+            border-right: none;
+            border-top: none;
         }
 
         /* Header Area */
@@ -359,15 +380,23 @@ function cmr_media_releases_grid_shortcode() {
     <div class="cmr-mrg-wrapper" id="newsroom">
         
         <!-- Top Nav -->
-        <div class="cmr-mrg-top-nav">
-            <a href="#" class="active">Press Release</a>
-            <a href="#">Featured</a>
-            <a href="#">Latest</a>
-            <a href="#">Media Resources</a>
-            <a href="#">Media Contacts</a>
-            <a href="#">Market Updates</a>
-            <a href="#">Reports</a>
-            <a href="#">CMR in news</a>
+        <div class="cmr-mrg-top-nav-wrap" style="margin-bottom: 40px;">
+            <div class="cmr-mrg-top-nav intel-nav-bar">
+                <div class="cmr-mrg-nav-title">Media Connect</div>
+                <div class="intel-nav-links">
+                    <a href="<?php echo esc_attr($atts['link_featured']); ?>">Featured</a>
+                    <a href="<?php echo esc_attr($atts['link_latest']); ?>">Latest</a>
+                    <a href="<?php echo esc_attr($atts['link_media_res']); ?>">Media Resources</a>
+                    <a href="<?php echo esc_attr($atts['link_media_con']); ?>">Media Contacts</a>
+                    <a href="<?php echo esc_attr($atts['link_market']); ?>">Market Updates</a>
+                    <a href="<?php echo esc_attr($atts['link_reports']); ?>">Reports</a>
+                    <a href="<?php echo esc_attr($atts['link_cmr_news']); ?>">CMR in news</a>
+                    <a href="#cmr-footer-card-section" class="cmr-nav-btn-subscribe" style="display: inline-flex; align-items: center; justify-content: center; background: #fff; color: #111; font-weight: 600; font-size: 14px; padding: 8px 16px; border-radius: 40px; text-decoration: none; border: 1px solid #111; margin-left: 15px; line-height: 1; transition: all 0.3s ease;">
+                        Subscribe now
+                        <svg style="margin-left: 6px;" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                    </a>
+                </div>
+            </div>
         </div>
 
         <!-- Header -->
