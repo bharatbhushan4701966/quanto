@@ -176,13 +176,41 @@ add_action('wp_footer', function() {
                         
                         let targetElement = document.getElementById(targetId);
                         
-                        // Fallback for Elementor sections missing IDs (like #reports, #newsroom, etc.)
+                        // Fallback 1: Try known shortcode wrapper selectors directly
+                        if (!targetElement) {
+                            const selectorMap = {
+                                'reports': '.cmr-latest-section, .cmr-featured-reports-section, [id^="reports-"]',
+                                'cmr-in-news': '.cmr-media-coverage-wrapper, .cmr-mc-wrapper, [class*="cmr-dmc-"]',
+                                'cmr-market-updates': '.cmr-mui-section, .cmr-market-updates-section',
+                                'featured': '.cmr-cancg-section, .cmr-enterprisecg-section, .cmr-smbcg-section, .cmr-featured-insight-section',
+                                'latest': '.cmr-channelcgd-wrapper, .cmr-enterprisecgd-wrapper, .cmr-smbcgd-wrapper'
+                            };
+
+                            // Try exact match first, then partial match
+                            if (selectorMap[targetId]) {
+                                targetElement = document.querySelector(selectorMap[targetId]);
+                            }
+                            if (!targetElement) {
+                                for (const [key, selector] of Object.entries(selectorMap)) {
+                                    if (targetId.includes(key) || key.includes(targetId)) {
+                                        targetElement = document.querySelector(selector);
+                                        if (targetElement) break;
+                                    }
+                                }
+                            }
+                        }
+
+                        // Fallback 2: Search by heading text for Elementor sections missing IDs
                         if (!targetElement) {
                             const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title'));
                             let matchingHeading = null;
                             
                             if (targetId.includes('report')) {
-                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('reports'));
+                                matchingHeading = headings.find(h => {
+                                    const txt = h.textContent.toLowerCase().trim();
+                                    return (txt.includes('reports') || txt.includes('featured reports') || txt.includes('latest reports'))
+                                        && !h.closest('.intel-nav-bar') && !h.closest('[class*="-nav"]');
+                                });
                             } else if (targetId.includes('insight')) {
                                 matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('insight'));
                             } else if (targetId.includes('market-update') || targetId.includes('market')) {
@@ -196,7 +224,11 @@ add_action('wp_footer', function() {
                             } else if (targetId.includes('media-contact')) {
                                 matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('media contact') || h.textContent.toLowerCase().includes('contact us'));
                             } else if (targetId.includes('newsroom') || targetId.includes('news')) {
-                                matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('newsroom') || h.textContent.toLowerCase().includes('media coverage') || h.textContent.toLowerCase().includes('news') || h.textContent.toLowerCase().includes('cmr live'));
+                                matchingHeading = headings.find(h => {
+                                    const txt = h.textContent.toLowerCase().trim();
+                                    return (txt.includes('media coverage') || txt.includes('cmr in news') || txt.includes('cmr media coverage') || txt.includes('newsroom') || txt.includes('cmr live'))
+                                        && !h.closest('.intel-nav-bar') && !h.closest('[class*="-nav"]');
+                                });
                             } else if (targetId.includes('explore')) {
                                 matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('explore industry intelligence') || h.textContent.toLowerCase().includes('intelligence'));
                             } else if (targetId === 'cmr-footer-card-section' || targetId.includes('subscribe')) {
@@ -209,7 +241,7 @@ add_action('wp_footer', function() {
                             }
                             
                             if (matchingHeading) {
-                                targetElement = matchingHeading.closest('.elementor-section') || matchingHeading.closest('.e-con-parent') || matchingHeading.closest('.e-con-full') || matchingHeading.parentElement;
+                                targetElement = matchingHeading.closest('.elementor-section') || matchingHeading.closest('.e-con-parent') || matchingHeading.closest('.e-con-full') || matchingHeading.closest('.cmr-latest-section') || matchingHeading.closest('.cmr-media-coverage-wrapper') || matchingHeading.closest('.cmr-mc-wrapper') || matchingHeading.closest('[class*="cmr-"]') || matchingHeading.parentElement;
                             }
                         }
 

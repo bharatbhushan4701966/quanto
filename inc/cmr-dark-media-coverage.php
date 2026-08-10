@@ -262,7 +262,7 @@ if ( ! function_exists( 'cmr_dark_media_coverage_shortcode' ) ) {
             }
         </style>
 
-        <div class="cmr-dmc-wrapper">
+        <div class="cmr-dmc-wrapper" id="cmr-in-news">
             <div class="cmr-dmc-header">
                 <div class="cmr-dmc-filters">
                     <button class="cmr-dmc-filter-btn active" data-pub="">All</button>

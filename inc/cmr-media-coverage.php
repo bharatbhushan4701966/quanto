@@ -32,7 +32,7 @@ function cmr_render_media_coverage_shortcode( $atts ) {
 
     ob_start();
     ?>
-    <div class="cmr-mc-wrapper">
+    <div class="cmr-mc-wrapper" id="cmr-in-news">
         <div class="cmr-mc-top-banner">
             <div class="cmr-mc-top-banner-title">CMR in News</div>
             <div class="cmr-mc-top-banner-links">

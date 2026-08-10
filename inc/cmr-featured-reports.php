@@ -243,7 +243,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
             }
         </style>
 
-        <section class="cmr-featured-reports-section">
+        <section class="cmr-featured-reports-section" id="reports">
             <h2 class="cmr-featured-reports-title"><?php echo esc_html( $atts['title'] ); ?></h2>
             
             <div class="cmr-featured-grid">

@@ -20,7 +20,7 @@ function cmr_media_coverage_shortcode( $atts ) {
     
     ob_start();
     ?>
-    <div class="cmr-media-coverage-wrapper">
+    <div class="cmr-media-coverage-wrapper" id="cmr-in-news">
         <div class="cmr-mc-header">
             <h2>CMR Media Coverage</h2>
             <p>Track emerging shifts, growth signals, and market movements in real time.</p>
