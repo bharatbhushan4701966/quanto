@@ -86,13 +86,15 @@ function cmr_intro_tech_shortcode() {
         }
     </style>
     <div class="cmr-intro-tech-section">
-        <p>Consumer technology is no longer defined by the device — it's defined by the experience surrounding it. AI integration, ecosystem lock-in and shifting ownership models are rewriting the rules of how people choose, use and stay loyal to technology brands.</p>
-        <p>Companies still competing on specs alone are losing ground to those competing on context — understanding not just what consumers buy, but why, when and what they expect next.</p>
-        <p>The winners won't just ship better products. They'll build smarter relationships with the people who use them.</p>
+        <p>Technology markets are being reshaped by AI, cloud, connectivity, digital platforms, and changing customer expectations. </p>
+        <p>Product lifecycles are shortening, innovation cycles are accelerating, and competition is intensifying across both consumer and enterprise markets. Success today depends not only on understanding where the market is today, but anticipating where it will move next.</p>
+        <p>CMR helps technology companies, enterprises, investors, and ecosystem partners navigate this dynamic landscape through independent research, market intelligence, strategic advisory, and deep industry expertise. We translate complex market signals into actionable insights that enables organizations to identify emerging opportunities, validate strategic decisions, and accelerate sustainable growth.</p>
         
         <div class="cmr-intro-tech-hidden-content">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>Our research spans the entire technology ecosystem, covering smartphones, PCs, wearables, smart devices, consumer electronics, semiconductors, AI, cloud, enterprise software, cybersecurity, digital infrastructure, telecom, 5G, IoT, and next-generation digital services. </p>
+            <p> By combining quantitative research, qualitative insights, competitive intelligence, channel analysis, and end-user research, we provide a comprehensive view of evolving markets and customer needs.</p>
+            <p>Whether you are launching a new product, entering a new market, refining your go-to-market strategy, strengthening competitive positioning, or evaluating the impact of emerging technologies, CMR equips you with the insights to make confident, evidence-based decisions.</p>
+            <p><strong>From identifying market opportunities to shaping long-term growth strategies, CMR helps organizations transform intelligence into innovation, strategy into execution, and insight into lasting competitive advantage.</strong></p>
         </div>
 
         <div class="cmr-intro-tech-read-more">
