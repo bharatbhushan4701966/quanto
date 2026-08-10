@@ -51,7 +51,7 @@ add_action('wp_footer', function() {
         window.cmrStickyNavInitialized = true;
         
         function initStickyNav() {            // Sticky Nav logic for both Industry Intelligence and Latest Insights shortcodes
-            const sections = document.querySelectorAll('.cmr-industry-intelligence, .cmr-latest-insights-section, .cmr-industry-intel-section, .cmr-marketing-services-section, .cmr-consulting-advisory-section');
+            const sections = document.querySelectorAll('.cmr-industry-intelligence, .cmr-latest-insights-section, .cmr-industry-intel-section, .cmr-marketing-services-section, .cmr-consulting-advisory-section, .cmr-enterprisecgd-wrapper, .cmr-channelcgd-wrapper, .cmr-smbcgd-wrapper, .cmr-mrg-wrapper');
             sections.forEach(section => {
                 const navBar = section.querySelector('.cmr-industry-nav-bar, .cmr-latest-nav-bar, .intel-nav-bar');
                 if (!navBar) return;
