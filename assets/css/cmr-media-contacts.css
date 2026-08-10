@@ -134,11 +134,17 @@
 }
 
 @media (max-width: 768px) {
+    .cmr-media-contacts-header h2 {
+        font-size: 26px;
+    }
+    .cmr-media-contact-card {
+        flex: 1 1 100%;
+    }
     .cmr-media-testimonial-card {
         padding: 30px 20px;
     }
-    
     .cmr-media-testimonial-card blockquote {
-        font-size: 18px;
+        font-size: 17px;
+        line-height: 1.5;
     }
 }

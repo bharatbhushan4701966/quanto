@@ -115,15 +115,24 @@
 /* Instead of hardcoding the 3rd, the hover state covers it cleanly */
 
 @media (max-width: 768px) {
+    .cmr-explore-sectors-section {
+        padding: 50px 0;
+    }
     .explore-sectors-container {
         padding-left: 20px;
+        padding-right: 20px;
     }
     .explore-sectors-title {
-        font-size: 32px;
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+    .explore-sectors-track {
+        padding-left: 20px;
     }
     .explore-sector-card {
         flex: 0 0 280px;
-        min-height: 340px;
-        padding: 30px;
+        height: auto;
+        min-height: 320px;
+        padding: 30px 24px;
     }
 }
