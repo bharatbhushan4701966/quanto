@@ -103,7 +103,7 @@ function cmr_intro_connected_tech_shortcode() {
             <p>Our expertise spans the connected technology ecosystem, including smartphones, PCs, tablets, wearables, smart devices, consumer electronics, enterprise devices, semiconductors, telecom networks, 5G and emerging 6G, broadband, IoT, cloud and edge computing, AI-enabled technologies, digital infrastructure, and connected digital services.</p>
             <p>Through market tracking, forecasting, competitive intelligence, consumer research, enterprise studies, technology adoption analysis, and ecosystem research, CMR provides a holistic view of technology markets and the forces shaping their evolution.</p>
             <p>Whether you are launching a new device, evaluating technology investments, developing connected solutions, entering new markets, or strengthening your competitive positioning, CMR delivers the intelligence you need to understand customers, anticipate market shifts, and make confident strategic decisions.</p>
-            <p>From devices to networks and infrastructure, CMR helps organizations understand the connected technology ecosystem and navigate what comes next.</p>
+            <p><strong>From devices to networks and infrastructure, CMR helps organizations understand the connected technology ecosystem and navigate what comes next.</strong></p>
         </div>
 
         <div class="cmr-intro-ct-read-more">

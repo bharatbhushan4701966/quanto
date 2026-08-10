@@ -101,7 +101,7 @@ function cmr_intro_semiconductors_shortcode() {
         <div class="cmr-intro-semi-hidden-content">
             <p>Our research spans the entire semiconductor value chain, including chip design, foundries, packaging and testing, memory, processors, AI accelerators, connectivity chipsets, automotive semiconductors, edge AI, industrial electronics, embedded systems, and the broader semiconductor supply ecosystem. By combining quantitative research, ecosystem intelligence, competitive analysis, customer insights, and executive advisory, we provide a comprehensive view of market opportunities and technology evolution.</p>
             <p>Whether you're expanding into new markets, launching next-generation silicon, strengthening ecosystem partnerships, evaluating manufacturing investments, or navigating the impact of AI and geopolitical shifts, CMR delivers the intelligence to reduce uncertainty, sharpen strategy, and accelerate growth.</p>
-            <p>From silicon innovation to market adoption, CMR helps organizations transform semiconductor intelligence into strategic advantage.</p>
+            <p><strong>From silicon innovation to market adoption, CMR helps organizations transform semiconductor intelligence into strategic advantage.</strong></p>
         </div>
 
         <div class="cmr-intro-semi-read-more">
