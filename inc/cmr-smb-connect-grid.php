@@ -43,46 +43,40 @@ function cmr_smb_connect_grid_shortcode() {
             color: #111;
         }
 
-        /* Top Navigation Pill Style */
+        /* Top Navigation Style */
         .cmr-smbcgd-top-nav {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid #e0e0e0;
-            border-radius: 50px;
-            padding: 15px 30px;
-            margin: 0 auto;
-            max-width: 1200px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            padding: 20px 0;
+            margin-bottom: 40px;
+            background: #fff;
             position: relative;
             z-index: 99999;
-            backdrop-filter: blur(10px);
-            justify-content: space-between;
         }
         .cmr-smbcgd-nav-title {
-            font-size: 22px;
+            font-size: 16px;
             font-weight: 600;
             color: #111;
         }
         .intel-nav-links {
             display: flex;
-            gap: 25px;
+            gap: 35px;
             align-items: center;
         }
         .intel-nav-links a {
             color: #111;
             text-decoration: none;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
-            transition: opacity 0.2s;
+            transition: color 0.3s ease;
         }
         .intel-nav-links a:hover {
-            opacity: 0.7;
+            color: #6A35FF;
         }
         .intel-nav-links a.cmr-nav-btn-subscribe:hover {
             background: #111 !important;
             color: #fff !important;
-            opacity: 1;
         }
 
         .intel-nav-fixed-js {
