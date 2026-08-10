@@ -337,6 +337,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-hero-banner.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-intro-text.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-intro-supply-chain.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-intro-connected-tech.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-intro-semiconductors.php';
 
 // Save rating meta for cmr_news comments
 add_action('comment_post', 'cmr_save_comment_rating', 10, 2);
