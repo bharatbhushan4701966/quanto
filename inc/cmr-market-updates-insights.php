@@ -687,6 +687,19 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                                 if (!targetElement) {
                                     targetElement = document.getElementById(targetId);
                                 }
+                            } else if (targetId === 'expert-insights' || targetId === 'cmr-footer-card-section') {
+                                // Try finding the footer card if the explicit ID doesn't exist
+                                targetElement = document.getElementById(targetId);
+                                if (!targetElement) {
+                                    const possibleCards = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title, .elementor-button-text'));
+                                    const matchingHeading = possibleCards.find(el => {
+                                        const txt = el.textContent.toLowerCase();
+                                        return txt.includes('cmr connect') || txt.includes('monthly digest') || (txt.includes('subscribe now') && !el.closest('.intel-nav-bar'));
+                                    });
+                                    if (matchingHeading) {
+                                        targetElement = matchingHeading.closest('.elementor-section') || matchingHeading.closest('.e-con') || matchingHeading.parentElement;
+                                    }
+                                }
                             } else {
                                 targetElement = document.getElementById(targetId);
                             }
