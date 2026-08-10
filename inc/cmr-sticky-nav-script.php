@@ -283,9 +283,66 @@ add_action('wp_footer', function() {
             });
         }
 
+        // Dynamic Anchor Script: assign IDs to Elementor sections based on headings
+        // so sticky navbar anchor links work regardless of page builder setup
+        function assignDynamicAnchors() {
+            var allHeadings = document.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title');
+            
+            allHeadings.forEach(function(h) {
+                // Skip headings inside nav bars
+                if (h.closest('.intel-nav-bar') || h.closest('[class*="-nav-bar"]')) return;
+                
+                var text = h.innerText.toLowerCase().trim();
+                var section = h.closest('.elementor-top-section') || h.closest('section') || h.closest('.elementor-section') || h.closest('.e-con') || h.closest('.e-con-parent') || h.closest('.e-con-full');
+                
+                if (!section) return;
+                // Don't overwrite existing IDs
+                if (section.id) return;
+                
+                // "CMR in news" section
+                if (text.includes("recognition of cmr in news") || text.includes("featured media coverage") || text === "cmr in news" || text.includes("cmr media coverage") || text === "media coverage") {
+                    section.id = 'cmr-in-news';
+                }
+                
+                // "Reports" section
+                if (text.includes("similar reports") || text.includes("browse latest reports") || text.includes("featured reports") || text === "reports" || text.includes("latest reports")) {
+                    if (!section.id) section.id = 'reports';
+                }
+                
+                // "Market Updates" section
+                if (text.includes("market intelligence &") || text.includes("market updates")) {
+                    if (!section.id) section.id = 'cmr-market-updates';
+                }
+                
+                // "Explore Industry Intelligence" section
+                if (text.includes("explore industry intelligence") || text.includes("explore our industry intelligence")) {
+                    if (!section.id) section.id = 'explore-industry-intelligence';
+                }
+                
+                // "Featured Intelligence" / "Newsroom" section
+                if (text.includes("featured intelligence") || (text.includes("media releases") && !text.includes("featured media")) || text === "newsroom") {
+                    if (!section.id || (section.id !== 'cmr-in-news')) section.id = 'newsroom';
+                }
+                
+                // "Insights" / "Latest Insights" section
+                if (text.includes("latest insights") && !section.id) {
+                    section.id = 'overview';
+                }
+                
+                // "Trends" section
+                if (text.includes("industry intelligence trends") && !section.id) {
+                    section.id = 'trends';
+                }
+            });
+        }
+
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initStickyNav);
+            document.addEventListener('DOMContentLoaded', function() {
+                assignDynamicAnchors();
+                initStickyNav();
+            });
         } else {
+            assignDynamicAnchors();
             initStickyNav();
         }
     }
