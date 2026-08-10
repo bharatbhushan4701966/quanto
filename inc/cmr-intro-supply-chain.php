@@ -86,8 +86,8 @@ function cmr_intro_supply_chain_shortcode() {
         }
     </style>
     <div class="cmr-intro-sc-section">
-        <p><strong>Supply Chains Are Being Reimagined. Every Decision Shapes Resilience.</strong></p>
-        <p><strong>Build Smarter Supply Chains. Create Lasting Advantage.</strong></p>
+        <p>Supply Chains Are Being Reimagined. Every Decision Shapes Resilience.</p>
+        <p>Build Smarter Supply Chains. Create Lasting Advantage.</p>
         <p>Global supply chains have evolved from operational functions into strategic growth engines. Rapid advances in AI, automation, robotics, IoT, cloud platforms, and predictive analytics are redefining how products are designed, sourced, manufactured, moved, and delivered. At the same time, geopolitical shifts, changing trade policies, sustainability mandates, and evolving customer expectations are compelling organizations to rethink resilience, agility, and operational efficiency.</p>
         <p>Success now depends on building supply chains that are intelligent, connected, data-driven, and adaptable.</p>
         
