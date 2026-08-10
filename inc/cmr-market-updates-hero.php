@@ -16,7 +16,7 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
 
         $query_args = array(
             'post_type'      => array('post', 'cmr_news'),
-            'posts_per_page' => $atts['posts_per_page'],
+            'posts_per_page' => 15, // Query more to account for duplicates
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
@@ -31,8 +31,14 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
         $hero_posts = get_posts( $query_args );
 
         $posts_data = array();
+        $seen_titles = array();
         if ( !empty($hero_posts) ) {
             foreach ( $hero_posts as $post_obj ) {
+                $title = trim(get_the_title($post_obj));
+                if ( isset( $seen_titles[$title] ) ) {
+                    continue;
+                }
+                $seen_titles[$title] = true;
                 
                 $thumbnail_url = get_the_post_thumbnail_url( $post_obj->ID, 'full' );
                 if ( ! $thumbnail_url ) {
@@ -56,13 +62,17 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
                 }
 
                 $posts_data[] = array(
-                    'title'    => get_the_title($post_obj),
+                    'title'    => $title,
                     'link'     => get_permalink($post_obj->ID),
                     'image'    => $thumbnail_url,
                     'category' => $category_name,
                     'date'     => $post_date,
                     'excerpt'  => wp_kses_post( $excerpt ),
                 );
+                
+                if ( count($posts_data) >= $atts['posts_per_page'] ) {
+                    break;
+                }
             }
         }
                 $slider_id = 'cmr-mu-hero-' . wp_rand(1000, 9999);
@@ -304,11 +314,27 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
                 background: #e0e0e0;
                 border-radius: 4px;
                 cursor: pointer;
-                transition: all 0.3s ease;
+                transition: width 0.3s ease, background-color 0.3s ease;
+                position: relative;
+                overflow: hidden;
             }
             .cmr-mu-dot.active {
+                width: 40px;
+                background: #e0e0e0;
+            }
+            .cmr-mu-dot.active::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 0%;
                 background: #6B3FA0;
-                width: 30px;
+                animation: loaderDot 5s linear forwards;
+            }
+            @keyframes loaderDot {
+                from { width: 0%; }
+                to { width: 100%; }
             }
 
             @media (max-width: 992px) {
@@ -418,6 +444,22 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
                 if (!track || slides.length === 0) return;
 
                 let currentIndex = 0;
+                let autoPlayInterval;
+                const slideDuration = 5000; // 5 seconds
+
+                function startAutoPlay() {
+                    stopAutoPlay();
+                    autoPlayInterval = setInterval(function() {
+                        let nextIndex = (currentIndex + 1) % slides.length;
+                        updateSlider(nextIndex);
+                    }, slideDuration);
+                }
+
+                function stopAutoPlay() {
+                    if (autoPlayInterval) {
+                        clearInterval(autoPlayInterval);
+                    }
+                }
 
                 function updateSlider(index) {
                     currentIndex = index;
@@ -432,12 +474,16 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
                     track.style.transform = 'translateX(-' + moveAmount + 'px)';
 
                     dots.forEach(function(dot, i) {
+                        dot.classList.remove('active');
+                        // Force reflow to restart CSS animation
+                        void dot.offsetWidth;
+                        
                         if (i === index) {
                             dot.classList.add('active');
-                        } else {
-                            dot.classList.remove('active');
                         }
                     });
+                    
+                    startAutoPlay(); // Restart the timer
                 }
 
                 dots.forEach(function(dot) {
@@ -449,6 +495,15 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
                 window.addEventListener('resize', function() {
                     updateSlider(currentIndex);
                 });
+
+                // Initialize autoplay
+                if (slides.length > 1) {
+                    startAutoPlay();
+                    
+                    // Optional: Pause on hover
+                    slider.addEventListener('mouseenter', stopAutoPlay);
+                    slider.addEventListener('mouseleave', startAutoPlay);
+                }
             });
         </script>
         
