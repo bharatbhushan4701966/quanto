@@ -332,6 +332,9 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
                 background: #6B3FA0;
                 animation: loaderDot 5s linear forwards;
             }
+            .cmr-mu-hero-wrap:hover .cmr-mu-dot.active::after {
+                animation-play-state: paused;
+            }
             @keyframes loaderDot {
                 from { width: 0%; }
                 to { width: 100%; }
@@ -444,22 +447,6 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
                 if (!track || slides.length === 0) return;
 
                 let currentIndex = 0;
-                let autoPlayInterval;
-                const slideDuration = 5000; // 5 seconds
-
-                function startAutoPlay() {
-                    stopAutoPlay();
-                    autoPlayInterval = setInterval(function() {
-                        let nextIndex = (currentIndex + 1) % slides.length;
-                        updateSlider(nextIndex);
-                    }, slideDuration);
-                }
-
-                function stopAutoPlay() {
-                    if (autoPlayInterval) {
-                        clearInterval(autoPlayInterval);
-                    }
-                }
 
                 function updateSlider(index) {
                     currentIndex = index;
@@ -482,8 +469,6 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
                             dot.classList.add('active');
                         }
                     });
-                    
-                    startAutoPlay(); // Restart the timer
                 }
 
                 dots.forEach(function(dot) {
@@ -491,18 +476,23 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
                         const index = parseInt(this.getAttribute('data-slide'));
                         updateSlider(index);
                     });
+                    
+                    // Sync the slide change perfectly with the end of the CSS animation
+                    dot.addEventListener('animationend', function(e) {
+                        if (e.animationName === 'loaderDot' && dot.classList.contains('active')) {
+                            let nextIndex = (currentIndex + 1) % slides.length;
+                            updateSlider(nextIndex);
+                        }
+                    });
                 });
+                
                 window.addEventListener('resize', function() {
                     updateSlider(currentIndex);
                 });
 
-                // Initialize autoplay
+                // Initialize first dot to trigger animation correctly
                 if (slides.length > 1) {
-                    startAutoPlay();
-                    
-                    // Optional: Pause on hover
-                    slider.addEventListener('mouseenter', stopAutoPlay);
-                    slider.addEventListener('mouseleave', startAutoPlay);
+                    updateSlider(0);
                 }
             });
         </script>
