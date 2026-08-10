@@ -255,6 +255,61 @@
         height: 120px;
     }
 }
+
+@media (max-width: 768px) {
+    .cmr-latest-insights-title {
+        font-size: 28px !important;
+    }
+    .cmr-latest-insights-desc {
+        font-size: 15px !important;
+    }
+    .intel-nav-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .intel-nav-links {
+        overflow-x: auto;
+        white-space: nowrap;
+        width: 100%;
+        gap: 15px;
+        padding-bottom: 5px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .intel-nav-links::-webkit-scrollbar {
+        display: none;
+    }
+    .cmr-insights-filters-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .cmr-insights-filters {
+        overflow-x: auto;
+        white-space: nowrap;
+        width: 100%;
+        padding-bottom: 5px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .cmr-insights-filters::-webkit-scrollbar {
+        display: none;
+    }
+    .cmr-insights-filters .filter-btn {
+        flex-shrink: 0;
+    }
+    .cmr-insights-search {
+        width: 100%;
+    }
+    .cmr-insights-search form {
+        width: 100%;
+    }
+    .cmr-insights-search .search-field {
+        width: 100%;
+    }
+}
+
 @media (max-width: 575px) {
     .insights-stacked-card {
         flex-direction: column;

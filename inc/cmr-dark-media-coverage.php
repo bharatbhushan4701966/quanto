@@ -260,6 +260,36 @@ if ( ! function_exists( 'cmr_dark_media_coverage_shortcode' ) ) {
                 opacity: 0.5;
                 pointer-events: none;
             }
+            @media (max-width: 768px) {
+                .cmr-dmc-wrapper {
+                    padding: 24px 16px;
+                    margin: 30px auto;
+                    border-radius: 8px;
+                }
+                .cmr-dmc-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 15px;
+                    margin-bottom: 20px;
+                }
+                .cmr-dmc-filters {
+                    overflow-x: auto;
+                    white-space: nowrap;
+                    width: 100%;
+                    padding-bottom: 8px;
+                    gap: 10px;
+                    -webkit-overflow-scrolling: touch;
+                    scrollbar-width: none;
+                }
+                .cmr-dmc-filters::-webkit-scrollbar {
+                    display: none;
+                }
+                .cmr-dmc-filter-btn {
+                    flex-shrink: 0;
+                    padding: 6px 18px;
+                    font-size: 13px;
+                }
+            }
         </style>
 
         <div class="cmr-dmc-wrapper" id="cmr-in-news">

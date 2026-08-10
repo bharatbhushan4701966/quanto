@@ -45,6 +45,30 @@ add_action('wp_footer', function() {
             padding-right: 20px !important;
         }
     }
+    @media (max-width: 768px) {
+        .intel-nav-fixed-js {
+            padding-left: 15px !important;
+            padding-right: 15px !important;
+        }
+        .intel-nav-fixed-js .intel-nav-title {
+            display: none !important;
+        }
+        .intel-nav-fixed-js .intel-nav-links {
+            overflow-x: auto !important;
+            white-space: nowrap !important;
+            width: 100% !important;
+            gap: 15px !important;
+            padding-bottom: 5px !important;
+            -webkit-overflow-scrolling: touch !important;
+            scrollbar-width: none !important;
+        }
+        .intel-nav-fixed-js .intel-nav-links::-webkit-scrollbar {
+            display: none !important;
+        }
+        .intel-nav-fixed-js .cmr-nav-btn-subscribe {
+            display: none !important;
+        }
+    }
     </style>
     <script>
     if (!window.cmrStickyNavInitialized) {

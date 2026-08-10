@@ -79,9 +79,18 @@ function cmr_intro_semiconductors_shortcode() {
         
         @media (max-width: 768px) {
             .cmr-intro-semi-section {
-                font-size: 16px !important;
+                font-size: 15px !important;
                 line-height: 1.6 !important;
-                padding: 40px 20px !important;
+                padding: 30px 16px !important;
+            }
+            .cmr-intro-semi-section p {
+                margin-bottom: 20px;
+            }
+            .cmr-intro-semi-hidden-content {
+                margin-top: 20px;
+            }
+            .cmr-intro-semi-read-more {
+                margin-top: 25px;
             }
         }
     </style>

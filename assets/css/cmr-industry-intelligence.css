@@ -191,8 +191,20 @@
     .intel-grid {
         grid-template-columns: 1fr;
     }
-    .intel-header h2 {
-        font-size: 28px;
+    .intel-header h2,
+    .cmr-intel-header h2 {
+        font-size: 28px !important;
+    }
+    .cmr-intel-header-wrapper {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 15px !important;
+    }
+    .intel-controls {
+        width: 100% !important;
+    }
+    .intel-controls #intel-search-form {
+        width: 100% !important;
     }
 }
 
