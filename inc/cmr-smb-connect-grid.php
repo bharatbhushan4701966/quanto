@@ -341,9 +341,28 @@ function cmr_smb_connect_grid_shortcode( $atts = array() ) {
             .cmr-smbcgd-grid {
                 grid-template-columns: 1fr;
             }
+            .cmr-smbcgd-header h1 {
+                font-size: 28px !important;
+                margin: 20px 0 10px 0 !important;
+            }
             .cmr-smbcgd-filters-row {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 15px;
+            }
+            .cmr-smbcgd-years {
+                overflow-x: auto;
+                white-space: nowrap;
+                width: 100%;
+                padding-bottom: 8px;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            .cmr-smbcgd-years::-webkit-scrollbar {
+                display: none;
+            }
+            .cmr-smbcgd-year-btn {
+                flex-shrink: 0;
             }
             .cmr-smbcgd-search {
                 width: 100%;

@@ -338,9 +338,28 @@ function cmr_channel_connect_grid_shortcode( $atts = array() ) {
             .cmr-channelcgd-grid {
                 grid-template-columns: 1fr;
             }
+            .cmr-channelcgd-header h1 {
+                font-size: 28px !important;
+                margin: 20px 0 10px 0 !important;
+            }
             .cmr-channelcgd-filters-row {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 15px;
+            }
+            .cmr-channelcgd-years {
+                overflow-x: auto;
+                white-space: nowrap;
+                width: 100%;
+                padding-bottom: 8px;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            .cmr-channelcgd-years::-webkit-scrollbar {
+                display: none;
+            }
+            .cmr-channelcgd-year-btn {
+                flex-shrink: 0;
             }
             .cmr-channelcgd-search {
                 width: 100%;

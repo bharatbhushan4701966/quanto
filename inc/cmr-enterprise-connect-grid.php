@@ -339,9 +339,28 @@ function cmr_enterprise_connect_grid_shortcode( $atts ) {
             .cmr-enterprisecgd-grid {
                 grid-template-columns: 1fr;
             }
+            .cmr-enterprisecgd-header h1 {
+                font-size: 28px !important;
+                margin: 20px 0 10px 0 !important;
+            }
             .cmr-enterprisecgd-filters-row {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 15px;
+            }
+            .cmr-enterprisecgd-years {
+                overflow-x: auto;
+                white-space: nowrap;
+                width: 100%;
+                padding-bottom: 8px;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            .cmr-enterprisecgd-years::-webkit-scrollbar {
+                display: none;
+            }
+            .cmr-enterprisecgd-year-btn {
+                flex-shrink: 0;
             }
             .cmr-enterprisecgd-search {
                 width: 100%;

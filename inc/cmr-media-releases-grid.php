@@ -369,9 +369,28 @@ function cmr_media_releases_grid_shortcode( $atts = array() ) {
             .cmr-mrg-grid {
                 grid-template-columns: 1fr;
             }
+            .cmr-mrg-header h1 {
+                font-size: 28px !important;
+                margin: 20px 0 10px 0 !important;
+            }
             .cmr-mrg-filters-row {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 15px;
+            }
+            .cmr-mrg-years {
+                overflow-x: auto;
+                white-space: nowrap;
+                width: 100%;
+                padding-bottom: 8px;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            .cmr-mrg-years::-webkit-scrollbar {
+                display: none;
+            }
+            .cmr-mrg-year-btn {
+                flex-shrink: 0;
             }
             .cmr-mrg-search {
                 width: 100%;
