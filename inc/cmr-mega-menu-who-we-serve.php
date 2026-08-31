@@ -230,6 +230,14 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
                     </div>
                     <p>Intelligence for connected supply chains</p>
                 </a>
+
+                <a href="<?php echo esc_url( home_url( '/msme/' ) ); ?>" class="cmr-mms-item">
+                    <div class="cmr-mms-item-header">
+                        <h4>MSME</h4>
+                        <span class="cmr-mms-badge">New</span>
+                    </div>
+                    <p>Empowering small & medium enterprise growth</p>
+                </a>
             </div>
             
             <div class="cmr-mms-col">
@@ -247,6 +255,22 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
                         <span class="cmr-mms-badge">New</span>
                     </div>
                     <p>Tracking innovation and demand shifts</p>
+                </a>
+
+                <a href="<?php echo esc_url( home_url( '/ai/' ) ); ?>" class="cmr-mms-item">
+                    <div class="cmr-mms-item-header">
+                        <h4>AI</h4>
+                        <span class="cmr-mms-badge">New</span>
+                    </div>
+                    <p>Artificial Intelligence & transformation insights</p>
+                </a>
+
+                <a href="<?php echo esc_url( home_url( '/enterprise-tech/' ) ); ?>" class="cmr-mms-item">
+                    <div class="cmr-mms-item-header">
+                        <h4>Enterprise Tech</h4>
+                        <span class="cmr-mms-badge">New</span>
+                    </div>
+                    <p>Cloud, infrastructure & enterprise IT solutions</p>
                 </a>
             </div>
         </div>
