@@ -248,8 +248,9 @@ function cmr_gate_scraped_table_content( $content ) {
         return $content;
     }
 
-    // Gate content for non-logged in users
-    $login_url = home_url( '/my-account/' );
+    // Gate content for non-logged in users with return redirect_to parameter
+    $current_page_url = get_permalink( $post_id );
+    $login_url = add_query_arg( 'redirect_to', urlencode( $current_page_url ), home_url( '/my-account/' ) );
 
     $gated_html = '
     <div class="cmr-gated-wrapper" style="position: relative; width: 100%; overflow: hidden; margin-top: 130px; margin-bottom: 50px;">

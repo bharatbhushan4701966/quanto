@@ -1522,27 +1522,55 @@ add_action( 'wp_head', function() {
 });
 
 /**
- * Redirect to cart page after successful login or registration if the user has items in their cart.
- * This ensures they can continue their purchase journey instead of landing on the My Account dashboard.
+/**
+ * Redirect to requested page (e.g. gated table page) after login if redirect_to is set,
+ * or fallback to cart page if the user has items in their cart.
  */
-function cmr_redirect_to_cart_if_not_empty( $redirect, $user = null ) {
+function cmr_redirect_after_login( $redirect, $user = null ) {
+    if ( ! empty( $_REQUEST['redirect_to'] ) ) {
+        return wp_validate_redirect( $_REQUEST['redirect_to'], $redirect );
+    }
+    if ( ! empty( $_POST['redirect'] ) ) {
+        return wp_validate_redirect( $_POST['redirect'], $redirect );
+    }
+    if ( ! empty( $_GET['redirect_to'] ) ) {
+        return wp_validate_redirect( $_GET['redirect_to'], $redirect );
+    }
+
     if ( class_exists( 'WooCommerce' ) && WC()->cart && ! WC()->cart->is_empty() ) {
         return wc_get_cart_url();
     }
     return $redirect;
 }
-add_filter( 'woocommerce_registration_redirect', 'cmr_redirect_to_cart_if_not_empty', 99, 2 );
-add_filter( 'woocommerce_login_redirect', 'cmr_redirect_to_cart_if_not_empty', 99, 2 );
+add_filter( 'woocommerce_registration_redirect', 'cmr_redirect_after_login', 99, 2 );
+add_filter( 'woocommerce_login_redirect', 'cmr_redirect_after_login', 99, 2 );
+add_filter( 'login_redirect', 'cmr_redirect_after_login', 99, 3 );
+
+// Pass redirect_to into hidden input fields in WooCommerce login form
+add_action( 'woocommerce_login_form', 'cmr_inject_redirect_to_hidden_fields' );
+function cmr_inject_redirect_to_hidden_fields() {
+    if ( ! empty( $_GET['redirect_to'] ) ) {
+        $redirect_to = esc_url( $_GET['redirect_to'] );
+        echo '<input type="hidden" name="redirect" value="' . $redirect_to . '" />';
+        echo '<input type="hidden" name="redirect_to" value="' . $redirect_to . '" />';
+    }
+}
 
 /**
- * Fallback: If a third-party plugin (like Elementor) forces a redirect to My Account 
- * with ?register=success, we intercept it here.
+ * Fallback: If a user logs in and lands on My Account with redirect_to set,
+ * redirect them to their destination page.
  */
 add_action( 'template_redirect', 'cmr_force_cart_redirect_after_registration' );
 function cmr_force_cart_redirect_after_registration() {
-    // Check if we are on the My Account page and the URL has ?register=success
+    if ( is_user_logged_in() && is_account_page() && ! empty( $_GET['redirect_to'] ) ) {
+        $target = wp_validate_redirect( $_GET['redirect_to'], '' );
+        if ( $target ) {
+            wp_safe_redirect( $target );
+            exit;
+        }
+    }
+
     if ( is_account_page() && isset( $_GET['register'] ) && $_GET['register'] === 'success' ) {
-        // If the cart is not empty, redirect to the cart page
         if ( class_exists( 'WooCommerce' ) && WC()->cart && ! WC()->cart->is_empty() ) {
             wp_safe_redirect( wc_get_cart_url() );
             exit;
