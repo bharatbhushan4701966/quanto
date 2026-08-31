@@ -692,22 +692,22 @@ function cmr_migrate_press_releases_callback() {
 add_action('wp_head', function() {
     ?>
     <style>
-        /* Make all top-level menu items purple on hover */
+        /* Make all top-level menu items light gray (#d1d1d1) on hover */
         .elementor-nav-menu--main .elementor-item:hover,
         .elementor-nav-menu--main .elementor-item.elementor-item-active,
         .elementor-nav-menu--main .elementor-item:focus,
         .menu-item > a:hover {
-            color: #6A35FF !important;
+            color: #d1d1d1 !important;
         }
 
-        /* Keep the text purple when the user is hovering inside the mega menu card itself */
+        /* Keep the text light gray (#d1d1d1) when the user is hovering inside the mega menu card itself */
         .cmr-has-mega-menu:hover > a,
         .cmr-has-mega-menu-do:hover > a,
         .cmr-has-mega-menu-serve:hover > a,
         .cmr-has-mega-menu-think:hover > a,
         .cmr-has-mega-menu-newsroom:hover > a,
         .cmr-has-mega-menu-connect:hover > a {
-            color: #6A35FF !important;
+            color: #d1d1d1 !important;
         }
     </style>
     <?php
