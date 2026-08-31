@@ -332,7 +332,7 @@ function cmr_gate_scraped_table_content( $content ) {
                 
                 <h3>Exclusive Industry Intelligence</h3>
                 
-                <p>This data page is restricted to registered members. Please sign in or register to unlock full access to this intelligence table.</p>
+                <p>This data page is restricted to registered members. Please sign in to unlock full access to this intelligence table.</p>
 
                 <a href="' . esc_url( $login_url ) . '" class="cmr-gated-btn">
                     Sign In to Unlock Access

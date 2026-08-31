@@ -1641,6 +1641,33 @@ function cmr_inject_redirect_to_hidden_fields() {
     }
 }
 
+// Hide WooCommerce registration/signup column when coming from a gated page with redirect_to
+add_action( 'wp_head', function() {
+    if ( is_account_page() && ( ! empty( $_GET['redirect_to'] ) || isset( $_GET['hide_register'] ) ) ) {
+        ?>
+        <style id="cmr-hide-gated-registration">
+            /* Hide Register/Signup column for gated table visitors */
+            #customer_login .u-column2,
+            .woocommerce-form-register,
+            .woocommerce-FormRow--register,
+            .col-2.u-column2 {
+                display: none !important;
+            }
+            #customer_login .u-column1,
+            .col-1.u-column1 {
+                width: 100% !important;
+                max-width: 480px !important;
+                margin: 0 auto !important;
+                float: none !important;
+            }
+            #customer_login {
+                display: block !important;
+            }
+        </style>
+        <?php
+    }
+} );
+
 /**
  * Fallback: If a user logs in and lands on My Account with redirect_to set,
  * redirect them to their destination page.
