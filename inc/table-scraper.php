@@ -277,7 +277,7 @@ function cmr_gate_scraped_table_content( $content ) {
                     This data page is restricted to registered members. Please sign in or register to unlock full access to this intelligence table.
                 </p>
 
-                <a href="' . esc_url( $login_url ) . '" class="cmr-gated-btn" style="display: inline-flex; align-items: center; justify-content: center; width: 100%; padding: 15px 28px; background: #4820B0; color: #ffffff; font-size: 15px; font-weight: 600; text-decoration: none; border-radius: 30px; transition: background 0.2s ease, transform 0.2s ease; box-shadow: 0 4px 14px rgba(72, 32, 176, 0.35); box-sizing: border-box;">
+                <a href="' . esc_url( $login_url ) . '" class="cmr-gated-btn" style="display: inline-flex; align-items: center; justify-content: center; width: 100%; padding: 15px 28px; background: #4820B0; color: #ffffff; font-size: 15px; font-weight: 600; letter-spacing: 0.6px; text-decoration: none; border-radius: 30px; transition: background 0.2s ease, transform 0.2s ease; box-shadow: none; box-sizing: border-box;">
                     Sign In to Unlock Access
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px;">
                         <line x1="5" y1="12" x2="19" y2="12"></line>
