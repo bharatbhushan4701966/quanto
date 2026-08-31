@@ -1911,4 +1911,77 @@ add_action( 'rest_api_init', function () {
         },
         'permission_callback' => '__return_true',
     ) );
+
+    register_rest_route( 'quanto/v1', '/update_table_slugs', array(
+        'methods'  => 'GET',
+        'callback' => function() {
+            delete_option( 'cmr_table_pages_renamed_v2' );
+            cmr_update_table_page_slugs_and_titles();
+            return rest_ensure_response( array(
+                'success' => true,
+                'message' => 'Table page titles and slugs updated successfully',
+                'pages'   => array(
+                    'Gated Section'      => home_url( '/records/' ),
+                    'Speakers'           => home_url( '/speakers-info/' ),
+                    'Audience Profiling' => home_url( '/audience-profiling/' ),
+                    'CMR LINKS'          => home_url( '/imsg-links/' ),
+                ),
+            ) );
+        },
+        'permission_callback' => '__return_true',
+    ) );
 } );
+
+// Update Table Scraped Page Titles & Slugs
+add_action( 'init', 'cmr_update_table_page_slugs_and_titles' );
+function cmr_update_table_page_slugs_and_titles() {
+    $updated = get_option( 'cmr_table_pages_renamed_v2' );
+    if ( $updated ) {
+        return;
+    }
+
+    $mappings = array(
+        '1-gated-section-2026-07-30-csv' => array(
+            'title' => 'Gated Section',
+            'slug'  => 'records',
+        ),
+        '4-speakers-2026-07-30-csv' => array(
+            'title' => 'Speakers',
+            'slug'  => 'speakers-info',
+        ),
+        '9-audience-profiling-2026-07-30-csv' => array(
+            'title' => 'Audience Profiling',
+            'slug'  => 'audience-profiling',
+        ),
+        '12-cmr-links-2026-07-30-csv' => array(
+            'title' => 'CMR LINKS',
+            'slug'  => 'imsg-links',
+        ),
+    );
+
+    foreach ( $mappings as $old_slug => $data ) {
+        $page = get_page_by_path( $old_slug );
+        if ( ! $page ) {
+            $query = new WP_Query( array(
+                'post_type'      => 'page',
+                'name'           => $old_slug,
+                'posts_per_page' => 1,
+                'post_status'    => 'any',
+            ) );
+            if ( $query->have_posts() ) {
+                $page = $query->posts[0];
+            }
+        }
+
+        if ( $page ) {
+            wp_update_post( array(
+                'ID'         => $page->ID,
+                'post_title' => $data['title'],
+                'post_name'  => $data['slug'],
+            ) );
+        }
+    }
+
+    flush_rewrite_rules();
+    update_option( 'cmr_table_pages_renamed_v2', '1' );
+}
