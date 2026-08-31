@@ -253,7 +253,68 @@ function cmr_gate_scraped_table_content( $content ) {
     $login_url = add_query_arg( 'redirect_to', urlencode( $current_page_url ), home_url( '/my-account/' ) );
 
     $gated_html = '
-    <div class="cmr-gated-wrapper" style="position: relative; width: 100%; overflow: hidden; margin-top: 130px; margin-bottom: 50px;">
+    <style>
+    .cmr-gated-wrapper {
+        position: relative !important;
+        width: 100% !important;
+        overflow: hidden !important;
+        margin-top: 130px !important;
+        margin-bottom: 50px !important;
+    }
+    .cmr-gated-card {
+        max-width: 500px !important;
+        width: 100% !important;
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 20px !important;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03) !important;
+        padding: 40px 32px !important;
+        text-align: center !important;
+        font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif !important;
+        letter-spacing: normal !important;
+        word-spacing: normal !important;
+    }
+    .cmr-gated-card h3 {
+        font-size: 22px !important;
+        font-weight: 700 !important;
+        color: #0f172a !important;
+        margin: 0 0 12px 0 !important;
+        line-height: 1.3 !important;
+        letter-spacing: 0.5px !important;
+        word-spacing: 0.25em !important;
+    }
+    .cmr-gated-card p {
+        font-size: 14px !important;
+        color: #64748b !important;
+        margin: 0 0 28px 0 !important;
+        line-height: 1.6 !important;
+        letter-spacing: 0.2px !important;
+        word-spacing: 0.15em !important;
+    }
+    .cmr-gated-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        padding: 15px 28px !important;
+        background: #4820B0 !important;
+        color: #ffffff !important;
+        font-size: 15px !important;
+        font-weight: 600 !important;
+        letter-spacing: 1px !important;
+        word-spacing: 0.2em !important;
+        text-decoration: none !important;
+        border-radius: 30px !important;
+        transition: background 0.2s ease, transform 0.2s ease !important;
+        box-shadow: none !important;
+        box-sizing: border-box !important;
+    }
+    .cmr-gated-btn:hover {
+        background: #39198e !important;
+        color: #ffffff !important;
+    }
+    </style>
+    <div class="cmr-gated-wrapper">
         <!-- Blurred Preview -->
         <div class="cmr-gated-preview" style="filter: blur(8px); opacity: 0.25; user-select: none; pointer-events: none; max-height: 420px; overflow: hidden;">
             ' . $content . '
@@ -261,7 +322,7 @@ function cmr_gate_scraped_table_content( $content ) {
 
         <!-- Lock Overlay Card -->
         <div class="cmr-gated-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; min-height: 380px; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 10; padding: 20px; box-sizing: border-box;">
-            <div class="cmr-gated-card" style="max-width: 500px; width: 100%; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03); padding: 40px 32px; text-align: center; font-family: \'Instrument Sans\', sans-serif;">
+            <div class="cmr-gated-card">
                 <div class="cmr-gated-icon-box" style="width: 60px; height: 60px; margin: 0 auto 20px; background: rgba(72, 32, 176, 0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #4820B0;">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
@@ -269,15 +330,11 @@ function cmr_gate_scraped_table_content( $content ) {
                     </svg>
                 </div>
                 
-                <h3 style="font-size: 22px; font-weight: 700; color: #0f172a; margin: 0 0 12px; line-height: 1.3;">
-                    Exclusive Industry Intelligence
-                </h3>
+                <h3>Exclusive Industry Intelligence</h3>
                 
-                <p style="font-size: 14px; color: #64748b; margin: 0 0 28px; line-height: 1.6;">
-                    This data page is restricted to registered members. Please sign in or register to unlock full access to this intelligence table.
-                </p>
+                <p>This data page is restricted to registered members. Please sign in or register to unlock full access to this intelligence table.</p>
 
-                <a href="' . esc_url( $login_url ) . '" class="cmr-gated-btn" style="display: inline-flex; align-items: center; justify-content: center; width: 100%; padding: 15px 28px; background: #4820B0; color: #ffffff; font-size: 15px; font-weight: 600; letter-spacing: 0.6px; text-decoration: none; border-radius: 30px; transition: background 0.2s ease, transform 0.2s ease; box-shadow: none; box-sizing: border-box;">
+                <a href="' . esc_url( $login_url ) . '" class="cmr-gated-btn">
                     Sign In to Unlock Access
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px;">
                         <line x1="5" y1="12" x2="19" y2="12"></line>
