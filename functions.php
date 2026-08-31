@@ -723,6 +723,44 @@ add_action('wp_head', function() {
     <?php
 });
 
+// Fix 60 MIN duration breaking issue and big text issue
+add_action('wp_head', function() {
+    ?>
+    <style id="cmr-typography-fixes">
+        /* 1. Prevent "60 MIN" / "38 MIN" line breaking in WEBINAR / PODCAST cards */
+        .elementor-widget-heading .elementor-heading-title {
+            word-break: keep-all;
+        }
+        
+        /* 2. Fix big text issue: balance oversized section main titles across pages */
+        .elementor-widget-heading h2.elementor-heading-title,
+        .elementor-widget-heading h3.elementor-heading-title {
+            font-size: clamp(28px, 3.2vw, 40px) !important;
+            line-height: 1.25 !important;
+            letter-spacing: -0.5px !important;
+            word-spacing: normal !important;
+        }
+    </style>
+    <?php
+});
+
+add_action('wp_footer', function() {
+    ?>
+    <script id="cmr-duration-meta-fix">
+    document.addEventListener('DOMContentLoaded', function() {
+        // Prevent WEBINAR . 60 MIN and PODCAST . 38 MIN from breaking onto 2 lines
+        var elements = document.querySelectorAll('.elementor-widget-heading .elementor-heading-title, .elementor-widget-text-editor, .cmr-ls-meta');
+        elements.forEach(function(el) {
+            if (el.textContent.includes('MIN') && (el.textContent.includes('WEBINAR') || el.textContent.includes('PODCAST') || el.textContent.includes('.'))) {
+                el.style.whiteSpace = 'nowrap';
+                el.style.display = 'inline-block';
+            }
+        });
+    });
+    </script>
+    <?php
+});
+
 // Re-add Hover CSS for Team Box Image
 add_action('wp_head', function() {
     ?>
