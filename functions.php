@@ -688,25 +688,35 @@ function cmr_migrate_press_releases_callback() {
     ), 200);
 }
 
-// Global Custom CSS for Menus
+// Global Custom CSS for Menus (Main Header Only)
 add_action('wp_head', function() {
     ?>
     <style>
-        /* Make all top-level menu items light gray (#d1d1d1) on hover */
-        .elementor-nav-menu--main .elementor-item:hover,
-        .elementor-nav-menu--main .elementor-item.elementor-item-active,
-        .elementor-nav-menu--main .elementor-item:focus,
-        .menu-item > a:hover {
+        /* Make top-level menu items light gray (#d1d1d1) on hover ONLY for main header */
+        .main-header-wrapper .elementor-nav-menu--main .elementor-item:hover,
+        .main-header-wrapper .elementor-nav-menu--main .elementor-item.elementor-item-active,
+        .main-header-wrapper .elementor-nav-menu--main .elementor-item:focus,
+        .main-header-wrapper .menu-item > a:hover,
+        #quanto-header-desktop .elementor-nav-menu--main .elementor-item:hover,
+        #quanto-header-desktop .elementor-nav-menu--main .elementor-item.elementor-item-active,
+        #quanto-header-desktop .elementor-nav-menu--main .elementor-item:focus,
+        #quanto-header-desktop .menu-item > a:hover {
             color: #d1d1d1 !important;
         }
 
-        /* Keep the text light gray (#d1d1d1) when the user is hovering inside the mega menu card itself */
-        .cmr-has-mega-menu:hover > a,
-        .cmr-has-mega-menu-do:hover > a,
-        .cmr-has-mega-menu-serve:hover > a,
-        .cmr-has-mega-menu-think:hover > a,
-        .cmr-has-mega-menu-newsroom:hover > a,
-        .cmr-has-mega-menu-connect:hover > a {
+        /* Keep text light gray (#d1d1d1) when user is hovering inside mega menu card on main header */
+        .main-header-wrapper .cmr-has-mega-menu:hover > a,
+        .main-header-wrapper .cmr-has-mega-menu-do:hover > a,
+        .main-header-wrapper .cmr-has-mega-menu-serve:hover > a,
+        .main-header-wrapper .cmr-has-mega-menu-think:hover > a,
+        .main-header-wrapper .cmr-has-mega-menu-newsroom:hover > a,
+        .main-header-wrapper .cmr-has-mega-menu-connect:hover > a,
+        #quanto-header-desktop .cmr-has-mega-menu:hover > a,
+        #quanto-header-desktop .cmr-has-mega-menu-do:hover > a,
+        #quanto-header-desktop .cmr-has-mega-menu-serve:hover > a,
+        #quanto-header-desktop .cmr-has-mega-menu-think:hover > a,
+        #quanto-header-desktop .cmr-has-mega-menu-newsroom:hover > a,
+        #quanto-header-desktop .cmr-has-mega-menu-connect:hover > a {
             color: #d1d1d1 !important;
         }
     </style>
