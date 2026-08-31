@@ -723,19 +723,33 @@ add_action('wp_head', function() {
     <?php
 });
 
-// Fix 60 MIN duration breaking issue and big text issue
+// Fix 60 MIN / 38 MIN duration tag sizing, horizontal straight-line alignment, and oversized section headings
 add_action('wp_head', function() {
     ?>
     <style id="cmr-typography-fixes">
-        /* 1. Prevent "60 MIN" / "38 MIN" line breaking in WEBINAR / PODCAST cards */
-        .elementor-widget-heading .elementor-heading-title {
-            word-break: keep-all;
+        /* 1. Fix WEBINAR . 60 MIN / PODCAST . 38 MIN meta tag font-size and alignment */
+        .cmr-duration-meta-tag,
+        .cmr-duration-meta-tag * {
+            font-size: 13px !important;
+            line-height: 1.4 !important;
+            font-weight: 700 !important;
+            vertical-align: middle !important;
+            letter-spacing: 0.5px !important;
+        }
+        .cmr-duration-meta-tag {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 4px !important;
+            white-space: nowrap !important;
+            margin-bottom: 8px !important;
+            color: #475569 !important;
+            text-transform: uppercase !important;
         }
         
         /* 2. Fix big text issue: balance oversized section main titles across pages */
-        .elementor-widget-heading h2.elementor-heading-title,
-        .elementor-widget-heading h3.elementor-heading-title {
-            font-size: clamp(28px, 3.2vw, 40px) !important;
+        .elementor-widget-heading h2.elementor-heading-title:not(.cmr-duration-meta-tag),
+        .elementor-widget-heading h3.elementor-heading-title:not(.cmr-duration-meta-tag) {
+            font-size: clamp(26px, 3.2vw, 38px) !important;
             line-height: 1.25 !important;
             letter-spacing: -0.5px !important;
             word-spacing: normal !important;
@@ -747,16 +761,39 @@ add_action('wp_head', function() {
 add_action('wp_footer', function() {
     ?>
     <script id="cmr-duration-meta-fix">
-    document.addEventListener('DOMContentLoaded', function() {
-        // Prevent WEBINAR . 60 MIN and PODCAST . 38 MIN from breaking onto 2 lines
-        var elements = document.querySelectorAll('.elementor-widget-heading .elementor-heading-title, .elementor-widget-text-editor, .cmr-ls-meta');
-        elements.forEach(function(el) {
-            if (el.textContent.includes('MIN') && (el.textContent.includes('WEBINAR') || el.textContent.includes('PODCAST') || el.textContent.includes('.'))) {
-                el.style.whiteSpace = 'nowrap';
-                el.style.display = 'inline-block';
-            }
-        });
-    });
+    (function() {
+        function fixDurationMetaTags() {
+            var elements = document.querySelectorAll('.elementor-widget-heading .elementor-heading-title, .elementor-widget-text-editor, .cmr-ls-meta');
+            elements.forEach(function(el) {
+                var text = el.textContent || el.innerText || '';
+                if (text.indexOf('MIN') !== -1 && (text.indexOf('WEBINAR') !== -1 || text.indexOf('PODCAST') !== -1 || text.indexOf('.') !== -1)) {
+                    el.classList.add('cmr-duration-meta-tag');
+                    el.style.setProperty('font-size', '13px', 'important');
+                    el.style.setProperty('line-height', '1.4', 'important');
+                    el.style.setProperty('font-weight', '700', 'important');
+                    el.style.setProperty('display', 'inline-flex', 'important');
+                    el.style.setProperty('align-items', 'center', 'important');
+                    el.style.setProperty('vertical-align', 'middle', 'important');
+                    el.style.setProperty('white-space', 'nowrap', 'important');
+
+                    var children = el.querySelectorAll('*');
+                    for (var i = 0; i < children.length; i++) {
+                        children[i].style.setProperty('font-size', '13px', 'important');
+                        children[i].style.setProperty('line-height', '1.4', 'important');
+                        children[i].style.setProperty('font-weight', '700', 'important');
+                        children[i].style.setProperty('vertical-align', 'middle', 'important');
+                    }
+                }
+            });
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', fixDurationMetaTags);
+        } else {
+            fixDurationMetaTags();
+        }
+        setTimeout(fixDurationMetaTags, 300);
+        setTimeout(fixDurationMetaTags, 1000);
+    })();
     </script>
     <?php
 });
