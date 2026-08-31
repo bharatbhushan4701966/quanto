@@ -1592,6 +1592,7 @@ add_action( 'pre_get_posts', 'cmr_category_posts_per_page' );
 
 // Shortcode for Account Icon
 function cmr_account_icon_shortcode() {
+    static $css_rendered = false;
     $url = home_url('/my-account/');
     $icon_html = '';
     
@@ -1605,10 +1606,55 @@ function cmr_account_icon_shortcode() {
         
         $icon_html = '<div class="cmr-account-initial" style="width:35px; height:35px; border-radius:50%; background:#00bfbc; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:18px; line-height:1;">' . esc_html( strtoupper( $initial ) ) . '</div>';
     } else {
-        $icon_html = '<i class="ri-user-line" style="font-size:24px; color:#111;"></i>';
+        $icon_html = '<i class="ri-user-line" style="font-size:24px;"></i>';
     }
     
-    return '<a href="' . esc_url( $url ) . '" class="cmr-account-link" style="display:flex; align-items:center; justify-content:center; text-decoration:none;">' . $icon_html . '</a>';
+    ob_start();
+    if ( ! $css_rendered ) {
+        $css_rendered = true;
+        ?>
+        <style>
+        .cmr-account-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #333; /* Default black for inner/blog headers */
+            transition: color 0.3s ease;
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Make login face white ONLY on main header / home page */
+        body.home .cmr-account-link,
+        body.home-page .cmr-account-link,
+        #quanto-header-desktop .cmr-account-link,
+        .main-header-wrapper .cmr-account-link {
+            color: #fff;
+        }
+
+        /* Keep black on mobile / blog header */
+        #quanto-header-mobile .cmr-account-link,
+        .blog-header-wrapper .cmr-account-link {
+            color: #333;
+        }
+
+        .cmr-account-link:hover {
+            color: #4820B0 !important;
+        }
+
+        /* Force black when header is sticky */
+        .elementor-sticky--effects .cmr-account-link,
+        .is-sticky .cmr-account-link,
+        header.sticky .cmr-account-link,
+        .intel-nav-fixed-js .cmr-account-link {
+            color: #333 !important;
+        }
+        </style>
+        <?php
+    }
+    echo '<a href="' . esc_url( $url ) . '" class="cmr-account-link">' . $icon_html . '</a>';
+    return ob_get_clean();
 }
 add_shortcode( 'cmr_account_icon', 'cmr_account_icon_shortcode' );
 
@@ -1673,6 +1719,8 @@ add_action( 'rest_api_init', function () {
                 'post_type'     => !empty($params['post_type']) ? sanitize_text_field($params['post_type']) : 'page',
                 'meta_input'    => array(
                     '_scraped_source_url' => esc_url_raw( $params['url'] ?? '' ),
+                    '_scraped_from_table' => '1',
+                    '_cmr_is_gated'        => '1',
                 )
             );
 

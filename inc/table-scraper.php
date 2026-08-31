@@ -211,6 +211,7 @@ function cmr_scrape_single_handler() {
             '_scraped_from_table'  => $tid,
             '_wp_page_template'    => 'elementor_header_footer', // Elementor Full Width = no container
             '_cmr_use_blog_header' => '1',                       // Forces blog-header via header.php
+            '_cmr_is_gated'        => '1',                       // Gated content flag
         )
     );
 
@@ -220,4 +221,71 @@ function cmr_scrape_single_handler() {
     }
 
     wp_send_json_success( ['post_id' => $post_id] );
+}
+
+/**
+ * Gate content for all pages created by Table Scraper / TablePress
+ */
+add_filter( 'the_content', 'cmr_gate_scraped_table_content', 999 );
+function cmr_gate_scraped_table_content( $content ) {
+    if ( ! is_singular() ) {
+        return $content;
+    }
+
+    $post_id = get_the_ID();
+
+    // Check if post is marked as scraped/table page or contains TablePress table shortcode
+    $is_table_page = get_post_meta( $post_id, '_scraped_from_table', true ) 
+                  || get_post_meta( $post_id, '_cmr_is_gated', true )
+                  || ( is_string($content) && ( strpos($content, '[table id=') !== false || strpos($content, 'cmr-table-container') !== false ) );
+
+    if ( ! $is_table_page ) {
+        return $content;
+    }
+
+    // If user is logged in, show full content
+    if ( is_user_logged_in() ) {
+        return $content;
+    }
+
+    // Gate content for non-logged in users
+    $login_url = home_url( '/my-account/' );
+
+    $gated_html = '
+    <div class="cmr-gated-wrapper" style="position: relative; width: 100%; overflow: hidden; margin-top: 130px; margin-bottom: 50px;">
+        <!-- Blurred Preview -->
+        <div class="cmr-gated-preview" style="filter: blur(8px); opacity: 0.25; user-select: none; pointer-events: none; max-height: 420px; overflow: hidden;">
+            ' . $content . '
+        </div>
+
+        <!-- Lock Overlay Card -->
+        <div class="cmr-gated-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; min-height: 380px; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 10; padding: 20px; box-sizing: border-box;">
+            <div class="cmr-gated-card" style="max-width: 500px; width: 100%; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03); padding: 40px 32px; text-align: center; font-family: \'Instrument Sans\', sans-serif;">
+                <div class="cmr-gated-icon-box" style="width: 60px; height: 60px; margin: 0 auto 20px; background: rgba(72, 32, 176, 0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #4820B0;">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                </div>
+                
+                <h3 style="font-size: 22px; font-weight: 700; color: #0f172a; margin: 0 0 12px; line-height: 1.3;">
+                    Exclusive Industry Intelligence
+                </h3>
+                
+                <p style="font-size: 14px; color: #64748b; margin: 0 0 28px; line-height: 1.6;">
+                    This data page is restricted to registered members. Please sign in or register to unlock full access to this intelligence table.
+                </p>
+
+                <a href="' . esc_url( $login_url ) . '" class="cmr-gated-btn" style="display: inline-flex; align-items: center; justify-content: center; width: 100%; padding: 15px 28px; background: #4820B0; color: #ffffff; font-size: 15px; font-weight: 600; text-decoration: none; border-radius: 30px; transition: background 0.2s ease, transform 0.2s ease; box-shadow: 0 4px 14px rgba(72, 32, 176, 0.35); box-sizing: border-box;">
+                    Sign In to Unlock Access
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px;">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>';
+
+    return $gated_html;
 }

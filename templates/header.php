@@ -27,7 +27,7 @@
             }
 
             if ( ! empty( $header_post ) ) {
-                echo '<header class="header">';
+                echo '<header class="header blog-header-wrapper">';
                 echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $header_post->ID, true );
                 echo '</header>';
             } else {
@@ -40,7 +40,7 @@
                 }
                 
                 if ( $header_post ) {
-                    echo '<header class="header">';
+                    echo '<header class="header main-header-wrapper">';
                     echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $header_post->ID, true );
                     echo '</header>';
                 } else {
@@ -58,7 +58,7 @@
             if ( get_post_meta( $quanto_post_id, '_cmr_use_blog_header', true ) == '1' ) {
                 $header_post = get_page_by_path( 'blog-header', OBJECT, 'quanto_header' );
                 if ( $header_post ) {
-                    echo '<header class="header">';
+                    echo '<header class="header blog-header-wrapper">';
                     echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $header_post->ID, true );
                     echo '</header>';
                 }
@@ -90,17 +90,17 @@
 
                 if ( $main_header && $blog_header ) {
                     if ( wp_is_mobile() ) {
-                        echo '<header id="quanto-header-mobile" class="header">';
+                        echo '<header id="quanto-header-mobile" class="header blog-header-wrapper">';
                         echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $blog_header->ID, true );
                         echo '</header>';
                     } else {
-                        echo '<header id="quanto-header-desktop" class="header">';
+                        echo '<header id="quanto-header-desktop" class="header main-header-wrapper">';
                         echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $main_header->ID, true );
                         echo '</header>';
                     }
                 } else {
                     if ( $main_header ) {
-                        echo '<header class="header">';
+                        echo '<header class="header main-header-wrapper">';
                         echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $main_header->ID, true );
                         echo '</header>';
                     } else {
@@ -120,7 +120,7 @@
                 }
                 
                 if ( $header_post ) {
-                    echo '<header>';
+                    echo '<header class="header main-header-wrapper">';
                     echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $header_post->ID, true );
                     echo '</header>';
                 } else {
@@ -138,7 +138,7 @@
             }
 
             if ( $header_post ) {
-                echo '<header class="header">';
+                echo '<header class="header main-header-wrapper">';
                 echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $header_post->ID, true );
                 echo '</header>';
             } else {
