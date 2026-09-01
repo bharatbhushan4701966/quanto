@@ -2020,3 +2020,143 @@ function quanto_hide_elementor_popup_on_login() {
     echo '<style>.elementor-location-popup { display: none !important; }</style>';
 }
 add_action( 'login_head', 'quanto_hide_elementor_popup_on_login' );
+
+/**
+ * CMR Live Section Header & View All Button Styling Override
+ */
+add_action( 'wp_head', function() {
+    ?>
+    <style id="cmr-live-header-override">
+        /* 1. Header Container Row - Space Between */
+        .elementor-element.elementor-element-2c76331,
+        div[data-id="2c76331"],
+        .elementor-element-2c76331.e-con-full,
+        .elementor-element-2c76331.e-con {
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: space-between !important;
+            align-items: flex-end !important;
+            width: 100% !important;
+            gap: 30px !important;
+            flex-wrap: wrap !important;
+            --justify-content: space-between !important;
+            --align-items: flex-end !important;
+            --flex-direction: row !important;
+        }
+
+        .elementor-element-2c76331 > h1,
+        .elementor-element-2c76331 .e-heading-base,
+        .elementor-element-2c76331 [data-id="983db4c"] {
+            flex: 1 1 auto !important;
+            max-width: 820px !important;
+            width: auto !important;
+            margin: 0 !important;
+            font-family: 'Instrument Sans', sans-serif !important;
+            font-size: 42px !important;
+            font-weight: 700 !important;
+            line-height: 1.25 !important;
+            color: #000000 !important;
+            letter-spacing: -0.5px !important;
+        }
+
+        /* 2. Div holding View all button - Push to Far Right */
+        .elementor-element-2c76331 .elementor-element-c8d290c,
+        .elementor-element.elementor-element-c8d290c,
+        div[data-id="c8d290c"] {
+            margin-left: auto !important;
+            align-self: flex-end !important;
+            margin-bottom: 12px !important;
+            width: auto !important;
+            flex-shrink: 0 !important;
+            display: flex !important;
+            justify-content: flex-end !important;
+        }
+
+        .elementor-element-c8d290c .elementor-widget-container {
+            display: flex !important;
+            justify-content: flex-end !important;
+        }
+
+        /* 3. View all Button Redesign */
+        .elementor-element-c8d290c a.quanto-link-btn,
+        div[data-id="c8d290c"] a.quanto-link-btn,
+        div[data-id="b4d41ec"] a.quanto-link-btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            font-family: 'Instrument Sans', sans-serif !important;
+            font-size: 15px !important;
+            font-weight: 600 !important;
+            color: #111111 !important;
+            text-decoration: none !important;
+            border-bottom: 1.5px solid #111111 !important;
+            padding: 0 0 2px 0 !important;
+            border-radius: 0 !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            letter-spacing: -0.1px !important;
+            transition: all 0.2s ease !important;
+            height: auto !important;
+            line-height: 1.4 !important;
+        }
+
+        .elementor-element-c8d290c a.quanto-link-btn:hover,
+        div[data-id="c8d290c"] a.quanto-link-btn:hover,
+        div[data-id="b4d41ec"] a.quanto-link-btn:hover {
+            color: #000000 !important;
+            border-bottom-color: #000000 !important;
+        }
+
+        .elementor-element-c8d290c a.quanto-link-btn span,
+        div[data-id="c8d290c"] a.quanto-link-btn span,
+        div[data-id="b4d41ec"] a.quanto-link-btn span {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            position: static !important;
+            width: auto !important;
+            height: auto !important;
+            background: transparent !important;
+            overflow: visible !important;
+            margin-left: 2px !important;
+        }
+
+        .elementor-element-c8d290c a.quanto-link-btn span .arry1,
+        div[data-id="c8d290c"] a.quanto-link-btn span .arry1,
+        div[data-id="b4d41ec"] a.quanto-link-btn span .arry1 {
+            display: inline-block !important;
+            position: static !important;
+            transform: rotate(-45deg) !important;
+            font-size: 13px !important;
+            color: #111111 !important;
+            transition: transform 0.25s ease !important;
+        }
+
+        .elementor-element-c8d290c a.quanto-link-btn span .arry2,
+        div[data-id="c8d290c"] a.quanto-link-btn span .arry2,
+        div[data-id="b4d41ec"] a.quanto-link-btn span .arry2 {
+            display: none !important;
+        }
+
+        .elementor-element-c8d290c a.quanto-link-btn:hover span .arry1,
+        div[data-id="c8d290c"] a.quanto-link-btn:hover span .arry1,
+        div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1 {
+            transform: rotate(-45deg) translate(2px, -2px) !important;
+        }
+
+        @media (max-width: 767px) {
+            .elementor-element.elementor-element-2c76331,
+            div[data-id="2c76331"] {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+            }
+            .elementor-element-2c76331 .elementor-element-c8d290c,
+            .elementor-element.elementor-element-c8d290c {
+                margin-left: 0 !important;
+                align-self: flex-start !important;
+                margin-top: 10px !important;
+            }
+        }
+    </style>
+    <?php
+}, 999 );
