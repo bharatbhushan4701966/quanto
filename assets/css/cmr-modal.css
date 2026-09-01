@@ -237,12 +237,20 @@ body.modal-open {
 /* Outer Popup Parent Container Reset */
 .elementor-7758,
 .elementor-7637,
+.elementor-7832,
+.elementor-7849,
 .elementor-popup-modal[data-elementor-id="7758"],
 .elementor-popup-modal[data-elementor-id="7637"],
+.elementor-popup-modal[data-elementor-id="7832"],
+.elementor-popup-modal[data-elementor-id="7849"],
 .elementor-popup-modal .elementor-element-295b2c6,
 .elementor-popup-modal .elementor-element-5c7df874,
+.elementor-popup-modal .elementor-element-4dd37a6,
+.elementor-popup-modal .elementor-element-2371b89,
 .elementor-element.elementor-element-295b2c6,
-.elementor-element.elementor-element-5c7df874 {
+.elementor-element.elementor-element-5c7df874,
+.elementor-element.elementor-element-4dd37a6,
+.elementor-element.elementor-element-2371b89 {
     padding: 0 !important;
     margin: 0 !important;
     width: 100% !important;
@@ -254,11 +262,17 @@ body.modal-open {
 
 .elementor-7758 .e-con-inner,
 .elementor-7637 .e-con-inner,
+.elementor-7832 .e-con-inner,
+.elementor-7849 .e-con-inner,
 .elementor-popup-modal .e-con-inner,
 .elementor-7758 .elementor-element-295b2c6 > .e-con-inner,
 .elementor-7637 .elementor-element-5c7df874 > .e-con-inner,
+.elementor-7832 .elementor-element-4dd37a6 > .e-con-inner,
+.elementor-7849 .elementor-element-2371b89 > .e-con-inner,
 .elementor-popup-modal[data-elementor-id="7758"] .elementor-element-295b2c6 > .e-con-inner,
-.elementor-popup-modal[data-elementor-id="7637"] .elementor-element-5c7df874 > .e-con-inner {
+.elementor-popup-modal[data-elementor-id="7637"] .elementor-element-5c7df874 > .e-con-inner,
+.elementor-popup-modal[data-elementor-id="7832"] .elementor-element-4dd37a6 > .e-con-inner,
+.elementor-popup-modal[data-elementor-id="7849"] .elementor-element-2371b89 > .e-con-inner {
     padding: 0 !important;
     margin: 0 auto !important;
     width: 100% !important;
@@ -274,8 +288,12 @@ body.modal-open {
 /* Flex Row Container holding Left & Right columns */
 .elementor-7758 .elementor-element-1d1d0d3,
 .elementor-7637 .elementor-element-2eeace2,
+.elementor-7832 .elementor-element-d33c8e6,
+.elementor-7849 .elementor-element-804d4ea,
 .elementor-popup-modal .elementor-element-1d1d0d3,
-.elementor-popup-modal .elementor-element-2eeace2 {
+.elementor-popup-modal .elementor-element-2eeace2,
+.elementor-popup-modal .elementor-element-d33c8e6,
+.elementor-popup-modal .elementor-element-804d4ea {
     display: flex !important;
     flex-direction: row !important;
     align-items: stretch !important;
@@ -292,16 +310,20 @@ body.modal-open {
     box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* --- LEFT COLUMN: Deep Purple Side (#4318d1) --- */
+/* --- LEFT COLUMN: Deep Purple / Blue Side --- */
 .elementor-7758 .elementor-element-fc8da81,
 .elementor-7637 .elementor-element-5f053ae,
+.elementor-7832 .elementor-element-2f9a6aa,
+.elementor-7849 .elementor-element-3d97663,
 .elementor-popup-modal .elementor-element-fc8da81,
-.elementor-popup-modal .elementor-element-5f053ae {
+.elementor-popup-modal .elementor-element-5f053ae,
+.elementor-popup-modal .elementor-element-2f9a6aa,
+.elementor-popup-modal .elementor-element-3d97663 {
     flex: 0 0 46% !important;
     width: 46% !important;
     max-width: 46% !important;
-    background-color: #4318d1 !important;
-    background: #4318d1 !important;
+    background-color: #0047eb !important;
+    background: #0047eb !important;
     padding: 48px 42px !important;
     display: flex !important;
     flex-direction: column !important;
@@ -312,6 +334,25 @@ body.modal-open {
     align-self: stretch !important;
     border-radius: 16px 0 0 16px !important;
     height: 100% !important;
+}
+
+.elementor-7758 .elementor-element-fc8da81,
+.elementor-7637 .elementor-element-5f053ae {
+    background-color: #4318d1 !important;
+    background: #4318d1 !important;
+}
+
+.elementor-7832 .elementor-element-ae8915e p,
+.elementor-7849 .elementor-element-6ae161a p,
+.elementor-popup-modal .elementor-element-2f9a6aa .elementor-element-ae8915e p,
+.elementor-popup-modal .elementor-element-3d97663 .elementor-element-6ae161a p {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 12px !important;
+    letter-spacing: 1.5px !important;
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+    color: rgba(255, 255, 255, 0.75) !important;
+    margin: 0 0 12px 0 !important;
 }
 
 .elementor-7758 .elementor-element-de500a4,
@@ -325,11 +366,15 @@ body.modal-open {
     justify-content: center !important;
 }
 
-/* Left Title: Unlock Key Market Insights / Speak Directly (H2. Headline: SemiBold 600, 38px-40px, -1.5px) */
+/* Left Title (H2. Headline: SemiBold 600, 38px-40px, -1.5px) */
 .elementor-7758 .elementor-element-e5f2560 h2,
 .elementor-7637 .elementor-element-f9d72d8 h2,
+.elementor-7832 .elementor-element-7ccdac7 h2,
+.elementor-7849 .elementor-element-6595cb8 h2,
 .elementor-popup-modal .elementor-element-fc8da81 h2,
-.elementor-popup-modal .elementor-element-5f053ae h2 {
+.elementor-popup-modal .elementor-element-5f053ae h2,
+.elementor-popup-modal .elementor-element-2f9a6aa h2,
+.elementor-popup-modal .elementor-element-3d97663 h2 {
     font-family: 'Instrument Sans', sans-serif !important;
     font-size: 38px !important;
     font-weight: 600 !important;
@@ -499,8 +544,11 @@ body.modal-open {
 /* --- RIGHT COLUMN: White Form Side --- */
 .elementor-7758 .elementor-element-5609af6,
 .elementor-7637 .elementor-element-49c9d22,
+.elementor-7832 .elementor-element-a26a79a,
+.elementor-7849 .elementor-element-804d4ea,
 .elementor-popup-modal .elementor-element-5609af6,
-.elementor-popup-modal .elementor-element-49c9d22 {
+.elementor-popup-modal .elementor-element-49c9d22,
+.elementor-popup-modal .elementor-element-a26a79a {
     flex: 0 0 54% !important;
     width: 54% !important;
     max-width: 54% !important;
@@ -515,11 +563,14 @@ body.modal-open {
     position: relative !important;
 }
 
-/* Right Title: Get Your Free Report / Request a Consultation (H3. Headline: SemiBold 600, 36px/46px, -0.2px) */
+/* Right Title: Get Your Free Report / Request a Consultation / Subscribe to Insights */
 .elementor-7758 .elementor-element-b034026 h2,
 .elementor-7637 .elementor-element-c26c6d0 h2,
+.elementor-7832 .elementor-element-112e4d5 h2,
+.elementor-7849 .elementor-element-112e4d5 h2,
 .elementor-popup-modal .elementor-element-5609af6 h2,
-.elementor-popup-modal .elementor-element-49c9d22 h2 {
+.elementor-popup-modal .elementor-element-49c9d22 h2,
+.elementor-popup-modal .elementor-element-a26a79a h2 {
     font-family: 'Instrument Sans', sans-serif !important;
     font-size: 34px !important;
     font-weight: 600 !important;
@@ -528,6 +579,60 @@ body.modal-open {
     color: #111827 !important;
     margin: 0 0 6px 0 !important;
     text-transform: none !important;
+}
+
+/* Subscription Form Specifics */
+.custom-subscribe-form .subscription-heading {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+    color: #4b5563 !important;
+    margin: 12px 0 10px 0 !important;
+}
+
+.custom-subscribe-form .subscription-item {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    margin-bottom: 12px !important;
+    cursor: pointer !important;
+}
+
+.custom-subscribe-form .subscription-item input[type="checkbox"] {
+    width: 18px !important;
+    height: 18px !important;
+    accent-color: #582cd7 !important;
+    margin: 2px 0 0 0 !important;
+    flex-shrink: 0 !important;
+    cursor: pointer !important;
+}
+
+.custom-subscribe-form .subscription-content .title {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #111827 !important;
+    line-height: 1.2 !important;
+}
+
+.custom-subscribe-form .subscription-content .desc {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    color: #6b7280 !important;
+    margin-top: 2px !important;
+    line-height: 1.4 !important;
+}
+
+.custom-subscribe-form .spam-note,
+.custom-subscribe-form .subscription-note {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 12px !important;
+    color: #6b7280 !important;
+    text-align: center !important;
+    margin-top: 10px !important;
 }
 
 /* Right Subtitle Text */
