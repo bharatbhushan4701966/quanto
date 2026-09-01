@@ -164,8 +164,8 @@
     if ( comments_open() ) {
         echo '<!-- Comment Form Modal -->';
         ?>
-        <div id="cmr-review-modal" style="display: none; position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: rgba(243, 244, 246, 0.95); z-index: 999999 !important; align-items: center; justify-content: center; margin: 0; padding: 0; box-sizing: border-box;">
-            <div class="cmr-review-modal-content" style="background: #fff; padding: 40px; width: 90%; max-width: 650px; position: relative; max-height: 95vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.05);">
+        <div id="cmr-review-modal" style="display: none; position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; width: 100vw !important; height: 100vh !important; background: rgba(15, 23, 42, 0.5) !important; backdrop-filter: blur(10px) !important; -webkit-backdrop-filter: blur(10px) !important; z-index: 999999 !important; align-items: center !important; justify-content: center !important; margin: 0; padding: 20px; box-sizing: border-box !important; overflow-y: auto !important; overscroll-behavior: contain !important;">
+            <div class="cmr-review-modal-content" style="background: #fff; padding: 40px; width: 90%; max-width: 650px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 60px -15px rgba(0,0,0,0.35); border-radius: 16px; margin: auto !important;">
                 <button id="cmr-close-review-modal" style="position: absolute; top: 30px; right: 30px; background: none; border: none; font-size: 16px; color: #6b7280; font-family: 'Instrument Sans', sans-serif; cursor: pointer; display: flex; align-items: center; gap: 8px;">Close <i class="fa-solid fa-xmark"></i></button>
                 
                 <div class="cmr-modal-header d-flex mb-4 pb-4" style="border-bottom: 1px solid #f3f4f6;">
@@ -201,13 +201,19 @@
                 btn.onclick = function(e) {
                     e.preventDefault();
                     modal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                    document.documentElement.style.overflow = 'hidden';
                 }
                 span.onclick = function() {
                     modal.style.display = 'none';
+                    document.body.style.overflow = '';
+                    document.documentElement.style.overflow = '';
                 }
                 window.onclick = function(event) {
                     if (event.target == modal) {
                         modal.style.display = 'none';
+                        document.body.style.overflow = '';
+                        document.documentElement.style.overflow = '';
                     }
                 }
             }

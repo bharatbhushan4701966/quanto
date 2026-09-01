@@ -16,13 +16,20 @@ add_action('wp_footer', function() {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
-    background: rgba(248, 250, 252, 0.97) !important;
+    background: rgba(15, 23, 42, 0.5) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
     z-index: 2147483647 !important;
-    align-items: center;
-    justify-content: center;
-    overflow-y: auto;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+    padding: 20px;
+    box-sizing: border-box !important;
 }
 #cmr-review-modal-overlay.cmr-open {
     display: flex !important;
@@ -33,9 +40,11 @@ add_action('wp_footer', function() {
     max-width: 560px;
     padding: 40px;
     position: relative;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.10);
-    border-radius: 12px;
-    margin: auto;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.35);
+    border-radius: 16px;
+    margin: auto !important;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 #cmr-review-modal-close {
     position: absolute;
