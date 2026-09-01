@@ -230,8 +230,11 @@ body.modal-open {
 
 /* Outer Popup Parent Container */
 .elementor-7758,
+.elementor-7637,
 .elementor-popup-modal[data-elementor-id="7758"],
-.elementor-popup-modal .elementor-element-295b2c6 {
+.elementor-popup-modal[data-elementor-id="7637"],
+.elementor-popup-modal .elementor-element-295b2c6,
+.elementor-popup-modal .elementor-element-5c7df874 {
     padding: 0 !important;
     margin: 0 !important;
     width: 100% !important;
@@ -239,7 +242,9 @@ body.modal-open {
 }
 
 .elementor-7758 .elementor-element-295b2c6 > .e-con-inner,
-.elementor-popup-modal[data-elementor-id="7758"] .elementor-element-295b2c6 > .e-con-inner {
+.elementor-7637 .elementor-element-5c7df874 > .e-con-inner,
+.elementor-popup-modal[data-elementor-id="7758"] .elementor-element-295b2c6 > .e-con-inner,
+.elementor-popup-modal[data-elementor-id="7637"] .elementor-element-5c7df874 > .e-con-inner {
     padding: 0 !important;
     margin: 0 auto !important;
     width: 100% !important;
@@ -251,9 +256,12 @@ body.modal-open {
 
 /* Flex Row Container holding Left & Right columns */
 .elementor-7758 .elementor-element-1d1d0d3,
-.elementor-popup-modal .elementor-element-1d1d0d3 {
+.elementor-7637 .elementor-element-2eeace2,
+.elementor-popup-modal .elementor-element-1d1d0d3,
+.elementor-popup-modal .elementor-element-2eeace2 {
     display: flex !important;
     flex-direction: row !important;
+    align-items: stretch !important;
     width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -265,19 +273,22 @@ body.modal-open {
 
 /* --- LEFT COLUMN: Deep Purple Side (#4318d1) --- */
 .elementor-7758 .elementor-element-fc8da81,
-.elementor-popup-modal .elementor-element-fc8da81 {
+.elementor-7637 .elementor-element-5f053ae,
+.elementor-popup-modal .elementor-element-fc8da81,
+.elementor-popup-modal .elementor-element-5f053ae {
     flex: 0 0 46% !important;
     width: 46% !important;
     max-width: 46% !important;
     background-color: #4318d1 !important;
     background: #4318d1 !important;
-    padding: 50px 42px !important;
+    padding: 48px 42px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
     margin: 0 !important;
     box-sizing: border-box !important;
     color: #ffffff !important;
+    align-self: stretch !important;
 }
 
 .elementor-7758 .elementor-element-de500a4,
@@ -291,44 +302,54 @@ body.modal-open {
     justify-content: center !important;
 }
 
-/* Left Title: Unlock Key Market Insights Instantly (H2. Headline: SemiBold 600, 48px/38px, -1.5px) */
+/* Left Title: Unlock Key Market Insights / Speak Directly (H2. Headline: SemiBold 600, 38px-40px, -1.5px) */
 .elementor-7758 .elementor-element-e5f2560 h2,
-.elementor-popup-modal .elementor-element-fc8da81 h2 {
+.elementor-7637 .elementor-element-f9d72d8 h2,
+.elementor-popup-modal .elementor-element-fc8da81 h2,
+.elementor-popup-modal .elementor-element-5f053ae h2 {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 40px !important;
+    font-size: 38px !important;
     font-weight: 600 !important;
-    line-height: 48px !important;
+    line-height: 46px !important;
     letter-spacing: -1.5px !important;
     color: #ffffff !important;
-    margin: 0 0 18px 0 !important;
+    margin: 0 0 16px 0 !important;
     text-transform: none !important;
 }
 
 /* Left Description Text */
 .elementor-7758 .elementor-element-1938802,
-.elementor-popup-modal .elementor-element-fc8da81 p {
+.elementor-7637 .elementor-element-2edfb42,
+.elementor-popup-modal .elementor-element-fc8da81 p,
+.elementor-popup-modal .elementor-element-5f053ae p {
     font-family: 'Instrument Sans', sans-serif !important;
     font-size: 15px !important;
     font-weight: 400 !important;
     line-height: 24px !important;
     letter-spacing: 0px !important;
     color: rgba(255, 255, 255, 0.9) !important;
-    margin: 0 0 36px 0 !important;
+    margin: 0 0 32px 0 !important;
 }
 
 /* Left Bullet List with Icons */
 .elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-items,
-.elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-items {
+.elementor-7637 .elementor-element-32ec6cc .elementor-icon-list-items,
+.elementor-7637 .elementor-element-a35c3d8 .elementor-icon-list-items,
+.elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-items,
+.elementor-popup-modal .elementor-element-5f053ae .elementor-icon-list-items {
     display: flex !important;
     flex-direction: column !important;
-    gap: 20px !important;
+    gap: 18px !important;
     padding: 0 !important;
     margin: 0 !important;
     list-style: none !important;
 }
 
 .elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-item,
-.elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-item {
+.elementor-7637 .elementor-element-32ec6cc .elementor-icon-list-item,
+.elementor-7637 .elementor-element-a35c3d8 .elementor-icon-list-item,
+.elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-item,
+.elementor-popup-modal .elementor-element-5f053ae .elementor-icon-list-item {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
@@ -338,7 +359,10 @@ body.modal-open {
 }
 
 .elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-icon,
-.elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-icon {
+.elementor-7637 .elementor-element-32ec6cc .elementor-icon-list-icon,
+.elementor-7637 .elementor-element-a35c3d8 .elementor-icon-list-icon,
+.elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-icon,
+.elementor-popup-modal .elementor-element-5f053ae .elementor-icon-list-icon {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -350,7 +374,7 @@ body.modal-open {
     color: #ffffff !important;
 }
 
-/* Bullet 1 Icon: Chart/Trend */
+/* Bullet 1 Icon: Chart/Trend or Message */
 .elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-item:nth-child(1) .elementor-icon-list-icon::before,
 .elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-item:nth-child(1) .elementor-icon-list-icon::before {
     content: "\f201" !important;
@@ -361,7 +385,17 @@ body.modal-open {
     display: block !important;
 }
 
-/* Bullet 2 Icon: Lightbulb */
+.elementor-7637 .elementor-element-32ec6cc .elementor-icon-list-item:nth-child(1) .elementor-icon-list-icon::before,
+.elementor-popup-modal .elementor-element-5f053ae .elementor-element-32ec6cc .elementor-icon-list-item:nth-child(1) .elementor-icon-list-icon::before {
+    content: "\f075" !important; /* fa-comment */
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 900 !important;
+    font-size: 16px !important;
+    color: #ffffff !important;
+    display: block !important;
+}
+
+/* Bullet 2 Icon: Lightbulb or Check */
 .elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-item:nth-child(2) .elementor-icon-list-icon::before,
 .elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-item:nth-child(2) .elementor-icon-list-icon::before {
     content: "\f0eb" !important;
@@ -372,7 +406,17 @@ body.modal-open {
     display: block !important;
 }
 
-/* Bullet 3 Icon: Building */
+.elementor-7637 .elementor-element-32ec6cc .elementor-icon-list-item:nth-child(2) .elementor-icon-list-icon::before,
+.elementor-popup-modal .elementor-element-5f053ae .elementor-element-32ec6cc .elementor-icon-list-item:nth-child(2) .elementor-icon-list-icon::before {
+    content: "\f058" !important; /* fa-circle-check */
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 900 !important;
+    font-size: 16px !important;
+    color: #ffffff !important;
+    display: block !important;
+}
+
+/* Bullet 3 Icon: Building or Trend */
 .elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-item:nth-child(3) .elementor-icon-list-icon::before,
 .elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-item:nth-child(3) .elementor-icon-list-icon::before {
     content: "\f1ad" !important;
@@ -383,13 +427,44 @@ body.modal-open {
     display: block !important;
 }
 
+.elementor-7637 .elementor-element-32ec6cc .elementor-icon-list-item:nth-child(3) .elementor-icon-list-icon::before,
+.elementor-popup-modal .elementor-element-5f053ae .elementor-element-32ec6cc .elementor-icon-list-item:nth-child(3) .elementor-icon-list-icon::before {
+    content: "\f201" !important; /* fa-chart-line */
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 900 !important;
+    font-size: 16px !important;
+    color: #ffffff !important;
+    display: block !important;
+}
+
+/* Bullet 4 Icon (Popup 7637): Analysts / Team */
+.elementor-7637 .elementor-element-a35c3d8 .elementor-icon-list-item .elementor-icon-list-icon::before,
+.elementor-popup-modal .elementor-element-5f053ae .elementor-element-a35c3d8 .elementor-icon-list-item .elementor-icon-list-icon::before {
+    content: "\f0c0" !important; /* fa-users */
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 900 !important;
+    font-size: 16px !important;
+    color: #ffffff !important;
+    display: block !important;
+}
+
+.elementor-7637 .elementor-element-7dfe0ab,
+.elementor-7637 .elementor-element-a19596a {
+    display: none !important;
+}
+
 .elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-icon svg,
-.elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-icon svg {
+.elementor-7637 .elementor-element-32ec6cc .elementor-icon-list-icon svg,
+.elementor-7637 .elementor-element-a35c3d8 .elementor-icon-list-icon svg,
+.elementor-popup-modal .elementor-icon-list-icon svg {
     display: none !important;
 }
 
 .elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-text,
-.elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-text {
+.elementor-7637 .elementor-element-32ec6cc .elementor-icon-list-text,
+.elementor-7637 .elementor-element-a35c3d8 .elementor-icon-list-text,
+.elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-text,
+.elementor-popup-modal .elementor-element-5f053ae .elementor-icon-list-text {
     font-family: 'Instrument Sans', sans-serif !important;
     font-size: 15px !important;
     font-weight: 500 !important;
@@ -400,13 +475,15 @@ body.modal-open {
 
 /* --- RIGHT COLUMN: White Form Side --- */
 .elementor-7758 .elementor-element-5609af6,
-.elementor-popup-modal .elementor-element-5609af6 {
+.elementor-7637 .elementor-element-49c9d22,
+.elementor-popup-modal .elementor-element-5609af6,
+.elementor-popup-modal .elementor-element-49c9d22 {
     flex: 0 0 54% !important;
     width: 54% !important;
     max-width: 54% !important;
     background-color: #ffffff !important;
     background: #ffffff !important;
-    padding: 44px 45px !important;
+    padding: 40px 45px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
@@ -415,17 +492,29 @@ body.modal-open {
     position: relative !important;
 }
 
-/* Right Title: Get Your Free Report (H3. Headline: SemiBold 600, 36px/46px, -0.2px) */
+/* Right Title: Get Your Free Report / Request a Consultation (H3. Headline: SemiBold 600, 36px/46px, -0.2px) */
 .elementor-7758 .elementor-element-b034026 h2,
-.elementor-popup-modal .elementor-element-5609af6 h2 {
+.elementor-7637 .elementor-element-c26c6d0 h2,
+.elementor-popup-modal .elementor-element-5609af6 h2,
+.elementor-popup-modal .elementor-element-49c9d22 h2 {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 36px !important;
+    font-size: 34px !important;
     font-weight: 600 !important;
-    line-height: 46px !important;
+    line-height: 42px !important;
     letter-spacing: -0.2px !important;
     color: #111827 !important;
     margin: 0 0 6px 0 !important;
     text-transform: none !important;
+}
+
+/* Right Subtitle Text */
+.elementor-7637 .elementor-element-a2e6f47,
+.elementor-popup-modal .elementor-element-49c9d22 p.sub-desc {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    color: #4b5563 !important;
+    margin: 0 0 18px 0 !important;
 }
 
 /* Right Subtag: ⚡ Instant access. No waiting. */
@@ -524,16 +613,47 @@ body.modal-open {
     transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
+.custom-report-form textarea,
+.elementor-element-42f4ebe textarea,
+.elementor-element-052bc23 textarea,
+.elementor-popup-modal textarea {
+    width: 100% !important;
+    height: 75px !important;
+    min-height: 70px !important;
+    border: 1.5px solid #d1d5db !important;
+    border-radius: 10px !important;
+    padding: 12px 18px !important;
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 14px !important;
+    color: #111827 !important;
+    background: #ffffff !important;
+    outline: none !important;
+    box-sizing: border-box !important;
+    margin: 0 0 4px 0 !important;
+    resize: none !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
 .custom-report-form input:focus,
 .elementor-element-42f4ebe input:focus,
-.elementor-popup-modal input:focus {
+.elementor-element-052bc23 input:focus,
+.elementor-popup-modal input:focus,
+.custom-report-form textarea:focus,
+.elementor-element-42f4ebe textarea:focus,
+.elementor-element-052bc23 textarea:focus,
+.elementor-popup-modal textarea:focus {
     border-color: #582cd7 !important;
     box-shadow: 0 0 0 3px rgba(88, 44, 215, 0.1) !important;
 }
 
 .custom-report-form input::placeholder,
 .elementor-element-42f4ebe input::placeholder,
-.elementor-popup-modal input::placeholder {
+.elementor-element-052bc23 input::placeholder,
+.elementor-popup-modal input::placeholder,
+.custom-report-form textarea::placeholder,
+.elementor-element-42f4ebe textarea::placeholder,
+.elementor-element-052bc23 textarea::placeholder,
+.elementor-popup-modal textarea::placeholder {
     color: #9ca3af !important;
     font-size: 14px !important;
     font-weight: 400 !important;
