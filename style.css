@@ -3205,3 +3205,177 @@ html body .quanto-link-btn {
     position: relative;
     z-index: 3;
 }
+
+/* ==========================================================================
+   CMR LIVE Section Header, Badge & "View All" Button Redesign
+   ========================================================================== */
+
+/* 1. CMR LIVE Pill Badge */
+.elementor-element.elementor-element-d155fe5 {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    background: #ffffff !important;
+    border: 1px solid #d1d5db !important;
+    border-radius: 50px !important;
+    padding: 6px 18px 6px 8px !important;
+    gap: 10px !important;
+    width: auto !important;
+    max-width: fit-content !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+    margin-bottom: 24px !important;
+}
+
+.elementor-element.elementor-element-d155fe5 .elementor-element-533a48d {
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 22px !important;
+    height: 22px !important;
+    border-radius: 50% !important;
+    background: rgba(220, 38, 38, 0.12) !important;
+    flex-shrink: 0 !important;
+    position: relative !important;
+}
+
+.elementor-element.elementor-element-d155fe5 .elementor-element-533a48d img {
+    display: none !important;
+}
+
+.elementor-element.elementor-element-d155fe5 .elementor-element-533a48d::after {
+    content: '' !important;
+    display: block !important;
+    width: 9px !important;
+    height: 9px !important;
+    border-radius: 50% !important;
+    background: #dc2626 !important;
+}
+
+.elementor-element.elementor-element-d155fe5 h6,
+.elementor-element.elementor-element-d155fe5 .e-heading-base {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: #000000 !important;
+    letter-spacing: 0.5px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+    text-transform: uppercase !important;
+}
+
+/* 2. Heading & Button Row Layout - Push Button to the Far Right (Last) */
+.elementor-element.elementor-element-275e662 .e-con-inner {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: flex-end !important;
+    width: 100% !important;
+    gap: 20px !important;
+    flex-wrap: wrap !important;
+}
+
+.elementor-element.elementor-element-b82bad4 {
+    flex: 1 1 auto !important;
+    max-width: 820px !important;
+    width: auto !important;
+}
+
+.elementor-element.elementor-element-b82bad4 h1,
+.elementor-element.elementor-element-b82bad4 .e-heading-base {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 42px !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    color: #000000 !important;
+    letter-spacing: -0.5px !important;
+    margin: 0 0 10px 0 !important;
+}
+
+.elementor-element.elementor-element-c49530d {
+    margin-left: auto !important;
+    align-self: flex-end !important;
+    margin-bottom: 20px !important;
+    width: auto !important;
+    flex-shrink: 0 !important;
+}
+
+.elementor-element.elementor-element-c49530d .elementor-widget-container {
+    display: flex !important;
+    justify-content: flex-end !important;
+}
+
+/* 3. "View all" Button Redesign */
+.elementor-element.elementor-element-c49530d a.quanto-link-btn,
+.elementor-element.elementor-element-b4d41ec a.quanto-link-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: #111111 !important;
+    text-decoration: none !important;
+    border-bottom: 1.5px solid #111111 !important;
+    padding: 0 0 2px 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    letter-spacing: -0.1px !important;
+    transition: all 0.2s ease !important;
+    height: auto !important;
+    line-height: 1.4 !important;
+}
+
+.elementor-element.elementor-element-c49530d a.quanto-link-btn:hover,
+.elementor-element.elementor-element-b4d41ec a.quanto-link-btn:hover {
+    color: #000000 !important;
+    border-bottom-color: #000000 !important;
+}
+
+.elementor-element.elementor-element-c49530d a.quanto-link-btn span,
+.elementor-element.elementor-element-b4d41ec a.quanto-link-btn span {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    background: transparent !important;
+    overflow: visible !important;
+    margin-left: 2px !important;
+}
+
+.elementor-element.elementor-element-c49530d a.quanto-link-btn span .arry1,
+.elementor-element.elementor-element-b4d41ec a.quanto-link-btn span .arry1 {
+    display: inline-block !important;
+    position: static !important;
+    transform: rotate(-45deg) !important;
+    font-size: 13px !important;
+    color: #111111 !important;
+    transition: transform 0.25s ease !important;
+}
+
+.elementor-element.elementor-element-c49530d a.quanto-link-btn span .arry2,
+.elementor-element.elementor-element-b4d41ec a.quanto-link-btn span .arry2 {
+    display: none !important;
+}
+
+.elementor-element.elementor-element-c49530d a.quanto-link-btn:hover span .arry1,
+.elementor-element.elementor-element-b4d41ec a.quanto-link-btn:hover span .arry1 {
+    transform: rotate(-45deg) translate(2px, -2px) !important;
+}
+
+@media (max-width: 767px) {
+    .elementor-element.elementor-element-275e662 .e-con-inner {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+    .elementor-element.elementor-element-c49530d {
+        margin-left: 0 !important;
+        align-self: flex-start !important;
+        margin-top: 10px !important;
+    }
+}
+
