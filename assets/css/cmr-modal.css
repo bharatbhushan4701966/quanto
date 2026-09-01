@@ -104,13 +104,19 @@ body.modal-open {
     box-sizing: border-box !important;
     padding: 0 !important;
     border: none !important;
+    height: auto !important;
+    min-height: 0 !important;
 }
 
-.elementor-popup-modal .dialog-message {
+.elementor-popup-modal .dialog-message,
+.dialog-widget .dialog-message {
     margin: 0 !important;
     padding: 0 !important;
     width: 100% !important;
     background: transparent !important;
+    border: none !important;
+    height: auto !important;
+    min-height: 0 !important;
 }
 
 /* Close Button (×) */
@@ -225,22 +231,30 @@ body.modal-open {
 }
 
 /* ==========================================================================
-   6. Split 2-Column Free Report / Consultation Modal (Popup 7758)
+   6. Split 2-Column Free Report / Consultation Modal (Popup 7758 & 7637)
    ========================================================================== */
 
-/* Outer Popup Parent Container */
+/* Outer Popup Parent Container Reset */
 .elementor-7758,
 .elementor-7637,
 .elementor-popup-modal[data-elementor-id="7758"],
 .elementor-popup-modal[data-elementor-id="7637"],
 .elementor-popup-modal .elementor-element-295b2c6,
-.elementor-popup-modal .elementor-element-5c7df874 {
+.elementor-popup-modal .elementor-element-5c7df874,
+.elementor-element.elementor-element-295b2c6,
+.elementor-element.elementor-element-5c7df874 {
     padding: 0 !important;
     margin: 0 !important;
     width: 100% !important;
     background: transparent !important;
+    border: none !important;
+    min-height: 0 !important;
+    height: auto !important;
 }
 
+.elementor-7758 .e-con-inner,
+.elementor-7637 .e-con-inner,
+.elementor-popup-modal .e-con-inner,
 .elementor-7758 .elementor-element-295b2c6 > .e-con-inner,
 .elementor-7637 .elementor-element-5c7df874 > .e-con-inner,
 .elementor-popup-modal[data-elementor-id="7758"] .elementor-element-295b2c6 > .e-con-inner,
@@ -251,7 +265,10 @@ body.modal-open {
     max-width: 950px !important;
     border-radius: 16px !important;
     overflow: hidden !important;
-    background: #ffffff !important;
+    background: transparent !important;
+    border: none !important;
+    min-height: 0 !important;
+    height: auto !important;
 }
 
 /* Flex Row Container holding Left & Right columns */
@@ -268,7 +285,11 @@ body.modal-open {
     gap: 0 !important;
     grid-template-columns: none !important;
     background: #ffffff !important;
-    min-height: 520px !important;
+    min-height: 0 !important;
+    height: auto !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4) !important;
 }
 
 /* --- LEFT COLUMN: Deep Purple Side (#4318d1) --- */
@@ -289,6 +310,8 @@ body.modal-open {
     box-sizing: border-box !important;
     color: #ffffff !important;
     align-self: stretch !important;
+    border-radius: 16px 0 0 16px !important;
+    height: 100% !important;
 }
 
 .elementor-7758 .elementor-element-de500a4,
