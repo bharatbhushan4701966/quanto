@@ -1,0 +1,206 @@
+/**
+ * CMR Common Modal Styles
+ * Standardizes all modals across the website:
+ * 1. Centers all modals (Elementor Popups, Bootstrap Modals, Magnific Popup, Review Modals, etc.)
+ * 2. Translucent dark overlay with backdrop-filter blur so background page is visible and blurred
+ * 3. Page scroll locking while any modal is open
+ */
+
+/* ==========================================================================
+   1. Body & HTML Scroll Lock when Modal is Open
+   ========================================================================== */
+html.cmr-modal-open,
+body.cmr-modal-open,
+html.elementor-popup-modal-open,
+body.elementor-popup-modal-open,
+body.modal-open {
+    overflow: hidden !important;
+    height: 100% !important;
+    touch-action: none !important;
+    -webkit-overflow-scrolling: auto !important;
+    overscroll-behavior: none !important;
+}
+
+/* ==========================================================================
+   2. Elementor Popups & Lightboxes
+   ========================================================================== */
+.dialog-widget.dialog-type-lightbox,
+.dialog-widget.dialog-lightbox-widget,
+.elementor-popup-modal.dialog-type-lightbox,
+.dialog-type-lightbox {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: rgba(15, 23, 42, 0.5) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    z-index: 999999 !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+    padding: 20px !important;
+    box-sizing: border-box !important;
+}
+
+.dialog-backdrop,
+.dialog-lightbox-backdrop {
+    background-color: rgba(15, 23, 42, 0.5) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 999998 !important;
+}
+
+.dialog-widget.dialog-type-lightbox .dialog-widget-content,
+.dialog-widget.dialog-lightbox-widget .dialog-widget-content,
+.elementor-popup-modal .dialog-widget-content {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    margin: auto !important;
+    max-height: 90vh !important;
+    max-width: 95vw !important;
+    overflow-y: auto !important;
+    border-radius: 16px !important;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4) !important;
+    box-sizing: border-box !important;
+}
+
+.elementor-popup-modal .dialog-message {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+}
+
+/* ==========================================================================
+   3. Bootstrap Modals
+   ========================================================================== */
+.modal-backdrop,
+.modal-backdrop.show {
+    background-color: rgba(15, 23, 42, 0.5) !important;
+    opacity: 1 !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    z-index: 1050 !important;
+}
+
+.modal {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 1055 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+}
+
+.modal.show {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 20px !important;
+}
+
+.modal-dialog {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: calc(100vh - 60px) !important;
+    margin: auto !important;
+    max-width: 600px;
+    width: 100%;
+}
+
+.modal-content {
+    border-radius: 16px !important;
+    border: none !important;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.35) !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+}
+
+/* ==========================================================================
+   4. Magnific Popup (Lightbox)
+   ========================================================================== */
+.mfp-bg {
+    background: rgba(15, 23, 42, 0.5) !important;
+    opacity: 1 !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    z-index: 100000 !important;
+    position: fixed !important;
+    inset: 0 !important;
+}
+
+.mfp-wrap {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 100001 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+    padding: 20px !important;
+    box-sizing: border-box !important;
+}
+
+.mfp-container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+}
+
+.mfp-content {
+    margin: auto !important;
+    vertical-align: middle !important;
+    position: relative !important;
+    max-height: 90vh !important;
+    max-width: 95vw !important;
+}
+
+/* ==========================================================================
+   5. Custom CMR Review Modals
+   ========================================================================== */
+#cmr-review-modal-overlay,
+#cmr-review-modal {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(15, 23, 42, 0.5) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    z-index: 2147483647 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+    padding: 20px !important;
+    box-sizing: border-box !important;
+}
+
+#cmr-review-modal-box,
+.cmr-review-modal-content {
+    margin: auto !important;
+    position: relative !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+    border-radius: 16px !important;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.35) !important;
+}
