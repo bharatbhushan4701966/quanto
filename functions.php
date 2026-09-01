@@ -2027,7 +2027,7 @@ add_action( 'login_head', 'quanto_hide_elementor_popup_on_login' );
 add_action( 'wp_head', function() {
     ?>
     <style id="cmr-live-header-override">
-        /* 1. Header Container Row - Space Between */
+        /* 1. Header Container Row - Space Between & No Wrap */
         .elementor-element.elementor-element-2c76331,
         div[data-id="2c76331"],
         .elementor-element-2c76331.e-con-full,
@@ -2037,44 +2037,64 @@ add_action( 'wp_head', function() {
             justify-content: space-between !important;
             align-items: flex-end !important;
             width: 100% !important;
-            gap: 30px !important;
-            flex-wrap: wrap !important;
+            gap: 25px !important;
+            flex-wrap: nowrap !important;
+            --display: flex !important;
+            --flex-direction: row !important;
             --justify-content: space-between !important;
             --align-items: flex-end !important;
-            --flex-direction: row !important;
+            --flex-wrap: nowrap !important;
         }
 
+        /* Heading takes all available space so it only wraps into 2 clean lines */
         .elementor-element-2c76331 > h1,
         .elementor-element-2c76331 .e-heading-base,
-        .elementor-element-2c76331 [data-id="983db4c"] {
+        .elementor-element-2c76331 [data-id="983db4c"],
+        div[data-id="2c76331"] > h1 {
             flex: 1 1 auto !important;
-            max-width: 820px !important;
             width: auto !important;
+            max-width: none !important;
             margin: 0 !important;
             font-family: 'Instrument Sans', sans-serif !important;
             font-size: 42px !important;
             font-weight: 700 !important;
-            line-height: 1.25 !important;
+            line-height: 1.22 !important;
             color: #000000 !important;
             letter-spacing: -0.5px !important;
+            --container-widget-width: initial !important;
+            --width: auto !important;
+            flex-basis: auto !important;
+            flex-grow: 1 !important;
+            flex-shrink: 1 !important;
         }
 
-        /* 2. Div holding View all button - Push to Far Right */
+        /* 2. Div holding View all button - Takes ONLY content width, NO 50% column width */
         .elementor-element-2c76331 .elementor-element-c8d290c,
         .elementor-element.elementor-element-c8d290c,
         div[data-id="c8d290c"] {
-            margin-left: auto !important;
-            align-self: flex-end !important;
-            margin-bottom: 12px !important;
+            flex: 0 0 auto !important;
             width: auto !important;
-            flex-shrink: 0 !important;
-            display: flex !important;
+            max-width: max-content !important;
+            min-width: 0 !important;
+            margin: 0 0 8px 0 !important;
+            padding: 0 !important;
+            display: inline-flex !important;
+            align-items: flex-end !important;
             justify-content: flex-end !important;
+            align-self: flex-end !important;
+            --container-widget-width: auto !important;
+            --width: auto !important;
+            flex-basis: auto !important;
+            flex-grow: 0 !important;
+            flex-shrink: 0 !important;
         }
 
+        .elementor-element-c8d290c .elementor-widget-quanto_button,
         .elementor-element-c8d290c .elementor-widget-container {
-            display: flex !important;
-            justify-content: flex-end !important;
+            width: auto !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            display: inline-flex !important;
         }
 
         /* 3. View all Button Redesign */
@@ -2083,7 +2103,7 @@ add_action( 'wp_head', function() {
         div[data-id="b4d41ec"] a.quanto-link-btn {
             display: inline-flex !important;
             align-items: center !important;
-            gap: 6px !important;
+            gap: 5px !important;
             font-family: 'Instrument Sans', sans-serif !important;
             font-size: 15px !important;
             font-weight: 600 !important;
@@ -2097,7 +2117,9 @@ add_action( 'wp_head', function() {
             letter-spacing: -0.1px !important;
             transition: all 0.2s ease !important;
             height: auto !important;
-            line-height: 1.4 !important;
+            line-height: 1.2 !important;
+            white-space: nowrap !important;
+            width: auto !important;
         }
 
         .elementor-element-c8d290c a.quanto-link-btn:hover,
@@ -2129,6 +2151,7 @@ add_action( 'wp_head', function() {
             transform: rotate(-45deg) !important;
             font-size: 13px !important;
             color: #111111 !important;
+            line-height: 1 !important;
             transition: transform 0.25s ease !important;
         }
 
@@ -2142,6 +2165,66 @@ add_action( 'wp_head', function() {
         div[data-id="c8d290c"] a.quanto-link-btn:hover span .arry1,
         div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1 {
             transform: rotate(-45deg) translate(2px, -2px) !important;
+        }
+
+        /* 4. CMR LIVE Pill Badge */
+        .elementor-element.elementor-element-d155fe5,
+        div[data-id="d155fe5"] {
+            display: inline-flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            background: #ffffff !important;
+            border: 1px solid #d1d5db !important;
+            border-radius: 50px !important;
+            padding: 5px 16px 5px 6px !important;
+            gap: 10px !important;
+            width: auto !important;
+            max-width: fit-content !important;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+            margin-bottom: 24px !important;
+        }
+
+        .elementor-element-d155fe5 .elementor-element-533a48d,
+        div[data-id="d155fe5"] .elementor-widget-image {
+            margin: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 22px !important;
+            height: 22px !important;
+            border-radius: 50% !important;
+            background: rgba(220, 38, 38, 0.12) !important;
+            flex-shrink: 0 !important;
+            position: relative !important;
+        }
+
+        .elementor-element-d155fe5 .elementor-element-533a48d img,
+        div[data-id="d155fe5"] .elementor-widget-image img {
+            display: none !important;
+        }
+
+        .elementor-element-d155fe5 .elementor-element-533a48d::after,
+        div[data-id="d155fe5"] .elementor-widget-image::after {
+            content: '' !important;
+            display: block !important;
+            width: 8px !important;
+            height: 8px !important;
+            border-radius: 50% !important;
+            background: #dc2626 !important;
+        }
+
+        .elementor-element-d155fe5 h6,
+        .elementor-element-d155fe5 .e-heading-base,
+        div[data-id="d155fe5"] h6 {
+            font-family: 'Instrument Sans', sans-serif !important;
+            font-size: 14px !important;
+            font-weight: 700 !important;
+            color: #000000 !important;
+            letter-spacing: 0.5px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            line-height: 1 !important;
+            text-transform: uppercase !important;
         }
 
         @media (max-width: 767px) {
