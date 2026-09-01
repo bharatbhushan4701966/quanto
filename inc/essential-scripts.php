@@ -271,40 +271,82 @@ add_action( 'wp_footer', function() {
         document.addEventListener('DOMContentLoaded', function() {
             fixProcessDescriptionHTML();
 
-            // Instant close on clicking outside dialog content or on close button
+            // Handle popup open triggers: remove any residual inline styles & open popup
             document.body.addEventListener('click', function(e) {
+                var reportTrigger = e.target.closest('.open-report-popup, .slide-cta-button, [href="#open-report-popup"]');
+                if (reportTrigger) {
+                    e.preventDefault();
+                    document.querySelectorAll('.dialog-widget, .elementor-popup-modal').forEach(function(el) {
+                        el.style.removeProperty('display');
+                        el.style.removeProperty('opacity');
+                    });
+                    if (typeof elementorProFrontend !== 'undefined' && elementorProFrontend.modules && elementorProFrontend.modules.popup) {
+                        elementorProFrontend.modules.popup.showPopup({ id: 7758 });
+                    }
+                    setTimeout(checkActiveModals, 50);
+                    return;
+                }
+
+                var generalPopupTrigger = e.target.closest('.open-popup, .custom-talk-analyst-btn, [href="#open-popup"]');
+                if (generalPopupTrigger) {
+                    e.preventDefault();
+                    document.querySelectorAll('.dialog-widget, .elementor-popup-modal').forEach(function(el) {
+                        el.style.removeProperty('display');
+                        el.style.removeProperty('opacity');
+                    });
+                    if (typeof elementorProFrontend !== 'undefined' && elementorProFrontend.modules && elementorProFrontend.modules.popup) {
+                        elementorProFrontend.modules.popup.showPopup({ id: 7637 });
+                    }
+                    setTimeout(checkActiveModals, 50);
+                    return;
+                }
+
+                // Handle close button click
                 var closeBtn = e.target.closest('.dialog-close-button, .dialog-lightbox-close-button, .btn-close, .mfp-close, #cmr-close-review-modal');
                 if (closeBtn) {
                     document.documentElement.classList.remove('cmr-modal-open');
                     document.body.classList.remove('cmr-modal-open');
-                    var dlg = closeBtn.closest('.dialog-widget, .elementor-popup-modal, .modal, #cmr-review-modal-overlay');
+                    var dlg = closeBtn.closest('.dialog-widget, .elementor-popup-modal');
                     if (dlg) {
-                        dlg.style.setProperty('display', 'none', 'important');
-                        dlg.style.setProperty('opacity', '0', 'important');
+                        if (typeof elementorProFrontend !== 'undefined' && elementorProFrontend.modules && elementorProFrontend.modules.popup) {
+                            elementorProFrontend.modules.popup.closePopup({}, e);
+                        } else {
+                            dlg.style.display = 'none';
+                        }
                     }
-                    setTimeout(checkActiveModals, 10);
-                } else if (e.target.classList.contains('dialog-type-lightbox') || e.target.classList.contains('dialog-widget')) {
-                    var btn = e.target.querySelector('.dialog-close-button, .dialog-lightbox-close-button');
-                    if (btn) btn.click();
+                    setTimeout(checkActiveModals, 20);
+                    return;
+                }
+
+                // Close on clicking backdrop (outside dialog content)
+                if (e.target.classList.contains('dialog-type-lightbox') || e.target.classList.contains('dialog-widget') || e.target.classList.contains('dialog-backdrop')) {
                     document.documentElement.classList.remove('cmr-modal-open');
                     document.body.classList.remove('cmr-modal-open');
-                    e.target.style.setProperty('display', 'none', 'important');
-                    e.target.style.setProperty('opacity', '0', 'important');
+                    if (typeof elementorProFrontend !== 'undefined' && elementorProFrontend.modules && elementorProFrontend.modules.popup) {
+                        elementorProFrontend.modules.popup.closePopup({}, e);
+                    } else {
+                        var btn = e.target.querySelector('.dialog-close-button, .dialog-lightbox-close-button');
+                        if (btn) btn.click();
+                    }
+                    setTimeout(checkActiveModals, 20);
                 }
             });
 
             // Instant ESC key close
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' || e.keyCode === 27) {
-                    var openPopups = document.querySelectorAll('.dialog-widget:not([style*="display: none"]), .elementor-popup-modal:not([style*="display: none"])');
-                    openPopups.forEach(function(p) {
-                        var b = p.querySelector('.dialog-close-button, .dialog-lightbox-close-button');
-                        if (b) b.click();
-                        p.style.setProperty('display', 'none', 'important');
-                    });
                     document.documentElement.classList.remove('cmr-modal-open');
                     document.body.classList.remove('cmr-modal-open');
-                    setTimeout(checkActiveModals, 10);
+                    if (typeof elementorProFrontend !== 'undefined' && elementorProFrontend.modules && elementorProFrontend.modules.popup) {
+                        elementorProFrontend.modules.popup.closePopup({}, e);
+                    } else {
+                        var openPopups = document.querySelectorAll('.dialog-widget:not([style*="display: none"]), .elementor-popup-modal:not([style*="display: none"])');
+                        openPopups.forEach(function(p) {
+                            var b = p.querySelector('.dialog-close-button, .dialog-lightbox-close-button');
+                            if (b) b.click();
+                        });
+                    }
+                    setTimeout(checkActiveModals, 20);
                 }
             });
 
