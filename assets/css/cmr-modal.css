@@ -1,11 +1,12 @@
 /**
  * CMR Common Modal Styles & Typography
- * Standardizes all modals across the website:
+ * Standardizes all modals across the website to match the exact design system:
  * 1. Strictly hides closed/hidden modals to prevent blank popups
  * 2. Centers active modals (Elementor Popups, Bootstrap Modals, Magnific Popup, Review Modals)
  * 3. Translucent dark overlay with backdrop-filter blur so background page is visible and blurred
  * 4. Page scroll locking while any modal is open
- * 5. Complete Instrument Sans Typography System (Headlines, Paragraphs, Form Labels, Placeholders, Buttons)
+ * 5. Complete Instrument Sans Typography System
+ * 6. Pixel-perfect 2-Column Split Free Report / Consultation Modal (Popup 7758)
  */
 
 /* ==========================================================================
@@ -72,7 +73,6 @@ body.modal-open {
     box-sizing: border-box !important;
 }
 
-/* Active Backdrop element if rendered separately */
 .dialog-backdrop.dialog-backdrop-active {
     display: block !important;
     background-color: rgba(15, 23, 42, 0.5) !important;
@@ -83,7 +83,7 @@ body.modal-open {
     z-index: 999998 !important;
 }
 
-/* Modal Dialog / Content Container */
+/* Dialog Container Reset */
 .dialog-widget.dialog-type-lightbox .dialog-widget-content,
 .dialog-widget.dialog-lightbox-widget .dialog-widget-content,
 .elementor-popup-modal .dialog-widget-content {
@@ -95,31 +95,52 @@ body.modal-open {
     transform: none !important;
     margin: auto !important;
     max-height: 90vh !important;
-    max-width: 95vw !important;
-    overflow-y: auto !important;
+    max-width: 950px !important;
+    width: 950px !important;
+    overflow: hidden !important;
     border-radius: 16px !important;
+    background: transparent !important;
     box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4) !important;
     box-sizing: border-box !important;
+    padding: 0 !important;
+    border: none !important;
 }
 
 .elementor-popup-modal .dialog-message {
     margin: 0 !important;
     padding: 0 !important;
+    width: 100% !important;
+    background: transparent !important;
+}
+
+/* Close Button (×) */
+.dialog-close-button,
+.dialog-lightbox-close-button {
+    position: absolute !important;
+    top: 18px !important;
+    right: 18px !important;
+    width: 32px !important;
+    height: 32px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    width: 100% !important;
+    font-size: 24px !important;
+    color: #4b5563 !important;
+    cursor: pointer !important;
+    z-index: 1000 !important;
+    background: transparent !important;
+    border: none !important;
+    line-height: 1 !important;
+    transition: color 0.15s ease !important;
 }
 
-/* Close Button styling */
-.dialog-close-button,
-.dialog-lightbox-close-button {
-    cursor: pointer !important;
-    z-index: 10 !important;
+.dialog-close-button:hover,
+.dialog-lightbox-close-button:hover {
+    color: #000000 !important;
 }
 
 /* ==========================================================================
-   4. Bootstrap Modals
+   4. Bootstrap Modals & Magnific Popup
    ========================================================================== */
 .modal-backdrop.show {
     display: block !important;
@@ -140,7 +161,6 @@ body.modal-open {
     align-items: center !important;
     justify-content: center !important;
     padding: 20px !important;
-    overflow-x: hidden !important;
     overflow-y: auto !important;
     overscroll-behavior: contain !important;
 }
@@ -149,7 +169,6 @@ body.modal-open {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    min-height: calc(100vh - 60px) !important;
     margin: auto !important;
     max-width: 600px;
     width: 100%;
@@ -163,9 +182,6 @@ body.modal-open {
     overflow-y: auto !important;
 }
 
-/* ==========================================================================
-   5. Magnific Popup (Lightbox)
-   ========================================================================== */
 .mfp-bg.mfp-ready {
     display: block !important;
     background: rgba(15, 23, 42, 0.5) !important;
@@ -184,68 +200,12 @@ body.modal-open {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    overflow-y: auto !important;
-    overscroll-behavior: contain !important;
     padding: 20px !important;
-    box-sizing: border-box !important;
-}
-
-.mfp-container {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    height: 100% !important;
-    width: 100% !important;
-    padding: 0 !important;
-}
-
-.mfp-content {
-    margin: auto !important;
-    vertical-align: middle !important;
-    position: relative !important;
-    max-height: 90vh !important;
-    max-width: 95vw !important;
 }
 
 /* ==========================================================================
-   6. Custom CMR Review Modals
+   5. Typography System: Instrument Sans
    ========================================================================== */
-#cmr-review-modal-overlay.cmr-open,
-#cmr-review-modal.cmr-open,
-#cmr-review-modal[style*="display: flex"],
-#cmr-review-modal[style*="display: block"] {
-    position: fixed !important;
-    inset: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background: rgba(15, 23, 42, 0.5) !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    z-index: 2147483647 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    overflow-y: auto !important;
-    overscroll-behavior: contain !important;
-    padding: 20px !important;
-    box-sizing: border-box !important;
-}
-
-#cmr-review-modal-box,
-.cmr-review-modal-content {
-    margin: auto !important;
-    position: relative !important;
-    max-height: 90vh !important;
-    overflow-y: auto !important;
-    border-radius: 16px !important;
-    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.35) !important;
-}
-
-/* ==========================================================================
-   7. Typography System: Instrument Sans (Exact Specifications)
-   ========================================================================== */
-
-/* Universal Font Binding for Modal Contexts */
 .elementor-popup-modal,
 .dialog-widget.dialog-type-lightbox,
 .modal,
@@ -264,334 +224,100 @@ body.modal-open {
     font-family: 'Instrument Sans', sans-serif !important;
 }
 
-/* --- Headlines --- */
-
-/* H1. Headline: Semi Bold (600), Size: 60px, Line: 70px, Spacing: -2px */
-.elementor-popup-modal h1,
-.dialog-widget h1,
-.modal h1,
-#cmr-review-modal-overlay h1,
-.cmr-modal-h1 {
-    font-family: 'Instrument Sans', sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 60px !important;
-    line-height: 70px !important;
-    letter-spacing: -2px !important;
-    color: #111111 !important;
-}
-
-/* H2. Headline: Semi Bold (600), Size: 48px, Line: 58px, Spacing: -1.5px */
-.elementor-popup-modal h2,
-.dialog-widget h2,
-.modal h2,
-#cmr-review-modal-overlay h2,
-.cmr-modal-h2 {
-    font-family: 'Instrument Sans', sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 48px !important;
-    line-height: 58px !important;
-    letter-spacing: -1.5px !important;
-    color: #111111 !important;
-}
-
-/* H3. Headline: Semi Bold (600), Size: 36px, Line: 46px, Spacing: -0.2px */
-.elementor-popup-modal h3,
-.dialog-widget h3,
-.modal h3,
-#cmr-review-modal-overlay h3,
-.cmr-modal-h3 {
-    font-family: 'Instrument Sans', sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 36px !important;
-    line-height: 46px !important;
-    letter-spacing: -0.2px !important;
-    color: #111111 !important;
-}
-
-/* H4. Headline: Semi Bold (600), Size: 24px, Line: 34px, Spacing: -0.2px */
-.elementor-popup-modal h4,
-.dialog-widget h4,
-.modal h4,
-#cmr-review-modal-overlay h4,
-.cmr-modal-h4 {
-    font-family: 'Instrument Sans', sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 24px !important;
-    line-height: 34px !important;
-    letter-spacing: -0.2px !important;
-    color: #111111 !important;
-}
-
-/* H5. Headline: Semi Bold (600), Size: 18px, Line: 28px, Spacing: -0.2px */
-.elementor-popup-modal h5,
-.elementor-popup-modal h6,
-.dialog-widget h5,
-.dialog-widget h6,
-.modal h5,
-.modal h6,
-#cmr-review-modal-overlay h5,
-#cmr-review-modal-overlay h6,
-.cmr-modal-h5 {
-    font-family: 'Instrument Sans', sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 18px !important;
-    line-height: 28px !important;
-    letter-spacing: -0.2px !important;
-    color: #111111 !important;
-}
-
-/* --- Paragraphs --- */
-
-/* P1. Para: Medium (500), Size: 20px, Line: 30px, Spacing: -1px */
-.elementor-popup-modal .lead,
-.dialog-widget .lead,
-.cmr-modal-p1 {
-    font-family: 'Instrument Sans', sans-serif !important;
-    font-weight: 500 !important;
-    font-size: 20px !important;
-    line-height: 30px !important;
-    letter-spacing: -1px !important;
-    color: #333333 !important;
-}
-
-/* P2. Para: Medium (500), Size: 18px, Line: 28px, Spacing: 0px */
-.cmr-modal-p2 {
-    font-family: 'Instrument Sans', sans-serif !important;
-    font-weight: 500 !important;
-    font-size: 18px !important;
-    line-height: 28px !important;
-    letter-spacing: 0px !important;
-    color: #333333 !important;
-}
-
-/* P3. Para: Regular (400), Size: 16px, Line: 26px, Spacing: 0px */
-.elementor-popup-modal p,
-.dialog-widget p,
-.modal p,
-#cmr-review-modal-overlay p,
-.cmr-modal-p3 {
-    font-family: 'Instrument Sans', sans-serif !important;
-    font-weight: 400 !important;
-    font-size: 16px !important;
-    line-height: 26px !important;
-    letter-spacing: 0px !important;
-    color: #4b5563 !important;
-}
-
-/* P4. Para: Regular (400), Size: 14px, Line: 24px, Spacing: 0px */
-.elementor-popup-modal small,
-.dialog-widget small,
-.modal small,
-.cmr-modal-p4 {
-    font-family: 'Instrument Sans', sans-serif !important;
-    font-weight: 400 !important;
-    font-size: 14px !important;
-    line-height: 24px !important;
-    letter-spacing: 0px !important;
-    color: #6b7280 !important;
-}
-
-/* --- Form Labels & Placeholders --- */
-
-/* LABEL: Semibold (600), Size: 14px, Line: 24px, Spacing: 0px */
-.elementor-popup-modal label,
-.elementor-popup-modal .elementor-field-label,
-.dialog-widget label,
-.modal label,
-#cmr-review-modal-overlay label,
-.cmr-modal-label {
-    font-family: 'Instrument Sans', sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 14px !important;
-    line-height: 24px !important;
-    letter-spacing: 0px !important;
-    color: #1f2937 !important;
-    margin-bottom: 6px !important;
-    display: inline-block !important;
-}
-
-/* Form-Placeholder (#212529/75%): Medium (500), Size: 12px, Line: 22px, Spacing: 0px */
-.elementor-popup-modal input::placeholder,
-.elementor-popup-modal textarea::placeholder,
-.elementor-popup-modal select::placeholder,
-.dialog-widget input::placeholder,
-.dialog-widget textarea::placeholder,
-.modal input::placeholder,
-.modal textarea::placeholder,
-#cmr-review-modal-overlay input::placeholder,
-#cmr-review-modal-overlay textarea::placeholder {
-    font-family: 'Instrument Sans', sans-serif !important;
-    font-weight: 500 !important;
-    font-size: 12px !important;
-    line-height: 22px !important;
-    letter-spacing: 0px !important;
-    color: rgba(33, 37, 41, 0.75) !important;
-}
-
-.elementor-popup-modal input[type="text"],
-.elementor-popup-modal input[type="email"],
-.elementor-popup-modal input[type="tel"],
-.elementor-popup-modal input[type="number"],
-.elementor-popup-modal textarea,
-.elementor-popup-modal select,
-.dialog-widget input,
-.dialog-widget textarea,
-.dialog-widget select,
-.modal input,
-.modal textarea,
-.modal select,
-#cmr-review-modal-overlay input,
-#cmr-review-modal-overlay textarea {
-    font-family: 'Instrument Sans', sans-serif !important;
-    font-weight: 500 !important;
-    font-size: 14px !important;
-    line-height: 22px !important;
-    letter-spacing: 0px !important;
-    color: #212529 !important;
-}
-
-/* --- Button Fonts --- */
-
-/* Button Common: Semi Bold (600), Size: 14px, Line: 24px, Spacing: 0px */
-.elementor-popup-modal button,
-.elementor-popup-modal .elementor-button,
-.elementor-popup-modal input[type="submit"],
-.dialog-widget button,
-.dialog-widget .elementor-button,
-.modal button,
-.modal .btn,
-#cmr-review-modal-overlay button,
-#cmr-review-modal-overlay .btn,
-.cmr-btn {
-    font-family: 'Instrument Sans', sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 14px !important;
-    line-height: 24px !important;
-    letter-spacing: 0px !important;
-}
-
-/* Filled Button (e.g. Get Expert Insights ↗): Semi Bold (600), Size: 14px, Line: 24px, Spacing: 0px */
-.elementor-popup-modal .elementor-button[type="submit"],
-.elementor-popup-modal button[type="submit"],
-.dialog-widget button[type="submit"],
-.modal .btn-primary,
-.cmr-btn-filled {
-    font-family: 'Instrument Sans', sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 14px !important;
-    line-height: 24px !important;
-    letter-spacing: 0px !important;
-    border-radius: 50px !important;
-    padding: 10px 24px !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 8px !important;
-    text-align: center !important;
-}
-
-/* Outline Button (e.g. Watch Insights): Semi Bold (600), Size: 14px, Line: 24px, Spacing: 0px */
-.elementor-popup-modal .elementor-button.btn-outline,
-.modal .btn-outline-secondary,
-.modal .btn-outline-dark,
-.cmr-btn-outline {
-    font-family: 'Instrument Sans', sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 14px !important;
-    line-height: 24px !important;
-    letter-spacing: 0px !important;
-    background: #ffffff !important;
-    border: 1.5px solid #111111 !important;
-    color: #111111 !important;
-    border-radius: 50px !important;
-    padding: 10px 24px !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 8px !important;
-}
-
-/* Textual Button (e.g. Explore ↗): Semi Bold (600), Size: 14px, Line: 24px, Spacing: 0px */
-.elementor-popup-modal .btn-link,
-.elementor-popup-modal a.quanto-link-btn,
-.dialog-widget a.quanto-link-btn,
-.cmr-btn-textual {
-    font-family: 'Instrument Sans', sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 14px !important;
-    line-height: 24px !important;
-    letter-spacing: 0px !important;
-    color: #111111 !important;
-    text-decoration: none !important;
-    border-bottom: 1.5px solid #111111 !important;
-    padding: 0 0 2px 0 !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-}
-
 /* ==========================================================================
-   8. Free Report / Consultation Modal (Split 2-Column Card)
+   6. Split 2-Column Free Report / Consultation Modal (Popup 7758)
    ========================================================================== */
 
-/* Popup Box Container */
-.elementor-7758 .e-con-inner,
-.elementor-popup-modal[data-elementor-id="7758"] .e-con-inner,
-.elementor-popup-modal .elementor-element-295b2c6 .e-con-inner,
+/* Outer Popup Parent Container */
+.elementor-7758,
+.elementor-popup-modal[data-elementor-id="7758"],
+.elementor-popup-modal .elementor-element-295b2c6 {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    background: transparent !important;
+}
+
+.elementor-7758 .elementor-element-295b2c6 > .e-con-inner,
+.elementor-popup-modal[data-elementor-id="7758"] .elementor-element-295b2c6 > .e-con-inner {
+    padding: 0 !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    max-width: 950px !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
+}
+
+/* Flex Row Container holding Left & Right columns */
+.elementor-7758 .elementor-element-1d1d0d3,
 .elementor-popup-modal .elementor-element-1d1d0d3 {
     display: flex !important;
     flex-direction: row !important;
     width: 100% !important;
-    max-width: 900px !important;
-    margin: 0 auto !important;
-    border-radius: 16px !important;
-    overflow: hidden !important;
-    background: #ffffff !important;
-    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4) !important;
+    margin: 0 !important;
     padding: 0 !important;
     gap: 0 !important;
+    grid-template-columns: none !important;
+    background: #ffffff !important;
+    min-height: 520px !important;
 }
 
-/* Left Column: Deep Purple Side */
-.elementor-element.elementor-element-fc8da81,
-.elementor-element.elementor-element-de500a4,
-.elementor-popup-modal .cmr-modal-left-col {
+/* --- LEFT COLUMN: Deep Purple Side (#4318d1) --- */
+.elementor-7758 .elementor-element-fc8da81,
+.elementor-popup-modal .elementor-element-fc8da81 {
+    flex: 0 0 46% !important;
+    width: 46% !important;
+    max-width: 46% !important;
     background-color: #4318d1 !important;
     background: #4318d1 !important;
-    padding: 48px 40px !important;
-    flex: 1 1 45% !important;
-    max-width: 45% !important;
+    padding: 50px 42px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
+    margin: 0 !important;
     box-sizing: border-box !important;
     color: #ffffff !important;
 }
 
-.elementor-element.elementor-element-e5f2560 h2,
-.elementor-element.elementor-element-fc8da81 h2,
-.elementor-element.elementor-element-de500a4 h2 {
+.elementor-7758 .elementor-element-de500a4,
+.elementor-popup-modal .elementor-element-de500a4 {
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+}
+
+/* Left Title: Unlock Key Market Insights Instantly */
+.elementor-7758 .elementor-element-e5f2560 h2,
+.elementor-popup-modal .elementor-element-fc8da81 h2 {
     font-family: 'Instrument Sans', sans-serif !important;
     font-size: 34px !important;
     font-weight: 700 !important;
-    line-height: 1.2 !important;
+    line-height: 1.15 !important;
     letter-spacing: -1px !important;
     color: #ffffff !important;
-    margin-bottom: 16px !important;
+    margin: 0 0 16px 0 !important;
+    text-transform: none !important;
 }
 
-.elementor-element.elementor-element-1938802,
-.elementor-element.elementor-element-fc8da81 p,
-.elementor-element.elementor-element-de500a4 p {
+/* Left Description Text */
+.elementor-7758 .elementor-element-1938802,
+.elementor-popup-modal .elementor-element-fc8da81 p {
     font-family: 'Instrument Sans', sans-serif !important;
     font-size: 15px !important;
     font-weight: 400 !important;
-    line-height: 1.6 !important;
-    color: rgba(255, 255, 255, 0.9) !important;
-    margin-bottom: 28px !important;
+    line-height: 1.55 !important;
+    color: rgba(255, 255, 255, 0.88) !important;
+    margin: 0 0 32px 0 !important;
 }
 
-.elementor-element.elementor-element-c1e30ed .elementor-icon-list-items {
+/* Left Bullet List */
+.elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-items,
+.elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-items {
     display: flex !important;
     flex-direction: column !important;
     gap: 16px !important;
@@ -600,72 +326,132 @@ body.modal-open {
     list-style: none !important;
 }
 
-.elementor-element.elementor-element-c1e30ed .elementor-icon-list-item {
+.elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-item,
+.elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-item {
     display: flex !important;
+    flex-direction: row !important;
     align-items: center !important;
     gap: 12px !important;
-    color: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-icon,
+.elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 22px !important;
+    height: 22px !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-icon svg,
+.elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-icon svg {
+    width: 18px !important;
+    height: 18px !important;
+    fill: #ffffff !important;
+    display: block !important;
+}
+
+.elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-text,
+.elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-text {
     font-family: 'Instrument Sans', sans-serif !important;
     font-size: 15px !important;
     font-weight: 500 !important;
-    line-height: 1.4 !important;
-}
-
-.elementor-element.elementor-element-c1e30ed .elementor-icon-list-icon svg,
-.elementor-element.elementor-element-c1e30ed .elementor-icon-list-icon i {
+    line-height: 1.3 !important;
     color: #ffffff !important;
-    fill: #ffffff !important;
-    flex-shrink: 0 !important;
+    white-space: nowrap !important;
 }
 
-/* Right Column: Clean White Form Side */
-.elementor-element.elementor-element-5609af6,
-.elementor-popup-modal .cmr-modal-right-col {
+/* --- RIGHT COLUMN: White Form Side --- */
+.elementor-7758 .elementor-element-5609af6,
+.elementor-popup-modal .elementor-element-5609af6 {
+    flex: 0 0 54% !important;
+    width: 54% !important;
+    max-width: 54% !important;
+    background-color: #ffffff !important;
     background: #ffffff !important;
-    padding: 40px 44px !important;
-    flex: 1 1 55% !important;
-    max-width: 55% !important;
+    padding: 44px 45px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
+    margin: 0 !important;
     box-sizing: border-box !important;
     position: relative !important;
 }
 
-.elementor-element.elementor-element-b034026 h2,
-.elementor-element.elementor-element-5609af6 h2 {
+/* Right Title: Get Your Free Report */
+.elementor-7758 .elementor-element-b034026 h2,
+.elementor-popup-modal .elementor-element-5609af6 h2 {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 28px !important;
+    font-size: 30px !important;
     font-weight: 700 !important;
-    line-height: 1.25 !important;
+    line-height: 1.2 !important;
     letter-spacing: -0.5px !important;
     color: #111827 !important;
-    margin-bottom: 6px !important;
+    margin: 0 0 6px 0 !important;
+    text-transform: none !important;
 }
 
-.elementor-element.elementor-element-770f953 .elementor-icon-list-item {
+/* Right Subtag: ⚡ Instant access. No waiting. */
+.elementor-7758 .elementor-element-770f953 .elementor-icon-list-items,
+.elementor-popup-modal .elementor-element-5609af6 .elementor-icon-list-items {
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 0 20px 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+
+.elementor-7758 .elementor-element-770f953 .elementor-icon-list-item,
+.elementor-popup-modal .elementor-element-5609af6 .elementor-icon-list-item {
     display: inline-flex !important;
     align-items: center !important;
     gap: 6px !important;
+}
+
+.elementor-7758 .elementor-element-770f953 .elementor-icon-list-icon,
+.elementor-popup-modal .elementor-element-5609af6 .elementor-icon-list-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    color: #6366f1 !important;
+    font-size: 15px !important;
+    margin: 0 !important;
+}
+
+.elementor-7758 .elementor-element-770f953 .elementor-icon-list-icon i::before,
+.elementor-popup-modal .elementor-element-5609af6 .elementor-icon-list-icon i::before {
+    content: "\f0e7" !important;
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 900 !important;
+    color: #6366f1 !important;
+}
+
+.elementor-7758 .elementor-element-770f953 .elementor-icon-list-text,
+.elementor-popup-modal .elementor-element-5609af6 .elementor-icon-list-text {
     font-family: 'Instrument Sans', sans-serif !important;
     font-size: 14px !important;
     font-weight: 500 !important;
     color: #4b5563 !important;
-    margin-bottom: 20px !important;
 }
 
-.elementor-element.elementor-element-770f953 i {
-    color: #6366f1 !important;
-    font-size: 16px !important;
-}
-
-/* Form Styling within Popup */
+/* --- Form Fields & Labels --- */
 .custom-report-form,
 .elementor-element-42f4ebe form {
     display: flex !important;
     flex-direction: column !important;
-    gap: 14px !important;
-    font-family: 'Instrument Sans', sans-serif !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.custom-report-form p,
+.elementor-element-42f4ebe form p {
+    margin: 0 0 12px 0 !important;
+    padding: 0 !important;
 }
 
 .custom-report-form label,
@@ -674,8 +460,9 @@ body.modal-open {
     font-size: 14px !important;
     font-weight: 600 !important;
     color: #111827 !important;
-    margin-bottom: 4px !important;
+    margin: 0 0 4px 0 !important;
     display: block !important;
+    line-height: 1.3 !important;
 }
 
 .custom-report-form input[type="text"],
@@ -685,7 +472,7 @@ body.modal-open {
 .elementor-element-42f4ebe input[type="email"],
 .elementor-element-42f4ebe input[type="tel"] {
     width: 100% !important;
-    height: 46px !important;
+    height: 44px !important;
     border: 1.5px solid #d1d5db !important;
     border-radius: 8px !important;
     padding: 0 14px !important;
@@ -695,6 +482,7 @@ body.modal-open {
     background: #ffffff !important;
     outline: none !important;
     box-sizing: border-box !important;
+    margin: 4px 0 0 0 !important;
     transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
@@ -711,7 +499,7 @@ body.modal-open {
     font-weight: 400 !important;
 }
 
-/* Submit Button: Download Report ↓ */
+/* Download Report Button */
 .custom-report-form input[type="submit"],
 .elementor-element-42f4ebe input[type="submit"] {
     width: 100% !important;
@@ -725,13 +513,14 @@ body.modal-open {
     font-size: 15px !important;
     font-weight: 600 !important;
     cursor: pointer !important;
-    margin-top: 6px !important;
+    margin-top: 4px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     text-align: center !important;
     transition: background-color 0.2s ease !important;
-    box-shadow: 0 4px 12px rgba(67, 24, 209, 0.25) !important;
+    box-shadow: 0 4px 14px rgba(67, 24, 209, 0.25) !important;
+    padding: 0 !important;
 }
 
 .custom-report-form input[type="submit"]:hover,
@@ -742,22 +531,41 @@ body.modal-open {
 /* Privacy & Terms Checkbox */
 .custom-report-form .privacy-check,
 .elementor-element-42f4ebe .privacy-check {
-    margin-top: 6px !important;
+    margin-top: 10px !important;
     display: flex !important;
     align-items: center !important;
     gap: 8px !important;
     font-family: 'Instrument Sans', sans-serif !important;
     font-size: 12px !important;
     color: #4b5563 !important;
+    line-height: 1.4 !important;
+}
+
+.custom-report-form .privacy-check .wpcf7-list-item,
+.elementor-element-42f4ebe .privacy-check .wpcf7-list-item {
+    margin: 0 !important;
+}
+
+.custom-report-form .privacy-check .wpcf7-list-item label,
+.elementor-element-42f4ebe .privacy-check .wpcf7-list-item label {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    color: #4b5563 !important;
+    margin: 0 !important;
+    cursor: pointer !important;
 }
 
 .custom-report-form .privacy-check input[type="checkbox"],
-.elementor-element-42f4ebe input[type="checkbox"] {
+.elementor-element-42f4ebe .privacy-check input[type="checkbox"] {
     width: 16px !important;
     height: 16px !important;
     accent-color: #4318d1 !important;
     cursor: pointer !important;
     margin: 0 !important;
+    flex-shrink: 0 !important;
 }
 
 .custom-report-form .privacy-check a,
@@ -767,36 +575,18 @@ body.modal-open {
     font-weight: 500 !important;
 }
 
-/* Close Button (×) */
-.dialog-close-button,
-.dialog-lightbox-close-button {
-    position: absolute !important;
-    top: 16px !important;
-    right: 16px !important;
-    font-size: 22px !important;
-    color: #4b5563 !important;
-    cursor: pointer !important;
-    z-index: 100 !important;
-    background: transparent !important;
-    border: none !important;
-    transition: color 0.15s ease !important;
-}
-
-.dialog-close-button:hover,
-.dialog-lightbox-close-button:hover {
-    color: #000000 !important;
-}
-
 @media (max-width: 767px) {
-    .elementor-7758 .e-con-inner,
+    .elementor-7758 .elementor-element-1d1d0d3,
     .elementor-popup-modal .elementor-element-1d1d0d3 {
         flex-direction: column !important;
     }
-    .elementor-element.elementor-element-fc8da81,
-    .elementor-element.elementor-element-5609af6 {
+    .elementor-7758 .elementor-element-fc8da81,
+    .elementor-popup-modal .elementor-element-fc8da81,
+    .elementor-7758 .elementor-element-5609af6,
+    .elementor-popup-modal .elementor-element-5609af6 {
+        width: 100% !important;
         max-width: 100% !important;
         flex: 1 1 100% !important;
-        padding: 30px 24px !important;
+        padding: 32px 24px !important;
     }
 }
-
