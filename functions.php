@@ -2012,3 +2012,11 @@ function cmr_update_table_page_slugs_and_titles() {
     flush_rewrite_rules();
     update_option( 'cmr_table_pages_renamed_v2', '1' );
 }
+
+/**
+ * Hide Elementor popups (like the consultation form) on the login page.
+ */
+function quanto_hide_elementor_popup_on_login() {
+    echo '<style>.elementor-location-popup { display: none !important; }</style>';
+}
+add_action( 'login_head', 'quanto_hide_elementor_popup_on_login' );
