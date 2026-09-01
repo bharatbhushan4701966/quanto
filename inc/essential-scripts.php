@@ -204,3 +204,93 @@ function quanto_google_fonts() {
 
     return esc_url_raw( $fontUrl );
 }
+
+/**
+ * Universal Modal Trigger & Scroll Lock Controller
+ */
+add_action( 'wp_footer', function() {
+    ?>
+    <script id="cmr-modal-controller-js">
+    (function() {
+        // Universal modal scroll lock checker
+        function checkActiveModals() {
+            var active = false;
+
+            // Elementor Popups
+            var elemModals = document.querySelectorAll('.dialog-widget.dialog-type-lightbox, .elementor-popup-modal');
+            for (var i = 0; i < elemModals.length; i++) {
+                var el = elemModals[i];
+                if (el.style.display !== 'none' && !el.classList.contains('dialog-hidden') && window.getComputedStyle(el).display !== 'none') {
+                    active = true;
+                    break;
+                }
+            }
+
+            // Bootstrap
+            if (!active) {
+                var bs = document.querySelectorAll('.modal.show');
+                if (bs.length > 0) active = true;
+            }
+
+            // Magnific Popup
+            if (!active) {
+                var mfp = document.querySelectorAll('.mfp-wrap.mfp-ready');
+                if (mfp.length > 0) active = true;
+            }
+
+            // CMR Review Modal
+            if (!active) {
+                var cr1 = document.getElementById('cmr-review-modal-overlay');
+                if (cr1 && cr1.classList.contains('cmr-open')) active = true;
+                var cr2 = document.getElementById('cmr-review-modal');
+                if (cr2 && cr2.style.display === 'flex') active = true;
+            }
+
+            if (active) {
+                document.documentElement.classList.add('cmr-modal-open');
+                document.body.classList.add('cmr-modal-open');
+            } else {
+                document.documentElement.classList.remove('cmr-modal-open');
+                document.body.classList.remove('cmr-modal-open');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // MutationObserver to catch any open/close dynamically
+            var observer = new MutationObserver(function() {
+                checkActiveModals();
+            });
+
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true,
+                attributes: true,
+                attributeFilter: ['style', 'class']
+            });
+
+            // Delegate close on clicking outside dialog-widget-content
+            document.body.addEventListener('click', function(e) {
+                if (e.target.classList.contains('dialog-type-lightbox') || e.target.classList.contains('dialog-widget')) {
+                    var closeBtn = e.target.querySelector('.dialog-close-button, .dialog-lightbox-close-button');
+                    if (closeBtn) closeBtn.click();
+                }
+            });
+
+            // jQuery hooks for Elementor & Bootstrap
+            if (window.jQuery) {
+                jQuery(document).on('elementor/popup/show', checkActiveModals);
+                jQuery(document).on('elementor/popup/hide', function() {
+                    setTimeout(checkActiveModals, 100);
+                });
+                jQuery(document).on('shown.bs.modal show.bs.modal', checkActiveModals);
+                jQuery(document).on('hidden.bs.modal hide.bs.modal', function() {
+                    setTimeout(checkActiveModals, 100);
+                });
+            }
+
+            checkActiveModals();
+        });
+    })();
+    </script>
+    <?php
+}, 999 );

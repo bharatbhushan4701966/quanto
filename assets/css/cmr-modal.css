@@ -1,9 +1,10 @@
 /**
  * CMR Common Modal Styles
  * Standardizes all modals across the website:
- * 1. Centers all modals (Elementor Popups, Bootstrap Modals, Magnific Popup, Review Modals, etc.)
- * 2. Translucent dark overlay with backdrop-filter blur so background page is visible and blurred
- * 3. Page scroll locking while any modal is open
+ * 1. Strictly hides closed/hidden modals to prevent blank popups
+ * 2. Centers active modals (Elementor Popups, Bootstrap Modals, Magnific Popup, Review Modals)
+ * 3. Translucent dark overlay with backdrop-filter blur so background page is visible and blurred
+ * 4. Page scroll locking while any modal is open
  */
 
 /* ==========================================================================
@@ -22,12 +23,34 @@ body.modal-open {
 }
 
 /* ==========================================================================
-   2. Elementor Popups & Lightboxes
+   2. Strict Hide for Inactive / Closed Modals & Backdrops
    ========================================================================== */
-.dialog-widget.dialog-type-lightbox,
-.dialog-widget.dialog-lightbox-widget,
-.elementor-popup-modal.dialog-type-lightbox,
-.dialog-type-lightbox {
+.dialog-widget[style*="display: none"],
+.dialog-widget[style*="display:none"],
+.elementor-popup-modal[style*="display: none"],
+.elementor-popup-modal[style*="display:none"],
+.dialog-type-lightbox[style*="display: none"],
+.dialog-type-lightbox[style*="display:none"],
+.elementor-location-popup[style*="display: none"],
+.elementor-location-popup[style*="display:none"],
+.dialog-backdrop:not(.dialog-backdrop-active),
+.modal:not(.show):not([style*="display: block"]),
+.modal-backdrop:not(.show),
+#cmr-review-modal-overlay:not(.cmr-open),
+#cmr-review-modal[style*="display: none"],
+#cmr-review-modal:not(.cmr-open):not([style*="display: flex"]):not([style*="display: block"]) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* ==========================================================================
+   3. Active Elementor Popups & Lightboxes (Centered with Backdrop Blur)
+   ========================================================================== */
+.dialog-widget.dialog-type-lightbox:not([style*="display: none"]):not([style*="display:none"]),
+.dialog-widget.dialog-lightbox-widget:not([style*="display: none"]):not([style*="display:none"]),
+.elementor-popup-modal:not([style*="display: none"]):not([style*="display:none"]) {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
@@ -48,8 +71,9 @@ body.modal-open {
     box-sizing: border-box !important;
 }
 
-.dialog-backdrop,
-.dialog-lightbox-backdrop {
+/* Active Backdrop element if rendered separately */
+.dialog-backdrop.dialog-backdrop-active {
+    display: block !important;
     background-color: rgba(15, 23, 42, 0.5) !important;
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
@@ -58,6 +82,7 @@ body.modal-open {
     z-index: 999998 !important;
 }
 
+/* Modal Dialog / Content Container */
 .dialog-widget.dialog-type-lightbox .dialog-widget-content,
 .dialog-widget.dialog-lightbox-widget .dialog-widget-content,
 .elementor-popup-modal .dialog-widget-content {
@@ -85,32 +110,38 @@ body.modal-open {
     width: 100% !important;
 }
 
+/* Close Button styling */
+.dialog-close-button,
+.dialog-lightbox-close-button {
+    cursor: pointer !important;
+    z-index: 10 !important;
+}
+
 /* ==========================================================================
-   3. Bootstrap Modals
+   4. Bootstrap Modals
    ========================================================================== */
-.modal-backdrop,
 .modal-backdrop.show {
+    display: block !important;
     background-color: rgba(15, 23, 42, 0.5) !important;
     opacity: 1 !important;
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
+    position: fixed !important;
+    inset: 0 !important;
     z-index: 1050 !important;
 }
 
-.modal {
+.modal.show {
     position: fixed !important;
     inset: 0 !important;
     z-index: 1055 !important;
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
-    overscroll-behavior: contain !important;
-}
-
-.modal.show {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     padding: 20px !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
 }
 
 .modal-dialog {
@@ -132,9 +163,10 @@ body.modal-open {
 }
 
 /* ==========================================================================
-   4. Magnific Popup (Lightbox)
+   5. Magnific Popup (Lightbox)
    ========================================================================== */
-.mfp-bg {
+.mfp-bg.mfp-ready {
+    display: block !important;
     background: rgba(15, 23, 42, 0.5) !important;
     opacity: 1 !important;
     backdrop-filter: blur(10px) !important;
@@ -144,7 +176,7 @@ body.modal-open {
     inset: 0 !important;
 }
 
-.mfp-wrap {
+.mfp-wrap.mfp-ready {
     position: fixed !important;
     inset: 0 !important;
     z-index: 100001 !important;
@@ -175,10 +207,12 @@ body.modal-open {
 }
 
 /* ==========================================================================
-   5. Custom CMR Review Modals
+   6. Custom CMR Review Modals
    ========================================================================== */
-#cmr-review-modal-overlay,
-#cmr-review-modal {
+#cmr-review-modal-overlay.cmr-open,
+#cmr-review-modal.cmr-open,
+#cmr-review-modal[style*="display: flex"],
+#cmr-review-modal[style*="display: block"] {
     position: fixed !important;
     inset: 0 !important;
     width: 100vw !important;
@@ -187,6 +221,7 @@ body.modal-open {
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
     z-index: 2147483647 !important;
+    display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     overflow-y: auto !important;
