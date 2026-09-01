@@ -3437,3 +3437,35 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     }
 }
 
+/* Process Box Card "Explore" Button */
+.custom-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    color: #ffffff !important;
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    margin-top: 15px !important;
+    transition: color 0.2s ease !important;
+}
+
+.custom-btn .arrow {
+    display: inline-block !important;
+    width: 7px !important;
+    height: 7px !important;
+    border-top: 2px solid #ffffff !important;
+    border-right: 2px solid #ffffff !important;
+    transform: rotate(45deg) !important;
+    transition: transform 0.2s ease !important;
+    margin-left: 4px !important;
+}
+
+.custom-btn:hover .arrow,
+.process-box:hover .custom-btn .arrow,
+.explore-sector-card:hover .custom-btn .arrow {
+    transform: rotate(45deg) translate(2px, -2px) !important;
+}
+
+

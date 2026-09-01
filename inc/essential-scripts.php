@@ -206,13 +206,13 @@ function quanto_google_fonts() {
 }
 
 /**
- * Universal Modal Trigger & Scroll Lock Controller
+ * Lightweight Modal Trigger & Scroll Lock Controller + HTML Entity Decoder
  */
 add_action( 'wp_footer', function() {
     ?>
     <script id="cmr-modal-controller-js">
     (function() {
-        // Universal modal scroll lock checker
+        // Universal modal scroll lock checker (Event-driven, 0 CPU overhead)
         function checkActiveModals() {
             var active = false;
 
@@ -255,18 +255,21 @@ add_action( 'wp_footer', function() {
             }
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // MutationObserver to catch any open/close dynamically
-            var observer = new MutationObserver(function() {
-                checkActiveModals();
+        // Auto-decode any escaped HTML in process boxes (e.g. &lt;br&gt;&lt;a...&gt;)
+        function fixProcessDescriptionHTML() {
+            var descriptions = document.querySelectorAll('.process-description, .quanto-process-box p, .explore-sectors-track .sector-desc');
+            descriptions.forEach(function(el) {
+                var html = el.innerHTML;
+                if (html.indexOf('&lt;') !== -1 || html.indexOf('&gt;') !== -1) {
+                    var txt = document.createElement('textarea');
+                    txt.innerHTML = html;
+                    el.innerHTML = txt.value;
+                }
             });
+        }
 
-            observer.observe(document.body, {
-                childList: true,
-                subtree: true,
-                attributes: true,
-                attributeFilter: ['style', 'class']
-            });
+        document.addEventListener('DOMContentLoaded', function() {
+            fixProcessDescriptionHTML();
 
             // Delegate close on clicking outside dialog-widget-content
             document.body.addEventListener('click', function(e) {
@@ -276,7 +279,7 @@ add_action( 'wp_footer', function() {
                 }
             });
 
-            // jQuery hooks for Elementor & Bootstrap
+            // Lightweight event hooks for Elementor & Bootstrap
             if (window.jQuery) {
                 jQuery(document).on('elementor/popup/show', checkActiveModals);
                 jQuery(document).on('elementor/popup/hide', function() {
