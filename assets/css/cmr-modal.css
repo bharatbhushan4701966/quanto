@@ -470,9 +470,10 @@ body.modal-open {
     color: #4b5563 !important;
 }
 
-/* --- Form Fields & Labels --- */
+/* --- Form Fields & Labels Gaping --- */
 .custom-report-form,
-.elementor-element-42f4ebe form {
+.elementor-element-42f4ebe form,
+.elementor-popup-modal form {
     display: flex !important;
     flex-direction: column !important;
     gap: 0 !important;
@@ -481,18 +482,20 @@ body.modal-open {
 }
 
 .custom-report-form p,
-.elementor-element-42f4ebe form p {
-    margin: 0 0 14px 0 !important;
+.elementor-element-42f4ebe form p,
+.elementor-popup-modal form p {
+    margin: 0 0 20px 0 !important;
     padding: 0 !important;
 }
 
 .custom-report-form label,
-.elementor-element-42f4ebe label {
+.elementor-element-42f4ebe label,
+.elementor-popup-modal label {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 14px !important;
+    font-size: 15px !important;
     font-weight: 600 !important;
     color: #111827 !important;
-    margin: 0 0 6px 0 !important;
+    margin: 0 0 8px 0 !important;
     display: block !important;
     line-height: 1.3 !important;
 }
@@ -502,73 +505,84 @@ body.modal-open {
 .custom-report-form input[type="tel"],
 .elementor-element-42f4ebe input[type="text"],
 .elementor-element-42f4ebe input[type="email"],
-.elementor-element-42f4ebe input[type="tel"] {
+.elementor-element-42f4ebe input[type="tel"],
+.elementor-popup-modal input[type="text"],
+.elementor-popup-modal input[type="email"],
+.elementor-popup-modal input[type="tel"] {
     width: 100% !important;
-    height: 48px !important;
+    height: 50px !important;
     border: 1.5px solid #d1d5db !important;
-    border-radius: 8px !important;
-    padding: 0 16px !important;
+    border-radius: 10px !important;
+    padding: 0 18px !important;
     font-family: 'Instrument Sans', sans-serif !important;
     font-size: 14px !important;
     color: #111827 !important;
     background: #ffffff !important;
     outline: none !important;
     box-sizing: border-box !important;
-    margin: 4px 0 0 0 !important;
+    margin: 0 0 4px 0 !important;
     transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
 .custom-report-form input:focus,
-.elementor-element-42f4ebe input:focus {
-    border-color: #4318d1 !important;
-    box-shadow: 0 0 0 3px rgba(67, 24, 209, 0.08) !important;
+.elementor-element-42f4ebe input:focus,
+.elementor-popup-modal input:focus {
+    border-color: #582cd7 !important;
+    box-shadow: 0 0 0 3px rgba(88, 44, 215, 0.1) !important;
 }
 
 .custom-report-form input::placeholder,
-.elementor-element-42f4ebe input::placeholder {
+.elementor-element-42f4ebe input::placeholder,
+.elementor-popup-modal input::placeholder {
     color: #9ca3af !important;
-    font-size: 13px !important;
+    font-size: 14px !important;
     font-weight: 400 !important;
 }
 
-/* Download Report Button */
+/* Download Report Button with Gaping */
 .custom-report-form input[type="submit"],
-.elementor-element-42f4ebe input[type="submit"] {
+.elementor-element-42f4ebe input[type="submit"],
+.elementor-popup-modal input[type="submit"],
+.elementor-popup-modal button[type="submit"] {
     width: 100% !important;
-    height: 48px !important;
-    background-color: #4318d1 !important;
-    background: #4318d1 !important;
+    height: 52px !important;
+    background-color: #582cd7 !important;
+    background: #582cd7 !important;
     color: #ffffff !important;
     border: none !important;
     border-radius: 50px !important;
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 15px !important;
+    font-size: 16px !important;
     font-weight: 600 !important;
     cursor: pointer !important;
-    margin-top: 4px !important;
+    margin-top: 10px !important;
+    margin-bottom: 8px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     text-align: center !important;
-    transition: background-color 0.2s ease !important;
-    box-shadow: 0 4px 14px rgba(67, 24, 209, 0.25) !important;
+    transition: background-color 0.2s ease, transform 0.1s ease !important;
+    box-shadow: 0 4px 16px rgba(88, 44, 215, 0.28) !important;
     padding: 0 !important;
 }
 
 .custom-report-form input[type="submit"]:hover,
-.elementor-element-42f4ebe input[type="submit"]:hover {
-    background-color: #3713b0 !important;
+.elementor-element-42f4ebe input[type="submit"]:hover,
+.elementor-popup-modal input[type="submit"]:hover {
+    background-color: #4921be !important;
+    box-shadow: 0 6px 20px rgba(88, 44, 215, 0.35) !important;
 }
 
 /* Privacy & Terms Checkbox */
 .custom-report-form .privacy-check,
-.elementor-element-42f4ebe .privacy-check {
-    margin-top: 10px !important;
+.elementor-element-42f4ebe .privacy-check,
+.elementor-popup-modal .privacy-check {
+    margin-top: 14px !important;
     display: flex !important;
     align-items: center !important;
-    gap: 8px !important;
+    gap: 10px !important;
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 12px !important;
+    font-size: 13px !important;
     color: #4b5563 !important;
     line-height: 1.4 !important;
 }
