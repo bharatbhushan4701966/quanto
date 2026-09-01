@@ -271,11 +271,40 @@ add_action( 'wp_footer', function() {
         document.addEventListener('DOMContentLoaded', function() {
             fixProcessDescriptionHTML();
 
-            // Delegate close on clicking outside dialog-widget-content
+            // Instant close on clicking outside dialog content or on close button
             document.body.addEventListener('click', function(e) {
-                if (e.target.classList.contains('dialog-type-lightbox') || e.target.classList.contains('dialog-widget')) {
-                    var closeBtn = e.target.querySelector('.dialog-close-button, .dialog-lightbox-close-button');
-                    if (closeBtn) closeBtn.click();
+                var closeBtn = e.target.closest('.dialog-close-button, .dialog-lightbox-close-button, .btn-close, .mfp-close, #cmr-close-review-modal');
+                if (closeBtn) {
+                    document.documentElement.classList.remove('cmr-modal-open');
+                    document.body.classList.remove('cmr-modal-open');
+                    var dlg = closeBtn.closest('.dialog-widget, .elementor-popup-modal, .modal, #cmr-review-modal-overlay');
+                    if (dlg) {
+                        dlg.style.setProperty('display', 'none', 'important');
+                        dlg.style.setProperty('opacity', '0', 'important');
+                    }
+                    setTimeout(checkActiveModals, 10);
+                } else if (e.target.classList.contains('dialog-type-lightbox') || e.target.classList.contains('dialog-widget')) {
+                    var btn = e.target.querySelector('.dialog-close-button, .dialog-lightbox-close-button');
+                    if (btn) btn.click();
+                    document.documentElement.classList.remove('cmr-modal-open');
+                    document.body.classList.remove('cmr-modal-open');
+                    e.target.style.setProperty('display', 'none', 'important');
+                    e.target.style.setProperty('opacity', '0', 'important');
+                }
+            });
+
+            // Instant ESC key close
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' || e.keyCode === 27) {
+                    var openPopups = document.querySelectorAll('.dialog-widget:not([style*="display: none"]), .elementor-popup-modal:not([style*="display: none"])');
+                    openPopups.forEach(function(p) {
+                        var b = p.querySelector('.dialog-close-button, .dialog-lightbox-close-button');
+                        if (b) b.click();
+                        p.style.setProperty('display', 'none', 'important');
+                    });
+                    document.documentElement.classList.remove('cmr-modal-open');
+                    document.body.classList.remove('cmr-modal-open');
+                    setTimeout(checkActiveModals, 10);
                 }
             });
 
@@ -283,11 +312,11 @@ add_action( 'wp_footer', function() {
             if (window.jQuery) {
                 jQuery(document).on('elementor/popup/show', checkActiveModals);
                 jQuery(document).on('elementor/popup/hide', function() {
-                    setTimeout(checkActiveModals, 100);
+                    checkActiveModals();
                 });
                 jQuery(document).on('shown.bs.modal show.bs.modal', checkActiveModals);
                 jQuery(document).on('hidden.bs.modal hide.bs.modal', function() {
-                    setTimeout(checkActiveModals, 100);
+                    checkActiveModals();
                 });
             }
 
