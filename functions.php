@@ -1840,9 +1840,6 @@ add_action('init', function() {
 // Include Review Modal
 require_once get_template_directory() . '/inc/cmr-review-modal.php';
 
-// Include Global Modals Enhancement (Centering, Blur Overlay, Scroll Lock)
-require_once get_template_directory() . '/inc/cmr-global-modals.php';
-
 // Include Table Scraper Tool
 require_once get_template_directory() . '/inc/table-scraper.php';
 
