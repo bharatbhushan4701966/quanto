@@ -27,14 +27,6 @@ body.modal-open {
 /* ==========================================================================
    2. Strict Hide for Inactive / Closed Modals & Backdrops
    ========================================================================== */
-html:not(.cmr-modal-open) .dialog-widget,
-html:not(.cmr-modal-open) .elementor-popup-modal,
-html:not(.cmr-modal-open) .dialog-backdrop,
-html:not(.cmr-modal-open) .elementor-location-popup,
-body:not(.cmr-modal-open) .dialog-widget,
-body:not(.cmr-modal-open) .elementor-popup-modal,
-body:not(.cmr-modal-open) .dialog-backdrop,
-body:not(.cmr-modal-open) .elementor-location-popup,
 .dialog-widget[style*="display: none"],
 .dialog-widget[style*="display:none"],
 .elementor-popup-modal[style*="display: none"],

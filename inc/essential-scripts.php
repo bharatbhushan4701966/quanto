@@ -283,7 +283,8 @@ add_action( 'wp_footer', function() {
                 }
 
                 document.querySelectorAll('.dialog-widget, .elementor-popup-modal').forEach(function(el) {
-                    el.style.setProperty('display', 'none', 'important');
+                    el.style.display = 'none';
+                    el.style.opacity = '0';
                 });
 
                 var crOverlay = document.getElementById('cmr-review-modal-overlay');
@@ -294,49 +295,43 @@ add_action( 'wp_footer', function() {
                 setTimeout(checkActiveModals, 20);
             }
 
+            // Function to open popup by ID
+            function openPopup(id) {
+                // First close/hide all other popups cleanly
+                document.querySelectorAll('.dialog-widget, .elementor-popup-modal').forEach(function(el) {
+                    el.style.display = 'none';
+                    el.style.opacity = '0';
+                });
+
+                // Target specific popup
+                var target = document.querySelector('.elementor-popup-modal[data-elementor-id="' + id + '"], .dialog-widget[data-elementor-id="' + id + '"], #elementor-popup-modal-' + id);
+                if (target) {
+                    target.style.display = '';
+                    target.style.opacity = '';
+                }
+
+                if (typeof elementorProFrontend !== 'undefined' && elementorProFrontend.modules && elementorProFrontend.modules.popup) {
+                    elementorProFrontend.modules.popup.showPopup({ id: parseInt(id) });
+                }
+
+                document.documentElement.classList.add('cmr-modal-open');
+                document.body.classList.add('cmr-modal-open');
+                setTimeout(checkActiveModals, 50);
+            }
+
             // Handle popup open triggers: isolate only the targeted popup
             document.body.addEventListener('click', function(e) {
                 var reportTrigger = e.target.closest('.open-report-popup, .slide-cta-button, [href="#open-report-popup"]');
                 if (reportTrigger) {
                     e.preventDefault();
-                    // First hide all other popups
-                    document.querySelectorAll('.dialog-widget, .elementor-popup-modal').forEach(function(el) {
-                        el.style.setProperty('display', 'none', 'important');
-                    });
-                    
-                    // Unhide only popup 7758
-                    var p7758 = document.querySelector('.elementor-popup-modal[data-elementor-id="7758"], .dialog-widget[data-elementor-id="7758"], #elementor-popup-modal-7758');
-                    if (p7758) {
-                        p7758.style.removeProperty('display');
-                        p7758.style.removeProperty('opacity');
-                    }
-                    
-                    if (typeof elementorProFrontend !== 'undefined' && elementorProFrontend.modules && elementorProFrontend.modules.popup) {
-                        elementorProFrontend.modules.popup.showPopup({ id: 7758 });
-                    }
-                    setTimeout(checkActiveModals, 50);
+                    openPopup(7758);
                     return;
                 }
 
                 var generalPopupTrigger = e.target.closest('.open-popup, .custom-talk-analyst-btn, [href="#open-popup"]');
                 if (generalPopupTrigger) {
                     e.preventDefault();
-                    // First hide all other popups
-                    document.querySelectorAll('.dialog-widget, .elementor-popup-modal').forEach(function(el) {
-                        el.style.setProperty('display', 'none', 'important');
-                    });
-                    
-                    // Unhide only popup 7637
-                    var p7637 = document.querySelector('.elementor-popup-modal[data-elementor-id="7637"], .dialog-widget[data-elementor-id="7637"], #elementor-popup-modal-7637');
-                    if (p7637) {
-                        p7637.style.removeProperty('display');
-                        p7637.style.removeProperty('opacity');
-                    }
-                    
-                    if (typeof elementorProFrontend !== 'undefined' && elementorProFrontend.modules && elementorProFrontend.modules.popup) {
-                        elementorProFrontend.modules.popup.showPopup({ id: 7637 });
-                    }
-                    setTimeout(checkActiveModals, 50);
+                    openPopup(7637);
                     return;
                 }
 
