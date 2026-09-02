@@ -286,7 +286,7 @@ max-width:512px !important ;
   /* Video / Insights Section Mobile Styling */
   .elementor-14 .elementor-element.elementor-element-275e662 {
     flex-direction: column !important;
-    gap: 40px !important;
+    gap: 36px !important;
   }
 
   .elementor-14 .elementor-element.elementor-element-b82bad4,
@@ -295,38 +295,49 @@ max-width:512px !important ;
     margin-bottom: 20px !important;
   }
 
+  /* NO ROUNDED CORNERS ON VIDEO / THUMBNAIL */
   .elementor-14 .elementor-element.elementor-element-9b2ddd6,
   .elementor-14 .elementor-element.elementor-element-d713748,
-  .elementor-14 .elementor-element.elementor-element-9b2ddd6 iframe,
-  .elementor-14 .elementor-element.elementor-element-d713748 iframe,
-  .elementor-14 .elementor-element.elementor-element-9b2ddd6 video,
-  .elementor-14 .elementor-element.elementor-element-d713748 video {
-    border-radius: 12px !important;
+  .elementor-14 .elementor-element.elementor-element-275e662 .elementor-widget-video,
+  .elementor-14 .elementor-element.elementor-element-275e662 .elementor-wrapper,
+  .elementor-14 .elementor-element.elementor-element-275e662 iframe,
+  .elementor-14 .elementor-element.elementor-element-275e662 video,
+  .elementor-14 .elementor-element.elementor-element-275e662 .elementor-custom-embed-image-overlay {
+    border-radius: 0px !important;
     overflow: hidden !important;
     aspect-ratio: 16 / 9 !important;
     width: 100% !important;
   }
 
   .elementor-14 .elementor-element.elementor-element-bf85eb0,
-  .elementor-14 .elementor-element.elementor-element-1de6221 {
+  .elementor-14 .elementor-element.elementor-element-1de6221,
+  .elementor-14 .elementor-element.elementor-element-275e662 .e-div-block-base:has(h6) {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    gap: 8px !important;
+    gap: 6px !important;
     margin-top: 18px !important;
     margin-bottom: 8px !important;
+  }
+
+  .elementor-14 .elementor-element.elementor-element-bf85eb0 h6,
+  .elementor-14 .elementor-element.elementor-element-1de6221 h6,
+  .elementor-14 .elementor-element.elementor-element-275e662 h6,
+  .elementor-14 .e-1fd1573-0ea6203,
+  .elementor-14 .e-ff3f001-b9ccb27 {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.6px !important;
+    text-transform: uppercase !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
   }
 
   .elementor-14 .elementor-element.elementor-element-bf85eb0 h6:first-child,
   .elementor-14 .elementor-element.elementor-element-1de6221 h6:first-child,
   .elementor-14 .e-1fd1573-0ea6203,
   .elementor-14 .e-ff3f001-b9ccb27 {
-    font-size: 13px !important;
-    font-weight: 700 !important;
     color: #4820B0 !important;
-    letter-spacing: 0.8px !important;
-    text-transform: uppercase !important;
-    margin: 0 !important;
   }
 
   .elementor-14 .elementor-element.elementor-element-bf85eb0 h6:last-child,
@@ -345,20 +356,25 @@ max-width:512px !important ;
   .elementor-14 .elementor-element.elementor-element-c49530d h3,
   .elementor-14 .elementor-element.elementor-element-e5a291e h3,
   .elementor-14 .e-255acd5-0533542,
-  .elementor-14 .e-bb5a035-8148c2a {
-    font-size: 21px !important;
-    font-weight: 700 !important;
+  .elementor-14 .e-bb5a035-8148c2a,
+  .elementor-14 .elementor-element.elementor-element-275e662 .e-heading-base,
+  body .elementor-14 .elementor-element.elementor-element-275e662 h3 {
+    font-size: 20px !important;
+    font-weight: 600 !important;
     line-height: 1.35 !important;
     color: #0F0F0F !important;
     margin-top: 10px !important;
-    margin-bottom: 20px !important;
-    letter-spacing: -0.4px !important;
+    margin-bottom: 22px !important;
+    letter-spacing: -0.3px !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   .elementor-14 .elementor-element.elementor-element-93c603b .elementor-button,
-  .elementor-14 .elementor-element.elementor-element-e8b38a1 .elementor-button {
+  .elementor-14 .elementor-element.elementor-element-e8b38a1 .elementor-button,
+  .elementor-14 .elementor-element.elementor-element-275e662 .elementor-button {
     background-color: #FFFFFF !important;
-    border: 1px solid #000000 !important;
+    border: 1.5px solid #000000 !important;
     border-radius: 40px !important;
     padding: 10px 24px !important;
     color: #000000 !important;
@@ -369,6 +385,7 @@ max-width:512px !important ;
     gap: 8px !important;
     width: auto !important;
     max-width: max-content !important;
+    box-shadow: none !important;
   }
 }
 
