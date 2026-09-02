@@ -198,87 +198,196 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             .slide-main-heading { font-size: 40px; line-height: 48px; }
             .slide-value { font-size: 64px; }
         }
+
         @media (max-width: 768px) {
+            #slide,
+            .brain-component-wrapper {
+                background-color: #000000 !important;
+                padding: 40px 16px 50px 16px !important;
+                overflow: visible !important;
+                height: auto !important;
+                max-height: none !important;
+                margin: 0 !important;
+            }
+
             .slide-spacer {
-                height: 4vh;
+                display: none !important;
             }
+
             .slide-scroll-container {
-                padding: 0 20px;
-                padding-top: 60px;
+                padding: 0 !important;
+                height: auto !important;
+                max-height: none !important;
+                overflow: visible !important;
+                position: relative !important;
             }
+
             .slide-main-layout {
-                gap: 30px;
+                flex-direction: column-reverse !important;
+                gap: 32px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 auto !important;
             }
-            .slide-left-column {
-                position: relative;
-                top: 0;
-                width: 100%;
-                display: flex;
-                justify-content: center;
-            }
+
             .slide-right-column {
-                padding-top: 0;
-                padding-bottom: 60px;
-                text-align: center;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
+                padding: 0 !important;
+                width: 100% !important;
+                text-align: center !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
             }
-            .slide-sticky-box {
-                width: 90%; /* Slight margin on mobile for the blue box to overflow correctly */
-                max-width: 400px;
-                margin-left: auto;
-                margin-right: auto;
+
+            .slide-content-wrapper {
+                width: 100% !important;
+                max-width: 340px !important;
+                margin: 0 auto !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                text-align: center !important;
             }
-            .slide-blue-layer {
-                width: 100%;
-                height: calc(100% + 20px);
-                left: 0;
-                top: 0;
-                transform: none;
-            }
-            .slide-image-layer {
-                width: calc(100% - 30px);
-                height: 100%;
-                left: 15px;
-                top: 0;
-                transform: none;
-            }
-            
-            .slide-main-heading { 
-                font-size: 32px; 
-                line-height: 40px; 
-                margin-bottom: 20px;
-                letter-spacing: -1px;
-            }
-            .slide-description {
-                font-size: 15px;
-                line-height: 24px;
-                margin-bottom: 30px;
-            }
-            .slide-value { 
-                font-size: 42px; 
-                line-height: 48px; 
-            }
-            .slide-label {
-                font-size: 10px;
-            }
-            .slide-image-text-overlay {
-                bottom: 20px;
-                right: 20px;
-            }
+
             .slide-badge {
-                margin-bottom: 20px;
-                justify-content: center;
+                font-family: 'Outfit', 'Instrument Sans', sans-serif !important;
+                font-size: 13px !important;
+                font-weight: 600 !important;
+                letter-spacing: 1px !important;
+                text-transform: uppercase !important;
+                color: #ffffff !important;
+                margin-bottom: 16px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 8px !important;
+                opacity: 1 !important;
             }
+
+            .slide-day-icon {
+                width: 16px !important;
+                height: 16px !important;
+            }
+
+            .slide-main-heading { 
+                font-family: 'Outfit', 'Instrument Sans', sans-serif !important;
+                font-size: 30px !important; 
+                line-height: 38px !important; 
+                font-weight: 600 !important;
+                margin-bottom: 16px !important;
+                letter-spacing: -0.8px !important;
+                color: #ffffff !important;
+                text-align: center !important;
+            }
+
+            .slide-description {
+                font-family: 'Outfit', 'Instrument Sans', sans-serif !important;
+                font-size: 14.5px !important;
+                line-height: 22px !important;
+                color: rgba(255, 255, 255, 0.9) !important;
+                margin-bottom: 24px !important;
+                text-align: center !important;
+            }
+
             .slide-cta-button {
-                padding: 14px 24px;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 8px !important;
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                width: 100% !important;
+                max-width: 320px !important;
+                height: 48px !important;
+                padding: 0 24px !important;
+                border-radius: 50px !important;
+                font-family: 'Outfit', 'Instrument Sans', sans-serif !important;
                 font-size: 15px !important;
-                width: 100%;
-                justify-content: center;
+                font-weight: 600 !important;
+                text-decoration: none !important;
+                margin: 0 auto !important;
+                box-shadow: none !important;
+            }
+
+            .slide-cta-button .button-icon {
+                width: 14px !important;
+                height: 14px !important;
+            }
+
+            .slide-left-column {
+                position: relative !important;
+                top: auto !important;
+                width: 100% !important;
+                display: flex !important;
+                justify-content: center !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .slide-sticky-box {
+                width: 100% !important;
+                max-width: 340px !important;
+                aspect-ratio: 1 / 1.15 !important;
+                margin: 0 auto !important;
+                position: relative !important;
+                background-color: #00ede9 !important;
+                padding: 10px 10px 12px 10px !important;
+                border-radius: 0 !important;
+                box-sizing: border-box !important;
+            }
+
+            .slide-blue-layer {
+                display: none !important;
+            }
+
+            .slide-image-layer {
+                position: relative !important;
+                top: auto !important;
+                left: auto !important;
+                width: 100% !important;
+                height: 100% !important;
+                transform: none !important;
+                box-shadow: none !important;
+                overflow: hidden !important;
+                background: #000000 !important;
+            }
+
+            .slide-image-layer img {
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: cover !important;
+                filter: grayscale(0) !important;
+            }
+
+            .slide-image-text-overlay {
+                position: absolute !important;
+                bottom: 20px !important;
+                right: 20px !important;
+                z-index: 5 !important;
+                text-align: right !important;
+            }
+
+            .slide-value { 
+                font-family: 'Outfit', 'Instrument Sans', sans-serif !important;
+                font-size: 42px !important; 
+                font-weight: 800 !important;
+                line-height: 46px !important; 
+                color: #ffffff !important;
+                margin: 0 !important;
+            }
+
+            .slide-label {
+                font-family: 'Outfit', 'Instrument Sans', sans-serif !important;
+                font-size: 11px !important;
+                font-weight: 500 !important;
+                letter-spacing: 0px !important;
+                color: #ffffff !important;
+                opacity: 0.9 !important;
+                margin: 2px 0 0 0 !important;
+                text-transform: capitalize !important;
             }
         }
-
     </style>
 
     <div class="brain-component-wrapper">
