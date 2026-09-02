@@ -18,9 +18,7 @@ html.elementor-popup-modal-open,
 body.elementor-popup-modal-open,
 body.modal-open {
     overflow: hidden !important;
-    height: 100% !important;
     touch-action: none !important;
-    -webkit-overflow-scrolling: auto !important;
     overscroll-behavior: none !important;
 }
 
@@ -33,6 +31,7 @@ body.modal-open {
 .elementor-popup-modal[style*="display:none"],
 .dialog-type-lightbox[style*="display: none"],
 .dialog-type-lightbox[style*="display:none"],
+.elementor-location-popup:not(.dialog-widget-content *):not(.dialog-message *),
 .elementor-location-popup[style*="display: none"],
 .elementor-location-popup[style*="display:none"],
 .dialog-backdrop:not(.dialog-backdrop-active),

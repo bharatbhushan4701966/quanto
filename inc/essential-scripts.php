@@ -268,6 +268,23 @@ add_action( 'wp_footer', function() {
             });
         }
 
+        // Helper to extract popup ID from Elementor action URLs
+        function extractPopupId(href) {
+            if (!href) return null;
+            try {
+                var decoded = decodeURIComponent(href);
+                var match = decoded.match(/settings=([A-Za-z0-9+/=]+)/);
+                if (match && match[1]) {
+                    var jsonStr = atob(match[1]);
+                    var parsed = JSON.parse(jsonStr);
+                    if (parsed && parsed.id) return parseInt(parsed.id);
+                }
+                var idMatch = decoded.match(/id["':=\s]+(\d+)/);
+                if (idMatch && idMatch[1]) return parseInt(idMatch[1]);
+            } catch(e) {}
+            return null;
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             fixProcessDescriptionHTML();
 
@@ -282,7 +299,7 @@ add_action( 'wp_footer', function() {
                     } catch(err) {}
                 }
 
-                document.querySelectorAll('.dialog-widget, .elementor-popup-modal').forEach(function(el) {
+                document.querySelectorAll('.dialog-widget.dialog-type-lightbox, .elementor-popup-modal').forEach(function(el) {
                     el.style.display = 'none';
                     el.style.opacity = '0';
                 });
@@ -292,26 +309,33 @@ add_action( 'wp_footer', function() {
                 var crModal = document.getElementById('cmr-review-modal');
                 if (crModal) crModal.style.display = 'none';
 
-                setTimeout(checkActiveModals, 20);
+                setTimeout(checkActiveModals, 30);
             }
 
-            // Function to open popup by ID
-            function openPopup(id) {
-                // First close/hide all other popups cleanly
-                document.querySelectorAll('.dialog-widget, .elementor-popup-modal').forEach(function(el) {
-                    el.style.display = 'none';
-                    el.style.opacity = '0';
+            // Function to open popup by ID cleanly and reliably
+            function openPopup(id, triggerEl) {
+                id = parseInt(id);
+                if (!id) return;
+
+                // Remove previous hide overrides on target popup
+                var targets = document.querySelectorAll(
+                    '.elementor-popup-modal[data-elementor-id="' + id + '"], ' +
+                    '.dialog-widget[data-elementor-id="' + id + '"], ' +
+                    '#elementor-popup-modal-' + id + ', ' +
+                    '.elementor-' + id
+                );
+                targets.forEach(function(el) {
+                    el.style.removeProperty('display');
+                    el.style.removeProperty('opacity');
+                    el.style.removeProperty('visibility');
                 });
 
-                // Target specific popup
-                var target = document.querySelector('.elementor-popup-modal[data-elementor-id="' + id + '"], .dialog-widget[data-elementor-id="' + id + '"], #elementor-popup-modal-' + id);
-                if (target) {
-                    target.style.display = '';
-                    target.style.opacity = '';
-                }
-
                 if (typeof elementorProFrontend !== 'undefined' && elementorProFrontend.modules && elementorProFrontend.modules.popup) {
-                    elementorProFrontend.modules.popup.showPopup({ id: parseInt(id) });
+                    try {
+                        elementorProFrontend.modules.popup.showPopup({ id: id }, triggerEl);
+                    } catch(err) {
+                        console.error(err);
+                    }
                 }
 
                 document.documentElement.classList.add('cmr-modal-open');
@@ -319,24 +343,44 @@ add_action( 'wp_footer', function() {
                 setTimeout(checkActiveModals, 50);
             }
 
-            // Handle popup open triggers: isolate only the targeted popup
+            // Unified click handler for all popups
             document.body.addEventListener('click', function(e) {
-                var reportTrigger = e.target.closest('.open-report-popup, .slide-cta-button, [href="#open-report-popup"]');
-                if (reportTrigger) {
-                    e.preventDefault();
-                    openPopup(7758);
-                    return;
+                // 1. Check if clicked element or parent is a popup trigger
+                var trigger = e.target.closest(
+                    'a[href*="popup:open"], a[href*="elementor-action"], ' +
+                    '.open-report-popup, .slide-cta-button, [href="#open-report-popup"], ' +
+                    '.open-popup, .custom-talk-analyst-btn, [href="#open-popup"], ' +
+                    '[data-elementor-open-popup], [data-popup-id]'
+                );
+
+                if (trigger) {
+                    var href = trigger.getAttribute('href') || '';
+                    var popupId = null;
+
+                    if (trigger.classList.contains('open-report-popup') || trigger.classList.contains('slide-cta-button') || href === '#open-report-popup') {
+                        popupId = 7758;
+                    } else if (trigger.classList.contains('open-popup') || trigger.classList.contains('custom-talk-analyst-btn') || href === '#open-popup') {
+                        popupId = 7637;
+                    } else if (trigger.getAttribute('data-popup-id')) {
+                        popupId = parseInt(trigger.getAttribute('data-popup-id'));
+                    } else if (href.indexOf('7832') !== -1) {
+                        popupId = 7832;
+                    } else if (href.indexOf('7849') !== -1) {
+                        popupId = 7849;
+                    } else {
+                        popupId = extractPopupId(href);
+                    }
+
+                    if (popupId) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        openPopup(popupId, trigger);
+                        return;
+                    }
                 }
 
-                var generalPopupTrigger = e.target.closest('.open-popup, .custom-talk-analyst-btn, [href="#open-popup"]');
-                if (generalPopupTrigger) {
-                    e.preventDefault();
-                    openPopup(7637);
-                    return;
-                }
-
-                // Handle close button click
-                var closeBtn = e.target.closest('.dialog-close-button, .dialog-lightbox-close-button, .btn-close, .mfp-close, #cmr-close-review-modal');
+                // 2. Handle close button click
+                var closeBtn = e.target.closest('.dialog-close-button, .dialog-lightbox-close-button, .btn-close, .mfp-close, #cmr-close-review-modal, #cmr-review-modal-close');
                 if (closeBtn) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -344,8 +388,8 @@ add_action( 'wp_footer', function() {
                     return;
                 }
 
-                // Close on clicking backdrop (outside dialog content)
-                if (e.target.classList.contains('dialog-type-lightbox') || e.target.classList.contains('dialog-widget') || e.target.classList.contains('dialog-backdrop')) {
+                // 3. Close on clicking backdrop (outside dialog content)
+                if (e.target.classList.contains('dialog-type-lightbox') || e.target.classList.contains('dialog-widget') || e.target.classList.contains('dialog-backdrop') || e.target.id === 'cmr-review-modal-overlay') {
                     e.preventDefault();
                     closeAllModals(e);
                 }
@@ -358,7 +402,7 @@ add_action( 'wp_footer', function() {
                 }
             });
 
-            // Lightweight event hooks for Elementor & Bootstrap
+            // Event hooks for Elementor & Bootstrap
             if (window.jQuery) {
                 jQuery(document).on('elementor/popup/show', checkActiveModals);
                 jQuery(document).on('elementor/popup/hide', function() {
