@@ -389,54 +389,62 @@ max-width:512px !important ;
   }
 }
 
-/* WHAT WE DO - Service Box 4 Cards (Bootstrap Style) */
+/* WHAT WE DO - Service Box 4 (Desktop Row Layout) */
 .quanto-service-box4 {
-  background-color: #F8F9FA !important;
-  border: none !important;
-  border-top: none !important;
-  border-radius: 16px !important;
-  padding: 40px 32px !important;
-  margin-bottom: 24px !important;
   display: flex !important;
-  flex-direction: column !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
   align-items: flex-start !important;
-  transition: all 0.3s ease !important;
+  gap: 30px !important;
+  border: none !important;
+  border-top: 1px solid #E5E5E5 !important;
+  border-radius: 0 !important;
+  padding: 50px 0 !important;
+  margin-bottom: 0 !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  transition: all 0.2s linear !important;
   overflow: hidden;
 }
 
-.quanto-service-box4:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-}
-
 .quanto-service-box4:last-child {
+  border-bottom: 1px solid #E5E5E5 !important;
   margin-bottom: 0 !important;
 }
 
+.quanto-service-box4:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
 .quanto-service-box4 .quanto-iconbox-icon {
-  order: 1 !important;
-  margin-bottom: 24px !important;
+  order: 0 !important;
+  flex-shrink: 0 !important;
+  width: 60px !important;
+  margin-bottom: 0 !important;
 }
 
 .quanto-service-box4 .quanto-iconbox-icon img,
 .quanto-service-box4 .quanto-iconbox-icon svg,
 .quanto-service-box4 img,
 .quanto-service-box4 svg {
-  width: 38px !important;
-  height: 38px !important;
+  width: 48px !important;
+  height: 48px !important;
   object-fit: contain !important;
 }
 
 .quanto-service-box4 .service-title {
-  order: 2 !important;
+  order: 1 !important;
   visibility: visible !important;
-  font-size: 24px !important;
-  font-weight: 600 !important;
+  width: 340px !important;
+  max-width: 340px !important;
+  flex-shrink: 0 !important;
+  font-size: 38px !important;
+  font-weight: 700 !important;
+  line-height: 1.15 !important;
+  letter-spacing: -1.5px !important;
   color: #0F0F0F !important;
-  margin-bottom: 16px !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  letter-spacing: -0.5px !important;
+  margin-bottom: 0 !important;
 }
 
 .quanto-service-box4 .service-title span {
@@ -444,14 +452,15 @@ max-width:512px !important ;
 }
 
 .quanto-service-box4 .service-info {
-  order: 3 !important;
+  order: 2 !important;
+  max-width: 520px !important;
   width: 100% !important;
-  max-width: 100% !important;
+  flex-shrink: 1 !important;
 }
 
 .quanto-service-box4 .service-info p {
-  font-size: 15px !important;
-  line-height: 1.65 !important;
+  font-size: 16px !important;
+  line-height: 26px !important;
   color: #333333 !important;
   margin-bottom: 24px !important;
 }
@@ -473,6 +482,64 @@ max-width:512px !important ;
 .quanto-service-box4:hover .quanto-link-btn {
   opacity: 1 !important;
   color: #000 !important;
+}
+
+/* MOBILE VIEW (max-width: 991.98px) - Clean Card Layout */
+@media only screen and (max-width: 991.98px) {
+  .quanto-service-box4 {
+    background-color: #F8F9FA !important;
+    border: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    border-radius: 16px !important;
+    padding: 36px 26px !important;
+    margin-bottom: 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0 !important;
+  }
+
+  .quanto-service-box4:last-child {
+    border-bottom: none !important;
+    margin-bottom: 0 !important;
+  }
+
+  .quanto-service-box4 .quanto-iconbox-icon {
+    order: 1 !important;
+    width: auto !important;
+    margin-bottom: 20px !important;
+  }
+
+  .quanto-service-box4 .quanto-iconbox-icon img,
+  .quanto-service-box4 .quanto-iconbox-icon svg,
+  .quanto-service-box4 img,
+  .quanto-service-box4 svg {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  .quanto-service-box4 .service-title {
+    order: 2 !important;
+    font-size: 24px !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.5px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-bottom: 14px !important;
+  }
+
+  .quanto-service-box4 .service-info {
+    order: 3 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .quanto-service-box4 .service-info p {
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+    margin-bottom: 20px !important;
+  }
 }/* End custom CSS */
 /* Start custom CSS for button, class: .elementor-element-162e092 *//* Outer wrapper */
 .download-btn {
