@@ -6707,7 +6707,7 @@ ins {
     flex-wrap: nowrap !important;
     overflow-x: auto !important;
     overflow-y: hidden !important;
-    gap: 10px !important;
+    gap: 0 !important;
     padding: 0 12px 20px 12px !important;
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
