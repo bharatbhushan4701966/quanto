@@ -953,16 +953,17 @@ body.modal-open {
 
 /* --- Mobile Devices (max-width: 767px) --- */
 @media (max-width: 767px) {
-    /* 1. Default Open State: Centered Vertically & Horizontally */
+    /* 1. Default Open State: Centered Vertically & Horizontally with Smooth Bi-directional Scroll */
     .dialog-widget.dialog-type-lightbox,
     .dialog-widget.dialog-lightbox-widget,
     .elementor-popup-modal,
     .modal,
     #cmr-review-modal-overlay {
-        padding: 16px 12px !important;
+        padding: 20px 14px !important;
         display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
         align-items: center !important;
-        justify-content: center !important;
         overflow-y: auto !important;
         -webkit-overflow-scrolling: touch !important;
         overscroll-behavior: contain !important;
@@ -979,10 +980,9 @@ body.modal-open {
     .elementor-popup-modal .e-con-inner {
         width: 100% !important;
         max-width: 100% !important;
-        max-height: 92vh !important;
+        max-height: none !important;
         height: auto !important;
-        overflow-y: auto !important;
-        -webkit-overflow-scrolling: touch !important;
+        overflow: visible !important;
         margin: auto !important;
         transition: transform 0.25s ease, margin 0.25s ease !important;
     }
@@ -997,7 +997,6 @@ body.modal-open {
     body.cmr-keyboard-active .elementor-popup-modal,
     body.cmr-keyboard-active .modal,
     body.cmr-keyboard-active #cmr-review-modal-overlay {
-        align-items: flex-start !important;
         padding-top: 15px !important;
         padding-bottom: 300px !important;
     }
@@ -1007,7 +1006,7 @@ body.modal-open {
     body.cmr-keyboard-active .elementor-popup-modal .dialog-widget-content,
     .cmr-keyboard-active .dialog-widget-content {
         margin-top: 10px !important;
-        margin-bottom: 120px !important;
+        margin-bottom: auto !important;
         max-height: none !important;
     }
 

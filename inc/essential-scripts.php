@@ -331,7 +331,10 @@ add_action( 'wp_footer', function() {
                     el.style.removeProperty('display');
                     el.style.removeProperty('opacity');
                     el.style.removeProperty('visibility');
+                    el.scrollTop = 0;
+                    el.classList.remove('cmr-keyboard-active');
                 });
+                document.body.classList.remove('cmr-keyboard-active');
 
                 if (typeof elementorProFrontend !== 'undefined' && elementorProFrontend.modules && elementorProFrontend.modules.popup) {
                     try {
@@ -441,7 +444,7 @@ add_action( 'wp_footer', function() {
                 }
             }, true);
 
-            // Restore Center Alignment when input loses focus
+            // Restore Center Alignment when input loses focus (smooth recenter)
             document.addEventListener('focusout', function(e) {
                 if (window.innerWidth <= 768) {
                     var target = e.target;
@@ -452,6 +455,11 @@ add_action( 'wp_footer', function() {
                             if (!stillInInput) {
                                 document.querySelectorAll('.cmr-keyboard-active').forEach(function(el) {
                                     el.classList.remove('cmr-keyboard-active');
+                                    try {
+                                        el.scrollTo({ top: 0, behavior: 'smooth' });
+                                    } catch(err) {
+                                        el.scrollTop = 0;
+                                    }
                                 });
                                 document.body.classList.remove('cmr-keyboard-active');
                             }
