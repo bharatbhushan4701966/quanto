@@ -124,7 +124,9 @@
     width: max-content;
 }/* End custom CSS */
 /* Start custom CSS for quanto_process, class: .elementor-element-85d6744 *//* ===== WRAPPER ===== */
-.process-box-wrapper {
+.process-box-wrapper,
+div.process-box-wrapper.horizontal-scroll,
+body .elementor-element .process-box-wrapper {
   counter-reset: process-number;
   display: flex;
   flex-wrap: nowrap;
@@ -221,7 +223,9 @@ max-width:512px !important ;
     padding-right: 0 !important;
   }
 
-  .process-box-wrapper {
+  .process-box-wrapper,
+  div.process-box-wrapper.horizontal-scroll,
+  body .elementor-element .process-box-wrapper {
     display: flex !important;
     flex-wrap: nowrap !important;
     overflow-x: auto !important;

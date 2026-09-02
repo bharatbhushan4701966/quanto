@@ -6678,7 +6678,9 @@ ins {
   overflow: hidden;
 }
 
-.process-box-wrapper {
+.process-box-wrapper,
+div.process-box-wrapper.horizontal-scroll,
+body .elementor-element .process-box-wrapper {
   counter-reset: process-number;
   display: flex;
   flex-wrap: nowrap;
@@ -6688,13 +6690,17 @@ ins {
 }
 
 @media only screen and (max-width: 1399.98px) {
-  .process-box-wrapper {
+  .process-box-wrapper,
+  div.process-box-wrapper.horizontal-scroll,
+  body .elementor-element .process-box-wrapper {
     gap: 20px !important;
   }
 }
 
 @media only screen and (max-width: 1199.98px) {
-  .process-box-wrapper {
+  .process-box-wrapper,
+  div.process-box-wrapper.horizontal-scroll,
+  body .elementor-element .process-box-wrapper {
     gap: 20px !important;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -6702,7 +6708,9 @@ ins {
 }
 
 @media only screen and (max-width: 767.98px) {
-  .process-box-wrapper {
+  .process-box-wrapper,
+  div.process-box-wrapper.horizontal-scroll,
+  body .elementor-element .process-box-wrapper {
     display: flex !important;
     flex-wrap: nowrap !important;
     overflow-x: auto !important;

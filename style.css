@@ -3478,9 +3478,10 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     }
 
     .process-box-wrapper,
-    .process-box-wrapper.horizontal-scroll {
+    .process-box-wrapper.horizontal-scroll,
+    div.process-box-wrapper.horizontal-scroll,
+    body .elementor-element .process-box-wrapper {
         display: flex !important;
-        flex-direction: row !important;
         flex-wrap: nowrap !important;
         overflow-x: auto !important;
         overflow-y: hidden !important;
