@@ -3880,109 +3880,88 @@ ins {
 }
 
 .quanto-service-box4 {
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
-  gap: 15px;
-  border-top: 1px solid var(--color-1);
-  padding: 55px 0;
-  transition: all 0.2s linear;
+  background-color: #F8F9FA !important;
+  border: none !important;
+  border-top: none !important;
+  border-radius: 16px !important;
+  padding: 40px 32px !important;
+  margin-bottom: 24px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  transition: all 0.3s ease !important;
   overflow: hidden;
 }
 
+.quanto-service-box4:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
 .quanto-service-box4:last-child {
-  padding-bottom: 0;
+  margin-bottom: 0 !important;
 }
 
-@media only screen and (max-width: 991.98px) {
-  .quanto-service-box4 {
-    flex-direction: column;
-  }
+.quanto-service-box4 .quanto-iconbox-icon {
+  order: 1 !important;
+  margin-bottom: 24px !important;
 }
 
-@media only screen and (min-width: 992px) {
-  .quanto-service-box4 {
-    padding: 55px 0;
-  }
-
-  .quanto-service-box4:last-child {
-    padding-bottom: 0px;
-  }
-}
-
-.service-title {
-  visibility: hidden;
+.quanto-service-box4 .quanto-iconbox-icon img,
+.quanto-service-box4 .quanto-iconbox-icon svg,
+.quanto-service-box4 img,
+.quanto-service-box4 svg {
+  width: 38px !important;
+  height: 38px !important;
+  object-fit: contain !important;
 }
 
 .quanto-service-box4 .service-title {
-  max-width: 306px;
-  width: 100%;
-  flex-shrink: 0;
+  order: 2 !important;
+  visibility: visible !important;
+  font-size: 24px !important;
+  font-weight: 600 !important;
+  color: #0F0F0F !important;
+  margin-bottom: 16px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  letter-spacing: -0.5px !important;
 }
 
-@media only screen and (max-width: 1199.98px) {
-  .quanto-service-box4 .service-title {
-    max-width: 300px;
-  }
-}
-
-@media only screen and (max-width: 991.98px) {
-  .quanto-service-box4 .service-title {
-    max-width: 100%;
-    order: 1;
-  }
+.quanto-service-box4 .service-title span {
+  display: none !important;
 }
 
 .quanto-service-box4 .service-info {
-  max-width: 680px;
-  width: 100%;
-  flex-shrink: 0;
-  position: relative;
+  order: 3 !important;
+  width: 100% !important;
+  max-width: 100% !important;
 }
 
-@media only screen and (max-width: 1199.98px) {
-  .quanto-service-box4 .service-info {
-    max-width: 400px;
-  }
+.quanto-service-box4 .service-info p {
+  font-size: 15px !important;
+  line-height: 1.65 !important;
+  color: #333333 !important;
+  margin-bottom: 24px !important;
 }
 
-@media only screen and (max-width: 991.98px) {
-  .quanto-service-box4 .service-info {
-    order: 2;
-    max-width: 100%;
-  }
+.quanto-service-box4 .service-info a,
+.quanto-service-box4 .quanto-link-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: #0F0F0F !important;
+  text-decoration: underline !important;
+  margin-top: 0 !important;
+  opacity: 1 !important;
 }
 
-.quanto-service-box4 .service-info a {
-  margin-top: 20px;
-}
-
-@media only screen and (min-width: 992px) {
-  .quanto-service-box4 .service-info a {
-    opacity: 1;
-  }
-}
-
-.quanto-service-box4 svg {
-  width: 52px;
-  height: 52px;
-  flex-shrink: 0;
-  display: grid;
-  place-content: center;
-  color: var(--color-primary);
-}
-
-@media only screen and (max-width: 991.98px) {
-  .quanto-service-box4 svg {
-    order: 0;
-    margin-bottom: 20px;
-  }
-}
-
-@media only screen and (min-width: 992px) {
-  .quanto-service-box4:hover .service-info a {
-    opacity: 1;
-  }
+.quanto-service-box4:hover .service-info a,
+.quanto-service-box4:hover .quanto-link-btn {
+  opacity: 1 !important;
+  color: #000 !important;
 }
 
 .quanto-service-box5 {
