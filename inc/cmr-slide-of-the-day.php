@@ -13,9 +13,16 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             --text-white: #ffffff;
             --transition-smooth: all 0.8s cubic-bezier(0.33, 1, 0.68, 1);
         }
-        /* Target the parent container using its ID to safely make it black */
-        #slide {
+        /* Target the parent container and all wrappers to make them seamless black */
+        #slide,
+        .brain,
+        .elementor-element-12ee4ee,
+        .elementor-element-12ee4ee > .e-con-inner,
+        .elementor-element-5a5e00d,
+        .elementor-element-0cb331f,
+        .brain-component-wrapper {
             background-color: #000000 !important;
+            background: #000000 !important;
         }
         
         /* ===== SLIDE OF DAY ICON ===== */
@@ -201,13 +208,24 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
 
         @media (max-width: 768px) {
             #slide,
+            .brain,
+            .elementor-element-12ee4ee,
+            .elementor-element-12ee4ee > .e-con-inner,
+            .elementor-element-5a5e00d,
+            .elementor-element-0cb331f,
             .brain-component-wrapper {
                 background-color: #000000 !important;
-                padding: 40px 16px 50px 16px !important;
-                overflow: visible !important;
+                background: #000000 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                min-height: 0 !important;
                 height: auto !important;
                 max-height: none !important;
-                margin: 0 !important;
+                overflow: visible !important;
+            }
+
+            .brain-component-wrapper {
+                padding: 40px 16px 50px 16px !important;
             }
 
             .slide-spacer {
