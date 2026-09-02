@@ -252,8 +252,9 @@ body.modal-open {
 .elementor-element.elementor-element-4dd37a6,
 .elementor-element.elementor-element-2371b89 {
     padding: 0 !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
     width: 100% !important;
+    max-width: 950px !important;
     background: transparent !important;
     border: none !important;
     min-height: 0 !important;
@@ -298,7 +299,8 @@ body.modal-open {
     flex-direction: row !important;
     align-items: stretch !important;
     width: 100% !important;
-    margin: 0 !important;
+    max-width: 950px !important;
+    margin: 0 auto !important;
     padding: 0 !important;
     gap: 0 !important;
     grid-template-columns: none !important;
@@ -310,7 +312,7 @@ body.modal-open {
     box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* --- LEFT COLUMN: Deep Purple / Blue Side --- */
+/* --- LEFT COLUMN: Purple / Teal Side --- */
 .elementor-7758 .elementor-element-fc8da81,
 .elementor-7637 .elementor-element-5f053ae,
 .elementor-7832 .elementor-element-2f9a6aa,
@@ -322,9 +324,7 @@ body.modal-open {
     flex: 0 0 46% !important;
     width: 46% !important;
     max-width: 46% !important;
-    background-color: #0047eb !important;
-    background: #0047eb !important;
-    padding: 48px 42px !important;
+    padding: 44px 38px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
@@ -342,6 +342,14 @@ body.modal-open {
     background: #4318d1 !important;
 }
 
+.elementor-7832 .elementor-element-2f9a6aa,
+.elementor-7849 .elementor-element-3d97663,
+.elementor-popup-modal .elementor-element-2f9a6aa,
+.elementor-popup-modal .elementor-element-3d97663 {
+    background-color: #00bba6 !important;
+    background: #00bba6 !important;
+}
+
 .elementor-7832 .elementor-element-ae8915e p,
 .elementor-7849 .elementor-element-6ae161a p,
 .elementor-popup-modal .elementor-element-2f9a6aa .elementor-element-ae8915e p,
@@ -351,7 +359,7 @@ body.modal-open {
     letter-spacing: 1.5px !important;
     text-transform: uppercase !important;
     font-weight: 600 !important;
-    color: rgba(255, 255, 255, 0.75) !important;
+    color: rgba(255, 255, 255, 0.8) !important;
     margin: 0 0 12px 0 !important;
 }
 
@@ -366,7 +374,7 @@ body.modal-open {
     justify-content: center !important;
 }
 
-/* Left Title (H2. Headline: SemiBold 600, 38px-40px, -1.5px) */
+/* Left Title (H2. Headline: SemiBold 600, 36px, -1.2px) */
 .elementor-7758 .elementor-element-e5f2560 h2,
 .elementor-7637 .elementor-element-f9d72d8 h2,
 .elementor-7832 .elementor-element-7ccdac7 h2,
@@ -376,10 +384,10 @@ body.modal-open {
 .elementor-popup-modal .elementor-element-2f9a6aa h2,
 .elementor-popup-modal .elementor-element-3d97663 h2 {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 38px !important;
+    font-size: 36px !important;
     font-weight: 600 !important;
-    line-height: 46px !important;
-    letter-spacing: -1.5px !important;
+    line-height: 44px !important;
+    letter-spacing: -1.2px !important;
     color: #ffffff !important;
     margin: 0 0 16px 0 !important;
     text-transform: none !important;
@@ -388,26 +396,34 @@ body.modal-open {
 /* Left Description Text */
 .elementor-7758 .elementor-element-1938802,
 .elementor-7637 .elementor-element-2edfb42,
+.elementor-7832 .elementor-element-e81e06c p,
+.elementor-7849 .elementor-element-ae96706 p,
 .elementor-popup-modal .elementor-element-fc8da81 p,
-.elementor-popup-modal .elementor-element-5f053ae p {
+.elementor-popup-modal .elementor-element-5f053ae p,
+.elementor-popup-modal .elementor-element-2f9a6aa p,
+.elementor-popup-modal .elementor-element-3d97663 p {
     font-family: 'Instrument Sans', sans-serif !important;
     font-size: 15px !important;
     font-weight: 400 !important;
     line-height: 24px !important;
     letter-spacing: 0px !important;
     color: rgba(255, 255, 255, 0.9) !important;
-    margin: 0 0 32px 0 !important;
+    margin: 0 0 24px 0 !important;
 }
 
 /* Left Bullet List with Icons */
 .elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-items,
 .elementor-7637 .elementor-element-32ec6cc .elementor-icon-list-items,
 .elementor-7637 .elementor-element-a35c3d8 .elementor-icon-list-items,
+.elementor-7832 .elementor-element-2122c0a .elementor-icon-list-items,
+.elementor-7849 .elementor-element-bb13090 .elementor-icon-list-items,
 .elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-items,
-.elementor-popup-modal .elementor-element-5f053ae .elementor-icon-list-items {
+.elementor-popup-modal .elementor-element-5f053ae .elementor-icon-list-items,
+.elementor-popup-modal .elementor-element-2f9a6aa .elementor-icon-list-items,
+.elementor-popup-modal .elementor-element-3d97663 .elementor-icon-list-items {
     display: flex !important;
     flex-direction: column !important;
-    gap: 18px !important;
+    gap: 16px !important;
     padding: 0 !important;
     margin: 0 !important;
     list-style: none !important;
@@ -416,12 +432,16 @@ body.modal-open {
 .elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-item,
 .elementor-7637 .elementor-element-32ec6cc .elementor-icon-list-item,
 .elementor-7637 .elementor-element-a35c3d8 .elementor-icon-list-item,
+.elementor-7832 .elementor-element-2122c0a .elementor-icon-list-item,
+.elementor-7849 .elementor-element-bb13090 .elementor-icon-list-item,
 .elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-item,
-.elementor-popup-modal .elementor-element-5f053ae .elementor-icon-list-item {
+.elementor-popup-modal .elementor-element-5f053ae .elementor-icon-list-item,
+.elementor-popup-modal .elementor-element-2f9a6aa .elementor-icon-list-item,
+.elementor-popup-modal .elementor-element-3d97663 .elementor-icon-list-item {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    gap: 14px !important;
+    gap: 12px !important;
     margin: 0 !important;
     padding: 0 !important;
 }
@@ -429,13 +449,17 @@ body.modal-open {
 .elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-icon,
 .elementor-7637 .elementor-element-32ec6cc .elementor-icon-list-icon,
 .elementor-7637 .elementor-element-a35c3d8 .elementor-icon-list-icon,
+.elementor-7832 .elementor-element-2122c0a .elementor-icon-list-icon,
+.elementor-7849 .elementor-element-bb13090 .elementor-icon-list-icon,
 .elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-icon,
-.elementor-popup-modal .elementor-element-5f053ae .elementor-icon-list-icon {
+.elementor-popup-modal .elementor-element-5f053ae .elementor-icon-list-icon,
+.elementor-popup-modal .elementor-element-2f9a6aa .elementor-icon-list-icon,
+.elementor-popup-modal .elementor-element-3d97663 .elementor-icon-list-icon {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    width: 22px !important;
-    height: 22px !important;
+    width: 20px !important;
+    height: 20px !important;
     flex-shrink: 0 !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -524,37 +548,52 @@ body.modal-open {
 .elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-icon svg,
 .elementor-7637 .elementor-element-32ec6cc .elementor-icon-list-icon svg,
 .elementor-7637 .elementor-element-a35c3d8 .elementor-icon-list-icon svg,
-.elementor-popup-modal .elementor-icon-list-icon svg {
+.elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-icon svg,
+.elementor-popup-modal .elementor-element-5f053ae .elementor-icon-list-icon svg {
     display: none !important;
 }
 
 .elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-text,
 .elementor-7637 .elementor-element-32ec6cc .elementor-icon-list-text,
 .elementor-7637 .elementor-element-a35c3d8 .elementor-icon-list-text,
+.elementor-7832 .elementor-element-2122c0a .elementor-icon-list-text,
+.elementor-7849 .elementor-element-bb13090 .elementor-icon-list-text,
 .elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-text,
-.elementor-popup-modal .elementor-element-5f053ae .elementor-icon-list-text {
+.elementor-popup-modal .elementor-element-5f053ae .elementor-icon-list-text,
+.elementor-popup-modal .elementor-element-2f9a6aa .elementor-icon-list-text,
+.elementor-popup-modal .elementor-element-3d97663 .elementor-icon-list-text {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 15px !important;
+    font-size: 14.5px !important;
     font-weight: 500 !important;
     line-height: 1.3 !important;
     color: #ffffff !important;
     white-space: nowrap !important;
 }
 
+/* Left Bottom Note (Trusted by 10,000+) */
+.elementor-7832 .elementor-element-f7bc24a .elementor-icon-list-text,
+.elementor-7849 .elementor-element-fcfa559 .elementor-icon-list-text {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 12.5px !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+    white-space: normal !important;
+}
+
 /* --- RIGHT COLUMN: White Form Side --- */
 .elementor-7758 .elementor-element-5609af6,
 .elementor-7637 .elementor-element-49c9d22,
 .elementor-7832 .elementor-element-a26a79a,
-.elementor-7849 .elementor-element-804d4ea,
+.elementor-7849 .elementor-element-2123f86,
 .elementor-popup-modal .elementor-element-5609af6,
 .elementor-popup-modal .elementor-element-49c9d22,
-.elementor-popup-modal .elementor-element-a26a79a {
+.elementor-popup-modal .elementor-element-a26a79a,
+.elementor-popup-modal .elementor-element-2123f86 {
     flex: 0 0 54% !important;
     width: 54% !important;
     max-width: 54% !important;
     background-color: #ffffff !important;
     background: #ffffff !important;
-    padding: 40px 45px !important;
+    padding: 38px 42px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
@@ -567,17 +606,18 @@ body.modal-open {
 .elementor-7758 .elementor-element-b034026 h2,
 .elementor-7637 .elementor-element-c26c6d0 h2,
 .elementor-7832 .elementor-element-112e4d5 h2,
-.elementor-7849 .elementor-element-112e4d5 h2,
+.elementor-7849 .elementor-element-004d71c h2,
 .elementor-popup-modal .elementor-element-5609af6 h2,
 .elementor-popup-modal .elementor-element-49c9d22 h2,
-.elementor-popup-modal .elementor-element-a26a79a h2 {
+.elementor-popup-modal .elementor-element-a26a79a h2,
+.elementor-popup-modal .elementor-element-2123f86 h2 {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 34px !important;
+    font-size: 32px !important;
     font-weight: 600 !important;
-    line-height: 42px !important;
+    line-height: 40px !important;
     letter-spacing: -0.2px !important;
     color: #111827 !important;
-    margin: 0 0 6px 0 !important;
+    margin: 0 0 8px 0 !important;
     text-transform: none !important;
 }
 
@@ -589,14 +629,14 @@ body.modal-open {
     letter-spacing: 1px !important;
     text-transform: uppercase !important;
     color: #4b5563 !important;
-    margin: 12px 0 10px 0 !important;
+    margin: 10px 0 8px 0 !important;
 }
 
 .custom-subscribe-form .subscription-item {
     display: flex !important;
     align-items: flex-start !important;
-    gap: 12px !important;
-    margin-bottom: 12px !important;
+    gap: 10px !important;
+    margin-bottom: 10px !important;
     cursor: pointer !important;
 }
 
@@ -611,7 +651,7 @@ body.modal-open {
 
 .custom-subscribe-form .subscription-content .title {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 14px !important;
+    font-size: 13.5px !important;
     font-weight: 600 !important;
     color: #111827 !important;
     line-height: 1.2 !important;
@@ -623,7 +663,7 @@ body.modal-open {
     font-weight: 400 !important;
     color: #6b7280 !important;
     margin-top: 2px !important;
-    line-height: 1.4 !important;
+    line-height: 1.3 !important;
 }
 
 .custom-subscribe-form .spam-note,
@@ -981,10 +1021,11 @@ body.modal-open {
     .elementor-7758 .elementor-element-5609af6,
     .elementor-7637 .elementor-element-49c9d22,
     .elementor-7832 .elementor-element-a26a79a,
-    .elementor-7849 .elementor-element-804d4ea,
+    .elementor-7849 .elementor-element-2123f86,
     .elementor-popup-modal .elementor-element-5609af6,
     .elementor-popup-modal .elementor-element-49c9d22,
     .elementor-popup-modal .elementor-element-a26a79a,
+    .elementor-popup-modal .elementor-element-2123f86,
     .elementor-popup-modal .elementor-element-1d1d0d3 > .elementor-element:last-child,
     .elementor-popup-modal .elementor-element-2eeace2 > .elementor-element:last-child,
     .elementor-popup-modal .elementor-element-d33c8e6 > .elementor-element:last-child,
@@ -999,10 +1040,11 @@ body.modal-open {
     .elementor-7758 .elementor-element-b034026 h2,
     .elementor-7637 .elementor-element-c26c6d0 h2,
     .elementor-7832 .elementor-element-112e4d5 h2,
-    .elementor-7849 .elementor-element-112e4d5 h2,
+    .elementor-7849 .elementor-element-004d71c h2,
     .elementor-popup-modal .elementor-element-5609af6 h2,
     .elementor-popup-modal .elementor-element-49c9d22 h2,
-    .elementor-popup-modal .elementor-element-a26a79a h2 {
+    .elementor-popup-modal .elementor-element-a26a79a h2,
+    .elementor-popup-modal .elementor-element-2123f86 h2 {
         font-size: 26px !important;
         line-height: 32px !important;
         margin-bottom: 6px !important;
@@ -1085,20 +1127,22 @@ body.modal-open {
     .elementor-7758 .elementor-element-5609af6,
     .elementor-7637 .elementor-element-49c9d22,
     .elementor-7832 .elementor-element-a26a79a,
-    .elementor-7849 .elementor-element-804d4ea,
+    .elementor-7849 .elementor-element-2123f86,
     .elementor-popup-modal .elementor-element-5609af6,
     .elementor-popup-modal .elementor-element-49c9d22,
-    .elementor-popup-modal .elementor-element-a26a79a {
+    .elementor-popup-modal .elementor-element-a26a79a,
+    .elementor-popup-modal .elementor-element-2123f86 {
         padding: 26px 18px 24px 18px !important;
     }
 
     .elementor-7758 .elementor-element-b034026 h2,
     .elementor-7637 .elementor-element-c26c6d0 h2,
     .elementor-7832 .elementor-element-112e4d5 h2,
-    .elementor-7849 .elementor-element-112e4d5 h2,
+    .elementor-7849 .elementor-element-004d71c h2,
     .elementor-popup-modal .elementor-element-5609af6 h2,
     .elementor-popup-modal .elementor-element-49c9d22 h2,
-    .elementor-popup-modal .elementor-element-a26a79a h2 {
+    .elementor-popup-modal .elementor-element-a26a79a h2,
+    .elementor-popup-modal .elementor-element-2123f86 h2 {
         font-size: 22px !important;
         line-height: 28px !important;
     }
