@@ -311,7 +311,7 @@ body.modal-open {
     box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* --- LEFT COLUMN: Purple / Teal Side --- */
+/* --- LEFT COLUMN: Deep Purple Side (All Modals) --- */
 .elementor-7758 .elementor-element-fc8da81,
 .elementor-7637 .elementor-element-5f053ae,
 .elementor-7832 .elementor-element-2f9a6aa,
@@ -329,24 +329,12 @@ body.modal-open {
     justify-content: center !important;
     margin: 0 !important;
     box-sizing: border-box !important;
+    background-color: #4318d1 !important;
+    background: #4318d1 !important;
     color: #ffffff !important;
     align-self: stretch !important;
     border-radius: 16px 0 0 16px !important;
     height: 100% !important;
-}
-
-.elementor-7758 .elementor-element-fc8da81,
-.elementor-7637 .elementor-element-5f053ae {
-    background-color: #4318d1 !important;
-    background: #4318d1 !important;
-}
-
-.elementor-7832 .elementor-element-2f9a6aa,
-.elementor-7849 .elementor-element-3d97663,
-.elementor-popup-modal .elementor-element-2f9a6aa,
-.elementor-popup-modal .elementor-element-3d97663 {
-    background-color: #00bba6 !important;
-    background: #00bba6 !important;
 }
 
 .elementor-7832 .elementor-element-ae8915e p,
