@@ -6683,19 +6683,19 @@ ins {
   display: flex;
   flex-wrap: nowrap;
   justify-content: start;
-  gap: 110px;
+  gap: 20px !important;
   position: relative;
 }
 
 @media only screen and (max-width: 1399.98px) {
   .process-box-wrapper {
-    gap: 80px;
+    gap: 20px !important;
   }
 }
 
 @media only screen and (max-width: 1199.98px) {
   .process-box-wrapper {
-    gap: 40px;
+    gap: 20px !important;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -6707,7 +6707,7 @@ ins {
     flex-wrap: nowrap !important;
     overflow-x: auto !important;
     overflow-y: hidden !important;
-    gap: 0 !important;
+    gap: 20px !important;
     padding: 0 12px 20px 12px !important;
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;

@@ -3484,7 +3484,7 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
         flex-wrap: nowrap !important;
         overflow-x: auto !important;
         overflow-y: hidden !important;
-        gap: 0 !important;
+        gap: 20px !important;
         padding: 0 12px 20px 12px !important;
         scroll-snap-type: x mandatory !important;
         -webkit-overflow-scrolling: touch !important;

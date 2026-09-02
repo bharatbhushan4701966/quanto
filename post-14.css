@@ -129,7 +129,7 @@
   display: flex;
   flex-wrap: nowrap;
   justify-content: flex-start;
-  gap: 35px !important;   /* final spacing */
+  gap: 20px !important;
   position: relative;
 }
 
@@ -226,7 +226,7 @@ max-width:512px !important ;
     flex-wrap: nowrap !important;
     overflow-x: auto !important;
     overflow-y: hidden !important;
-    gap: 0 !important;
+    gap: 20px !important;
     padding: 0 12px 20px 12px !important;
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
