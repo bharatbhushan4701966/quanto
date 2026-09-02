@@ -282,6 +282,94 @@ max-width:512px !important ;
   .custom-btn {
     margin-top: 40px;
   }
+
+  /* Video / Insights Section Mobile Styling */
+  .elementor-14 .elementor-element.elementor-element-275e662 {
+    flex-direction: column !important;
+    gap: 40px !important;
+  }
+
+  .elementor-14 .elementor-element.elementor-element-b82bad4,
+  .elementor-14 .elementor-element.elementor-element-ed5537e {
+    width: 100% !important;
+    margin-bottom: 20px !important;
+  }
+
+  .elementor-14 .elementor-element.elementor-element-9b2ddd6,
+  .elementor-14 .elementor-element.elementor-element-d713748,
+  .elementor-14 .elementor-element.elementor-element-9b2ddd6 iframe,
+  .elementor-14 .elementor-element.elementor-element-d713748 iframe,
+  .elementor-14 .elementor-element.elementor-element-9b2ddd6 video,
+  .elementor-14 .elementor-element.elementor-element-d713748 video {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    aspect-ratio: 16 / 9 !important;
+    width: 100% !important;
+  }
+
+  .elementor-14 .elementor-element.elementor-element-bf85eb0,
+  .elementor-14 .elementor-element.elementor-element-1de6221 {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin-top: 18px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .elementor-14 .elementor-element.elementor-element-bf85eb0 h6:first-child,
+  .elementor-14 .elementor-element.elementor-element-1de6221 h6:first-child,
+  .elementor-14 .e-1fd1573-0ea6203,
+  .elementor-14 .e-ff3f001-b9ccb27 {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #4820B0 !important;
+    letter-spacing: 0.8px !important;
+    text-transform: uppercase !important;
+    margin: 0 !important;
+  }
+
+  .elementor-14 .elementor-element.elementor-element-bf85eb0 h6:last-child,
+  .elementor-14 .elementor-element.elementor-element-1de6221 h6:last-child,
+  .elementor-14 .e-dce2088-db9802c,
+  .elementor-14 .e-05eef5a-fd4033e {
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    color: #555555 !important;
+    margin: 0 !important;
+  }
+
+  .elementor-14 .elementor-element.elementor-element-275e662 h3,
+  .elementor-14 .elementor-element.elementor-element-b82bad4 h3,
+  .elementor-14 .elementor-element.elementor-element-ed5537e h3,
+  .elementor-14 .elementor-element.elementor-element-c49530d h3,
+  .elementor-14 .elementor-element.elementor-element-e5a291e h3,
+  .elementor-14 .e-255acd5-0533542,
+  .elementor-14 .e-bb5a035-8148c2a {
+    font-size: 21px !important;
+    font-weight: 700 !important;
+    line-height: 1.35 !important;
+    color: #0F0F0F !important;
+    margin-top: 10px !important;
+    margin-bottom: 20px !important;
+    letter-spacing: -0.4px !important;
+  }
+
+  .elementor-14 .elementor-element.elementor-element-93c603b .elementor-button,
+  .elementor-14 .elementor-element.elementor-element-e8b38a1 .elementor-button {
+    background-color: #FFFFFF !important;
+    border: 1px solid #000000 !important;
+    border-radius: 40px !important;
+    padding: 10px 24px !important;
+    color: #000000 !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    width: auto !important;
+    max-width: max-content !important;
+  }
 }
 
 /* WHAT WE DO - Service Box 4 Cards (Bootstrap Style) */
