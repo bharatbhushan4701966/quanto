@@ -18,7 +18,6 @@ html.elementor-popup-modal-open,
 body.elementor-popup-modal-open,
 body.modal-open {
     overflow: hidden !important;
-    touch-action: none !important;
     overscroll-behavior: none !important;
 }
 
@@ -58,7 +57,8 @@ body.modal-open {
     right: 0 !important;
     bottom: 0 !important;
     width: 100vw !important;
-    height: 100vh !important;
+    height: 100% !important;
+    max-height: 100dvh !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -67,6 +67,7 @@ body.modal-open {
     -webkit-backdrop-filter: blur(10px) !important;
     z-index: 999999 !important;
     overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
     overscroll-behavior: contain !important;
     padding: 20px !important;
     box-sizing: border-box !important;
@@ -954,9 +955,15 @@ body.modal-open {
 @media (max-width: 767px) {
     .dialog-widget.dialog-type-lightbox,
     .dialog-widget.dialog-lightbox-widget,
-    .elementor-popup-modal {
-        padding: 12px !important;
+    .elementor-popup-modal,
+    .modal,
+    #cmr-review-modal-overlay {
+        padding: 16px 12px 280px 12px !important;
         align-items: flex-start !important;
+        justify-content: center !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        overscroll-behavior: contain !important;
     }
 
     .dialog-widget.dialog-type-lightbox .dialog-widget-content,
@@ -967,10 +974,10 @@ body.modal-open {
     .elementor-popup-modal .e-con-inner {
         width: 100% !important;
         max-width: 100% !important;
-        max-height: 94vh !important;
-        overflow-y: auto !important;
-        -webkit-overflow-scrolling: touch !important;
-        margin: auto !important;
+        max-height: none !important;
+        height: auto !important;
+        overflow: visible !important;
+        margin: 10px auto 140px auto !important;
     }
 
     /* Stack and container setup on mobile */

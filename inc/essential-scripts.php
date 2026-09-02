@@ -414,6 +414,43 @@ add_action( 'wp_footer', function() {
                 });
             }
 
+            // Auto scroll focused input into viewport above mobile virtual keyboard
+            document.addEventListener('focusin', function(e) {
+                if (window.innerWidth <= 768) {
+                    var target = e.target;
+                    if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT')) {
+                        var modal = target.closest('.dialog-widget, .elementor-popup-modal, .modal, #cmr-review-modal');
+                        if (modal) {
+                            setTimeout(function() {
+                                try {
+                                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                } catch(err) {
+                                    target.scrollIntoView(false);
+                                }
+                            }, 300);
+                        }
+                    }
+                }
+            }, true);
+
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener('resize', function() {
+                    if (window.innerWidth <= 768) {
+                        var activeEl = document.activeElement;
+                        if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.tagName === 'SELECT')) {
+                            var modal = activeEl.closest('.dialog-widget, .elementor-popup-modal, .modal, #cmr-review-modal');
+                            if (modal) {
+                                setTimeout(function() {
+                                    try {
+                                        activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                    } catch(err) {}
+                                }, 100);
+                            }
+                        }
+                    }
+                });
+            }
+
             checkActiveModals();
         });
     })();
