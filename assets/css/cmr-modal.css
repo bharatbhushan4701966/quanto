@@ -946,99 +946,81 @@ body.modal-open {
         margin: auto !important;
     }
 
-    /* Stack left and right columns vertically */
+    /* Stack and container setup on mobile */
     .elementor-7758 .elementor-element-1d1d0d3,
     .elementor-7637 .elementor-element-2eeace2,
+    .elementor-7832 .elementor-element-d33c8e6,
+    .elementor-7849 .elementor-element-804d4ea,
     .elementor-popup-modal .elementor-element-1d1d0d3,
-    .elementor-popup-modal .elementor-element-2eeace2 {
+    .elementor-popup-modal .elementor-element-2eeace2,
+    .elementor-popup-modal .elementor-element-d33c8e6,
+    .elementor-popup-modal .elementor-element-804d4ea {
         flex-direction: column !important;
         height: auto !important;
         min-height: auto !important;
+        border-radius: 16px !important;
     }
 
-    /* Top Purple Header Column on Mobile */
+    /* Hide Purple / Left Column completely on Mobile (Applies to ALL 2-Column Popups) */
     .elementor-7758 .elementor-element-fc8da81,
     .elementor-7637 .elementor-element-5f053ae,
+    .elementor-7832 .elementor-element-2f9a6aa,
+    .elementor-7849 .elementor-element-3d97663,
     .elementor-popup-modal .elementor-element-fc8da81,
-    .elementor-popup-modal .elementor-element-5f053ae {
-        width: 100% !important;
-        max-width: 100% !important;
-        flex: 1 1 100% !important;
-        padding: 34px 22px 28px 22px !important;
-        border-radius: 16px 16px 0 0 !important;
-        align-self: auto !important;
+    .elementor-popup-modal .elementor-element-5f053ae,
+    .elementor-popup-modal .elementor-element-2f9a6aa,
+    .elementor-popup-modal .elementor-element-3d97663,
+    .elementor-popup-modal .elementor-element-1d1d0d3 > .elementor-element:first-child,
+    .elementor-popup-modal .elementor-element-2eeace2 > .elementor-element:first-child,
+    .elementor-popup-modal .elementor-element-d33c8e6 > .elementor-element:first-child,
+    .elementor-popup-modal .elementor-element-804d4ea > .elementor-element:first-child {
+        display: none !important;
     }
 
-    .elementor-7758 .elementor-element-e5f2560 h2,
-    .elementor-7637 .elementor-element-f9d72d8 h2,
-    .elementor-popup-modal .elementor-element-fc8da81 h2,
-    .elementor-popup-modal .elementor-element-5f053ae h2 {
-        font-size: 26px !important;
-        line-height: 32px !important;
-        letter-spacing: -0.5px !important;
-        margin-bottom: 10px !important;
-    }
-
-    .elementor-7758 .elementor-element-1938802,
-    .elementor-7637 .elementor-element-2edfb42,
-    .elementor-popup-modal .elementor-element-fc8da81 p,
-    .elementor-popup-modal .elementor-element-5f053ae p {
-        font-size: 14px !important;
-        line-height: 20px !important;
-        margin-bottom: 20px !important;
-    }
-
-    .elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-items,
-    .elementor-7637 .elementor-element-32ec6cc .elementor-icon-list-items,
-    .elementor-7637 .elementor-element-a35c3d8 .elementor-icon-list-items,
-    .elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-items,
-    .elementor-popup-modal .elementor-element-5f053ae .elementor-icon-list-items {
-        gap: 12px !important;
-    }
-
-    .elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-text,
-    .elementor-7637 .elementor-element-32ec6cc .elementor-icon-list-text,
-    .elementor-7637 .elementor-element-a35c3d8 .elementor-icon-list-text,
-    .elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-text,
-    .elementor-popup-modal .elementor-element-5f053ae .elementor-icon-list-text {
-        font-size: 13.5px !important;
-        white-space: normal !important;
-    }
-
-    /* Bottom White Form Column on Mobile */
+    /* Full Width White Form Column on Mobile (Applies to ALL 2-Column Popups) */
     .elementor-7758 .elementor-element-5609af6,
     .elementor-7637 .elementor-element-49c9d22,
+    .elementor-7832 .elementor-element-a26a79a,
+    .elementor-7849 .elementor-element-804d4ea,
     .elementor-popup-modal .elementor-element-5609af6,
-    .elementor-popup-modal .elementor-element-49c9d22 {
+    .elementor-popup-modal .elementor-element-49c9d22,
+    .elementor-popup-modal .elementor-element-a26a79a,
+    .elementor-popup-modal .elementor-element-1d1d0d3 > .elementor-element:last-child,
+    .elementor-popup-modal .elementor-element-2eeace2 > .elementor-element:last-child,
+    .elementor-popup-modal .elementor-element-d33c8e6 > .elementor-element:last-child,
+    .elementor-popup-modal .elementor-element-804d4ea > .elementor-element:last-child {
         width: 100% !important;
         max-width: 100% !important;
         flex: 1 1 100% !important;
-        padding: 28px 20px 32px 20px !important;
-        border-radius: 0 0 16px 16px !important;
+        padding: 32px 24px 28px 24px !important;
+        border-radius: 16px !important;
     }
 
     .elementor-7758 .elementor-element-b034026 h2,
     .elementor-7637 .elementor-element-c26c6d0 h2,
+    .elementor-7832 .elementor-element-112e4d5 h2,
+    .elementor-7849 .elementor-element-112e4d5 h2,
     .elementor-popup-modal .elementor-element-5609af6 h2,
-    .elementor-popup-modal .elementor-element-49c9d22 h2 {
-        font-size: 24px !important;
-        line-height: 30px !important;
-        margin-bottom: 4px !important;
+    .elementor-popup-modal .elementor-element-49c9d22 h2,
+    .elementor-popup-modal .elementor-element-a26a79a h2 {
+        font-size: 26px !important;
+        line-height: 32px !important;
+        margin-bottom: 6px !important;
     }
 
     .custom-report-form p,
     .elementor-element-42f4ebe form p,
     .elementor-element-052bc23 form p,
     .elementor-popup-modal form p {
-        margin: 0 0 14px 0 !important;
+        margin: 0 0 16px 0 !important;
     }
 
     .custom-report-form label,
     .elementor-element-42f4ebe label,
     .elementor-element-052bc23 label,
     .elementor-popup-modal label {
-        font-size: 13.5px !important;
-        margin-bottom: 4px !important;
+        font-size: 14px !important;
+        margin-bottom: 6px !important;
     }
 
     .custom-report-form input[type="text"],
@@ -1053,21 +1035,21 @@ body.modal-open {
     .elementor-popup-modal input[type="text"],
     .elementor-popup-modal input[type="email"],
     .elementor-popup-modal input[type="tel"] {
-        height: 46px !important;
+        height: 48px !important;
         font-size: 14px !important;
-        padding: 0 14px !important;
-        border-radius: 8px !important;
+        padding: 0 16px !important;
+        border-radius: 10px !important;
     }
 
     .custom-report-form textarea,
     .elementor-element-42f4ebe textarea,
     .elementor-element-052bc23 textarea,
     .elementor-popup-modal textarea {
-        height: 65px !important;
-        min-height: 60px !important;
+        height: 70px !important;
+        min-height: 65px !important;
         font-size: 14px !important;
-        padding: 10px 14px !important;
-        border-radius: 8px !important;
+        padding: 12px 16px !important;
+        border-radius: 10px !important;
     }
 
     .custom-report-form input[type="submit"],
@@ -1075,58 +1057,49 @@ body.modal-open {
     .elementor-element-052bc23 input[type="submit"],
     .elementor-popup-modal input[type="submit"],
     .elementor-popup-modal button[type="submit"] {
-        height: 48px !important;
+        height: 50px !important;
         font-size: 15px !important;
-        margin-top: 6px !important;
+        margin-top: 8px !important;
     }
 
-    /* Close Button on Mobile: Glassmorphic Floating Button */
+    /* Close Button on Mobile */
     .dialog-close-button,
     .dialog-lightbox-close-button {
         top: 14px !important;
         right: 14px !important;
         width: 32px !important;
         height: 32px !important;
-        background: rgba(0, 0, 0, 0.3) !important;
-        color: #ffffff !important;
+        background: transparent !important;
+        color: #4b5563 !important;
         border-radius: 50% !important;
-        font-size: 20px !important;
+        font-size: 22px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        backdrop-filter: blur(4px) !important;
+        z-index: 1000 !important;
     }
 }
 
 /* --- Small Mobile (max-width: 480px) --- */
 @media (max-width: 480px) {
-    .elementor-7758 .elementor-element-fc8da81,
-    .elementor-7637 .elementor-element-5f053ae,
-    .elementor-popup-modal .elementor-element-fc8da81,
-    .elementor-popup-modal .elementor-element-5f053ae {
-        padding: 28px 18px 22px 18px !important;
-    }
-
     .elementor-7758 .elementor-element-5609af6,
     .elementor-7637 .elementor-element-49c9d22,
+    .elementor-7832 .elementor-element-a26a79a,
+    .elementor-7849 .elementor-element-804d4ea,
     .elementor-popup-modal .elementor-element-5609af6,
-    .elementor-popup-modal .elementor-element-49c9d22 {
-        padding: 22px 16px 26px 16px !important;
-    }
-
-    .elementor-7758 .elementor-element-e5f2560 h2,
-    .elementor-7637 .elementor-element-f9d72d8 h2,
-    .elementor-popup-modal .elementor-element-fc8da81 h2,
-    .elementor-popup-modal .elementor-element-5f053ae h2 {
-        font-size: 22px !important;
-        line-height: 28px !important;
+    .elementor-popup-modal .elementor-element-49c9d22,
+    .elementor-popup-modal .elementor-element-a26a79a {
+        padding: 26px 18px 24px 18px !important;
     }
 
     .elementor-7758 .elementor-element-b034026 h2,
     .elementor-7637 .elementor-element-c26c6d0 h2,
+    .elementor-7832 .elementor-element-112e4d5 h2,
+    .elementor-7849 .elementor-element-112e4d5 h2,
     .elementor-popup-modal .elementor-element-5609af6 h2,
-    .elementor-popup-modal .elementor-element-49c9d22 h2 {
-        font-size: 21px !important;
-        line-height: 26px !important;
+    .elementor-popup-modal .elementor-element-49c9d22 h2,
+    .elementor-popup-modal .elementor-element-a26a79a h2 {
+        font-size: 22px !important;
+        line-height: 28px !important;
     }
 }
