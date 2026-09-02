@@ -953,17 +953,20 @@ body.modal-open {
 
 /* --- Mobile Devices (max-width: 767px) --- */
 @media (max-width: 767px) {
+    /* 1. Default Open State: Centered Vertically & Horizontally */
     .dialog-widget.dialog-type-lightbox,
     .dialog-widget.dialog-lightbox-widget,
     .elementor-popup-modal,
     .modal,
     #cmr-review-modal-overlay {
-        padding: 16px 12px 280px 12px !important;
-        align-items: flex-start !important;
+        padding: 16px 12px !important;
+        display: flex !important;
+        align-items: center !important;
         justify-content: center !important;
         overflow-y: auto !important;
         -webkit-overflow-scrolling: touch !important;
         overscroll-behavior: contain !important;
+        transition: padding 0.25s ease !important;
     }
 
     .dialog-widget.dialog-type-lightbox .dialog-widget-content,
@@ -971,13 +974,41 @@ body.modal-open {
     .elementor-popup-modal .dialog-widget-content,
     .elementor-7758 .e-con-inner,
     .elementor-7637 .e-con-inner,
+    .elementor-7832 .e-con-inner,
+    .elementor-7849 .e-con-inner,
     .elementor-popup-modal .e-con-inner {
         width: 100% !important;
         max-width: 100% !important;
-        max-height: none !important;
+        max-height: 92vh !important;
         height: auto !important;
-        overflow: visible !important;
-        margin: 10px auto 140px auto !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        margin: auto !important;
+        transition: transform 0.25s ease, margin 0.25s ease !important;
+    }
+
+    /* 2. Active Input / Keyboard Focused State: Shifts up above keyboard */
+    .dialog-widget.dialog-type-lightbox.cmr-keyboard-active,
+    .dialog-widget.dialog-lightbox-widget.cmr-keyboard-active,
+    .elementor-popup-modal.cmr-keyboard-active,
+    .modal.cmr-keyboard-active,
+    #cmr-review-modal-overlay.cmr-keyboard-active,
+    body.cmr-keyboard-active .dialog-widget.dialog-type-lightbox,
+    body.cmr-keyboard-active .elementor-popup-modal,
+    body.cmr-keyboard-active .modal,
+    body.cmr-keyboard-active #cmr-review-modal-overlay {
+        align-items: flex-start !important;
+        padding-top: 15px !important;
+        padding-bottom: 300px !important;
+    }
+
+    body.cmr-keyboard-active .dialog-widget.dialog-type-lightbox .dialog-widget-content,
+    body.cmr-keyboard-active .dialog-widget.dialog-lightbox-widget .dialog-widget-content,
+    body.cmr-keyboard-active .elementor-popup-modal .dialog-widget-content,
+    .cmr-keyboard-active .dialog-widget-content {
+        margin-top: 10px !important;
+        margin-bottom: 120px !important;
+        max-height: none !important;
     }
 
     /* Stack and container setup on mobile */

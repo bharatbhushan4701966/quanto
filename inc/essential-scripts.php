@@ -307,7 +307,10 @@ add_action( 'wp_footer', function() {
                 var crOverlay = document.getElementById('cmr-review-modal-overlay');
                 if (crOverlay) crOverlay.classList.remove('cmr-open');
                 var crModal = document.getElementById('cmr-review-modal');
-                if (crModal) crModal.style.display = 'none';
+                document.querySelectorAll('.cmr-keyboard-active').forEach(function(el) {
+                    el.classList.remove('cmr-keyboard-active');
+                });
+                document.body.classList.remove('cmr-keyboard-active');
 
                 setTimeout(checkActiveModals, 30);
             }
@@ -414,21 +417,45 @@ add_action( 'wp_footer', function() {
                 });
             }
 
+            var keyboardBlurTimeout = null;
+
             // Auto scroll focused input into viewport above mobile virtual keyboard
             document.addEventListener('focusin', function(e) {
                 if (window.innerWidth <= 768) {
                     var target = e.target;
                     if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT')) {
-                        var modal = target.closest('.dialog-widget, .elementor-popup-modal, .modal, #cmr-review-modal');
+                        var modal = target.closest('.dialog-widget, .elementor-popup-modal, .modal, #cmr-review-modal, #cmr-review-modal-overlay');
                         if (modal) {
+                            clearTimeout(keyboardBlurTimeout);
+                            modal.classList.add('cmr-keyboard-active');
+                            document.body.classList.add('cmr-keyboard-active');
                             setTimeout(function() {
                                 try {
                                     target.scrollIntoView({ behavior: 'smooth', block: 'center' });
                                 } catch(err) {
                                     target.scrollIntoView(false);
                                 }
-                            }, 300);
+                            }, 280);
                         }
+                    }
+                }
+            }, true);
+
+            // Restore Center Alignment when input loses focus
+            document.addEventListener('focusout', function(e) {
+                if (window.innerWidth <= 768) {
+                    var target = e.target;
+                    if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT')) {
+                        keyboardBlurTimeout = setTimeout(function() {
+                            var activeEl = document.activeElement;
+                            var stillInInput = activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.tagName === 'SELECT');
+                            if (!stillInInput) {
+                                document.querySelectorAll('.cmr-keyboard-active').forEach(function(el) {
+                                    el.classList.remove('cmr-keyboard-active');
+                                });
+                                document.body.classList.remove('cmr-keyboard-active');
+                            }
+                        }, 200);
                     }
                 }
             }, true);
@@ -438,8 +465,10 @@ add_action( 'wp_footer', function() {
                     if (window.innerWidth <= 768) {
                         var activeEl = document.activeElement;
                         if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.tagName === 'SELECT')) {
-                            var modal = activeEl.closest('.dialog-widget, .elementor-popup-modal, .modal, #cmr-review-modal');
+                            var modal = activeEl.closest('.dialog-widget, .elementor-popup-modal, .modal, #cmr-review-modal, #cmr-review-modal-overlay');
                             if (modal) {
+                                modal.classList.add('cmr-keyboard-active');
+                                document.body.classList.add('cmr-keyboard-active');
                                 setTimeout(function() {
                                     try {
                                         activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
