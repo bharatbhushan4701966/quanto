@@ -6707,9 +6707,8 @@ ins {
     flex-wrap: nowrap !important;
     overflow-x: auto !important;
     overflow-y: hidden !important;
-    gap: 16px !important;
-    padding-bottom: 20px !important;
-    padding-right: 20px !important;
+    gap: 14px !important;
+    padding: 0 16px 20px 16px !important;
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
     scrollbar-width: none !important;
@@ -6719,12 +6718,17 @@ ins {
     display: none !important;
   }
   .process-box {
-    flex: 0 0 85% !important;
-    width: 85% !important;
-    max-width: 85% !important;
-    min-width: 280px !important;
+    flex: 0 0 74% !important;
+    width: 74% !important;
+    max-width: 74% !important;
+    min-width: 0 !important;
     scroll-snap-align: start !important;
     flex-shrink: 0 !important;
+    box-sizing: border-box !important;
+    padding: 30px 22px !important;
+    gap: 80px !important;
+    height: auto !important;
+    min-height: 340px !important;
   }
 }
 

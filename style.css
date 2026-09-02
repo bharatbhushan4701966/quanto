@@ -3472,6 +3472,11 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
    WHO WE SERVE (Process Box) - Mobile Horizontal Slide Carousel
    ========================================================================== */
 @media (max-width: 768px) {
+    .elementor-element-f0b0e67 {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
     .process-box-wrapper,
     .process-box-wrapper.horizontal-scroll {
         display: flex !important;
@@ -3479,9 +3484,8 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
         flex-wrap: nowrap !important;
         overflow-x: auto !important;
         overflow-y: hidden !important;
-        gap: 16px !important;
-        padding-bottom: 20px !important;
-        padding-right: 20px !important;
+        gap: 14px !important;
+        padding: 0 16px 20px 16px !important;
         scroll-snap-type: x mandatory !important;
         -webkit-overflow-scrolling: touch !important;
         scrollbar-width: none !important;
@@ -3494,19 +3498,20 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
 
     .process-box-wrapper .process-box,
     .process-box.scroll-item {
-        flex: 0 0 85% !important;
-        width: 85% !important;
-        max-width: 85% !important;
-        min-width: 280px !important;
+        flex: 0 0 74% !important;
+        width: 74% !important;
+        max-width: 74% !important;
+        min-width: 0 !important;
         scroll-snap-align: start !important;
         flex-shrink: 0 !important;
         box-sizing: border-box !important;
-        padding: 36px 28px !important;
-        gap: 100px !important;
+        padding: 30px 22px !important;
+        gap: 80px !important;
         height: auto !important;
-        min-height: 380px !important;
+        min-height: 340px !important;
     }
 }
+
 
 
 
