@@ -239,17 +239,17 @@ max-width:512px !important ;
   }
 
   .process-box {
-    flex: 0 0 82% !important;
-    width: 82% !important;
-    max-width: 82% !important;
+    flex: 0 0 88% !important;
+    width: 88% !important;
+    max-width: 88% !important;
     min-width: 0 !important;
     scroll-snap-align: start !important;
     flex-shrink: 0 !important;
     box-sizing: border-box !important;
     padding: 36px 26px !important;
-    gap: 100px !important;
+    gap: normal !important;
     height: auto !important;
-    min-height: 380px !important;
+    min-height: 350px !important;
   }
 
   .elementor-14 .elementor-element.elementor-element-03fdb2b {
