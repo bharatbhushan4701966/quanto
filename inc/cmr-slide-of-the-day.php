@@ -67,7 +67,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             overflow: visible !important;
             width: 100% !important;
             max-width: 100% !important;
-            margin: 0 !important;
+            margin: 80px 0 100px 0 !important;
             padding: 70px 0 !important;
             box-sizing: border-box;
             position: relative;
@@ -123,10 +123,10 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
         /* 1st Div: The Blue/Teal Background/Frame */
         .slide-blue-layer {
             position: absolute;
-            top: -70px;
+            top: -110px;
             left: 25px;
             width: calc(100% - 25px);
-            height: calc(100% + 15px);
+            height: calc(100% + 35px);
             background-color: var(--primary-blue);
             z-index: 1;
             transition: var(--transition-smooth);
@@ -143,7 +143,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             z-index: 2;
             overflow: hidden;
             transition: var(--transition-smooth);
-            transform: translateY(80px);
+            transform: translateY(110px);
             box-shadow: none;
         }
         .slide-image-layer img {
