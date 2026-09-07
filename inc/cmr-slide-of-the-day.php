@@ -67,8 +67,8 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             overflow: visible !important;
             width: 100% !important;
             max-width: 100% !important;
-            margin: 80px 0 100px 0 !important;
-            padding: 70px 0 !important;
+            margin: 100px 0 120px 0 !important;
+            padding: 60px 0 !important;
             box-sizing: border-box;
             position: relative;
             z-index: 2;
@@ -82,7 +82,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
         }
         .slide-scroll-container {
             width: 100%;
-            max-width: 1240px;
+            max-width: 1280px;
             margin: 0 auto;
             padding: 0 40px;
             position: relative;
@@ -92,21 +92,21 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 60px;
+            gap: 70px;
             width: 100%;
             margin: 0 auto;
             overflow: visible !important;
         }
         .slide-left-column {
-            flex: 0 0 440px;
-            max-width: 440px;
+            flex: 0 0 480px;
+            max-width: 480px;
             position: relative;
             top: auto;
             overflow: visible !important;
         }
         .slide-right-column {
             flex: 1;
-            padding-left: 40px;
+            padding-left: 20px;
             max-width: 620px;
             display: flex;
             flex-direction: column;
@@ -114,8 +114,8 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
         }
         .slide-sticky-box {
             width: 100%;
-            max-width: 440px;
-            aspect-ratio: 1 / 1.1;
+            max-width: 480px;
+            aspect-ratio: 1 / 1.15;
             position: relative;
             overflow: visible !important;
             margin: 0;
@@ -123,10 +123,10 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
         /* 1st Div: The Blue/Teal Background/Frame */
         .slide-blue-layer {
             position: absolute;
-            top: -110px;
-            left: 25px;
-            width: calc(100% - 25px);
-            height: calc(100% + 35px);
+            top: -95px;
+            left: 45px;
+            width: calc(100% - 45px);
+            height: 100%;
             background-color: var(--primary-blue);
             z-index: 1;
             transition: var(--transition-smooth);
@@ -137,13 +137,13 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             position: absolute;
             top: 0;
             left: 0;
-            width: calc(100% - 35px);
+            width: calc(100% - 45px);
             height: 100%;
             background-color: #000000;
             z-index: 2;
             overflow: hidden;
             transition: var(--transition-smooth);
-            transform: translateY(110px);
+            transform: translateY(95px);
             box-shadow: none;
         }
         .slide-image-layer img {
@@ -162,20 +162,19 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             text-align: right;
         }
         .slide-value {
-            font-size: 54px;
+            font-size: 56px;
             font-weight: 800;
-            line-height: 64px;
+            line-height: 1;
             margin: 0;
-            color:#fff;
+            color: #fff;
             letter-spacing: 0px;
         }
         .slide-label {
             font-size: 12px;
-            text-transform: uppercase;
+            text-transform: capitalize;
             letter-spacing: 0px;
-            color: #fff;
-            opacity: 0.7;
-            margin: 0;
+            color: rgba(255, 255, 255, 0.8);
+            margin: 6px 0 0 0;
         }
         /* RIGHT SIDE CONTENT STYLES */
         .slide-content-wrapper {
@@ -184,26 +183,28 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
         .slide-badge {
             font-size: 14px;
             font-weight: 600;
-            letter-spacing: 1px;
-            margin-bottom: 30px;
+            letter-spacing: 1.5px;
+            margin-bottom: 24px;
             display: flex;
             align-items: center;
             gap: 10px;
             opacity: 100%;
+            text-transform: uppercase;
         }
         .slide-main-heading {
-            font-size: 48px;
+            font-size: 52px;
             font-weight: 600;
-            line-height: 58px;
-            margin-bottom: 30px;
+            line-height: 1.15;
+            margin-bottom: 24px;
             letter-spacing: -1.5px;
             color: #fff;
         }
         .slide-description {
-            font-size: 14px;
-            line-height: 24px;
-            color: #ffffff;
-            margin-bottom: 40px;
+            font-size: 15px;
+            line-height: 25px;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 36px;
+            max-width: 520px;
         }
         .slide-cta-button{
             display: inline-flex;
@@ -211,11 +212,11 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             gap: 10px;
             background-color: #fff;
             color: #000;
-            padding: 16px 28px; 
+            padding: 16px 30px; 
             border-radius: 50px;
             text-decoration: none;
-            font-size: 16px !important;   
-            font-weight: 500;
+            font-size: 15px !important;   
+            font-weight: 600;
             line-height: 1;               
             transition: all 0.3s ease;
         }
