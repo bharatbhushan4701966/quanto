@@ -13,16 +13,27 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             --text-white: #ffffff;
             --transition-smooth: all 0.8s cubic-bezier(0.33, 1, 0.68, 1);
         }
-        /* Parent elementor container should be transparent and allow overflow */
+        /* Target the parent container and all wrappers to make them seamless full-width black and allow overflow */
         #slide,
         .brain,
         .elementor-element-12ee4ee,
         .elementor-element-12ee4ee > .e-con-inner,
         .elementor-element-5a5e00d,
-        .elementor-element-0cb331f {
-            background-color: transparent !important;
-            background: transparent !important;
+        .elementor-element-0cb331f,
+        .brain-component-wrapper {
+            background-color: #000000 !important;
+            background: #000000 !important;
             overflow: visible !important;
+        }
+
+        .elementor-element-12ee4ee,
+        .elementor-element-12ee4ee > .e-con-inner {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
         }
 
         /* Allow overflow across all component containers so teal layer and image layer pop out above and below */
@@ -56,7 +67,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             overflow: visible !important;
             width: 100% !important;
             max-width: 100% !important;
-            margin: 90px 0 110px 0 !important;
+            margin: 0 !important;
             padding: 70px 0 !important;
             box-sizing: border-box;
             position: relative;
