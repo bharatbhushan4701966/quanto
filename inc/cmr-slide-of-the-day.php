@@ -8,21 +8,37 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
     ?>
     <style>
         :root {
-            --primary-blue: #36ebd6;
+            --primary-blue: #00baa8;
             --bg-dark: #000000;
             --text-white: #ffffff;
             --transition-smooth: all 0.8s cubic-bezier(0.33, 1, 0.68, 1);
         }
-        /* Target the parent container and all wrappers to make them seamless black */
+        
+        /* Parent elementor container should be transparent and allow overflow */
+        #slide,
+        .brain,
+        .elementor-element-12ee4ee,
+        .elementor-element-12ee4ee > .e-con-inner,
+        .elementor-element-5a5e00d,
+        .elementor-element-0cb331f {
+            background-color: transparent !important;
+            background: transparent !important;
+            overflow: visible !important;
+        }
+
+        /* Allow overflow across all component containers so teal layer and image layer pop out above and below */
         #slide,
         .brain,
         .elementor-element-12ee4ee,
         .elementor-element-12ee4ee > .e-con-inner,
         .elementor-element-5a5e00d,
         .elementor-element-0cb331f,
-        .brain-component-wrapper {
-            background-color: #000000 !important;
-            background: #000000 !important;
+        .brain-component-wrapper,
+        .slide-scroll-container,
+        .slide-main-layout,
+        .slide-left-column,
+        .slide-sticky-box {
+            overflow: visible !important;
         }
         
         /* ===== SLIDE OF DAY ICON ===== */
@@ -34,55 +50,58 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             flex-shrink:0;
         }
         .brain-component-wrapper {
-            background-color: var(--bg-dark);
+            background-color: var(--bg-dark) !important;
+            background: var(--bg-dark) !important;
             color: var(--text-white);
             font-family: 'Outfit', sans-serif;
-            overflow-x: hidden;
-            margin: 0;
-            padding: 0;
+            overflow: visible !important;
+            margin: 70px 0 90px 0 !important;
+            padding: 60px 0 !important;
             box-sizing: border-box;
-            scrollbar-width: none;
+            position: relative;
+            z-index: 2;
         }
         .brain-component-wrapper * {
             box-sizing: border-box;
         }
         /* Initial spacer */
         .slide-spacer {
-            height: 8vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0.3;
-            letter-spacing: 5px;
+            display: none !important;
         }
         .slide-scroll-container {
             height: 100%;
             position: relative;
             padding: 0 5%;
+            overflow: visible !important;
         }
         .slide-main-layout {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 80px;
             max-width: 1140px;
             margin: 0 auto;
+            overflow: visible !important;
         }
         .slide-left-column {
             flex: 1;
-            position: sticky;
-            top: 5vh;
+            position: relative;
+            top: auto;
+            overflow: visible !important;
         }
         .slide-right-column {
             flex: 1;
-            padding-top: 10vh;
+            padding: 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
         .slide-sticky-box {
             width: 100%;
+            max-width: 440px;
             aspect-ratio: 1 / 1.1;
             position: relative;
+            overflow: visible !important;
+            margin: 0 auto;
         }
         /* 1st Div: The Blue Background/Frame */
         .slide-blue-layer {
@@ -90,7 +109,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100% + 100px);
+            height: calc(100% + 40px);
             background-color: var(--primary-blue);
             z-index: 1;
             transition: var(--transition-smooth);
@@ -226,6 +245,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
 
             .brain-component-wrapper {
                 padding: 40px 16px 50px 16px !important;
+                margin: 0 !important;
             }
 
             .slide-spacer {
@@ -470,9 +490,9 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
                     const img = imageLayer.querySelector('img');
                     
                     // Remove CSS transitions so GSAP can scrub smoothly
-                    blueLayer.style.transition = 'none';
-                    imageLayer.style.transition = 'none';
-                    img.style.transition = 'none';
+                    if (blueLayer) blueLayer.style.transition = 'none';
+                    if (imageLayer) imageLayer.style.transition = 'none';
+                    if (img) img.style.transition = 'none';
                     
                     let mm = gsap.matchMedia();
                     
@@ -481,15 +501,15 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
                         let tl = gsap.timeline({
                             scrollTrigger: {
                                 trigger: triggerZone,
-                                start: "top 75%",
-                                end: "top 25%",
+                                start: "top 80%",
+                                end: "center center",
                                 scrub: 1
                             }
                         });
                         
-                        tl.to(blueLayer, { opacity: 0, y: -150, ease: "none" }, 0)
-                          .to(imageLayer, { x: 0, y: 0, boxShadow: "0px 0px 0px rgba(0,0,0,0)", ease: "none" }, 0)
-                          .to(img, { filter: "grayscale(0)", ease: "none" }, 0);
+                        // Keep teal layer & image offset framing intact like Image 2,
+                        // smoothly scrub grayscale to color on scroll
+                        tl.to(img, { filter: "grayscale(0)", ease: "none" }, 0);
                     });
                     
                     // Mobile & Tablet Portrait
