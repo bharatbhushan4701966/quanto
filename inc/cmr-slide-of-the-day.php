@@ -8,37 +8,21 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
     ?>
     <style>
         :root {
-            --primary-blue: #00baa8;
+            --primary-blue: #36ebd6;
             --bg-dark: #000000;
             --text-white: #ffffff;
             --transition-smooth: all 0.8s cubic-bezier(0.33, 1, 0.68, 1);
         }
-        
-        /* Parent elementor container should be transparent and allow overflow */
-        #slide,
-        .brain,
-        .elementor-element-12ee4ee,
-        .elementor-element-12ee4ee > .e-con-inner,
-        .elementor-element-5a5e00d,
-        .elementor-element-0cb331f {
-            background-color: transparent !important;
-            background: transparent !important;
-            overflow: visible !important;
-        }
-
-        /* Allow overflow across all component containers so teal layer and image layer pop out above and below */
+        /* Target the parent container and all wrappers to make them seamless black */
         #slide,
         .brain,
         .elementor-element-12ee4ee,
         .elementor-element-12ee4ee > .e-con-inner,
         .elementor-element-5a5e00d,
         .elementor-element-0cb331f,
-        .brain-component-wrapper,
-        .slide-scroll-container,
-        .slide-main-layout,
-        .slide-left-column,
-        .slide-sticky-box {
-            overflow: visible !important;
+        .brain-component-wrapper {
+            background-color: #000000 !important;
+            background: #000000 !important;
         }
         
         /* ===== SLIDE OF DAY ICON ===== */
@@ -50,91 +34,81 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             flex-shrink:0;
         }
         .brain-component-wrapper {
-            background-color: #000000 !important;
-            background: #000000 !important;
+            background-color: var(--bg-dark);
             color: var(--text-white);
             font-family: 'Outfit', sans-serif;
-            overflow: visible !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            margin: 90px 0 110px 0 !important;
-            padding: 70px 0 !important;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
-            position: relative;
-            z-index: 2;
+            scrollbar-width: none;
         }
         .brain-component-wrapper * {
             box-sizing: border-box;
         }
         /* Initial spacer */
         .slide-spacer {
-            display: none !important;
+            height: 8vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0.3;
+            letter-spacing: 5px;
         }
         .slide-scroll-container {
-            width: 100%;
-            max-width: 1240px;
-            margin: 0 auto;
-            padding: 0 40px;
+            height: 100%;
             position: relative;
-            overflow: visible !important;
+            padding: 0 5%;
         }
         .slide-main-layout {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 60px;
-            width: 100%;
+            align-items: flex-start;
+            gap: 80px;
+            max-width: 1140px;
             margin: 0 auto;
-            overflow: visible !important;
         }
         .slide-left-column {
-            flex: 0 0 440px;
-            max-width: 440px;
-            position: relative;
-            top: auto;
-            overflow: visible !important;
+            flex: 1;
+            position: sticky;
+            top: 5vh;
         }
         .slide-right-column {
             flex: 1;
-            padding-left: 40px;
-            max-width: 620px;
+            padding-top: 10vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
         .slide-sticky-box {
             width: 100%;
-            max-width: 440px;
             aspect-ratio: 1 / 1.1;
             position: relative;
-            overflow: visible !important;
-            margin: 0;
         }
-        /* 1st Div: The Blue/Teal Background/Frame */
+        /* 1st Div: The Blue Background/Frame */
         .slide-blue-layer {
             position: absolute;
-            top: -70px;
-            left: 25px;
-            width: calc(100% - 25px);
-            height: calc(100% + 15px);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: calc(100% + 100px);
             background-color: var(--primary-blue);
             z-index: 1;
             transition: var(--transition-smooth);
-            transform: none; 
+            transform: translateY(-60px); 
         }
         /* 2nd Div: The Image (Overlapping) */
         .slide-image-layer {
             position: absolute;
             top: 0;
             left: 0;
-            width: calc(100% - 35px);
+            width: 100%;
             height: 100%;
-            background-color: #000000;
+            background-color: #111;
             z-index: 2;
             overflow: hidden;
             transition: var(--transition-smooth);
-            transform: translateY(80px);
-            box-shadow: none;
+            transform: translate(-40px, 60px);
+            box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
         }
         .slide-image-layer img {
             width: 100%;
@@ -252,7 +226,6 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
 
             .brain-component-wrapper {
                 padding: 40px 16px 50px 16px !important;
-                margin: 0 !important;
             }
 
             .slide-spacer {
@@ -497,9 +470,9 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
                     const img = imageLayer.querySelector('img');
                     
                     // Remove CSS transitions so GSAP can scrub smoothly
-                    if (blueLayer) blueLayer.style.transition = 'none';
-                    if (imageLayer) imageLayer.style.transition = 'none';
-                    if (img) img.style.transition = 'none';
+                    blueLayer.style.transition = 'none';
+                    imageLayer.style.transition = 'none';
+                    img.style.transition = 'none';
                     
                     let mm = gsap.matchMedia();
                     
@@ -508,15 +481,15 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
                         let tl = gsap.timeline({
                             scrollTrigger: {
                                 trigger: triggerZone,
-                                start: "top 80%",
-                                end: "center center",
+                                start: "top 75%",
+                                end: "top 25%",
                                 scrub: 1
                             }
                         });
                         
-                        // Keep teal layer & image offset framing intact like Image 2,
-                        // smoothly scrub grayscale to color on scroll
-                        tl.to(img, { filter: "grayscale(0)", ease: "none" }, 0);
+                        tl.to(blueLayer, { opacity: 0, y: -150, ease: "none" }, 0)
+                          .to(imageLayer, { x: 0, y: 0, boxShadow: "0px 0px 0px rgba(0,0,0,0)", ease: "none" }, 0)
+                          .to(img, { filter: "grayscale(0)", ease: "none" }, 0);
                     });
                     
                     // Mobile & Tablet Portrait
