@@ -55,8 +55,10 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             color: var(--text-white);
             font-family: 'Outfit', sans-serif;
             overflow: visible !important;
-            margin: 70px 0 90px 0 !important;
-            padding: 60px 0 !important;
+            max-width: 1200px;
+            width: calc(100% - 160px);
+            margin: 80px auto 100px auto !important;
+            padding: 50px 40px 60px 40px !important;
             box-sizing: border-box;
             position: relative;
             z-index: 2;
@@ -71,25 +73,28 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
         .slide-scroll-container {
             height: 100%;
             position: relative;
-            padding: 0 5%;
+            padding: 0;
             overflow: visible !important;
         }
         .slide-main-layout {
             display: flex;
             align-items: center;
-            gap: 80px;
-            max-width: 1140px;
+            justify-content: space-between;
+            gap: 60px;
+            max-width: 100%;
             margin: 0 auto;
             overflow: visible !important;
         }
         .slide-left-column {
-            flex: 1;
+            flex: 0 0 42%;
+            max-width: 42%;
             position: relative;
             top: auto;
             overflow: visible !important;
         }
         .slide-right-column {
-            flex: 1;
+            flex: 0 0 52%;
+            max-width: 52%;
             padding: 0;
             display: flex;
             flex-direction: column;
@@ -97,11 +102,11 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
         }
         .slide-sticky-box {
             width: 100%;
-            max-width: 440px;
+            max-width: 400px;
             aspect-ratio: 1 / 1.1;
             position: relative;
             overflow: visible !important;
-            margin: 0 auto;
+            margin: 0;
         }
         /* 1st Div: The Blue Background/Frame */
         .slide-blue-layer {
