@@ -31,10 +31,10 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             'heading' => 'Industry Intelligence that drives smarter business decisions',
             'desc' => 'Access real-time industry intelligence, expert analysis and strategic insights to stay ahead of market shifts and competitive dynamics.',
             'list' => array(
-                'Understand market trends & shifts',
-                'Evaluate growth opportunities',
-                'Make data-driven decisions',
-                'Gain industry-specific insights'
+                'Track market trends and shifts',
+                'Identify growth opportunities',
+                'Assess future market outlook',
+                'Make data-driven decisions'
             ),
             'link_text' => 'Explore industry intelligence',
             'link_url' => home_url('/industry-intelligence/'),
