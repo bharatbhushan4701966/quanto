@@ -63,10 +63,10 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             'heading' => 'Research-backed marketing solutions for your brand',
             'desc' => 'Leverage our deep industry knowledge to create high-impact marketing campaigns that resonate with your target audience.',
             'list' => array(
-                'Go-to-market strategies',
-                'Content & thought leadership',
-                'Lead generation campaigns',
-                'Brand positioning & messaging'
+                'Build brand credibility & influence',
+                'Reach the right decision-makers',
+                'Convert engagement into demand',
+                'Drive measurable market momentum'
             ),
             'link_text' => 'Explore marketing services',
             'link_url' => home_url('/marketing-services/'),
