@@ -47,10 +47,10 @@ function cmr_mega_menu_what_we_do_shortcode($atts) {
             'heading' => 'Consulting & Advisory that drives business growth',
             'desc' => 'Expert guidance to help you navigate complex business challenges and accelerate your growth trajectory.',
             'list' => array(
-                'Strategic business planning',
-                'Operational optimization',
-                'Risk management & compliance',
-                'Digital transformation strategies'
+                'Identify and size market opportunities',
+                'Develop winning go-to-market strategies',
+                'Navigate market and competitive risks',
+                'Turn insights into actionable decisions'
             ),
             'link_text' => 'Explore consulting & advisory',
             'link_url' => home_url('/consulting-advisory/'),
