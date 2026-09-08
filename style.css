@@ -3849,19 +3849,19 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
 }
 
 /* ==========================================================================
-   Mobile Responsive Testimonials Section (Figma Match - Left Aligned)
+   Mobile Responsive Testimonials Section (Centered Layout - Image 2 Match)
    ========================================================================== */
 @media (max-width: 767.98px) {
-    /* Main container padding & left alignment */
+    /* Main section container: centered, clean padding */
     #cmr-testimonials-section,
     .elementor-element-a6ac41e,
     .elementor-element-82ef444 {
-        padding-top: 50px !important;
-        padding-bottom: 50px !important;
+        padding-top: 60px !important;
+        padding-bottom: 60px !important;
         padding-left: 20px !important;
         padding-right: 20px !important;
-        align-items: flex-start !important;
-        text-align: left !important;
+        align-items: center !important;
+        text-align: center !important;
     }
 
     #cmr-testimonials-section .e-con-inner,
@@ -3873,16 +3873,18 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     .elementor-element-82ef444 .elementor-element-748fff1 {
         width: 100% !important;
         max-width: 100% !important;
-        align-items: flex-start !important;
-        justify-content: flex-start !important;
-        text-align: left !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
         padding-left: 0 !important;
         padding-right: 0 !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
     }
 
-    /* Left column containing Subtitle, Quote Icon, Heading */
+    /* Column containing Subtitle, Heading */
     #cmr-testimonials-section .elementor-element-6647a0b,
     #cmr-testimonials-section .elementor-element-0807bbc,
     .elementor-element-a6ac41e .elementor-element-6647a0b,
@@ -3893,12 +3895,12 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
         border-right: none !important;
         padding-left: 0 !important;
         padding-right: 0 !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        margin-bottom: 24px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        margin-bottom: 28px !important;
         gap: 0 !important;
-        align-items: flex-start !important;
-        text-align: left !important;
+        align-items: center !important;
+        text-align: center !important;
     }
 
     /* 1. Subtitle: "CLIENT TESTIMONIALS" */
@@ -3909,12 +3911,12 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     .elementor-23190 .elementor-element.elementor-element-cd36bd5,
     .elementor-14 .elementor-element.elementor-element-d9679c4 {
         width: 100% !important;
-        text-align: left !important;
-        align-self: flex-start !important;
+        text-align: center !important;
+        align-self: center !important;
         margin-top: 0 !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        margin-bottom: 20px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        margin-bottom: 16px !important;
         padding: 0 !important;
     }
 
@@ -3924,17 +3926,17 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     .elementor-element-82ef444 .elementor-element-d9679c4 p,
     .elementor-23190 .elementor-element.elementor-element-cd36bd5 p,
     .elementor-14 .elementor-element.elementor-element-d9679c4 p {
-        text-align: left !important;
+        text-align: center !important;
         font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-        font-size: 14px !important;
+        font-size: 13px !important;
         font-weight: 600 !important;
-        letter-spacing: 0.4px !important;
+        letter-spacing: 0.6px !important;
         text-transform: uppercase !important;
         color: #0F0F0F !important;
-        margin: 0 !important;
+        margin: 0 auto !important;
     }
 
-    /* 2. Big Quote Symbol Icon */
+    /* 2. Hide big quote icon SVG in Image 2 */
     #cmr-testimonials-section .elementor-element-1df5c74,
     #cmr-testimonials-section .elementor-element-7c38a95,
     .elementor-element-a6ac41e .elementor-element-1df5c74,
@@ -3944,35 +3946,8 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     #cmr-testimonials-section .elementor-widget-image,
     .elementor-element-a6ac41e .elementor-widget-image,
     .elementor-element-82ef444 .elementor-widget-image {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        width: 100% !important;
-        text-align: left !important;
-        align-self: flex-start !important;
-        margin-top: 0 !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        margin-bottom: 24px !important;
-        padding: 0 !important;
-    }
-
-    #cmr-testimonials-section .elementor-element-1df5c74 img,
-    #cmr-testimonials-section .elementor-element-7c38a95 img,
-    .elementor-element-a6ac41e .elementor-element-1df5c74 img,
-    .elementor-element-82ef444 .elementor-element-7c38a95 img,
-    .elementor-23190 .elementor-element.elementor-element-1df5c74 img,
-    .elementor-14 .elementor-element.elementor-element-7c38a95 img,
-    #cmr-testimonials-section .elementor-widget-image img,
-    .elementor-element-a6ac41e .elementor-widget-image img,
-    .elementor-element-82ef444 .elementor-widget-image img {
-        display: inline-block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        width: 72px !important;
-        max-width: 80px !important;
-        height: auto !important;
-        margin: 0 !important;
+        display: none !important;
+        visibility: hidden !important;
     }
 
     /* 3. Heading: "What our clients say about us" */
@@ -3983,11 +3958,11 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     .elementor-23190 .elementor-element.elementor-element-aecd77b,
     .elementor-14 .elementor-element.elementor-element-8da86a5 {
         width: 100% !important;
-        text-align: left !important;
-        align-self: flex-start !important;
+        text-align: center !important;
+        align-self: center !important;
         margin-top: 0 !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
         margin-bottom: 30px !important;
         padding: 0 !important;
     }
@@ -3998,14 +3973,14 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     .elementor-element-82ef444 .elementor-element-8da86a5 .elementor-heading-title,
     .elementor-23190 .elementor-element.elementor-element-aecd77b .elementor-heading-title,
     .elementor-14 .elementor-element.elementor-element-8da86a5 .elementor-heading-title {
-        text-align: left !important;
+        text-align: center !important;
         font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-        font-size: 34px !important;
-        font-weight: 600 !important;
-        line-height: 1.18 !important;
-        letter-spacing: -1.2px !important;
+        font-size: 32px !important;
+        font-weight: 700 !important;
+        line-height: 1.22 !important;
+        letter-spacing: -1px !important;
         color: #0F0F0F !important;
-        margin: 0 !important;
+        margin: 0 auto !important;
     }
 
     /* 4. Testimonial Quote / Feedback */
@@ -4016,15 +3991,15 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
         width: 100% !important;
         max-width: 100% !important;
         padding: 0 !important;
-        margin: 0 !important;
-        text-align: left !important;
+        margin: 0 auto !important;
+        text-align: center !important;
     }
 
     #cmr-testimonials-section .aae--a-testimonial .slide,
     .elementor-element-a6ac41e .aae--a-testimonial .slide,
     .elementor-element-82ef444 .aae--a-testimonial .slide {
         padding: 0 !important;
-        text-align: left !important;
+        text-align: center !important;
     }
 
     #cmr-testimonials-section .aae--a-testimonial .feedback,
@@ -4032,44 +4007,69 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     .elementor-element-a6ac41e .aae--a-testimonial .feedback,
     .elementor-element-82ef444 .aae--a-testimonial .feedback,
     .aae--a-testimonial .feedback {
-        text-align: left !important;
+        text-align: center !important;
         font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
         font-size: 16px !important;
         font-weight: 400 !important;
-        line-height: 1.6 !important;
+        line-height: 1.65 !important;
         letter-spacing: -0.2px !important;
-        color: #0F0F0F !important;
+        color: #1e1e1e !important;
         margin-top: 0 !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
         margin-bottom: 28px !important;
+        max-width: 580px !important;
     }
 
-    /* 5. Author info left aligned */
+    /* 5. Author info centered horizontally */
     #cmr-testimonials-section .aae--a-testimonial .wrap,
     .elementor-element-a6ac41e .aae--a-testimonial .wrap,
     .elementor-element-82ef444 .aae--a-testimonial .wrap {
         display: flex !important;
-        justify-content: flex-start !important;
+        justify-content: center !important;
         align-items: center !important;
-        text-align: left !important;
+        text-align: center !important;
         width: 100% !important;
-        margin: 0 !important;
+        margin: 0 auto !important;
     }
 
     #cmr-testimonials-section .aae--a-testimonial .author,
     .elementor-element-a6ac41e .aae--a-testimonial .author,
     .elementor-element-82ef444 .aae--a-testimonial .author {
-        display: flex !important;
-        justify-content: flex-start !important;
+        display: inline-flex !important;
+        justify-content: center !important;
         align-items: center !important;
         text-align: left !important;
+        margin: 0 auto !important;
+        gap: 16px !important;
+    }
+
+    #cmr-testimonials-section .aae--a-testimonial .author .image,
+    .elementor-element-a6ac41e .aae--a-testimonial .author .image,
+    .elementor-element-82ef444 .aae--a-testimonial .author .image {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
         margin: 0 !important;
+        flex-shrink: 0 !important;
+    }
+
+    #cmr-testimonials-section .aae--a-testimonial .author .image img,
+    .elementor-element-a6ac41e .aae--a-testimonial .author .image img,
+    .elementor-element-82ef444 .aae--a-testimonial .author .image img {
+        width: 70px !important;
+        height: auto !important;
+        max-height: 60px !important;
+        object-fit: contain !important;
+        border-radius: 0 !important;
     }
 
     #cmr-testimonials-section .aae--a-testimonial .author .info,
     .elementor-element-a6ac41e .aae--a-testimonial .author .info,
     .elementor-element-82ef444 .aae--a-testimonial .author .info {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
         text-align: left !important;
     }
 
@@ -4077,24 +4077,50 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     .elementor-element-a6ac41e .aae--a-testimonial .author .name,
     .elementor-element-82ef444 .aae--a-testimonial .author .name {
         text-align: left !important;
+        font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        font-size: 18px !important;
+        font-weight: 700 !important;
+        line-height: 1.3 !important;
+        color: #0F0F0F !important;
+        margin: 0 !important;
     }
 
     #cmr-testimonials-section .aae--a-testimonial .author .designation,
     .elementor-element-a6ac41e .aae--a-testimonial .author .designation,
     .elementor-element-82ef444 .aae--a-testimonial .author .designation {
         text-align: left !important;
+        font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        font-size: 14px !important;
+        color: #555555 !important;
+        line-height: 1.4 !important;
+        margin-top: 2px !important;
     }
 
-    /* 6. Navigation arrows left aligned */
+    /* 6. Navigation arrows centered horizontally */
     #cmr-testimonials-section .aae--a-testimonial .ts-navigation,
     .elementor-element-a6ac41e .aae--a-testimonial .ts-navigation,
     .elementor-element-82ef444 .aae--a-testimonial .ts-navigation {
         display: flex !important;
-        justify-content: flex-start !important;
+        justify-content: center !important;
         align-items: center !important;
-        margin-left: 0 !important;
-        margin-top: 30px !important;
-        gap: 12px !important;
+        margin: 32px auto 0 auto !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        width: 100% !important;
+        gap: 16px !important;
+    }
+
+    #cmr-testimonials-section .aae--a-testimonial .wcf-arrow,
+    .elementor-element-a6ac41e .aae--a-testimonial .wcf-arrow,
+    .elementor-element-82ef444 .aae--a-testimonial .wcf-arrow {
+        background-color: #F5F5F5 !important;
+        border-radius: 50% !important;
+        width: 48px !important;
+        height: 48px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 }
+
 
