@@ -1101,6 +1101,28 @@ add_shortcode('cmr_testimonials', function() {
         
         // Render it
         if ( class_exists( '\\Elementor\\Plugin' ) ) {
+            echo '<style id="cmr-testimonials-mobile-inline-css">
+@media (max-width: 767.98px) {
+    #cmr-testimonials-section, .elementor-element-a6ac41e, .elementor-element-82ef444 { padding-top: 50px !important; padding-bottom: 50px !important; padding-left: 20px !important; padding-right: 20px !important; align-items: flex-start !important; text-align: left !important; }
+    #cmr-testimonials-section .e-con-inner, .elementor-element-a6ac41e .e-con-inner, .elementor-element-82ef444 .e-con-inner, #cmr-testimonials-section .elementor-element-283442d, #cmr-testimonials-section .elementor-element-748fff1 { width: 100% !important; max-width: 100% !important; align-items: flex-start !important; justify-content: flex-start !important; text-align: left !important; padding-left: 0 !important; padding-right: 0 !important; margin: 0 !important; }
+    #cmr-testimonials-section .elementor-element-6647a0b, #cmr-testimonials-section .elementor-element-0807bbc { width: 100% !important; max-width: 100% !important; border: none !important; border-right: none !important; padding: 0 !important; margin: 0 0 24px 0 !important; gap: 0 !important; align-items: flex-start !important; text-align: left !important; }
+    #cmr-testimonials-section .elementor-element-cd36bd5, #cmr-testimonials-section .elementor-element-d9679c4 { width: 100% !important; text-align: left !important; align-self: flex-start !important; margin: 0 0 20px 0 !important; padding: 0 !important; }
+    #cmr-testimonials-section .elementor-element-cd36bd5 p, #cmr-testimonials-section .elementor-element-d9679c4 p { text-align: left !important; font-family: "Instrument Sans", sans-serif !important; font-size: 14px !important; font-weight: 600 !important; letter-spacing: 0.4px !important; text-transform: uppercase !important; color: #0F0F0F !important; margin: 0 !important; }
+    #cmr-testimonials-section .elementor-element-1df5c74, #cmr-testimonials-section .elementor-element-7c38a95, #cmr-testimonials-section .elementor-widget-image { display: block !important; visibility: visible !important; opacity: 1 !important; width: 100% !important; text-align: left !important; align-self: flex-start !important; margin: 0 0 24px 0 !important; padding: 0 !important; }
+    #cmr-testimonials-section .elementor-element-1df5c74 img, #cmr-testimonials-section .elementor-element-7c38a95 img, #cmr-testimonials-section .elementor-widget-image img { display: inline-block !important; visibility: visible !important; opacity: 1 !important; width: 72px !important; max-width: 80px !important; height: auto !important; margin: 0 !important; }
+    #cmr-testimonials-section .elementor-element-aecd77b, #cmr-testimonials-section .elementor-element-8da86a5 { width: 100% !important; text-align: left !important; align-self: flex-start !important; margin: 0 0 30px 0 !important; padding: 0 !important; }
+    #cmr-testimonials-section .elementor-element-aecd77b .elementor-heading-title, #cmr-testimonials-section .elementor-element-8da86a5 .elementor-heading-title { text-align: left !important; font-family: "Instrument Sans", sans-serif !important; font-size: 34px !important; font-weight: 600 !important; line-height: 1.18 !important; letter-spacing: -1.2px !important; color: #0F0F0F !important; margin: 0 !important; }
+    #cmr-testimonials-section .elementor-element-acc3da4, #cmr-testimonials-section .elementor-element-3b754b6 { width: 100% !important; max-width: 100% !important; padding: 0 !important; margin: 0 !important; text-align: left !important; }
+    #cmr-testimonials-section .aae--a-testimonial .slide { padding: 0 !important; text-align: left !important; }
+    #cmr-testimonials-section .aae--a-testimonial .feedback, #cmr-testimonials-section .wcf__slider .feedback { text-align: left !important; font-family: "Instrument Sans", sans-serif !important; font-size: 16px !important; font-weight: 400 !important; line-height: 1.6 !important; letter-spacing: -0.2px !important; color: #0F0F0F !important; margin: 0 0 28px 0 !important; }
+    #cmr-testimonials-section .aae--a-testimonial .wrap { display: flex !important; justify-content: flex-start !important; align-items: center !important; text-align: left !important; width: 100% !important; margin: 0 !important; }
+    #cmr-testimonials-section .aae--a-testimonial .author { display: flex !important; justify-content: flex-start !important; align-items: center !important; text-align: left !important; margin: 0 !important; }
+    #cmr-testimonials-section .aae--a-testimonial .author .info { text-align: left !important; }
+    #cmr-testimonials-section .aae--a-testimonial .author .name { text-align: left !important; }
+    #cmr-testimonials-section .aae--a-testimonial .author .designation { text-align: left !important; }
+    #cmr-testimonials-section .aae--a-testimonial .ts-navigation { display: flex !important; justify-content: flex-start !important; align-items: center !important; margin-left: 0 !important; margin-top: 30px !important; gap: 12px !important; }
+}
+</style>';
             echo '<div id="cmr-testimonials-section">';
             echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
             echo '</div>';
