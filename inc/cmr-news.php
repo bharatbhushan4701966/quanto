@@ -297,6 +297,24 @@ function cmr_news_tabs_shortcode( $atts ) {
     $is_who_we_serve = is_page('who-we-serve') || is_page('press-releases');
     $bg_class = $is_who_we_serve ? ' cmr-news-black-bg' : '';
     ?>
+    <style id="cmr-news-mobile-firstcard-gap-css">
+    @media (max-width: 768px) {
+        .cmr-news-grid, .cmr-media-grid {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        .cmr-news-grid > *:first-child,
+        .cmr-media-grid > *:first-child,
+        .cmr-news-tabs > *:first-child {
+            margin-left: 20px !important;
+        }
+        .cmr-news-grid > *:last-child,
+        .cmr-media-grid > *:last-child,
+        .cmr-news-tabs > *:last-child {
+            margin-right: 20px !important;
+        }
+    }
+    </style>
     <div class="cmr-news-container<?php echo esc_attr( $bg_class ); ?>">
         <!-- Tabs -->
         <div class="cmr-news-tabs">

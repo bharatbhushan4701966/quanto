@@ -4123,14 +4123,25 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     }
 }
 
-/* CMR News Grid Mobile Spacing */
+/* CMR News Grid Mobile Spacing (Starts with 20px gap, scrolls edge-to-edge) */
 @media (max-width: 768px) {
     .cmr-news-grid,
     .cmr-media-grid {
-        padding-left: 20px !important;
-        padding-right: 20px !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    .cmr-news-grid > *:first-child,
+    .cmr-media-grid > *:first-child,
+    .cmr-news-tabs > *:first-child {
+        margin-left: 20px !important;
+    }
+    .cmr-news-grid > *:last-child,
+    .cmr-media-grid > *:last-child,
+    .cmr-news-tabs > *:last-child {
+        margin-right: 20px !important;
     }
 }
+
 
 
 

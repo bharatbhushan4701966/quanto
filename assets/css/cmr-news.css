@@ -285,14 +285,14 @@
         flex-shrink: 0;
     }
 
-    /* Horizontal Scrolling for Grid */
+    /* Horizontal Scrolling for Grid (First item starts with 20px gap, scrolls edge-to-edge) */
     .cmr-news-grid,
     .cmr-media-grid {
         display: flex;
         overflow-x: auto;
         gap: 15px;
-        padding-left: 20px !important;
-        padding-right: 20px !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
         padding-bottom: 15px;
         scroll-snap-type: x mandatory;
         scrollbar-width: none;
@@ -301,6 +301,26 @@
     .cmr-news-grid::-webkit-scrollbar,
     .cmr-media-grid::-webkit-scrollbar {
         display: none;
+    }
+
+    /* Initial 20px space so first card is not glued to edge */
+    .cmr-news-grid > *:first-child,
+    .cmr-media-grid > *:first-child {
+        margin-left: 20px !important;
+    }
+
+    /* Trailing 20px space after the last card */
+    .cmr-news-grid > *:last-child,
+    .cmr-media-grid > *:last-child {
+        margin-right: 20px !important;
+    }
+
+    /* Tabs first and last items */
+    .cmr-news-tabs > *:first-child {
+        margin-left: 20px !important;
+    }
+    .cmr-news-tabs > *:last-child {
+        margin-right: 20px !important;
     }
 
     /* Make all cards look like featured cards & fit horizontal scroll */
