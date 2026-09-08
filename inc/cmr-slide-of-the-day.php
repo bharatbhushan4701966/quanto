@@ -13,7 +13,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             --text-white: #ffffff;
             --transition-smooth: all 0.8s cubic-bezier(0.33, 1, 0.68, 1);
         }
-        /* Target the parent container and all wrappers to make them seamless black */
+        /* Target the parent container and all wrappers to make them seamless black & overflow visible */
         #slide,
         .brain,
         .elementor-element-12ee4ee,
@@ -23,6 +23,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
         .brain-component-wrapper {
             background-color: #000000 !important;
             background: #000000 !important;
+            overflow: visible !important;
         }
         
         /* ===== SLIDE OF DAY ICON ===== */
@@ -37,44 +38,34 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             background-color: var(--bg-dark);
             color: var(--text-white);
             font-family: 'Outfit', sans-serif;
-            overflow-x: hidden;
+            overflow: visible !important;
             margin: 0;
-            padding: 0;
+            padding: 60px 0;
             box-sizing: border-box;
-            scrollbar-width: none;
         }
         .brain-component-wrapper * {
             box-sizing: border-box;
         }
-        /* Initial spacer */
-        .slide-spacer {
-            height: 8vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0.3;
-            letter-spacing: 5px;
-        }
         .slide-scroll-container {
-            height: 100%;
             position: relative;
             padding: 0 5%;
+            overflow: visible !important;
         }
         .slide-main-layout {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 80px;
             max-width: 1140px;
             margin: 0 auto;
+            overflow: visible;
         }
         .slide-left-column {
             flex: 1;
-            position: sticky;
-            top: 5vh;
+            position: relative;
+            overflow: visible;
         }
         .slide-right-column {
             flex: 1;
-            padding-top: 10vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -83,6 +74,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             width: 100%;
             aspect-ratio: 1 / 1.1;
             position: relative;
+            overflow: visible;
         }
         /* 1st Div: The Blue Background/Frame */
         .slide-blue-layer {
@@ -93,10 +85,10 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             height: calc(100% + 100px);
             background-color: var(--primary-blue);
             z-index: 1;
-            transition: var(--transition-smooth);
-            transform: translateY(-60px); 
+            transform: translateY(-60px);
+            border-radius: 4px;
         }
-        /* 2nd Div: The Image (Overlapping) */
+        /* 2nd Div: The Image (Overlapping diagonally) */
         .slide-image-layer {
             position: absolute;
             top: 0;
@@ -106,15 +98,15 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             background-color: #111;
             z-index: 2;
             overflow: hidden;
-            transition: var(--transition-smooth);
             transform: translate(-40px, 60px);
             box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
+            border-radius: 4px;
         }
         .slide-image-layer img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(1);
+            filter: grayscale(0);
             transition: var(--transition-smooth);
         }
         /* Overlay text ON the image */
@@ -189,11 +181,10 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             height: 16px;
             object-fit: contain;
         }
-        /* HOVER (optional smooth lift like Figma) */
+        /* HOVER */
         .slide-cta-button:hover{
             transform: translateY(-2px);
         }
-        /* SCROLL TRANSFORM STATE (Handled by GSAP now) */
 
         /* Mobile Responsiveness */
         @media (max-width: 1024px) {
@@ -201,7 +192,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
                 flex-direction: column-reverse;
                 gap: 50px;
             }
-            .slide-right-column { padding-top: 50px; }
+            .slide-right-column { padding-top: 0; }
             .slide-main-heading { font-size: 40px; line-height: 48px; }
             .slide-value { font-size: 64px; }
         }
@@ -228,10 +219,6 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
                 padding: 40px 16px 50px 16px !important;
             }
 
-            .slide-spacer {
-                display: none !important;
-            }
-
             .slide-scroll-container {
                 padding: 0 !important;
                 height: auto !important;
@@ -246,6 +233,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
                 width: 100% !important;
                 max-width: 100% !important;
                 margin: 0 auto !important;
+                overflow: visible !important;
             }
 
             .slide-right-column {
@@ -341,6 +329,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
                 justify-content: center !important;
                 padding: 0 !important;
                 margin: 0 !important;
+                overflow: visible !important;
             }
 
             .slide-sticky-box {
@@ -409,15 +398,14 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
     </style>
 
     <div class="brain-component-wrapper">
-        <div class="slide-spacer"></div>
         <div class="slide-scroll-container" id="slide-trigger-zone">
             <div class="slide-main-layout">
-                <!-- Left Side: Interactive Image -->
+                <!-- Left Side: Overlapping Diagonal Image Frame -->
                 <div class="slide-left-column">
                     <div class="slide-sticky-box" id="slide-main-box">
-                        <!-- 1st Div: Blue -->
+                        <!-- 1st Div: Blue Layer -->
                         <div class="slide-blue-layer"></div>
-                        <!-- 2nd Div: Image (Overlaps blue with gap) -->
+                        <!-- 2nd Div: Image Layer -->
                         <div class="slide-image-layer">
                             <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Rectangle-25.png" alt="Market Insight">
                         </div>
@@ -454,62 +442,6 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const mainBox = document.getElementById('slide-main-box');
-            const triggerZone = document.getElementById('slide-trigger-zone');
-            
-            if (mainBox && triggerZone) {
-                const initGSAP = () => {
-                    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-                        setTimeout(initGSAP, 50);
-                        return;
-                    }
-                    gsap.registerPlugin(ScrollTrigger);
-                    
-                    const blueLayer = mainBox.querySelector('.slide-blue-layer');
-                    const imageLayer = mainBox.querySelector('.slide-image-layer');
-                    const img = imageLayer.querySelector('img');
-                    
-                    // Remove CSS transitions so GSAP can scrub smoothly
-                    blueLayer.style.transition = 'none';
-                    imageLayer.style.transition = 'none';
-                    img.style.transition = 'none';
-                    
-                    let mm = gsap.matchMedia();
-                    
-                    // Desktop & Tablet Landscape
-                    mm.add("(min-width: 769px)", () => {
-                        let tl = gsap.timeline({
-                            scrollTrigger: {
-                                trigger: triggerZone,
-                                start: "top 75%",
-                                end: "top 25%",
-                                scrub: 1
-                            }
-                        });
-                        
-                        tl.to(blueLayer, { opacity: 0, y: -150, ease: "none" }, 0)
-                          .to(imageLayer, { x: 0, y: 0, boxShadow: "0px 0px 0px rgba(0,0,0,0)", ease: "none" }, 0)
-                          .to(img, { filter: "grayscale(0)", ease: "none" }, 0);
-                    });
-                    
-                    // Mobile & Tablet Portrait
-                    mm.add("(max-width: 768px)", () => {
-                        let tl = gsap.timeline({
-                            scrollTrigger: {
-                                trigger: mainBox, // Trigger when the image itself enters viewport
-                                start: "top 85%",
-                                end: "center center",
-                                scrub: 1
-                            }
-                        });
-                        // On mobile, blue box and image remain static as a frame.
-                        // Only the grayscale effect animates!
-                        tl.to(img, { filter: "grayscale(0)", ease: "none" }, 0);
-                    });
-                };
-                initGSAP();
-            }
-
             const reportBtn = document.querySelector('.slide-cta-button');
             if(reportBtn){
                 reportBtn.addEventListener('click', function(e){
