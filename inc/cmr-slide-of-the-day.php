@@ -1,60 +1,76 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-    exit; // Exit if accessed directly.
+/**
+ * CMR Slide of the Day Component
+ */
+if (!defined('ABSPATH')) {
+    // exit;
 }
-
-function cmr_slide_of_the_day_shortcode( $atts ) {
-    ob_start();
-    ?>
-    <style>
+?>
+<style>
         :root {
-            --bg-dark: #0a0a0a;
-            --teal-accent: #00bfa5;
+            --bg-dark: #070707;
+            --teal-accent: #00baa8;
             --text-gray: #9ca3af;
         }
 
-        /* Top White Space / Section */
-        
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Top Spacer for Desktop View */
+        .top-spacer {
+            background-color: #ffffff;
+            height: 60px;
+            width: 100%;
+        }
+
         /* Hero Dark Section */
         .hero-section {
+            background-color: var(--bg-dark);
             position: relative;
             padding-top: 50px;
-            padding-bottom: 50px;
-            /* Allow elements to overflow top and bottom into white sections */
+            padding-bottom: 60px;
             overflow: visible;
             z-index: 10;
         }
 
-        /* Relative container for the layered image and teal block */
+        /* Container wrapper for image */
         .image-container-wrapper {
             position: relative;
             max-width: 440px;
             margin: 0 auto;
         }
 
-        /* Teal block protruding ABOVE the dark section and to the RIGHT */
+        /* Desktop: Teal block protruding ABOVE the dark section and to the RIGHT */
         .teal-backdrop {
             position: absolute;
-            top: -95px; /* Protrudes into the top white section */
+            top: -90px;
             left: 0;
-            width: calc(100% + 55px); /* Protrudes to the right */
+            width: calc(100% + 55px);
             height: 480px;
             background-color: var(--teal-accent);
             z-index: 1;
-            border-radius: 0px;
         }
 
-        /* Main Image Card protruding BELOW the dark section into the bottom white section */
+        /* Main Image Card */
         .hero-image-card {
             position: relative;
             z-index: 2;
             background-color: #000000;
             width: 100%;
             height: 520px;
-            margin-bottom: -110px; /* Hangs down into the bottom white section */
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            margin-bottom: -110px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
             overflow: hidden;
-            border-radius: 0px;
         }
 
         .hero-image-card img {
@@ -96,24 +112,8 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
 
         /* Right Content Column */
         .content-col {
-            padding-left: 3rem;
+            padding-left: 3.5rem;
             color: #ffffff;
-        }
-
-        @media (max-width: 991.98px) {
-            .content-col {
-                padding-left: 0.75rem;
-                margin-top: 7rem;
-            }
-            .teal-backdrop {
-                top: -50px;
-                width: 100%;
-                height: 420px;
-            }
-            .hero-image-card {
-                height: 440px;
-                margin-bottom: -60px;
-            }
         }
 
         /* Slide of the Day Badge */
@@ -121,7 +121,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.75rem;
+            font-size: 0.78rem;
             font-weight: 700;
             letter-spacing: 0.1em;
             text-transform: uppercase;
@@ -136,7 +136,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
         /* Title */
         .hero-title {
             font-size: clamp(2.4rem, 4vw, 3.25rem);
-            font-weight: 700;
+            font-weight: 600;
             line-height: 1.15;
             letter-spacing: -0.03em;
             color: #ffffff;
@@ -157,12 +157,13 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
         .btn-download {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             background-color: #ffffff;
             color: #000000;
             font-weight: 700;
-            font-size: 0.92rem;
-            padding: 0.75rem 1.6rem;
+            font-size: 0.95rem;
+            padding: 0.85rem 1.8rem;
             border-radius: 9999px;
             border: none;
             text-decoration: none;
@@ -181,48 +182,133 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             font-weight: 800;
         }
 
-        /* Bottom White Newsroom Section */
-        .newsroom-section {
-            background-color: #ffffff;
-            padding-top: 130px; /* Space for overlapping image card */
-            padding-bottom: 80px;
-            position: relative;
-            z-index: 1;
-        }
+        /* ==========================================================
+           MOBILE RESPONSIVE STYLES (EXACT MATCH FOR FIGMA SCREENSHOT)
+           ========================================================== */
+        @media (max-width: 991.98px) {
+            .top-spacer {
+                display: none;
+            }
 
-        .newsroom-tag {
-            font-size: 0.78rem;
-            font-weight: 800;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: #000000;
-            margin-bottom: 1rem;
-        }
+            .hero-section {
+                padding-top: 35px;
+                padding-bottom: 0px;
+                background-color: var(--bg-dark);
+            }
 
-        .newsroom-title {
-            font-size: clamp(2rem, 3.5vw, 2.75rem);
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            color: #000000;
-            margin: 0;
+            /* Content container */
+            .content-col {
+                padding: 0 10px;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 35px;
+            }
+
+            .badge-tag {
+                font-size: 0.75rem;
+                font-weight: 600;
+                letter-spacing: 0.08em;
+                margin-bottom: 1.25rem;
+                justify-content: center;
+            }
+
+            .hero-title {
+                font-size: 1.85rem;
+                line-height: 1.25;
+                font-weight: 600;
+                margin-bottom: 1.25rem;
+                text-align: center;
+                max-width: 320px;
+            }
+
+            .hero-desc {
+                font-size: 0.88rem;
+                line-height: 1.55;
+                color: rgba(255, 255, 255, 0.85);
+                margin-bottom: 1.75rem;
+                text-align: center;
+                max-width: 310px;
+            }
+
+            .btn-download {
+                width: 100%;
+                max-width: 315px;
+                height: 48px;
+                padding: 0 20px;
+                font-size: 0.92rem;
+                font-weight: 600;
+            }
+
+            /* Mobile Image Wrapper & Proper Left-Right Gaps */
+            .image-col {
+                padding-left: 24px !important;
+                padding-right: 24px !important;
+                display: flex;
+                justify-content: center;
+            }
+
+            .image-container-wrapper {
+                width: 100%;
+                max-width: 310px;
+                margin: 0 auto;
+                position: relative;
+            }
+
+            /* Teal Backdrop Frame with clean side spacing */
+            .teal-backdrop {
+                top: 45%;
+                left: -12px;
+                width: calc(100% + 24px);
+                height: calc(55% + 12px);
+                background-color: var(--teal-accent);
+                z-index: 1;
+            }
+
+            .hero-image-card {
+                width: 100%;
+                height: 430px;
+                margin-bottom: 0;
+                box-shadow: none;
+                background-color: #000000;
+            }
+
+            .hero-image-card img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center bottom;
+            }
+
+            .stat-overlay {
+                bottom: 18px;
+                right: 18px;
+            }
+
+            .stat-overlay .stat-number {
+                font-size: 2.4rem;
+                line-height: 1;
+                margin-bottom: 2px;
+            }
+
+            .stat-overlay .stat-label {
+                font-size: 0.7rem;
+            }
         }
     </style>
 
-    <!-- Top White Area -->
-    <!-- <div class="top-spacer"></div> -->
-
-    <!-- Hero Dark Section -->
-    <section class="hero-section">
+<section class="hero-section">
         <div class="container">
-            <div class="row align-items-center">
+            <div class="row align-items-center flex-column-reverse flex-lg-row">
                 
-                <!-- Left Column: Layered Teal Backdrop + Image Card -->
-                <div class="col-lg-6 col-md-10 mx-auto">
+                <!-- Image Column (Desktop: Left, Mobile: Bottom) -->
+                <div class="col-lg-6 col-md-12 image-col">
                     <div class="image-container-wrapper">
-                        <!-- Teal Block (overlaps top boundary and right side) -->
+                        <!-- Teal Backdrop -->
                         <div class="teal-backdrop"></div>
                         
-                        <!-- Image Card (overlaps bottom boundary) -->
+                        <!-- Main Image Card -->
                         <div class="hero-image-card">
                             <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Rectangle-25.png" alt="India AI Market">
                             
@@ -235,8 +321,8 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
                     </div>
                 </div>
 
-                <!-- Right Column: Text & CTA -->
-                <div class="col-lg-6">
+                <!-- Text / Content Column (Desktop: Right, Mobile: Top) -->
+                <div class="col-lg-6 col-md-12">
                     <div class="content-col">
                         <!-- Slide Tag -->
                         <div class="badge-tag">
@@ -246,7 +332,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
 
                         <!-- Title -->
                         <h1 class="hero-title">
-                            India AI market<br>growing at 18% YoY
+                            India AI market growing<br class="d-none d-lg-block">at 18% YoY
                         </h1>
 
                         <!-- Paragraph -->
@@ -255,9 +341,9 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
                         </p>
 
                         <!-- CTA Button -->
-                        <div>
+                        <div class="w-100 d-flex justify-content-center justify-content-lg-start">
                             <a href="#download" class="btn-download">
-                                Download Free Report <i class="bi bi-arrow-up-right"></i>
+                                Download free report <i class="bi bi-arrow-up-right"></i>
                             </a>
                         </div>
                     </div>
@@ -267,23 +353,14 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
         </div>
     </section>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const reportBtn = document.querySelector('.slide-cta-button');
-            if(reportBtn){
-                reportBtn.addEventListener('click', function(e){
-                    e.preventDefault();
-                    if (typeof elementorProFrontend !== 'undefined' && elementorProFrontend.modules && elementorProFrontend.modules.popup) {
-                        elementorProFrontend.modules.popup.showPopup({ id: 7758 });
-                    } else {
-                        console.log('Elementor Popup JS not loaded');
-                    }
-                });
-            }
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const reportBtn = document.querySelector('.btn-download');
+    if(reportBtn){
+        reportBtn.addEventListener('click', function(e){
+            e.preventDefault();
+            // modal or popup trigger
         });
-    </script>
-    <?php
-    return ob_get_clean();
-}
-add_shortcode( 'cmr_slide_of_the_day', 'cmr_slide_of_the_day_shortcode' );
-
+    }
+});
+</script>
