@@ -17,7 +17,8 @@ if ( ! function_exists( 'cmr_latest_insights_ai_shortcode' ) ) {
             'nav_title'      => 'AI',
             'section_title'  => 'Latest Insights',
             'section_desc'   => 'Explore expert analysis, research reports, and real-time market signals shaping industries and business strategy.',
-            'category'       => 'ai', // Dynamic category option
+            'category'       => '', // Dynamic category option (supports slug, name, or comma-separated list)
+            'filters'        => '', // Optional custom filter buttons comma-separated
             'link_overview'  => '#top',
             'link_insights'  => '#overview',
             'link_reports'   => '#reports',
@@ -26,30 +27,60 @@ if ( ! function_exists( 'cmr_latest_insights_ai_shortcode' ) ) {
             'link_cmr_news'  => '#cmr-in-news'
         ), $atts );
 
-        $category_slug = sanitize_title( $atts['category'] );
-
         $query_args = array(
-            'post_type'      => array( 'post', 'cmr_news' ),
-            'posts_per_page' => $atts['posts_per_page'],
+            'post_type'      => array( 'post', 'cmr_news', 'cmr_media' ),
+            'posts_per_page' => intval( $atts['posts_per_page'] ),
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
-            'tax_query'      => array(
+        );
+
+        $has_category_filter = false;
+
+        if ( ! empty( $atts['category'] ) && strtolower( trim( $atts['category'] ) ) !== 'all' ) {
+            $cat_items   = array_filter( array_map( 'trim', explode( ',', $atts['category'] ) ) );
+            $terms_slugs = array_map( 'sanitize_title', $cat_items );
+            $terms_names = $cat_items;
+
+            $query_args['tax_query'] = array(
                 'relation' => 'OR',
                 array(
                     'taxonomy' => 'category',
                     'field'    => 'slug',
-                    'terms'    => $category_slug,
+                    'terms'    => $terms_slugs,
+                ),
+                array(
+                    'taxonomy' => 'category',
+                    'field'    => 'name',
+                    'terms'    => $terms_names,
                 ),
                 array(
                     'taxonomy' => 'cmr_news_category',
                     'field'    => 'slug',
-                    'terms'    => $category_slug,
+                    'terms'    => $terms_slugs,
                 ),
-            ),
-        );
+                array(
+                    'taxonomy' => 'cmr_news_category',
+                    'field'    => 'name',
+                    'terms'    => $terms_names,
+                ),
+            );
+            $has_category_filter = true;
+        }
 
         $insights_query = new WP_Query( $query_args );
+
+        // Fallback: If category query yielded no posts, fallback to latest published posts so articles always show
+        if ( ! $insights_query->have_posts() && $has_category_filter ) {
+            $fallback_args = array(
+                'post_type'      => array( 'post', 'cmr_news', 'cmr_media' ),
+                'posts_per_page' => intval( $atts['posts_per_page'] ),
+                'post_status'    => 'publish',
+                'orderby'        => 'date',
+                'order'          => 'DESC',
+            );
+            $insights_query = new WP_Query( $fallback_args );
+        }
 
         ob_start();
         ?>
@@ -90,10 +121,14 @@ if ( ! function_exists( 'cmr_latest_insights_ai_shortcode' ) ) {
             <div class="cmr-insights-filters-bar">
                 <div class="cmr-insights-filters">
                     <button class="filter-btn active">All</button>
-                    <button class="filter-btn">EV Growth</button>
-                    <button class="filter-btn">Battery Innovation</button>
-                    <button class="filter-btn">OEM Strategy</button>
-                    <button class="filter-btn">Supply Chain</button>
+                    <?php 
+                    $filters = ! empty( $atts['filters'] ) 
+                        ? array_filter( array_map( 'trim', explode( ',', $atts['filters'] ) ) )
+                        : array( 'Generative AI', 'Enterprise AI', 'Edge AI', 'AI Infrastructure' );
+                    
+                    foreach ( $filters as $filter_item ) : ?>
+                        <button class="filter-btn"><?php echo esc_html( $filter_item ); ?></button>
+                    <?php endforeach; ?>
                 </div>
                 <div class="cmr-insights-search">
                     <form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
@@ -123,6 +158,9 @@ if ( ! function_exists( 'cmr_latest_insights_ai_shortcode' ) ) {
                         // Categories / Tags
                         $category_name = 'Media Releases';
                         $terms = get_the_terms( get_the_ID(), 'category' );
+                        if ( ! $terms || is_wp_error( $terms ) ) {
+                            $terms = get_the_terms( get_the_ID(), 'cmr_news_category' );
+                        }
                         if ( $terms && ! is_wp_error( $terms ) ) {
                             $category_name = $terms[0]->name;
                         }
