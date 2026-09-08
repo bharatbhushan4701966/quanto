@@ -47,43 +47,47 @@ get_header();
 
 <style id="cmr-404-styles">
 .cmr-404-section {
-    min-height: calc(85vh - 120px);
+    min-height: calc(80vh - 100px);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 90px 20px 130px 20px;
-    background: radial-gradient(ellipse at 50% 25%, rgba(99, 102, 241, 0.06) 0%, rgba(255, 255, 255, 0) 70%);
+    padding: 70px 20px 100px 20px;
+    background: radial-gradient(ellipse at 50% 25%, rgba(99, 102, 241, 0.05) 0%, rgba(255, 255, 255, 0) 70%);
     position: relative;
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 .cmr-404-card {
-    max-width: 760px;
+    max-width: 680px;
     margin: 0 auto;
     text-align: center;
     position: relative;
     z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .cmr-404-badge {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
     background: rgba(99, 102, 241, 0.08);
     color: #4f46e5;
-    padding: 6px 18px;
+    padding: 5px 15px;
     border-radius: 100px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     letter-spacing: 1.2px;
     text-transform: uppercase;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     border: 1px solid rgba(99, 102, 241, 0.2);
 }
 
 .cmr-404-badge .cmr-dot {
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background-color: #4f46e5;
     display: inline-block;
@@ -96,11 +100,11 @@ get_header();
 }
 
 .cmr-404-hero-num {
-    font-size: clamp(80px, 11vw, 130px);
+    font-size: clamp(70px, 9vw, 110px);
     font-weight: 900;
     line-height: 1;
-    letter-spacing: -3px;
-    margin-bottom: 18px;
+    letter-spacing: -2px;
+    margin-bottom: 12px;
     background: linear-gradient(135deg, #0f172a 0%, #312e81 40%, #4f46e5 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -108,52 +112,54 @@ get_header();
 }
 
 .cmr-404-title {
-    font-size: clamp(28px, 4vw, 44px) !important;
+    font-size: clamp(24px, 3.5vw, 38px) !important;
     font-weight: 700 !important;
-    line-height: 1.25 !important;
+    line-height: 1.28 !important;
     color: #0f172a !important;
-    letter-spacing: -0.025em;
-    margin: 0 auto 16px auto !important;
-    max-width: 640px;
+    letter-spacing: -0.02em;
+    margin: 0 auto 12px auto !important;
+    max-width: 580px;
 }
 
 .cmr-404-desc {
-    font-size: 18px !important;
-    line-height: 1.65 !important;
+    font-size: 16px !important;
+    line-height: 1.6 !important;
     color: #64748b !important;
-    max-width: 500px;
-    margin: 0 auto 38px auto !important;
+    max-width: 440px;
+    margin: 0 auto 30px auto !important;
 }
 
 .cmr-404-actions {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 16px;
+    gap: 14px;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .cmr-404-btn-primary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
     background: #0f172a;
     color: #ffffff !important;
-    font-size: 15px;
+    font-size: 14.5px;
     font-weight: 600;
-    padding: 14px 30px;
+    padding: 12px 26px;
     border-radius: 100px;
     text-decoration: none !important;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.15);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+    white-space: nowrap;
 }
 
 .cmr-404-btn-primary:hover {
     background: #4f46e5;
     color: #ffffff !important;
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(79, 70, 229, 0.3);
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.28);
 }
 
 .cmr-404-btn-primary svg {
@@ -171,13 +177,14 @@ get_header();
     gap: 8px;
     background: #ffffff;
     color: #0f172a !important;
-    font-size: 15px;
+    font-size: 14.5px;
     font-weight: 600;
-    padding: 13px 28px;
+    padding: 11px 24px;
     border-radius: 100px;
     border: 1px solid #e2e8f0;
     text-decoration: none !important;
     transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
 .cmr-404-btn-secondary:hover {
@@ -187,22 +194,71 @@ get_header();
     transform: translateY(-2px);
 }
 
+/* Tablet and Mobile adjustments */
 @media (max-width: 767.98px) {
     .cmr-404-section {
-        padding: 60px 16px 90px 16px;
+        padding: 50px 16px 80px 16px;
         min-height: auto;
     }
-    .cmr-404-desc {
-        font-size: 15px !important;
-        margin-bottom: 28px !important;
+    
+    .cmr-404-badge {
+        font-size: 11px;
+        padding: 4px 12px;
+        margin-bottom: 12px;
     }
+    
+    .cmr-404-hero-num {
+        font-size: 64px;
+        margin-bottom: 8px;
+    }
+    
+    .cmr-404-title {
+        font-size: 22px !important;
+        margin-bottom: 10px !important;
+        max-width: 320px;
+    }
+    
+    .cmr-404-desc {
+        font-size: 14px !important;
+        margin-bottom: 24px !important;
+        max-width: 290px;
+        line-height: 1.5 !important;
+    }
+    
     .cmr-404-actions {
         flex-direction: column;
-        width: 100%;
+        align-items: center;
+        gap: 10px;
     }
+    
     .cmr-404-btn-primary,
     .cmr-404-btn-secondary {
-        width: 100%;
+        width: auto;
+        min-width: 200px;
+        max-width: 260px;
+        font-size: 13.5px;
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 420px) {
+    .cmr-404-section {
+        padding: 40px 14px 75px 14px;
+    }
+    
+    .cmr-404-hero-num {
+        font-size: 56px;
+    }
+    
+    .cmr-404-title {
+        font-size: 20px !important;
+    }
+    
+    .cmr-404-btn-primary,
+    .cmr-404-btn-secondary {
+        min-width: 180px;
+        padding: 9px 18px;
+        font-size: 13px;
     }
 }
 </style>
@@ -224,7 +280,7 @@ get_header();
                 }
 
                 if ( ! empty( $error_main_img ) ) {
-                    echo '<div class="cmr-404-img-wrap mb-4"><img src="' . esc_url( $error_main_img ) . '" alt="404" style="max-width: 280px; height: auto;"></div>';
+                    echo '<div class="cmr-404-img-wrap mb-3"><img src="' . esc_url( $error_main_img ) . '" alt="404" style="max-width: 240px; height: auto;"></div>';
                 } else {
                     echo '<div class="cmr-404-hero-num">404</div>';
                 }
@@ -244,7 +300,7 @@ get_header();
             <div class="cmr-404-actions">
                 <?php if ( ! empty( $quanto404btntext ) ) : ?>
                     <a class="cmr-404-btn-primary" href="<?php echo esc_url( $quanto404btnlink ); ?>">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="19" y1="12" x2="5" y2="12"></line>
                             <polyline points="12 19 5 12 12 5"></polyline>
                         </svg>
