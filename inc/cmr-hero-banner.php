@@ -215,8 +215,12 @@ function cmr_hero_banner_shortcode($atts) {
     ========================= */
     @media (max-width: 768px){
 
+      .hero {
+        min-height: auto;
+      }
+
       .hero-content{
-        padding: 100px 20px 40px !important;
+        padding: 80px 20px 60px !important;
         display: flex;
         flex-direction: column;
         align-items: center;
