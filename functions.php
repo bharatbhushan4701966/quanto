@@ -2328,6 +2328,13 @@ add_action( 'wp_head', function() {
                 line-height: 1.25 !important;
                 letter-spacing: -0.5px !important;
             }
+
+            section.hero,
+            .hero {
+                position: relative !important;
+                min-height: 65vh !important;
+                overflow: hidden !important;
+            }
         }
     </style>
     <?php

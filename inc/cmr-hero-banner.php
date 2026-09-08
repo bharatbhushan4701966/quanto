@@ -215,9 +215,10 @@ function cmr_hero_banner_shortcode($atts) {
     ========================= */
     @media (max-width: 768px){
 
+      section.hero,
       .hero {
         position: relative;
-        min-height: 65vh;
+        min-height: 65vh !important;
         overflow: hidden;
       }
 
