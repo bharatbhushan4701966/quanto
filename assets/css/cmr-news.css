@@ -285,52 +285,59 @@
         flex-shrink: 0;
     }
 
-    /* Horizontal Scrolling for Grid (First item starts with 20px gap, scrolls edge-to-edge) */
+    /* Horizontal Scrolling for Grid (Aligned with 20px screen margin) */
     .cmr-news-grid,
-    .cmr-media-grid {
-        display: flex;
-        overflow-x: auto;
-        gap: 15px;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        padding-bottom: 15px;
-        scroll-snap-type: x mandatory;
-        scrollbar-width: none;
-        -webkit-overflow-scrolling: touch;
+    .cmr-media-grid,
+    .cmr-insights-grid {
+        display: flex !important;
+        overflow-x: auto !important;
+        gap: 15px !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        padding-bottom: 15px !important;
+        scroll-padding-left: 20px !important;
+        scroll-padding-inline: 20px !important;
+        scroll-snap-type: x mandatory !important;
+        scrollbar-width: none !important;
+        -webkit-overflow-scrolling: touch !important;
+        box-sizing: border-box !important;
     }
     .cmr-news-grid::-webkit-scrollbar,
-    .cmr-media-grid::-webkit-scrollbar {
-        display: none;
+    .cmr-media-grid::-webkit-scrollbar,
+    .cmr-insights-grid::-webkit-scrollbar {
+        display: none !important;
     }
 
-    /* Initial 20px space so first card is not glued to edge */
-    .cmr-news-grid > *:first-child,
-    .cmr-media-grid > *:first-child {
-        margin-left: 20px !important;
+    /* Tabs aligned with 20px padding */
+    .cmr-news-tabs {
+        display: flex !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        gap: 15px !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        padding-bottom: 10px !important;
+        scroll-padding-left: 20px !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+        box-sizing: border-box !important;
     }
-
-    /* Trailing 20px space after the last card */
-    .cmr-news-grid > *:last-child,
-    .cmr-media-grid > *:last-child {
-        margin-right: 20px !important;
-    }
-
-    /* Tabs first and last items */
-    .cmr-news-tabs > *:first-child {
-        margin-left: 20px !important;
-    }
-    .cmr-news-tabs > *:last-child {
-        margin-right: 20px !important;
+    .cmr-news-tabs::-webkit-scrollbar {
+        display: none !important;
     }
 
     /* Make all cards look like featured cards & fit horizontal scroll */
+    .cmr-card,
     .cmr-card-featured,
     .cmr-card-standard,
     .cmr-media-left,
     .cmr-media-horizontal-card {
-        flex: 0 0 85%;
-        height: 400px;
-        scroll-snap-align: start;
+        flex: 0 0 85% !important;
+        max-width: 85% !important;
+        width: 85% !important;
+        height: 400px !important;
+        scroll-snap-align: start !important;
+        scroll-margin-left: 20px !important;
         grid-column: auto;
     }
     

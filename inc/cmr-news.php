@@ -299,19 +299,40 @@ function cmr_news_tabs_shortcode( $atts ) {
     ?>
     <style id="cmr-news-mobile-firstcard-gap-css">
     @media (max-width: 768px) {
-        .cmr-news-grid, .cmr-media-grid {
-            padding-left: 0 !important;
-            padding-right: 0 !important;
+        .cmr-news-grid, .cmr-media-grid, .cmr-insights-grid {
+            display: flex !important;
+            overflow-x: auto !important;
+            gap: 15px !important;
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+            padding-bottom: 15px !important;
+            scroll-padding-left: 20px !important;
+            scroll-padding-inline: 20px !important;
+            scroll-snap-type: x mandatory !important;
+            scrollbar-width: none !important;
+            -webkit-overflow-scrolling: touch !important;
+            box-sizing: border-box !important;
         }
-        .cmr-news-grid > *:first-child,
-        .cmr-media-grid > *:first-child,
-        .cmr-news-tabs > *:first-child {
-            margin-left: 20px !important;
+        .cmr-news-tabs {
+            display: flex !important;
+            overflow-x: auto !important;
+            white-space: nowrap !important;
+            gap: 15px !important;
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+            padding-bottom: 10px !important;
+            scroll-padding-left: 20px !important;
+            -webkit-overflow-scrolling: touch !important;
+            scrollbar-width: none !important;
+            box-sizing: border-box !important;
         }
-        .cmr-news-grid > *:last-child,
-        .cmr-media-grid > *:last-child,
-        .cmr-news-tabs > *:last-child {
-            margin-right: 20px !important;
+        .cmr-card, .cmr-card-featured, .cmr-card-standard, .cmr-media-left, .cmr-media-horizontal-card {
+            flex: 0 0 85% !important;
+            max-width: 85% !important;
+            width: 85% !important;
+            height: 400px !important;
+            scroll-snap-align: start !important;
+            scroll-margin-left: 20px !important;
         }
     }
     </style>
