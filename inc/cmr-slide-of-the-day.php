@@ -170,9 +170,25 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             box-shadow: 0 4px 15px rgba(255, 255, 255, 0.25);
         }
 
-        .btn-download i {
-            font-size: 0.85rem;
-            font-weight: 800;
+        .slide-day-icon {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .button-icon {
+            width: 13px;
+            height: 13px;
+            object-fit: contain;
+            display: inline-block;
+            vertical-align: middle;
+            transition: transform 0.25s ease;
+        }
+
+        .btn-download:hover .button-icon {
+            transform: translate(2px, -2px);
         }
 
         /* ==========================================================
@@ -185,13 +201,13 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
 
             .hero-section {
                 padding-top: 35px;
-                padding-bottom: 0px;
+                padding-bottom: 40px;
                 background-color: var(--bg-dark);
             }
 
             /* Content container */
             .content-col {
-                padding: 0 10px;
+                padding: 0 16px;
                 text-align: center;
                 display: flex;
                 flex-direction: column;
@@ -213,7 +229,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
                 font-weight: 600;
                 margin-bottom: 1.25rem;
                 text-align: center;
-                max-width: 320px;
+                max-width: 100%;
             }
 
             .hero-desc {
@@ -222,12 +238,12 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
                 color: rgba(255, 255, 255, 0.85);
                 margin-bottom: 1.75rem;
                 text-align: center;
-                max-width: 310px;
+                max-width: 380px;
             }
 
             .btn-download {
                 width: 100%;
-                max-width: 315px;
+                max-width: 330px;
                 height: 48px;
                 padding: 0 20px;
                 font-size: 0.92rem;
@@ -236,32 +252,33 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
 
             /* Mobile Image Wrapper & Proper Left-Right Gaps */
             .image-col {
-                padding-left: 24px !important;
-                padding-right: 24px !important;
+                padding-left: 18px !important;
+                padding-right: 18px !important;
                 display: flex;
                 justify-content: center;
+                width: 100%;
             }
 
             .image-container-wrapper {
                 width: 100%;
-                max-width: 310px;
+                max-width: 440px;
                 margin: 0 auto;
                 position: relative;
             }
 
             /* Teal Backdrop Frame with clean side spacing */
             .teal-backdrop {
-                top: 45%;
+                top: 42%;
                 left: -12px;
                 width: calc(100% + 24px);
-                height: calc(55% + 12px);
+                height: calc(58% + 14px);
                 background-color: var(--teal-accent);
                 z-index: 1;
             }
 
             .hero-image-card {
                 width: 100%;
-                height: 430px;
+                height: 440px;
                 margin-bottom: 0;
                 box-shadow: none;
                 background-color: #000000;
@@ -327,7 +344,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
 
                         <!-- Title -->
                         <h1 class="hero-title">
-                            India AI market growing<br class="d-none d-lg-block">at 18% YoY
+                            India AI market growing<br>at 18% YoY
                         </h1>
 
                         <!-- Paragraph -->
