@@ -279,7 +279,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
 
             /* Teal Backdrop Frame with clean side spacing */
             .teal-backdrop {
-                top: 42%;
+                top: 20%;
                 bottom: 0px;
                 left: -12px;
                 width: calc(100% + 24px);
