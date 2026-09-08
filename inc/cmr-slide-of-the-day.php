@@ -201,8 +201,16 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
 
             .hero-section {
                 padding-top: 35px;
-                padding-bottom: 40px;
+                padding-bottom: 0px !important;
                 background-color: var(--bg-dark);
+            }
+
+            .hero-section .container {
+                padding-bottom: 0px !important;
+            }
+
+            .hero-section .row {
+                margin-bottom: 0px !important;
             }
 
             /* Content container */
@@ -254,6 +262,8 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             .image-col {
                 padding-left: 18px !important;
                 padding-right: 18px !important;
+                padding-bottom: 0px !important;
+                margin-bottom: 0px !important;
                 display: flex;
                 justify-content: center;
                 width: 100%;
@@ -263,15 +273,17 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
                 width: 100%;
                 max-width: 440px;
                 margin: 0 auto;
+                margin-bottom: 0px !important;
                 position: relative;
             }
 
             /* Teal Backdrop Frame with clean side spacing */
             .teal-backdrop {
                 top: 42%;
+                bottom: 0px;
                 left: -12px;
                 width: calc(100% + 24px);
-                height: calc(58% + 14px);
+                height: auto;
                 background-color: var(--teal-accent);
                 z-index: 1;
             }
@@ -279,7 +291,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
             .hero-image-card {
                 width: 100%;
                 height: 440px;
-                margin-bottom: 0;
+                margin-bottom: 14px;
                 box-shadow: none;
                 background-color: #000000;
             }
