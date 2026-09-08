@@ -2,11 +2,14 @@
 /**
  * CMR Slide of the Day Component
  */
-if (!defined('ABSPATH')) {
-    // exit;
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
 }
-?>
-<style>
+
+function cmr_slide_of_the_day_shortcode( $atts ) {
+    ob_start();
+    ?>
+    <style>
         :root {
             --bg-dark: #070707;
             --teal-accent: #00baa8;
@@ -15,15 +18,6 @@ if (!defined('ABSPATH')) {
 
         * {
             box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-dark);
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
         }
 
         /* Top Spacer for Desktop View */
@@ -298,7 +292,8 @@ if (!defined('ABSPATH')) {
         }
     </style>
 
-<section class="hero-section">
+    <!-- Hero Dark Section -->
+    <section class="hero-section">
         <div class="container">
             <div class="row align-items-center flex-column-reverse flex-lg-row">
                 
@@ -353,14 +348,22 @@ if (!defined('ABSPATH')) {
         </div>
     </section>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const reportBtn = document.querySelector('.btn-download');
-    if(reportBtn){
-        reportBtn.addEventListener('click', function(e){
-            e.preventDefault();
-            // modal or popup trigger
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const reportBtn = document.querySelector('.btn-download');
+            if (reportBtn) {
+                reportBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (typeof elementorProFrontend !== 'undefined' && elementorProFrontend.modules && elementorProFrontend.modules.popup) {
+                        elementorProFrontend.modules.popup.showPopup({ id: 7758 });
+                    } else {
+                        console.log('Elementor Popup JS not loaded');
+                    }
+                });
+            }
         });
-    }
-});
-</script>
+    </script>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode( 'cmr_slide_of_the_day', 'cmr_slide_of_the_day_shortcode' );
