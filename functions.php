@@ -2312,6 +2312,15 @@ add_action( 'wp_head', function() {
                 align-self: center !important;
                 margin-top: 10px !important;
             }
+
+            [data-id="f93180d"],
+            [data-id="f93180d"] h2,
+            h2[data-id="f93180d"],
+            .e-f93180d-76d932c {
+                font-size: 32px !important;
+                line-height: 1.25 !important;
+                letter-spacing: -0.5px !important;
+            }
         }
     </style>
     <?php

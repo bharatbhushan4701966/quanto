@@ -3838,7 +3838,16 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     }
 }
 
-
-
-
-
+/* ==========================================================================
+   Mobile Heading Typography Override
+   ========================================================================== */
+@media (max-width: 767px) {
+    [data-id="f93180d"],
+    [data-id="f93180d"] h2,
+    h2[data-id="f93180d"],
+    .e-f93180d-76d932c {
+        font-size: 32px !important;
+        line-height: 1.25 !important;
+        letter-spacing: -0.5px !important;
+    }
+}
