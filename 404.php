@@ -201,6 +201,10 @@ get_header();
         min-height: auto;
     }
     
+    .cmr-404-card {
+        margin-bottom: 5rem;
+    }
+    
     .cmr-404-badge {
         font-size: 11px;
         padding: 4px 12px;
