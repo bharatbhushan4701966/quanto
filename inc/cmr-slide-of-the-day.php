@@ -8,437 +8,270 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
     ?>
     <style>
         :root {
-            --primary-blue: #36ebd6;
-            --bg-dark: #000000;
-            --text-white: #ffffff;
-            --transition-smooth: all 0.8s cubic-bezier(0.33, 1, 0.68, 1);
+            --bg-dark: #0a0a0a;
+            --teal-accent: #00bfa5;
+            --text-gray: #9ca3af;
         }
-        /* Target the parent container and all wrappers to make them seamless black & overflow visible */
-        #slide,
-        .brain,
-        .elementor-element-12ee4ee,
-        .elementor-element-12ee4ee > .e-con-inner,
-        .elementor-element-5a5e00d,
-        .elementor-element-0cb331f,
-        .brain-component-wrapper {
-            background-color: #000000 !important;
-            background: #000000 !important;
-            overflow: visible !important;
+
+        /* Top White Space / Section */
+        .top-spacer {
+            background-color: #ffffff;
+            height: 80px;
+            width: 100%;
         }
-        
-        /* ===== SLIDE OF DAY ICON ===== */
-        .slide-day-icon{
-            width:18px;
-            height:18px;
-            object-fit:contain;
-            display:block;
-            flex-shrink:0;
-        }
-        .brain-component-wrapper {
+
+        /* Hero Dark Section */
+        .hero-section {
             background-color: var(--bg-dark);
-            color: var(--text-white);
-            font-family: 'Outfit', sans-serif;
-            overflow: visible !important;
-            margin: 0;
-            padding: 60px 0;
-            box-sizing: border-box;
-        }
-        .brain-component-wrapper * {
-            box-sizing: border-box;
-        }
-        .slide-scroll-container {
             position: relative;
-            padding: 0 5%;
-            overflow: visible !important;
+            padding-top: 50px;
+            padding-bottom: 50px;
+            /* Allow elements to overflow top and bottom into white sections */
+            overflow: visible;
+            z-index: 10;
         }
-        .slide-main-layout {
-            display: flex;
-            align-items: center;
-            gap: 80px;
-            max-width: 1140px;
+
+        /* Relative container for the layered image and teal block */
+        .image-container-wrapper {
+            position: relative;
+            max-width: 440px;
             margin: 0 auto;
-            overflow: visible;
         }
-        .slide-left-column {
-            flex: 1;
-            position: relative;
-            overflow: visible;
-        }
-        .slide-right-column {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .slide-sticky-box {
-            width: 100%;
-            aspect-ratio: 1 / 1.1;
-            position: relative;
-            overflow: visible;
-        }
-        /* 1st Div: The Blue Background/Frame */
-        .slide-blue-layer {
+
+        /* Teal block protruding ABOVE the dark section and to the RIGHT */
+        .teal-backdrop {
             position: absolute;
-            top: 0;
+            top: -95px; /* Protrudes into the top white section */
             left: 0;
-            width: 100%;
-            height: calc(100% + 100px);
-            background-color: var(--primary-blue);
+            width: calc(100% + 55px); /* Protrudes to the right */
+            height: 480px;
+            background-color: var(--teal-accent);
             z-index: 1;
-            transform: translateY(-60px);
-            border-radius: 4px;
+            border-radius: 0px;
         }
-        /* 2nd Div: The Image (Overlapping diagonally) */
-        .slide-image-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #111;
+
+        /* Main Image Card protruding BELOW the dark section into the bottom white section */
+        .hero-image-card {
+            position: relative;
             z-index: 2;
+            background-color: #000000;
+            width: 100%;
+            height: 520px;
+            margin-bottom: -110px; /* Hangs down into the bottom white section */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             overflow: hidden;
-            transform: translate(-40px, 60px);
-            box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
-            border-radius: 4px;
+            border-radius: 0px;
         }
-        .slide-image-layer img {
+
+        .hero-image-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(0);
-            transition: var(--transition-smooth);
+            object-position: center bottom;
+            display: block;
         }
-        /* Overlay text ON the image */
-        .slide-image-text-overlay {
+
+        /* Stat text overlay in the bottom right of the image */
+        .stat-overlay {
             position: absolute;
-            bottom: 40px;
-            right: 40px;
+            bottom: 24px;
+            right: 24px;
             z-index: 3;
             text-align: right;
-        }
-        .slide-value {
-            font-size: 54px;
-            font-weight: 800;
-            line-height: 64px;
-            margin: 0;
-            color:#fff;
-            letter-spacing: 0px;
-        }
-        .slide-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0px;
-            color: #fff;
-            opacity: 0.7;
-            margin: 0;
-        }
-        /* RIGHT SIDE CONTENT STYLES */
-        .slide-content-wrapper {
-            max-width: 100%;
-        }
-        .slide-badge {
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            opacity: 100%;
-        }
-        .slide-main-heading {
-            font-size: 48px;
-            font-weight: 600;
-            line-height: 58px;
-            margin-bottom: 30px;
-            letter-spacing: -1.5px;
-            color: #fff;
-        }
-        .slide-description {
-            font-size: 14px;
-            line-height: 24px;
             color: #ffffff;
-            margin-bottom: 40px;
+            pointer-events: none;
         }
-        .slide-cta-button{
+
+        .stat-overlay .stat-number {
+            font-size: 2.85rem;
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            margin-bottom: 4px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+
+        .stat-overlay .stat-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+            letter-spacing: 0.02em;
+            margin: 0;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+        }
+
+        /* Right Content Column */
+        .content-col {
+            padding-left: 3rem;
+            color: #ffffff;
+        }
+
+        @media (max-width: 991.98px) {
+            .content-col {
+                padding-left: 0.75rem;
+                margin-top: 7rem;
+            }
+            .teal-backdrop {
+                top: -50px;
+                width: 100%;
+                height: 420px;
+            }
+            .hero-image-card {
+                height: 440px;
+                margin-bottom: -60px;
+            }
+        }
+
+        /* Slide of the Day Badge */
+        .badge-tag {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            background-color: #fff;
-            color: #000;
-            padding: 16px 28px; 
-            border-radius: 50px;
+            gap: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+        }
+
+        .badge-tag i {
+            font-size: 0.95rem;
+        }
+
+        /* Title */
+        .hero-title {
+            font-size: clamp(2.4rem, 4vw, 3.25rem);
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+            color: #ffffff;
+            margin-bottom: 1.75rem;
+        }
+
+        /* Description Paragraph */
+        .hero-desc {
+            font-size: 0.95rem;
+            line-height: 1.65;
+            color: var(--text-gray);
+            max-width: 440px;
+            margin-bottom: 2.25rem;
+            font-weight: 400;
+        }
+
+        /* Download Button */
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #ffffff;
+            color: #000000;
+            font-weight: 700;
+            font-size: 0.92rem;
+            padding: 0.75rem 1.6rem;
+            border-radius: 9999px;
+            border: none;
             text-decoration: none;
-            font-size: 16px !important;   
-            font-weight: 500;
-            line-height: 1;               
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
         }
-        /* ICON SIZE FIX */
-        .slide-cta-button .button-icon{
-            width: 16px;
-            height: 16px;
-            object-fit: contain;
-        }
-        /* HOVER */
-        .slide-cta-button:hover{
+
+        .btn-download:hover {
+            background-color: #f3f4f6;
+            color: #000000;
             transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.25);
         }
 
-        /* Mobile Responsiveness */
-        @media (max-width: 1024px) {
-            .slide-main-layout {
-                flex-direction: column-reverse;
-                gap: 50px;
-            }
-            .slide-right-column { padding-top: 0; }
-            .slide-main-heading { font-size: 40px; line-height: 48px; }
-            .slide-value { font-size: 64px; }
+        .btn-download i {
+            font-size: 0.85rem;
+            font-weight: 800;
         }
 
-        @media (max-width: 768px) {
-            #slide,
-            .brain,
-            .elementor-element-12ee4ee,
-            .elementor-element-12ee4ee > .e-con-inner,
-            .elementor-element-5a5e00d,
-            .elementor-element-0cb331f,
-            .brain-component-wrapper {
-                background-color: #000000 !important;
-                background: #000000 !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                min-height: 0 !important;
-                height: auto !important;
-                max-height: none !important;
-                overflow: visible !important;
-            }
+        /* Bottom White Newsroom Section */
+        .newsroom-section {
+            background-color: #ffffff;
+            padding-top: 130px; /* Space for overlapping image card */
+            padding-bottom: 80px;
+            position: relative;
+            z-index: 1;
+        }
 
-            .brain-component-wrapper {
-                padding: 40px 16px 50px 16px !important;
-            }
+        .newsroom-tag {
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #000000;
+            margin-bottom: 1rem;
+        }
 
-            .slide-scroll-container {
-                padding: 0 !important;
-                height: auto !important;
-                max-height: none !important;
-                overflow: visible !important;
-                position: relative !important;
-            }
-
-            .slide-main-layout {
-                flex-direction: column-reverse !important;
-                gap: 32px !important;
-                width: 100% !important;
-                max-width: 100% !important;
-                margin: 0 auto !important;
-                overflow: visible !important;
-            }
-
-            .slide-right-column {
-                padding: 0 !important;
-                width: 100% !important;
-                text-align: center !important;
-                display: flex !important;
-                flex-direction: column !important;
-                align-items: center !important;
-                justify-content: center !important;
-            }
-
-            .slide-content-wrapper {
-                width: 100% !important;
-                max-width: 340px !important;
-                margin: 0 auto !important;
-                display: flex !important;
-                flex-direction: column !important;
-                align-items: center !important;
-                text-align: center !important;
-            }
-
-            .slide-badge {
-                font-family: 'Outfit', 'Instrument Sans', sans-serif !important;
-                font-size: 13px !important;
-                font-weight: 600 !important;
-                letter-spacing: 1px !important;
-                text-transform: uppercase !important;
-                color: #ffffff !important;
-                margin-bottom: 16px !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                gap: 8px !important;
-                opacity: 1 !important;
-            }
-
-            .slide-day-icon {
-                width: 16px !important;
-                height: 16px !important;
-            }
-
-            .slide-main-heading { 
-                font-family: 'Outfit', 'Instrument Sans', sans-serif !important;
-                font-size: 30px !important; 
-                line-height: 38px !important; 
-                font-weight: 600 !important;
-                margin-bottom: 16px !important;
-                letter-spacing: -0.8px !important;
-                color: #ffffff !important;
-                text-align: center !important;
-            }
-
-            .slide-description {
-                font-family: 'Outfit', 'Instrument Sans', sans-serif !important;
-                font-size: 14.5px !important;
-                line-height: 22px !important;
-                color: rgba(255, 255, 255, 0.9) !important;
-                margin-bottom: 24px !important;
-                text-align: center !important;
-            }
-
-            .slide-cta-button {
-                display: inline-flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                gap: 8px !important;
-                background-color: #ffffff !important;
-                color: #000000 !important;
-                width: 100% !important;
-                max-width: 320px !important;
-                height: 48px !important;
-                padding: 0 24px !important;
-                border-radius: 50px !important;
-                font-family: 'Outfit', 'Instrument Sans', sans-serif !important;
-                font-size: 15px !important;
-                font-weight: 600 !important;
-                text-decoration: none !important;
-                margin: 0 auto !important;
-                box-shadow: none !important;
-            }
-
-            .slide-cta-button .button-icon {
-                width: 14px !important;
-                height: 14px !important;
-            }
-
-            .slide-left-column {
-                position: relative !important;
-                top: auto !important;
-                width: 100% !important;
-                display: flex !important;
-                justify-content: center !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                overflow: visible !important;
-            }
-
-            .slide-sticky-box {
-                width: 100% !important;
-                max-width: 340px !important;
-                aspect-ratio: 1 / 1.15 !important;
-                margin: 0 auto !important;
-                position: relative !important;
-                background-color: #00ede9 !important;
-                padding: 10px 10px 12px 10px !important;
-                border-radius: 0 !important;
-                box-sizing: border-box !important;
-            }
-
-            .slide-blue-layer {
-                display: none !important;
-            }
-
-            .slide-image-layer {
-                position: relative !important;
-                top: auto !important;
-                left: auto !important;
-                width: 100% !important;
-                height: 100% !important;
-                transform: none !important;
-                box-shadow: none !important;
-                overflow: hidden !important;
-                background: #000000 !important;
-            }
-
-            .slide-image-layer img {
-                width: 100% !important;
-                height: 100% !important;
-                object-fit: cover !important;
-                filter: grayscale(0) !important;
-            }
-
-            .slide-image-text-overlay {
-                position: absolute !important;
-                bottom: 20px !important;
-                right: 20px !important;
-                z-index: 5 !important;
-                text-align: right !important;
-            }
-
-            .slide-value { 
-                font-family: 'Outfit', 'Instrument Sans', sans-serif !important;
-                font-size: 42px !important; 
-                font-weight: 800 !important;
-                line-height: 46px !important; 
-                color: #ffffff !important;
-                margin: 0 !important;
-            }
-
-            .slide-label {
-                font-family: 'Outfit', 'Instrument Sans', sans-serif !important;
-                font-size: 11px !important;
-                font-weight: 500 !important;
-                letter-spacing: 0px !important;
-                color: #ffffff !important;
-                opacity: 0.9 !important;
-                margin: 2px 0 0 0 !important;
-                text-transform: capitalize !important;
-            }
+        .newsroom-title {
+            font-size: clamp(2rem, 3.5vw, 2.75rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: #000000;
+            margin: 0;
         }
     </style>
 
-    <div class="brain-component-wrapper">
-        <div class="slide-scroll-container" id="slide-trigger-zone">
-            <div class="slide-main-layout">
-                <!-- Left Side: Overlapping Diagonal Image Frame -->
-                <div class="slide-left-column">
-                    <div class="slide-sticky-box" id="slide-main-box">
-                        <!-- 1st Div: Blue Layer -->
-                        <div class="slide-blue-layer"></div>
-                        <!-- 2nd Div: Image Layer -->
-                        <div class="slide-image-layer">
-                            <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Rectangle-25.png" alt="Market Insight">
-                        </div>
-                        <!-- Overlay text on image -->
-                        <div class="slide-image-text-overlay">
-                            <h1 class="slide-value">$14.2B</h1>
-                            <p class="slide-label">Projected Market Value (2028)</p>
+    <!-- Top White Area -->
+    <div class="top-spacer"></div>
+
+    <!-- Hero Dark Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                
+                <!-- Left Column: Layered Teal Backdrop + Image Card -->
+                <div class="col-lg-6 col-md-10 mx-auto">
+                    <div class="image-container-wrapper">
+                        <!-- Teal Block (overlaps top boundary and right side) -->
+                        <div class="teal-backdrop"></div>
+                        
+                        <!-- Image Card (overlaps bottom boundary) -->
+                        <div class="hero-image-card">
+                            <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Rectangle-25.png" alt="India AI Market">
+                            
+                            <!-- Stat Overlay -->
+                            <div class="stat-overlay">
+                                <div class="stat-number">$14.2B</div>
+                                <div class="stat-label">Projected Market Value (2028)</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- Right Side: Text Content -->
-                <div class="slide-right-column">
-                    <div class="slide-content-wrapper">
-                        <div class="slide-badge">
-                            <img 
-                            src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/slide-of-day.svg" 
-                            class="slide-day-icon" 
-                            alt="Slide of the Day"
-                            > SLIDE OF THE DAY
+
+                <!-- Right Column: Text & CTA -->
+                <div class="col-lg-6">
+                    <div class="content-col">
+                        <!-- Slide Tag -->
+                        <div class="badge-tag">
+                            <i class="bi bi-calendar4-event"></i>
+                            <span>SLIDE OF THE DAY</span>
                         </div>
-                        <h2 class="slide-main-heading">India AI market growing at 18% YoY</h2>
-                        <p class="slide-description">
+
+                        <!-- Title -->
+                        <h1 class="hero-title">
+                            India AI market<br>growing at 18% YoY
+                        </h1>
+
+                        <!-- Paragraph -->
+                        <p class="hero-desc">
                             Our latest study indicates that generative AI adoption among Indian SMEs surpass large enterprises by 2026, driven by localised language models.
                         </p>
-                        <a href="#" class="slide-cta-button open-report-popup">
-                            Download Free Report 
-                            <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg" class="button-icon" alt="arrow">
-                        </a>
+
+                        <!-- CTA Button -->
+                        <div>
+                            <a href="#download" class="btn-download">
+                                Download Free Report <i class="bi bi-arrow-up-right"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
-    </div>
+    </section>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
