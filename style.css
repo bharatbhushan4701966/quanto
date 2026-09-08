@@ -3519,11 +3519,14 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
         overflow-x: auto !important;
         overflow-y: hidden !important;
         gap: 20px !important;
-        padding: 0 12px 20px 12px !important;
+        padding: 0 20px 20px 20px !important;
+        scroll-padding-left: 20px !important;
+        scroll-padding-inline: 20px !important;
         scroll-snap-type: x mandatory !important;
         -webkit-overflow-scrolling: touch !important;
         scrollbar-width: none !important;
         -ms-overflow-style: none !important;
+        box-sizing: border-box !important;
     }
 
     .process-box-wrapper::-webkit-scrollbar {
@@ -3537,6 +3540,7 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
         max-width: 88% !important;
         min-width: 0 !important;
         scroll-snap-align: start !important;
+        scroll-margin-left: 20px !important;
         flex-shrink: 0 !important;
         box-sizing: border-box !important;
         padding: 36px 26px !important;

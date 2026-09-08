@@ -6756,6 +6756,7 @@ body .elementor-element .process-box-wrapper {
 
 @media only screen and (max-width: 767.98px) {
   .process-box-wrapper,
+  .process-box-wrapper.horizontal-scroll,
   div.process-box-wrapper.horizontal-scroll,
   body .elementor-element .process-box-wrapper {
     display: flex !important;
@@ -6763,21 +6764,27 @@ body .elementor-element .process-box-wrapper {
     overflow-x: auto !important;
     overflow-y: hidden !important;
     gap: 20px !important;
-    padding: 0 12px 20px 12px !important;
+    padding: 0 20px 20px 20px !important;
+    scroll-padding-left: 20px !important;
+    scroll-padding-inline: 20px !important;
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
+    box-sizing: border-box !important;
   }
   .process-box-wrapper::-webkit-scrollbar {
     display: none !important;
   }
+  .process-box-wrapper .process-box,
+  .process-box.scroll-item,
   .process-box {
     flex: 0 0 88% !important;
     width: 88% !important;
     max-width: 88% !important;
     min-width: 0 !important;
     scroll-snap-align: start !important;
+    scroll-margin-left: 20px !important;
     flex-shrink: 0 !important;
     box-sizing: border-box !important;
     padding: 36px 26px !important;
