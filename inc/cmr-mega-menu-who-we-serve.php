@@ -231,7 +231,7 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
                     <p>Intelligence for connected supply chains</p>
                 </a>
 
-                <a href="<?php echo esc_url( home_url( '/msme/' ) ); ?>" class="cmr-mms-item">
+                <a href="<?php echo esc_url( home_url( '/msme-2/' ) ); ?>" class="cmr-mms-item">
                     <div class="cmr-mms-item-header">
                         <h4>MSME</h4>
                         <span class="cmr-mms-badge">New</span>
