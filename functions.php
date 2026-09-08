@@ -342,6 +342,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-intro-connected-tech.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-intro-semiconductors.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-intro-ai.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-intro-msme.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-intro-enterprise-tech.php';
 // Save rating meta for cmr_news comments
 add_action('comment_post', 'cmr_save_comment_rating', 10, 2);
 function cmr_save_comment_rating( $comment_id, $comment_approved ) {
