@@ -29,7 +29,6 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
 
         /* Hero Dark Section */
         .hero-section {
-            background-color: var(--bg-dark);
             position: relative;
             padding-top: 50px;
             padding-bottom: 60px;
