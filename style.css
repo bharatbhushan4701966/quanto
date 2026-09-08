@@ -3847,3 +3847,254 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
         overflow: hidden;
     }
 }
+
+/* ==========================================================================
+   Mobile Responsive Testimonials Section (Figma Match - Left Aligned)
+   ========================================================================== */
+@media (max-width: 767.98px) {
+    /* Main container padding & left alignment */
+    #cmr-testimonials-section,
+    .elementor-element-a6ac41e,
+    .elementor-element-82ef444 {
+        padding-top: 50px !important;
+        padding-bottom: 50px !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        align-items: flex-start !important;
+        text-align: left !important;
+    }
+
+    #cmr-testimonials-section .e-con-inner,
+    .elementor-element-a6ac41e .e-con-inner,
+    .elementor-element-82ef444 .e-con-inner,
+    #cmr-testimonials-section .elementor-element-283442d,
+    #cmr-testimonials-section .elementor-element-748fff1,
+    .elementor-element-a6ac41e .elementor-element-283442d,
+    .elementor-element-82ef444 .elementor-element-748fff1 {
+        width: 100% !important;
+        max-width: 100% !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+        text-align: left !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* Left column containing Subtitle, Quote Icon, Heading */
+    #cmr-testimonials-section .elementor-element-6647a0b,
+    #cmr-testimonials-section .elementor-element-0807bbc,
+    .elementor-element-a6ac41e .elementor-element-6647a0b,
+    .elementor-element-82ef444 .elementor-element-0807bbc {
+        width: 100% !important;
+        max-width: 100% !important;
+        border: none !important;
+        border-right: none !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-bottom: 24px !important;
+        gap: 0 !important;
+        align-items: flex-start !important;
+        text-align: left !important;
+    }
+
+    /* 1. Subtitle: "CLIENT TESTIMONIALS" */
+    #cmr-testimonials-section .elementor-element-cd36bd5,
+    #cmr-testimonials-section .elementor-element-d9679c4,
+    .elementor-element-a6ac41e .elementor-element-cd36bd5,
+    .elementor-element-82ef444 .elementor-element-d9679c4,
+    .elementor-23190 .elementor-element.elementor-element-cd36bd5,
+    .elementor-14 .elementor-element.elementor-element-d9679c4 {
+        width: 100% !important;
+        text-align: left !important;
+        align-self: flex-start !important;
+        margin-top: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-bottom: 20px !important;
+        padding: 0 !important;
+    }
+
+    #cmr-testimonials-section .elementor-element-cd36bd5 p,
+    #cmr-testimonials-section .elementor-element-d9679c4 p,
+    .elementor-element-a6ac41e .elementor-element-cd36bd5 p,
+    .elementor-element-82ef444 .elementor-element-d9679c4 p,
+    .elementor-23190 .elementor-element.elementor-element-cd36bd5 p,
+    .elementor-14 .elementor-element.elementor-element-d9679c4 p {
+        text-align: left !important;
+        font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.4px !important;
+        text-transform: uppercase !important;
+        color: #0F0F0F !important;
+        margin: 0 !important;
+    }
+
+    /* 2. Big Quote Symbol Icon */
+    #cmr-testimonials-section .elementor-element-1df5c74,
+    #cmr-testimonials-section .elementor-element-7c38a95,
+    .elementor-element-a6ac41e .elementor-element-1df5c74,
+    .elementor-element-82ef444 .elementor-element-7c38a95,
+    .elementor-23190 .elementor-element.elementor-element-1df5c74,
+    .elementor-14 .elementor-element.elementor-element-7c38a95,
+    #cmr-testimonials-section .elementor-widget-image,
+    .elementor-element-a6ac41e .elementor-widget-image,
+    .elementor-element-82ef444 .elementor-widget-image {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: 100% !important;
+        text-align: left !important;
+        align-self: flex-start !important;
+        margin-top: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-bottom: 24px !important;
+        padding: 0 !important;
+    }
+
+    #cmr-testimonials-section .elementor-element-1df5c74 img,
+    #cmr-testimonials-section .elementor-element-7c38a95 img,
+    .elementor-element-a6ac41e .elementor-element-1df5c74 img,
+    .elementor-element-82ef444 .elementor-element-7c38a95 img,
+    .elementor-23190 .elementor-element.elementor-element-1df5c74 img,
+    .elementor-14 .elementor-element.elementor-element-7c38a95 img,
+    #cmr-testimonials-section .elementor-widget-image img,
+    .elementor-element-a6ac41e .elementor-widget-image img,
+    .elementor-element-82ef444 .elementor-widget-image img {
+        display: inline-block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: 72px !important;
+        max-width: 80px !important;
+        height: auto !important;
+        margin: 0 !important;
+    }
+
+    /* 3. Heading: "What our clients say about us" */
+    #cmr-testimonials-section .elementor-element-aecd77b,
+    #cmr-testimonials-section .elementor-element-8da86a5,
+    .elementor-element-a6ac41e .elementor-element-aecd77b,
+    .elementor-element-82ef444 .elementor-element-8da86a5,
+    .elementor-23190 .elementor-element.elementor-element-aecd77b,
+    .elementor-14 .elementor-element.elementor-element-8da86a5 {
+        width: 100% !important;
+        text-align: left !important;
+        align-self: flex-start !important;
+        margin-top: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-bottom: 30px !important;
+        padding: 0 !important;
+    }
+
+    #cmr-testimonials-section .elementor-element-aecd77b .elementor-heading-title,
+    #cmr-testimonials-section .elementor-element-8da86a5 .elementor-heading-title,
+    .elementor-element-a6ac41e .elementor-element-aecd77b .elementor-heading-title,
+    .elementor-element-82ef444 .elementor-element-8da86a5 .elementor-heading-title,
+    .elementor-23190 .elementor-element.elementor-element-aecd77b .elementor-heading-title,
+    .elementor-14 .elementor-element.elementor-element-8da86a5 .elementor-heading-title {
+        text-align: left !important;
+        font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        font-size: 34px !important;
+        font-weight: 600 !important;
+        line-height: 1.18 !important;
+        letter-spacing: -1.2px !important;
+        color: #0F0F0F !important;
+        margin: 0 !important;
+    }
+
+    /* 4. Testimonial Quote / Feedback */
+    #cmr-testimonials-section .elementor-element-acc3da4,
+    #cmr-testimonials-section .elementor-element-3b754b6,
+    .elementor-element-a6ac41e .elementor-element-acc3da4,
+    .elementor-element-82ef444 .elementor-element-3b754b6 {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        text-align: left !important;
+    }
+
+    #cmr-testimonials-section .aae--a-testimonial .slide,
+    .elementor-element-a6ac41e .aae--a-testimonial .slide,
+    .elementor-element-82ef444 .aae--a-testimonial .slide {
+        padding: 0 !important;
+        text-align: left !important;
+    }
+
+    #cmr-testimonials-section .aae--a-testimonial .feedback,
+    #cmr-testimonials-section .wcf__slider .feedback,
+    .elementor-element-a6ac41e .aae--a-testimonial .feedback,
+    .elementor-element-82ef444 .aae--a-testimonial .feedback,
+    .aae--a-testimonial .feedback {
+        text-align: left !important;
+        font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        font-size: 16px !important;
+        font-weight: 400 !important;
+        line-height: 1.6 !important;
+        letter-spacing: -0.2px !important;
+        color: #0F0F0F !important;
+        margin-top: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-bottom: 28px !important;
+    }
+
+    /* 5. Author info left aligned */
+    #cmr-testimonials-section .aae--a-testimonial .wrap,
+    .elementor-element-a6ac41e .aae--a-testimonial .wrap,
+    .elementor-element-82ef444 .aae--a-testimonial .wrap {
+        display: flex !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        text-align: left !important;
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    #cmr-testimonials-section .aae--a-testimonial .author,
+    .elementor-element-a6ac41e .aae--a-testimonial .author,
+    .elementor-element-82ef444 .aae--a-testimonial .author {
+        display: flex !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        text-align: left !important;
+        margin: 0 !important;
+    }
+
+    #cmr-testimonials-section .aae--a-testimonial .author .info,
+    .elementor-element-a6ac41e .aae--a-testimonial .author .info,
+    .elementor-element-82ef444 .aae--a-testimonial .author .info {
+        text-align: left !important;
+    }
+
+    #cmr-testimonials-section .aae--a-testimonial .author .name,
+    .elementor-element-a6ac41e .aae--a-testimonial .author .name,
+    .elementor-element-82ef444 .aae--a-testimonial .author .name {
+        text-align: left !important;
+    }
+
+    #cmr-testimonials-section .aae--a-testimonial .author .designation,
+    .elementor-element-a6ac41e .aae--a-testimonial .author .designation,
+    .elementor-element-82ef444 .aae--a-testimonial .author .designation {
+        text-align: left !important;
+    }
+
+    /* 6. Navigation arrows left aligned */
+    #cmr-testimonials-section .aae--a-testimonial .ts-navigation,
+    .elementor-element-a6ac41e .aae--a-testimonial .ts-navigation,
+    .elementor-element-82ef444 .aae--a-testimonial .ts-navigation {
+        display: flex !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        margin-left: 0 !important;
+        margin-top: 30px !important;
+        gap: 12px !important;
+    }
+}
+
