@@ -215,12 +215,21 @@ function cmr_hero_banner_shortcode($atts) {
     ========================= */
     @media (max-width: 768px){
 
+      .hero {
+        min-height: calc(100svh - 80px);
+        min-height: calc(100vh - 80px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
       .hero-content{
-        padding: 100px 20px 40px !important;
+        padding: 30px 20px !important;
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
+        width: 100%;
       }
 
       .hero-title{
