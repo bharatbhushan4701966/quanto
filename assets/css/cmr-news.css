@@ -291,6 +291,8 @@
         display: flex;
         overflow-x: auto;
         gap: 15px;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
         padding-bottom: 15px;
         scroll-snap-type: x mandatory;
         scrollbar-width: none;

@@ -4123,4 +4123,14 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     }
 }
 
+/* CMR News Grid Mobile Spacing */
+@media (max-width: 768px) {
+    .cmr-news-grid,
+    .cmr-media-grid {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+}
+
+
 
