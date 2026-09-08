@@ -14,7 +14,7 @@ if ( ! function_exists( 'cmr_latest_insights_msme_shortcode' ) ) {
 
         $atts = shortcode_atts( array(
             'posts_per_page' => 4,
-            'nav_title'      => 'MSME',
+            'nav_title'      => 'Micro Small and Medium Enterprises',
             'section_title'  => 'Latest Insights',
             'section_desc'   => 'Explore expert analysis, research reports, and real-time market signals shaping industries and business strategy.',
             'category'       => '', // Dynamic category option (supports slug, name, or comma-separated list)
