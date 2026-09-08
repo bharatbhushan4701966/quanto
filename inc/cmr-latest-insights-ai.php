@@ -14,7 +14,7 @@ if ( ! function_exists( 'cmr_latest_insights_ai_shortcode' ) ) {
 
         $atts = shortcode_atts( array(
             'posts_per_page' => 4,
-            'nav_title'      => 'AI',
+            'nav_title'      => 'Artificial Intelligence',
             'section_title'  => 'Latest Insights',
             'section_desc'   => 'Explore expert analysis, research reports, and real-time market signals shaping industries and business strategy.',
             'category'       => '', // Dynamic category option (supports slug, name, or comma-separated list)
