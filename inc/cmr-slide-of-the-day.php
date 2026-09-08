@@ -14,12 +14,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
         }
 
         /* Top White Space / Section */
-        .top-spacer {
-            background-color: #ffffff;
-            height: 80px;
-            width: 100%;
-        }
-
+        
         /* Hero Dark Section */
         .hero-section {
             background-color: var(--bg-dark);
@@ -215,7 +210,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
     </style>
 
     <!-- Top White Area -->
-    <div class="top-spacer"></div>
+    <!-- <div class="top-spacer"></div> -->
 
     <!-- Hero Dark Section -->
     <section class="hero-section">
