@@ -321,7 +321,8 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
                     <div class="content-col">
                         <!-- Slide Tag -->
                         <div class="badge-tag">
-                            <i class="bi bi-calendar4-event"></i>
+                            <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/slide-of-day.svg"
+                            class="slide-day-icon" alt="Slide of the Day">
                             <span>SLIDE OF THE DAY</span>
                         </div>
 
@@ -338,7 +339,8 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
                         <!-- CTA Button -->
                         <div class="w-100 d-flex justify-content-center justify-content-lg-start">
                             <a href="#download" class="btn-download">
-                                Download free report <i class="bi bi-arrow-up-right"></i>
+                                Download free report <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg"
+                            class="button-icon" alt="arrow">
                             </a>
                         </div>
                     </div>
