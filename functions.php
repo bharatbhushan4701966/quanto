@@ -125,6 +125,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-latest-insights-supply.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-latest-insights-semiconductors.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-latest-insights-ai.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-latest-insights-msme.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-latest-insights-enterprise-tech.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-latest-insights-it-telecom.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-industry-intelligence.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-marketing-services.php';
