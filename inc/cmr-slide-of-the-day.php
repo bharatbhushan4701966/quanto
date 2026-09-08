@@ -12,7 +12,7 @@ function cmr_slide_of_the_day_shortcode( $atts ) {
     <style>
         :root {
             --bg-dark: #070707;
-            --teal-accent: #00baa8;
+            --teal-accent: #00BFBC;
             --text-gray: #9ca3af;
         }
 
