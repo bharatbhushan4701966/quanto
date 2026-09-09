@@ -3299,9 +3299,21 @@ add_action( 'wp_head', function() {
 
         .elementor-element.elementor-element-d155fe5 .elementor-element-533a48d,
         div[data-id="d155fe5"] .elementor-widget-image,
-        div[data-id="d155fe5"] [data-id="533a48d"],
-        .elementor-element.elementor-element-d155fe5 .elementor-widget-container,
-        div[data-id="d155fe5"] .elementor-widget-container {
+        div[data-id="d155fe5"] [data-id="533a48d"] {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 22px !important;
+            height: 22px !important;
+            min-width: 22px !important;
+            min-height: 22px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex-shrink: 0 !important;
+        }
+
+        .elementor-element.elementor-element-d155fe5 [data-id="533a48d"] .elementor-widget-container,
+        div[data-id="d155fe5"] [data-id="533a48d"] .elementor-widget-container {
             margin: 0 !important;
             padding: 0 !important;
             width: 22px !important;
@@ -3323,9 +3335,8 @@ add_action( 'wp_head', function() {
             display: none !important;
         }
 
-        .elementor-element.elementor-element-d155fe5 .elementor-element-533a48d::after,
-        div[data-id="d155fe5"] .elementor-widget-image::after,
-        div[data-id="d155fe5"] [data-id="533a48d"]::after {
+        .elementor-element.elementor-element-d155fe5 [data-id="533a48d"] .elementor-widget-container::after,
+        div[data-id="d155fe5"] [data-id="533a48d"] .elementor-widget-container::after {
             content: '' !important;
             display: block !important;
             width: 9px !important;
@@ -3384,6 +3395,66 @@ add_action( 'wp_head', function() {
                 --flex-wrap: nowrap !important;
                 --align-items: center !important;
                 --justify-content: center !important;
+            }
+
+            /* Mobile: Red dot circle container */
+            .elementor-element.elementor-element-d155fe5 .elementor-element-533a48d,
+            div[data-id="d155fe5"] .elementor-widget-image,
+            div[data-id="d155fe5"] [data-id="533a48d"] {
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 22px !important;
+                height: 22px !important;
+                min-width: 22px !important;
+                min-height: 22px !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                flex-shrink: 0 !important;
+            }
+
+            .elementor-element.elementor-element-d155fe5 [data-id="533a48d"] .elementor-widget-container,
+            div[data-id="d155fe5"] [data-id="533a48d"] .elementor-widget-container {
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 22px !important;
+                height: 22px !important;
+                min-width: 22px !important;
+                min-height: 22px !important;
+                border-radius: 50% !important;
+                background: rgba(220, 38, 38, 0.12) !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                flex-shrink: 0 !important;
+                position: relative !important;
+            }
+
+            /* Mobile: Red dot */
+            .elementor-element.elementor-element-d155fe5 [data-id="533a48d"] .elementor-widget-container::after,
+            div[data-id="d155fe5"] [data-id="533a48d"] .elementor-widget-container::after {
+                content: '' !important;
+                display: block !important;
+                width: 9px !important;
+                height: 9px !important;
+                border-radius: 50% !important;
+                background: #dc2626 !important;
+            }
+
+            /* Mobile: CMR LIVE text */
+            .elementor-element.elementor-element-d155fe5 h6,
+            .elementor-element.elementor-element-d155fe5 .e-heading-base,
+            div[data-id="d155fe5"] h6,
+            div[data-id="d155fe5"] .e-heading-base,
+            .e-e62c637-96a4a06,
+            [data-id="e62c637"] {
+                font-size: 14px !important;
+                font-weight: 700 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                line-height: 1 !important;
+                height: auto !important;
+                white-space: nowrap !important;
             }
 
             .elementor-element-b06ac09,
