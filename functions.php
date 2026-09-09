@@ -3444,6 +3444,21 @@ add_action( 'wp_head', function() {
                 font-weight: 600 !important;
                 line-height: 1.3 !important;
             }
+
+            .elementor-element-1e0db62,
+            .elementor-element-1e0db62 .elementor-heading-title,
+            [data-id="1e0db62"],
+            [data-id="1e0db62"] .elementor-heading-title,
+            [data-id="1e0db62"] h1,
+            [data-id="1e0db62"] h2,
+            [data-id="1e0db62"] h3,
+            [data-id="1e0db62"] h4,
+            [data-id="1e0db62"] h5,
+            [data-id="1e0db62"] h6,
+            .elementor-22037 .elementor-element.elementor-element-1e0db62 .elementor-heading-title {
+                font-size: 12px !important;
+                font-weight: 600 !important;
+            }
         }
 
         @media (max-width: 768px) {
