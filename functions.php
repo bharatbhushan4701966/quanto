@@ -3535,6 +3535,272 @@ add_action( 'wp_head', function() {
                 overflow: hidden !important;
             }
         }
+
+        /* ===================================================
+           Team Section (e9e2ef0) - Desktop & Responsive Layout
+           =================================================== */
+        .elementor-element-e9e2ef0,
+        [data-id="e9e2ef0"] {
+            width: 100% !important;
+            max-width: 1280px !important;
+            margin: 0 auto !important;
+            box-sizing: border-box !important;
+        }
+
+        @media (min-width: 1025px) {
+            .elementor-element-e9e2ef0,
+            [data-id="e9e2ef0"] {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: space-between !important;
+                align-items: flex-start !important;
+                gap: 40px !important;
+                padding: 60px 24px 40px 24px !important;
+            }
+
+            .elementor-element-b5534eb,
+            [data-id="b5534eb"] {
+                flex: 0 0 280px !important;
+                width: 280px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                text-align: left !important;
+            }
+
+            [data-id="01a9d2a"],
+            .e-01a9d2a-6018b41 {
+                font-family: 'Instrument Sans', sans-serif !important;
+                font-size: 42px !important;
+                font-weight: 600 !important;
+                color: #0F0F0F !important;
+                line-height: 1.15 !important;
+                letter-spacing: -1.2px !important;
+                margin: 0 0 35px 0 !important;
+                text-align: left !important;
+            }
+
+            .elementor-element-b95ab32,
+            [data-id="b95ab32"] {
+                display: block !important;
+                text-align: left !important;
+                margin: 0 !important;
+            }
+
+            .elementor-element-c946a02,
+            [data-id="c946a02"] {
+                display: flex !important;
+                flex-direction: row !important;
+                gap: 24px !important;
+                flex: 1 1 auto !important;
+                width: calc(100% - 320px) !important;
+                max-width: calc(100% - 320px) !important;
+                justify-content: flex-start !important;
+                align-items: stretch !important;
+            }
+
+            .elementor-element-f64cd23,
+            [data-id="f64cd23"],
+            .elementor-element-a6469e6,
+            [data-id="a6469e6"],
+            .elementor-element-5600e8d,
+            [data-id="5600e8d"] {
+                flex: 1 1 0% !important;
+                min-width: 0 !important;
+                width: calc(33.333% - 16px) !important;
+                max-width: calc(33.333% - 16px) !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                text-align: left !important;
+            }
+        }
+
+        /* Team Card Shared Styles */
+        .elementor-element-f64cd23 img,
+        [data-id="f64cd23"] img,
+        .elementor-element-a6469e6 img,
+        [data-id="a6469e6"] img,
+        .elementor-element-5600e8d img,
+        [data-id="5600e8d"] img {
+            width: 100% !important;
+            height: auto !important;
+            aspect-ratio: 3/3.8 !important;
+            object-fit: cover !important;
+            display: block !important;
+            background: #f5f5f5 !important;
+            border-radius: 0 !important;
+            margin-bottom: 16px !important;
+        }
+
+        [data-id="dd9791d"],
+        [data-id="fc8c017"],
+        [data-id="7333940"],
+        .e-dd9791d-13c3858,
+        .e-fc8c017-24113ae,
+        .e-7333940-b3d4700 {
+            font-family: 'Instrument Sans', sans-serif !important;
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            color: #0F0F0F !important;
+            margin: 0 0 6px 0 !important;
+            letter-spacing: -0.3px !important;
+            line-height: 1.25 !important;
+            text-align: left !important;
+        }
+
+        [data-id="dd9791d"] a,
+        [data-id="fc8c017"] a,
+        [data-id="7333940"] a {
+            color: #0F0F0F !important;
+            text-decoration: none !important;
+        }
+
+        [data-id="5caff27"],
+        [data-id="711c626"],
+        [data-id="e1f1f3e"],
+        .e-5caff27-a02fe46,
+        .e-711c626-3281288,
+        .e-e1f1f3e-023d3ec {
+            font-family: 'Instrument Sans', sans-serif !important;
+            font-size: 13px !important;
+            color: #475569 !important;
+            margin: 0 0 16px 0 !important;
+            line-height: 1.35 !important;
+            text-align: left !important;
+        }
+
+        .elementor-element-8294ddf,
+        [data-id="8294ddf"],
+        .elementor-element-d1e2194,
+        [data-id="d1e2194"],
+        .elementor-element-0c9cb54,
+        [data-id="0c9cb54"] {
+            display: flex !important;
+            flex-direction: row !important;
+            gap: 8px !important;
+            align-items: center !important;
+            margin-top: auto !important;
+        }
+
+        [data-id="8294ddf"] .e-svg-base,
+        [data-id="d1e2194"] .e-svg-base,
+        [data-id="0c9cb54"] .e-svg-base {
+            width: 28px !important;
+            height: 28px !important;
+            min-width: 28px !important;
+            min-height: 28px !important;
+            max-width: 28px !important;
+            max-height: 28px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background-color: #0F0F0F !important;
+            border-radius: 4px !important;
+            padding: 6px !important;
+            box-sizing: border-box !important;
+            cursor: pointer !important;
+            transition: background-color 0.2s ease !important;
+        }
+
+        [data-id="8294ddf"] .e-svg-base:hover,
+        [data-id="d1e2194"] .e-svg-base:hover,
+        [data-id="0c9cb54"] .e-svg-base:hover {
+            background-color: #333 !important;
+        }
+
+        [data-id="8294ddf"] svg,
+        [data-id="d1e2194"] svg,
+        [data-id="0c9cb54"] svg {
+            width: 14px !important;
+            height: 14px !important;
+        }
+
+        /* Mobile / Tablet Responsive for Team Section */
+        @media (max-width: 1024px) {
+            .elementor-element-e9e2ef0,
+            [data-id="e9e2ef0"] {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                text-align: center !important;
+                padding: 40px 20px 20px 20px !important;
+                gap: 20px !important;
+            }
+
+            .elementor-element-b5534eb,
+            [data-id="b5534eb"] {
+                width: 100% !important;
+                flex: 0 0 100% !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                text-align: center !important;
+            }
+
+            [data-id="01a9d2a"],
+            .e-01a9d2a-6018b41 {
+                font-family: 'Instrument Sans', sans-serif !important;
+                font-size: 26px !important;
+                font-weight: 600 !important;
+                color: #0F0F0F !important;
+                line-height: 1.2 !important;
+                letter-spacing: -0.8px !important;
+                margin: 0 auto 20px auto !important;
+                text-align: center !important;
+            }
+
+            [data-id="01a9d2a"] br,
+            .e-01a9d2a-6018b41 br {
+                display: none !important;
+            }
+
+            .elementor-element-b95ab32,
+            [data-id="b95ab32"] {
+                display: block !important;
+                text-align: center !important;
+                margin: 0 auto 20px auto !important;
+            }
+
+            .elementor-element-c946a02,
+            [data-id="c946a02"] {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                gap: 16px !important;
+                padding: 10px 10px 20px 10px !important;
+                -webkit-overflow-scrolling: touch !important;
+                scroll-snap-type: x mandatory !important;
+                scrollbar-width: none !important;
+                justify-content: flex-start !important;
+                box-sizing: border-box !important;
+            }
+
+            .elementor-element-c946a02::-webkit-scrollbar,
+            [data-id="c946a02"]::-webkit-scrollbar {
+                display: none !important;
+            }
+
+            .elementor-element-f64cd23,
+            [data-id="f64cd23"],
+            .elementor-element-a6469e6,
+            [data-id="a6469e6"],
+            .elementor-element-5600e8d,
+            [data-id="5600e8d"] {
+                flex: 0 0 78% !important;
+                min-width: 250px !important;
+                max-width: 280px !important;
+                scroll-snap-align: start !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                text-align: left !important;
+            }
+        }
     </style>
     <?php
 }, 999 );
@@ -3554,6 +3820,12 @@ add_action( 'wp_footer', function() {
                 parent.removeChild(tag);
             });
         }
+
+        // Fix any invalid team links if present
+        var badLinks = document.querySelectorAll('a[href*="http://teams/"]');
+        badLinks.forEach(function(link) {
+            link.href = link.href.replace('http://teams/', '/teams/');
+        });
     });
     </script>
     <?php
