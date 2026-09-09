@@ -3259,15 +3259,17 @@ add_action( 'wp_head', function() {
             transform: rotate(-45deg) translate(2px, -2px) !important;
         }
 
-        @media (max-width: 768px) {
-            .elementor-element.elementor-element-d155fe5,
-            div[data-id="d155fe5"],
-            .elementor-element-d155fe5.e-con,
-            .elementor-element-d155fe5.e-div-block-base,
-            .e-d155fe5-f948194 {
-                display: none !important;
-            }
+        /* Hide CMR LIVE Badge */
+        .elementor-element.elementor-element-d155fe5,
+        div[data-id="d155fe5"],
+        .elementor-element-d155fe5.e-con,
+        .elementor-element-d155fe5.e-div-block-base,
+        .e-d155fe5-f948194,
+        [data-interaction-id="d155fe5"] {
+            display: none !important;
+        }
 
+        @media (max-width: 768px) {
             .elementor-element-b06ac09,
             div[data-id="b06ac09"] {
                 display: flex !important;
