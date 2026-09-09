@@ -1151,14 +1151,6 @@ function cmr_testimonials_global_mobile_css() {
     .elementor-element-96edc13.elementor-hidden-desktop,
     .elementor-element-96edc13.elementor-hidden-tablet {
         display: block !important;
-        width: 100% !important;
-        max-width: 1280px !important;
-        margin: 0 auto !important;
-        padding: 0 !important;
-    }
-    .elementor-element-96edc13 > .e-con-inner {
-        padding: 0 !important;
-        margin: 0 !important;
     }
 
     /* ==========================================
@@ -1172,8 +1164,8 @@ function cmr_testimonials_global_mobile_css() {
         .elementor-element-82ef444 {
             width: 100% !important;
             max-width: 1280px !important;
-            margin: 140px auto 50px auto !important;
-            padding: 0 24px !important;
+            margin: 0 auto 50px auto !important;
+            padding: 40px 24px !important;
             box-sizing: border-box !important;
             background-color: #FFFFFF !important;
         }

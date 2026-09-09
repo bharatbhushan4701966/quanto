@@ -63,8 +63,7 @@ function cmr_team_scroll_shortcode($atts) {
                 justify-content: space-between !important;
                 align-items: flex-start !important;
                 gap: 50px !important;
-                padding: 0 24px !important;
-                margin: 0 auto !important;
+                padding: 60px 24px 30px 24px !important;
             }
             .cmr-team-left-col {
                 flex: 0 0 280px !important;
