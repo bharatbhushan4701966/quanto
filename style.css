@@ -3877,19 +3877,21 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
         padding-bottom: 0 !important;
         margin-bottom: 0 !important;
     }
-    .elementor-element-96edc13 .cmr-team-scroll-section {
-        padding-bottom: 15px !important;
+    .elementor-element-96edc13 .cmr-team-scroll-section,
+    .cmr-team-scroll-section {
+        padding-bottom: 0 !important;
     }
-    .elementor-element-96edc13 .cmr-team-view-all {
+    .elementor-element-96edc13 .cmr-team-view-all,
+    .cmr-team-view-all {
         margin-top: 20px !important;
         margin-bottom: 0 !important;
     }
 
-    /* Outer testimonials container: exactly 20px side margins from screen edge, minimal top gap */
+    /* Outer testimonials container: exactly 20px side margins from screen edge, 50px top gap */
     #cmr-testimonials-section,
     .elementor-element-a6ac41e,
     .elementor-element-82ef444 {
-        padding-top: 20px !important;
+        padding-top: 50px !important;
         padding-bottom: 40px !important;
         padding-left: 20px !important;
         padding-right: 20px !important;
@@ -3992,7 +3994,7 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
         visibility: hidden !important;
     }
 
-    /* 3. Heading: "What our clients say about us" */
+    /* 3. Heading: "What our clients say about us" - Font size 28px, Weight 600 */
     #cmr-testimonials-section .elementor-element-aecd77b,
     #cmr-testimonials-section .elementor-element-8da86a5,
     .elementor-element-a6ac41e .elementor-element-aecd77b,
@@ -4016,10 +4018,10 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     .elementor-14 .elementor-element.elementor-element-8da86a5 .elementor-heading-title {
         text-align: center !important;
         font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-        font-size: 32px !important;
-        font-weight: 700 !important;
+        font-size: 28px !important;
+        font-weight: 600 !important;
         line-height: 1.25 !important;
-        letter-spacing: -1px !important;
+        letter-spacing: -0.5px !important;
         color: #0F0F0F !important;
         margin: 0 auto !important;
         white-space: normal !important;

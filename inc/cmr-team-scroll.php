@@ -168,7 +168,7 @@ function cmr_team_scroll_shortcode($atts) {
         @media (max-width: 768px) {
             .cmr-team-scroll-section {
                 padding-top: 40px;
-                padding-bottom: 15px;
+                padding-bottom: 0px;
             }
             .cmr-team-view-all {
                 margin-top: 24px;

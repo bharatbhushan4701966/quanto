@@ -1115,12 +1115,21 @@ add_action('wp_head', 'cmr_testimonials_global_mobile_css', 9999);
 function cmr_testimonials_global_mobile_css() {
     ?>
     <style id="cmr-testimonials-global-mobile-css">
-    @media (max-width: 1024px) {
-        /* Section containers: exactly 20px edge margin from screen borders, reduced top gap */
+        /* Team section bottom spacing adjustment for exact 50px gap */
+        .elementor-element-96edc13 .cmr-team-scroll-section,
+        .cmr-team-scroll-section {
+            padding-bottom: 0 !important;
+        }
+        .elementor-element-96edc13 .cmr-team-view-all,
+        .cmr-team-view-all {
+            margin-bottom: 0 !important;
+        }
+
+        /* Section containers: 50px top gap from View Team, exactly 20px edge margin from screen borders */
         #cmr-testimonials-section,
         .elementor-element-a6ac41e,
         .elementor-element-82ef444 {
-            padding-top: 20px !important;
+            padding-top: 50px !important;
             padding-bottom: 40px !important;
             padding-left: 20px !important;
             padding-right: 20px !important;
@@ -1219,7 +1228,7 @@ function cmr_testimonials_global_mobile_css() {
             visibility: hidden !important;
         }
 
-        /* Heading: "What our clients say about us" */
+        /* Heading: "What our clients say about us" - Font size 28px, Weight 600 */
         #cmr-testimonials-section .elementor-element-aecd77b,
         #cmr-testimonials-section .elementor-element-8da86a5,
         .elementor-element-a6ac41e .elementor-element-aecd77b,
@@ -1243,10 +1252,10 @@ function cmr_testimonials_global_mobile_css() {
         .elementor-14 .elementor-element.elementor-element-8da86a5 .elementor-heading-title {
             text-align: center !important;
             font-family: "Instrument Sans", sans-serif !important;
-            font-size: 32px !important;
-            font-weight: 700 !important;
+            font-size: 28px !important;
+            font-weight: 600 !important;
             line-height: 1.25 !important;
-            letter-spacing: -1px !important;
+            letter-spacing: -0.5px !important;
             color: #0F0F0F !important;
             margin: 0 auto !important;
             white-space: normal !important;
