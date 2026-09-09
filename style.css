@@ -3853,6 +3853,15 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
 }
 
 /* ==========================================================================
+   Team Section (Desktop Visibility)
+   ========================================================================== */
+.elementor-element.elementor-element-96edc13,
+.elementor-element-96edc13.elementor-hidden-desktop,
+.elementor-element-96edc13.elementor-hidden-tablet {
+    display: block !important;
+}
+
+/* ==========================================================================
    Desktop Testimonials Section (2-Column Wide Layout - Matching Image 1)
    ========================================================================== */
 @media (min-width: 1025px) {
@@ -3864,7 +3873,7 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
         width: 100% !important;
         max-width: 1280px !important;
         margin: 0 auto 50px auto !important;
-        padding: 50px 24px !important;
+        padding: 40px 24px !important;
         box-sizing: border-box !important;
         background-color: #FFFFFF !important;
     }
@@ -3996,7 +4005,7 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
         flex: 1 1 0% !important;
         width: calc(100% - 360px) !important;
         max-width: calc(100% - 360px) !important;
-        padding-left: 60px !important;
+        padding-left: 55px !important;
         padding-right: 0 !important;
         margin: 0 !important;
         box-sizing: border-box !important;
@@ -4053,15 +4062,17 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
         padding: 0 !important;
     }
 
-    /* Feedback quote text: Wide matching Image 1 */
+    /* Feedback quote text: Max-width 700px matching Image 1 line-wrap */
     .wcf__slider .feedback,
     .aae--a-testimonial .feedback,
     .elementor-element-acc3da4 .feedback,
     .elementor-element-3b754b6 .feedback,
+    .elementor-23190 .elementor-element.elementor-element-acc3da4 .feedback,
+    .elementor-14 .elementor-element.elementor-element-3b754b6 .feedback,
     #cmr-testimonials-section .feedback,
     p.feedback {
         width: 100% !important;
-        max-width: 100% !important;
+        max-width: 700px !important;
         font-family: "Instrument Sans", sans-serif !important;
         font-size: 21px !important;
         font-weight: 500 !important;

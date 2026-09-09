@@ -1145,6 +1145,15 @@ function cmr_testimonials_global_mobile_css() {
     ?>
     <style id="cmr-testimonials-global-mobile-css">
     /* ==========================================
+       TEAM SECTION (DESKTOP VISIBILITY & SPACING)
+       ========================================== */
+    .elementor-element.elementor-element-96edc13,
+    .elementor-element-96edc13.elementor-hidden-desktop,
+    .elementor-element-96edc13.elementor-hidden-tablet {
+        display: block !important;
+    }
+
+    /* ==========================================
        DESKTOP VIEW (2-COLUMN WIDE LAYOUT - MATCHING IMAGE 1)
        ========================================== */
     @media (min-width: 1025px) {
@@ -1156,7 +1165,7 @@ function cmr_testimonials_global_mobile_css() {
             width: 100% !important;
             max-width: 1280px !important;
             margin: 0 auto 50px auto !important;
-            padding: 50px 24px !important;
+            padding: 40px 24px !important;
             box-sizing: border-box !important;
             background-color: #FFFFFF !important;
         }
@@ -1288,7 +1297,7 @@ function cmr_testimonials_global_mobile_css() {
             flex: 1 1 0% !important;
             width: calc(100% - 360px) !important;
             max-width: calc(100% - 360px) !important;
-            padding-left: 60px !important;
+            padding-left: 55px !important;
             padding-right: 0 !important;
             margin: 0 !important;
             box-sizing: border-box !important;
@@ -1349,7 +1358,7 @@ function cmr_testimonials_global_mobile_css() {
             background: transparent !important;
         }
 
-        /* Feedback quote text on desktop - Wide matching Image 1 */
+        /* Feedback quote text on desktop - Max-width 700px to match Image 1 line-wrap */
         .wcf__slider .feedback,
         .aae--a-testimonial .feedback,
         .elementor-element-acc3da4 .feedback,
@@ -1371,7 +1380,7 @@ function cmr_testimonials_global_mobile_css() {
             margin: 0 0 35px 0 !important;
             padding: 0 !important;
             width: 100% !important;
-            max-width: 100% !important;
+            max-width: 700px !important;
             box-sizing: border-box !important;
             display: block !important;
         }
