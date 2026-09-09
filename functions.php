@@ -3458,6 +3458,11 @@ add_action( 'wp_head', function() {
             .elementor-22037 .elementor-element.elementor-element-1e0db62 .elementor-heading-title {
                 font-size: 12px !important;
                 font-weight: 600 !important;
+                text-align: center !important;
+                justify-content: center !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+                width: 100% !important;
             }
         }
 
