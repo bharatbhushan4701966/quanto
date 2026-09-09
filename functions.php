@@ -1165,7 +1165,7 @@ function cmr_testimonials_global_mobile_css() {
             width: 100% !important;
             max-width: 1280px !important;
             margin: 0 auto 50px auto !important;
-            padding: 40px 24px !important;
+            padding: 20px 24px !important;
             box-sizing: border-box !important;
             background-color: #FFFFFF !important;
         }
