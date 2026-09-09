@@ -2036,7 +2036,7 @@ function cmr_testimonials_global_mobile_css() {
         .elementor-23198 .elementor-element-645a65a,
         .elementor-14 .elementor-element-c9502e0 {
             margin-top: 0 !important;
-            margin-bottom: 35px !important;
+            margin-bottom: 0 !important;
             padding-top: 0 !important;
             padding-bottom: 0 !important;
         }
