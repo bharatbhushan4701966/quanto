@@ -2503,18 +2503,15 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
 
 
 
-/* Override padding for elementor section 82ef444 */
-
-
+/* Override padding for elementor section a6ac41e and 82ef444 */
+.elementor-23190 .elementor-element.elementor-element-a6ac41e,
+.elementor-element-a6ac41e {
+    --padding-top: 0px !important;
+    padding-top: 0px !important;
+}
 
 .elementor-14 .elementor-element.elementor-element-82ef444 {
-
-
-
     --padding-top: 40px !important;
-
-
-
 }
 
 

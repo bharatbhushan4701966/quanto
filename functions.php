@@ -1162,6 +1162,7 @@ function cmr_testimonials_global_mobile_css() {
         .elementor-14 .elementor-element.elementor-element-82ef444,
         .elementor-element-a6ac41e,
         .elementor-element-82ef444 {
+            --padding-top: 0px !important;
             width: 100% !important;
             max-width: 1280px !important;
             margin: 0 auto 50px auto !important;
