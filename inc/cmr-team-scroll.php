@@ -209,7 +209,7 @@ function cmr_team_scroll_shortcode($atts) {
             }
             .cmr-team-scroll-title {
                 font-family: "Instrument Sans", sans-serif !important;
-                font-size: 32px !important;
+                font-size: 26px !important;
                 font-weight: 600 !important;
                 color: #0F0F0F !important;
                 margin-bottom: 30px !important;
@@ -303,7 +303,7 @@ function cmr_team_scroll_shortcode($atts) {
 
     <div class="cmr-team-scroll-section">
         <div class="cmr-team-left-col">
-            <h2 class="cmr-team-scroll-title">Meet<br>the people<br>behind our<br>success</h2>
+            <h2 class="cmr-team-scroll-title">Meet the people behind our success</h2>
             <div class="cmr-team-view-all cmr-team-desktop-btn">
                 <a href="<?php echo esc_url( home_url( '/leadership/' ) ); ?>">View Team 
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
