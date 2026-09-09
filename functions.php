@@ -1144,6 +1144,288 @@ add_action('wp_head', 'cmr_testimonials_global_mobile_css', 9999);
 function cmr_testimonials_global_mobile_css() {
     ?>
     <style id="cmr-testimonials-global-mobile-css">
+    /* ==========================================
+       DESKTOP VIEW (2-COLUMN LAYOUT - MATCHING IMAGE 2)
+       ========================================== */
+    @media (min-width: 1025px) {
+        #cmr-testimonials-section,
+        .elementor-element-a6ac41e,
+        .elementor-element-82ef444 {
+            width: 100% !important;
+            max-width: 1280px !important;
+            margin: 0 auto 50px auto !important;
+            padding: 40px 20px 40px 20px !important;
+            box-sizing: border-box !important;
+        }
+
+        #cmr-testimonials-section .e-con-inner,
+        .elementor-element-a6ac41e .e-con-inner,
+        .elementor-element-82ef444 .e-con-inner,
+        #cmr-testimonials-section .elementor-element-283442d,
+        #cmr-testimonials-section .elementor-element-748fff1,
+        .elementor-element-a6ac41e .elementor-element-283442d,
+        .elementor-element-82ef444 .elementor-element-748fff1 {
+            width: 100% !important;
+            max-width: 100% !important;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: stretch !important;
+            justify-content: space-between !important;
+            text-align: left !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            box-sizing: border-box !important;
+            gap: 0 !important;
+        }
+
+        /* Left Column: Subtitle, Big Quote, Heading with vertical separator line */
+        #cmr-testimonials-section .elementor-element-6647a0b,
+        #cmr-testimonials-section .elementor-element-0807bbc,
+        .elementor-element-a6ac41e .elementor-element-6647a0b,
+        .elementor-element-82ef444 .elementor-element-0807bbc {
+            width: 380px !important;
+            min-width: 380px !important;
+            max-width: 380px !important;
+            flex: 0 0 380px !important;
+            border-right: 1px solid #E5E7EB !important;
+            border-top: none !important;
+            border-bottom: none !important;
+            border-left: none !important;
+            padding: 0 40px 0 0 !important;
+            margin: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            text-align: left !important;
+            box-sizing: border-box !important;
+        }
+
+        /* Subtitle: "CLIENT TESTIMONIALS" */
+        #cmr-testimonials-section .elementor-element-cd36bd5,
+        #cmr-testimonials-section .elementor-element-d9679c4,
+        .elementor-element-a6ac41e .elementor-element-cd36bd5,
+        .elementor-element-82ef444 .elementor-element-d9679c4 {
+            width: 100% !important;
+            text-align: left !important;
+            margin: 0 0 20px 0 !important;
+            padding: 0 !important;
+        }
+
+        #cmr-testimonials-section .elementor-element-cd36bd5 p,
+        #cmr-testimonials-section .elementor-element-d9679c4 p,
+        .elementor-element-a6ac41e .elementor-element-cd36bd5 p,
+        .elementor-element-82ef444 .elementor-element-d9679c4 p {
+            text-align: left !important;
+            font-family: "Instrument Sans", sans-serif !important;
+            font-size: 13px !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.6px !important;
+            text-transform: uppercase !important;
+            color: #0F0F0F !important;
+            margin: 0 !important;
+        }
+
+        /* Big Quote Mark Image */
+        #cmr-testimonials-section .elementor-element-1df5c74,
+        #cmr-testimonials-section .elementor-element-7c38a95,
+        .elementor-element-a6ac41e .elementor-element-1df5c74,
+        .elementor-element-82ef444 .elementor-element-7c38a95,
+        #cmr-testimonials-section .elementor-widget-image,
+        .elementor-element-a6ac41e .elementor-widget-image,
+        .elementor-element-82ef444 .elementor-widget-image {
+            display: block !important;
+            visibility: visible !important;
+            margin: 0 0 30px 0 !important;
+            width: auto !important;
+            text-align: left !important;
+        }
+
+        #cmr-testimonials-section .elementor-widget-image img,
+        .elementor-element-a6ac41e .elementor-widget-image img,
+        .elementor-element-82ef444 .elementor-widget-image img {
+            width: 68px !important;
+            height: auto !important;
+            display: block !important;
+        }
+
+        /* Heading: "What our <br> clients say <br> about us" */
+        #cmr-testimonials-section .elementor-element-aecd77b,
+        #cmr-testimonials-section .elementor-element-8da86a5,
+        .elementor-element-a6ac41e .elementor-element-aecd77b,
+        .elementor-element-82ef444 .elementor-element-8da86a5 {
+            width: 100% !important;
+            text-align: left !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        #cmr-testimonials-section .elementor-element-aecd77b .elementor-heading-title,
+        #cmr-testimonials-section .elementor-element-8da86a5 .elementor-heading-title,
+        .elementor-element-a6ac41e .elementor-element-aecd77b .elementor-heading-title,
+        .elementor-element-82ef444 .elementor-element-8da86a5 .elementor-heading-title {
+            text-align: left !important;
+            font-family: "Instrument Sans", sans-serif !important;
+            font-size: 46px !important;
+            font-weight: 600 !important;
+            line-height: 1.15 !important;
+            letter-spacing: -1.2px !important;
+            color: #0F0F0F !important;
+            margin: 0 !important;
+            white-space: normal !important;
+        }
+
+        #cmr-testimonials-section .elementor-element-aecd77b .elementor-heading-title br,
+        #cmr-testimonials-section .elementor-element-8da86a5 .elementor-heading-title br,
+        .elementor-element-a6ac41e .elementor-element-aecd77b .elementor-heading-title br,
+        .elementor-element-82ef444 .elementor-element-8da86a5 .elementor-heading-title br {
+            display: inline !important;
+        }
+
+        /* Right Column: Testimonials Slider */
+        #cmr-testimonials-section .elementor-element-acc3da4,
+        #cmr-testimonials-section .elementor-element-3b754b6,
+        .elementor-element-a6ac41e .elementor-element-acc3da4,
+        .elementor-element-82ef444 .elementor-element-3b754b6,
+        #cmr-testimonials-section .elementor-widget-wcf--a-testimonial,
+        #cmr-testimonials-section .wcf__t_slider-wrapper {
+            flex: 1 1 auto !important;
+            width: calc(100% - 380px) !important;
+            max-width: calc(100% - 380px) !important;
+            padding: 0 0 0 50px !important;
+            margin: 0 !important;
+            text-align: left !important;
+            box-sizing: border-box !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+        }
+
+        #cmr-testimonials-section .wcf__slider,
+        #cmr-testimonials-section .wcf__slider.swiper {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow: hidden !important;
+            position: relative !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        #cmr-testimonials-section .slide,
+        #cmr-testimonials-section .aae--a-testimonial .slide,
+        #cmr-testimonials-section .slide-content,
+        #cmr-testimonials-section .content {
+            text-align: left !important;
+            align-items: flex-start !important;
+            justify-content: flex-start !important;
+            display: flex !important;
+            flex-direction: column !important;
+            width: 100% !important;
+        }
+
+        /* Feedback quote text on desktop */
+        #cmr-testimonials-section .feedback,
+        #cmr-testimonials-section .aae--a-testimonial .feedback,
+        #cmr-testimonials-section .wcf__slider .feedback {
+            text-align: left !important;
+            font-family: "Instrument Sans", sans-serif !important;
+            font-size: 20px !important;
+            font-weight: 500 !important;
+            line-height: 1.55 !important;
+            letter-spacing: -0.4px !important;
+            color: #111111 !important;
+            margin: 0 0 35px 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            max-width: 680px !important;
+        }
+
+        /* Author on desktop */
+        #cmr-testimonials-section .wrap,
+        #cmr-testimonials-section .aae--a-testimonial .wrap,
+        #cmr-testimonials-section .author,
+        #cmr-testimonials-section .aae--a-testimonial .author {
+            display: inline-flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            gap: 20px !important;
+            margin: 0 0 30px 0 !important;
+            text-align: left !important;
+            width: auto !important;
+        }
+
+        #cmr-testimonials-section .author .image img,
+        #cmr-testimonials-section .aae--a-testimonial .author .image img {
+            max-height: 52px !important;
+            max-width: 130px !important;
+            width: auto !important;
+            height: auto !important;
+            object-fit: contain !important;
+            border-radius: 0 !important;
+        }
+
+        #cmr-testimonials-section .author .info,
+        #cmr-testimonials-section .aae--a-testimonial .author .info {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            justify-content: center !important;
+            text-align: left !important;
+        }
+
+        #cmr-testimonials-section .author .name,
+        #cmr-testimonials-section .aae--a-testimonial .author .name {
+            font-family: "Instrument Sans", sans-serif !important;
+            font-size: 22px !important;
+            font-weight: 700 !important;
+            line-height: 1.25 !important;
+            color: #0F0F0F !important;
+            margin: 0 0 4px 0 !important;
+            text-align: left !important;
+        }
+
+        #cmr-testimonials-section .author .designation,
+        #cmr-testimonials-section .aae--a-testimonial .author .designation {
+            font-family: "Instrument Sans", sans-serif !important;
+            font-size: 14px !important;
+            font-weight: 400 !important;
+            color: #475569 !important;
+            line-height: 1.4 !important;
+            margin: 0 !important;
+            text-align: left !important;
+        }
+
+        /* Navigation Arrows on desktop */
+        #cmr-testimonials-section .ts-navigation,
+        #cmr-testimonials-section .aae--a-testimonial .ts-navigation {
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: flex-start !important;
+            align-items: center !important;
+            gap: 12px !important;
+            margin: 0 !important;
+            width: auto !important;
+            text-align: left !important;
+        }
+
+        #cmr-testimonials-section .wcf-arrow,
+        #cmr-testimonials-section .aae--a-testimonial .wcf-arrow {
+            background-color: #F5F5F5 !important;
+            border-radius: 50% !important;
+            width: 44px !important;
+            height: 44px !important;
+            min-width: 44px !important;
+            min-height: 44px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer !important;
+        }
+    }
+
+    /* ==========================================
+       MOBILE & TABLET VIEW (CENTERED SINGLE SLIDE)
+       ========================================== */
     @media (max-width: 1024px) {
         /* Team section bottom spacing adjustment for exact 50px gap */
         .elementor-element-96edc13 .cmr-team-scroll-section,
