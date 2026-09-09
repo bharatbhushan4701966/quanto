@@ -3407,6 +3407,13 @@ add_action( 'wp_head', function() {
             font-weight: 600 !important;
         }
 
+        /* 1e0db62 overview gap */
+        [data-id="1e0db62"],
+        .elementor-element-1e0db62 {
+            margin-bottom: 20px !important;
+            --margin-bottom: 20px !important;
+        }
+
         /* Mobile: center the badge */
         @media (max-width: 768px) {
             .cmr-live-badge,
@@ -3462,6 +3469,8 @@ add_action( 'wp_head', function() {
                 justify-content: center !important;
                 margin-left: auto !important;
                 margin-right: auto !important;
+                margin-bottom: 20px !important;
+                --margin-bottom: 20px !important;
                 width: 100% !important;
             }
         }
