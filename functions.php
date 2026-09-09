@@ -3408,6 +3408,12 @@ add_action( 'wp_head', function() {
                 align-self: center !important;
                 --justify-content: center !important;
             }
+
+            [data-id="dbed1d7"],
+            .e-dbed1d7-febf73c {
+                font-size: 20px !important;
+                line-height: 1.3 !important;
+            }
         }
 
         @media (max-width: 768px) {
