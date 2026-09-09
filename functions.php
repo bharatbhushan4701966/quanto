@@ -1245,17 +1245,61 @@ add_shortcode('cmr_testimonials', function() {
     #cmr-testimonials-section .elementor-element-acc3da4,
     #cmr-testimonials-section .elementor-element-3b754b6,
     #cmr-testimonials-section .elementor-widget-wcf--a-testimonial,
-    #cmr-testimonials-section .wcf__t_slider-wrapper,
-    #cmr-testimonials-section .wcf__slider,
-    #cmr-testimonials-section .swiper-wrapper,
-    #cmr-testimonials-section .swiper-slide,
-    #cmr-testimonials-section .aae--a-testimonial .slide {
+    #cmr-testimonials-section .wcf__t_slider-wrapper {
         width: 100% !important;
         max-width: 100% !important;
         padding: 0 !important;
         margin: 0 !important;
         text-align: center !important;
         box-sizing: border-box !important;
+    }
+
+    #cmr-testimonials-section .wcf__slider,
+    #cmr-testimonials-section .wcf__slider.swiper {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
+        position: relative !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    #cmr-testimonials-section .swiper-wrapper {
+        width: auto !important;
+        max-width: none !important;
+        display: flex !important;
+        position: relative !important;
+        box-sizing: content-box !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    #cmr-testimonials-section .swiper-slide {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+        flex-shrink: 0 !important;
+        box-sizing: border-box !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    #cmr-testimonials-section .aae--a-testimonial .slide {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 auto !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
     }
 
     #cmr-testimonials-section .aae--a-testimonial .feedback,
@@ -1296,11 +1340,10 @@ add_shortcode('cmr_testimonials', function() {
     }
 
     #cmr-testimonials-section .aae--a-testimonial .author .image img {
-        width: 70px !important;
-        height: auto !important;
-        max-height: 60px !important;
-        object-fit: contain !important;
-        border-radius: 0 !important;
+        width: 56px !important;
+        height: 56px !important;
+        object-fit: cover !important;
+        border-radius: 50% !important;
     }
 
     #cmr-testimonials-section .aae--a-testimonial .author .info {
@@ -1350,6 +1393,50 @@ add_shortcode('cmr_testimonials', function() {
             echo '<div id="cmr-testimonials-section">';
             echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
             echo '</div>';
+            echo '<script>
+(function() {
+    function initOneSlideTestimonials() {
+        if (window.innerWidth > 767.98) return;
+        var sliderEl = document.querySelector("#cmr-testimonials-section .wcf__slider");
+        if (!sliderEl) return;
+        if (sliderEl.swiper) {
+            var sw = sliderEl.swiper;
+            if (sw.params.slidesPerView !== 1) {
+                sw.params.slidesPerView = 1;
+                sw.params.slidesPerGroup = 1;
+                sw.params.spaceBetween = 20;
+                sw.params.allowTouchMove = true;
+                if (sw.params.breakpoints) {
+                    for (var bp in sw.params.breakpoints) {
+                        if (parseInt(bp, 10) <= 768) {
+                            sw.params.breakpoints[bp].slidesPerView = 1;
+                            sw.params.breakpoints[bp].slidesPerGroup = 1;
+                        }
+                    }
+                }
+                sw.update();
+            }
+        }
+    }
+    document.addEventListener("DOMContentLoaded", initOneSlideTestimonials);
+    window.addEventListener("load", initOneSlideTestimonials);
+    window.addEventListener("resize", initOneSlideTestimonials);
+    setTimeout(initOneSlideTestimonials, 200);
+    setTimeout(initOneSlideTestimonials, 600);
+    setTimeout(initOneSlideTestimonials, 1200);
+    setTimeout(initOneSlideTestimonials, 2500);
+
+    if (window.jQuery) {
+        jQuery(window).on("elementor/frontend/init", function() {
+            if (window.elementorFrontend && elementorFrontend.hooks) {
+                elementorFrontend.hooks.addAction("frontend/element_ready/wcf--a-testimonial.default", function() {
+                    setTimeout(initOneSlideTestimonials, 100);
+                });
+            }
+        });
+    }
+})();
+</script>';
         }
     }
     
