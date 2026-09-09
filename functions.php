@@ -3283,8 +3283,10 @@ add_action( 'wp_head', function() {
             transform: rotate(-45deg) translate(2px, -2px) !important;
         }
 
-        /* CMR LIVE Pill Badge — custom class approach (no Elementor conflicts) */
-        .cmr-live-badge {
+        /* CMR LIVE Pill Badge — custom class + Elementor selectors (both work) */
+        .cmr-live-badge,
+        .e-d155fe5-f948194,
+        [data-id="d155fe5"] {
             display: inline-flex !important;
             flex-direction: row !important;
             flex-wrap: nowrap !important;
@@ -3311,19 +3313,23 @@ add_action( 'wp_head', function() {
             --flex-direction: row !important;
             --flex-wrap: nowrap !important;
             --align-items: center !important;
+            --justify-content: flex-start !important;
             --padding-top: 0px !important;
             --padding-bottom: 0px !important;
             --padding-left: 0px !important;
             --padding-right: 0px !important;
         }
 
-        .cmr-live-badge * {
+        .cmr-live-badge *,
+        [data-id="d155fe5"] * {
             box-sizing: border-box !important;
         }
 
         /* Red dot circle wrapper */
         .cmr-live-badge [data-id="533a48d"],
-        .cmr-live-badge .elementor-widget-image {
+        .cmr-live-badge .elementor-widget-image,
+        [data-id="d155fe5"] [data-id="533a48d"],
+        [data-id="d155fe5"] .elementor-widget-image {
             margin: 0 !important;
             padding: 0 !important;
             width: 22px !important;
@@ -3336,7 +3342,8 @@ add_action( 'wp_head', function() {
             flex-shrink: 0 !important;
         }
 
-        .cmr-live-badge [data-id="533a48d"] .elementor-widget-container {
+        .cmr-live-badge [data-id="533a48d"] .elementor-widget-container,
+        [data-id="d155fe5"] [data-id="533a48d"] .elementor-widget-container {
             margin: 0 !important;
             padding: 0 !important;
             width: 22px !important;
@@ -3353,11 +3360,13 @@ add_action( 'wp_head', function() {
         }
 
         /* Hide original image, show red dot via ::after */
-        .cmr-live-badge img {
+        .cmr-live-badge img,
+        [data-id="d155fe5"] img {
             display: none !important;
         }
 
-        .cmr-live-badge [data-id="533a48d"] .elementor-widget-container::after {
+        .cmr-live-badge [data-id="533a48d"] .elementor-widget-container::after,
+        [data-id="d155fe5"] [data-id="533a48d"] .elementor-widget-container::after {
             content: '' !important;
             display: block !important;
             width: 9px !important;
@@ -3369,7 +3378,10 @@ add_action( 'wp_head', function() {
         /* CMR LIVE text */
         .cmr-live-badge h6,
         .cmr-live-badge .e-heading-base,
-        .cmr-live-badge [data-id="e62c637"] {
+        .cmr-live-badge [data-id="e62c637"],
+        [data-id="d155fe5"] h6,
+        [data-id="d155fe5"] .e-heading-base,
+        [data-id="d155fe5"] [data-id="e62c637"] {
             font-family: 'Instrument Sans', sans-serif !important;
             font-size: 14px !important;
             font-weight: 700 !important;
@@ -3389,9 +3401,12 @@ add_action( 'wp_head', function() {
 
         /* Mobile: center the badge */
         @media (max-width: 768px) {
-            .cmr-live-badge {
+            .cmr-live-badge,
+            [data-id="d155fe5"] {
+                justify-content: center !important;
                 margin: 0 auto 20px auto !important;
                 align-self: center !important;
+                --justify-content: center !important;
             }
         }
 
