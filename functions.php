@@ -1976,6 +1976,8 @@ function cmr_testimonials_global_mobile_css() {
         .elementor-element-645a65a,
         .elementor-23198 .elementor-element-645a65a,
         .elementor-14 .elementor-element-c9502e0 {
+            --padding-bottom: 0px !important;
+            --padding-top: 0px !important;
             margin-top: 0 !important;
             margin-bottom: 40px !important;
             padding-top: 0 !important;
