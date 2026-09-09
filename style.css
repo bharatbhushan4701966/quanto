@@ -3203,6 +3203,104 @@ html body .quanto-link-btn {
    CMR LIVE Section Header, Badge & "View All" Button Redesign
    ========================================================================== */
 
+/* 1. CMR LIVE Pill Badge */
+.elementor-element.elementor-element-d155fe5,
+div[data-id="d155fe5"],
+.elementor-element-d155fe5.e-con,
+.elementor-element-d155fe5.e-div-block-base,
+.e-d155fe5-f948194 {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    background: #ffffff !important;
+    border: 1.5px solid #d1d5db !important;
+    border-radius: 9999px !important;
+    padding: 6px 18px 6px 8px !important;
+    gap: 10px !important;
+    width: auto !important;
+    max-width: fit-content !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 36px !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+    margin: 0 0 24px 0 !important;
+    align-self: flex-start !important;
+    --min-height: 0px !important;
+    --height: auto !important;
+    --gap: 10px !important;
+    --flex-direction: row !important;
+    --flex-wrap: nowrap !important;
+    --align-items: center !important;
+}
+
+.elementor-element.elementor-element-d155fe5 *,
+div[data-id="d155fe5"] * {
+    box-sizing: border-box !important;
+}
+
+.elementor-element.elementor-element-d155fe5 .elementor-element-533a48d,
+div[data-id="d155fe5"] .elementor-widget-image,
+div[data-id="d155fe5"] [data-id="533a48d"],
+.elementor-element.elementor-element-d155fe5 .elementor-widget-container,
+div[data-id="d155fe5"] .elementor-widget-container {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+    min-height: 22px !important;
+    border-radius: 50% !important;
+    background: rgba(220, 38, 38, 0.12) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    position: relative !important;
+}
+
+.elementor-element.elementor-element-d155fe5 .elementor-element-533a48d img,
+div[data-id="d155fe5"] .elementor-widget-image img,
+div[data-id="d155fe5"] [data-id="533a48d"] img {
+    display: none !important;
+}
+
+.elementor-element.elementor-element-d155fe5 .elementor-element-533a48d::after,
+div[data-id="d155fe5"] .elementor-widget-image::after,
+div[data-id="d155fe5"] [data-id="533a48d"]::after {
+    content: '' !important;
+    display: block !important;
+    width: 9px !important;
+    height: 9px !important;
+    border-radius: 50% !important;
+    background: #dc2626 !important;
+}
+
+.elementor-element.elementor-element-d155fe5 h6,
+.elementor-element.elementor-element-d155fe5 .e-heading-base,
+div[data-id="d155fe5"] h6,
+div[data-id="d155fe5"] .e-heading-base,
+.e-e62c637-96a4a06,
+[data-id="e62c637"] {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: #000000 !important;
+    letter-spacing: 0.5px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+    height: auto !important;
+    text-transform: uppercase !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    vertical-align: middle !important;
+    white-space: nowrap !important;
+}
+
 /* 2. Heading & Button Row Layout - Space Between & No Wrap */
 .elementor-element.elementor-element-2c76331,
 div[data-id="2c76331"],
@@ -3359,17 +3457,34 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     transform: rotate(-45deg) translate(2px, -2px) !important;
 }
 
-/* Hide CMR LIVE Badge */
-.elementor-element.elementor-element-d155fe5,
-div[data-id="d155fe5"],
-.elementor-element-d155fe5.e-con,
-.elementor-element-d155fe5.e-div-block-base,
-.e-d155fe5-f948194,
-[data-interaction-id="d155fe5"] {
-    display: none !important;
-}
-
 @media (max-width: 768px) {
+    .elementor-element.elementor-element-d155fe5,
+    div[data-id="d155fe5"],
+    .elementor-element-d155fe5.e-con,
+    .elementor-element-d155fe5.e-div-block-base,
+    .e-d155fe5-f948194 {
+        display: inline-flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: #ffffff !important;
+        border: 1.5px solid #d1d5db !important;
+        border-radius: 9999px !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+        padding: 6px 18px 6px 8px !important;
+        gap: 10px !important;
+        width: auto !important;
+        max-width: fit-content !important;
+        min-height: 36px !important;
+        height: auto !important;
+        margin: 0 auto 20px auto !important;
+        align-self: center !important;
+        --flex-direction: row !important;
+        --flex-wrap: nowrap !important;
+        --align-items: center !important;
+        --justify-content: center !important;
+    }
     .elementor-element-b06ac09,
     div[data-id="b06ac09"] {
         display: flex !important;
