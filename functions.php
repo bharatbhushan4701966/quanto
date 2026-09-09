@@ -921,13 +921,17 @@ require_once get_template_directory() . '/inc/cmr-footer-css-fix.php';
 
 // Shortcode to display the main Elementor footer by fetching the rendered URL
 add_shortcode('cmr_footer', function() {
+    if ( function_exists('cmr_is_elementor_active') && cmr_is_elementor_active() ) {
+        return '<div style="padding:20px;text-align:center;background:#f5f5f5;color:#666;font-size:14px;">[Footer Section]</div>';
+    }
+
     $transient_key = 'cmr_footer_html_cache';
     $cached_footer = get_transient( $transient_key );
     
     // Check if user is logged in (to force refresh) or if cache is empty
     if ( false === $cached_footer || ( is_user_logged_in() && isset($_GET['refresh_footer']) ) ) {
         $url = home_url( '/?quanto_footer=main' );
-        $response = wp_remote_get( $url, array('timeout' => 15) );
+        $response = wp_remote_get( $url, array('timeout' => 5) );
         
         if ( is_wp_error( $response ) ) {
             return $cached_footer ? $cached_footer : '<!-- Error fetching footer -->';
@@ -943,30 +947,31 @@ add_shortcode('cmr_footer', function() {
             // is cleared), read the CSS directly from disk and embed it inline.
             // This makes the cached footer completely self-contained.
             $inline_css = '';
-            
-            // Extract post IDs from Elementor CSS link tags in the response
-            if ( preg_match_all( '/elementor\/css\/post-(\d+)\.css/i', $body, $id_matches ) ) {
-                $post_ids = array_unique( $id_matches[1] );
-                foreach ( $post_ids as $pid ) {
-                    if ( function_exists( 'cmr_get_elementor_css_inline' ) ) {
-                        $css = cmr_get_elementor_css_inline( (int) $pid );
-                        if ( ! empty( $css ) ) {
-                            $inline_css .= '<style id="cmr-footer-cached-' . $pid . '-css">' . $css . '</style>' . "\n";
+            if ( preg_match_all( '/<link[^>]+href=[\'"]([^\'"]+post-(\d+)\.css[^\'"]*)[\'"][^>]*>/i', $body, $link_matches, PREG_SET_ORDER ) ) {
+                $upload_dir = wp_upload_dir();
+                $elementor_css_dir = trailingslashit( $upload_dir['basedir'] ) . 'elementor/css/';
+                
+                foreach ( $link_matches as $lm ) {
+                    $full_tag = $lm[0];
+                    $css_id   = $lm[2];
+                    $disk_file = $elementor_css_dir . 'post-' . $css_id . '.css';
+                    
+                    if ( file_exists( $disk_file ) ) {
+                        $css_content = file_get_contents( $disk_file );
+                        if ( ! empty( $css_content ) ) {
+                            $inline_css .= '<style id="cmr-cached-footer-post-' . $css_id . '-css">' . $css_content . '</style>' . "\n";
+                            // Remove the original <link> tag to avoid redundant / failing HTTP requests
+                            $cached_footer = str_replace( $full_tag, '', $cached_footer );
                         }
                     }
                 }
             }
             
-            // If we couldn't get inline CSS, fall back to link tags
-            if ( empty( $inline_css ) ) {
-                if ( preg_match_all( '/<link[^>]*href="[^"]*elementor\/css\/post-\d+\.css[^"]*"[^>]*>/is', $body, $css_matches ) ) {
-                    $inline_css = implode("\n", $css_matches[0]) . "\n";
-                }
-            }
-            
+            // Prepend the inlined CSS so it loads with the HTML
             $cached_footer = $inline_css . $cached_footer;
             
-            set_transient( $transient_key, $cached_footer, 6 * HOUR_IN_SECONDS );
+            // Cache for 7 days
+            set_transient( $transient_key, $cached_footer, WEEK_IN_SECONDS );
         } else {
             return '<!-- Footer tag not found in remote URL -->';
         }
@@ -975,29 +980,53 @@ add_shortcode('cmr_footer', function() {
     return $cached_footer;
 });
 
+// Safe helper to check if Elementor editor or preview is active
+if ( ! function_exists('cmr_is_elementor_active') ) {
+    function cmr_is_elementor_active() {
+        if ( ! class_exists( '\Elementor\Plugin' ) ) {
+            return false;
+        }
+        if ( ! empty( $_GET['elementor-preview'] ) || ( isset( $_GET['action'] ) && $_GET['action'] === 'elementor' ) ) {
+            return true;
+        }
+        if ( isset( \Elementor\Plugin::$instance ) ) {
+            if ( isset( \Elementor\Plugin::$instance->editor ) && method_exists( \Elementor\Plugin::$instance->editor, 'is_edit_mode' ) ) {
+                if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
+                    return true;
+                }
+            }
+            if ( isset( \Elementor\Plugin::$instance->preview ) && method_exists( \Elementor\Plugin::$instance->preview, 'is_preview_mode' ) ) {
+                if ( \Elementor\Plugin::$instance->preview->is_preview_mode() ) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
+
 // Helper to force print Elementor CSS inline inside a shortcode
 if ( ! function_exists('cmr_print_elementor_css') ) {
     function cmr_print_elementor_css($post_id) {
+        if ( cmr_is_elementor_active() ) {
+            return;
+        }
         if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
             $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
             
             // Ensure the CSS file exists on disk
             if ( ! file_exists( $css_file->get_path() ) ) {
-                // $css_file->update() generates empty CSS for custom post types.
-                // We MUST use the full rendering pipeline to generate the CSS file.
-                if ( class_exists( '\\Elementor\\Plugin' ) ) {
-                    \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
+                if ( class_exists( '\\Elementor\\Plugin' ) && isset(\Elementor\Plugin::$instance) && isset(\Elementor\Plugin::$instance->frontend) ) {
+                    \Elementor\Plugin::$instance->frontend->get_builder_content_for_display( $post_id, true );
                 }
             }
             
             // Read the CSS file content from disk and output inline.
-            // This bypasses CDN/server caching issues where the external CSS file
-            // URL returns a cached 404 even though the file now exists on disk.
             $css_path = $css_file->get_path();
             if ( file_exists( $css_path ) ) {
-                $css_content = file_get_contents( $css_path );
+                $css_content = @file_get_contents( $css_path );
                 if ( ! empty( $css_content ) ) {
-                    echo '<style id="elementor-post-' . $post_id . '-inline-css">' . $css_content . '</style>';
+                    echo '<style id="elementor-post-' . intval($post_id) . '-inline-css">' . $css_content . '</style>';
                     return;
                 }
             }
@@ -1006,7 +1035,7 @@ if ( ! function_exists('cmr_print_elementor_css') ) {
             $css_file->enqueue();
             $url = $css_file->get_url();
             if ($url) {
-                echo '<link rel="stylesheet" id="elementor-post-'.$post_id.'-css" href="'.esc_url($url).'" type="text/css" media="all">';
+                echo '<link rel="stylesheet" id="elementor-post-'.intval($post_id).'-css" href="'.esc_url($url).'" type="text/css" media="all">';
             }
             $css_file->print_css();
         }
