@@ -3421,6 +3421,17 @@ add_action( 'wp_head', function() {
                 font-weight: 600 !important;
                 line-height: 1.2 !important;
             }
+
+            [data-id="0169cee"],
+            .elementor-element-0169cee,
+            [data-id="0169cee"] p,
+            [data-id="0169cee"] span,
+            [data-id="0169cee"] b,
+            .elementor-element-0169cee p,
+            .elementor-element-0169cee span {
+                font-size: 28px !important;
+                line-height: 1.3 !important;
+            }
         }
 
         @media (max-width: 768px) {
