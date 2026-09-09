@@ -3273,22 +3273,18 @@ add_action( 'wp_head', function() {
             background: #ffffff !important;
             border: 1px solid #d1d5db !important;
             border-radius: 9999px !important;
-            padding: 6px 16px !important;
+            padding: 4px 14px 4px 6px !important;
             gap: 8px !important;
             width: auto !important;
-            max-width: max-content !important;
+            max-width: fit-content !important;
             min-width: 0 !important;
             height: auto !important;
-            min-height: 0 !important;
+            min-height: 30px !important;
             box-sizing: border-box !important;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
             margin: 0 0 24px 0 !important;
             --min-height: 0px !important;
             --height: auto !important;
-            --padding-top: 6px !important;
-            --padding-bottom: 6px !important;
-            --padding-left: 16px !important;
-            --padding-right: 16px !important;
             --gap: 8px !important;
             --flex-direction: row !important;
             --flex-wrap: nowrap !important;
@@ -3298,8 +3294,6 @@ add_action( 'wp_head', function() {
 
         .elementor-element.elementor-element-d155fe5 *,
         div[data-id="d155fe5"] * {
-            margin: 0 !important;
-            padding: 0 !important;
             box-sizing: border-box !important;
         }
 
@@ -3310,28 +3304,34 @@ add_action( 'wp_head', function() {
         div[data-id="d155fe5"] .elementor-widget-container {
             margin: 0 !important;
             padding: 0 !important;
-            width: auto !important;
-            height: auto !important;
-            min-height: 0 !important;
+            width: 20px !important;
+            height: 20px !important;
+            min-width: 20px !important;
+            min-height: 20px !important;
+            border-radius: 50% !important;
+            background: rgba(220, 38, 38, 0.12) !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
             flex-shrink: 0 !important;
+            position: relative !important;
         }
 
         .elementor-element.elementor-element-d155fe5 .elementor-element-533a48d img,
         div[data-id="d155fe5"] .elementor-widget-image img,
         div[data-id="d155fe5"] [data-id="533a48d"] img {
+            display: none !important;
+        }
+
+        .elementor-element.elementor-element-d155fe5 .elementor-element-533a48d::after,
+        div[data-id="d155fe5"] .elementor-widget-image::after,
+        div[data-id="d155fe5"] [data-id="533a48d"]::after {
+            content: '' !important;
             display: block !important;
-            width: 22px !important;
-            height: 22px !important;
-            max-width: 22px !important;
-            max-height: 22px !important;
-            min-width: 22px !important;
-            min-height: 22px !important;
-            object-fit: contain !important;
-            margin: 0 !important;
-            padding: 0 !important;
+            width: 8px !important;
+            height: 8px !important;
+            border-radius: 50% !important;
+            background: #dc2626 !important;
         }
 
         .elementor-element.elementor-element-d155fe5 h6,
@@ -3341,7 +3341,7 @@ add_action( 'wp_head', function() {
         .e-e62c637-96a4a06,
         [data-id="e62c637"] {
             font-family: 'Instrument Sans', sans-serif !important;
-            font-size: 14px !important;
+            font-size: 13px !important;
             font-weight: 700 !important;
             color: #000000 !important;
             letter-spacing: 0.5px !important;
@@ -3368,15 +3368,15 @@ add_action( 'wp_head', function() {
                 flex-wrap: nowrap !important;
                 align-items: center !important;
                 justify-content: center !important;
-                background: transparent !important;
-                border: none !important;
-                border-radius: 0 !important;
-                box-shadow: none !important;
-                padding: 0 !important;
+                background: #ffffff !important;
+                border: 1px solid #d1d5db !important;
+                border-radius: 9999px !important;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+                padding: 4px 14px 4px 6px !important;
                 gap: 8px !important;
                 width: auto !important;
-                max-width: max-content !important;
-                min-height: 0 !important;
+                max-width: fit-content !important;
+                min-height: 30px !important;
                 height: auto !important;
                 margin: 0 auto 16px auto !important;
                 --flex-direction: row !important;
@@ -3392,28 +3392,34 @@ add_action( 'wp_head', function() {
             div[data-id="d155fe5"] .elementor-widget-container {
                 margin: 0 !important;
                 padding: 0 !important;
-                width: auto !important;
-                height: auto !important;
-                min-height: 0 !important;
+                width: 20px !important;
+                height: 20px !important;
+                min-width: 20px !important;
+                min-height: 20px !important;
+                border-radius: 50% !important;
+                background: rgba(220, 38, 38, 0.12) !important;
                 display: inline-flex !important;
                 align-items: center !important;
                 justify-content: center !important;
                 flex-shrink: 0 !important;
+                position: relative !important;
             }
 
             .elementor-element.elementor-element-d155fe5 .elementor-element-533a48d img,
             div[data-id="d155fe5"] .elementor-widget-image img,
             div[data-id="d155fe5"] [data-id="533a48d"] img {
+                display: none !important;
+            }
+
+            .elementor-element.elementor-element-d155fe5 .elementor-element-533a48d::after,
+            div[data-id="d155fe5"] .elementor-widget-image::after,
+            div[data-id="d155fe5"] [data-id="533a48d"]::after {
+                content: '' !important;
                 display: block !important;
-                width: 18px !important;
-                height: 18px !important;
-                max-width: 18px !important;
-                max-height: 18px !important;
-                min-width: 18px !important;
-                min-height: 18px !important;
-                object-fit: contain !important;
-                margin: 0 !important;
-                padding: 0 !important;
+                width: 8px !important;
+                height: 8px !important;
+                border-radius: 50% !important;
+                background: #dc2626 !important;
             }
 
             .elementor-element.elementor-element-d155fe5 h6,
@@ -3423,7 +3429,7 @@ add_action( 'wp_head', function() {
             .e-e62c637-96a4a06,
             [data-id="e62c637"] {
                 font-family: 'Instrument Sans', sans-serif !important;
-                font-size: 14px !important;
+                font-size: 13px !important;
                 font-weight: 700 !important;
                 color: #000000 !important;
                 letter-spacing: 0.5px !important;
