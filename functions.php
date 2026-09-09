@@ -1110,12 +1110,12 @@ add_shortcode('cmr_testimonials', function() {
     return ob_get_clean();
 });
 
-// Global Mobile CSS for Testimonials Slider (Single slide, 20px edge margin, clean white design)
-add_action('wp_head', 'cmr_testimonials_global_mobile_css', 999);
+// Global Mobile & Tablet CSS for Testimonials Slider (Single centered slide, 20px edge margin, clean white design matching Image 2)
+add_action('wp_head', 'cmr_testimonials_global_mobile_css', 9999);
 function cmr_testimonials_global_mobile_css() {
     ?>
     <style id="cmr-testimonials-global-mobile-css">
-    @media (max-width: 767.98px) {
+    @media (max-width: 1024px) {
         /* Section containers: exactly 20px edge margin from screen borders, reduced top gap */
         #cmr-testimonials-section,
         .elementor-element-a6ac41e,
@@ -1270,7 +1270,7 @@ function cmr_testimonials_global_mobile_css() {
             box-sizing: border-box !important;
         }
 
-        /* Swiper container - exactly 100% width and overflow hidden */
+        /* Swiper container - exactly 100% width and strictly hidden overflow */
         .elementor-widget-wcf--a-testimonial .wcf__slider,
         .elementor-widget-wcf--a-testimonial .wcf__slider.swiper,
         .aae--a-testimonial .wcf__slider,
@@ -1278,7 +1278,9 @@ function cmr_testimonials_global_mobile_css() {
         .elementor-element-acc3da4 .wcf__slider,
         .elementor-element-3b754b6 .wcf__slider,
         #cmr-testimonials-section .wcf__slider,
-        #cmr-testimonials-section .wcf__slider.swiper {
+        #cmr-testimonials-section .wcf__slider.swiper,
+        .wcf__slider,
+        .wcf__slider.swiper {
             width: 100% !important;
             max-width: 100% !important;
             overflow: hidden !important;
@@ -1293,22 +1295,24 @@ function cmr_testimonials_global_mobile_css() {
         .aae--a-testimonial .swiper-wrapper,
         .elementor-element-acc3da4 .swiper-wrapper,
         .elementor-element-3b754b6 .swiper-wrapper,
-        #cmr-testimonials-section .swiper-wrapper {
-            width: auto !important;
-            max-width: none !important;
+        #cmr-testimonials-section .swiper-wrapper,
+        .wcf__slider .swiper-wrapper {
+            width: 100% !important;
             display: flex !important;
             position: relative !important;
-            box-sizing: content-box !important;
+            box-sizing: border-box !important;
             padding: 0 !important;
             margin: 0 !important;
         }
 
-        /* EXACTLY ONE SLIDE FULL WIDTH AT A TIME */
+        /* EXACTLY ONE SLIDE FULL WIDTH AT A TIME - NO MARGIN SHIFT */
         .elementor-widget-wcf--a-testimonial .swiper-slide,
         .aae--a-testimonial .swiper-slide,
         .elementor-element-acc3da4 .swiper-slide,
         .elementor-element-3b754b6 .swiper-slide,
-        #cmr-testimonials-section .swiper-slide {
+        #cmr-testimonials-section .swiper-slide,
+        .wcf__slider .swiper-slide,
+        .wcf__t_slider-wrapper .swiper-slide {
             width: 100% !important;
             min-width: 100% !important;
             max-width: 100% !important;
@@ -1317,66 +1321,79 @@ function cmr_testimonials_global_mobile_css() {
             box-sizing: border-box !important;
             padding: 0 !important;
             margin: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
             overflow: hidden !important;
             display: flex !important;
             justify-content: center !important;
             align-items: center !important;
         }
 
-        /* Slide item */
+        /* Slide item: Vertically stacked, centered */
         .elementor-widget-wcf--a-testimonial .slide,
         .aae--a-testimonial .slide,
         .elementor-element-acc3da4 .slide,
         .elementor-element-3b754b6 .slide,
         #cmr-testimonials-section .aae--a-testimonial .slide,
         .elementor-element-a6ac41e .aae--a-testimonial .slide,
-        .elementor-element-82ef444 .aae--a-testimonial .slide {
+        .elementor-element-82ef444 .aae--a-testimonial .slide,
+        .wcf__slider .slide {
             width: 100% !important;
             max-width: 100% !important;
-            padding: 0 !important;
+            padding: 0 12px !important;
             margin: 0 auto !important;
             text-align: center !important;
             box-sizing: border-box !important;
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
+            justify-content: center !important;
         }
 
-        /* Feedback text */
+        /* Feedback quote text: CENTERED, readable, matching Image 2 */
         .elementor-widget-wcf--a-testimonial .feedback,
         .aae--a-testimonial .feedback,
         #cmr-testimonials-section .aae--a-testimonial .feedback,
         #cmr-testimonials-section .wcf__slider .feedback,
         .elementor-element-a6ac41e .aae--a-testimonial .feedback,
         .elementor-element-82ef444 .aae--a-testimonial .feedback,
-        .aae--a-testimonial .feedback {
+        .elementor-element-3b754b6 .feedback,
+        .elementor-element-acc3da4 .feedback,
+        .wcf__slider .feedback,
+        .slide .feedback,
+        p.feedback {
             text-align: center !important;
             font-family: "Instrument Sans", sans-serif !important;
-            font-size: 16px !important;
-            font-weight: 400 !important;
-            line-height: 1.65 !important;
-            letter-spacing: -0.2px !important;
-            color: #1e1e1e !important;
-            margin: 0 0 24px 0 !important;
+            font-size: 18px !important;
+            font-weight: 500 !important;
+            line-height: 1.55 !important;
+            letter-spacing: -0.3px !important;
+            color: #111111 !important;
+            margin: 0 auto 28px auto !important;
             padding: 0 !important;
             width: 100% !important;
-            max-width: 100% !important;
+            max-width: 680px !important;
             box-sizing: border-box !important;
+            display: block !important;
         }
 
-        /* Author wrap & info */
+        /* Author wrap & info: HORIZONTALLY CENTERED */
         .elementor-widget-wcf--a-testimonial .wrap,
         .aae--a-testimonial .wrap,
         #cmr-testimonials-section .aae--a-testimonial .wrap,
         .elementor-element-a6ac41e .aae--a-testimonial .wrap,
-        .elementor-element-82ef444 .aae--a-testimonial .wrap {
+        .elementor-element-82ef444 .aae--a-testimonial .wrap,
+        .elementor-element-3b754b6 .wrap,
+        .elementor-element-acc3da4 .wrap,
+        .slide .wrap,
+        .wcf__slider .wrap {
             display: flex !important;
             justify-content: center !important;
             align-items: center !important;
             text-align: center !important;
             width: 100% !important;
             max-width: 100% !important;
-            margin: 0 !important;
+            margin: 0 auto !important;
             padding: 0 !important;
             box-sizing: border-box !important;
         }
@@ -1385,46 +1402,76 @@ function cmr_testimonials_global_mobile_css() {
         .aae--a-testimonial .author,
         #cmr-testimonials-section .aae--a-testimonial .author,
         .elementor-element-a6ac41e .aae--a-testimonial .author,
-        .elementor-element-82ef444 .aae--a-testimonial .author {
+        .elementor-element-82ef444 .aae--a-testimonial .author,
+        .elementor-element-3b754b6 .author,
+        .elementor-element-acc3da4 .author,
+        .slide .author,
+        .wcf__slider .author {
             display: inline-flex !important;
+            flex-direction: row !important;
             justify-content: center !important;
             align-items: center !important;
             text-align: left !important;
             margin: 0 auto !important;
             gap: 16px !important;
+            max-width: 100% !important;
         }
 
         .elementor-widget-wcf--a-testimonial .author .image,
         .aae--a-testimonial .author .image,
         #cmr-testimonials-section .aae--a-testimonial .author .image,
         .elementor-element-a6ac41e .aae--a-testimonial .author .image,
-        .elementor-element-82ef444 .aae--a-testimonial .author .image {
+        .elementor-element-82ef444 .aae--a-testimonial .author .image,
+        .elementor-element-3b754b6 .author .image,
+        .elementor-element-acc3da4 .author .image {
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             margin: 0 !important;
             flex-shrink: 0 !important;
+            max-width: 90px !important;
+            max-height: 60px !important;
+            overflow: visible !important;
+            border-radius: 0 !important;
         }
 
         .elementor-widget-wcf--a-testimonial .author .image img,
         .aae--a-testimonial .author .image img,
         #cmr-testimonials-section .aae--a-testimonial .author .image img,
         .elementor-element-a6ac41e .aae--a-testimonial .author .image img,
-        .elementor-element-82ef444 .aae--a-testimonial .author .image img {
-            width: 56px !important;
-            height: 56px !important;
-            object-fit: cover !important;
+        .elementor-element-82ef444 .aae--a-testimonial .author .image img,
+        .elementor-element-3b754b6 .author .image img,
+        .elementor-element-acc3da4 .author .image img {
+            max-height: 56px !important;
+            max-width: 90px !important;
+            width: auto !important;
+            height: auto !important;
+            object-fit: contain !important;
             border-radius: 50% !important;
+        }
+
+        .elementor-widget-wcf--a-testimonial .author .image img[src*="ibm"],
+        .elementor-widget-wcf--a-testimonial .author .image img[src*="logo"],
+        .elementor-widget-wcf--a-testimonial .author .image img[src*="Symbol"],
+        .elementor-widget-wcf--a-testimonial .author .image img[src*=".svg"],
+        .aae--a-testimonial .author .image img[src*="ibm"],
+        .aae--a-testimonial .author .image img[src*="logo"],
+        .aae--a-testimonial .author .image img[src*="Symbol"],
+        .aae--a-testimonial .author .image img[src*=".svg"] {
+            border-radius: 0 !important;
         }
 
         .elementor-widget-wcf--a-testimonial .author .info,
         .aae--a-testimonial .author .info,
         #cmr-testimonials-section .aae--a-testimonial .author .info,
         .elementor-element-a6ac41e .aae--a-testimonial .author .info,
-        .elementor-element-82ef444 .aae--a-testimonial .author .info {
+        .elementor-element-82ef444 .aae--a-testimonial .author .info,
+        .elementor-element-3b754b6 .author .info,
+        .elementor-element-acc3da4 .author .info {
             display: flex !important;
             flex-direction: column !important;
             align-items: flex-start !important;
+            justify-content: center !important;
             text-align: left !important;
         }
 
@@ -1432,70 +1479,84 @@ function cmr_testimonials_global_mobile_css() {
         .aae--a-testimonial .author .name,
         #cmr-testimonials-section .aae--a-testimonial .author .name,
         .elementor-element-a6ac41e .aae--a-testimonial .author .name,
-        .elementor-element-82ef444 .aae--a-testimonial .author .name {
+        .elementor-element-82ef444 .aae--a-testimonial .author .name,
+        .elementor-element-3b754b6 .author .name,
+        .elementor-element-acc3da4 .author .name {
             text-align: left !important;
             font-family: "Instrument Sans", sans-serif !important;
-            font-size: 18px !important;
+            font-size: 20px !important;
             font-weight: 700 !important;
-            line-height: 1.3 !important;
+            line-height: 1.25 !important;
             color: #0F0F0F !important;
-            margin: 0 !important;
+            margin: 0 0 3px 0 !important;
         }
 
         .elementor-widget-wcf--a-testimonial .author .designation,
         .aae--a-testimonial .author .designation,
         #cmr-testimonials-section .aae--a-testimonial .author .designation,
         .elementor-element-a6ac41e .aae--a-testimonial .author .designation,
-        .elementor-element-82ef444 .aae--a-testimonial .author .designation {
+        .elementor-element-82ef444 .aae--a-testimonial .author .designation,
+        .elementor-element-3b754b6 .author .designation,
+        .elementor-element-acc3da4 .author .designation {
             text-align: left !important;
             font-family: "Instrument Sans", sans-serif !important;
             font-size: 14px !important;
-            color: #555555 !important;
+            font-weight: 400 !important;
+            color: #475569 !important;
             line-height: 1.4 !important;
-            margin-top: 2px !important;
+            margin: 0 !important;
         }
 
         .elementor-widget-wcf--a-testimonial .ts-navigation,
         .aae--a-testimonial .ts-navigation,
         #cmr-testimonials-section .aae--a-testimonial .ts-navigation,
         .elementor-element-a6ac41e .aae--a-testimonial .ts-navigation,
-        .elementor-element-82ef444 .aae--a-testimonial .ts-navigation {
+        .elementor-element-82ef444 .aae--a-testimonial .ts-navigation,
+        .elementor-element-3b754b6 .ts-navigation,
+        .elementor-element-acc3da4 .ts-navigation,
+        .wcf__t_slider-wrapper .ts-navigation {
             display: flex !important;
             justify-content: center !important;
             align-items: center !important;
-            margin: 24px auto 0 auto !important;
+            margin: 28px auto 0 auto !important;
             width: 100% !important;
             gap: 16px !important;
+            position: relative !important;
+            z-index: 5 !important;
         }
 
         .elementor-widget-wcf--a-testimonial .wcf-arrow,
         .aae--a-testimonial .wcf-arrow,
         #cmr-testimonials-section .aae--a-testimonial .wcf-arrow,
         .elementor-element-a6ac41e .aae--a-testimonial .wcf-arrow,
-        .elementor-element-82ef444 .aae--a-testimonial .wcf-arrow {
+        .elementor-element-82ef444 .aae--a-testimonial .wcf-arrow,
+        .wcf-arrow {
             background-color: #F5F5F5 !important;
             border-radius: 50% !important;
             width: 48px !important;
             height: 48px !important;
+            min-width: 48px !important;
+            min-height: 48px !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
+            cursor: pointer !important;
         }
     }
     </style>
     <?php
 }
 
-// Global Mobile Swiper Reconfiguration for Testimonials Slider (Single slide swipe, touch enabled)
-add_action('wp_footer', 'cmr_testimonials_global_mobile_js', 9999);
+// Global Mobile & Tablet Swiper Reconfiguration for Testimonials Slider (Single slide swipe, touch enabled, zero offset drift)
+add_action('wp_footer', 'cmr_testimonials_global_mobile_js', 99999);
 function cmr_testimonials_global_mobile_js() {
     ?>
     <script id="cmr-testimonials-global-fix">
     (function() {
         function reconfigureTestimonialSliders() {
-            if (window.innerWidth > 767.98) return;
+            if (window.innerWidth > 1024) return;
 
-            // 1. Pre-patch data-settings on the wrappers so if Swiper initializes later, it reads slidesPerView: 1
+            // 1. Pre-patch data-settings on the wrappers so if Swiper initializes later, it reads slidesPerView: 1 and spaceBetween: 0
             var wrappers = document.querySelectorAll('.wcf__t_slider-wrapper, .aae--a-testimonial');
             wrappers.forEach(function(w) {
                 var ds = w.getAttribute('data-settings');
@@ -1508,15 +1569,25 @@ function cmr_testimonials_global_mobile_js() {
                             conf.slidesPerGroup = 1;
                             mod = true;
                         }
+                        if (conf.spaceBetween !== 0) {
+                            conf.spaceBetween = 0;
+                            mod = true;
+                        }
+                        if (!conf.centeredSlides) {
+                            conf.centeredSlides = true;
+                            mod = true;
+                        }
                         if (!conf.allowTouchMove) {
                             conf.allowTouchMove = true;
                             mod = true;
                         }
                         if (conf.breakpoints) {
                             for (var b in conf.breakpoints) {
-                                if (parseInt(b, 10) <= 768) {
+                                if (parseInt(b, 10) <= 1024) {
                                     conf.breakpoints[b].slidesPerView = 1;
                                     conf.breakpoints[b].slidesPerGroup = 1;
+                                    conf.breakpoints[b].spaceBetween = 0;
+                                    conf.breakpoints[b].centeredSlides = true;
                                     mod = true;
                                 }
                             }
@@ -1539,26 +1610,40 @@ function cmr_testimonials_global_mobile_js() {
                         sw.params.slidesPerGroup = 1;
                         changed = true;
                     }
+                    if (sw.params.spaceBetween !== 0) {
+                        sw.params.spaceBetween = 0;
+                        changed = true;
+                    }
+                    if (!sw.params.centeredSlides) {
+                        sw.params.centeredSlides = true;
+                        changed = true;
+                    }
                     if (!sw.params.allowTouchMove) {
                         sw.params.allowTouchMove = true;
                         sw.allowTouchMove = true;
                         changed = true;
                     }
-                    if (sw.params.spaceBetween !== 20) {
-                        sw.params.spaceBetween = 20;
-                        changed = true;
-                    }
                     if (sw.params.breakpoints) {
                         for (var bp in sw.params.breakpoints) {
-                            if (parseInt(bp, 10) <= 768) {
+                            if (parseInt(bp, 10) <= 1024) {
                                 sw.params.breakpoints[bp].slidesPerView = 1;
                                 sw.params.breakpoints[bp].slidesPerGroup = 1;
+                                sw.params.breakpoints[bp].spaceBetween = 0;
+                                sw.params.breakpoints[bp].centeredSlides = true;
                                 changed = true;
                             }
                         }
                     }
                     if (changed) {
-                        sw.update();
+                        if (sw.updateSize) sw.updateSize();
+                        if (sw.updateSlides) sw.updateSlides();
+                        if (sw.updateProgress) sw.updateProgress();
+                        if (sw.update) sw.update();
+                        if (sw.slideToLoop) {
+                            sw.slideToLoop(sw.realIndex || 0, 0);
+                        } else if (sw.slideTo) {
+                            sw.slideTo(sw.activeIndex || 0, 0);
+                        }
                     }
                 }
             });
@@ -1571,11 +1656,13 @@ function cmr_testimonials_global_mobile_js() {
         }
         window.addEventListener('load', reconfigureTestimonialSliders);
         window.addEventListener('resize', reconfigureTestimonialSliders);
-        setTimeout(reconfigureTestimonialSliders, 100);
+        setTimeout(reconfigureTestimonialSliders, 50);
+        setTimeout(reconfigureTestimonialSliders, 150);
         setTimeout(reconfigureTestimonialSliders, 300);
         setTimeout(reconfigureTestimonialSliders, 600);
-        setTimeout(reconfigureTestimonialSliders, 1200);
-        setTimeout(reconfigureTestimonialSliders, 2500);
+        setTimeout(reconfigureTestimonialSliders, 1000);
+        setTimeout(reconfigureTestimonialSliders, 2000);
+        setTimeout(reconfigureTestimonialSliders, 3500);
 
         if (window.jQuery) {
             jQuery(window).on('elementor/frontend/init', function() {

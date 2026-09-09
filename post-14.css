@@ -565,7 +565,8 @@ max-width:512px !important ;
 .download-btn .elementor-button svg path {
     fill: #000000 !important;
 }/* End custom CSS */
-/* Start custom CSS for wcf--a-testimonial, class: .elementor-element-3b754b6 */.aae--a-testimonial .ts-navigation {
+/* Start custom CSS for wcf--a-testimonial, class: .elementor-element-3b754b6 */@media (min-width: 1025px) {
+.aae--a-testimonial .ts-navigation {
     gap: 10px;
     display: flex;
     align-items: start !important;
@@ -576,11 +577,10 @@ max-width:512px !important ;
     margin-left: 20px;
     margin-top: 60px;
 }
-
-
 .aae--a-testimonial .wcf-arrow {
     background-color: #F5F5F5;
     border-radius: 24px;
+}
 }/* End custom CSS */
 /* Start custom CSS for button, class: .elementor-element-168efdf */.elementor-14 .elementor-element.elementor-element-168efdf .elementor-button
 {
