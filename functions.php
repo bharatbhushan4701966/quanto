@@ -763,6 +763,28 @@ add_action('wp_head', function() {
     <?php
 });
 
+// Add custom class to CMR LIVE badge element to avoid Elementor CSS conflicts
+add_action('wp_footer', function() {
+    ?>
+    <script id="cmr-live-badge-class">
+    (function() {
+        function addCmrLiveBadgeClass() {
+            var badge = document.querySelector('[data-id="d155fe5"]');
+            if (badge && !badge.classList.contains('cmr-live-badge')) {
+                badge.classList.add('cmr-live-badge');
+            }
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', addCmrLiveBadgeClass);
+        } else {
+            addCmrLiveBadgeClass();
+        }
+        setTimeout(addCmrLiveBadgeClass, 500);
+    })();
+    </script>
+    <?php
+}, 99);
+
 add_action('wp_footer', function() {
     ?>
     <script id="cmr-duration-meta-fix">
@@ -3261,12 +3283,8 @@ add_action( 'wp_head', function() {
             transform: rotate(-45deg) translate(2px, -2px) !important;
         }
 
-        /* CMR LIVE Pill Badge */
-        .elementor-element.elementor-element-d155fe5,
-        div[data-id="d155fe5"],
-        .elementor-element-d155fe5.e-con,
-        .elementor-element-d155fe5.e-div-block-base,
-        .e-d155fe5-f948194 {
+        /* CMR LIVE Pill Badge — custom class approach (no Elementor conflicts) */
+        .cmr-live-badge {
             display: inline-flex !important;
             flex-direction: row !important;
             flex-wrap: nowrap !important;
@@ -3286,22 +3304,26 @@ add_action( 'wp_head', function() {
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
             margin: 0 0 24px 0 !important;
             align-self: flex-start !important;
+            /* Kill Elementor e-con variables */
             --min-height: 0px !important;
             --height: auto !important;
             --gap: 10px !important;
             --flex-direction: row !important;
             --flex-wrap: nowrap !important;
             --align-items: center !important;
+            --padding-top: 0px !important;
+            --padding-bottom: 0px !important;
+            --padding-left: 0px !important;
+            --padding-right: 0px !important;
         }
 
-        .elementor-element.elementor-element-d155fe5 *,
-        div[data-id="d155fe5"] * {
+        .cmr-live-badge * {
             box-sizing: border-box !important;
         }
 
-        .elementor-element.elementor-element-d155fe5 .elementor-element-533a48d,
-        div[data-id="d155fe5"] .elementor-widget-image,
-        div[data-id="d155fe5"] [data-id="533a48d"] {
+        /* Red dot circle wrapper */
+        .cmr-live-badge [data-id="533a48d"],
+        .cmr-live-badge .elementor-widget-image {
             margin: 0 !important;
             padding: 0 !important;
             width: 22px !important;
@@ -3314,8 +3336,7 @@ add_action( 'wp_head', function() {
             flex-shrink: 0 !important;
         }
 
-        .elementor-element.elementor-element-d155fe5 [data-id="533a48d"] .elementor-widget-container,
-        div[data-id="d155fe5"] [data-id="533a48d"] .elementor-widget-container {
+        .cmr-live-badge [data-id="533a48d"] .elementor-widget-container {
             margin: 0 !important;
             padding: 0 !important;
             width: 22px !important;
@@ -3331,14 +3352,12 @@ add_action( 'wp_head', function() {
             position: relative !important;
         }
 
-        .elementor-element.elementor-element-d155fe5 .elementor-element-533a48d img,
-        div[data-id="d155fe5"] .elementor-widget-image img,
-        div[data-id="d155fe5"] [data-id="533a48d"] img {
+        /* Hide original image, show red dot via ::after */
+        .cmr-live-badge img {
             display: none !important;
         }
 
-        .elementor-element.elementor-element-d155fe5 [data-id="533a48d"] .elementor-widget-container::after,
-        div[data-id="d155fe5"] [data-id="533a48d"] .elementor-widget-container::after {
+        .cmr-live-badge [data-id="533a48d"] .elementor-widget-container::after {
             content: '' !important;
             display: block !important;
             width: 9px !important;
@@ -3347,12 +3366,10 @@ add_action( 'wp_head', function() {
             background: #dc2626 !important;
         }
 
-        .elementor-element.elementor-element-d155fe5 h6,
-        .elementor-element.elementor-element-d155fe5 .e-heading-base,
-        div[data-id="d155fe5"] h6,
-        div[data-id="d155fe5"] .e-heading-base,
-        .e-e62c637-96a4a06,
-        [data-id="e62c637"] {
+        /* CMR LIVE text */
+        .cmr-live-badge h6,
+        .cmr-live-badge .e-heading-base,
+        .cmr-live-badge [data-id="e62c637"] {
             font-family: 'Instrument Sans', sans-serif !important;
             font-size: 14px !important;
             font-weight: 700 !important;
@@ -3368,6 +3385,14 @@ add_action( 'wp_head', function() {
             justify-content: center !important;
             vertical-align: middle !important;
             white-space: nowrap !important;
+        }
+
+        /* Mobile: center the badge */
+        @media (max-width: 768px) {
+            .cmr-live-badge {
+                margin: 0 auto 20px auto !important;
+                align-self: center !important;
+            }
         }
 
         @media (max-width: 768px) {
