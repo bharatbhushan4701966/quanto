@@ -2514,6 +2514,12 @@ body.single-post .elementor-element.elementor-element-5e656d6 > .e-con-inner {
     --padding-top: 40px !important;
 }
 
+.elementor-23198 .elementor-element.elementor-element-645a65a,
+.elementor-element-645a65a {
+    --margin-bottom: 40px !important;
+    margin-bottom: 40px !important;
+}
+
 
 
 
@@ -4735,10 +4741,11 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     #cmr-global-brands-section,
     .elementor-element-7ec6a9b,
     .elementor-23198,
+    .elementor-element-645a65a,
     .elementor-23198 .elementor-element-645a65a,
     .elementor-14 .elementor-element-c9502e0 {
         margin-top: 0 !important;
-        margin-bottom: 45px !important;
+        margin-bottom: 40px !important;
         padding-top: 0 !important;
         padding-bottom: 0 !important;
     }

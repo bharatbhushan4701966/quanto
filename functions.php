@@ -1973,10 +1973,11 @@ function cmr_testimonials_global_mobile_css() {
         #cmr-global-brands-section,
         .elementor-element-7ec6a9b,
         .elementor-23198,
+        .elementor-element-645a65a,
         .elementor-23198 .elementor-element-645a65a,
         .elementor-14 .elementor-element-c9502e0 {
             margin-top: 0 !important;
-            margin-bottom: 45px !important;
+            margin-bottom: 40px !important;
             padding-top: 0 !important;
             padding-bottom: 0 !important;
         }
