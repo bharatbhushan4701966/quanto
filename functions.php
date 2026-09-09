@@ -1287,11 +1287,13 @@ function cmr_testimonials_global_mobile_css() {
         .elementor-element-a6ac41e .elementor-element-acc3da4,
         .elementor-element-82ef444 .elementor-element-3b754b6,
         #cmr-testimonials-section .elementor-widget-wcf--a-testimonial,
-        #cmr-testimonials-section .wcf__t_slider-wrapper {
+        #cmr-testimonials-section .wcf__t_slider-wrapper,
+        .elementor-widget-wcf--a-testimonial,
+        .wcf__t_slider-wrapper {
             flex: 1 1 auto !important;
             width: calc(100% - 380px) !important;
             max-width: calc(100% - 380px) !important;
-            padding: 0 0 0 50px !important;
+            padding: 0 0 0 60px !important;
             margin: 0 !important;
             text-align: left !important;
             box-sizing: border-box !important;
@@ -1301,49 +1303,84 @@ function cmr_testimonials_global_mobile_css() {
         }
 
         #cmr-testimonials-section .wcf__slider,
-        #cmr-testimonials-section .wcf__slider.swiper {
+        #cmr-testimonials-section .wcf__slider.swiper,
+        .elementor-widget-wcf--a-testimonial .wcf__slider,
+        .aae--a-testimonial .wcf__slider {
             width: 100% !important;
             max-width: 100% !important;
             overflow: hidden !important;
             position: relative !important;
             margin: 0 !important;
             padding: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        #cmr-testimonials-section .swiper-wrapper,
+        .elementor-widget-wcf--a-testimonial .swiper-wrapper,
+        .wcf__slider .swiper-wrapper {
+            display: flex !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        #cmr-testimonials-section .swiper-slide,
+        .elementor-widget-wcf--a-testimonial .swiper-slide,
+        .wcf__slider .swiper-slide,
+        .aae--a-testimonial .swiper-slide {
+            width: 100% !important;
+            min-width: 100% !important;
+            max-width: 100% !important;
+            flex: 0 0 100% !important;
+            flex-shrink: 0 !important;
+            box-sizing: border-box !important;
+            margin-right: 0 !important;
+            padding: 0 !important;
         }
 
         #cmr-testimonials-section .slide,
         #cmr-testimonials-section .aae--a-testimonial .slide,
         #cmr-testimonials-section .slide-content,
-        #cmr-testimonials-section .content {
+        #cmr-testimonials-section .content,
+        .wcf__slider .slide {
             text-align: left !important;
             align-items: flex-start !important;
             justify-content: flex-start !important;
             display: flex !important;
             flex-direction: column !important;
             width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            background: transparent !important;
         }
 
-        /* Feedback quote text on desktop */
+        /* Feedback quote text on desktop - Wide and clear matching Image 1 */
         #cmr-testimonials-section .feedback,
         #cmr-testimonials-section .aae--a-testimonial .feedback,
-        #cmr-testimonials-section .wcf__slider .feedback {
+        #cmr-testimonials-section .wcf__slider .feedback,
+        .elementor-widget-wcf--a-testimonial .feedback,
+        p.feedback {
             text-align: left !important;
             font-family: "Instrument Sans", sans-serif !important;
-            font-size: 20px !important;
+            font-size: 21px !important;
             font-weight: 500 !important;
             line-height: 1.55 !important;
-            letter-spacing: -0.4px !important;
+            letter-spacing: -0.3px !important;
             color: #111111 !important;
             margin: 0 0 35px 0 !important;
             padding: 0 !important;
             width: 100% !important;
-            max-width: 680px !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            display: block !important;
         }
 
         /* Author on desktop */
         #cmr-testimonials-section .wrap,
         #cmr-testimonials-section .aae--a-testimonial .wrap,
         #cmr-testimonials-section .author,
-        #cmr-testimonials-section .aae--a-testimonial .author {
+        #cmr-testimonials-section .aae--a-testimonial .author,
+        .elementor-widget-wcf--a-testimonial .wrap,
+        .elementor-widget-wcf--a-testimonial .author {
             display: inline-flex !important;
             flex-direction: row !important;
             align-items: center !important;
@@ -1352,10 +1389,12 @@ function cmr_testimonials_global_mobile_css() {
             margin: 0 0 30px 0 !important;
             text-align: left !important;
             width: auto !important;
+            box-sizing: border-box !important;
         }
 
         #cmr-testimonials-section .author .image img,
-        #cmr-testimonials-section .aae--a-testimonial .author .image img {
+        #cmr-testimonials-section .aae--a-testimonial .author .image img,
+        .elementor-widget-wcf--a-testimonial .author .image img {
             max-height: 52px !important;
             max-width: 130px !important;
             width: auto !important;
@@ -1365,7 +1404,8 @@ function cmr_testimonials_global_mobile_css() {
         }
 
         #cmr-testimonials-section .author .info,
-        #cmr-testimonials-section .aae--a-testimonial .author .info {
+        #cmr-testimonials-section .aae--a-testimonial .author .info,
+        .elementor-widget-wcf--a-testimonial .author .info {
             display: flex !important;
             flex-direction: column !important;
             align-items: flex-start !important;
@@ -1374,7 +1414,8 @@ function cmr_testimonials_global_mobile_css() {
         }
 
         #cmr-testimonials-section .author .name,
-        #cmr-testimonials-section .aae--a-testimonial .author .name {
+        #cmr-testimonials-section .aae--a-testimonial .author .name,
+        .elementor-widget-wcf--a-testimonial .author .name {
             font-family: "Instrument Sans", sans-serif !important;
             font-size: 22px !important;
             font-weight: 700 !important;
@@ -1385,7 +1426,8 @@ function cmr_testimonials_global_mobile_css() {
         }
 
         #cmr-testimonials-section .author .designation,
-        #cmr-testimonials-section .aae--a-testimonial .author .designation {
+        #cmr-testimonials-section .aae--a-testimonial .author .designation,
+        .elementor-widget-wcf--a-testimonial .author .designation {
             font-family: "Instrument Sans", sans-serif !important;
             font-size: 14px !important;
             font-weight: 400 !important;
@@ -1397,7 +1439,8 @@ function cmr_testimonials_global_mobile_css() {
 
         /* Navigation Arrows on desktop */
         #cmr-testimonials-section .ts-navigation,
-        #cmr-testimonials-section .aae--a-testimonial .ts-navigation {
+        #cmr-testimonials-section .aae--a-testimonial .ts-navigation,
+        .elementor-widget-wcf--a-testimonial .ts-navigation {
             display: flex !important;
             flex-direction: row !important;
             justify-content: flex-start !important;
@@ -1409,7 +1452,8 @@ function cmr_testimonials_global_mobile_css() {
         }
 
         #cmr-testimonials-section .wcf-arrow,
-        #cmr-testimonials-section .aae--a-testimonial .wcf-arrow {
+        #cmr-testimonials-section .aae--a-testimonial .wcf-arrow,
+        .elementor-widget-wcf--a-testimonial .wcf-arrow {
             background-color: #F5F5F5 !important;
             border-radius: 50% !important;
             width: 44px !important;
@@ -1975,21 +2019,21 @@ function cmr_testimonials_global_mobile_js() {
     <script id="cmr-testimonials-global-fix">
     (function() {
         function reconfigureTestimonialSliders() {
-            if (window.innerWidth > 1024) return;
+            // Remove hardcoded <br> tags from the testimonial section heading on mobile only (<= 1024px)
+            if (window.innerWidth <= 1024) {
+                var titles = document.querySelectorAll(
+                    '#cmr-testimonials-section .elementor-heading-title, ' +
+                    '.elementor-element-aecd77b .elementor-heading-title, ' +
+                    '.elementor-element-8da86a5 .elementor-heading-title'
+                );
+                titles.forEach(function(t) {
+                    if (t && t.innerHTML && /<br\s*[\/]?>/i.test(t.innerHTML)) {
+                        t.innerHTML = t.innerHTML.replace(/<br\s*[\/]?>/gi, ' ');
+                    }
+                });
+            }
 
-            // Remove hardcoded <br> tags from the testimonial section heading on mobile only
-            var titles = document.querySelectorAll(
-                '#cmr-testimonials-section .elementor-heading-title, ' +
-                '.elementor-element-aecd77b .elementor-heading-title, ' +
-                '.elementor-element-8da86a5 .elementor-heading-title'
-            );
-            titles.forEach(function(t) {
-                if (t && t.innerHTML && /<br\s*[\/]?>/i.test(t.innerHTML)) {
-                    t.innerHTML = t.innerHTML.replace(/<br\s*[\/]?>/gi, ' ');
-                }
-            });
-
-            // 1. Pre-patch data-settings on the wrappers so if Swiper initializes later, it reads slidesPerView: 1 and spaceBetween: 0
+            // 1. Pre-patch data-settings on the wrappers so Swiper reads slidesPerView: 1 and spaceBetween: 0 on ALL screens (Desktop & Mobile)
             var wrappers = document.querySelectorAll('.wcf__t_slider-wrapper, .aae--a-testimonial');
             wrappers.forEach(function(w) {
                 var ds = w.getAttribute('data-settings');
@@ -2006,23 +2050,16 @@ function cmr_testimonials_global_mobile_js() {
                             conf.spaceBetween = 0;
                             mod = true;
                         }
-                        if (!conf.centeredSlides) {
-                            conf.centeredSlides = true;
-                            mod = true;
-                        }
-                        if (!conf.allowTouchMove) {
+                        if (conf.allowTouchMove !== true) {
                             conf.allowTouchMove = true;
                             mod = true;
                         }
                         if (conf.breakpoints) {
                             for (var b in conf.breakpoints) {
-                                if (parseInt(b, 10) <= 1024) {
-                                    conf.breakpoints[b].slidesPerView = 1;
-                                    conf.breakpoints[b].slidesPerGroup = 1;
-                                    conf.breakpoints[b].spaceBetween = 0;
-                                    conf.breakpoints[b].centeredSlides = true;
-                                    mod = true;
-                                }
+                                conf.breakpoints[b].slidesPerView = 1;
+                                conf.breakpoints[b].slidesPerGroup = 1;
+                                conf.breakpoints[b].spaceBetween = 0;
+                                mod = true;
                             }
                         }
                         if (mod) {
