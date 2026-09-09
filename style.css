@@ -4018,10 +4018,27 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
         font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
         font-size: 32px !important;
         font-weight: 700 !important;
-        line-height: 1.22 !important;
+        line-height: 1.25 !important;
         letter-spacing: -1px !important;
         color: #0F0F0F !important;
         margin: 0 auto !important;
+        white-space: normal !important;
+    }
+
+    #cmr-testimonials-section .elementor-element-aecd77b .elementor-heading-title br,
+    #cmr-testimonials-section .elementor-element-8da86a5 .elementor-heading-title br,
+    .elementor-element-a6ac41e .elementor-element-aecd77b .elementor-heading-title br,
+    .elementor-element-82ef444 .elementor-element-8da86a5 .elementor-heading-title br,
+    .elementor-23190 .elementor-element.elementor-element-aecd77b .elementor-heading-title br,
+    .elementor-14 .elementor-element.elementor-element-8da86a5 .elementor-heading-title br,
+    .elementor-element-aecd77b .elementor-heading-title br,
+    .elementor-element-8da86a5 .elementor-heading-title br {
+        display: inline-block !important;
+        width: 0.28em !important;
+        height: 0 !important;
+        overflow: hidden !important;
+        vertical-align: baseline !important;
+        content: " " !important;
     }
 
     /* 4. Testimonial Quote / Feedback */

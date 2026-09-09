@@ -1245,10 +1245,27 @@ function cmr_testimonials_global_mobile_css() {
             font-family: "Instrument Sans", sans-serif !important;
             font-size: 32px !important;
             font-weight: 700 !important;
-            line-height: 1.22 !important;
+            line-height: 1.25 !important;
             letter-spacing: -1px !important;
             color: #0F0F0F !important;
             margin: 0 auto !important;
+            white-space: normal !important;
+        }
+
+        #cmr-testimonials-section .elementor-element-aecd77b .elementor-heading-title br,
+        #cmr-testimonials-section .elementor-element-8da86a5 .elementor-heading-title br,
+        .elementor-element-a6ac41e .elementor-element-aecd77b .elementor-heading-title br,
+        .elementor-element-82ef444 .elementor-element-8da86a5 .elementor-heading-title br,
+        .elementor-23190 .elementor-element.elementor-element-aecd77b .elementor-heading-title br,
+        .elementor-14 .elementor-element.elementor-element-8da86a5 .elementor-heading-title br,
+        .elementor-element-aecd77b .elementor-heading-title br,
+        .elementor-element-8da86a5 .elementor-heading-title br {
+            display: inline-block !important;
+            width: 0.28em !important;
+            height: 0 !important;
+            overflow: hidden !important;
+            vertical-align: baseline !important;
+            content: " " !important;
         }
 
         /* Slider Widget & Wrapper */
@@ -1554,6 +1571,18 @@ function cmr_testimonials_global_mobile_js() {
     <script id="cmr-testimonials-global-fix">
     (function() {
         function reconfigureTestimonialSliders() {
+            // Remove hardcoded <br> tags from the testimonial section heading
+            var titles = document.querySelectorAll(
+                '#cmr-testimonials-section .elementor-heading-title, ' +
+                '.elementor-element-aecd77b .elementor-heading-title, ' +
+                '.elementor-element-8da86a5 .elementor-heading-title'
+            );
+            titles.forEach(function(t) {
+                if (t && t.innerHTML && /<br\s*[\/]?>/i.test(t.innerHTML)) {
+                    t.innerHTML = t.innerHTML.replace(/<br\s*[\/]?>/gi, ' ');
+                }
+            });
+
             if (window.innerWidth > 1024) return;
 
             // 1. Pre-patch data-settings on the wrappers so if Swiper initializes later, it reads slidesPerView: 1 and spaceBetween: 0
