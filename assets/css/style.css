@@ -6840,7 +6840,7 @@ body .elementor-element .process-box-wrapper {
 
   .elementor-14 .elementor-element.elementor-element-bf85eb0,
   .elementor-14 .elementor-element.elementor-element-1de6221,
-  .elementor-14 .elementor-element.elementor-element-275e662 .e-div-block-base:has(h6) {
+  .elementor-14 .elementor-element.elementor-element-275e662 .e-div-block-base:not(.elementor-element-d155fe5):not([data-id="d155fe5"]):has(h6) {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
@@ -6851,7 +6851,7 @@ body .elementor-element .process-box-wrapper {
 
   .elementor-14 .elementor-element.elementor-element-bf85eb0 h6,
   .elementor-14 .elementor-element.elementor-element-1de6221 h6,
-  .elementor-14 .elementor-element.elementor-element-275e662 h6,
+  .elementor-14 .elementor-element.elementor-element-275e662 .elementor-element-2c76331 h6,
   .elementor-14 .e-1fd1573-0ea6203,
   .elementor-14 .e-ff3f001-b9ccb27 {
     font-size: 13px !important;
