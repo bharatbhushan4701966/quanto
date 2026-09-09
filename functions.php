@@ -3414,6 +3414,13 @@ add_action( 'wp_head', function() {
                 font-size: 20px !important;
                 line-height: 1.3 !important;
             }
+
+            [data-id="efd0eb4"],
+            .e-efd0eb4-113e810 {
+                font-size: 36px !important;
+                font-weight: 600 !important;
+                line-height: 1.2 !important;
+            }
         }
 
         @media (max-width: 768px) {
