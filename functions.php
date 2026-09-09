@@ -3372,13 +3372,13 @@ add_action( 'wp_head', function() {
                 border: 1px solid #d1d5db !important;
                 border-radius: 9999px !important;
                 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
-                padding: 4px 14px 4px 6px !important;
-                gap: 8px !important;
+                padding: 6px 18px 6px 8px !important;
+                gap: 10px !important;
                 width: auto !important;
                 max-width: fit-content !important;
-                min-height: 30px !important;
+                min-height: 36px !important;
                 height: auto !important;
-                margin: 0 auto 16px auto !important;
+                margin: 0 auto 20px auto !important;
                 --flex-direction: row !important;
                 --flex-wrap: nowrap !important;
                 --align-items: center !important;
@@ -3392,10 +3392,10 @@ add_action( 'wp_head', function() {
             div[data-id="d155fe5"] .elementor-widget-container {
                 margin: 0 !important;
                 padding: 0 !important;
-                width: 20px !important;
-                height: 20px !important;
-                min-width: 20px !important;
-                min-height: 20px !important;
+                width: 22px !important;
+                height: 22px !important;
+                min-width: 22px !important;
+                min-height: 22px !important;
                 border-radius: 50% !important;
                 background: rgba(220, 38, 38, 0.12) !important;
                 display: inline-flex !important;
@@ -3416,8 +3416,8 @@ add_action( 'wp_head', function() {
             div[data-id="d155fe5"] [data-id="533a48d"]::after {
                 content: '' !important;
                 display: block !important;
-                width: 8px !important;
-                height: 8px !important;
+                width: 9px !important;
+                height: 9px !important;
                 border-radius: 50% !important;
                 background: #dc2626 !important;
             }
@@ -3429,7 +3429,7 @@ add_action( 'wp_head', function() {
             .e-e62c637-96a4a06,
             [data-id="e62c637"] {
                 font-family: 'Instrument Sans', sans-serif !important;
-                font-size: 13px !important;
+                font-size: 14px !important;
                 font-weight: 700 !important;
                 color: #000000 !important;
                 letter-spacing: 0.5px !important;
@@ -3448,32 +3448,52 @@ add_action( 'wp_head', function() {
             .elementor-element-b06ac09,
             div[data-id="b06ac09"] {
                 display: flex !important;
+                flex-direction: column !important;
                 justify-content: center !important;
                 align-items: center !important;
                 text-align: center !important;
                 width: 100% !important;
             }
 
-            .elementor-element.elementor-element-2c76331,
-            div[data-id="2c76331"] {
+            .elementor-element-2c76331,
+            div[data-id="2c76331"],
+            .elementor-element-b82bad4,
+            div[data-id="b82bad4"] {
+                display: flex !important;
                 flex-direction: column !important;
                 align-items: center !important;
                 text-align: center !important;
+                width: 100% !important;
             }
 
+            .elementor-element-b82bad4 h1,
+            .elementor-element-2c76331 h1,
             .elementor-element-2c76331 > h1,
             .elementor-element-2c76331 .e-heading-base,
             .elementor-element-2c76331 [data-id="983db4c"],
-            div[data-id="2c76331"] > h1 {
+            div[data-id="2c76331"] > h1,
+            div[data-id="983db4c"],
+            .e-983db4c-d987a57,
+            .e-983db4c-e1cafae {
+                font-family: 'Instrument Sans', sans-serif !important;
+                font-size: 26px !important;
+                font-weight: 700 !important;
+                line-height: 1.25 !important;
+                color: #000000 !important;
+                letter-spacing: -0.5px !important;
                 text-align: center !important;
+                margin: 0 auto 20px auto !important;
+                max-width: 100% !important;
+                width: 100% !important;
             }
 
-            .elementor-element-2c76331 .elementor-element-c8d290c,
-            .elementor-element.elementor-element-c8d290c {
-                margin-left: auto !important;
-                margin-right: auto !important;
-                align-self: center !important;
-                margin-top: 10px !important;
+            .elementor-element.elementor-element-c8d290c,
+            div[data-id="c8d290c"],
+            .elementor-element.elementor-element-c49530d,
+            div[data-id="c49530d"],
+            .elementor-element.elementor-element-b4d41ec,
+            div[data-id="b4d41ec"] {
+                display: none !important;
             }
 
             [data-id="f93180d"],
