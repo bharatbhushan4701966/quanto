@@ -166,6 +166,14 @@ function cmr_team_scroll_shortcode($atts) {
             }
         }
         @media (max-width: 768px) {
+            .cmr-team-scroll-section {
+                padding-top: 40px;
+                padding-bottom: 15px;
+            }
+            .cmr-team-view-all {
+                margin-top: 24px;
+                margin-bottom: 0;
+            }
             .cmr-team-scroll-title {
                 font-size: 32px;
                 margin-bottom: 30px;
