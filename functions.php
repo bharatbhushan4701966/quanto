@@ -1144,6 +1144,7 @@ add_action('wp_head', 'cmr_testimonials_global_mobile_css', 9999);
 function cmr_testimonials_global_mobile_css() {
     ?>
     <style id="cmr-testimonials-global-mobile-css">
+    @media (max-width: 1024px) {
         /* Team section bottom spacing adjustment for exact 50px gap */
         .elementor-element-96edc13 .cmr-team-scroll-section,
         .cmr-team-scroll-section {
@@ -1692,7 +1693,9 @@ function cmr_testimonials_global_mobile_js() {
     <script id="cmr-testimonials-global-fix">
     (function() {
         function reconfigureTestimonialSliders() {
-            // Remove hardcoded <br> tags from the testimonial section heading
+            if (window.innerWidth > 1024) return;
+
+            // Remove hardcoded <br> tags from the testimonial section heading on mobile only
             var titles = document.querySelectorAll(
                 '#cmr-testimonials-section .elementor-heading-title, ' +
                 '.elementor-element-aecd77b .elementor-heading-title, ' +
@@ -1703,8 +1706,6 @@ function cmr_testimonials_global_mobile_js() {
                     t.innerHTML = t.innerHTML.replace(/<br\s*[\/]?>/gi, ' ');
                 }
             });
-
-            if (window.innerWidth > 1024) return;
 
             // 1. Pre-patch data-settings on the wrappers so if Swiper initializes later, it reads slidesPerView: 1 and spaceBetween: 0
             var wrappers = document.querySelectorAll('.wcf__t_slider-wrapper, .aae--a-testimonial');
