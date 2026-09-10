@@ -2025,125 +2025,104 @@ function cmr_testimonials_global_mobile_css() {
             justify-content: center !important;
             cursor: pointer !important;
         }
+    }
 
-        /* Global Brands Section Spacing (Matching Image 1: compact 40px gap between logo carousel and purple banner) */
-        #cmr-global-brands-section,
-        .elementor-element-7ec6a9b,
-        .elementor-23198,
-        .elementor-element-645a65a,
-        .elementor-23198 .elementor-element-645a65a,
-        .elementor-14 .elementor-element-c9502e0 {
-            --padding-bottom: 0px !important;
-            --padding-top: 0px !important;
-            margin-top: 0 !important;
-            margin-bottom: 40px !important;
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
-        }
+    /* ==========================================================================
+       Global Brands & Logo Carousel Styles (Desktop & Responsive)
+       ========================================================================== */
+    #cmr-global-brands-section,
+    .elementor-element-7ec6a9b,
+    .elementor-23198,
+    .elementor-element-645a65a,
+    .elementor-23198 .elementor-element-645a65a,
+    .elementor-14 .elementor-element-c9502e0 {
+        --padding-bottom: 0px !important;
+        --padding-top: 0px !important;
+        margin-top: 0 !important;
+        margin-bottom: 40px !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
 
-        .elementor-23198 .elementor-element.elementor-element-2496f2f,
-        .elementor-23198 .elementor-element-2496f2f,
-        .elementor-14 .elementor-element.elementor-element-71dfb04,
-        .elementor-14 .elementor-element-71dfb04,
-        #cmr-global-brands-section .elementor-widget-text-editor {
-            margin-top: 0 !important;
-            margin-bottom: 1rem !important;
-            --margin-bottom: 1rem !important;
-            text-align: center !important;
-        }
+    /* Global Brands Section Title */
+    .elementor-23198 .elementor-element.elementor-element-2496f2f,
+    .elementor-23198 .elementor-element-2496f2f,
+    .elementor-element-2496f2f,
+    div[data-id="2496f2f"],
+    .elementor-widget-text-editor[data-id="2496f2f"],
+    .elementor-14 .elementor-element-71dfb04,
+    .elementor-14 .elementor-element.elementor-element-71dfb04,
+    .elementor-element-71dfb04,
+    div[data-id="71dfb04"],
+    #cmr-global-brands-section .elementor-widget-text-editor {
+        margin-top: 0 !important;
+        margin-bottom: 1rem !important;
+        --margin-bottom: 1rem !important;
+        text-align: center !important;
+    }
 
+    .elementor-23198 .elementor-element.elementor-element-2496f2f,
+    .elementor-23198 .elementor-element-2496f2f,
+    .elementor-element-2496f2f,
+    div[data-id="2496f2f"],
+    .elementor-widget-text-editor[data-id="2496f2f"],
+    .elementor-23198 .elementor-element-2496f2f p,
+    .elementor-element-2496f2f p,
+    div[data-id="2496f2f"] p,
+    .elementor-widget-text-editor[data-id="2496f2f"] p,
+    .elementor-14 .elementor-element-71dfb04,
+    .elementor-14 .elementor-element-71dfb04 p,
+    .elementor-element-71dfb04,
+    .elementor-element-71dfb04 p,
+    div[data-id="71dfb04"],
+    div[data-id="71dfb04"] p,
+    #cmr-global-brands-section .elementor-widget-text-editor,
+    #cmr-global-brands-section p {
+        text-align: center !important;
+        font-family: "Instrument Sans", sans-serif !important;
+        font-size: 20px !important;
+        font-weight: 500 !important;
+        line-height: 28px !important;
+        letter-spacing: 0.4px !important;
+        color: #0F0F0F !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    @media (max-width: 768px) {
         .elementor-23198 .elementor-element-2496f2f,
-        .elementor-23198 .elementor-element-2496f2f,
-        .elementor-23198 .elementor-element-2496f2f p,
+        .elementor-element-2496f2f,
+        div[data-id="2496f2f"],
+        .elementor-element-2496f2f p,
+        div[data-id="2496f2f"] p,
         .elementor-14 .elementor-element-71dfb04,
-        .elementor-14 .elementor-element-71dfb04,
+        .elementor-element-71dfb04,
+        div[data-id="71dfb04"],
         .elementor-14 .elementor-element-71dfb04 p,
+        .elementor-element-71dfb04 p,
+        div[data-id="71dfb04"] p,
         #cmr-global-brands-section .elementor-widget-text-editor,
         #cmr-global-brands-section p {
-            text-align: center !important;
-            font-family: "Instrument Sans", sans-serif !important;
-            font-size: 20px !important;
-            font-weight: 500 !important;
-            line-height: 28px !important;
-            letter-spacing: 0.4px !important;
-            color: #0F0F0F !important;
-            margin-left: auto !important;
-            margin-right: auto !important;
+            font-size: 16px !important;
+            line-height: 24px !important;
         }
+    }
 
-        @media (max-width: 768px) {
-            .elementor-23198 .elementor-element-2496f2f,
-            .elementor-23198 .elementor-element-2496f2f,
-            .elementor-23198 .elementor-element-2496f2f p,
-            .elementor-14 .elementor-element-71dfb04,
-            .elementor-14 .elementor-element-71dfb04,
-            .elementor-14 .elementor-element-71dfb04 p,
-            #cmr-global-brands-section .elementor-widget-text-editor,
-            #cmr-global-brands-section p {
-                font-size: 16px !important;
-                line-height: 24px !important;
-            }
-        }
+    /* Compact Logo Carousel slide height and prominent desktop logo sizing */
+    .quanto-logo-slide,
+    .elementor-23198 .elementor-element-0e0abf8 .quanto-logo-slide,
+    .elementor-widget-quanto_logo_carousel .quanto-logo-slide {
+        height: 120px !important;
+        min-height: 120px !important;
+        padding: 12px 25px !important;
+    }
 
-        /* Compact Logo Carousel slide height and prominent desktop logo sizing */
-        .quanto-logo-slide,
-        .elementor-23198 .elementor-element-0e0abf8 .quanto-logo-slide,
-        .elementor-widget-quanto_logo_carousel .quanto-logo-slide {
-            height: 120px !important;
-            min-height: 120px !important;
-            padding: 12px 25px !important;
-        }
-
-        .quanto-logo-slide img {
-            max-height: 72px !important;
-            max-width: 88% !important;
-            width: auto !important;
-            height: auto !important;
-            object-fit: contain !important;
-        }
-
-        @media (max-width: 768px) {
-            .quanto-logo-slide,
-            .elementor-23198 .elementor-element-0e0abf8 .quanto-logo-slide,
-            .elementor-widget-quanto_logo_carousel .quanto-logo-slide {
-                height: 105px !important;
-                min-height: 105px !important;
-                padding: 8px 15px !important;
-            }
-
-            .quanto-logo-slide img {
-                max-height: 65px !important;
-                max-width: 88% !important;
-                width: auto !important;
-                height: auto !important;
-                object-fit: contain !important;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .quanto-logo-slide,
-            .elementor-23198 .elementor-element-0e0abf8 .quanto-logo-slide,
-            .elementor-widget-quanto_logo_carousel .quanto-logo-slide {
-                height: 100px !important;
-                min-height: 100px !important;
-                padding: 6px 12px !important;
-            }
-
-            .quanto-logo-slide img {
-                max-height: 60px !important;
-                max-width: 88% !important;
-            }
-        }
-
-        /* Purple CTA Banner (Footer Card) - eliminate excessive top margin */
-        #cmr-footer-card-section,
-        .elementor-23165,
-        .elementor-23165 .elementor-element-66f0cc3,
-        .elementor-14 .elementor-element-c95991a,
-        .elementor-14 .elementor-element-88332ab {
-            margin-top: 0 !important;
-            padding-top: 0 !important;
-        }
+    .quanto-logo-slide img {
+        max-height: 72px !important;
+        max-width: 88% !important;
+        width: auto !important;
+        height: auto !important;
+        object-fit: contain !important;
     }
 
     @media (max-width: 768px) {
@@ -2161,16 +2140,43 @@ function cmr_testimonials_global_mobile_css() {
         .quanto-logo-slide,
         .elementor-23198 .elementor-element-0e0abf8 .quanto-logo-slide,
         .elementor-widget-quanto_logo_carousel .quanto-logo-slide {
-            height: 95px !important;
-            min-height: 95px !important;
-            padding: 12px 16px !important;
+            height: 105px !important;
+            min-height: 105px !important;
+            padding: 8px 15px !important;
         }
 
         .quanto-logo-slide img {
-            max-height: 44px !important;
-            max-width: 80% !important;
+            max-height: 65px !important;
+            max-width: 88% !important;
+            width: auto !important;
+            height: auto !important;
             object-fit: contain !important;
         }
+    }
+
+    @media (max-width: 480px) {
+        .quanto-logo-slide,
+        .elementor-23198 .elementor-element-0e0abf8 .quanto-logo-slide,
+        .elementor-widget-quanto_logo_carousel .quanto-logo-slide {
+            height: 100px !important;
+            min-height: 100px !important;
+            padding: 6px 12px !important;
+        }
+
+        .quanto-logo-slide img {
+            max-height: 60px !important;
+            max-width: 88% !important;
+        }
+    }
+
+    /* Purple CTA Banner (Footer Card) - eliminate excessive top margin */
+    #cmr-footer-card-section,
+    .elementor-23165,
+    .elementor-23165 .elementor-element-66f0cc3,
+    .elementor-14 .elementor-element-c95991a,
+    .elementor-14 .elementor-element-88332ab {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
     }
     </style>
     <?php
