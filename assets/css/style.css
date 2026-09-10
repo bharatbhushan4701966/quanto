@@ -2216,7 +2216,20 @@ a.quanto-default-btn.sm-size {
   }
 }
 
-.aae--a-testimonial .author .image { flex-shrink: 0; width: 65px; height: 65px; overflow: hidden; border-radius: 50%; margin-right: 15px; } .aae--a-testimonial .author .image img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.aae--a-testimonial .author .image {
+    flex-shrink: 0;
+    width: 65px;
+    height: 65px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+.aae--a-testimonial .author .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
 
 /* Remove underline from WooCommerce sale price */
 .price ins,
@@ -9486,9 +9499,6 @@ h1.custom-product-title {
     position: relative;
     z-index: 2;
 }
-. a a e - - a - t e s t i m o n i a l   . a u t h o r   . i m a g e   {   f l e x - s h r i n k :   0 ;   w i d t h :   6 5 p x ;   h e i g h t :   6 5 p x ;   o v e r f l o w :   h i d d e n ;   b o r d e r - r a d i u s :   5 0 % ;   m a r g i n - r i g h t :   1 5 p x ;   }   . a a e - - a - t e s t i m o n i a l   . a u t h o r   . i m a g e   i m g   {   w i d t h :   1 0 0 % ;   h e i g h t :   1 0 0 % ;   o b j e c t - f i t :   c o v e r ;   o b j e c t - p o s i t i o n :   c e n t e r ;   } 
- 
- 
 /*================================================
 Single Product - Custom Sections (Related, Rating)
 =================================================*/
@@ -9666,7 +9676,6 @@ Single Product - Custom Sections (Related, Rating)
     margin-right: -50vw;
     background: #fff; /* Ensure it has a background if needed */
 }
-/ *   R e v i e w   M o d a l   S t y l e s   * / 
 
 
 /* Review Modal Styles */
