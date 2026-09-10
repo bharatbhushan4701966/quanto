@@ -17,17 +17,31 @@ function cmr_foundation_scroll_shortcode($atts) {
             background: #ffffff;
             color: #1a1a2e;
             overflow: visible;
+            margin-top: 0;
+            margin-bottom: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        [data-id="8c80839"],
+        [data-id="8c80839"] > .e-con-inner,
+        [data-id="8c80839"] .elementor-widget-container {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
         }
 
         .cmr-foundation-panel {
             width: 100%;
-            height: calc(100vh - 80px);
+            height: 60vh;
+            min-height: 480px;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 2;
             padding-top: 0;
-            padding-bottom: 20px;
+            padding-bottom: 0;
         }
 
         .cmr-foundation-inner {
@@ -45,7 +59,7 @@ function cmr_foundation_scroll_shortcode($atts) {
             line-height: 1.2;
             letter-spacing: -1px;
             max-width: 600px;
-            margin-bottom: 60px;
+            margin-bottom: 35px;
             font-family: 'Instrument Sans', sans-serif;
             color: #111;
         }
@@ -199,7 +213,7 @@ function cmr_foundation_scroll_shortcode($atts) {
                     if (totalBlocks <= 1) return;
                     
                     // Set scroll duration (amount of pinning)
-                    const scrollDuration = totalBlocks * window.innerHeight * 0.8;
+                    const scrollDuration = totalBlocks * window.innerHeight * 0.5;
                     
                     ScrollTrigger.create({
                         trigger: wrap,
