@@ -2295,7 +2295,12 @@ function cmr_testimonials_global_mobile_css() {
         .elementor-14 .elementor-element-adc3adf,
         .elementor-element.elementor-element-adc3adf,
         .elementor-element-adc3adf,
-        div[data-id="adc3adf"] {
+        div[data-id="adc3adf"],
+        .elementor-14 .elementor-element.elementor-element-e7ead58,
+        .elementor-14 .elementor-element-e7ead58,
+        .elementor-element.elementor-element-e7ead58,
+        .elementor-element-e7ead58,
+        div[data-id="e7ead58"] {
             --margin-top: 45px !important;
             margin-top: 45px !important;
         }
