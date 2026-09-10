@@ -2058,7 +2058,7 @@ function cmr_testimonials_global_mobile_css() {
         margin-top: 0 !important;
         margin-bottom: 1rem !important;
         --margin-bottom: 1rem !important;
-        text-align: center !important;
+        text-align: left !important;
     }
 
     .elementor-23198 .elementor-element.elementor-element-2496f2f,
@@ -2078,14 +2078,14 @@ function cmr_testimonials_global_mobile_css() {
     div[data-id="71dfb04"] p,
     #cmr-global-brands-section .elementor-widget-text-editor,
     #cmr-global-brands-section p {
-        text-align: center !important;
+        text-align: left !important;
         font-family: "Instrument Sans", sans-serif !important;
         font-size: 20px !important;
         font-weight: 500 !important;
         line-height: 28px !important;
         letter-spacing: 0.4px !important;
         color: #0F0F0F !important;
-        margin-left: auto !important;
+        margin-left: 0 !important;
         margin-right: auto !important;
     }
 
@@ -2105,6 +2105,8 @@ function cmr_testimonials_global_mobile_css() {
         #cmr-global-brands-section p {
             font-size: 16px !important;
             line-height: 24px !important;
+            text-align: left !important;
+            margin-left: 0 !important;
         }
     }
 
