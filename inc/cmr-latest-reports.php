@@ -354,7 +354,12 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
                 <div class="cmr-filter-bar">
                     <div class="cmr-filter-pills">
                         <button class="cmr-filter-pill active" data-cat="">All</button>
-                        <?php foreach ( $categories as $category ) : ?>
+                        <?php foreach ( $categories as $category ) : 
+                            $slug_check = strtolower( $category->slug );
+                            if ( in_array( $slug_check, array( 'digital', 'uncategorized', 'uncategorised' ) ) ) {
+                                continue;
+                            }
+                        ?>
                             <button class="cmr-filter-pill" data-cat="<?php echo esc_attr( $category->slug ); ?>"><?php echo esc_html( $category->name ); ?></button>
                         <?php endforeach; ?>
                     </div>
