@@ -1219,10 +1219,11 @@ function cmr_testimonials_global_mobile_css() {
         .elementor-element-a6ac41e,
         .elementor-element-82ef444 {
             --padding-top: 0px !important;
+            --padding-bottom: 0px !important;
             width: 100% !important;
             max-width: 1280px !important;
             margin: 0 auto 50px auto !important;
-            padding: 20px 24px !important;
+            padding: 20px 24px 0px !important;
             box-sizing: border-box !important;
             background-color: #FFFFFF !important;
         }
