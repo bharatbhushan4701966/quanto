@@ -693,11 +693,11 @@ function cmr_migrate_press_releases_callback() {
     ), 200);
 }
 
-// Global Custom CSS for Menus (Main Header Only)
+// Global Custom CSS for Menus (Main Header: Normal vs Sticky)
 add_action('wp_head', function() {
     ?>
     <style>
-        /* Make top-level menu items light gray (#d1d1d1) on hover ONLY for main header */
+        /* 1. Normal Header (Blue/Transparent): light white (#d1d1d1) on hover */
         .main-header-wrapper .elementor-nav-menu--main .elementor-item:hover,
         .main-header-wrapper .elementor-nav-menu--main .elementor-item.elementor-item-active,
         .main-header-wrapper .elementor-nav-menu--main .elementor-item:focus,
@@ -705,11 +705,7 @@ add_action('wp_head', function() {
         #quanto-header-desktop .elementor-nav-menu--main .elementor-item:hover,
         #quanto-header-desktop .elementor-nav-menu--main .elementor-item.elementor-item-active,
         #quanto-header-desktop .elementor-nav-menu--main .elementor-item:focus,
-        #quanto-header-desktop .menu-item > a:hover {
-            color: #d1d1d1 !important;
-        }
-
-        /* Keep text light gray (#d1d1d1) when user is hovering inside mega menu card on main header */
+        #quanto-header-desktop .menu-item > a:hover,
         .main-header-wrapper .cmr-has-mega-menu:hover > a,
         .main-header-wrapper .cmr-has-mega-menu-do:hover > a,
         .main-header-wrapper .cmr-has-mega-menu-serve:hover > a,
@@ -722,6 +718,44 @@ add_action('wp_head', function() {
         #quanto-header-desktop .cmr-has-mega-menu-think:hover > a,
         #quanto-header-desktop .cmr-has-mega-menu-newsroom:hover > a,
         #quanto-header-desktop .cmr-has-mega-menu-connect:hover > a {
+            color: #d1d1d1 !important;
+        }
+
+        /* 2. Sticky Header (.mas-sticky-header - White background): purple (#6241ca) on hover */
+        .mas-sticky-header .elementor-nav-menu--main .elementor-item:hover,
+        .mas-sticky-header .elementor-nav-menu--main .elementor-item.elementor-item-active,
+        .mas-sticky-header .elementor-nav-menu--main .elementor-item:focus,
+        .mas-sticky-header .menu-item > a:hover,
+        .mas-sticky-header.main-header-wrapper .elementor-nav-menu--main .elementor-item:hover,
+        .mas-sticky-header.main-header-wrapper .elementor-nav-menu--main .elementor-item.elementor-item-active,
+        .mas-sticky-header.main-header-wrapper .elementor-nav-menu--main .elementor-item:focus,
+        .mas-sticky-header.main-header-wrapper .menu-item > a:hover,
+        .main-header-wrapper .mas-sticky-header .elementor-nav-menu--main .elementor-item:hover,
+        .main-header-wrapper .mas-sticky-header .elementor-nav-menu--main .elementor-item.elementor-item-active,
+        .main-header-wrapper .mas-sticky-header .elementor-nav-menu--main .elementor-item:focus,
+        .main-header-wrapper .mas-sticky-header .menu-item > a:hover,
+        #quanto-header-desktop .mas-sticky-header .elementor-nav-menu--main .elementor-item:hover,
+        #quanto-header-desktop .mas-sticky-header .elementor-nav-menu--main .elementor-item.elementor-item-active,
+        #quanto-header-desktop .mas-sticky-header .elementor-nav-menu--main .elementor-item:focus,
+        #quanto-header-desktop .mas-sticky-header .menu-item > a:hover,
+        .mas-sticky-header .cmr-has-mega-menu:hover > a,
+        .mas-sticky-header .cmr-has-mega-menu-do:hover > a,
+        .mas-sticky-header .cmr-has-mega-menu-serve:hover > a,
+        .mas-sticky-header .cmr-has-mega-menu-think:hover > a,
+        .mas-sticky-header .cmr-has-mega-menu-newsroom:hover > a,
+        .mas-sticky-header .cmr-has-mega-menu-connect:hover > a,
+        .main-header-wrapper .mas-sticky-header .cmr-has-mega-menu:hover > a,
+        .main-header-wrapper .mas-sticky-header .cmr-has-mega-menu-do:hover > a,
+        .main-header-wrapper .mas-sticky-header .cmr-has-mega-menu-serve:hover > a,
+        .main-header-wrapper .mas-sticky-header .cmr-has-mega-menu-think:hover > a,
+        .main-header-wrapper .mas-sticky-header .cmr-has-mega-menu-newsroom:hover > a,
+        .main-header-wrapper .mas-sticky-header .cmr-has-mega-menu-connect:hover > a,
+        #quanto-header-desktop .mas-sticky-header .cmr-has-mega-menu:hover > a,
+        #quanto-header-desktop .mas-sticky-header .cmr-has-mega-menu-do:hover > a,
+        #quanto-header-desktop .mas-sticky-header .cmr-has-mega-menu-serve:hover > a,
+        #quanto-header-desktop .mas-sticky-header .cmr-has-mega-menu-think:hover > a,
+        #quanto-header-desktop .mas-sticky-header .cmr-has-mega-menu-newsroom:hover > a,
+        #quanto-header-desktop .mas-sticky-header .cmr-has-mega-menu-connect:hover > a {
             color: #6241ca !important;
         }
     </style>
