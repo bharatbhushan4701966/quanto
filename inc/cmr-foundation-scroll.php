@@ -36,11 +36,11 @@ function cmr_foundation_scroll_shortcode($atts) {
             margin-bottom: 0 !important;
         }
 
-        /* Connect next section (Meet the people / Team: 0888bae) with tight, clean spacing */
+        /* Connect next section (Meet the people / Team: 0888bae) with clean, equal spacing */
         [data-id="0888bae"],
         [data-id="0888bae"] > .e-con-inner {
             margin-top: 0 !important;
-            padding-top: 30px !important;
+            padding-top: 0 !important;
         }
 
         .cmr-foundation-panel {
@@ -51,8 +51,8 @@ function cmr_foundation_scroll_shortcode($atts) {
             align-items: flex-start;
             justify-content: center;
             z-index: 2;
-            padding-top: 30px !important;
-            padding-bottom: 25px !important;
+            padding-top: 80px !important;
+            padding-bottom: 20px !important;
         }
 
         .cmr-foundation-inner {

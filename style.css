@@ -5284,13 +5284,13 @@ ul.wp-block-list ol li {
 .cmr-foundation-panel {
     height: auto !important;
     min-height: auto !important;
-    padding-top: 25px !important;
+    padding-top: 80px !important;
     padding-bottom: 20px !important;
 }
 
-/* Connect next section (Meet the people behind our success: 0888bae) seamlessly */
+/* Connect next section (Meet the people behind our success: 0888bae) seamlessly with equal spacing */
 [data-id="0888bae"],
 [data-id="0888bae"] > .e-con-inner {
     margin-top: 0 !important;
-    padding-top: 25px !important;
+    padding-top: 0 !important;
 }
