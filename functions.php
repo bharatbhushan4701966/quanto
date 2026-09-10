@@ -722,7 +722,7 @@ add_action('wp_head', function() {
         #quanto-header-desktop .cmr-has-mega-menu-think:hover > a,
         #quanto-header-desktop .cmr-has-mega-menu-newsroom:hover > a,
         #quanto-header-desktop .cmr-has-mega-menu-connect:hover > a {
-            color: #d1d1d1 !important;
+            color: #6241ca !important;
         }
     </style>
     <?php
