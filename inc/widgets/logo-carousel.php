@@ -193,12 +193,23 @@ class Quanto_Logo_Carousel_Widget extends \Elementor\Widget_Base {
 
             @media (max-width: 768px) {
                 .quanto-logo-slide {
-                    height: 90px;
-                    padding: 10px 15px;
+                    height: 105px;
+                    padding: 8px 15px;
                 }
                 .quanto-logo-slide img {
-                    max-height: 48px;
-                    max-width: 85%;
+                    max-height: 65px;
+                    max-width: 88%;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .quanto-logo-slide {
+                    height: 100px;
+                    padding: 6px 12px;
+                }
+                .quanto-logo-slide img {
+                    max-height: 60px;
+                    max-width: 88%;
                 }
             }
 
