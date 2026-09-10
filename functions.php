@@ -706,7 +706,7 @@ add_action('wp_head', function() {
         #quanto-header-desktop .elementor-nav-menu--main .elementor-item.elementor-item-active,
         #quanto-header-desktop .elementor-nav-menu--main .elementor-item:focus,
         #quanto-header-desktop .menu-item > a:hover {
-            color: #6241ca !important;
+            color: #d1d1d1 !important;
         }
 
         /* Keep text light gray (#d1d1d1) when user is hovering inside mega menu card on main header */
