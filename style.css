@@ -4834,19 +4834,36 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
         margin: 0 auto !important;
     }
 
-    /* Compact Logo Carousel slide height matching Image 1 */
+    /* Compact Logo Carousel slide height and prominent desktop logo sizing */
     .quanto-logo-slide,
     .elementor-23198 .elementor-element-0e0abf8 .quanto-logo-slide,
     .elementor-widget-quanto_logo_carousel .quanto-logo-slide {
-        height: 110px !important;
-        min-height: 110px !important;
-        padding: 15px 20px !important;
+        height: 120px !important;
+        min-height: 120px !important;
+        padding: 12px 25px !important;
     }
 
     .quanto-logo-slide img {
-        max-height: 52px !important;
-        max-width: 85% !important;
+        max-height: 72px !important;
+        max-width: 88% !important;
+        width: auto !important;
+        height: auto !important;
         object-fit: contain !important;
+    }
+
+    @media (max-width: 768px) {
+        .quanto-logo-slide,
+        .elementor-23198 .elementor-element-0e0abf8 .quanto-logo-slide,
+        .elementor-widget-quanto_logo_carousel .quanto-logo-slide {
+            height: 90px !important;
+            min-height: 90px !important;
+            padding: 10px 15px !important;
+        }
+
+        .quanto-logo-slide img {
+            max-height: 48px !important;
+            max-width: 85% !important;
+        }
     }
 
     /* Purple CTA Banner (Footer Card) - eliminate excessive top margin */
