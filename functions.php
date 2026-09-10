@@ -3407,6 +3407,23 @@ add_action( 'wp_head', function() {
             font-weight: 600 !important;
         }
 
+        /* 403530a text widget styling - clear Times New Roman / Word styles */
+        [data-id="403530a"],
+        [data-id="403530a"] *,
+        .elementor-element-403530a,
+        .elementor-element-403530a *,
+        .MsoNormal,
+        .MsoNormal * {
+            font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+            line-height: 1.6 !important;
+        }
+
+        [data-id="403530a"] p,
+        .elementor-element-403530a p {
+            margin-top: 0 !important;
+            margin-bottom: 20px !important;
+        }
+
         /* 1e0db62 overview gap */
         [data-id="1e0db62"],
         .elementor-element-1e0db62 {
@@ -3990,6 +4007,18 @@ add_action( 'wp_footer', function() {
                 parent.removeChild(tag);
             });
         }
+
+        // Clean MS Word / Times New Roman inline styles from 403530a
+        var msoElements = document.querySelectorAll('[data-id="403530a"], .elementor-element-403530a, .MsoNormal, [style*="Times New Roman"]');
+        msoElements.forEach(function(item) {
+            item.removeAttribute('style');
+            item.classList.remove('MsoNormal');
+            var styledNodes = item.querySelectorAll('*[style]');
+            styledNodes.forEach(function(node) {
+                node.removeAttribute('style');
+                node.classList.remove('MsoNormal');
+            });
+        });
 
         // Fix any invalid team links if present
         var badLinks = document.querySelectorAll('a[href*="http://teams/"]');
