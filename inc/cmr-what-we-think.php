@@ -22,6 +22,23 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             'research-reports'  => 'Research Reports'
         );
 
+        $used_post_ids = array();
+
+        $default_fallback_cards = array(
+            'market-updates' => array(
+                array( 'title' => 'What the UAE Is Doing With Agentic AI — And What India Can Learn?', 'link' => '#', 'image' => 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80', 'cat' => 'Market Updates' ),
+                array( 'title' => 'The Philippines: Charting a Course as Southeast Asia\'s Digital Economy Leader', 'link' => '#', 'image' => 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&q=80', 'cat' => 'Market Updates' ),
+            ),
+            'industry-insights' => array(
+                array( 'title' => 'How AI Is Reshaping Supply Chain Management Across Asia-Pacific', 'link' => '#', 'image' => 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80', 'cat' => 'Industry Insights' ),
+                array( 'title' => 'Digital Transformation in Healthcare: Lessons from Leading Markets', 'link' => '#', 'image' => 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80', 'cat' => 'Industry Insights' ),
+            ),
+            'research-reports' => array(
+                array( 'title' => 'Global Cloud Infrastructure Spending Report Q1 2026', 'link' => '#', 'image' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80', 'cat' => 'Research Reports' ),
+                array( 'title' => 'The Future of Work: Hybrid Models and Their Impact on Productivity', 'link' => '#', 'image' => 'https://images.unsplash.com/photo-1497215842964-222b430dc094?w=600&q=80', 'cat' => 'Research Reports' ),
+            ),
+        );
+
         foreach ( $categories_to_fetch as $slug => $label ) {
             $posts = array();
 
@@ -33,82 +50,203 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
                     'post_status'    => 'publish',
                     'orderby'        => 'date',
                     'order'          => 'DESC',
+                    'post__not_in'   => $used_post_ids,
                     'meta_query'     => array(
                         array( 'key' => '_thumbnail_id', 'compare' => 'EXISTS' )
                     )
                 );
                 $posts = get_posts( $product_args );
             } else {
-                // First try to find in post categories
+                // Determine matching category terms
+                $category_slugs = array( $slug );
+                if ( $slug === 'industry-insights' ) {
+                    $category_slugs = array( 'industry-insights', 'industry-insight', 'insights', 'industry', 'viewpoints', 'viewpoint', 'industry-connect' );
+                } elseif ( $slug === 'market-updates' ) {
+                    $category_slugs = array( 'market-updates', 'market-update' );
+                }
+
+                // 1. Try querying standard posts matching categories
                 $query_args = array(
                     'post_type'      => 'post',
                     'posts_per_page' => 2,
                     'post_status'    => 'publish',
                     'orderby'        => 'date',
                     'order'          => 'DESC',
-                    'category_name'  => $slug,
+                    'post__not_in'   => $used_post_ids,
+                    'tax_query'      => array(
+                        array(
+                            'taxonomy' => 'category',
+                            'field'    => 'slug',
+                            'terms'    => $category_slugs,
+                        ),
+                    ),
                     'meta_query'     => array(
                         array( 'key' => '_thumbnail_id', 'compare' => 'EXISTS' )
                     )
                 );
                 $posts = get_posts( $query_args );
 
-                // If we don't have 2 posts, try cmr_news_category
-                if ( count($posts) < 2 ) {
-                    $news_args = array(
-                        'post_type'      => 'cmr_news',
-                        'posts_per_page' => 2 - count($posts),
+                // Fallback to category_name if tax_query returned nothing
+                if ( empty( $posts ) ) {
+                    $cat_name_args = array(
+                        'post_type'      => 'post',
+                        'posts_per_page' => 2,
                         'post_status'    => 'publish',
                         'orderby'        => 'date',
                         'order'          => 'DESC',
+                        'post__not_in'   => $used_post_ids,
+                        'category_name'  => implode( ',', $category_slugs ),
+                        'meta_query'     => array(
+                            array( 'key' => '_thumbnail_id', 'compare' => 'EXISTS' )
+                        )
+                    );
+                    $posts = get_posts( $cat_name_args );
+                }
+
+                // 2. If we don't have 2 posts, check cmr_news
+                if ( count( $posts ) < 2 ) {
+                    $exclude_ids = array_unique( array_merge( $used_post_ids, wp_list_pluck( $posts, 'ID' ) ) );
+                    $news_args = array(
+                        'post_type'      => 'cmr_news',
+                        'posts_per_page' => 2 - count( $posts ),
+                        'post_status'    => 'publish',
+                        'orderby'        => 'date',
+                        'order'          => 'DESC',
+                        'post__not_in'   => $exclude_ids,
                         'tax_query'      => array(
+                            'relation' => 'OR',
                             array(
                                 'taxonomy' => 'cmr_news_category',
                                 'field'    => 'slug',
-                                'terms'    => $slug
-                            )
+                                'terms'    => $category_slugs,
+                            ),
+                            array(
+                                'taxonomy' => 'category',
+                                'field'    => 'slug',
+                                'terms'    => $category_slugs,
+                            ),
                         ),
                         'meta_query'     => array(
                             array( 'key' => '_thumbnail_id', 'compare' => 'EXISTS' )
                         )
                     );
                     $news_posts = get_posts( $news_args );
-                    $posts = array_merge( $posts, $news_posts );
+                    if ( ! empty( $news_posts ) ) {
+                        $posts = array_merge( $posts, $news_posts );
+                    }
                 }
             }
 
-            // Fallback: If still not enough, just grab any latest posts not in the slide
-            if ( count($posts) < 2 ) {
+            // Deduplicate collected posts by ID and Title
+            $deduped_posts = array();
+            $seen_ids = array();
+            $seen_titles = array();
+            foreach ( $posts as $p ) {
+                if ( ! is_object( $p ) || empty( $p->ID ) ) {
+                    continue;
+                }
+                $t = trim( get_the_title( $p ) );
+                if ( in_array( $p->ID, $seen_ids ) || ( ! empty( $t ) && in_array( $t, $seen_titles ) ) ) {
+                    continue;
+                }
+                $seen_ids[] = $p->ID;
+                if ( ! empty( $t ) ) {
+                    $seen_titles[] = $t;
+                }
+                $deduped_posts[] = $p;
+            }
+            $posts = $deduped_posts;
+
+            // 3. Fallback: If still not enough, grab any latest posts not yet used or seen
+            if ( count( $posts ) < 2 ) {
+                $exclude_ids = array_unique( array_merge( $used_post_ids, $seen_ids ) );
                 $fallback_args = array(
-                    'post_type'      => array('post', 'cmr_news'),
-                    'posts_per_page' => 2 - count($posts),
+                    'post_type'      => array( 'post', 'cmr_news' ),
+                    'posts_per_page' => 2 - count( $posts ),
                     'post_status'    => 'publish',
                     'orderby'        => 'date',
                     'order'          => 'DESC',
+                    'post__not_in'   => $exclude_ids,
                     'meta_query'     => array(
                         array( 'key' => '_thumbnail_id', 'compare' => 'EXISTS' )
                     )
                 );
                 $fallback_posts = get_posts( $fallback_args );
-                $posts = array_merge( $posts, $fallback_posts );
+
+                // If still not enough, try without the thumbnail requirement
+                if ( ( count( $posts ) + count( $fallback_posts ) ) < 2 ) {
+                    $exclude_ids_2 = array_unique( array_merge( $exclude_ids, wp_list_pluck( $fallback_posts, 'ID' ) ) );
+                    $fallback_args2 = array(
+                        'post_type'      => array( 'post', 'cmr_news' ),
+                        'posts_per_page' => 2 - count( $posts ) - count( $fallback_posts ),
+                        'post_status'    => 'publish',
+                        'orderby'        => 'date',
+                        'order'          => 'DESC',
+                        'post__not_in'   => $exclude_ids_2,
+                    );
+                    $fallback_posts2 = get_posts( $fallback_args2 );
+                    $fallback_posts = array_merge( $fallback_posts, $fallback_posts2 );
+                }
+
+                foreach ( $fallback_posts as $fp ) {
+                    if ( ! is_object( $fp ) || empty( $fp->ID ) ) {
+                        continue;
+                    }
+                    $t = trim( get_the_title( $fp ) );
+                    if ( in_array( $fp->ID, $seen_ids ) || ( ! empty( $t ) && in_array( $t, $seen_titles ) ) ) {
+                        continue;
+                    }
+                    $seen_ids[] = $fp->ID;
+                    if ( ! empty( $t ) ) {
+                        $seen_titles[] = $t;
+                    }
+                    $posts[] = $fp;
+                    if ( count( $posts ) >= 2 ) {
+                        break;
+                    }
+                }
             }
 
+            // Build slide cards from posts
             $slide_data = array();
             foreach ( $posts as $post_obj ) {
-                $post_title = get_the_title($post_obj);
-                $post_link = get_permalink($post_obj->ID);
+                $post_title = get_the_title( $post_obj );
+                $post_link  = get_permalink( $post_obj->ID );
                 $thumbnail_url = get_the_post_thumbnail_url( $post_obj->ID, 'large' );
                 if ( ! $thumbnail_url ) {
                     $thumbnail_url = 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80';
                 }
-                
+
                 $slide_data[] = array(
                     'title' => $post_title,
                     'link'  => $post_link,
                     'image' => $thumbnail_url,
-                    'cat'   => $label, // Always use the requested category label
+                    'cat'   => $label,
                 );
+
+                // Add to used_post_ids so subsequent tabs don't repeat the same posts either
+                $used_post_ids[] = $post_obj->ID;
             }
+
+            // If still under 2 items, top up with default fallback cards so cards are NEVER identical
+            if ( count( $slide_data ) < 2 && isset( $default_fallback_cards[ $slug ] ) ) {
+                foreach ( $default_fallback_cards[ $slug ] as $def_card ) {
+                    $is_duplicate = false;
+                    foreach ( $slide_data as $sd ) {
+                        if ( trim( $sd['title'] ) === trim( $def_card['title'] ) ) {
+                            $is_duplicate = true;
+                            break;
+                        }
+                    }
+                    if ( ! $is_duplicate ) {
+                        $slide_data[] = $def_card;
+                    }
+                    if ( count( $slide_data ) >= 2 ) {
+                        break;
+                    }
+                }
+            }
+
             $slides[] = $slide_data;
         }
         
