@@ -114,8 +114,8 @@ function cmr_foundation_scroll_shortcode($atts) {
             left: 0;
             width: 100%;
             opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 1.5s ease, transform 1.5s ease;
+            transform: translateY(30px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
             pointer-events: none;
             padding-left: 100px;
         }
@@ -224,15 +224,15 @@ function cmr_foundation_scroll_shortcode($atts) {
                     
                     if (totalBlocks <= 1) return;
                     
-                    // Set scroll duration (amount of pinning) - compact distance to prevent large whitespace
-                    const scrollDuration = totalBlocks * 160;
+                    // Set scroll duration (amount of pinning) - relaxed so user can comfortably read each slide
+                    const scrollDuration = totalBlocks * 350;
                     
                     ScrollTrigger.create({
                         trigger: wrap,
                         start: "top top+=80", // Account for sticky headers if any
                         end: "+=" + scrollDuration,
                         pin: panel,
-                        scrub: true,
+                        scrub: 0.5, // Smooth easing for pleasant scrolling
                         onUpdate: self => {
                             // Calculate current active slide index based on progress
                             let rawIndex = self.progress * totalBlocks;
