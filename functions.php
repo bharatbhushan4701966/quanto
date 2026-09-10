@@ -3207,7 +3207,7 @@ add_action( 'wp_head', function() {
             margin: 0 !important;
             font-family: 'Instrument Sans', sans-serif !important;
             font-size: 42px !important;
-            font-weight: 700 !important;
+            font-weight: 600 !important;
             line-height: 1.22 !important;
             color: #000000 !important;
             letter-spacing: -0.5px !important;
