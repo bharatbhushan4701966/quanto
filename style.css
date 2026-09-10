@@ -5262,7 +5262,35 @@ ul.wp-block-list ol li {
     margin-bottom: 8px !important;
 }
 
+/* Foundation Scroll Section Spacing Fix */
+[data-id="0e46dc4"],
+[data-id="0e46dc4"] > .e-con-inner,
+[data-id="0e46dc4"] .elementor-widget-container,
+[data-id="8c80839"],
+[data-id="8c80839"] > .e-con-inner,
+[data-id="8c80839"] .elementor-widget-container {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
 
+.cmr-foundation-wrap {
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
 
+.cmr-foundation-panel {
+    height: auto !important;
+    min-height: auto !important;
+    padding-top: 25px !important;
+    padding-bottom: 20px !important;
+}
 
-
+/* Connect next section (Meet the people behind our success: 0888bae) seamlessly */
+[data-id="0888bae"],
+[data-id="0888bae"] > .e-con-inner {
+    margin-top: 0 !important;
+    padding-top: 25px !important;
+}

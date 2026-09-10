@@ -17,12 +17,16 @@ function cmr_foundation_scroll_shortcode($atts) {
             background: #ffffff;
             color: #1a1a2e;
             overflow: visible;
-            margin-top: 0;
-            margin-bottom: 0;
-            padding-top: 0;
-            padding-bottom: 0;
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
         }
 
+        /* Reset parent Elementor container and shortcode widget padding */
+        [data-id="0e46dc4"],
+        [data-id="0e46dc4"] > .e-con-inner,
+        [data-id="0e46dc4"] .elementor-widget-container,
         [data-id="8c80839"],
         [data-id="8c80839"] > .e-con-inner,
         [data-id="8c80839"] .elementor-widget-container {
@@ -32,16 +36,23 @@ function cmr_foundation_scroll_shortcode($atts) {
             margin-bottom: 0 !important;
         }
 
+        /* Connect next section (Meet the people / Team: 0888bae) with tight, clean spacing */
+        [data-id="0888bae"],
+        [data-id="0888bae"] > .e-con-inner {
+            margin-top: 0 !important;
+            padding-top: 30px !important;
+        }
+
         .cmr-foundation-panel {
             width: 100%;
-            height: 60vh;
-            min-height: 480px;
+            height: auto !important;
+            min-height: auto !important;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             z-index: 2;
-            padding-top: 0;
-            padding-bottom: 0;
+            padding-top: 30px !important;
+            padding-bottom: 25px !important;
         }
 
         .cmr-foundation-inner {
@@ -212,8 +223,8 @@ function cmr_foundation_scroll_shortcode($atts) {
                     
                     if (totalBlocks <= 1) return;
                     
-                    // Set scroll duration (amount of pinning)
-                    const scrollDuration = totalBlocks * window.innerHeight * 0.5;
+                    // Set scroll duration (amount of pinning) - compact distance to prevent large whitespace
+                    const scrollDuration = totalBlocks * 160;
                     
                     ScrollTrigger.create({
                         trigger: wrap,
@@ -235,12 +246,17 @@ function cmr_foundation_scroll_shortcode($atts) {
                         }
                     });
                     
-                    // Click handlers for menu items to scroll smoothly to their respective points
+                    // Click handlers for menu items to switch active slide and scroll smoothly
                     navItems.forEach((item, i) => {
                         item.addEventListener('click', function() {
+                            navItems.forEach(m => m.classList.remove('active'));
+                            blocks.forEach(s => s.classList.remove('show'));
+                            item.classList.add('active');
+                            if (blocks[i]) blocks[i].classList.add('show');
+
                             const st = ScrollTrigger.getAll().find(t => t.trigger === wrap);
                             if (st) {
-                                const targetY = st.start + (i / totalBlocks) * (st.end - st.start) + 10;
+                                const targetY = st.start + (i / (totalBlocks - 1 || 1)) * (st.end - st.start);
                                 window.scrollTo({ top: targetY, behavior: 'smooth' });
                             }
                         });
