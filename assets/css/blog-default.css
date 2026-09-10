@@ -864,7 +864,9 @@ h4.wp-block-heading,
 
   margin-left: 0;
 
-  padding-left: 0;
+  padding-left: 28px;
+
+  list-style-type: decimal;
 
 }
 
@@ -876,7 +878,11 @@ h4.wp-block-heading,
 
 .blog-content ol>li {
 
-  padding-left: 0;
+  padding-left: 4px;
+
+  list-style: decimal;
+
+  display: list-item;
 
   color: var(--color-primary);
 

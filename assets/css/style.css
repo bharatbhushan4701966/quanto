@@ -8146,7 +8146,25 @@ h3.inner-title {
 
 .blog-body>ul,
 .blog-body>ol {
-  padding-left: 0;
+  padding-left: 28px;
+}
+
+.blog-body ol {
+  list-style-type: decimal !important;
+}
+
+.blog-body ol li {
+  list-style: decimal !important;
+  display: list-item !important;
+}
+
+.blog-body ul {
+  list-style-type: disc !important;
+}
+
+.blog-body ul li {
+  list-style: disc !important;
+  display: list-item !important;
 }
 
 .has-large-font-size,

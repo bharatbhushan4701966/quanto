@@ -583,6 +583,155 @@ function cmr_global_font_style() {
     </style>';
 }
 
+// Ensure Ordered (Numbered) and Unordered (Bullet) lists display properly in Post / Article content
+add_action('wp_head', 'cmr_post_content_lists_style', 999);
+function cmr_post_content_lists_style() {
+    ?>
+    <style id="cmr-post-lists-style">
+        .blog-body ol,
+        .single-post .blog-body ol,
+        .entry-content ol,
+        .post-content ol,
+        .blog-content ol,
+        .page--content ol,
+        .cmr-media-description ol,
+        .cmr-media-content ol,
+        .elementor-widget-text-editor ol,
+        .wp-block-post-content ol,
+        ol.wp-block-list {
+            list-style-type: decimal !important;
+            list-style-position: outside !important;
+            padding-left: 28px !important;
+            margin-left: 0 !important;
+            margin-top: 15px !important;
+            margin-bottom: 20px !important;
+        }
+        .blog-body ol li,
+        .single-post .blog-body ol li,
+        .entry-content ol li,
+        .post-content ol li,
+        .blog-content ol li,
+        .page--content ol li,
+        .cmr-media-description ol li,
+        .cmr-media-content ol li,
+        .elementor-widget-text-editor ol li,
+        .wp-block-post-content ol li,
+        ol.wp-block-list li {
+            list-style-type: decimal !important;
+            list-style: decimal !important;
+            display: list-item !important;
+            margin-bottom: 10px !important;
+            line-height: 1.7 !important;
+        }
+        .blog-body ul:not(.custom-ul),
+        .single-post .blog-body ul:not(.custom-ul),
+        .entry-content ul:not(.custom-ul),
+        .post-content ul:not(.custom-ul),
+        .blog-content ul:not(.custom-ul),
+        .page--content ul:not(.custom-ul),
+        .cmr-media-description ul:not(.custom-ul),
+        .cmr-media-content ul:not(.custom-ul),
+        .elementor-widget-text-editor ul:not(.custom-ul),
+        .wp-block-post-content ul:not(.custom-ul),
+        ul.wp-block-list {
+            list-style-type: disc !important;
+            list-style-position: outside !important;
+            padding-left: 28px !important;
+            margin-left: 0 !important;
+            margin-top: 15px !important;
+            margin-bottom: 20px !important;
+        }
+        .blog-body ul:not(.custom-ul) li,
+        .single-post .blog-body ul:not(.custom-ul) li,
+        .entry-content ul:not(.custom-ul) li,
+        .post-content ul:not(.custom-ul) li,
+        .blog-content ul:not(.custom-ul) li,
+        .page--content ul:not(.custom-ul) li,
+        .cmr-media-description ul:not(.custom-ul) li,
+        .cmr-media-content ul:not(.custom-ul) li,
+        .elementor-widget-text-editor ul:not(.custom-ul) li,
+        .wp-block-post-content ul:not(.custom-ul) li,
+        ul.wp-block-list li {
+            list-style-type: disc !important;
+            list-style: disc !important;
+            display: list-item !important;
+            margin-bottom: 10px !important;
+            line-height: 1.7 !important;
+        }
+        /* Nested lists */
+        .blog-body ol ul,
+        .blog-body ul ul,
+        .single-post .blog-body ol ul,
+        .single-post .blog-body ul ul,
+        .entry-content ol ul,
+        .entry-content ul ul,
+        .post-content ol ul,
+        .post-content ul ul,
+        .blog-content ol ul,
+        .blog-content ul ul,
+        .page--content ol ul,
+        .page--content ul ul,
+        .cmr-media-description ol ul,
+        .cmr-media-description ul ul,
+        .cmr-media-content ol ul,
+        .cmr-media-content ul ul,
+        .elementor-widget-text-editor ol ul,
+        ol.wp-block-list ul,
+        ul.wp-block-list ul {
+            list-style-type: disc !important;
+            list-style-position: outside !important;
+            padding-left: 24px !important;
+            margin-top: 8px !important;
+            margin-bottom: 8px !important;
+        }
+        .blog-body ol ul li,
+        .blog-body ul ul li,
+        .entry-content ol ul li,
+        .entry-content ul ul li,
+        .cmr-media-description ol ul li,
+        .cmr-media-content ol ul li,
+        .elementor-widget-text-editor ol ul li,
+        ol.wp-block-list ul li,
+        ul.wp-block-list ul li {
+            list-style-type: disc !important;
+            list-style: disc !important;
+            display: list-item !important;
+            margin-bottom: 8px !important;
+        }
+        /* Nested ordered lists */
+        .blog-body ol ol,
+        .blog-body ul ol,
+        .entry-content ol ol,
+        .entry-content ul ol,
+        .cmr-media-description ol ol,
+        .cmr-media-content ol ol,
+        .elementor-widget-text-editor ol ol,
+        ol.wp-block-list ol,
+        ul.wp-block-list ol {
+            list-style-type: lower-alpha !important;
+            list-style-position: outside !important;
+            padding-left: 24px !important;
+            margin-top: 8px !important;
+            margin-bottom: 8px !important;
+        }
+        .blog-body ol ol li,
+        .blog-body ul ol li,
+        .entry-content ol ol li,
+        .entry-content ul ol li,
+        .cmr-media-description ol ol li,
+        .cmr-media-content ol ol li,
+        .elementor-widget-text-editor ol ol li,
+        ol.wp-block-list ol li,
+        ul.wp-block-list ol li {
+            list-style-type: lower-alpha !important;
+            list-style: lower-alpha !important;
+            display: list-item !important;
+            margin-bottom: 8px !important;
+        }
+    </style>
+    <?php
+}
+
 // Shortcode to display the Single Media CTA Banner section by rendering the quanto_tab_build post
 add_shortcode('cmr_single_media_cta', function() {
     ob_start();
