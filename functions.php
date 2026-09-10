@@ -2291,6 +2291,15 @@ function cmr_testimonials_global_mobile_css() {
             padding-bottom: 0 !important;
         }
 
+        .elementor-14 .elementor-element.elementor-element-adc3adf,
+        .elementor-14 .elementor-element-adc3adf,
+        .elementor-element.elementor-element-adc3adf,
+        .elementor-element-adc3adf,
+        div[data-id="adc3adf"] {
+            --margin-top: 45px !important;
+            margin-top: 45px !important;
+        }
+
         .quanto-logo-slide,
         .elementor-23198 .elementor-element-0e0abf8 .quanto-logo-slide,
         .elementor-widget-quanto_logo_carousel .quanto-logo-slide {

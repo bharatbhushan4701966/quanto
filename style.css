@@ -5295,3 +5295,14 @@ ul.wp-block-list ol li {
     margin-top: 0 !important;
     padding-top: 0 !important;
 }
+
+@media (max-width: 768px) {
+    .elementor-14 .elementor-element.elementor-element-adc3adf,
+    .elementor-14 .elementor-element-adc3adf,
+    .elementor-element.elementor-element-adc3adf,
+    .elementor-element-adc3adf,
+    div[data-id="adc3adf"] {
+        --margin-top: 45px !important;
+        margin-top: 45px !important;
+    }
+}
