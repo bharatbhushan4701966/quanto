@@ -4000,7 +4000,8 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
 
     .elementor-23190 .elementor-element.elementor-element-cd36bd5 p,
     .elementor-14 .elementor-element.elementor-element-d9679c4 p,
-    #cmr-testimonials-section p {
+    #cmr-testimonials-section .elementor-element-cd36bd5 p,
+    #cmr-testimonials-section .elementor-element-d9679c4 p {
         font-family: "Instrument Sans", sans-serif !important;
         font-size: 13px !important;
         font-weight: 600 !important;
@@ -4139,6 +4140,7 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     .elementor-23190 .elementor-element.elementor-element-acc3da4 .feedback,
     .elementor-14 .elementor-element.elementor-element-3b754b6 .feedback,
     #cmr-testimonials-section .feedback,
+    #cmr-testimonials-section p.feedback,
     p.feedback {
         width: 100% !important;
         max-width: 700px !important;
@@ -4147,6 +4149,7 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
         font-weight: 500 !important;
         line-height: 1.55 !important;
         letter-spacing: -0.3px !important;
+        text-transform: none !important;
         color: #111111 !important;
         margin: 0 0 35px 0 !important;
         padding: 0 !important;
@@ -4626,6 +4629,7 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
         font-weight: 500 !important;
         line-height: 1.55 !important;
         letter-spacing: -0.3px !important;
+        text-transform: none !important;
         color: #111111 !important;
         margin: 0 auto 28px auto !important;
         padding: 0 !important;

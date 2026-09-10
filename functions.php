@@ -1430,7 +1430,8 @@ function cmr_testimonials_global_mobile_css() {
 
         .elementor-23190 .elementor-element.elementor-element-cd36bd5 p,
         .elementor-14 .elementor-element.elementor-element-d9679c4 p,
-        #cmr-testimonials-section p {
+        #cmr-testimonials-section .elementor-element-cd36bd5 p,
+        #cmr-testimonials-section .elementor-element-d9679c4 p {
             font-family: "Instrument Sans", sans-serif !important;
             font-size: 13px !important;
             font-weight: 600 !important;
@@ -1583,6 +1584,7 @@ function cmr_testimonials_global_mobile_css() {
             font-weight: 500 !important;
             line-height: 1.55 !important;
             letter-spacing: -0.3px !important;
+            text-transform: none !important;
             color: #111111 !important;
             margin: 0 0 35px 0 !important;
             padding: 0 !important;
@@ -2000,6 +2002,7 @@ function cmr_testimonials_global_mobile_css() {
             font-weight: 500 !important;
             line-height: 1.55 !important;
             letter-spacing: -0.3px !important;
+            text-transform: none !important;
             color: #111111 !important;
             margin: 0 auto 28px auto !important;
             padding: 0 !important;
@@ -2353,6 +2356,21 @@ function cmr_testimonials_global_mobile_js() {
                     }
                 });
             }
+
+            // Normalize testimonial feedback text to clean sentence case if entered in ALL CAPS
+            var feedbacks = document.querySelectorAll(
+                '#cmr-testimonials-section .feedback, .wcf__slider .feedback, .aae--a-testimonial .feedback, p.feedback'
+            );
+            feedbacks.forEach(function(fb) {
+                if (fb && fb.textContent) {
+                    var txt = fb.textContent.trim();
+                    if (txt.length > 20 && /[A-Z]/.test(txt) && txt === txt.toUpperCase()) {
+                        fb.textContent = txt.toLowerCase().replace(/(^\s*["'“]?|[.!?]\s*["'“]?)([a-z])/g, function(m, p, c) {
+                            return p + c.toUpperCase();
+                        });
+                    }
+                }
+            });
 
             // 1. Pre-patch data-settings on the wrappers so Swiper reads slidesPerView: 1 and spaceBetween: 0 on ALL screens (Desktop & Mobile)
             var wrappers = document.querySelectorAll('.wcf__t_slider-wrapper, .aae--a-testimonial');
