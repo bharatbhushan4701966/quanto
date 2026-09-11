@@ -11,7 +11,7 @@ function cmr_location_accordion_shortcode($atts) {
             font-family: 'Instrument Sans', sans-serif !important;
             max-width: 1280px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 40px 16px;
             color: #111;
         }
 
