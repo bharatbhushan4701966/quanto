@@ -5355,4 +5355,9 @@ ul.wp-block-list ol li {
         --margin-top: 45px !important;
         margin-top: 45px !important;
     }
+
+    .elementor-22225 .elementor-element.elementor-element-6e12bc2 .elementor-heading-title {
+        font-size: 20px !important;
+        letter-spacing: normal !important;
+    }
 }
