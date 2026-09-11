@@ -5358,6 +5358,7 @@ ul.wp-block-list ol li {
 
     .elementor-22225 .elementor-element.elementor-element-6e12bc2 .elementor-heading-title {
         font-size: 36px !important;
+        line-height: 40px !important;
         letter-spacing: normal !important;
     }
 
@@ -5420,11 +5421,9 @@ ul.wp-block-list ol li {
         border-radius: 0 !important;
         will-change: transform;
     }
-}
 
-@media (max-width: 1024px) {
-    .elementor-22225 .elementor-element.elementor-element-4cef7b5 {
-        --padding-top: 50px !important;
-        padding-top: 50px !important;
+    .elementor-22225 .elementor-element.elementor-element-b1481ac {
+        --padding-top: 0px !important;
+        padding-top: 0px !important;
     }
 }
