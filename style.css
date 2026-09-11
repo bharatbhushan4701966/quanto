@@ -5360,4 +5360,64 @@ ul.wp-block-list ol li {
         font-size: 20px !important;
         letter-spacing: normal !important;
     }
+
+    /* Careers Gallery Section Spacing on Mobile (377f540) */
+    .elementor-element-377f540,
+    [data-id="377f540"] {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        padding-top: 30px !important;
+        padding-bottom: 40px !important;
+        box-sizing: border-box !important;
+    }
+
+    .elementor-element-205e781,
+    [data-id="205e781"] {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 24px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .elementor-element-c5b5271,
+    [data-id="c5b5271"],
+    .elementor-element-42abd66,
+    [data-id="42abd66"],
+    .elementor-element-74e5f73,
+    [data-id="74e5f73"],
+    .elementor-element-39b7ec2,
+    [data-id="39b7ec2"] {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-top: 0 !important;
+        margin-bottom: 24px !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+        border-radius: 14px !important;
+    }
+
+    .elementor-element-39b7ec2,
+    [data-id="39b7ec2"] {
+        margin-bottom: 0 !important;
+    }
+
+    .elementor-element-377f540 .elementor-widget-image,
+    [data-id="377f540"] .elementor-widget-image {
+        width: 100% !important;
+        overflow: hidden !important;
+        border-radius: 14px !important;
+        position: relative !important;
+        background: #f8f8f8 !important;
+    }
+
+    .elementor-element-377f540 .elementor-widget-image img,
+    [data-id="377f540"] .elementor-widget-image img {
+        width: 100% !important;
+        height: auto !important;
+        display: block !important;
+        border-radius: 14px !important;
+        will-change: transform;
+    }
 }

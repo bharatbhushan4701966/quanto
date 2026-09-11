@@ -4373,6 +4373,42 @@ add_action( 'wp_footer', function() {
             });
         }
         fixAboutTeamSocialIcons();
+
+        // Mobile Parallax Scroll Effect for Careers Gallery
+        function initMobileGalleryParallax() {
+            if (window.innerWidth > 768) return;
+            if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+            var galleryWidgets = document.querySelectorAll(
+                '[data-id="377f540"] .elementor-widget-image, .elementor-element-377f540 .elementor-widget-image'
+            );
+            if (!galleryWidgets.length) return;
+
+            galleryWidgets.forEach(function(widget) {
+                var img = widget.querySelector('img');
+                if (!img) return;
+
+                widget.style.overflow = 'hidden';
+                widget.style.borderRadius = '14px';
+
+                gsap.fromTo(img, 
+                    { y: -30, scale: 1.1 },
+                    {
+                        y: 30,
+                        scale: 1.1,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: widget,
+                            start: 'top bottom',
+                            end: 'bottom top',
+                            scrub: 0.8
+                        }
+                    }
+                );
+            });
+        }
+        initMobileGalleryParallax();
+        window.addEventListener('resize', initMobileGalleryParallax);
     });
     </script>
     <?php
