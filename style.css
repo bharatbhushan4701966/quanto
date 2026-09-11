@@ -5523,7 +5523,7 @@ ul.wp-block-list ol li {
 /* Social Icons */
 #manager .quanto-team-box .team-content .custom-ul {
     display: flex !important;
-    gap: 10px !important;
+    gap: 14px !important;
     margin-top: 18px !important;
     padding: 0 !important;
     list-style: none !important;
@@ -5538,20 +5538,32 @@ ul.wp-block-list ol li {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    width: 32px !important;
-    height: 32px !important;
-    background: #000000 !important;
-    color: #ffffff !important;
-    border-radius: 4px !important;
+    width: auto !important;
+    height: auto !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    color: #000000 !important;
+    border: none !important;
+    border-radius: 0 !important;
     text-decoration: none !important;
-    transition: all 0.2s ease !important;
+    transition: color 0.2s ease !important;
+}
+
+#manager .quanto-team-box .team-content .custom-ul li a:hover {
+    color: #6A35FF !important;
+    background: transparent !important;
 }
 
 #manager .quanto-team-box .team-content .custom-ul li a svg {
-    width: 18px !important;
-    height: 18px !important;
-    fill: #ffffff !important;
-    color: #ffffff !important;
+    width: 22px !important;
+    height: 22px !important;
+    fill: currentColor !important;
+    color: inherit !important;
+}
+
+#manager .quanto-team-box .team-content .custom-ul li a i {
+    font-size: 22px !important;
+    color: inherit !important;
 }
 
 /* 7. Column alignment on desktop to keep gap balanced like Figma */
@@ -5584,12 +5596,21 @@ ul.wp-block-list ol li {
     }
 
     #manager .quanto-team-box .team-content .custom-ul li a {
-        width: 34px !important;
-        height: 34px !important;
+        width: auto !important;
+        height: auto !important;
+        background: transparent !important;
+        background-color: transparent !important;
     }
 
     #manager .quanto-team-box .team-content .custom-ul li a svg {
-        width: 20px !important;
-        height: 20px !important;
+        width: 24px !important;
+        height: 24px !important;
+        fill: currentColor !important;
+        color: inherit !important;
+    }
+
+    #manager .quanto-team-box .team-content .custom-ul li a i {
+        font-size: 24px !important;
+        color: inherit !important;
     }
 }
