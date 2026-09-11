@@ -2268,15 +2268,39 @@ function cmr_testimonials_global_mobile_css() {
     .elementor-widget-quanto_logo_carousel .quanto-logo-slide {
         height: 120px !important;
         min-height: 120px !important;
-        padding: 12px 25px !important;
+        padding: 8px 15px !important;
+        overflow: hidden !important;
     }
 
     .quanto-logo-slide img {
-        max-height: 72px !important;
-        max-width: 88% !important;
+        max-height: 96px !important;
+        max-width: 90% !important;
         width: auto !important;
         height: auto !important;
         object-fit: contain !important;
+        transform: scale(1.35) !important;
+        transform-origin: center center !important;
+        display: block !important;
+    }
+
+    .elementor-14 .elementor-element.elementor-element-df14a6f .elementor-widget-image,
+    div[data-id="df14a6f"] .elementor-widget-image {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        height: 100% !important;
+        overflow: hidden !important;
+    }
+
+    .elementor-14 .elementor-element.elementor-element-df14a6f .elementor-widget-image img,
+    div[data-id="df14a6f"] .elementor-widget-image img {
+        max-width: 90% !important;
+        width: auto !important;
+        height: auto !important;
+        transform: scale(1.35) !important;
+        transform-origin: center center !important;
+        display: block !important;
     }
 
     @media (max-width: 768px) {
@@ -2310,15 +2334,25 @@ function cmr_testimonials_global_mobile_css() {
         .elementor-widget-quanto_logo_carousel .quanto-logo-slide {
             height: 105px !important;
             min-height: 105px !important;
-            padding: 8px 15px !important;
+            padding: 6px 12px !important;
+            overflow: hidden !important;
         }
 
         .quanto-logo-slide img {
-            max-height: 65px !important;
+            max-height: 85px !important;
             max-width: 88% !important;
             width: auto !important;
             height: auto !important;
             object-fit: contain !important;
+            transform: scale(1.3) !important;
+            transform-origin: center center !important;
+        }
+
+        .elementor-14 .elementor-element.elementor-element-df14a6f .elementor-widget-image img,
+        div[data-id="df14a6f"] .elementor-widget-image img {
+            max-width: 88% !important;
+            transform: scale(1.3) !important;
+            transform-origin: center center !important;
         }
     }
 
@@ -2326,14 +2360,23 @@ function cmr_testimonials_global_mobile_css() {
         .quanto-logo-slide,
         .elementor-23198 .elementor-element-0e0abf8 .quanto-logo-slide,
         .elementor-widget-quanto_logo_carousel .quanto-logo-slide {
-            height: 100px !important;
-            min-height: 100px !important;
-            padding: 6px 12px !important;
+            height: 95px !important;
+            min-height: 95px !important;
+            padding: 5px 10px !important;
+            overflow: hidden !important;
         }
 
         .quanto-logo-slide img {
-            max-height: 60px !important;
+            max-height: 75px !important;
             max-width: 88% !important;
+            transform: scale(1.25) !important;
+            transform-origin: center center !important;
+        }
+
+        .elementor-14 .elementor-element.elementor-element-df14a6f .elementor-widget-image img,
+        div[data-id="df14a6f"] .elementor-widget-image img {
+            transform: scale(1.25) !important;
+            transform-origin: center center !important;
         }
     }
 
