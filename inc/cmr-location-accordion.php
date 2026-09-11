@@ -202,7 +202,7 @@ function cmr_location_accordion_shortcode($atts) {
                 left: auto;
                 transform: none;
                 width: 100%;
-                padding: 30px 20px;
+                padding: 30px 0px;
                 box-shadow: none;
             }
             .cmr-loc-map {
