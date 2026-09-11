@@ -5439,3 +5439,97 @@ ul.wp-block-list ol li {
         padding-top: 35px !important;
     }
 }
+
+/* ==========================================================================
+   Leadership Page - Management Team Cards (#manager) - Figma Design Match
+   ========================================================================== */
+
+/* 1. Row Container: Centered with max-width and balanced gap */
+#manager .row {
+    max-width: 1040px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    row-gap: 50px !important;
+}
+
+/* 2. Card Container: Wider cards (~460px-480px) */
+#manager .quanto-team-box {
+    margin: 0 auto 30px auto !important;
+    display: block !important;
+    max-width: 480px !important;
+    width: 100% !important;
+}
+
+/* 3. Image Container: Perfect SQUARE (1:1 aspect ratio) like Figma */
+#manager .quanto-team-box .team-thumb {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+}
+
+/* 4. Image: Fills Square, focused on face & shoulders */
+#manager .quanto-team-box .team-thumb img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center 15% !important;
+    display: block !important;
+    border-radius: 0 !important;
+}
+
+/* 5. Remove arrow icon and dark gradient overlay */
+#manager .quanto-team-box .team-thumb::before,
+#manager .quanto-team-box .team-thumb::after,
+#manager .quanto-team-box:hover .team-thumb::before,
+#manager .quanto-team-box:hover .team-thumb::after {
+    display: none !important;
+    content: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* 6. Typography & Content Alignment */
+#manager .quanto-team-box .team-content {
+    margin-top: 20px !important;
+    text-align: left !important;
+}
+
+#manager .quanto-team-box .team-member-name,
+#manager .quanto-team-box .team-member-name a {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    color: #000000 !important;
+    margin: 0 0 6px 0 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.4px !important;
+    text-decoration: none !important;
+}
+
+#manager .quanto-team-box .team-member-position {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 15px !important;
+    color: #555555 !important;
+    display: block !important;
+    margin: 0 0 14px 0 !important;
+    font-weight: 400 !important;
+}
+
+/* 7. Column alignment on desktop to keep gap balanced like Figma */
+@media (min-width: 992px) {
+    #manager .col-xl-6:nth-child(odd) .quanto-team-box,
+    #manager .col-md-6:nth-child(odd) .quanto-team-box {
+        margin-right: 20px !important;
+        margin-left: auto !important;
+    }
+    #manager .col-xl-6:nth-child(even) .quanto-team-box,
+    #manager .col-md-6:nth-child(even) .quanto-team-box {
+        margin-left: 20px !important;
+        margin-right: auto !important;
+    }
+}
