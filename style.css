@@ -5502,7 +5502,7 @@ ul.wp-block-list ol li {
 #manager .quanto-team-box .team-member-name,
 #manager .quanto-team-box .team-member-name a {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 24px !important;
+    font-size: 28px !important;
     font-weight: 700 !important;
     color: #000000 !important;
     margin: 0 0 6px 0 !important;
@@ -5520,6 +5520,40 @@ ul.wp-block-list ol li {
     font-weight: 400 !important;
 }
 
+/* Social Icons */
+#manager .quanto-team-box .team-content .custom-ul {
+    display: flex !important;
+    gap: 10px !important;
+    margin-top: 18px !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+
+#manager .quanto-team-box .team-content .custom-ul li {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+#manager .quanto-team-box .team-content .custom-ul li a {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+    background: #000000 !important;
+    color: #ffffff !important;
+    border-radius: 4px !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+}
+
+#manager .quanto-team-box .team-content .custom-ul li a svg {
+    width: 18px !important;
+    height: 18px !important;
+    fill: #ffffff !important;
+    color: #ffffff !important;
+}
+
 /* 7. Column alignment on desktop to keep gap balanced like Figma */
 @media (min-width: 992px) {
     #manager .col-xl-6:nth-child(odd) .quanto-team-box,
@@ -5531,5 +5565,31 @@ ul.wp-block-list ol li {
     #manager .col-md-6:nth-child(even) .quanto-team-box {
         margin-left: 20px !important;
         margin-right: auto !important;
+    }
+}
+
+/* 8. Mobile Styles: Font-size 20px, Border card box, and Increased icons */
+@media (max-width: 768px) {
+    #manager .quanto-team-box .team-member-name,
+    #manager .quanto-team-box .team-member-name a {
+        font-size: 20px !important;
+    }
+
+    #manager .quanto-team-box .team-content {
+        margin-top: 0 !important;
+        border: 1px solid #E5E5E5 !important;
+        padding: 20px !important;
+        background: #ffffff !important;
+        box-sizing: border-box !important;
+    }
+
+    #manager .quanto-team-box .team-content .custom-ul li a {
+        width: 34px !important;
+        height: 34px !important;
+    }
+
+    #manager .quanto-team-box .team-content .custom-ul li a svg {
+        width: 20px !important;
+        height: 20px !important;
     }
 }
