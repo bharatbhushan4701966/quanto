@@ -4389,7 +4389,6 @@ add_action( 'wp_footer', function() {
                 if (!img) return;
 
                 widget.style.overflow = 'hidden';
-                widget.style.borderRadius = '14px';
 
                 gsap.fromTo(img, 
                     { y: -30, scale: 1.1 },

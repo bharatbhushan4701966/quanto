@@ -5395,7 +5395,7 @@ ul.wp-block-list ol li {
         padding: 0 !important;
         box-sizing: border-box !important;
         overflow: hidden !important;
-        border-radius: 14px !important;
+        border-radius: 0 !important;
     }
 
     .elementor-element-39b7ec2,
@@ -5407,7 +5407,7 @@ ul.wp-block-list ol li {
     [data-id="377f540"] .elementor-widget-image {
         width: 100% !important;
         overflow: hidden !important;
-        border-radius: 14px !important;
+        border-radius: 0 !important;
         position: relative !important;
         background: #f8f8f8 !important;
     }
@@ -5417,7 +5417,7 @@ ul.wp-block-list ol li {
         width: 100% !important;
         height: auto !important;
         display: block !important;
-        border-radius: 14px !important;
+        border-radius: 0 !important;
         will-change: transform;
     }
 }
