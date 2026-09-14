@@ -155,7 +155,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
             }
         </style>
         <?php if ( !empty($featured_posts) ) : ?>
-            <div class="cmr-fi-wrapper" style="display: flex; justify-content: flex-end; width: 100%; padding-right: 16px;">
+            <div class="cmr-fi-wrapper" style="display: flex; justify-content: flex-end; width: 100%;">
                 <div class="cmr-fi-container">
                 <?php foreach ( $featured_posts as $post_obj ) : 
                     $thumbnail_url = get_the_post_thumbnail_url( $post_obj->ID, 'full' );

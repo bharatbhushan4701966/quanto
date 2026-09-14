@@ -16,7 +16,7 @@ add_action('wp_footer', function() {
         transform: translateX(-50%);
         width: 100%;
         max-width: 1280px;
-        z-index: 999999;
+        z-index: 999990;
         background: transparent !important;
         padding-left: 20px !important;
         padding-right: 20px !important;
@@ -39,6 +39,9 @@ add_action('wp_footer', function() {
     .intel-nav-fixed-js .cmr-nav-btn-subscribe {
         display: inline-flex !important;
     }
+    .intel-nav-mobile-wrap {
+        display: none;
+    }
     @media (max-width: 1320px) {
         .intel-nav-fixed-js {
             padding-left: 20px !important;
@@ -46,26 +49,162 @@ add_action('wp_footer', function() {
         }
     }
     @media (max-width: 768px) {
-        .intel-nav-fixed-js {
-            padding-left: 15px !important;
-            padding-right: 15px !important;
-        }
-        .intel-nav-fixed-js .intel-nav-title {
-            display: none !important;
-        }
-        .intel-nav-fixed-js .intel-nav-links {
-            overflow-x: auto !important;
-            white-space: nowrap !important;
+        /* Mobile Dropdown Format matching reference */
+        .intel-nav-bar {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            position: relative !important;
             width: 100% !important;
-            gap: 15px !important;
-            padding-bottom: 5px !important;
-            -webkit-overflow-scrolling: touch !important;
-            scrollbar-width: none !important;
+            min-height: 52px !important;
+            padding: 0 16px !important;
+            box-sizing: border-box !important;
+            background: #ffffff !important;
+            border-bottom: 1px solid #eeeeee !important;
+            margin-bottom: 25px !important;
         }
-        .intel-nav-fixed-js .intel-nav-links::-webkit-scrollbar {
+
+        .intel-nav-bar .intel-nav-title {
+            display: block !important;
+            font-family: 'Instrument Sans', sans-serif !important;
+            font-size: 15px !important;
+            font-weight: 700 !important;
+            color: #0f172a !important;
+            letter-spacing: -0.3px !important;
+            line-height: 1.25 !important;
+            margin: 0 !important;
+            flex: 1 1 auto !important;
+            padding-right: 8px !important;
+            word-break: break-word !important;
+        }
+
+        .intel-nav-mobile-wrap {
+            display: flex !important;
+            align-items: center !important;
+            flex-shrink: 0 !important;
+        }
+
+        .intel-nav-dropdown-btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            background: transparent !important;
+            border: none !important;
+            padding: 8px 0 !important;
+            cursor: pointer !important;
+            font-family: 'Instrument Sans', sans-serif !important;
+            font-size: 15px !important;
+            font-weight: 700 !important;
+            color: #0f172a !important;
+            line-height: 1 !important;
+            outline: none !important;
+        }
+
+        .intel-nav-current-label {
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            max-width: 140px !important;
+        }
+
+        .intel-nav-chevron {
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            flex-shrink: 0 !important;
+            color: #0f172a !important;
+        }
+
+        .intel-nav-bar.is-dropdown-open .intel-nav-chevron {
+            transform: rotate(180deg) !important;
+        }
+
+        /* Dropdown links container on mobile */
+        .intel-nav-bar .intel-nav-links {
             display: none !important;
+            position: absolute !important;
+            top: 100% !important;
+            left: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            background: #ffffff !important;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12) !important;
+            border-top: 1px solid #f0f0f0 !important;
+            border-bottom: 2px solid #5c24d3 !important;
+            flex-direction: column !important;
+            padding: 6px 0 !important;
+            margin: 0 !important;
+            z-index: 10000000 !important;
+            max-height: 380px !important;
+            overflow-y: auto !important;
+            box-sizing: border-box !important;
+            -webkit-overflow-scrolling: touch !important;
         }
-        .intel-nav-fixed-js .cmr-nav-btn-subscribe {
+
+        .intel-nav-bar.is-dropdown-open .intel-nav-links {
+            display: flex !important;
+        }
+
+        .intel-nav-bar .intel-nav-links a {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding: 13px 20px !important;
+            font-family: 'Instrument Sans', sans-serif !important;
+            font-size: 15px !important;
+            font-weight: 500 !important;
+            color: #374151 !important;
+            text-decoration: none !important;
+            border-bottom: 1px solid #f3f4f6 !important;
+            margin: 0 !important;
+            transition: background 0.15s ease, color 0.15s ease !important;
+        }
+
+        .intel-nav-bar .intel-nav-links a:hover,
+        .intel-nav-bar .intel-nav-links a.active {
+            background-color: #f8f6ff !important;
+            color: #5c24d3 !important;
+            font-weight: 600 !important;
+        }
+
+        .intel-nav-bar .intel-nav-links a:last-child {
+            border-bottom: none !important;
+        }
+
+        .intel-nav-bar .intel-nav-links a.cmr-nav-btn-subscribe {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            background: #5c24d3 !important;
+            color: #ffffff !important;
+            font-weight: 600 !important;
+            margin: 10px 16px 6px 16px !important;
+            padding: 12px 20px !important;
+            border-radius: 40px !important;
+            border: none !important;
+            text-align: center !important;
+        }
+        .intel-nav-bar .intel-nav-links a.cmr-nav-btn-subscribe svg {
+            stroke: #ffffff !important;
+        }
+
+        /* Mobile Sticky / Fixed State */
+        .intel-nav-bar.intel-nav-fixed-js {
+            position: fixed !important;
+            left: 0 !important;
+            right: 0 !important;
+            transform: none !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            border-radius: 0 !important;
+            background: #ffffff !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08) !important;
+            border-bottom: 1px solid #e5e7eb !important;
+            padding-left: 16px !important;
+            padding-right: 16px !important;
+            margin: 0 !important;
+            z-index: 999990 !important;
+        }
+
+        .intel-nav-bar.intel-nav-fixed-js::before {
             display: none !important;
         }
     }
@@ -74,11 +213,56 @@ add_action('wp_footer', function() {
     if (!window.cmrStickyNavInitialized) {
         window.cmrStickyNavInitialized = true;
         
-        function initStickyNav() {            // Sticky Nav logic for both Industry Intelligence and Latest Insights shortcodes
-            const sections = document.querySelectorAll('.cmr-industry-intelligence, .cmr-latest-insights-section, .cmr-industry-intel-section, .cmr-marketing-services-section, .cmr-consulting-advisory-section, .cmr-enterprisecgd-wrapper, .cmr-channelcgd-wrapper, .cmr-smbcgd-wrapper, .cmr-mrg-wrapper');
-            sections.forEach(section => {
-                const navBar = section.querySelector('.cmr-industry-nav-bar, .cmr-latest-nav-bar, .intel-nav-bar');
-                if (!navBar) return;
+        function initStickyNav() {
+            // Global click to close dropdown when clicking outside
+            if (!window.cmrStickyNavClickOutsideAttached) {
+                window.cmrStickyNavClickOutsideAttached = true;
+                document.addEventListener('click', function(e) {
+                    document.querySelectorAll('.intel-nav-bar.is-dropdown-open').forEach(function(bar) {
+                        if (!bar.contains(e.target)) {
+                            bar.classList.remove('is-dropdown-open');
+                            var btn = bar.querySelector('.intel-nav-dropdown-btn');
+                            if (btn) btn.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                });
+            }
+
+            // Find all intel nav bars across sections
+            const navBars = document.querySelectorAll('.cmr-industry-nav-bar, .cmr-latest-nav-bar, .intel-nav-bar');
+            navBars.forEach(navBar => {
+                if (navBar.dataset.stickyInitialized) return;
+                navBar.dataset.stickyInitialized = 'true';
+
+                const section = navBar.closest('.cmr-industry-intelligence, .cmr-latest-insights-section, .cmr-industry-intel-section, .cmr-marketing-services-section, .cmr-consulting-advisory-section, .cmr-enterprisecgd-wrapper, .cmr-channelcgd-wrapper, .cmr-smbcgd-wrapper, .cmr-mrg-wrapper, .elementor-section, .e-con, section') || navBar.parentElement;
+
+                // Setup Mobile Dropdown Toggle Button
+                let toggleWrap = navBar.querySelector('.intel-nav-mobile-wrap');
+                if (!toggleWrap) {
+                    toggleWrap = document.createElement('div');
+                    toggleWrap.className = 'intel-nav-mobile-wrap';
+                    
+                    const navLinks = navBar.querySelectorAll('.intel-nav-links a:not(.cmr-nav-btn-subscribe)');
+                    const defaultText = navLinks.length > 0 ? navLinks[0].textContent.trim() : 'Overview';
+                    
+                    toggleWrap.innerHTML = `
+                        <button type="button" class="intel-nav-dropdown-btn" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="intel-nav-current-label">${defaultText}</span>
+                            <svg class="intel-nav-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                    `;
+                    navBar.appendChild(toggleWrap);
+                    
+                    const dropdownBtn = toggleWrap.querySelector('.intel-nav-dropdown-btn');
+                    dropdownBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const isOpen = navBar.classList.toggle('is-dropdown-open');
+                        dropdownBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                    });
+                }
                 
                 const placeholder = document.createElement('div');
                 placeholder.className = 'cmr-nav-placeholder';
@@ -86,24 +270,63 @@ add_action('wp_footer', function() {
                 placeholder.style.marginBottom = '0px';
                 navBar.parentNode.insertBefore(placeholder, navBar);
                 
-                function updateSticky() {
-                    const sectionRect = section.getBoundingClientRect();
-                    let stickyOffset = 0;
+                function getStickyHeaderOffset() {
+                    let offset = 0;
                     const wpAdminBar = document.getElementById('wpadminbar');
                     if (wpAdminBar && window.getComputedStyle(wpAdminBar).position === 'fixed') {
-                        stickyOffset = wpAdminBar.offsetHeight;
+                        offset = wpAdminBar.offsetHeight;
                     }
-                    const headers = document.querySelectorAll('header, [data-elementor-type="header"], .elementor-location-header, .elementor-sticky--active');
-                    headers.forEach(h => {
-                        if (h === navBar || h.contains(navBar)) return;
+                    
+                    const headerSelectors = [
+                        'header',
+                        '.header',
+                        '[data-elementor-type="header"]',
+                        '.elementor-location-header',
+                        '.elementor-sticky',
+                        '.elementor-sticky--active',
+                        '.elementor-sticky--effects',
+                        'header .elementor-element',
+                        '.header .elementor-element',
+                        '.main-header-wrapper',
+                        '.blog-header-wrapper'
+                    ];
+                    
+                    const candidates = document.querySelectorAll(headerSelectors.join(', '));
+                    candidates.forEach(h => {
+                        if (!h || h === navBar || h.contains(navBar) || navBar.contains(h)) return;
                         const hStyle = window.getComputedStyle(h);
-                        if (hStyle.position === 'fixed' || hStyle.position === 'sticky' || h.classList.contains('elementor-sticky--active')) {
+                        const isSticky = hStyle.position === 'fixed' || 
+                                         hStyle.position === 'sticky' || 
+                                         h.classList.contains('elementor-sticky--active') || 
+                                         h.classList.contains('elementor-sticky--effects');
+                        if (isSticky) {
                             const hRect = h.getBoundingClientRect();
-                            if (hRect.top <= stickyOffset + 10 && hRect.bottom > stickyOffset && hRect.bottom < (window.innerHeight / 2)) {
-                                stickyOffset = hRect.bottom;
+                            if (hRect.top <= offset + 25 && hRect.bottom > offset && hRect.bottom < (window.innerHeight * 0.45)) {
+                                if (hRect.bottom > offset) {
+                                    offset = hRect.bottom;
+                                }
                             }
                         }
                     });
+
+                    // Fallback for mobile fixed header
+                    if (offset === 0) {
+                        const topHeader = document.querySelector('header, .header, .elementor-location-header');
+                        if (topHeader) {
+                            const rect = topHeader.getBoundingClientRect();
+                            const hStyle = window.getComputedStyle(topHeader);
+                            if ((hStyle.position === 'fixed' || hStyle.position === 'sticky') && rect.bottom > 0 && rect.bottom < 140) {
+                                offset = rect.bottom;
+                            }
+                        }
+                    }
+                    
+                    return Math.round(offset);
+                }
+
+                function updateSticky() {
+                    const sectionRect = section.getBoundingClientRect();
+                    const stickyOffset = getStickyHeaderOffset();
 
                     let boundaryBottom = sectionRect.bottom;
                     
@@ -137,7 +360,9 @@ add_action('wp_footer', function() {
                             navBar.classList.add('intel-nav-fixed-js');
                             document.body.appendChild(navBar); 
                             const subscribeBtn = navBar.querySelector('.cmr-nav-btn-subscribe');
-                            if (subscribeBtn) subscribeBtn.style.setProperty('display', 'flex', 'important');
+                            if (subscribeBtn && window.innerWidth > 768) {
+                                subscribeBtn.style.setProperty('display', 'inline-flex', 'important');
+                            }
                         }
                         
                         if (boundaryBottom <= (navBar.offsetHeight + stickyOffset)) {
@@ -153,7 +378,9 @@ add_action('wp_footer', function() {
                             placeholder.style.height = '0px';
                             placeholder.style.marginBottom = '0px';
                             const subscribeBtn = navBar.querySelector('.cmr-nav-btn-subscribe');
-                            if (subscribeBtn) subscribeBtn.style.setProperty('display', 'none', 'important');
+                            if (subscribeBtn && window.innerWidth > 768) {
+                                subscribeBtn.style.setProperty('display', 'none', 'important');
+                            }
                         }
                     }
                 }
@@ -163,15 +390,70 @@ add_action('wp_footer', function() {
                 setTimeout(updateSticky, 100);
                 setTimeout(updateSticky, 1000); // Failsafe for late render
                 
+                // Active section spy for mobile dropdown label
+                function updateActiveSpy() {
+                    if (window.innerWidth > 768) return;
+                    const navLinks = navBar.querySelectorAll('.intel-nav-links a:not(.cmr-nav-btn-subscribe)');
+                    if (!navLinks.length) return;
+                    
+                    const currentTop = navBar.classList.contains('intel-nav-fixed-js') ? (parseFloat(navBar.style.top) || 0) + (navBar.offsetHeight || 50) : 0;
+                    const scrollPos = window.scrollY + currentTop + 70;
+                    let activeLink = null;
+                    
+                    navLinks.forEach(link => {
+                        const href = link.getAttribute('href');
+                        if (!href || href === '#top') return;
+                        const hashIdx = href.indexOf('#');
+                        if (hashIdx === -1) return;
+                        const targetId = href.substring(hashIdx + 1);
+                        if (!targetId) return;
+                        const target = document.getElementById(targetId);
+                        if (target) {
+                            const top = target.getBoundingClientRect().top + window.scrollY;
+                            if (top <= scrollPos) {
+                                activeLink = link;
+                            }
+                        }
+                    });
+                    
+                    const labelSpan = navBar.querySelector('.intel-nav-current-label');
+                    if (activeLink && labelSpan) {
+                        if (labelSpan.textContent !== activeLink.textContent.trim()) {
+                            labelSpan.textContent = activeLink.textContent.trim();
+                        }
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        activeLink.classList.add('active');
+                    } else if (window.scrollY < 400 && labelSpan && navLinks.length > 0) {
+                        labelSpan.textContent = navLinks[0].textContent.trim();
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        navLinks[0].classList.add('active');
+                    }
+                }
+                window.addEventListener('scroll', updateActiveSpy, { passive: true });
+
                 // Add smooth scrolling for anchor links inside this navBar
                 const links = navBar.querySelectorAll('.intel-nav-links a');
                 links.forEach(link => {
                     link.addEventListener('click', function(e) {
+                        // Close dropdown on mobile and update label
+                        navBar.classList.remove('is-dropdown-open');
+                        const dropdownBtn = navBar.querySelector('.intel-nav-dropdown-btn');
+                        if (dropdownBtn) dropdownBtn.setAttribute('aria-expanded', 'false');
+                        const labelSpan = navBar.querySelector('.intel-nav-current-label');
+                        if (labelSpan && !this.classList.contains('cmr-nav-btn-subscribe')) {
+                            labelSpan.textContent = this.textContent.trim();
+                        }
+                        const allLinks = navBar.querySelectorAll('.intel-nav-links a');
+                        allLinks.forEach(l => l.classList.remove('active'));
+                        if (!this.classList.contains('cmr-nav-btn-subscribe')) {
+                            this.classList.add('active');
+                        }
+
                         const href = this.getAttribute('href');
                         const linkText = this.innerText.toLowerCase().trim();
                         
-                        // Special handling for Overview / Featured to scroll to top
-                        if (linkText === 'overview' || linkText === 'featured' || href === '#top') {
+                        // Special handling for Overview to scroll to top
+                        if (linkText === 'overview' || href === '#top') {
                             e.preventDefault();
                             e.stopPropagation(); // Prevent Elementor from hijacking
                             window.scrollTo({
@@ -273,27 +555,9 @@ add_action('wp_footer', function() {
                             e.preventDefault();
                             e.stopPropagation(); // Prevent Elementor from hijacking
                             
-                            // Re-calculate the total sticky offset dynamically
-                            let stickyOffset = 0;
-                            const wpAdminBar = document.getElementById('wpadminbar');
-                            if (wpAdminBar && window.getComputedStyle(wpAdminBar).position === 'fixed') {
-                                stickyOffset = wpAdminBar.offsetHeight;
-                            }
-                            const headers = document.querySelectorAll('header, [data-elementor-type="header"], .elementor-location-header, .elementor-sticky--active');
-                            headers.forEach(h => {
-                                if (h === navBar || h.contains(navBar)) return;
-                                const hStyle = window.getComputedStyle(h);
-                                if (hStyle.position === 'fixed' || hStyle.position === 'sticky' || h.classList.contains('elementor-sticky--active')) {
-                                    const hRect = h.getBoundingClientRect();
-                                    if (hRect.top <= stickyOffset + 10 && hRect.bottom > stickyOffset && hRect.bottom < (window.innerHeight / 2)) {
-                                        stickyOffset = hRect.bottom;
-                                    }
-                                }
-                            });
-                            
-                            // The nav bar itself will be sticky, so we add its height to the offset
-                            const navHeight = navBar.offsetHeight || 60;
-                            const finalOffset = stickyOffset + navHeight + 20; // 20px breathing room
+                            const stickyOffset = getStickyHeaderOffset();
+                            const navHeight = navBar.offsetHeight || 52;
+                            const finalOffset = stickyOffset + navHeight + 15; // 15px breathing room
                             
                             const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
                             
