@@ -6118,10 +6118,69 @@ ul.wp-block-list ol li {
         font-weight: 600 !important;
         color: #000000 !important;
     }
+
+    /* ==========================================================================
+       Hero Section Buttons Full Width on Mobile (Consulting & Practice Pages)
+       ========================================================================== */
+    .elementor-element.elementor-element-758e182,
+    .elementor .e-758e182-3fd8f24 {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+        margin-top: 15px !important;
+    }
+
+    .elementor-element.elementor-element-758e182 .elementor-widget-button,
+    .elementor-element.elementor-element-758e182 .download-btn,
+    .elementor-element.elementor-element-758e182 .talk-btn,
+    .elementor-element.elementor-element-758e182 .elementor-widget-container,
+    .elementor-element-37736ef,
+    .elementor-element-d2bb779 {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    .elementor-element.elementor-element-758e182 .elementor-button,
+    .elementor-element-37736ef .elementor-button,
+    .elementor-element-d2bb779 .elementor-button {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+        padding-top: 14px !important;
+        padding-bottom: 14px !important;
+    }
+
+    .elementor-element.elementor-element-758e182 .elementor-button-content-wrapper,
+    .elementor-element-37736ef .elementor-button-content-wrapper,
+    .elementor-element-d2bb779 .elementor-button-content-wrapper {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 8px !important;
+    }
 }
 
 /* Industry Stack Section Wrapper Padding */
 .cmr-stack-wrapper {
     padding: 20px 0px !important;
 }
+
+.elementor .e-flexbox-base {
+    padding: 0 !important;
+}
+
 
