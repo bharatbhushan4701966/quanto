@@ -61,7 +61,31 @@ add_action('wp_footer', function() {
             box-sizing: border-box !important;
             background: #ffffff !important;
             border-bottom: 1px solid #eeeeee !important;
+            margin-bottom: 15px !important;
+        }
+
+        .cmr-industry-intel-section {
+            margin-top: 15px !important;
+            margin-bottom: 40px !important;
+        }
+
+        .cmr-intel-header-wrapper {
             margin-bottom: 25px !important;
+        }
+
+        #overview::before,
+        #cmr-intel-trends-section::before,
+        #cmr-market-updates::before,
+        #reports::before,
+        #cmr-in-news::before,
+        #newsroom::before {
+            display: none !important;
+            height: 0 !important;
+            margin-top: 0 !important;
+        }
+
+        #overview {
+            scroll-margin-top: 0 !important;
         }
 
         .intel-nav-bar .intel-nav-title {
@@ -93,8 +117,8 @@ add_action('wp_footer', function() {
             padding: 8px 0 !important;
             cursor: pointer !important;
             font-family: 'Instrument Sans', sans-serif !important;
-            font-size: 15px !important;
-            font-weight: 700 !important;
+            font-size: 12px !important;
+            font-weight: 500 !important;
             color: #0f172a !important;
             line-height: 1 !important;
             outline: none !important;
@@ -130,7 +154,8 @@ add_action('wp_footer', function() {
             border-top: 1px solid #f0f0f0 !important;
             border-bottom: 2px solid #5c24d3 !important;
             flex-direction: column !important;
-            padding: 6px 0 !important;
+            align-items: stretch !important;
+            padding: 0 !important;
             margin: 0 !important;
             z-index: 10000000 !important;
             max-height: 380px !important;
@@ -146,14 +171,17 @@ add_action('wp_footer', function() {
         .intel-nav-bar .intel-nav-links a {
             display: flex !important;
             align-items: center !important;
-            justify-content: space-between !important;
-            padding: 13px 20px !important;
+            justify-content: flex-start !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            padding: 14px 20px !important;
             font-family: 'Instrument Sans', sans-serif !important;
             font-size: 15px !important;
             font-weight: 500 !important;
             color: #374151 !important;
             text-decoration: none !important;
-            border-bottom: 1px solid #f3f4f6 !important;
+            text-align: left !important;
+            border-bottom: 1px solid #f0f0f0 !important;
             margin: 0 !important;
             transition: background 0.15s ease, color 0.15s ease !important;
         }
@@ -176,7 +204,9 @@ add_action('wp_footer', function() {
             background: #5c24d3 !important;
             color: #ffffff !important;
             font-weight: 600 !important;
-            margin: 10px 16px 6px 16px !important;
+            width: calc(100% - 32px) !important;
+            box-sizing: border-box !important;
+            margin: 12px 16px 14px 16px !important;
             padding: 12px 20px !important;
             border-radius: 40px !important;
             border: none !important;
@@ -352,11 +382,12 @@ add_action('wp_footer', function() {
                         }
                     }
 
-                    if (sectionRect.top <= stickyOffset && boundaryBottom > (navBar.offsetHeight + stickyOffset)) {
+                    const triggerTop = placeholder.getBoundingClientRect().top;
+
+                    if (triggerTop <= stickyOffset && boundaryBottom > (navBar.offsetHeight + stickyOffset)) {
                         if (!navBar.classList.contains('intel-nav-fixed-js')) {
                             placeholder.style.height = navBar.offsetHeight + 'px';
-                            const style = window.getComputedStyle(navBar);
-                            placeholder.style.marginBottom = style.marginBottom;
+                            placeholder.style.marginBottom = window.innerWidth <= 768 ? '15px' : '30px';
                             navBar.classList.add('intel-nav-fixed-js');
                             document.body.appendChild(navBar); 
                             const subscribeBtn = navBar.querySelector('.cmr-nav-btn-subscribe');
@@ -481,6 +512,12 @@ add_action('wp_footer', function() {
                         if (!targetId) return;
                         
                         let targetElement = document.getElementById(targetId);
+                        if (targetId === 'overview' || targetId === 'insights') {
+                            const headingWrap = section.querySelector('.cmr-intel-header-wrapper, .cmr-intel-header');
+                            if (headingWrap) {
+                                targetElement = headingWrap;
+                            }
+                        }
                         
                         // Fallback 1: Try known shortcode wrapper selectors directly
                         if (!targetElement) {
