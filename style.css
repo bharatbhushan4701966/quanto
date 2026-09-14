@@ -5676,6 +5676,22 @@ ul.wp-block-list ol li {
     margin-top: 0px !important;
 }
 
+/* 44px gap between Heading Text and Team Images */
+.elementor-element-400d7f4,
+.elementor-element-004973c,
+.elementor-22337 .elementor-element.elementor-element-400d7f4,
+.elementor-22337 .elementor-element.elementor-element-004973c {
+    --margin-bottom: 44px !important;
+    margin-bottom: 44px !important;
+}
+
+.elementor-element-400d7f4 h1,
+.elementor-element-004973c h1,
+.elementor-element-400d7f4 .e-heading-base,
+.elementor-element-004973c .e-heading-base {
+    margin-bottom: 0 !important;
+}
+
 /* ==========================================================================
    Mobile Styles (Both #manager & #practice) - 2-Column with Border Cards
    ========================================================================== */
@@ -5684,6 +5700,22 @@ ul.wp-block-list ol li {
     .elementor-element.elementor-element-ae742f9 {
         --margin-top: 0px !important;
         margin-top: 0px !important;
+    }
+
+    /* 44px gap between Heading Text and Team Images on mobile */
+    .elementor-element-400d7f4,
+    .elementor-element-004973c,
+    .elementor-22337 .elementor-element.elementor-element-400d7f4,
+    .elementor-22337 .elementor-element.elementor-element-004973c {
+        --margin-bottom: 44px !important;
+        margin-bottom: 44px !important;
+    }
+
+    .elementor-element-400d7f4 h1,
+    .elementor-element-004973c h1,
+    .elementor-element-400d7f4 .e-heading-base,
+    .elementor-element-004973c .e-heading-base {
+        margin-bottom: 0 !important;
     }
 
     #manager,
