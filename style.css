@@ -6172,6 +6172,84 @@ ul.wp-block-list ol li {
         align-items: center !important;
         gap: 8px !important;
     }
+
+    /* ==========================================================================
+       Industry Intelligence Stack Section - Mobile Edge-to-Edge 16px Spacing
+       Ensure total spacing from screen edge is exactly 16px across all blocks
+       ========================================================================== */
+    .elementor-element.elementor-element-bf386ef,
+    .elementor-element[data-id="bf386ef"],
+    #mx-16 {
+        --padding-left: 0px !important;
+        --padding-right: 0px !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .elementor-element.elementor-element-bf386ef > .e-con-inner,
+    .elementor-element[data-id="bf386ef"] > .e-con-inner,
+    #mx-16 > .e-con-inner {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Fallback if #mx-16 is used without .e-con-inner */
+    #mx-16:not(.e-con-boxed) {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
+
+    /* Zero out all nested containers and wrappers to prevent extra padding accumulation */
+    .elementor-element.elementor-element-bf386ef .elementor-element-ab8ebd9,
+    .elementor-element.elementor-element-bf386ef .elementor-element-f37c75e,
+    .elementor-element.elementor-element-bf386ef .elementor-element-f37c75e > .e-con-inner,
+    .elementor-element.elementor-element-bf386ef .elementor-element-0a90ba0,
+    .elementor-element.elementor-element-bf386ef .elementor-element-0a90ba0 .elementor-widget-container,
+    .elementor-element.elementor-element-bf386ef .elementor-shortcode,
+    #mx-16 .e-con,
+    #mx-16 .e-con-inner,
+    #mx-16 .elementor-widget,
+    #mx-16 .elementor-widget-container,
+    #mx-16 .elementor-shortcode {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .cmr-stack-wrapper {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        box-sizing: border-box !important;
+    }
+
+    .cmr-stack-grid {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    .cmr-stack-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+    }
 }
 
 /* Industry Stack Section Wrapper Padding */

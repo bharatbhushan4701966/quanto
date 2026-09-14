@@ -123,12 +123,23 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
                 }
             }
             @media (max-width: 768px) {
+                .cmr-stack-wrapper {
+                    padding: 20px 0px !important;
+                    width: 100% !important;
+                    box-sizing: border-box !important;
+                }
                 .cmr-stack-grid {
                     grid-template-columns: 1fr;
+                    padding: 0 !important;
+                    margin: 0 !important;
+                    width: 100% !important;
+                    box-sizing: border-box !important;
                 }
                 .cmr-stack-card {
                     height: auto;
                     min-height: 400px;
+                    width: 100% !important;
+                    box-sizing: border-box !important;
                 }
             }
         </style>
