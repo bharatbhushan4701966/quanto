@@ -6279,7 +6279,7 @@ ul.wp-block-list ol li {
         box-sizing: border-box !important;
         background: #ffffff !important;
         border-bottom: 1px solid #eeeeee !important;
-        margin-bottom: 15px !important;
+        margin-bottom: 25px !important;
     }
 
     .cmr-industry-intel-section {
@@ -6288,6 +6288,7 @@ ul.wp-block-list ol li {
     }
 
     .cmr-intel-header-wrapper {
+        margin-top: 15px !important;
         margin-bottom: 25px !important;
     }
 
@@ -6310,7 +6311,7 @@ ul.wp-block-list ol li {
         display: block !important;
         font-family: 'Instrument Sans', sans-serif !important;
         font-size: 15px !important;
-        font-weight: 700 !important;
+        font-weight: 500 !important;
         color: #0f172a !important;
         letter-spacing: -0.3px !important;
         line-height: 1.25 !important;

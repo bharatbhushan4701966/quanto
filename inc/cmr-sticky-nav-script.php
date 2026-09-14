@@ -61,7 +61,7 @@ add_action('wp_footer', function() {
             box-sizing: border-box !important;
             background: #ffffff !important;
             border-bottom: 1px solid #eeeeee !important;
-            margin-bottom: 15px !important;
+            margin-bottom: 25px !important;
         }
 
         .cmr-industry-intel-section {
@@ -70,6 +70,7 @@ add_action('wp_footer', function() {
         }
 
         .cmr-intel-header-wrapper {
+            margin-top: 15px !important;
             margin-bottom: 25px !important;
         }
 
@@ -92,7 +93,7 @@ add_action('wp_footer', function() {
             display: block !important;
             font-family: 'Instrument Sans', sans-serif !important;
             font-size: 15px !important;
-            font-weight: 700 !important;
+            font-weight: 500 !important;
             color: #0f172a !important;
             letter-spacing: -0.3px !important;
             line-height: 1.25 !important;
@@ -387,7 +388,7 @@ add_action('wp_footer', function() {
                     if (triggerTop <= stickyOffset && boundaryBottom > (navBar.offsetHeight + stickyOffset)) {
                         if (!navBar.classList.contains('intel-nav-fixed-js')) {
                             placeholder.style.height = navBar.offsetHeight + 'px';
-                            placeholder.style.marginBottom = window.innerWidth <= 768 ? '15px' : '30px';
+                            placeholder.style.marginBottom = window.innerWidth <= 768 ? '25px' : '30px';
                             navBar.classList.add('intel-nav-fixed-js');
                             document.body.appendChild(navBar); 
                             const subscribeBtn = navBar.querySelector('.cmr-nav-btn-subscribe');
@@ -594,7 +595,7 @@ add_action('wp_footer', function() {
                             
                             const stickyOffset = getStickyHeaderOffset();
                             const navHeight = navBar.offsetHeight || 52;
-                            const finalOffset = stickyOffset + navHeight + 15; // 15px breathing room
+                            const finalOffset = stickyOffset + navHeight + 25; // 25px breathing room
                             
                             const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
                             
