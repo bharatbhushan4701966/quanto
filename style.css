@@ -6119,3 +6119,9 @@ ul.wp-block-list ol li {
         color: #000000 !important;
     }
 }
+
+/* Industry Stack Section Wrapper Padding */
+.cmr-stack-wrapper {
+    padding: 20px 0px !important;
+}
+

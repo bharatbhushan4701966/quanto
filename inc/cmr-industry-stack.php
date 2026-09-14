@@ -22,7 +22,7 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
                 font-family: 'Instrument Sans', sans-serif;
                 max-width: 1280px;
                 margin: 0 auto;
-                padding: 60px 20px;
+                padding: 20px 0px;
                 background-color: #f9fafb;
             }
             .cmr-stack-header {
