@@ -5600,43 +5600,8 @@ ul.wp-block-list ol li {
     }
 }
 
-/* 8. Mobile Styles: Font-size 20px, Border card box, and Increased icons */
-@media (max-width: 768px) {
-    #manager .quanto-team-box .team-member-name,
-    #manager .quanto-team-box .team-member-name a {
-        font-size: 20px !important;
-    }
-
-    #manager .quanto-team-box .team-content {
-        margin-top: 0 !important;
-        border: 1px solid #E5E5E5 !important;
-        padding: 20px !important;
-        background: #ffffff !important;
-        box-sizing: border-box !important;
-    }
-
-    #manager .quanto-team-box .team-content .custom-ul li a {
-        width: auto !important;
-        height: auto !important;
-        background: transparent !important;
-        background-color: transparent !important;
-    }
-
-    #manager .quanto-team-box .team-content .custom-ul li a svg {
-        width: 24px !important;
-        height: 24px !important;
-        fill: currentColor !important;
-        color: inherit !important;
-    }
-
-    #manager .quanto-team-box .team-content .custom-ul li a i {
-        font-size: 24px !important;
-        color: inherit !important;
-    }
-}
-
 /* ==========================================================================
-   Practice Heads & Principals (#practice) - Mobile 2-Column with 16px Spacing
+   Practice Heads & Principals (#practice) Base Styles
    ========================================================================== */
 #practice .quanto-team-box {
     display: flex !important;
@@ -5711,6 +5676,9 @@ ul.wp-block-list ol li {
     margin-top: 0px !important;
 }
 
+/* ==========================================================================
+   Mobile Styles (Both #manager & #practice) - 2-Column with Border Cards
+   ========================================================================== */
 @media (max-width: 768px) {
     .elementor-22337 .elementor-element.elementor-element-ae742f9,
     .elementor-element.elementor-element-ae742f9 {
@@ -5718,6 +5686,7 @@ ul.wp-block-list ol li {
         margin-top: 0px !important;
     }
 
+    #manager,
     #practice {
         padding: 0 !important;
         width: 100% !important;
@@ -5727,6 +5696,7 @@ ul.wp-block-list ol li {
     }
 
     /* 2. Grid layout: exactly 2 equal columns on mobile */
+    #manager .row,
     #practice .row {
         display: grid !important;
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
@@ -5735,10 +5705,14 @@ ul.wp-block-list ol li {
         max-width: 100% !important;
         margin-left: 0 !important;
         margin-right: 0 !important;
+        margin-bottom: 14px !important;
         padding: 0 !important;
         box-sizing: border-box !important;
     }
 
+    #manager .col-xl-6,
+    #manager .col-md-6,
+    #manager .col-sm-12,
     #practice .col-xl-6,
     #practice .col-md-6,
     #practice .col-sm-12 {
@@ -5749,6 +5723,7 @@ ul.wp-block-list ol li {
     }
 
     /* 3. Card Container */
+    #manager .quanto-team-box,
     #practice .quanto-team-box {
         display: flex !important;
         flex-direction: column !important;
@@ -5758,7 +5733,8 @@ ul.wp-block-list ol li {
         height: 100% !important;
     }
 
-    /* 4. Card Image Thumb */
+    /* 4. Card Image Thumb: 3:4 portrait like Figma */
+    #manager .quanto-team-box .team-thumb,
     #practice .quanto-team-box .team-thumb {
         position: relative !important;
         width: 100% !important;
@@ -5770,6 +5746,7 @@ ul.wp-block-list ol li {
         border-radius: 0 !important;
     }
 
+    #manager .quanto-team-box .team-thumb img,
     #practice .quanto-team-box .team-thumb img {
         width: 100% !important;
         height: 100% !important;
@@ -5777,7 +5754,8 @@ ul.wp-block-list ol li {
         object-position: center top !important;
     }
 
-    /* 5. Card Content Box */
+    /* 5. Card Content Box with 1px border */
+    #manager .quanto-team-box .team-content,
     #practice .quanto-team-box .team-content {
         margin-top: 0 !important;
         border: 1px solid #E5E5E5 !important;
@@ -5791,6 +5769,8 @@ ul.wp-block-list ol li {
         text-align: left !important;
     }
 
+    #manager .quanto-team-box .team-member-name,
+    #manager .quanto-team-box .team-member-name a,
     #practice .quanto-team-box .team-member-name,
     #practice .quanto-team-box .team-member-name a {
         font-size: 17px !important;
@@ -5799,11 +5779,10 @@ ul.wp-block-list ol li {
         margin: 0 0 6px 0 !important;
         line-height: 1.2 !important;
         letter-spacing: -0.3px !important;
-        white-space: nowrap !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
+        text-decoration: none !important;
     }
 
+    #manager .quanto-team-box .team-member-position,
     #practice .quanto-team-box .team-member-position {
         font-size: 12px !important;
         color: #555555 !important;
@@ -5813,6 +5792,7 @@ ul.wp-block-list ol li {
         min-height: 33px !important;
     }
 
+    #manager .quanto-team-box .team-content .custom-ul,
     #practice .quanto-team-box .team-content .custom-ul {
         display: flex !important;
         gap: 10px !important;
@@ -5821,18 +5801,22 @@ ul.wp-block-list ol li {
         list-style: none !important;
     }
 
+    #manager .quanto-team-box .team-content .custom-ul li a,
     #practice .quanto-team-box .team-content .custom-ul li a {
         width: auto !important;
         height: auto !important;
         background: transparent !important;
+        background-color: transparent !important;
     }
 
+    #manager .quanto-team-box .team-content .custom-ul li a svg,
     #practice .quanto-team-box .team-content .custom-ul li a svg {
         width: 18px !important;
         height: 18px !important;
         fill: currentColor !important;
     }
 
+    #manager .quanto-team-box .team-content .custom-ul li a i,
     #practice .quanto-team-box .team-content .custom-ul li a i {
         font-size: 18px !important;
     }
