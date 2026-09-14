@@ -1052,20 +1052,72 @@ add_action('wp_head', function() {
     <?php
 });
 
-// Move social icons from image thumb to below text using JS
+// Move social icons from image thumb to below text, and link team image to member profile
 add_action('wp_footer', function() {
     ?>
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    function setupQuantoTeamBoxes() {
         var teamBoxes = document.querySelectorAll(".quanto-team-box");
         teamBoxes.forEach(function(box) {
+            // 1. Move social icons below text if still inside team-thumb
             var ul = box.querySelector(".custom-ul");
             var content = box.querySelector(".team-content");
-            if (ul && content) {
+            if (ul && content && !content.contains(ul)) {
                 content.appendChild(ul);
             }
+
+            // 2. Link the image/thumb to the team member's profile page
+            var nameLink = box.querySelector(".team-member-name a");
+            var thumb = box.querySelector(".team-thumb");
+            if (nameLink && thumb) {
+                var href = nameLink.getAttribute("href");
+                var target = nameLink.getAttribute("target");
+                if (href) {
+                    thumb.style.cursor = "pointer";
+
+                    if (!thumb.querySelector("a.team-thumb-link") && thumb.parentElement.tagName !== "A") {
+                        var linkWrapper = document.createElement("a");
+                        linkWrapper.href = href;
+                        if (target) {
+                            linkWrapper.target = target;
+                        }
+                        linkWrapper.className = "team-thumb-link";
+                        linkWrapper.setAttribute("aria-label", nameLink.textContent.trim());
+
+                        var imgs = Array.from(thumb.querySelectorAll("img"));
+                        if (imgs.length > 0) {
+                            imgs.forEach(function(img) {
+                                linkWrapper.appendChild(img);
+                            });
+                            thumb.insertBefore(linkWrapper, thumb.firstChild);
+                        }
+                    }
+
+                    if (!thumb.dataset.linkAttached) {
+                        thumb.dataset.linkAttached = "true";
+                        thumb.addEventListener("click", function(e) {
+                            // Do not intercept clicks on social icons
+                            if (e.target.closest(".custom-ul a")) return;
+                            if (e.target.closest("a.team-thumb-link")) return; // handled natively
+                            if (target === "_blank") {
+                                window.open(href, "_blank");
+                            } else {
+                                window.location.href = href;
+                            }
+                        });
+                    }
+                }
+            }
         });
-    });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener("DOMContentLoaded", setupQuantoTeamBoxes);
+    } else {
+        setupQuantoTeamBoxes();
+    }
+    setTimeout(setupQuantoTeamBoxes, 300);
+    setTimeout(setupQuantoTeamBoxes, 1000);
     </script>
     <style id="quanto-team-social-css">
     /* Styling for the relocated social icons */

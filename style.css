@@ -5444,12 +5444,11 @@ ul.wp-block-list ol li {
    Leadership Page - Management Team Cards (#manager) - Figma Design Match
    ========================================================================== */
 
-/* 1. Row Container: Centered with max-width and balanced gap */
+/* 1. Row Container: Centered with max-width */
 #manager .row {
     max-width: 1040px !important;
     margin-left: auto !important;
     margin-right: auto !important;
-    row-gap: 50px !important;
 }
 
 /* 2. Card Container: Wider cards (~460px-480px) */
@@ -5470,6 +5469,17 @@ ul.wp-block-list ol li {
     overflow: hidden !important;
     margin: 0 !important;
     border-radius: 0 !important;
+    cursor: pointer !important;
+}
+
+#manager .quanto-team-box .team-thumb a.team-thumb-link,
+.quanto-team-box .team-thumb a.team-thumb-link {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: relative !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
 }
 
 /* 4. Image: Fills Square, focused on face & shoulders */
@@ -5486,7 +5496,11 @@ ul.wp-block-list ol li {
 #manager .quanto-team-box .team-thumb::before,
 #manager .quanto-team-box .team-thumb::after,
 #manager .quanto-team-box:hover .team-thumb::before,
-#manager .quanto-team-box:hover .team-thumb::after {
+#manager .quanto-team-box:hover .team-thumb::after,
+#practice .quanto-team-box .team-thumb::before,
+#practice .quanto-team-box .team-thumb::after,
+#practice .quanto-team-box:hover .team-thumb::before,
+#practice .quanto-team-box:hover .team-thumb::after {
     display: none !important;
     content: none !important;
     opacity: 0 !important;
@@ -5521,7 +5535,8 @@ ul.wp-block-list ol li {
 }
 
 /* Social Icons */
-#manager .quanto-team-box .team-content .custom-ul {
+#manager .quanto-team-box .team-content .custom-ul,
+#practice .quanto-team-box .team-content .custom-ul {
     display: flex !important;
     gap: 14px !important;
     margin-top: 18px !important;
@@ -5529,12 +5544,14 @@ ul.wp-block-list ol li {
     list-style: none !important;
 }
 
-#manager .quanto-team-box .team-content .custom-ul li {
+#manager .quanto-team-box .team-content .custom-ul li,
+#practice .quanto-team-box .team-content .custom-ul li {
     margin: 0 !important;
     padding: 0 !important;
 }
 
-#manager .quanto-team-box .team-content .custom-ul li a {
+#manager .quanto-team-box .team-content .custom-ul li a,
+#practice .quanto-team-box .team-content .custom-ul li a {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -5549,19 +5566,22 @@ ul.wp-block-list ol li {
     transition: color 0.2s ease !important;
 }
 
-#manager .quanto-team-box .team-content .custom-ul li a:hover {
+#manager .quanto-team-box .team-content .custom-ul li a:hover,
+#practice .quanto-team-box .team-content .custom-ul li a:hover {
     color: #6A35FF !important;
     background: transparent !important;
 }
 
-#manager .quanto-team-box .team-content .custom-ul li a svg {
+#manager .quanto-team-box .team-content .custom-ul li a svg,
+#practice .quanto-team-box .team-content .custom-ul li a svg {
     width: 22px !important;
     height: 22px !important;
     fill: currentColor !important;
     color: inherit !important;
 }
 
-#manager .quanto-team-box .team-content .custom-ul li a i {
+#manager .quanto-team-box .team-content .custom-ul li a i,
+#practice .quanto-team-box .team-content .custom-ul li a i {
     font-size: 22px !important;
     color: inherit !important;
 }
@@ -5612,5 +5632,214 @@ ul.wp-block-list ol li {
     #manager .quanto-team-box .team-content .custom-ul li a i {
         font-size: 24px !important;
         color: inherit !important;
+    }
+}
+
+/* ==========================================================================
+   Practice Heads & Principals (#practice) - Mobile 2-Column with 16px Spacing
+   ========================================================================== */
+#practice .quanto-team-box {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+#practice .quanto-team-box .team-thumb {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 3 / 4 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    cursor: pointer !important;
+}
+
+#practice .quanto-team-box .team-thumb img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center top !important;
+    display: block !important;
+    border-radius: 0 !important;
+}
+
+#practice .quanto-team-box .team-thumb a.team-thumb-link {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    cursor: pointer !important;
+}
+
+#practice .quanto-team-box .team-content {
+    margin-top: 0 !important;
+    border: 1px solid #E5E5E5 !important;
+    border-top: none !important;
+    background: #ffffff !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+    text-align: left !important;
+}
+
+#practice .quanto-team-box .team-member-name,
+#practice .quanto-team-box .team-member-name a {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-weight: 700 !important;
+    color: #000000 !important;
+    margin: 0 0 6px 0 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.4px !important;
+    text-decoration: none !important;
+}
+
+#practice .quanto-team-box .team-member-position {
+    font-family: 'Instrument Sans', sans-serif !important;
+    color: #555555 !important;
+    display: block !important;
+    margin: 0 0 14px 0 !important;
+    font-weight: 400 !important;
+    line-height: 1.35 !important;
+}
+
+@media (max-width: 768px) {
+    /* 1. Section 16px spacing from left and right */
+    .elementor-element-ae742f9 {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .elementor-element-ae742f9 > .e-con-inner,
+    .elementor-element-ae742f9 .elementor-element-8be9dd6 {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        box-sizing: border-box !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    #practice {
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 2. Grid layout: exactly 2 equal columns on mobile */
+    #practice .row {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 14px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    #practice .col-xl-6,
+    #practice .col-md-6,
+    #practice .col-sm-12 {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* 3. Card Container */
+    #practice .quanto-team-box {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        height: 100% !important;
+    }
+
+    /* 4. Card Image Thumb */
+    #practice .quanto-team-box .team-thumb {
+        position: relative !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 3 / 4 !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+    }
+
+    #practice .quanto-team-box .team-thumb img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center top !important;
+    }
+
+    /* 5. Card Content Box */
+    #practice .quanto-team-box .team-content {
+        margin-top: 0 !important;
+        border: 1px solid #E5E5E5 !important;
+        border-top: none !important;
+        padding: 16px 12px !important;
+        background: #ffffff !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 !important;
+        text-align: left !important;
+    }
+
+    #practice .quanto-team-box .team-member-name,
+    #practice .quanto-team-box .team-member-name a {
+        font-size: 17px !important;
+        font-weight: 700 !important;
+        color: #000000 !important;
+        margin: 0 0 6px 0 !important;
+        line-height: 1.2 !important;
+        letter-spacing: -0.3px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    #practice .quanto-team-box .team-member-position {
+        font-size: 12px !important;
+        color: #555555 !important;
+        margin: 0 0 14px 0 !important;
+        font-weight: 400 !important;
+        line-height: 1.35 !important;
+        min-height: 33px !important;
+    }
+
+    #practice .quanto-team-box .team-content .custom-ul {
+        display: flex !important;
+        gap: 10px !important;
+        margin-top: auto !important;
+        padding: 0 !important;
+        list-style: none !important;
+    }
+
+    #practice .quanto-team-box .team-content .custom-ul li a {
+        width: auto !important;
+        height: auto !important;
+        background: transparent !important;
+    }
+
+    #practice .quanto-team-box .team-content .custom-ul li a svg {
+        width: 18px !important;
+        height: 18px !important;
+        fill: currentColor !important;
+    }
+
+    #practice .quanto-team-box .team-content .custom-ul li a i {
+        font-size: 18px !important;
     }
 }
