@@ -5705,23 +5705,17 @@ ul.wp-block-list ol li {
     line-height: 1.35 !important;
 }
 
-@media (max-width: 768px) {
-    /* 1. Section 16px spacing from left and right */
-    .elementor-element-ae742f9 {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        box-sizing: border-box !important;
-    }
+.elementor-22337 .elementor-element.elementor-element-ae742f9,
+.elementor-element.elementor-element-ae742f9 {
+    --margin-top: 0px !important;
+    margin-top: 0px !important;
+}
 
-    .elementor-element-ae742f9 > .e-con-inner,
-    .elementor-element-ae742f9 .elementor-element-8be9dd6 {
-        padding-left: 16px !important;
-        padding-right: 16px !important;
-        box-sizing: border-box !important;
-        width: 100% !important;
-        max-width: 100% !important;
+@media (max-width: 768px) {
+    .elementor-22337 .elementor-element.elementor-element-ae742f9,
+    .elementor-element.elementor-element-ae742f9 {
+        --margin-top: 0px !important;
+        margin-top: 0px !important;
     }
 
     #practice {
