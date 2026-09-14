@@ -5862,4 +5862,262 @@ ul.wp-block-list ol li {
     #practice .quanto-team-box .team-content .custom-ul li a i {
         font-size: 18px !important;
     }
+
+    /* ==========================================================================
+       About Us Overview Section Mobile Gallery (Matching Image 2 Layout)
+       ========================================================================== */
+    .elementor-element.elementor-element-3dc56d0 {
+        padding-top: 40px !important;
+        padding-bottom: 40px !important;
+    }
+
+    .elementor-element.elementor-element-3dc56d0,
+    .elementor-element.elementor-element-3dc56d0 > .e-con-inner,
+    .elementor-element.elementor-element-0f5dbaf,
+    .elementor-element.elementor-element-d1bca3a,
+    .elementor-element.elementor-element-d1bca3a > .e-con-inner {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Subtitle and heading */
+    .elementor-element.elementor-element-0b36552 {
+        margin-bottom: 24px !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        width: 100% !important;
+    }
+
+    .elementor-element.elementor-element-1e0db62 .elementor-heading-title {
+        font-size: 13px !important;
+        letter-spacing: 0.6px !important;
+        margin-bottom: 12px !important;
+    }
+
+    .elementor-element.elementor-element-0169cee {
+        font-size: 28px !important;
+        line-height: 1.25 !important;
+        letter-spacing: -0.5px !important;
+    }
+
+    /* 18dc9bb: Main content grid */
+    .elementor-element.elementor-element-18dc9bb {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        column-gap: 14px !important;
+        row-gap: 20px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Unfold child 2 into direct grid items */
+    .elementor-element.elementor-element-e19f66c {
+        display: contents !important;
+    }
+
+    /* 1. Paragraph 1: Full width at top */
+    .elementor-element.elementor-element-403530a {
+        grid-column: 1 / -1 !important;
+        order: 1 !important;
+        width: 100% !important;
+        margin: 0 0 14px 0 !important;
+        padding: 0 !important;
+    }
+
+    .elementor-element.elementor-element-403530a p {
+        font-size: 15px !important;
+        line-height: 1.6 !important;
+        color: #333333 !important;
+        margin: 0 !important;
+    }
+
+    /* 2. Paragraph 2: Full width below paragraph 1 */
+    .elementor-element.elementor-element-3cbd0a4 {
+        grid-column: 1 / -1 !important;
+        order: 2 !important;
+        width: 100% !important;
+        margin: 0 0 10px 0 !important;
+        padding: 0 !important;
+    }
+
+    .elementor-element.elementor-element-3cbd0a4 p {
+        font-size: 15px !important;
+        line-height: 1.6 !important;
+        color: #333333 !important;
+        margin: 0 !important;
+    }
+
+    /* 3. Left Image: Man & woman writing on glass (7cd0be3) */
+    .elementor-element.elementor-element-7cd0be3 {
+        grid-column: 1 / 2 !important;
+        order: 3 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    /* 4. Right Image: Woman in pink blazer (60a2e05) */
+    .elementor-element.elementor-element-60a2e05 {
+        grid-column: 2 / 3 !important;
+        order: 4 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    /* 5. Bottom Image: 3 Women with laptop (4b67977) */
+    .elementor-element.elementor-element-4b67977 {
+        grid-column: 1 / -1 !important;
+        order: 5 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 10px 0 0 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    /* Image containers */
+    .elementor-element.elementor-element-7cd0be3 .elementor-widget-container,
+    .elementor-element.elementor-element-60a2e05 .elementor-widget-container,
+    .elementor-element.elementor-element-4b67977 .elementor-widget-container {
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Aspect ratios */
+    .elementor-element.elementor-element-7cd0be3 .elementor-widget-image {
+        width: 100% !important;
+        aspect-ratio: 3 / 4 !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        transform: none !important;
+    }
+
+    .elementor-element.elementor-element-60a2e05 .elementor-widget-image {
+        width: 100% !important;
+        aspect-ratio: 1 / 1 !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        transform: none !important;
+    }
+
+    .elementor-element.elementor-element-4b67977 .elementor-widget-image {
+        width: 100% !important;
+        aspect-ratio: 16 / 11 !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        transform: none !important;
+    }
+
+    .elementor-element.elementor-element-7cd0be3 img,
+    .elementor-element.elementor-element-60a2e05 img,
+    .elementor-element.elementor-element-4b67977 img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        display: block !important;
+        transform: none !important;
+    }
+
+    /* Keep images visible and cancel GSAP parallax translate that causes overlap */
+    .elementor-element-8cd6469,
+    .elementor-element-f7f45dd,
+    .elementor-element-3a628c6,
+    .elementor-element-8cd6469 *,
+    .elementor-element-f7f45dd *,
+    .elementor-element-3a628c6 *,
+    #mas_smooth_scroller.elementor-element-8cd6469,
+    #mas_smooth_scroller.elementor-element-f7f45dd,
+    #mas_smooth_scroller.elementor-element-3a628c6 {
+        visibility: visible !important;
+        opacity: 1 !important;
+        transform: none !important;
+        translate: none !important;
+        rotate: none !important;
+        scale: none !important;
+    }
+
+    /* ==========================================================================
+       Homepage About Section Mobile Gallery
+       ========================================================================== */
+    .elementor-element-1174619 {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        box-sizing: border-box !important;
+        display: block !important;
+    }
+
+    .elementor-element-dd32913 {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        column-gap: 14px !important;
+        row-gap: 14px !important;
+        width: 100% !important;
+    }
+
+    .elementor-element-789cb6d,
+    .elementor-element-a804c4c {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .elementor-element-49ab410,
+    .elementor-element-f6d7351,
+    .elementor-element-49ab410 *,
+    .elementor-element-f6d7351 * {
+        visibility: visible !important;
+        opacity: 1 !important;
+        transform: none !important;
+        translate: none !important;
+    }
+
+    .elementor-element-789cb6d .quanto-project-thumb {
+        width: 100% !important;
+        aspect-ratio: 3 / 4 !important;
+        overflow: hidden !important;
+    }
+
+    .elementor-element-789cb6d .quanto-project-thumb img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+    }
+
+    .elementor-element-a804c4c .quanto-project-thumb {
+        width: 100% !important;
+        aspect-ratio: 1 / 1 !important;
+        overflow: hidden !important;
+        margin-bottom: 12px !important;
+    }
+
+    .elementor-element-a804c4c .quanto-project-thumb img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+    }
+
+    .elementor-element-34aec32 .quanto-link-btn {
+        text-decoration: underline !important;
+        text-underline-offset: 4px !important;
+        font-weight: 600 !important;
+        color: #000000 !important;
+    }
 }
