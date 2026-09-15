@@ -95,7 +95,7 @@ add_action('wp_footer', function() {
         .intel-nav-bar .intel-nav-title {
             display: block !important;
             font-family: 'Instrument Sans', sans-serif !important;
-            font-size: 15px !important;
+            font-size: 12px !important;
             font-weight: 500 !important;
             color: #0f172a !important;
             letter-spacing: -0.3px !important;
