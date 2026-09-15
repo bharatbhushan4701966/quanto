@@ -271,23 +271,32 @@ if ( ! function_exists( 'cmr_dark_media_coverage_shortcode' ) ) {
                     align-items: flex-start;
                     gap: 15px;
                     margin-bottom: 20px;
+                    width: 100%;
                 }
                 .cmr-dmc-filters {
-                    overflow-x: auto;
-                    white-space: nowrap;
-                    width: 100%;
-                    padding-bottom: 8px;
-                    gap: 10px;
-                    -webkit-overflow-scrolling: touch;
-                    scrollbar-width: none;
+                    display: flex !important;
+                    flex-wrap: nowrap !important;
+                    overflow-x: auto !important;
+                    white-space: nowrap !important;
+                    width: 100% !important;
+                    max-width: 100% !important;
+                    box-sizing: border-box !important;
+                    padding-bottom: 8px !important;
+                    gap: 10px !important;
+                    -webkit-overflow-scrolling: touch !important;
+                    scrollbar-width: none !important;
+                    -ms-overflow-style: none !important;
                 }
                 .cmr-dmc-filters::-webkit-scrollbar {
-                    display: none;
+                    display: none !important;
+                    height: 0 !important;
+                    width: 0 !important;
                 }
                 .cmr-dmc-filter-btn {
-                    flex-shrink: 0;
-                    padding: 6px 18px;
-                    font-size: 13px;
+                    flex-shrink: 0 !important;
+                    white-space: nowrap !important;
+                    padding: 6px 18px !important;
+                    font-size: 13px !important;
                 }
             }
         </style>
