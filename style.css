@@ -6271,6 +6271,41 @@ ul.wp-block-list ol li {
 }
 
 @media (max-width: 768px) {
+    /* Parent elementor container padding reset for 16px total screen edge space */
+    .elementor-element-b632ab3,
+    .elementor-element-b632ab3 > .e-con-inner,
+    .elementor-element:has(.cmr-industry-intel-section),
+    .e-con:has(.cmr-industry-intel-section),
+    .e-con-inner:has(.cmr-industry-intel-section),
+    .elementor-widget:has(.cmr-industry-intel-section),
+    .elementor-widget-container:has(.cmr-industry-intel-section),
+    .elementor-shortcode:has(.cmr-industry-intel-section) {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        --padding-left: 0px !important;
+        --padding-right: 0px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .cmr-industry-intel-section,
+    .cmr-industry-intelligence,
+    .cmr-marketing-services-section,
+    .cmr-consulting-advisory-section {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-top: 15px !important;
+        margin-bottom: 40px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
     .intel-nav-bar {
         display: flex !important;
         justify-content: space-between !important;
@@ -6285,14 +6320,140 @@ ul.wp-block-list ol li {
         margin-bottom: 25px !important;
     }
 
-    .cmr-industry-intel-section {
-        margin-top: 15px !important;
-        margin-bottom: 40px !important;
+    .cmr-industry-intel-section .intel-nav-bar:not(.intel-nav-fixed-js),
+    .cmr-industry-intelligence .intel-nav-bar:not(.intel-nav-fixed-js),
+    .cmr-marketing-services-section .intel-nav-bar:not(.intel-nav-fixed-js),
+    .cmr-consulting-advisory-section .intel-nav-bar:not(.intel-nav-fixed-js) {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
     }
 
     .cmr-intel-header-wrapper {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        width: 100% !important;
+        gap: 16px !important;
         margin-top: 15px !important;
         margin-bottom: 25px !important;
+    }
+
+    .cmr-intel-header h2,
+    .intel-header h2 {
+        font-size: 26px !important;
+        line-height: 1.25 !important;
+        letter-spacing: -0.5px !important;
+        margin: 0 0 8px 0 !important;
+    }
+
+    .cmr-intel-header p,
+    .intel-header p {
+        font-size: 14px !important;
+        line-height: 1.5 !important;
+        color: #475569 !important;
+        margin: 0 !important;
+    }
+
+    .intel-controls {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: flex !important;
+        justify-content: stretch !important;
+        margin: 0 !important;
+    }
+
+    .intel-search {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: block !important;
+    }
+
+    .intel-controls #intel-search-form,
+    #intel-search-form {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 48px !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        align-items: center !important;
+        position: relative !important;
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 50px !important;
+        padding: 4px 6px 4px 18px !important;
+        margin: 0 !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    #intel-search-input {
+        flex: 1 1 auto !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        border: none !important;
+        background: transparent !important;
+        outline: none !important;
+        font-size: 14px !important;
+        color: #0f172a !important;
+        padding: 0 !important;
+        font-family: 'Instrument Sans', sans-serif !important;
+    }
+
+    #intel-search-input::placeholder {
+        color: #94a3b8 !important;
+        font-size: 14px !important;
+    }
+
+    .intel-search-btn {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        border-radius: 50% !important;
+        background: #5c24d3 !important;
+        color: #ffffff !important;
+        border: none !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+        margin-left: 8px !important;
+        cursor: pointer !important;
+        padding: 0 !important;
+    }
+
+    .intel-search-btn i,
+    .intel-search-btn svg {
+        font-size: 13px !important;
+        width: 13px !important;
+        height: 13px !important;
+        color: #ffffff !important;
+    }
+
+    .intel-grid {
+        grid-template-columns: 1fr !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 0 35px 0 !important;
+        gap: 24px !important;
+        box-sizing: border-box !important;
+    }
+
+    .intel-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .intel-card-img {
+        width: 100% !important;
+        border-radius: 8px !important;
+        overflow: hidden !important;
+        margin-bottom: 14px !important;
+    }
+
+    .intel-card-img img {
+        width: 100% !important;
+        height: auto !important;
+        display: block !important;
     }
 
     #overview::before,
