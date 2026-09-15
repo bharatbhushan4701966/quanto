@@ -8071,6 +8071,19 @@ ul.wp-block-list ol li {
         align-self: flex-start !important;
         margin-top: auto !important;
     }
+
+    /* Media Contacts Mobile */
+    .cmr-media-contacts-header {
+        text-align: center !important;
+        margin-bottom: 30px !important;
+    }
+    .cmr-media-contacts-header h2 {
+        font-size: 26px !important;
+        text-align: center !important;
+    }
+    .cmr-media-contacts-header p {
+        text-align: center !important;
+    }
 }
 
 /* Specific adjustment for mobile devices */
