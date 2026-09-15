@@ -7705,6 +7705,84 @@ ul.wp-block-list ol li {
     .explore-sectors-track {
         padding-left: 16px !important;
     }
+
+    /* CMR News Carousel Mobile Styles */
+    .cmr-nc-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+    }
+
+    .elementor-element:has(.cmr-nc-wrapper),
+    .e-con:has(.cmr-nc-wrapper),
+    .e-con-inner:has(.cmr-nc-wrapper),
+    .elementor-widget:has(.cmr-nc-wrapper),
+    .elementor-widget-container:has(.cmr-nc-wrapper) {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        --padding-left: 0px !important;
+        --padding-right: 0px !important;
+    }
+
+    .cmr-nc-header {
+        padding: 0 16px !important;
+        margin-bottom: 22px !important;
+    }
+
+    .cmr-nc-title {
+        font-size: 26px !important;
+        line-height: 1.25 !important;
+        letter-spacing: -0.5px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .cmr-nc-subtitle {
+        font-size: 14px !important;
+        line-height: 1.45 !important;
+    }
+
+    .cmr-nc-carousel {
+        padding-bottom: 15px !important;
+    }
+
+    .cmr-nc-card {
+        height: 440px !important;
+        border-radius: 12px !important;
+    }
+
+    .cmr-nc-top-bar {
+        padding: 14px 16px !important;
+    }
+
+    .cmr-nc-card-content {
+        padding: 16px 16px 20px 16px !important;
+    }
+
+    .cmr-nc-post-title {
+        font-size: 18px !important;
+        line-height: 1.35 !important;
+        margin-bottom: 8px !important;
+    }
+
+    .cmr-nc-excerpt {
+        font-size: 13px !important;
+        line-height: 1.45 !important;
+        margin-bottom: 14px !important;
+    }
+
+    .cmr-nc-read-btn {
+        font-size: 15px !important;
+    }
+
+    .cmr-nc-carousel .swiper-pagination-bullet {
+        width: 36px !important;
+        height: 4.5px !important;
+    }
 }
 
 /* Specific adjustment for mobile devices */

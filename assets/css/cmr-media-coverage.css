@@ -480,81 +480,194 @@
 }
 
 .cmr-nc-carousel {
-    padding-bottom: 50px !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    padding: 10px 0 20px 0 !important;
+    position: relative !important;
+}
+
+.cmr-nc-carousel .swiper-wrapper {
+    align-items: stretch;
+}
+
+.cmr-nc-carousel .swiper-slide {
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    opacity: 0.55;
+    transform: scale(0.96);
+    border-radius: 12px;
+    box-sizing: border-box;
+    height: auto;
+}
+
+.cmr-nc-carousel .swiper-slide-active {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .cmr-nc-card {
     position: relative;
-    height: 620px;
+    height: 480px;
+    border-radius: 12px;
     overflow: hidden;
     background-size: cover;
     background-position: center;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: space-between;
+    box-sizing: border-box;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
 .cmr-nc-overlay {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 4.17%, rgba(0, 0, 0, 0.04) 76.44%);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.25) 30%, rgba(10, 15, 30, 0.72) 62%, rgba(10, 15, 30, 0.95) 100%);
     z-index: 1;
+    pointer-events: none;
 }
 
-.cmr-nc-badge {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background: #fff;
-    color: #333;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 5px 12px;
-    border-radius: 4px;
-    z-index: 2;
-}
-
-.cmr-nc-card-content {
+/* Top Bar: Logo on left, Badge on right */
+.cmr-nc-top-bar {
     position: relative;
-    z-index: 2;
-    padding: 30px;
-    color: #fff;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.cmr-nc-logo-wrap {
+    display: flex;
+    align-items: center;
 }
 
 .cmr-nc-logo {
-    height: 40px;
+    max-height: 38px;
+    max-width: 120px;
     width: auto;
-    margin-bottom: 15px;
-    background: #cc0000;
+    height: auto;
+    object-fit: contain;
     border-radius: 4px;
-    padding: 2px;
+    display: block;
+}
+
+.cmr-nc-logo-bbc {
+    background: #bb1919;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 11px;
+    padding: 3px 6px;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    letter-spacing: 0.5px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.cmr-nc-logo-fallback {
+    background: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
+}
+
+/* Featured Badge */
+.cmr-nc-badge {
+    background: #ffffff;
+    color: #5842c3;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cmr-nc-badge svg {
+    color: #5842c3;
+    fill: #5842c3;
+    display: inline-block;
+    vertical-align: -1px;
+    margin-right: 5px;
+}
+
+/* Bottom Card Content */
+.cmr-nc-card-content {
+    position: relative;
+    z-index: 3;
+    padding: 20px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
 }
 
 .cmr-nc-meta-info {
-    font-size: 13px;
-    color: #ddd;
-    margin-bottom: 10px;
     display: flex;
-    gap: 15px;
+    justify-content: space-between;
     align-items: center;
+    font-size: 13px;
+    color: #e2e8f0;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.cmr-nc-meta-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+}
+
+.cmr-nc-meta-sep {
+    opacity: 0.6;
+    margin: 0 2px;
+}
+
+.cmr-nc-publisher {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.cmr-nc-date {
+    color: #cbd5e1;
+}
+
+.cmr-nc-time {
+    font-size: 13px;
+    color: #cbd5e1;
+    font-weight: 500;
+    white-space: nowrap;
 }
 
 .cmr-nc-post-title {
     font-family: 'Instrument Sans', sans-serif;
-    font-size: 24px;
-    font-weight: 600;
+    font-size: 21px;
+    font-weight: 700;
     line-height: 1.3;
+    color: #ffffff;
     margin: 0 0 10px 0;
-    color: #fff;
-    letter-spacing: 0px;
+    letter-spacing: -0.3px;
 }
 
 .cmr-nc-excerpt {
-    font-size: 14px;
-    color: #bbb;
-    margin-bottom: 20px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 16px 0;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -562,31 +675,128 @@
 .cmr-nc-read-btn {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    color: #fff;
+    gap: 8px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
     text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
-    border-bottom: 1px solid #fff;
-    padding-bottom: 2px;
-    transition: opacity 0.3s;
+    border-bottom: 2px solid #ffffff;
+    padding-bottom: 3px;
+    align-self: flex-start;
+    transition: opacity 0.2s ease;
+    line-height: 1.2;
 }
 
 .cmr-nc-read-btn:hover {
-    opacity: 0.8;
+    opacity: 0.85;
 }
 
-.swiper-pagination-bullet {
-    width: 30px !important;
-    height: 4px !important;
-    border-radius: 2px !important;
-    background: #ccc !important;
-    opacity: 0.5 !important;
+/* Pagination: Horizontal Rounded Dashes */
+.cmr-nc-carousel .swiper-pagination {
+    position: static !important;
+    margin-top: 22px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 8px !important;
+    width: 100% !important;
 }
 
-.swiper-pagination-bullet-active {
-    background: #6C5CE7 !important;
+.cmr-nc-carousel .swiper-pagination-bullet {
+    width: 42px !important;
+    height: 5px !important;
+    border-radius: 4px !important;
+    background: #ded8fa !important;
     opacity: 1 !important;
+    margin: 0 !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+.cmr-nc-carousel .swiper-pagination-bullet-active {
+    background: #5842c3 !important;
+    opacity: 1 !important;
+}
+
+/* Mobile Edge-to-Edge and Card Peeking */
+@media (max-width: 768px) {
+    .cmr-nc-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+    }
+
+    .elementor-element:has(.cmr-nc-wrapper),
+    .e-con:has(.cmr-nc-wrapper),
+    .e-con-inner:has(.cmr-nc-wrapper),
+    .elementor-widget:has(.cmr-nc-wrapper),
+    .elementor-widget-container:has(.cmr-nc-wrapper) {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        --padding-left: 0px !important;
+        --padding-right: 0px !important;
+    }
+
+    .cmr-nc-header {
+        padding: 0 16px !important;
+        margin-bottom: 22px !important;
+    }
+
+    .cmr-nc-title {
+        font-size: 26px !important;
+        line-height: 1.25 !important;
+        letter-spacing: -0.5px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .cmr-nc-subtitle {
+        font-size: 14px !important;
+        line-height: 1.45 !important;
+    }
+
+    .cmr-nc-carousel {
+        padding-bottom: 15px !important;
+    }
+
+    .cmr-nc-card {
+        height: 440px !important;
+        border-radius: 12px !important;
+    }
+
+    .cmr-nc-top-bar {
+        padding: 14px 16px !important;
+    }
+
+    .cmr-nc-card-content {
+        padding: 16px 16px 20px 16px !important;
+    }
+
+    .cmr-nc-post-title {
+        font-size: 18px !important;
+        line-height: 1.35 !important;
+        margin-bottom: 8px !important;
+    }
+
+    .cmr-nc-excerpt {
+        font-size: 13px !important;
+        line-height: 1.45 !important;
+        margin-bottom: 14px !important;
+    }
+
+    .cmr-nc-read-btn {
+        font-size: 15px !important;
+    }
+
+    .cmr-nc-carousel .swiper-pagination-bullet {
+        width: 36px !important;
+        height: 4.5px !important;
+    }
 }
 
 
