@@ -27,6 +27,148 @@ if ( ! function_exists( 'cmr_stay_updated_shortcode' ) ) {
 
         ob_start();
         ?>
+        <style>
+        @media (max-width: 768px) {
+            .elementor-element:has(.cmr-stay-updated-section),
+            .e-con:has(.cmr-stay-updated-section),
+            .e-con-boxed:has(.cmr-stay-updated-section),
+            .e-con-inner:has(.cmr-stay-updated-section),
+            .elementor-widget:has(.cmr-stay-updated-section),
+            .elementor-widget-container:has(.cmr-stay-updated-section),
+            .elementor-shortcode:has(.cmr-stay-updated-section),
+            .elementor-column:has(.cmr-stay-updated-section),
+            .elementor-section:has(.cmr-stay-updated-section) {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                --padding-left: 0px !important;
+                --padding-right: 0px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .cmr-stay-updated-section {
+                padding: 35px 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .cmr-stay-updated-section .stay-updated-container {
+                padding-left: 16px !important;
+                padding-right: 16px !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .cmr-stay-updated-section .stay-updated-title {
+                font-size: 26px !important;
+                font-weight: 700 !important;
+                line-height: 1.25 !important;
+                letter-spacing: -0.5px !important;
+                color: #111111 !important;
+                margin-top: 0 !important;
+                margin-bottom: 24px !important;
+                padding: 0 !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .cmr-stay-updated-section .stay-updated-grid {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 28px !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-sizing: border-box !important;
+            }
+
+            .cmr-stay-updated-section .stay-updated-card {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-sizing: border-box !important;
+            }
+
+            .cmr-stay-updated-section .stay-updated-img-link {
+                width: 100% !important;
+                margin-bottom: 14px !important;
+                display: block !important;
+            }
+
+            .cmr-stay-updated-section .stay-updated-image {
+                width: 100% !important;
+                border-radius: 8px !important;
+                overflow: hidden !important;
+            }
+
+            .cmr-stay-updated-section .stay-updated-image img {
+                width: 100% !important;
+                height: auto !important;
+                aspect-ratio: 16 / 9 !important;
+                object-fit: cover !important;
+                border-radius: 8px !important;
+                display: block !important;
+            }
+
+            .cmr-stay-updated-section .stay-updated-meta {
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                margin-bottom: 10px !important;
+                font-size: 13px !important;
+                color: #64748b !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .cmr-stay-updated-section .stay-updated-card-title {
+                font-size: 18px !important;
+                font-weight: 700 !important;
+                line-height: 1.35 !important;
+                color: #0f172a !important;
+                margin: 0 0 10px 0 !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .cmr-stay-updated-section .stay-updated-card-title a {
+                color: #0f172a !important;
+                text-decoration: none !important;
+            }
+
+            .cmr-stay-updated-section .stay-updated-excerpt {
+                font-size: 14px !important;
+                line-height: 1.55 !important;
+                color: #475569 !important;
+                margin-bottom: 14px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .cmr-stay-updated-section .stay-updated-more-link {
+                font-size: 13px !important;
+                font-weight: 600 !important;
+                color: #111111 !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                gap: 6px !important;
+                border-bottom: 1px solid #111111 !important;
+                padding-bottom: 2px !important;
+                text-decoration: none !important;
+                margin-top: 0 !important;
+            }
+        }
+        </style>
+
         <div class="cmr-stay-updated-section">
             <div class="stay-updated-container">
                 <h2 class="stay-updated-title">Stay up to date with the latest from CMR -<br>research, perspectives and industry news.</h2>
@@ -79,6 +221,56 @@ if ( ! function_exists( 'cmr_stay_updated_shortcode' ) ) {
                 <?php endif; wp_reset_postdata(); ?>
             </div>
         </div>
+        <script>
+        (function() {
+            function resetStayUpdatedParentPadding() {
+                if (window.innerWidth <= 768) {
+                    var sections = document.querySelectorAll('.cmr-stay-updated-section');
+                    sections.forEach(function(sec) {
+                        var el = sec.parentElement;
+                        while (el && el !== document.body) {
+                            if (el.classList && (
+                                el.classList.contains('elementor-element') ||
+                                el.classList.contains('e-con') ||
+                                el.classList.contains('e-con-inner') ||
+                                el.classList.contains('elementor-widget') ||
+                                el.classList.contains('elementor-widget-container') ||
+                                el.classList.contains('elementor-column') ||
+                                el.classList.contains('elementor-section') ||
+                                el.classList.contains('elementor-container')
+                            )) {
+                                el.style.setProperty('padding-left', '0px', 'important');
+                                el.style.setProperty('padding-right', '0px', 'important');
+                                el.style.setProperty('margin-left', '0px', 'important');
+                                el.style.setProperty('margin-right', '0px', 'important');
+                                el.style.setProperty('--padding-left', '0px', 'important');
+                                el.style.setProperty('--padding-right', '0px', 'important');
+                                var inners = el.querySelectorAll('.e-con-inner');
+                                inners.forEach(function(inn) {
+                                    inn.style.setProperty('padding-left', '0px', 'important');
+                                    inn.style.setProperty('padding-right', '0px', 'important');
+                                    inn.style.setProperty('margin-left', '0px', 'important');
+                                    inn.style.setProperty('margin-right', '0px', 'important');
+                                    inn.style.setProperty('--padding-left', '0px', 'important');
+                                    inn.style.setProperty('--padding-right', '0px', 'important');
+                                });
+                            }
+                            el = el.parentElement;
+                        }
+                    });
+                }
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', resetStayUpdatedParentPadding);
+            } else {
+                resetStayUpdatedParentPadding();
+            }
+            window.addEventListener('resize', resetStayUpdatedParentPadding);
+            setTimeout(resetStayUpdatedParentPadding, 100);
+            setTimeout(resetStayUpdatedParentPadding, 500);
+            setTimeout(resetStayUpdatedParentPadding, 1500);
+        })();
+        </script>
         <?php
         return ob_get_clean();
     }

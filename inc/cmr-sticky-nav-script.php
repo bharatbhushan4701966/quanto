@@ -117,6 +117,13 @@ add_action('wp_footer', function() {
             padding: 40px 16px !important;
         }
 
+        .cmr-mu-title {
+            font-size: 28px !important;
+            line-height: 1.2 !important;
+            letter-spacing: -0.5px !important;
+            margin-bottom: 16px !important;
+        }
+
         .cmr-fi-carousel-wrapper,
         .cmr-intel-trends-wrapper {
             margin-top: 25px !important;
@@ -534,7 +541,10 @@ add_action('wp_footer', function() {
         .cmr-industry-intel-section .intel-nav-bar:not(.intel-nav-fixed-js),
         .cmr-industry-intelligence .intel-nav-bar:not(.intel-nav-fixed-js),
         .cmr-marketing-services-section .intel-nav-bar:not(.intel-nav-fixed-js),
-        .cmr-consulting-advisory-section .intel-nav-bar:not(.intel-nav-fixed-js) {
+        .cmr-consulting-advisory-section .intel-nav-bar:not(.intel-nav-fixed-js),
+        .cmr-latest-insights-section .intel-nav-bar:not(.intel-nav-fixed-js),
+        .cmr-latest-insights-semiconductors .intel-nav-bar:not(.intel-nav-fixed-js),
+        [class*="cmr-latest-insights"] .intel-nav-bar:not(.intel-nav-fixed-js) {
             padding-left: 0 !important;
             padding-right: 0 !important;
         }
@@ -820,13 +830,24 @@ add_action('wp_footer', function() {
             display: none !important;
         }
 
-        /* Latest Insights Mobile Rules */
+        /* Latest Insights Mobile Rules - Zero parent padding for exact 16px screen edge alignment */
+        .elementor-element.elementor-element-eb6bc8c,
+        .elementor-element[data-id="eb6bc8c"],
+        .elementor-element.elementor-element-eb6bc8c > .e-con-inner,
+        .elementor-element[data-id="eb6bc8c"] > .e-con-inner,
         .elementor-element:has(.cmr-latest-insights-section),
         .e-con:has(.cmr-latest-insights-section),
+        .e-con-boxed:has(.cmr-latest-insights-section),
         .e-con-inner:has(.cmr-latest-insights-section),
+        .elementor-element:has([class*="cmr-latest-insights"]),
+        .e-con:has([class*="cmr-latest-insights"]),
+        .e-con-inner:has([class*="cmr-latest-insights"]),
         .elementor-widget:has(.cmr-latest-insights-section),
         .elementor-widget-container:has(.cmr-latest-insights-section),
-        .elementor-shortcode:has(.cmr-latest-insights-section) {
+        .elementor-shortcode:has(.cmr-latest-insights-section),
+        .elementor-widget:has([class*="cmr-latest-insights"]),
+        .elementor-widget-container:has([class*="cmr-latest-insights"]),
+        .elementor-shortcode:has([class*="cmr-latest-insights"]) {
             padding-left: 0 !important;
             padding-right: 0 !important;
             margin-left: 0 !important;
@@ -838,7 +859,8 @@ add_action('wp_footer', function() {
             box-sizing: border-box !important;
         }
 
-        .cmr-latest-insights-section {
+        .cmr-latest-insights-section,
+        [class*="cmr-latest-insights-"] {
             padding-left: 16px !important;
             padding-right: 16px !important;
             margin-left: 0 !important;
@@ -848,6 +870,36 @@ add_action('wp_footer', function() {
             box-sizing: border-box !important;
             margin-top: 25px !important;
             margin-bottom: 35px !important;
+        }
+
+        /* Nav bar inside Latest Insights must NOT have extra 16px padding on mobile */
+        .cmr-latest-insights-section .intel-nav-bar:not(.intel-nav-fixed-js),
+        [class*="cmr-latest-insights"] .intel-nav-bar:not(.intel-nav-fixed-js) {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            width: 100% !important;
+        }
+
+        /* Inner blocks must span 100% width cleanly */
+        .cmr-latest-insights-section .cmr-latest-insights-header,
+        .cmr-latest-insights-section .cmr-insights-filters-bar,
+        .cmr-latest-insights-section .cmr-insights-grid,
+        .cmr-latest-insights-section .cmr-insights-featured,
+        .cmr-latest-insights-section .cmr-insights-stack,
+        [class*="cmr-latest-insights"] .cmr-latest-insights-header,
+        [class*="cmr-latest-insights"] .cmr-insights-filters-bar,
+        [class*="cmr-latest-insights"] .cmr-insights-grid,
+        [class*="cmr-latest-insights"] .cmr-insights-featured,
+        [class*="cmr-latest-insights"] .cmr-insights-stack {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            box-sizing: border-box !important;
         }
 
         .cmr-latest-insights-header {
@@ -1112,6 +1164,180 @@ add_action('wp_footer', function() {
             border-bottom: 1px solid #0f172a !important;
             padding-bottom: 1px !important;
         }
+
+        /* Stay Updated Section Mobile Edge-to-Edge 16px */
+        .elementor-element.elementor-element-a5270fe,
+        .elementor-element[data-id="a5270fe"],
+        .elementor-element.elementor-element-a5270fe > .e-con-inner,
+        .elementor-element[data-id="a5270fe"] > .e-con-inner,
+        .elementor-element:has(.cmr-stay-updated-section),
+        .e-con:has(.cmr-stay-updated-section),
+        .e-con-boxed:has(.cmr-stay-updated-section),
+        .e-con-inner:has(.cmr-stay-updated-section),
+        .elementor-widget:has(.cmr-stay-updated-section),
+        .elementor-widget-container:has(.cmr-stay-updated-section),
+        .elementor-shortcode:has(.cmr-stay-updated-section) {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            --padding-left: 0px !important;
+            --padding-right: 0px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .cmr-stay-updated-section {
+            padding-top: 40px !important;
+            padding-bottom: 40px !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .stay-updated-container {
+            padding-left: 16px !important;
+            padding-right: 16px !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .stay-updated-title {
+            font-size: 26px !important;
+            font-weight: 700 !important;
+            line-height: 1.25 !important;
+            letter-spacing: -0.5px !important;
+            color: #111111 !important;
+            margin-bottom: 25px !important;
+            width: 100% !important;
+        }
+
+        .stay-updated-grid {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 28px !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .stay-updated-card {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        .stay-updated-image {
+            width: 100% !important;
+            border-radius: 8px !important;
+            overflow: hidden !important;
+            margin-bottom: 14px !important;
+        }
+
+        .stay-updated-image img {
+            width: 100% !important;
+            height: auto !important;
+            aspect-ratio: 16 / 9 !important;
+            object-fit: cover !important;
+            border-radius: 8px !important;
+            display: block !important;
+        }
+
+        .stay-updated-meta {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            margin-bottom: 8px !important;
+            font-size: 12px !important;
+            color: #64748b !important;
+        }
+
+        .stay-updated-card-title {
+            font-size: 18px !important;
+            font-weight: 700 !important;
+            line-height: 1.35 !important;
+            color: #0f172a !important;
+            margin: 0 0 10px 0 !important;
+        }
+
+        .stay-updated-card-title a {
+            color: #0f172a !important;
+            text-decoration: none !important;
+        }
+
+        .stay-updated-excerpt {
+            font-size: 14px !important;
+            line-height: 1.5 !important;
+            color: #475569 !important;
+            margin-bottom: 14px !important;
+        }
+
+        .stay-updated-more-link {
+            font-size: 13px !important;
+            font-weight: 600 !important;
+            color: #111111 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            border-bottom: 1px solid #111111 !important;
+            padding-bottom: 2px !important;
+            text-decoration: none !important;
+        }
+
+        /* Explore Sectors Mobile 16px */
+        .elementor-element.elementor-element-ea4d4ac,
+        .elementor-element[data-id="ea4d4ac"],
+        .elementor-element.elementor-element-ea4d4ac > .e-con-inner,
+        .elementor-element[data-id="ea4d4ac"] > .e-con-inner,
+        .elementor-element:has(.cmr-explore-sectors-section),
+        .e-con:has(.cmr-explore-sectors-section),
+        .e-con-boxed:has(.cmr-explore-sectors-section),
+        .e-con-inner:has(.cmr-explore-sectors-section),
+        .elementor-widget:has(.cmr-explore-sectors-section),
+        .elementor-widget-container:has(.cmr-explore-sectors-section),
+        .elementor-shortcode:has(.cmr-explore-sectors-section) {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            --padding-left: 0px !important;
+            --padding-right: 0px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .cmr-explore-sectors-section {
+            padding: 40px 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+        .explore-sectors-container {
+            padding-left: 16px !important;
+            padding-right: 16px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+        .explore-sectors-title {
+            font-size: 26px !important;
+            line-height: 1.25 !important;
+            letter-spacing: -0.5px !important;
+            margin-bottom: 25px !important;
+        }
+        .explore-sectors-track {
+            padding-left: 16px !important;
+        }
     }
     </style>
     <script>
@@ -1132,6 +1358,48 @@ add_action('wp_footer', function() {
                     });
                 });
             }
+
+            // Zero out parent elementor container padding on mobile for 16px screen edge alignment
+            function fixMobileEdgeSpacing() {
+                if (window.innerWidth <= 768) {
+                    document.querySelectorAll('.cmr-latest-insights-section, [class*="cmr-latest-insights"], .cmr-stay-updated-section, [class*="cmr-stay-updated"], .cmr-explore-sectors-section, [class*="cmr-explore-sectors"]').forEach(function(sec) {
+                        var p = sec.parentElement;
+                        while (p && p !== document.body) {
+                            if (p.classList && (
+                                p.classList.contains('elementor-element') ||
+                                p.classList.contains('e-con') ||
+                                p.classList.contains('e-con-inner') ||
+                                p.classList.contains('elementor-widget') ||
+                                p.classList.contains('elementor-widget-container') ||
+                                p.classList.contains('elementor-column') ||
+                                p.classList.contains('elementor-section') ||
+                                p.classList.contains('elementor-container')
+                            )) {
+                                p.style.setProperty('padding-left', '0px', 'important');
+                                p.style.setProperty('padding-right', '0px', 'important');
+                                p.style.setProperty('margin-left', '0px', 'important');
+                                p.style.setProperty('margin-right', '0px', 'important');
+                                p.style.setProperty('--padding-left', '0px', 'important');
+                                p.style.setProperty('--padding-right', '0px', 'important');
+                                var inners = p.querySelectorAll('.e-con-inner');
+                                inners.forEach(function(inner) {
+                                    inner.style.setProperty('padding-left', '0px', 'important');
+                                    inner.style.setProperty('padding-right', '0px', 'important');
+                                    inner.style.setProperty('margin-left', '0px', 'important');
+                                    inner.style.setProperty('margin-right', '0px', 'important');
+                                    inner.style.setProperty('--padding-left', '0px', 'important');
+                                    inner.style.setProperty('--padding-right', '0px', 'important');
+                                });
+                            }
+                            p = p.parentElement;
+                        }
+                    });
+                }
+            }
+            fixMobileEdgeSpacing();
+            window.addEventListener('resize', fixMobileEdgeSpacing);
+            setTimeout(fixMobileEdgeSpacing, 200);
+            setTimeout(fixMobileEdgeSpacing, 800);
 
             // Find all intel nav bars across sections
             const navBars = document.querySelectorAll('.cmr-industry-nav-bar, .cmr-latest-nav-bar, .intel-nav-bar');

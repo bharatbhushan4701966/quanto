@@ -115,24 +115,54 @@
 /* Instead of hardcoding the 3rd, the hover state covers it cleanly */
 
 @media (max-width: 768px) {
+    .elementor-element.elementor-element-ea4d4ac,
+    .elementor-element[data-id="ea4d4ac"],
+    .elementor-element.elementor-element-ea4d4ac > .e-con-inner,
+    .elementor-element[data-id="ea4d4ac"] > .e-con-inner,
+    .elementor-element:has(.cmr-explore-sectors-section),
+    .e-con:has(.cmr-explore-sectors-section),
+    .e-con-boxed:has(.cmr-explore-sectors-section),
+    .e-con-inner:has(.cmr-explore-sectors-section),
+    .elementor-widget:has(.cmr-explore-sectors-section),
+    .elementor-widget-container:has(.cmr-explore-sectors-section),
+    .elementor-shortcode:has(.cmr-explore-sectors-section) {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        --padding-left: 0px !important;
+        --padding-right: 0px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
     .cmr-explore-sectors-section {
-        padding: 50px 0;
+        padding: 40px 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
     }
     .explore-sectors-container {
-        padding-left: 20px;
-        padding-right: 20px;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
     }
     .explore-sectors-title {
-        font-size: 28px;
-        margin-bottom: 30px;
+        font-size: 26px !important;
+        line-height: 1.25 !important;
+        letter-spacing: -0.5px !important;
+        margin-bottom: 25px !important;
     }
     .explore-sectors-track {
-        padding-left: 20px;
+        padding-left: 16px !important;
     }
     .explore-sector-card {
-        flex: 0 0 280px;
-        height: auto;
-        min-height: 320px;
-        padding: 30px 24px;
+        flex: 0 0 280px !important;
+        height: auto !important;
+        min-height: 300px !important;
+        padding: 28px 20px !important;
     }
 }

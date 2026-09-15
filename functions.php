@@ -505,6 +505,12 @@ function cmr_market_updates_shortcode($atts) {
                 gap: 40px;
                 padding: 40px 16px !important;
             }
+            .cmr-mu-title {
+                font-size: 28px !important;
+                line-height: 1.2 !important;
+                letter-spacing: -0.5px !important;
+                margin-bottom: 16px !important;
+            }
         }
     </style>
 

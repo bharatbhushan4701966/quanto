@@ -260,12 +260,23 @@
 }
 
 @media (max-width: 768px) {
+    .elementor-element.elementor-element-eb6bc8c,
+    .elementor-element[data-id="eb6bc8c"],
+    .elementor-element.elementor-element-eb6bc8c > .e-con-inner,
+    .elementor-element[data-id="eb6bc8c"] > .e-con-inner,
     .elementor-element:has(.cmr-latest-insights-section),
     .e-con:has(.cmr-latest-insights-section),
+    .e-con-boxed:has(.cmr-latest-insights-section),
     .e-con-inner:has(.cmr-latest-insights-section),
+    .elementor-element:has([class*="cmr-latest-insights"]),
+    .e-con:has([class*="cmr-latest-insights"]),
+    .e-con-inner:has([class*="cmr-latest-insights"]),
     .elementor-widget:has(.cmr-latest-insights-section),
     .elementor-widget-container:has(.cmr-latest-insights-section),
-    .elementor-shortcode:has(.cmr-latest-insights-section) {
+    .elementor-shortcode:has(.cmr-latest-insights-section),
+    .elementor-widget:has([class*="cmr-latest-insights"]),
+    .elementor-widget-container:has([class*="cmr-latest-insights"]),
+    .elementor-shortcode:has([class*="cmr-latest-insights"]) {
         padding-left: 0 !important;
         padding-right: 0 !important;
         margin-left: 0 !important;
@@ -277,7 +288,8 @@
         box-sizing: border-box !important;
     }
 
-    .cmr-latest-insights-section {
+    .cmr-latest-insights-section,
+    [class*="cmr-latest-insights-"] {
         padding-left: 16px !important;
         padding-right: 16px !important;
         margin-left: 0 !important;
@@ -287,6 +299,36 @@
         box-sizing: border-box !important;
         margin-top: 25px !important;
         margin-bottom: 35px !important;
+    }
+
+    /* Nav bar inside Latest Insights must NOT have extra 16px padding on mobile */
+    .cmr-latest-insights-section .intel-nav-bar:not(.intel-nav-fixed-js),
+    [class*="cmr-latest-insights"] .intel-nav-bar:not(.intel-nav-fixed-js) {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+    }
+
+    /* Inner blocks must span 100% width cleanly */
+    .cmr-latest-insights-section .cmr-latest-insights-header,
+    .cmr-latest-insights-section .cmr-insights-filters-bar,
+    .cmr-latest-insights-section .cmr-insights-grid,
+    .cmr-latest-insights-section .cmr-insights-featured,
+    .cmr-latest-insights-section .cmr-insights-stack,
+    [class*="cmr-latest-insights"] .cmr-latest-insights-header,
+    [class*="cmr-latest-insights"] .cmr-insights-filters-bar,
+    [class*="cmr-latest-insights"] .cmr-insights-grid,
+    [class*="cmr-latest-insights"] .cmr-insights-featured,
+    [class*="cmr-latest-insights"] .cmr-insights-stack {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        box-sizing: border-box !important;
     }
 
     .cmr-latest-insights-header {
