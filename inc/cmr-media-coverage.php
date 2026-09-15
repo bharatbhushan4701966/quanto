@@ -32,16 +32,405 @@ function cmr_render_media_coverage_shortcode( $atts ) {
 
     ob_start();
     ?>
+    <style>
+    /* Sticky Intel Nav Bar for Media Coverage - Desktop */
+    @media (min-width: 769px) {
+        .cmr-mc-wrapper .intel-nav-bar {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            width: 100% !important;
+            min-height: 52px !important;
+            background: #ffffff !important;
+            border-bottom: 1px solid #eeeeee !important;
+            margin-bottom: 35px !important;
+            padding: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        .cmr-mc-wrapper .intel-nav-title {
+            font-size: 16px !important;
+            font-weight: 600 !important;
+            color: #111111 !important;
+        }
+
+        .cmr-mc-wrapper .intel-nav-links {
+            display: flex !important;
+            gap: 25px !important;
+            align-items: center !important;
+        }
+
+        .cmr-mc-wrapper .intel-nav-links a {
+            text-decoration: none !important;
+            color: #333333 !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            transition: color 0.2s ease !important;
+        }
+
+        .cmr-mc-wrapper .intel-nav-links a:hover,
+        .cmr-mc-wrapper .intel-nav-links a.active {
+            color: #5842c3 !important;
+        }
+    }
+
+    /* Filters Row & Scrollable Chips */
+    .cmr-mc-filters-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 35px;
+        gap: 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .cmr-mc-pills {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .cmr-mc-pill {
+        background: transparent;
+        border: 1px solid #E2E8F0;
+        border-radius: 40px;
+        padding: 8px 24px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #111111;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        outline: none;
+    }
+
+    .cmr-mc-pill:hover {
+        border-color: #5842c3;
+        color: #5842c3;
+    }
+
+    .cmr-mc-pill.active {
+        background: #5842c3 !important;
+        border-color: #5842c3 !important;
+        color: #ffffff !important;
+    }
+
+    /* Search Bar */
+    .cmr-mc-search {
+        position: relative;
+        width: 320px;
+        flex-shrink: 0;
+    }
+
+    .cmr-mc-search input {
+        width: 100%;
+        height: 48px;
+        border-radius: 40px;
+        border: 1px solid #E2E8F0;
+        padding: 10px 50px 10px 22px;
+        font-size: 14.5px;
+        color: #111111;
+        background: #ffffff;
+        box-sizing: border-box;
+        outline: none;
+        transition: border-color 0.2s ease;
+    }
+
+    .cmr-mc-search input:focus {
+        border-color: #5842c3;
+    }
+
+    .cmr-mc-search-icon {
+        position: absolute;
+        right: 6px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #5842c3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        pointer-events: none;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        .cmr-mc-wrapper {
+            padding-left: 16px !important;
+            padding-right: 16px !important;
+            box-sizing: border-box !important;
+        }
+
+        .cmr-mc-wrapper .intel-nav-bar:not(.intel-nav-fixed-js) {
+            margin-left: -16px !important;
+            margin-right: -16px !important;
+            width: calc(100% + 32px) !important;
+            padding: 0 16px !important;
+            margin-bottom: 25px !important;
+        }
+
+        .cmr-mc-header {
+            text-align: center !important;
+            margin-bottom: 25px !important;
+        }
+
+        .cmr-mc-title {
+            font-size: 28px !important;
+            line-height: 1.25 !important;
+            letter-spacing: -0.5px !important;
+            margin-bottom: 10px !important;
+            text-align: center !important;
+        }
+
+        .cmr-mc-subtitle {
+            font-size: 14px !important;
+            line-height: 1.5 !important;
+            color: #475569 !important;
+            text-align: center !important;
+            margin: 0 auto !important;
+        }
+
+        .cmr-mc-filters-row {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 16px !important;
+            margin-bottom: 25px !important;
+            width: 100% !important;
+        }
+
+        /* Horizontal Scrollable Chips on Mobile */
+        .cmr-mc-pills {
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            scrollbar-width: none !important;
+            gap: 10px !important;
+            width: 100% !important;
+            padding-bottom: 4px !important;
+            margin: 0 !important;
+        }
+
+        .cmr-mc-pills::-webkit-scrollbar {
+            display: none !important;
+        }
+
+        .cmr-mc-pill {
+            flex-shrink: 0 !important;
+            white-space: nowrap !important;
+            padding: 8px 22px !important;
+            font-size: 14px !important;
+        }
+
+        /* Full Width Search Bar on Mobile */
+        .cmr-mc-search {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+        }
+
+        .cmr-mc-search input {
+            width: 100% !important;
+            height: 48px !important;
+            border-radius: 40px !important;
+            padding: 10px 50px 10px 22px !important;
+        }
+
+        /* Grid & Cards on Mobile */
+        .cmr-mc-wrapper .cmr-mc-grid,
+        .cmr-media-coverage-wrapper .cmr-mc-grid,
+        .cmr-media-coverage-wrapper .cmr-mc-grid-inner {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 24px !important;
+            width: 100% !important;
+        }
+
+        /* Featured Card Mobile */
+        .cmr-mc-wrapper .cmr-mc-featured,
+        .cmr-media-coverage-wrapper .cmr-mc-featured {
+            grid-column: span 12 !important;
+            width: 100% !important;
+            margin-bottom: 0 !important;
+        }
+
+        .cmr-mc-wrapper .cmr-mc-featured .cmr-mc-link-wrapper,
+        .cmr-media-coverage-wrapper .cmr-mc-featured-inner {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 16px !important;
+            width: 100% !important;
+        }
+
+        .cmr-mc-wrapper .cmr-mc-featured .cmr-mc-image-wrap,
+        .cmr-media-coverage-wrapper .cmr-mc-featured-image {
+            flex: none !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            height: 220px !important;
+            min-height: 0 !important;
+            border-radius: 12px !important;
+            position: relative !important;
+            overflow: hidden !important;
+        }
+
+        .cmr-mc-wrapper .cmr-mc-featured .cmr-mc-image-wrap .cmr-mc-bg,
+        .cmr-media-coverage-wrapper .cmr-mc-featured-image .cmr-mc-bg {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+        }
+
+        .cmr-mc-wrapper .cmr-mc-featured .cmr-mc-content,
+        .cmr-media-coverage-wrapper .cmr-mc-featured-content {
+            flex: none !important;
+            width: 100% !important;
+            padding: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        .cmr-mc-wrapper .cmr-mc-featured .cmr-mc-meta,
+        .cmr-media-coverage-wrapper .cmr-mc-featured .cmr-mc-meta {
+            font-size: 12px !important;
+            color: #64748b !important;
+            margin-bottom: 8px !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+        }
+
+        .cmr-mc-wrapper .cmr-mc-featured .cmr-mc-title,
+        .cmr-media-coverage-wrapper .cmr-mc-featured .cmr-mc-title {
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            line-height: 1.35 !important;
+            color: #111111 !important;
+            margin: 0 0 10px 0 !important;
+        }
+
+        .cmr-mc-wrapper .cmr-mc-featured .cmr-mc-excerpt,
+        .cmr-media-coverage-wrapper .cmr-mc-featured .cmr-mc-excerpt {
+            font-size: 13px !important;
+            line-height: 1.5 !important;
+            color: #475569 !important;
+            margin: 0 0 14px 0 !important;
+        }
+
+        .cmr-mc-wrapper .cmr-mc-featured .cmr-mc-read-coverage,
+        .cmr-media-coverage-wrapper .cmr-mc-featured .cmr-mc-view-btn {
+            font-size: 13.5px !important;
+            font-weight: 600 !important;
+            color: #111111 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            text-decoration: none !important;
+            border-bottom: 1px solid #111111 !important;
+            padding-bottom: 2px !important;
+            align-self: flex-start !important;
+            margin-top: 4px !important;
+        }
+
+        /* Standard Cards Mobile */
+        .cmr-mc-wrapper .cmr-mc-standard,
+        .cmr-media-coverage-wrapper .cmr-mc-card {
+            grid-column: span 12 !important;
+            width: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        .cmr-mc-wrapper .cmr-mc-standard .cmr-mc-link-wrapper,
+        .cmr-media-coverage-wrapper .cmr-mc-card-inner {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 14px !important;
+            width: 100% !important;
+        }
+
+        .cmr-mc-wrapper .cmr-mc-standard .cmr-mc-image-wrap,
+        .cmr-media-coverage-wrapper .cmr-mc-card-image {
+            width: 100% !important;
+            height: 200px !important;
+            aspect-ratio: auto !important;
+            border-radius: 12px !important;
+            position: relative !important;
+            overflow: hidden !important;
+            margin-bottom: 0 !important;
+        }
+
+        .cmr-mc-wrapper .cmr-mc-standard .cmr-mc-image-wrap .cmr-mc-bg,
+        .cmr-media-coverage-wrapper .cmr-mc-card-image .cmr-mc-bg {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+        }
+
+        .cmr-mc-wrapper .cmr-mc-standard .cmr-mc-content,
+        .cmr-media-coverage-wrapper .cmr-mc-card-content {
+            width: 100% !important;
+            padding: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        .cmr-mc-wrapper .cmr-mc-standard .cmr-mc-meta,
+        .cmr-media-coverage-wrapper .cmr-mc-card .cmr-mc-meta-row {
+            font-size: 11.5px !important;
+            color: #64748b !important;
+            margin-bottom: 8px !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+        }
+
+        .cmr-mc-wrapper .cmr-mc-standard .cmr-mc-title,
+        .cmr-media-coverage-wrapper .cmr-mc-card .cmr-mc-title {
+            font-size: 15.5px !important;
+            font-weight: 600 !important;
+            line-height: 1.4 !important;
+            color: #111111 !important;
+            margin: 0 0 14px 0 !important;
+        }
+
+        .cmr-mc-wrapper .cmr-mc-standard .cmr-mc-read-coverage,
+        .cmr-media-coverage-wrapper .cmr-mc-card .cmr-mc-view-btn {
+            font-size: 13px !important;
+            font-weight: 600 !important;
+            color: #111111 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            text-decoration: none !important;
+            border-bottom: 1px solid #111111 !important;
+            padding-bottom: 2px !important;
+            align-self: flex-start !important;
+            margin-top: auto !important;
+        }
+    }
+    </style>
+
     <div class="cmr-mc-wrapper" id="cmr-in-news">
-        <div class="cmr-mc-top-banner">
-            <div class="cmr-mc-top-banner-title">CMR in News</div>
-            <div class="cmr-mc-top-banner-links">
-                <a href="#">Featured</a>
-                <a href="#">Latest Updates</a>
-                <a href="#">Press Release</a>
-                <a href="#">CMR Live</a>
-                <a href="#">Reports</a>
-                <a href="#">Media Contacts</a>
+        <div class="intel-nav-bar cmr-mc-top-nav">
+            <div class="intel-nav-title">
+                CMR in News
+            </div>
+            <div class="intel-nav-links">
+                <a href="#featured">Featured</a>
+                <a href="#latest-updates">Latest Updates</a>
+                <a href="#press-release">Press Release</a>
+                <a href="#cmr-live">CMR Live</a>
+                <a href="#reports">Reports</a>
+                <a href="#media-contacts">Media Contacts</a>
+
+                <a href="#cmr-footer-card-section" class="cmr-nav-btn-subscribe" style="display: none; align-items: center; justify-content: center; background: #fff; color: #111; font-weight: 600; font-size: 14px; padding: 8px 16px; border-radius: 40px; text-decoration: none; border: 1px solid #111; margin-left: 15px; line-height: 1; transition: all 0.3s ease;">
+                    Subscribe now
+                    <svg style="margin-left: 6px;" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
             </div>
         </div>
 
@@ -54,33 +443,15 @@ function cmr_render_media_coverage_shortcode( $atts ) {
             <div class="cmr-mc-pills">
                 <button class="cmr-mc-pill active" data-publisher="">All</button>
                 <?php 
-                // Show up to 4 publishers, hide others in "More"
-                $count = 0;
-                $hidden_publishers = array();
                 foreach ( $publishers as $pub ) {
-                    if ( $count < 4 ) {
-                        echo '<button class="cmr-mc-pill" data-publisher="' . esc_attr( $pub ) . '">' . esc_html( $pub ) . '</button>';
-                    } else {
-                        $hidden_publishers[] = $pub;
-                    }
-                    $count++;
+                    echo '<button class="cmr-mc-pill" data-publisher="' . esc_attr( $pub ) . '">' . esc_html( $pub ) . '</button>';
                 }
                 ?>
-                <?php if ( ! empty( $hidden_publishers ) ) : ?>
-                <div class="cmr-mc-pill-dropdown">
-                    <button class="cmr-mc-pill cmr-mc-more-btn">More <span class="cmr-mc-chevron">⌄</span></button>
-                    <div class="cmr-mc-dropdown-content">
-                        <?php foreach ( $hidden_publishers as $hpub ) : ?>
-                            <button class="cmr-mc-dropdown-item" data-publisher="<?php echo esc_attr( $hpub ); ?>"><?php echo esc_html( $hpub ); ?></button>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-                <?php endif; ?>
             </div>
             <div class="cmr-mc-search">
                 <input type="text" id="cmr-mc-search-input" placeholder="Search by name">
                 <div class="cmr-mc-search-icon">
-                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="7" cy="7" r="5" stroke="white" stroke-width="2"/>
                         <path d="M11 11L14 14" stroke="white" stroke-width="2" stroke-linecap="round"/>
                     </svg>

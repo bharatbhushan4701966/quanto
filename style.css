@@ -7029,7 +7029,8 @@ ul.wp-block-list ol li {
     .cmr-consulting-advisory-section .intel-nav-bar:not(.intel-nav-fixed-js),
     .cmr-latest-insights-section .intel-nav-bar:not(.intel-nav-fixed-js),
     .cmr-latest-insights-semiconductors .intel-nav-bar:not(.intel-nav-fixed-js),
-    [class*="cmr-latest-insights"] .intel-nav-bar:not(.intel-nav-fixed-js) {
+    [class*="cmr-latest-insights"] .intel-nav-bar:not(.intel-nav-fixed-js),
+    .cmr-mc-wrapper .intel-nav-bar:not(.intel-nav-fixed-js) {
         padding-left: 0 !important;
         padding-right: 0 !important;
     }
@@ -7782,6 +7783,293 @@ ul.wp-block-list ol li {
     .cmr-nc-carousel .swiper-pagination-bullet {
         width: 36px !important;
         height: 4.5px !important;
+    }
+
+    /* CMR Media Coverage Mobile */
+    .cmr-mc-wrapper {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        box-sizing: border-box !important;
+    }
+
+    .cmr-mc-wrapper .intel-nav-bar:not(.intel-nav-fixed-js) {
+        margin-left: -16px !important;
+        margin-right: -16px !important;
+        width: calc(100% + 32px) !important;
+        padding: 0 16px !important;
+        margin-bottom: 25px !important;
+    }
+
+    .cmr-mc-header {
+        text-align: center !important;
+        margin-bottom: 25px !important;
+    }
+
+    .cmr-mc-title {
+        font-size: 28px !important;
+        line-height: 1.25 !important;
+        letter-spacing: -0.5px !important;
+        margin-bottom: 10px !important;
+        text-align: center !important;
+    }
+
+    .cmr-mc-subtitle {
+        font-size: 14px !important;
+        line-height: 1.5 !important;
+        color: #475569 !important;
+        text-align: center !important;
+        margin: 0 auto !important;
+    }
+
+    .cmr-mc-filters-row {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 16px !important;
+        margin-bottom: 25px !important;
+        width: 100% !important;
+    }
+
+    /* Horizontal Scrollable Chips on Mobile */
+    .cmr-mc-pills {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+        gap: 10px !important;
+        width: 100% !important;
+        padding-bottom: 4px !important;
+        margin: 0 !important;
+    }
+
+    .cmr-mc-pills::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    .cmr-mc-pill {
+        flex-shrink: 0 !important;
+        white-space: nowrap !important;
+        padding: 8px 22px !important;
+        font-size: 14px !important;
+        border-radius: 40px !important;
+        border: 1px solid #E2E8F0 !important;
+        background: transparent !important;
+        color: #111111 !important;
+    }
+
+    .cmr-mc-pill.active {
+        background: #5842c3 !important;
+        border-color: #5842c3 !important;
+        color: #ffffff !important;
+    }
+
+    /* Full Width Search Bar on Mobile */
+    .cmr-mc-search {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        position: relative !important;
+        box-sizing: border-box !important;
+    }
+
+    .cmr-mc-search input {
+        width: 100% !important;
+        height: 48px !important;
+        border-radius: 40px !important;
+        border: 1px solid #E2E8F0 !important;
+        padding: 10px 50px 10px 22px !important;
+        font-size: 14.5px !important;
+        background: #ffffff !important;
+        box-sizing: border-box !important;
+        outline: none !important;
+    }
+
+    .cmr-mc-search-icon {
+        position: absolute !important;
+        right: 6px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        width: 36px !important;
+        height: 36px !important;
+        border-radius: 50% !important;
+        background: #5842c3 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    /* Grid & Cards on Mobile */
+    .cmr-mc-wrapper .cmr-mc-grid,
+    .cmr-media-coverage-wrapper .cmr-mc-grid,
+    .cmr-media-coverage-wrapper .cmr-mc-grid-inner {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 24px !important;
+        width: 100% !important;
+    }
+
+    /* Featured Card Mobile */
+    .cmr-mc-wrapper .cmr-mc-featured,
+    .cmr-media-coverage-wrapper .cmr-mc-featured {
+        grid-column: span 12 !important;
+        width: 100% !important;
+        margin-bottom: 0 !important;
+    }
+
+    .cmr-mc-wrapper .cmr-mc-featured .cmr-mc-link-wrapper,
+    .cmr-media-coverage-wrapper .cmr-mc-featured-inner {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 16px !important;
+        width: 100% !important;
+    }
+
+    .cmr-mc-wrapper .cmr-mc-featured .cmr-mc-image-wrap,
+    .cmr-media-coverage-wrapper .cmr-mc-featured-image {
+        flex: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 220px !important;
+        min-height: 0 !important;
+        border-radius: 12px !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+
+    .cmr-mc-wrapper .cmr-mc-featured .cmr-mc-image-wrap .cmr-mc-bg,
+    .cmr-media-coverage-wrapper .cmr-mc-featured-image .cmr-mc-bg {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+    }
+
+    .cmr-mc-wrapper .cmr-mc-featured .cmr-mc-content,
+    .cmr-media-coverage-wrapper .cmr-mc-featured-content {
+        flex: none !important;
+        width: 100% !important;
+        padding: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .cmr-mc-wrapper .cmr-mc-featured .cmr-mc-meta,
+    .cmr-media-coverage-wrapper .cmr-mc-featured .cmr-mc-meta {
+        font-size: 12px !important;
+        color: #64748b !important;
+        margin-bottom: 8px !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+    }
+
+    .cmr-mc-wrapper .cmr-mc-featured .cmr-mc-title,
+    .cmr-media-coverage-wrapper .cmr-mc-featured .cmr-mc-title {
+        font-size: 18px !important;
+        font-weight: 600 !important;
+        line-height: 1.35 !important;
+        color: #111111 !important;
+        margin: 0 0 10px 0 !important;
+    }
+
+    .cmr-mc-wrapper .cmr-mc-featured .cmr-mc-excerpt,
+    .cmr-media-coverage-wrapper .cmr-mc-featured .cmr-mc-excerpt {
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+        color: #475569 !important;
+        margin: 0 0 14px 0 !important;
+    }
+
+    .cmr-mc-wrapper .cmr-mc-featured .cmr-mc-read-coverage,
+    .cmr-media-coverage-wrapper .cmr-mc-featured .cmr-mc-view-btn {
+        font-size: 13.5px !important;
+        font-weight: 600 !important;
+        color: #111111 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        text-decoration: none !important;
+        border-bottom: 1px solid #111111 !important;
+        padding-bottom: 2px !important;
+        align-self: flex-start !important;
+        margin-top: 4px !important;
+    }
+
+    /* Standard Cards Mobile */
+    .cmr-mc-wrapper .cmr-mc-standard,
+    .cmr-media-coverage-wrapper .cmr-mc-card {
+        grid-column: span 12 !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .cmr-mc-wrapper .cmr-mc-standard .cmr-mc-link-wrapper,
+    .cmr-media-coverage-wrapper .cmr-mc-card-inner {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 14px !important;
+        width: 100% !important;
+    }
+
+    .cmr-mc-wrapper .cmr-mc-standard .cmr-mc-image-wrap,
+    .cmr-media-coverage-wrapper .cmr-mc-card-image {
+        width: 100% !important;
+        height: 200px !important;
+        aspect-ratio: auto !important;
+        border-radius: 12px !important;
+        position: relative !important;
+        overflow: hidden !important;
+        margin-bottom: 0 !important;
+    }
+
+    .cmr-mc-wrapper .cmr-mc-standard .cmr-mc-image-wrap .cmr-mc-bg,
+    .cmr-media-coverage-wrapper .cmr-mc-card-image .cmr-mc-bg {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+    }
+
+    .cmr-mc-wrapper .cmr-mc-standard .cmr-mc-content,
+    .cmr-media-coverage-wrapper .cmr-mc-card-content {
+        width: 100% !important;
+        padding: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .cmr-mc-wrapper .cmr-mc-standard .cmr-mc-meta,
+    .cmr-media-coverage-wrapper .cmr-mc-card .cmr-mc-meta-row {
+        font-size: 11.5px !important;
+        color: #64748b !important;
+        margin-bottom: 8px !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+
+    .cmr-mc-wrapper .cmr-mc-standard .cmr-mc-title,
+    .cmr-media-coverage-wrapper .cmr-mc-card .cmr-mc-title {
+        font-size: 15.5px !important;
+        font-weight: 600 !important;
+        line-height: 1.4 !important;
+        color: #111111 !important;
+        margin: 0 0 14px 0 !important;
+    }
+
+    .cmr-mc-wrapper .cmr-mc-standard .cmr-mc-read-coverage,
+    .cmr-media-coverage-wrapper .cmr-mc-card .cmr-mc-view-btn {
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        color: #111111 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        text-decoration: none !important;
+        border-bottom: 1px solid #111111 !important;
+        padding-bottom: 2px !important;
+        align-self: flex-start !important;
+        margin-top: auto !important;
     }
 }
 

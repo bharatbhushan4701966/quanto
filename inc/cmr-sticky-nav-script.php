@@ -544,7 +544,8 @@ add_action('wp_footer', function() {
         .cmr-consulting-advisory-section .intel-nav-bar:not(.intel-nav-fixed-js),
         .cmr-latest-insights-section .intel-nav-bar:not(.intel-nav-fixed-js),
         .cmr-latest-insights-semiconductors .intel-nav-bar:not(.intel-nav-fixed-js),
-        [class*="cmr-latest-insights"] .intel-nav-bar:not(.intel-nav-fixed-js) {
+        [class*="cmr-latest-insights"] .intel-nav-bar:not(.intel-nav-fixed-js),
+        .cmr-mc-wrapper .intel-nav-bar:not(.intel-nav-fixed-js) {
             padding-left: 0 !important;
             padding-right: 0 !important;
         }
@@ -1362,7 +1363,7 @@ add_action('wp_footer', function() {
             // Zero out parent elementor container padding on mobile for 16px screen edge alignment
             function fixMobileEdgeSpacing() {
                 if (window.innerWidth <= 768) {
-                    document.querySelectorAll('.cmr-latest-insights-section, [class*="cmr-latest-insights"], .cmr-stay-updated-section, [class*="cmr-stay-updated"], .cmr-explore-sectors-section, [class*="cmr-explore-sectors"]').forEach(function(sec) {
+                    document.querySelectorAll('.cmr-latest-insights-section, [class*="cmr-latest-insights"], .cmr-stay-updated-section, [class*="cmr-stay-updated"], .cmr-explore-sectors-section, [class*="cmr-explore-sectors"], .cmr-mc-wrapper').forEach(function(sec) {
                         var p = sec.parentElement;
                         while (p && p !== document.body) {
                             if (p.classList && (
@@ -1407,7 +1408,7 @@ add_action('wp_footer', function() {
                 if (navBar.dataset.stickyInitialized) return;
                 navBar.dataset.stickyInitialized = 'true';
 
-                const section = navBar.closest('.cmr-industry-intelligence, .cmr-latest-insights-section, .cmr-industry-intel-section, .cmr-marketing-services-section, .cmr-consulting-advisory-section, .cmr-enterprisecgd-wrapper, .cmr-channelcgd-wrapper, .cmr-smbcgd-wrapper, .cmr-mrg-wrapper, .elementor-section, .e-con, section') || navBar.parentElement;
+                const section = navBar.closest('.cmr-industry-intelligence, .cmr-latest-insights-section, .cmr-industry-intel-section, .cmr-marketing-services-section, .cmr-consulting-advisory-section, .cmr-enterprisecgd-wrapper, .cmr-channelcgd-wrapper, .cmr-smbcgd-wrapper, .cmr-mrg-wrapper, .cmr-mc-wrapper, .elementor-section, .e-con, section') || navBar.parentElement;
 
                 // Setup Mobile Dropdown Toggle Button
                 let toggleWrap = navBar.querySelector('.intel-nav-mobile-wrap');

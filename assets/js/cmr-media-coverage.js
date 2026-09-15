@@ -91,39 +91,4 @@ jQuery(document).ready(function($) {
         currentPage++;
         loadMediaCoverage(true);
     });
-
-    // Sticky Header Banner with Shadow
-    var banner = $('.cmr-mc-top-banner');
-    if (banner.length) {
-        var bannerOriginalPos = banner.offset().top;
-        var placeholder = $('<div class="cmr-mc-top-banner-placeholder" style="display:none;"></div>');
-        banner.after(placeholder);
-        
-        // Recalculate on resize in case layout changes
-        $(window).on('resize', function() {
-            if (!banner.hasClass('is-sticky')) {
-                bannerOriginalPos = banner.offset().top;
-            }
-        });
-
-        $(window).on('scroll', function() {
-            var scrollPos = $(window).scrollTop();
-            // Trigger when the scroll position passes the banner's original position
-            // Admin bar adds 32px to scroll requirements
-            var offset = $('body').hasClass('admin-bar') ? 32 : 0;
-            if (scrollPos >= bannerOriginalPos - offset) {
-                if (!banner.hasClass('is-sticky')) {
-                    placeholder.height(banner.outerHeight(true)).show();
-                    banner.addClass('is-sticky');
-                    $('body').append(banner); // Detach and move to body to avoid transform clipping!
-                }
-            } else {
-                if (banner.hasClass('is-sticky')) {
-                    placeholder.hide();
-                    banner.removeClass('is-sticky');
-                    placeholder.after(banner); // Put it back to its original location
-                }
-            }
-        });
-    }
 });
