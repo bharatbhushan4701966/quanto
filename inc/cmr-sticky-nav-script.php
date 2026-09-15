@@ -346,9 +346,9 @@ add_action('wp_footer', function() {
             max-width: 100% !important;
             background: #ffffff !important;
             border-radius: 20px !important;
-            padding: 30px 20px !important;
+            padding: 34px 22px 38px 22px !important;
             margin: 25px 0 10px 0 !important;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04) !important;
             box-sizing: border-box !important;
             display: flex !important;
             flex-direction: column !important;
@@ -361,22 +361,34 @@ add_action('wp_footer', function() {
         .elementor-element-137088e h3 {
             text-align: center !important;
             font-family: 'Instrument Sans', sans-serif !important;
-            font-size: 18px !important;
+            font-size: 20px !important;
             font-weight: 600 !important;
             color: #111111 !important;
-            margin: 0 0 20px 0 !important;
+            margin: 0 0 28px 0 !important;
             width: 100% !important;
         }
 
+        /* Outer container: take 100% full width, DO NOT be a 2-column grid itself */
         .elementor-element-bc380a0,
         .elementor-element-bc380a0.e-grid,
-        .elementor-element-bc380a0 > .e-con-inner {
+        .elementor-element-bc380a0.e-con {
+            display: block !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        /* 2x2 Grid for the 4 stats: targets inner container holding the items */
+        .elementor-element-bc380a0 > .e-con-inner,
+        .elementor-element-bc380a0:not(.e-con-boxed) {
             display: grid !important;
-            grid-template-columns: repeat(2, 1fr) !important;
-            --e-con-grid-template-columns: repeat(2, 1fr) !important;
-            gap: 24px 16px !important;
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            --e-con-grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            column-gap: 20px !important;
+            row-gap: 32px !important;
             justify-items: stretch !important;
-            --justify-items: start !important;
             align-items: start !important;
             width: 100% !important;
             max-width: 100% !important;
@@ -385,6 +397,13 @@ add_action('wp_footer', function() {
             box-sizing: border-box !important;
         }
 
+        /* Hide empty headings that create blank gaps */
+        .elementor-element-bc380a0 h2:empty,
+        .elementor-element-bc380a0 h6:empty {
+            display: none !important;
+        }
+
+        /* Stat Item Box */
         .elementor-element-bc380a0 .e-con,
         .elementor-element-c4748af,
         .elementor-element-e046079,
@@ -396,79 +415,102 @@ add_action('wp_footer', function() {
             text-align: left !important;
             width: 100% !important;
             max-width: 100% !important;
+            min-width: 0 !important;
             margin: 0 !important;
             padding: 0 !important;
             box-sizing: border-box !important;
         }
 
+        /* Label / Heading: e.g. SPEND APPROVAL, PROJECTS, MARKET SIZE */
         .elementor-element-c4748af h6,
         .elementor-element-e046079 h6,
         .elementor-element-5de608f h6,
         .elementor-element-6ad38a0 h6,
         .elementor-element-bc380a0 .e-con > h6 {
             font-family: 'Instrument Sans', sans-serif !important;
-            font-size: 11px !important;
+            font-size: 13px !important;
             font-weight: 700 !important;
             letter-spacing: 0.5px !important;
             text-transform: uppercase !important;
             color: #111111 !important;
-            margin: 0 0 6px 0 !important;
+            margin: 0 0 8px 0 !important;
             line-height: 1.2 !important;
             display: block !important;
             text-align: left !important;
         }
 
+        /* Stat Number Row */
+        .elementor-element-f489baf,
+        .elementor-element-9d9803f,
+        .elementor-element-1869b5a,
+        .elementor-element-0f8b3d0,
+        .elementor-element-bc380a0 .e-con:has(> h2) {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: wrap !important;
+            align-items: baseline !important;
+            gap: 6px !important;
+            margin: 0 0 8px 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* Big Stat Number: e.g. $13.23B, 12, 7%, 20% */
         .elementor-element-c4748af h2,
         .elementor-element-e046079 h2,
         .elementor-element-5de608f h2,
         .elementor-element-6ad38a0 h2,
         .elementor-element-bc380a0 .e-con h2 {
             font-family: 'Instrument Sans', sans-serif !important;
-            font-size: 28px !important;
-            font-weight: 700 !important;
-            line-height: 1.1 !important;
+            font-size: clamp(24px, 5.5vw, 28px) !important;
+            font-weight: 800 !important;
+            line-height: 1 !important;
             letter-spacing: -1px !important;
-            color: #0f172a !important;
-            margin: 0 0 6px 0 !important;
-            display: inline-flex !important;
-            align-items: baseline !important;
-            gap: 4px !important;
+            color: #0b0f19 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            display: inline-block !important;
             text-align: left !important;
+            word-break: normal !important;
+            white-space: nowrap !important;
         }
 
-        .elementor-element-f489baf,
-        .elementor-element-9d9803f,
-        .elementor-element-1869b5a,
-        .elementor-element-0f8b3d0 {
-            display: flex !important;
-            flex-direction: row !important;
-            align-items: baseline !important;
-            gap: 4px !important;
-            margin: 0 0 4px 0 !important;
-            width: 100% !important;
+        .elementor-element-c4748af h2 strong,
+        .elementor-element-e046079 h2 strong,
+        .elementor-element-5de608f h2 strong,
+        .elementor-element-6ad38a0 h2 strong {
+            font-weight: 800 !important;
         }
 
+        /* Text beside number: e.g. share, CAGR, growth */
         .elementor-element-1869b5a h6,
-        .elementor-element-0f8b3d0 h6 {
+        .elementor-element-0f8b3d0 h6,
+        .elementor-element-f489baf h6,
+        .elementor-element-9d9803f h6,
+        .elementor-element-bc380a0 .e-con div > h6 {
             font-family: 'Instrument Sans', sans-serif !important;
-            font-size: 13px !important;
+            font-size: 14px !important;
             font-weight: 600 !important;
             color: #475569 !important;
             text-transform: none !important;
             letter-spacing: 0 !important;
             margin: 0 !important;
             display: inline !important;
+            line-height: 1 !important;
+            white-space: nowrap !important;
         }
 
+        /* Description below stat */
         .elementor-element-c4748af p,
         .elementor-element-e046079 p,
         .elementor-element-5de608f p,
         .elementor-element-6ad38a0 p,
         .elementor-element-bc380a0 .e-con > p {
             font-family: 'Instrument Sans', sans-serif !important;
-            font-size: 12px !important;
+            font-size: 13px !important;
             line-height: 1.4 !important;
-            color: #64748b !important;
+            color: #475569 !important;
             margin: 0 !important;
             text-align: left !important;
             display: block !important;
