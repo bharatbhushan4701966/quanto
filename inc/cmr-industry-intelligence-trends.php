@@ -76,6 +76,33 @@ if ( ! function_exists( 'cmr_industry_intelligence_trends_shortcode' ) ) {
                 }
             }
             @media (max-width: 768px) {
+                .cmr-intel-trends-wrapper {
+                    padding-left: 16px !important;
+                    padding-right: 16px !important;
+                    margin-top: 25px !important;
+                    margin-bottom: 35px !important;
+                    margin-left: 0 !important;
+                    margin-right: 0 !important;
+                    width: 100% !important;
+                    max-width: 100% !important;
+                    box-sizing: border-box !important;
+                }
+                .cmr-intel-trends-header {
+                    margin-bottom: 20px !important;
+                    width: 100% !important;
+                }
+                .cmr-intel-trends-header h2 {
+                    font-size: 26px !important;
+                    line-height: 1.25 !important;
+                    letter-spacing: -0.5px !important;
+                    margin: 0 0 8px 0 !important;
+                }
+                .cmr-intel-trends-header p {
+                    font-size: 14px !important;
+                    line-height: 1.5 !important;
+                    color: #475569 !important;
+                    margin: 0 !important;
+                }
                 .cmr-intel-trends-card {
                     width: calc(85vw - 20px);
                 }

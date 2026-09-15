@@ -183,9 +183,39 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
             }
             
             @media (max-width: 768px) {
-                .cmr-fi-badge-pill { top: 20px; left: 20px; }
-                .cmr-fi-content-box { bottom: 20px; left: 20px; right: 20px; }
-                .cmr-fi-slider-container { height: 450px; }
+                .cmr-fi-carousel-wrapper {
+                    padding-left: 16px !important;
+                    padding-right: 16px !important;
+                    margin-top: 25px !important;
+                    margin-bottom: 35px !important;
+                    margin-left: 0 !important;
+                    margin-right: 0 !important;
+                    width: 100% !important;
+                    max-width: 100% !important;
+                    box-sizing: border-box !important;
+                }
+                .cmr-fi-header {
+                    margin-bottom: 20px !important;
+                    width: 100% !important;
+                }
+                .cmr-fi-header h2 {
+                    font-size: 26px !important;
+                    line-height: 1.25 !important;
+                    letter-spacing: -0.5px !important;
+                    margin: 0 0 8px 0 !important;
+                }
+                .cmr-fi-header p {
+                    font-size: 14px !important;
+                    line-height: 1.5 !important;
+                    color: #475569 !important;
+                    margin: 0 !important;
+                }
+                .cmr-fi-badge-pill { top: 16px; left: 16px; padding: 5px 14px; font-size: 12px; }
+                .cmr-fi-content-box { bottom: 16px; left: 16px; right: 16px; }
+                .cmr-fi-slider-container { height: 460px; border-radius: 8px; }
+                .cmr-fi-slide { border-radius: 8px; flex: 0 0 100% !important; }
+                .cmr-fi-slide-title { font-size: 20px !important; line-height: 1.3 !important; margin-bottom: 10px !important; }
+                .cmr-fi-slide-excerpt { font-size: 13px !important; line-height: 1.5 !important; margin-bottom: 15px !important; }
             }
 
             .cmr-fi-meta-row {

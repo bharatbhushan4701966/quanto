@@ -377,7 +377,8 @@ function cmr_market_updates_shortcode($atts) {
             font-family: 'Instrument Sans', sans-serif !important;
             max-width: 1280px;
             margin: 0 auto;
-            padding: 80px 20px;
+            padding: 40px 16px;
+            box-sizing: border-box;
             color: #111;
         }
 
@@ -502,6 +503,7 @@ function cmr_market_updates_shortcode($atts) {
             .cmr-market-updates-section {
                 flex-direction: column;
                 gap: 40px;
+                padding: 40px 16px !important;
             }
         }
     </style>

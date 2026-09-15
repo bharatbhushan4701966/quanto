@@ -243,81 +243,313 @@
 @media (max-width: 991px) {
     .cmr-insights-grid {
         grid-template-columns: 1fr;
+        gap: 25px;
     }
     .cmr-insights-featured .insights-featured-card {
-        min-height: 400px;
+        min-height: 380px;
+        height: 380px;
     }
     .insights-stacked-card {
         height: auto;
+        gap: 18px;
     }
     .insights-stacked-image {
-        flex: 0 0 150px;
+        flex: 0 0 160px;
         height: 120px;
     }
 }
 
 @media (max-width: 768px) {
+    .elementor-element:has(.cmr-latest-insights-section),
+    .e-con:has(.cmr-latest-insights-section),
+    .e-con-inner:has(.cmr-latest-insights-section),
+    .elementor-widget:has(.cmr-latest-insights-section),
+    .elementor-widget-container:has(.cmr-latest-insights-section),
+    .elementor-shortcode:has(.cmr-latest-insights-section) {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        --padding-left: 0px !important;
+        --padding-right: 0px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .cmr-latest-insights-section {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        margin-top: 25px !important;
+        margin-bottom: 35px !important;
+    }
+
+    .cmr-latest-insights-header {
+        margin-top: 20px !important;
+        margin-bottom: 20px !important;
+    }
+
     .cmr-latest-insights-title {
-        font-size: 28px !important;
+        font-size: 26px !important;
+        font-weight: 700 !important;
+        line-height: 1.25 !important;
+        letter-spacing: -0.5px !important;
+        margin: 0 0 8px 0 !important;
+        color: #0f172a !important;
     }
+
     .cmr-latest-insights-desc {
-        font-size: 15px !important;
+        font-size: 14px !important;
+        line-height: 1.5 !important;
+        color: #475569 !important;
+        margin: 0 !important;
     }
-    .intel-nav-bar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
-    .intel-nav-links {
-        overflow-x: auto;
-        white-space: nowrap;
-        width: 100%;
-        gap: 15px;
-        padding-bottom: 5px;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-    }
-    .intel-nav-links::-webkit-scrollbar {
-        display: none;
-    }
+
+    /* Filter Chips Horizontal Scroll */
     .cmr-insights-filters-bar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 14px !important;
+        margin-bottom: 24px !important;
+        width: 100% !important;
     }
+
     .cmr-insights-filters {
-        overflow-x: auto;
-        white-space: nowrap;
-        width: 100%;
-        padding-bottom: 5px;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+        gap: 8px !important;
+        padding-bottom: 6px !important;
+        padding-top: 2px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
     }
+
     .cmr-insights-filters::-webkit-scrollbar {
-        display: none;
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
     }
+
     .cmr-insights-filters .filter-btn {
-        flex-shrink: 0;
+        flex: 0 0 auto !important;
+        flex-shrink: 0 !important;
+        white-space: nowrap !important;
+        padding: 8px 18px !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        border-radius: 40px !important;
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        color: #0f172a !important;
+        line-height: 1.2 !important;
+        cursor: pointer !important;
     }
+
+    .cmr-insights-filters .filter-btn.active {
+        background: #0f172a !important;
+        color: #ffffff !important;
+        border-color: #0f172a !important;
+    }
+
+    /* Search Bar Mobile */
     .cmr-insights-search {
-        width: 100%;
+        width: 100% !important;
     }
+
     .cmr-insights-search form {
-        width: 100%;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        height: 48px !important;
+        padding: 4px 6px 4px 18px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 40px !important;
+        background: #ffffff !important;
     }
+
     .cmr-insights-search .search-field {
-        width: 100%;
+        flex: 1 1 auto !important;
+        width: 100% !important;
+        border: none !important;
+        outline: none !important;
+        font-size: 14px !important;
+        color: #0f172a !important;
+        background: transparent !important;
+    }
+
+    .cmr-insights-search .search-submit {
+        flex-shrink: 0 !important;
+        width: 36px !important;
+        height: 36px !important;
+        border-radius: 50% !important;
+        background: #5c24d3 !important;
+        color: #ffffff !important;
+        border: none !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        font-size: 13px !important;
+    }
+
+    /* Cards Grid on Mobile */
+    .cmr-insights-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 20px !important;
+        width: 100% !important;
+    }
+
+    /* Featured Left Card on Mobile */
+    .cmr-insights-featured {
+        width: 100% !important;
+    }
+
+    .cmr-insights-featured .insights-featured-card {
+        min-height: 320px !important;
+        height: 340px !important;
+        border-radius: 8px !important;
+        overflow: hidden !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        background-size: cover !important;
+        background-position: center !important;
+        position: relative !important;
+    }
+
+    .insights-featured-overlay {
+        height: 75% !important;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.45) 60%, rgba(0, 0, 0, 0) 100%) !important;
+    }
+
+    .insights-featured-content {
+        padding: 20px 16px !important;
+    }
+
+    .insights-featured-content .insights-tag {
+        font-size: 12px !important;
+        margin-bottom: 6px !important;
+        color: rgba(255, 255, 255, 0.8) !important;
+        display: inline-block !important;
+    }
+
+    .insights-featured-content .insights-title {
+        font-size: 20px !important;
+        line-height: 1.35 !important;
+        margin-bottom: 14px !important;
+        font-weight: 600 !important;
+        color: #ffffff !important;
+        letter-spacing: -0.3px !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 3 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+    }
+
+    .insights-featured-content .insights-more-link {
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        color: #ffffff !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        border-bottom: 1px solid #ffffff !important;
+        padding-bottom: 2px !important;
+    }
+
+    /* Stacked Cards on Mobile - Keep Horizontal List View */
+    .cmr-insights-stack {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 14px !important;
+        width: 100% !important;
+    }
+
+    .insights-stacked-card {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 14px !important;
+        width: 100% !important;
+        height: auto !important;
+        box-sizing: border-box !important;
+        padding-bottom: 14px !important;
+        border-bottom: 1px solid #f1f5f9 !important;
+        text-decoration: none !important;
+        background: transparent !important;
+    }
+
+    .insights-stacked-card:last-child {
+        border-bottom: none !important;
+        padding-bottom: 0 !important;
+    }
+
+    .insights-stacked-image {
+        flex: 0 0 110px !important;
+        width: 110px !important;
+        height: 85px !important;
+        border-radius: 6px !important;
+        overflow: hidden !important;
+    }
+
+    .insights-stacked-image img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        border-radius: 6px !important;
+        display: block !important;
+    }
+
+    .insights-stacked-content {
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        padding: 0 !important;
+    }
+
+    .insights-stacked-content .insights-tag {
+        display: inline-block !important;
+        font-size: 11px !important;
+        color: #64748b !important;
+        margin-bottom: 3px !important;
+        font-weight: 500 !important;
+    }
+
+    .insights-stacked-content .insights-title {
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        line-height: 1.35 !important;
+        color: #0f172a !important;
+        margin: 0 0 6px 0 !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+        word-break: break-word !important;
+    }
+
+    .insights-stacked-content .insights-more-link {
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        color: #0f172a !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 5px !important;
+        border-bottom: 1px solid #0f172a !important;
+        padding-bottom: 1px !important;
     }
 }
 
-@media (max-width: 575px) {
-    .insights-stacked-card {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .insights-stacked-image {
-        width: 100%;
-        height: 200px;
-        flex: none;
-    }
-}
