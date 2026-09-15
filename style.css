@@ -6479,6 +6479,18 @@ ul.wp-block-list ol li {
    Responsive WooCommerce Product Cards (Mobile & Tablet)
    ========================================================================== */
 @media (max-width: 1024px) {
+    /* Grid Container 16px edge spacing */
+    .woocommerce ul.products,
+    .elementor-wc-products ul.products {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
     /* Product Card Container */
     .woocommerce ul.products li.product,
     .elementor-wc-products ul.products li.product,
@@ -6564,9 +6576,7 @@ ul.wp-block-list ol li {
 
     /* Price: 16px */
     .woocommerce ul.products li.product .price,
-    .elementor-wc-products ul.products li.product .price,
-    .woocommerce ul.products li.product .price .amount,
-    .woocommerce ul.products li.product .price bdi {
+    .elementor-wc-products ul.products li.product .price {
         font-family: 'Instrument Sans', sans-serif !important;
         font-size: 16px !important;
         font-weight: 600 !important;
@@ -6574,9 +6584,26 @@ ul.wp-block-list ol li {
         padding-left: 12px !important;
         padding-right: 12px !important;
         padding-bottom: 0 !important;
+        padding-top: 0 !important;
         margin-top: 0 !important;
         margin-bottom: 12px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
         display: block !important;
+        text-align: left !important;
+    }
+
+    .woocommerce ul.products li.product .price .amount,
+    .woocommerce ul.products li.product .price bdi,
+    .woocommerce ul.products li.product .price ins,
+    .woocommerce ul.products li.product .price del {
+        font-family: inherit !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        color: inherit !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: inline !important;
     }
 
     /* Button Container */
