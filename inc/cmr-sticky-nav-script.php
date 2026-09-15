@@ -192,50 +192,54 @@ add_action('wp_footer', function() {
 
         /* Ensure Header Desktop Elements (Search, Cart, User Profile, Talk to Analyst)
            Are Completely Hidden on Mobile/Tablet */
-        header .elementor-element-219e18d,
+        .elementor-element-219e18d,
+        .elementor-element-b3cba9e,
+        .elementor-element-aa4f3cc,
+        .elementor-element-9219cb5,
+        .elementor-element-200fa94,
+        .elementor-element-c3cee6b,
+        .elementor-element-f67c2d7,
+        .elementor-element-25bf1c9,
+        .elementor-element-459def2,
+        .elementor-element-18b6098,
         header .elementor-element-b3cba9e,
-        header .elementor-element-f67c2d7,
-        header .elementor-element-459def2,
-        header .elementor-element-18b6098,
+        .header .elementor-element-b3cba9e,
+        header .elementor-widget-button,
+        .header .elementor-widget-button,
         header .download-btn,
+        .header .download-btn,
+        .quanto-header .download-btn,
+        [data-elementor-type="header"] .download-btn,
+        [data-elementor-type="header"] .talk-btn,
+        [data-elementor-type="header"] .elementor-element-b3cba9e,
+        [data-elementor-type="header"] .elementor-element-219e18d,
+        [data-elementor-type="header"] a[href*="7637"],
+        .elementor-location-header .download-btn,
+        .elementor-location-header .talk-btn,
         header .talk-btn,
+        .header .talk-btn,
         header .elementor-hidden-mobile,
         header .elementor-hidden-tablet,
         .elementor-location-header .elementor-element-219e18d,
-        .elementor-location-header .elementor-element-b3cba9e,
-        .elementor-location-header .elementor-element-f67c2d7,
-        .elementor-location-header .elementor-element-459def2,
-        .elementor-location-header .elementor-element-18b6098,
-        .elementor-location-header .download-btn,
-        .elementor-location-header .talk-btn,
         .elementor-location-header .elementor-hidden-mobile,
         .elementor-location-header .elementor-hidden-tablet,
         .site-header .elementor-element-219e18d,
         .site-header .download-btn,
         .site-header .elementor-hidden-mobile,
         .site-header .elementor-hidden-tablet,
+        a[href*="7637"],
         .elementor-hidden-mobile {
             display: none !important;
         }
 
-        /* Hero Section Buttons Full Width on Mobile */
-        #smooth-content .e-con:has(> .download-btn),
-        #smooth-content .e-con:has(> .talk-btn),
-        #smooth-content .e-con:has(.download-btn),
-        #smooth-content .e-con:has(.talk-btn),
-        #smooth-content .elementor-element:has(> .download-btn),
-        #smooth-content .elementor-element:has(> .talk-btn),
-        #smooth-content .e-con:has(> .elementor-widget-button + .elementor-widget-button),
-        .elementor:not(header):not(.elementor-location-header) .e-con:has(> .download-btn),
-        .elementor:not(header):not(.elementor-location-header) .e-con:has(> .talk-btn),
-        .elementor:not(header):not(.elementor-location-header) .e-con:has(.download-btn),
-        .elementor:not(header):not(.elementor-location-header) .e-con:has(.talk-btn),
-        .elementor-element.elementor-element-758e182,
-        .elementor .e-758e182-3fd8f24 {
+        /* Hero Section Buttons Full Width on Mobile (All Practice, Industry & Service Pages) */
+        #smooth-content .elementor-element-b44d429,
+        #smooth-content .elementor-element-758e182,
+        #smooth-content .e-con:has(> .download-btn):has(> .talk-btn) {
             width: 100% !important;
             max-width: 100% !important;
-            padding-left: 16px !important;
-            padding-right: 16px !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
             box-sizing: border-box !important;
             display: flex !important;
             flex-direction: column !important;
@@ -246,20 +250,15 @@ add_action('wp_footer', function() {
             margin-right: 0 !important;
         }
 
-        #smooth-content .download-btn,
-        #smooth-content .talk-btn,
-        #smooth-content .elementor-widget-button.download-btn,
-        #smooth-content .elementor-widget-button.talk-btn,
-        #smooth-content .e-con:has(> .download-btn) > .elementor-widget-button,
-        #smooth-content .e-con:has(> .talk-btn) > .elementor-widget-button,
-        #smooth-content .e-con:has(> .elementor-widget-button + .elementor-widget-button) > .elementor-widget-button,
-        .elementor:not(header):not(.elementor-location-header) .download-btn,
-        .elementor:not(header):not(.elementor-location-header) .talk-btn,
+        #smooth-content .elementor-element-b44d429 > .elementor-widget-button,
+        #smooth-content .elementor-element-758e182 > .elementor-widget-button,
+        #smooth-content .e-con:has(> .download-btn):has(> .talk-btn) > .elementor-widget-button,
         .elementor-element.elementor-element-758e182 .elementor-widget-button,
-        .elementor-element.elementor-element-758e182 .download-btn,
-        .elementor-element.elementor-element-758e182 .talk-btn,
+        .elementor-element.elementor-element-b44d429 .elementor-widget-button,
         .elementor-element-37736ef,
-        .elementor-element-d2bb779 {
+        .elementor-element-d2bb779,
+        .elementor-element-d4872f4,
+        .elementor-element-ecd03c0 {
             width: 100% !important;
             max-width: 100% !important;
             margin-left: 0 !important;
@@ -271,14 +270,9 @@ add_action('wp_footer', function() {
             display: block !important;
         }
 
-        #smooth-content .download-btn .elementor-widget-container,
-        #smooth-content .talk-btn .elementor-widget-container,
-        #smooth-content .e-con:has(> .download-btn) .elementor-widget-container,
-        #smooth-content .e-con:has(> .talk-btn) .elementor-widget-container,
-        #smooth-content .e-con:has(> .elementor-widget-button + .elementor-widget-button) .elementor-widget-container,
-        .elementor:not(header):not(.elementor-location-header) .download-btn .elementor-widget-container,
-        .elementor:not(header):not(.elementor-location-header) .talk-btn .elementor-widget-container,
-        .elementor-element.elementor-element-758e182 .elementor-widget-container {
+        #smooth-content .elementor-element-b44d429 .elementor-widget-container,
+        #smooth-content .elementor-element-758e182 .elementor-widget-container,
+        #smooth-content .e-con:has(> .download-btn):has(> .talk-btn) .elementor-widget-container {
             width: 100% !important;
             max-width: 100% !important;
             margin: 0 !important;
@@ -287,16 +281,13 @@ add_action('wp_footer', function() {
             display: block !important;
         }
 
-        #smooth-content .download-btn .elementor-button,
-        #smooth-content .talk-btn .elementor-button,
-        #smooth-content .e-con:has(> .download-btn) .elementor-button,
-        #smooth-content .e-con:has(> .talk-btn) .elementor-button,
-        #smooth-content .e-con:has(> .elementor-widget-button + .elementor-widget-button) .elementor-button,
-        .elementor:not(header):not(.elementor-location-header) .download-btn .elementor-button,
-        .elementor:not(header):not(.elementor-location-header) .talk-btn .elementor-button,
-        .elementor-element.elementor-element-758e182 .elementor-button,
+        #smooth-content .elementor-element-b44d429 .elementor-button,
+        #smooth-content .elementor-element-758e182 .elementor-button,
+        #smooth-content .e-con:has(> .download-btn):has(> .talk-btn) .elementor-button,
         .elementor-element-37736ef .elementor-button,
-        .elementor-element-d2bb779 .elementor-button {
+        .elementor-element-d2bb779 .elementor-button,
+        .elementor-element-d4872f4 .elementor-button,
+        .elementor-element-ecd03c0 .elementor-button {
             width: 100% !important;
             max-width: 100% !important;
             min-width: 100% !important;
@@ -313,21 +304,174 @@ add_action('wp_footer', function() {
             border-radius: 40px !important;
         }
 
-        #smooth-content .download-btn .elementor-button-content-wrapper,
-        #smooth-content .talk-btn .elementor-button-content-wrapper,
-        #smooth-content .e-con:has(> .download-btn) .elementor-button-content-wrapper,
-        #smooth-content .e-con:has(> .talk-btn) .elementor-button-content-wrapper,
-        #smooth-content .e-con:has(> .elementor-widget-button + .elementor-widget-button) .elementor-button-content-wrapper,
-        .elementor:not(header):not(.elementor-location-header) .download-btn .elementor-button-content-wrapper,
-        .elementor:not(header):not(.elementor-location-header) .talk-btn .elementor-button-content-wrapper,
-        .elementor-element.elementor-element-758e182 .elementor-button-content-wrapper,
+        #smooth-content .elementor-element-b44d429 .elementor-button-content-wrapper,
+        #smooth-content .elementor-element-758e182 .elementor-button-content-wrapper,
+        #smooth-content .e-con:has(> .download-btn):has(> .talk-btn) .elementor-button-content-wrapper,
         .elementor-element-37736ef .elementor-button-content-wrapper,
-        .elementor-element-d2bb779 .elementor-button-content-wrapper {
+        .elementor-element-d2bb779 .elementor-button-content-wrapper,
+        .elementor-element-d4872f4 .elementor-button-content-wrapper,
+        .elementor-element-ecd03c0 .elementor-button-content-wrapper {
             width: 100% !important;
             display: flex !important;
             justify-content: center !important;
             align-items: center !important;
             gap: 8px !important;
+        }
+
+        /* Hero Section Outlook & Competitive Edge Stats Card 2x2 Grid (Mobile) */
+        .elementor-element-0410bab,
+        .elementor-element-0410bab.e-con,
+        .elementor-element-b5163c3,
+        .elementor-element-b5163c3.e-con {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: stretch !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            padding-left: 16px !important;
+            padding-right: 16px !important;
+        }
+
+        .elementor-element-50e1f31,
+        .elementor-element-7096f9b {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* White Stats Card Container */
+        .elementor-element-137088e,
+        .elementor-element:has(> .elementor-element-bc380a0) {
+            width: 100% !important;
+            max-width: 100% !important;
+            background: #ffffff !important;
+            border-radius: 20px !important;
+            padding: 30px 20px !important;
+            margin: 25px 0 10px 0 !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+            box-sizing: border-box !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: stretch !important;
+        }
+
+        .elementor-element-137088e > p,
+        .elementor-element-137088e .e-paragraph-base,
+        .elementor-element-137088e h2,
+        .elementor-element-137088e h3 {
+            text-align: center !important;
+            font-family: 'Instrument Sans', sans-serif !important;
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            color: #111111 !important;
+            margin: 0 0 20px 0 !important;
+            width: 100% !important;
+        }
+
+        .elementor-element-bc380a0,
+        .elementor-element-bc380a0.e-grid,
+        .elementor-element-bc380a0 > .e-con-inner {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            --e-con-grid-template-columns: repeat(2, 1fr) !important;
+            gap: 24px 16px !important;
+            justify-items: stretch !important;
+            --justify-items: start !important;
+            align-items: start !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        .elementor-element-bc380a0 .e-con,
+        .elementor-element-c4748af,
+        .elementor-element-e046079,
+        .elementor-element-5de608f,
+        .elementor-element-6ad38a0 {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            text-align: left !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        .elementor-element-c4748af h6,
+        .elementor-element-e046079 h6,
+        .elementor-element-5de608f h6,
+        .elementor-element-6ad38a0 h6,
+        .elementor-element-bc380a0 .e-con > h6 {
+            font-family: 'Instrument Sans', sans-serif !important;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.5px !important;
+            text-transform: uppercase !important;
+            color: #111111 !important;
+            margin: 0 0 6px 0 !important;
+            line-height: 1.2 !important;
+            display: block !important;
+            text-align: left !important;
+        }
+
+        .elementor-element-c4748af h2,
+        .elementor-element-e046079 h2,
+        .elementor-element-5de608f h2,
+        .elementor-element-6ad38a0 h2,
+        .elementor-element-bc380a0 .e-con h2 {
+            font-family: 'Instrument Sans', sans-serif !important;
+            font-size: 28px !important;
+            font-weight: 700 !important;
+            line-height: 1.1 !important;
+            letter-spacing: -1px !important;
+            color: #0f172a !important;
+            margin: 0 0 6px 0 !important;
+            display: inline-flex !important;
+            align-items: baseline !important;
+            gap: 4px !important;
+            text-align: left !important;
+        }
+
+        .elementor-element-f489baf,
+        .elementor-element-9d9803f,
+        .elementor-element-1869b5a,
+        .elementor-element-0f8b3d0 {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: baseline !important;
+            gap: 4px !important;
+            margin: 0 0 4px 0 !important;
+            width: 100% !important;
+        }
+
+        .elementor-element-1869b5a h6,
+        .elementor-element-0f8b3d0 h6 {
+            font-family: 'Instrument Sans', sans-serif !important;
+            font-size: 13px !important;
+            font-weight: 600 !important;
+            color: #475569 !important;
+            text-transform: none !important;
+            letter-spacing: 0 !important;
+            margin: 0 !important;
+            display: inline !important;
+        }
+
+        .elementor-element-c4748af p,
+        .elementor-element-e046079 p,
+        .elementor-element-5de608f p,
+        .elementor-element-6ad38a0 p,
+        .elementor-element-bc380a0 .e-con > p {
+            font-family: 'Instrument Sans', sans-serif !important;
+            font-size: 12px !important;
+            line-height: 1.4 !important;
+            color: #64748b !important;
+            margin: 0 !important;
+            text-align: left !important;
+            display: block !important;
         }
 
         /* Mobile Dropdown Format matching reference */
