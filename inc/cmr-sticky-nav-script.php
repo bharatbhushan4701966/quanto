@@ -199,29 +199,13 @@ add_action('wp_footer', function() {
             font-weight: 600 !important;
         }
 
-        .intel-nav-bar .intel-nav-links a:last-child {
+        .intel-nav-bar .intel-nav-links a:last-child,
+        .intel-nav-bar .intel-nav-links a:nth-last-child(2) {
             border-bottom: none !important;
         }
 
         .intel-nav-bar .intel-nav-links a.cmr-nav-btn-subscribe {
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-            background: #5c24d3 !important;
-            color: #ffffff !important;
-            font-size: 12px !important;
-            font-weight: 600 !important;
-            line-height: 1.2 !important;
-            width: calc(100% - 32px) !important;
-            box-sizing: border-box !important;
-            margin: 8px 16px 10px 16px !important;
-            padding: 8px 16px !important;
-            border-radius: 40px !important;
-            border: none !important;
-            text-align: center !important;
-        }
-        .intel-nav-bar .intel-nav-links a.cmr-nav-btn-subscribe svg {
-            stroke: #ffffff !important;
+            display: none !important;
         }
 
         /* Mobile Sticky / Fixed State */
