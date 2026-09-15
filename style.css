@@ -6120,15 +6120,49 @@ ul.wp-block-list ol li {
     }
 
     /* ==========================================================================
+       Ensure Header Desktop Elements (Search, Cart, User Profile, Talk to Analyst)
+       Are Completely Hidden on Mobile/Tablet
+       ========================================================================== */
+    header .elementor-element-219e18d,
+    header .elementor-element-b3cba9e,
+    header .elementor-element-f67c2d7,
+    header .elementor-element-459def2,
+    header .elementor-element-18b6098,
+    header .download-btn,
+    header .talk-btn,
+    header .elementor-hidden-mobile,
+    header .elementor-hidden-tablet,
+    .elementor-location-header .elementor-element-219e18d,
+    .elementor-location-header .elementor-element-b3cba9e,
+    .elementor-location-header .elementor-element-f67c2d7,
+    .elementor-location-header .elementor-element-459def2,
+    .elementor-location-header .elementor-element-18b6098,
+    .elementor-location-header .download-btn,
+    .elementor-location-header .talk-btn,
+    .elementor-location-header .elementor-hidden-mobile,
+    .elementor-location-header .elementor-hidden-tablet,
+    .site-header .elementor-element-219e18d,
+    .site-header .download-btn,
+    .site-header .elementor-hidden-mobile,
+    .site-header .elementor-hidden-tablet,
+    .elementor-hidden-mobile {
+        display: none !important;
+    }
+
+    /* ==========================================================================
        Hero Section Buttons Full Width on Mobile (All Practice, Industry & Service Pages)
        ========================================================================== */
-    .e-con:has(> .download-btn),
-    .e-con:has(> .talk-btn),
-    .e-con:has(.download-btn),
-    .e-con:has(.talk-btn),
-    .elementor-element:has(> .download-btn),
-    .elementor-element:has(> .talk-btn),
-    .e-con:has(> .elementor-widget-button + .elementor-widget-button),
+    #smooth-content .e-con:has(> .download-btn),
+    #smooth-content .e-con:has(> .talk-btn),
+    #smooth-content .e-con:has(.download-btn),
+    #smooth-content .e-con:has(.talk-btn),
+    #smooth-content .elementor-element:has(> .download-btn),
+    #smooth-content .elementor-element:has(> .talk-btn),
+    #smooth-content .e-con:has(> .elementor-widget-button + .elementor-widget-button),
+    .elementor:not(header):not(.elementor-location-header) .e-con:has(> .download-btn),
+    .elementor:not(header):not(.elementor-location-header) .e-con:has(> .talk-btn),
+    .elementor:not(header):not(.elementor-location-header) .e-con:has(.download-btn),
+    .elementor:not(header):not(.elementor-location-header) .e-con:has(.talk-btn),
     .elementor-element.elementor-element-758e182,
     .elementor .e-758e182-3fd8f24 {
         width: 100% !important;
@@ -6145,13 +6179,15 @@ ul.wp-block-list ol li {
         margin-right: 0 !important;
     }
 
-    .download-btn,
-    .talk-btn,
-    .elementor-widget-button.download-btn,
-    .elementor-widget-button.talk-btn,
-    .e-con:has(> .download-btn) > .elementor-widget-button,
-    .e-con:has(> .talk-btn) > .elementor-widget-button,
-    .e-con:has(> .elementor-widget-button + .elementor-widget-button) > .elementor-widget-button,
+    #smooth-content .download-btn,
+    #smooth-content .talk-btn,
+    #smooth-content .elementor-widget-button.download-btn,
+    #smooth-content .elementor-widget-button.talk-btn,
+    #smooth-content .e-con:has(> .download-btn) > .elementor-widget-button,
+    #smooth-content .e-con:has(> .talk-btn) > .elementor-widget-button,
+    #smooth-content .e-con:has(> .elementor-widget-button + .elementor-widget-button) > .elementor-widget-button,
+    .elementor:not(header):not(.elementor-location-header) .download-btn,
+    .elementor:not(header):not(.elementor-location-header) .talk-btn,
     .elementor-element.elementor-element-758e182 .elementor-widget-button,
     .elementor-element.elementor-element-758e182 .download-btn,
     .elementor-element.elementor-element-758e182 .talk-btn,
@@ -6168,11 +6204,13 @@ ul.wp-block-list ol li {
         display: block !important;
     }
 
-    .download-btn .elementor-widget-container,
-    .talk-btn .elementor-widget-container,
-    .e-con:has(> .download-btn) .elementor-widget-container,
-    .e-con:has(> .talk-btn) .elementor-widget-container,
-    .e-con:has(> .elementor-widget-button + .elementor-widget-button) .elementor-widget-container,
+    #smooth-content .download-btn .elementor-widget-container,
+    #smooth-content .talk-btn .elementor-widget-container,
+    #smooth-content .e-con:has(> .download-btn) .elementor-widget-container,
+    #smooth-content .e-con:has(> .talk-btn) .elementor-widget-container,
+    #smooth-content .e-con:has(> .elementor-widget-button + .elementor-widget-button) .elementor-widget-container,
+    .elementor:not(header):not(.elementor-location-header) .download-btn .elementor-widget-container,
+    .elementor:not(header):not(.elementor-location-header) .talk-btn .elementor-widget-container,
     .elementor-element.elementor-element-758e182 .elementor-widget-container {
         width: 100% !important;
         max-width: 100% !important;
@@ -6182,11 +6220,13 @@ ul.wp-block-list ol li {
         display: block !important;
     }
 
-    .download-btn .elementor-button,
-    .talk-btn .elementor-button,
-    .e-con:has(> .download-btn) .elementor-button,
-    .e-con:has(> .talk-btn) .elementor-button,
-    .e-con:has(> .elementor-widget-button + .elementor-widget-button) .elementor-button,
+    #smooth-content .download-btn .elementor-button,
+    #smooth-content .talk-btn .elementor-button,
+    #smooth-content .e-con:has(> .download-btn) .elementor-button,
+    #smooth-content .e-con:has(> .talk-btn) .elementor-button,
+    #smooth-content .e-con:has(> .elementor-widget-button + .elementor-widget-button) .elementor-button,
+    .elementor:not(header):not(.elementor-location-header) .download-btn .elementor-button,
+    .elementor:not(header):not(.elementor-location-header) .talk-btn .elementor-button,
     .elementor-element.elementor-element-758e182 .elementor-button,
     .elementor-element-37736ef .elementor-button,
     .elementor-element-d2bb779 .elementor-button {
@@ -6206,11 +6246,13 @@ ul.wp-block-list ol li {
         border-radius: 40px !important;
     }
 
-    .download-btn .elementor-button-content-wrapper,
-    .talk-btn .elementor-button-content-wrapper,
-    .e-con:has(> .download-btn) .elementor-button-content-wrapper,
-    .e-con:has(> .talk-btn) .elementor-button-content-wrapper,
-    .e-con:has(> .elementor-widget-button + .elementor-widget-button) .elementor-button-content-wrapper,
+    #smooth-content .download-btn .elementor-button-content-wrapper,
+    #smooth-content .talk-btn .elementor-button-content-wrapper,
+    #smooth-content .e-con:has(> .download-btn) .elementor-button-content-wrapper,
+    #smooth-content .e-con:has(> .talk-btn) .elementor-button-content-wrapper,
+    #smooth-content .e-con:has(> .elementor-widget-button + .elementor-widget-button) .elementor-button-content-wrapper,
+    .elementor:not(header):not(.elementor-location-header) .download-btn .elementor-button-content-wrapper,
+    .elementor:not(header):not(.elementor-location-header) .talk-btn .elementor-button-content-wrapper,
     .elementor-element.elementor-element-758e182 .elementor-button-content-wrapper,
     .elementor-element-37736ef .elementor-button-content-wrapper,
     .elementor-element-d2bb779 .elementor-button-content-wrapper {
