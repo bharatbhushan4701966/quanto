@@ -61,7 +61,7 @@ function cmr_enterprise_connect_grid_shortcode( $atts ) {
             z-index: 99999;
         }
         .cmr-enterprisecgd-nav-title {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             color: #111;
         }

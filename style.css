@@ -6263,6 +6263,9 @@ ul.wp-block-list ol li {
 }
 
 /* Mobile intel-nav-bar dropdown format */
+.intel-nav-title {
+    font-size: 14px;
+}
 .intel-nav-mobile-wrap {
     display: none;
 }

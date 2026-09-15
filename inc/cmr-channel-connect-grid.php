@@ -60,7 +60,7 @@ function cmr_channel_connect_grid_shortcode( $atts = array() ) {
             z-index: 99999;
         }
         .cmr-channelcgd-nav-title {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             color: #111;
         }

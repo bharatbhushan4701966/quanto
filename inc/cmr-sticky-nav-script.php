@@ -24,6 +24,9 @@ add_action('wp_footer', function() {
         font-family: 'Instrument Sans', sans-serif !important;
         box-sizing: border-box !important;
     }
+    .intel-nav-bar .intel-nav-title {
+        font-size: 14px;
+    }
     .intel-nav-fixed-js::before {
         content: '';
         position: absolute;
