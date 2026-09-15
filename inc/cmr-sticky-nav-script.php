@@ -161,6 +161,7 @@ add_action('wp_footer', function() {
             align-items: stretch !important;
             padding: 0 !important;
             margin: 0 !important;
+            gap: 0 !important;
             z-index: 10000000 !important;
             max-height: 380px !important;
             overflow-y: auto !important;
@@ -178,10 +179,11 @@ add_action('wp_footer', function() {
             justify-content: flex-start !important;
             width: 100% !important;
             box-sizing: border-box !important;
-            padding: 14px 20px !important;
+            padding: 9px 16px !important;
             font-family: 'Instrument Sans', sans-serif !important;
-            font-size: 15px !important;
+            font-size: 12px !important;
             font-weight: 500 !important;
+            line-height: 1.3 !important;
             color: #374151 !important;
             text-decoration: none !important;
             text-align: left !important;
@@ -207,11 +209,13 @@ add_action('wp_footer', function() {
             align-items: center !important;
             background: #5c24d3 !important;
             color: #ffffff !important;
+            font-size: 12px !important;
             font-weight: 600 !important;
+            line-height: 1.2 !important;
             width: calc(100% - 32px) !important;
             box-sizing: border-box !important;
-            margin: 12px 16px 14px 16px !important;
-            padding: 12px 20px !important;
+            margin: 8px 16px 10px 16px !important;
+            padding: 8px 16px !important;
             border-radius: 40px !important;
             border: none !important;
             text-align: center !important;
