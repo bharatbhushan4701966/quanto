@@ -367,6 +367,9 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                     gap: 20px !important;
                     padding: 30px 20px !important;
                 }
+                .cmr-intel-list-banner-left h3 {
+                    font-size: 35px !important;
+                }
                 .cmr-intel-list-banner-mid {
                     padding: 0 !important;
                 }

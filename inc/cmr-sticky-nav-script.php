@@ -874,6 +874,10 @@ add_action('wp_footer', function() {
             align-self: flex-start !important;
         }
 
+        .cmr-intel-list-banner-left h3 {
+            font-size: 35px !important;
+        }
+
         .woocommerce ul.products li.product .woocommerce-loop-product__link img,
         .woocommerce ul.products li.product .woocommerce-LoopProduct-link img {
             width: 100% !important;

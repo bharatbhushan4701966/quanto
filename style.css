@@ -7283,6 +7283,10 @@ ul.wp-block-list ol li {
         align-self: flex-start !important;
     }
 
+    .cmr-intel-list-banner-left h3 {
+        font-size: 35px !important;
+    }
+
     #overview::before,
     #cmr-intel-trends-section::before,
     #cmr-market-updates::before,
