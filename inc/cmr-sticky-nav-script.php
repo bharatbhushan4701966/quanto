@@ -46,6 +46,45 @@ add_action('wp_footer', function() {
         display: none;
     }
 
+    .intel-card {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        text-align: left !important;
+    }
+    .intel-card-img {
+        width: 100% !important;
+        aspect-ratio: 16 / 9 !important;
+        overflow: hidden !important;
+        border-radius: 8px !important;
+        margin-bottom: 20px !important;
+        text-align: left !important;
+        display: block !important;
+        margin-left: 0 !important;
+        margin-right: auto !important;
+    }
+    .intel-card-img a {
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        text-align: left !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .intel-card-img img {
+        width: 100% !important;
+        height: 100% !important;
+        aspect-ratio: 16 / 9 !important;
+        object-fit: cover !important;
+        object-position: center left !important;
+        display: block !important;
+        border-radius: 8px !important;
+        margin: 0 !important;
+        margin-left: 0 !important;
+        margin-right: auto !important;
+        transition: transform 0.3s ease !important;
+    }
+
     @media (min-width: 769px) {
         .intel-nav-bar,
         .intel-nav-fixed-js {
@@ -714,19 +753,46 @@ add_action('wp_footer', function() {
             width: 100% !important;
             max-width: 100% !important;
             box-sizing: border-box !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            text-align: left !important;
         }
 
         .intel-card-img {
             width: 100% !important;
+            max-width: 100% !important;
+            aspect-ratio: 16 / 9 !important;
             border-radius: 8px !important;
             overflow: hidden !important;
-            margin-bottom: 14px !important;
+            margin: 0 0 14px 0 !important;
+            margin-left: 0 !important;
+            margin-right: auto !important;
+            text-align: left !important;
+            display: block !important;
+        }
+
+        .intel-card-img a {
+            display: block !important;
+            width: 100% !important;
+            height: 100% !important;
+            text-align: left !important;
+            margin: 0 !important;
+            padding: 0 !important;
         }
 
         .intel-card-img img {
             width: 100% !important;
-            height: auto !important;
+            max-width: 100% !important;
+            height: 100% !important;
+            aspect-ratio: 16 / 9 !important;
+            object-fit: cover !important;
+            object-position: center left !important;
+            border-radius: 8px !important;
             display: block !important;
+            margin: 0 !important;
+            margin-left: 0 !important;
+            margin-right: auto !important;
         }
 
         #overview::before,

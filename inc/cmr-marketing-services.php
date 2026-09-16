@@ -136,10 +136,10 @@ if ( ! function_exists( 'cmr_marketing_services_shortcode' ) ) {
                         if ($read_time < 1) $read_time = 1;
                         ?>
                         
-                        <div class="intel-card">
-                            <div class="intel-card-img">
-                                <a href="<?php echo esc_url( $post_link ); ?>">
-                                    <img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="<?php echo esc_attr( $post_title ); ?>" />
+                        <div class="intel-card" style="text-align: left; align-items: flex-start;">
+                            <div class="intel-card-img" style="width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 8px; margin-bottom: 14px; text-align: left; margin-left: 0; margin-right: auto; display: block;">
+                                <a href="<?php echo esc_url( $post_link ); ?>" style="display: block; width: 100%; height: 100%; text-align: left; margin: 0; padding: 0;">
+                                    <img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="<?php echo esc_attr( $post_title ); ?>" style="width: 100%; height: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: center left; display: block; border-radius: 8px; margin: 0; margin-left: 0; margin-right: auto;" />
                                 </a>
                             </div>
                             <div class="intel-card-content">
