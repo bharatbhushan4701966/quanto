@@ -7507,7 +7507,7 @@ ul.wp-block-list ol li {
     .woocommerce ul.products li.product .woocommerce-loop-product__link img,
     .woocommerce ul.products li.product .woocommerce-LoopProduct-link img {
         width: 100% !important;
-        height: 240px !important;
+        height: 280px !important;
         object-fit: cover !important;
         object-position: center top !important;
         border-top-left-radius: 7px !important;
@@ -7599,21 +7599,21 @@ ul.wp-block-list ol li {
     .woocommerce ul.products li.product .woocommerce-loop-product__buttons {
         padding-left: 12px !important;
         padding-right: 12px !important;
-        padding-bottom: 14px !important;
+        padding-bottom: 16px !important;
         margin: 0 !important;
         box-sizing: border-box !important;
     }
 
-    /* Button Text: 12px */
+    /* Button Text: 14px */
     .woocommerce ul.products li.product .woocommerce-loop-product__buttons .button,
     .woocommerce ul.products li.product a.button.add_to_cart_button,
     .woocommerce ul.products li.product .button,
     .elementor-wc-products ul.products li.product .button {
         font-family: 'Instrument Sans', sans-serif !important;
-        font-size: 12px !important;
-        font-weight: 500 !important;
-        padding: 7px 10px !important;
-        min-height: 34px !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        padding: 10px 18px !important;
+        min-height: 44px !important;
         height: auto !important;
         width: 100% !important;
         box-sizing: border-box !important;
@@ -7634,9 +7634,9 @@ ul.wp-block-list ol li {
 
     .woocommerce ul.products li.product a.button.add_to_cart_button::after,
     .woocommerce ul.products li.product .button::after {
-        width: 12px !important;
-        height: 12px !important;
-        margin-left: 2px !important;
+        width: 14px !important;
+        height: 14px !important;
+        margin-left: 4px !important;
     }
 
     .woocommerce ul.products li.product a.button.add_to_cart_button:hover,
@@ -8215,7 +8215,7 @@ ul.wp-block-list ol li {
 @media (max-width: 767px) {
     .woocommerce ul.products li.product .woocommerce-loop-product__link img,
     .woocommerce ul.products li.product .woocommerce-LoopProduct-link img {
-        height: 220px !important;
+        height: 280px !important;
         object-fit: cover !important;
         object-position: center top !important;
     }

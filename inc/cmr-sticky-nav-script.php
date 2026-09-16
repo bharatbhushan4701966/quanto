@@ -877,9 +877,51 @@ add_action('wp_footer', function() {
         .woocommerce ul.products li.product .woocommerce-loop-product__link img,
         .woocommerce ul.products li.product .woocommerce-LoopProduct-link img {
             width: 100% !important;
-            height: 220px !important;
+            height: 280px !important;
             object-fit: cover !important;
             object-position: center top !important;
+        }
+
+        .woocommerce ul.products li.product .woocommerce-loop-product__buttons .button,
+        .woocommerce ul.products li.product a.button.add_to_cart_button,
+        .woocommerce ul.products li.product .button,
+        .elementor-wc-products ul.products li.product .button {
+            font-family: 'Instrument Sans', sans-serif !important;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            padding: 10px 18px !important;
+            min-height: 44px !important;
+            height: auto !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            border-radius: 40px !important;
+            border: 1px solid #111111 !important;
+            background-color: transparent !important;
+            color: #111111 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 6px !important;
+            text-align: center !important;
+            text-transform: none !important;
+            white-space: nowrap !important;
+            letter-spacing: 0px !important;
+            cursor: pointer !important;
+        }
+
+        .woocommerce ul.products li.product a.button.add_to_cart_button::after,
+        .woocommerce ul.products li.product .button::after {
+            width: 14px !important;
+            height: 14px !important;
+            margin-left: 4px !important;
+        }
+
+        .woocommerce ul.products li.product .woocommerce-loop-product__buttons {
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+            padding-bottom: 16px !important;
+            margin: 0 !important;
+            box-sizing: border-box !important;
         }
 
         #overview::before,
