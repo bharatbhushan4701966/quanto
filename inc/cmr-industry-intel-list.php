@@ -63,12 +63,21 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 flex: 0 0 45%;
                 aspect-ratio: 16 / 9;
                 overflow: hidden;
+                border-radius: 8px;
+            }
+            .cmr-intel-list-img a {
+                display: block;
+                width: 100%;
+                height: 100%;
             }
             .cmr-intel-list-img img {
                 width: 100%;
                 height: 100%;
+                aspect-ratio: 16 / 9;
                 object-fit: cover;
+                object-position: center left;
                 display: block;
+                border-radius: 8px;
                 transition: transform 0.3s ease;
             }
             .cmr-intel-list-img:hover img {
@@ -279,18 +288,87 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 display: block;
             }
             @media (max-width: 768px) {
+                .cmr-intel-list-wrapper {
+                    width: 100% !important;
+                    max-width: 100% !important;
+                    box-sizing: border-box !important;
+                    gap: 30px !important;
+                }
+                .cmr-intel-list-items {
+                    width: 100% !important;
+                    max-width: 100% !important;
+                    box-sizing: border-box !important;
+                    gap: 30px !important;
+                }
                 .cmr-intel-list-item {
-                    flex-direction: column;
-                    gap: 20px;
+                    display: flex !important;
+                    flex-direction: column !important;
+                    align-items: flex-start !important;
+                    text-align: left !important;
+                    gap: 16px !important;
+                    width: 100% !important;
+                    max-width: 100% !important;
+                    box-sizing: border-box !important;
+                }
+                .cmr-intel-list-img {
+                    width: 100% !important;
+                    max-width: 100% !important;
+                    flex: none !important;
+                    aspect-ratio: 16 / 9 !important;
+                    border-radius: 8px !important;
+                    overflow: hidden !important;
+                    margin: 0 0 14px 0 !important;
+                    margin-left: 0 !important;
+                    margin-right: auto !important;
+                    text-align: left !important;
+                    display: block !important;
+                    box-sizing: border-box !important;
+                }
+                .cmr-intel-list-img a {
+                    display: block !important;
+                    width: 100% !important;
+                    height: 100% !important;
+                    text-align: left !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                }
+                .cmr-intel-list-img img {
+                    width: 100% !important;
+                    max-width: 100% !important;
+                    height: 100% !important;
+                    aspect-ratio: 16 / 9 !important;
+                    object-fit: cover !important;
+                    object-position: center left !important;
+                    border-radius: 8px !important;
+                    display: block !important;
+                    margin: 0 !important;
+                    margin-left: 0 !important;
+                    margin-right: auto !important;
+                }
+                .cmr-intel-list-content {
+                    width: 100% !important;
+                    max-width: 100% !important;
+                    box-sizing: border-box !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                    align-items: flex-start !important;
+                    text-align: left !important;
+                }
+                .cmr-intel-list-title,
+                .cmr-intel-list-meta,
+                .cmr-intel-list-excerpt,
+                .cmr-intel-list-more {
+                    text-align: left !important;
+                    align-self: flex-start !important;
                 }
                 .cmr-intel-list-banner {
-                    flex-direction: column;
-                    text-align: center;
-                    gap: 20px;
-                    padding: 30px 20px;
+                    flex-direction: column !important;
+                    text-align: center !important;
+                    gap: 20px !important;
+                    padding: 30px 20px !important;
                 }
                 .cmr-intel-list-banner-mid {
-                    padding: 0;
+                    padding: 0 !important;
                 }
             }
         </style>

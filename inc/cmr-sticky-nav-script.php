@@ -795,6 +795,85 @@ add_action('wp_footer', function() {
             margin-right: auto !important;
         }
 
+        .cmr-intel-list-wrapper {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .cmr-intel-list-items {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .cmr-intel-list-item {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            text-align: left !important;
+            gap: 16px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .cmr-intel-list-img {
+            width: 100% !important;
+            max-width: 100% !important;
+            flex: none !important;
+            aspect-ratio: 16 / 9 !important;
+            border-radius: 8px !important;
+            overflow: hidden !important;
+            margin: 0 0 14px 0 !important;
+            margin-left: 0 !important;
+            margin-right: auto !important;
+            text-align: left !important;
+            display: block !important;
+            box-sizing: border-box !important;
+        }
+
+        .cmr-intel-list-img a {
+            display: block !important;
+            width: 100% !important;
+            height: 100% !important;
+            text-align: left !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .cmr-intel-list-img img {
+            width: 100% !important;
+            max-width: 100% !important;
+            height: 100% !important;
+            aspect-ratio: 16 / 9 !important;
+            object-fit: cover !important;
+            object-position: center left !important;
+            border-radius: 8px !important;
+            display: block !important;
+            margin: 0 !important;
+            margin-left: 0 !important;
+            margin-right: auto !important;
+        }
+
+        .cmr-intel-list-content {
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            text-align: left !important;
+        }
+
+        .cmr-intel-list-title,
+        .cmr-intel-list-meta,
+        .cmr-intel-list-excerpt,
+        .cmr-intel-list-more {
+            text-align: left !important;
+            align-self: flex-start !important;
+        }
+
         #overview::before,
         #cmr-intel-trends-section::before,
         #cmr-market-updates::before,
