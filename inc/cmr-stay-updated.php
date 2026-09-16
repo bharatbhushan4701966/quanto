@@ -68,8 +68,8 @@ if ( ! function_exists( 'cmr_stay_updated_shortcode' ) ) {
             }
 
             .cmr-stay-updated-section .stay-updated-title {
-                font-size: 26px !important;
-                font-weight: 700 !important;
+                font-size: 28px !important;
+                font-weight: 600 !important;
                 line-height: 1.25 !important;
                 letter-spacing: -0.5px !important;
                 color: #111111 !important;
@@ -140,7 +140,7 @@ if ( ! function_exists( 'cmr_stay_updated_shortcode' ) ) {
 
             .cmr-stay-updated-section .stay-updated-card-title {
                 font-size: 18px !important;
-                font-weight: 700 !important;
+                font-weight: 600 !important;
                 line-height: 1.35 !important;
                 color: #0f172a !important;
                 margin: 0 0 10px 0 !important;
