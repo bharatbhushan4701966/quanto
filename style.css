@@ -7493,8 +7493,9 @@ ul.wp-block-list ol li {
     .woocommerce ul.products li.product .woocommerce-loop-product__link img,
     .woocommerce ul.products li.product .woocommerce-LoopProduct-link img {
         width: 100% !important;
-        height: 180px !important;
+        height: 240px !important;
         object-fit: cover !important;
+        object-position: center top !important;
         border-top-left-radius: 7px !important;
         border-top-right-radius: 7px !important;
         border-bottom-left-radius: 0 !important;
@@ -8200,7 +8201,9 @@ ul.wp-block-list ol li {
 @media (max-width: 767px) {
     .woocommerce ul.products li.product .woocommerce-loop-product__link img,
     .woocommerce ul.products li.product .woocommerce-LoopProduct-link img {
-        height: 145px !important;
+        height: 220px !important;
+        object-fit: cover !important;
+        object-position: center top !important;
     }
 }
 

@@ -874,6 +874,14 @@ add_action('wp_footer', function() {
             align-self: flex-start !important;
         }
 
+        .woocommerce ul.products li.product .woocommerce-loop-product__link img,
+        .woocommerce ul.products li.product .woocommerce-LoopProduct-link img {
+            width: 100% !important;
+            height: 220px !important;
+            object-fit: cover !important;
+            object-position: center top !important;
+        }
+
         #overview::before,
         #cmr-intel-trends-section::before,
         #cmr-market-updates::before,
