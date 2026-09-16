@@ -1064,8 +1064,7 @@ add_action('wp_footer', function() {
             box-sizing: border-box !important;
         }
 
-        .cmr-latest-insights-section,
-        [class*="cmr-latest-insights-"] {
+        .cmr-latest-insights-section {
             padding-left: 16px !important;
             padding-right: 16px !important;
             margin-left: 0 !important;
@@ -1079,7 +1078,7 @@ add_action('wp_footer', function() {
 
         /* Nav bar inside Latest Insights must NOT have extra 16px padding on mobile */
         .cmr-latest-insights-section .intel-nav-bar:not(.intel-nav-fixed-js),
-        [class*="cmr-latest-insights"] .intel-nav-bar:not(.intel-nav-fixed-js) {
+        .cmr-latest-insights-section .intel-nav-bar {
             padding-left: 0 !important;
             padding-right: 0 !important;
             margin-left: 0 !important;
@@ -1092,12 +1091,7 @@ add_action('wp_footer', function() {
         .cmr-latest-insights-section .cmr-insights-filters-bar,
         .cmr-latest-insights-section .cmr-insights-grid,
         .cmr-latest-insights-section .cmr-insights-featured,
-        .cmr-latest-insights-section .cmr-insights-stack,
-        [class*="cmr-latest-insights"] .cmr-latest-insights-header,
-        [class*="cmr-latest-insights"] .cmr-insights-filters-bar,
-        [class*="cmr-latest-insights"] .cmr-insights-grid,
-        [class*="cmr-latest-insights"] .cmr-insights-featured,
-        [class*="cmr-latest-insights"] .cmr-insights-stack {
+        .cmr-latest-insights-section .cmr-insights-stack {
             width: 100% !important;
             max-width: 100% !important;
             margin-left: 0 !important;
@@ -1110,15 +1104,28 @@ add_action('wp_footer', function() {
         .cmr-latest-insights-header {
             margin-top: 20px !important;
             margin-bottom: 20px !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
         }
 
         .cmr-latest-insights-title {
-            font-size: 26px !important;
-            font-weight: 700 !important;
+            font-size: 28px !important;
+            font-weight: 600 !important;
             line-height: 1.25 !important;
             letter-spacing: -0.5px !important;
             margin: 0 0 8px 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
             color: #0f172a !important;
+            text-align: left !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
         }
 
         .cmr-latest-insights-desc {
@@ -1126,6 +1133,14 @@ add_action('wp_footer', function() {
             line-height: 1.5 !important;
             color: #475569 !important;
             margin: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            text-align: left !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
         }
 
         /* Filter Chips Horizontal Scroll */
