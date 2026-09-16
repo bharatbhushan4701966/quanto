@@ -35,7 +35,9 @@ function cmr_render_media_coverage_shortcode( $atts ) {
     <style>
     /* Sticky Intel Nav Bar for Media Coverage - Desktop */
     @media (min-width: 769px) {
-        .cmr-mc-wrapper .intel-nav-bar {
+        .cmr-mc-wrapper .intel-nav-bar,
+        .intel-nav-bar.cmr-mc-top-nav,
+        .intel-nav-bar.cmr-mc-top-nav.intel-nav-fixed-js {
             display: flex !important;
             justify-content: space-between !important;
             align-items: center !important;
@@ -48,28 +50,39 @@ function cmr_render_media_coverage_shortcode( $atts ) {
             box-sizing: border-box !important;
         }
 
-        .cmr-mc-wrapper .intel-nav-title {
-            font-size: 16px !important;
+        .cmr-mc-wrapper .intel-nav-title,
+        .intel-nav-bar.cmr-mc-top-nav .intel-nav-title {
+            font-size: 14px !important;
             font-weight: 600 !important;
             color: #111111 !important;
+            white-space: nowrap !important;
+            margin: 0 !important;
+            flex-shrink: 0 !important;
         }
 
-        .cmr-mc-wrapper .intel-nav-links {
+        .cmr-mc-wrapper .intel-nav-links,
+        .intel-nav-bar.cmr-mc-top-nav .intel-nav-links {
             display: flex !important;
             gap: 25px !important;
             align-items: center !important;
+            margin: 0 !important;
+            padding: 0 !important;
         }
 
-        .cmr-mc-wrapper .intel-nav-links a {
+        .cmr-mc-wrapper .intel-nav-links a,
+        .intel-nav-bar.cmr-mc-top-nav .intel-nav-links a {
             text-decoration: none !important;
             color: #333333 !important;
             font-size: 14px !important;
             font-weight: 500 !important;
             transition: color 0.2s ease !important;
+            white-space: nowrap !important;
         }
 
         .cmr-mc-wrapper .intel-nav-links a:hover,
-        .cmr-mc-wrapper .intel-nav-links a.active {
+        .cmr-mc-wrapper .intel-nav-links a.active,
+        .intel-nav-bar.cmr-mc-top-nav .intel-nav-links a:hover,
+        .intel-nav-bar.cmr-mc-top-nav .intel-nav-links a.active {
             color: #5842c3 !important;
         }
     }
@@ -177,7 +190,7 @@ function cmr_render_media_coverage_shortcode( $atts ) {
             margin-bottom: 25px !important;
         }
 
-        .cmr-mc-title {
+        .cmr-mc-header .cmr-mc-title {
             font-size: 28px !important;
             line-height: 1.25 !important;
             letter-spacing: -0.5px !important;
@@ -304,12 +317,14 @@ function cmr_render_media_coverage_shortcode( $atts ) {
         }
 
         .cmr-mc-wrapper .cmr-mc-featured .cmr-mc-title,
-        .cmr-media-coverage-wrapper .cmr-mc-featured .cmr-mc-title {
+        .cmr-media-coverage-wrapper .cmr-mc-featured .cmr-mc-title,
+        .cmr-mc-featured .cmr-mc-title {
             font-size: 18px !important;
             font-weight: 600 !important;
             line-height: 1.35 !important;
             color: #111111 !important;
             margin: 0 0 10px 0 !important;
+            text-align: left !important;
         }
 
         .cmr-mc-wrapper .cmr-mc-featured .cmr-mc-excerpt,
@@ -389,12 +404,14 @@ function cmr_render_media_coverage_shortcode( $atts ) {
         }
 
         .cmr-mc-wrapper .cmr-mc-standard .cmr-mc-title,
-        .cmr-media-coverage-wrapper .cmr-mc-card .cmr-mc-title {
+        .cmr-media-coverage-wrapper .cmr-mc-card .cmr-mc-title,
+        .cmr-mc-standard .cmr-mc-title {
             font-size: 15.5px !important;
             font-weight: 600 !important;
             line-height: 1.4 !important;
             color: #111111 !important;
             margin: 0 0 14px 0 !important;
+            text-align: left !important;
         }
 
         .cmr-mc-wrapper .cmr-mc-standard .cmr-mc-read-coverage,
@@ -415,11 +432,11 @@ function cmr_render_media_coverage_shortcode( $atts ) {
     </style>
 
     <div class="cmr-mc-wrapper" id="cmr-in-news">
-        <div class="intel-nav-bar cmr-mc-top-nav">
-            <div class="intel-nav-title">
+        <div class="intel-nav-bar cmr-mc-top-nav" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <div class="intel-nav-title" style="white-space: nowrap;">
                 CMR in News
             </div>
-            <div class="intel-nav-links">
+            <div class="intel-nav-links" style="display: flex; align-items: center; gap: 25px;">
                 <a href="#featured">Featured</a>
                 <a href="#latest-updates">Latest Updates</a>
                 <a href="#press-release">Press Release</a>
@@ -564,7 +581,7 @@ function cmr_ajax_filter_media_coverage() {
                                 <?php endif; ?>
                                 <span class="cmr-mc-date">Published <?php echo esc_html( $date ); ?></span>
                             </div>
-                            <h2 class="cmr-mc-title"><?php the_title(); ?></h2>
+                            <h2 class="cmr-mc-title" style="text-align: left !important;"><?php the_title(); ?></h2>
                             <?php if ( has_excerpt() ) : ?>
                                 <p class="cmr-mc-excerpt"><?php echo wp_trim_words( get_the_excerpt(), 25 ); ?></p>
                             <?php endif; ?>
@@ -600,7 +617,7 @@ function cmr_ajax_filter_media_coverage() {
                                     </div>
                                 <?php endif; ?>
                             </div>
-                            <h3 class="cmr-mc-title"><?php the_title(); ?></h3>
+                            <h3 class="cmr-mc-title" style="text-align: left !important;"><?php the_title(); ?></h3>
                             <span class="cmr-mc-read-coverage">View Coverage <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg" class="cmr-mc-arrow" alt=""></span>
                         </div>
                     </a>

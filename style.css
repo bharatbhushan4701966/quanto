@@ -7805,7 +7805,7 @@ ul.wp-block-list ol li {
         margin-bottom: 25px !important;
     }
 
-    .cmr-mc-title {
+    .cmr-mc-header .cmr-mc-title {
         font-size: 28px !important;
         line-height: 1.25 !important;
         letter-spacing: -0.5px !important;
@@ -7964,12 +7964,14 @@ ul.wp-block-list ol li {
     }
 
     .cmr-mc-wrapper .cmr-mc-featured .cmr-mc-title,
-    .cmr-media-coverage-wrapper .cmr-mc-featured .cmr-mc-title {
+    .cmr-media-coverage-wrapper .cmr-mc-featured .cmr-mc-title,
+    .cmr-mc-featured .cmr-mc-title {
         font-size: 18px !important;
         font-weight: 600 !important;
         line-height: 1.35 !important;
         color: #111111 !important;
         margin: 0 0 10px 0 !important;
+        text-align: left !important;
     }
 
     .cmr-mc-wrapper .cmr-mc-featured .cmr-mc-excerpt,
@@ -8049,12 +8051,14 @@ ul.wp-block-list ol li {
     }
 
     .cmr-mc-wrapper .cmr-mc-standard .cmr-mc-title,
-    .cmr-media-coverage-wrapper .cmr-mc-card .cmr-mc-title {
+    .cmr-media-coverage-wrapper .cmr-mc-card .cmr-mc-title,
+    .cmr-mc-standard .cmr-mc-title {
         font-size: 15.5px !important;
         font-weight: 600 !important;
         line-height: 1.4 !important;
         color: #111111 !important;
         margin: 0 0 14px 0 !important;
+        text-align: left !important;
     }
 
     .cmr-mc-wrapper .cmr-mc-standard .cmr-mc-read-coverage,

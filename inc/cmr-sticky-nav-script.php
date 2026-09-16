@@ -30,11 +30,11 @@ add_action('wp_footer', function() {
     .intel-nav-fixed-js::before {
         content: '';
         position: absolute;
-        top: 0;
+        top: -1px !important;
         left: 50%;
         transform: translateX(-50%);
         width: 100vw;
-        height: 100%;
+        height: calc(100% + 1px) !important;
         background: #fff;
         box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         z-index: -1;
@@ -44,6 +44,57 @@ add_action('wp_footer', function() {
     }
     .intel-nav-mobile-wrap {
         display: none;
+    }
+
+    @media (min-width: 769px) {
+        .intel-nav-bar,
+        .intel-nav-fixed-js {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            width: 100% !important;
+            min-height: 52px !important;
+            box-sizing: border-box !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+        }
+        .intel-nav-bar .intel-nav-title,
+        .intel-nav-fixed-js .intel-nav-title {
+            font-family: 'Instrument Sans', sans-serif !important;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            color: #111111 !important;
+            white-space: nowrap !important;
+            margin: 0 !important;
+            line-height: 1 !important;
+            flex-shrink: 0 !important;
+        }
+        .intel-nav-bar .intel-nav-links,
+        .intel-nav-fixed-js .intel-nav-links {
+            display: flex !important;
+            align-items: center !important;
+            gap: 25px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            list-style: none !important;
+        }
+        .intel-nav-bar .intel-nav-links a,
+        .intel-nav-fixed-js .intel-nav-links a {
+            text-decoration: none !important;
+            color: #111111 !important;
+            font-family: 'Instrument Sans', sans-serif !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            transition: color 0.2s ease !important;
+            white-space: nowrap !important;
+            line-height: 1 !important;
+        }
+        .intel-nav-bar .intel-nav-links a:hover,
+        .intel-nav-bar .intel-nav-links a.active,
+        .intel-nav-fixed-js .intel-nav-links a:hover,
+        .intel-nav-fixed-js .intel-nav-links a.active {
+            color: #5c24d3 !important;
+        }
     }
     @media (max-width: 1320px) {
         .intel-nav-fixed-js {
@@ -1495,7 +1546,7 @@ add_action('wp_footer', function() {
                         }
                     }
                     
-                    return Math.round(offset);
+                    return offset > 0 ? (Math.floor(offset) - 1) : 0;
                 }
 
                 function updateSticky() {

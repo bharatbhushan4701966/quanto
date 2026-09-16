@@ -617,7 +617,7 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
                             if (sectionRect.bottom <= (navBar.offsetHeight + stickyOffset)) {
                                 navBar.style.top = (sectionRect.bottom - navBar.offsetHeight) + 'px';
                             } else {
-                                navBar.style.top = stickyOffset + 'px';
+                                navBar.style.top = (stickyOffset > 0 ? (Math.floor(stickyOffset) - 1) : 0) + 'px';
                             }
                         } else {
                             if (navBar.classList.contains('intel-nav-fixed-js')) {

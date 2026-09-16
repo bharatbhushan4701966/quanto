@@ -643,7 +643,7 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                             if (boundaryBottom <= (navBar.offsetHeight + stickyOffset)) {
                                 navBar.style.top = (boundaryBottom - navBar.offsetHeight) + 'px';
                             } else {
-                                navBar.style.top = stickyOffset + 'px';
+                                navBar.style.top = (stickyOffset > 0 ? (Math.floor(stickyOffset) - 1) : 0) + 'px';
                             }
                         } else {
                             if (navBar.classList.contains('intel-nav-fixed-js')) {
