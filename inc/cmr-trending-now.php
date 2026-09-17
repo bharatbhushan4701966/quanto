@@ -101,7 +101,7 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
                 transition: transform 0.3s ease;
                 display: flex;
                 flex-direction: row;
-                height: 450px;
+                height: 342px;
                 flex: 0 0 calc(50% - 10px);
                 scroll-snap-align: start;
             }
@@ -111,10 +111,9 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
             }
 
             .cmr-tn-image-wrap {
+                width: 45%;
                 height: 100%;
-                flex: 0 0 450px;
-                width: 450px;
-                aspect-ratio: 1 / 1;
+                flex: 0 0 45%;
                 position: relative;
                 overflow: hidden;
                 background: #f8f9fa;
@@ -147,9 +146,10 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
             }
 
             .cmr-tn-content {
+                width: 55%;
                 flex: 1;
                 min-width: 0;
-                padding: 24px 22px;
+                padding: 25px;
                 display: flex;
                 flex-direction: column;
                 box-sizing: border-box;
@@ -164,11 +164,11 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
             }
 
             .cmr-tn-title {
-                font-size: 26px;
+                font-size: 18px;
                 font-weight: 600;
                 color: #111827;
-                margin-bottom: 12px;
-                line-height: 1.25;
+                margin-bottom: 15px;
+                line-height: 1.3;
                 text-decoration: none;
             }
 
@@ -190,7 +190,7 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
             .cmr-tn-brand {
                 font-size: 13px;
                 color: #6b7280;
-                margin-bottom: 12px;
+                margin-bottom: 15px;
             }
 
             .cmr-tn-price {
@@ -198,7 +198,6 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
                 font-size: 20px;
                 font-weight: 600;
                 color: #111827;
-                padding-top: 4px;
             }
 
             .cmr-tn-price del {
