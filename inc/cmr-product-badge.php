@@ -223,11 +223,11 @@ function cmr_render_product_badge_meta_box( $post ) {
     <div class="cmr-badge-meta-wrap">
         <label for="cmr_product_badge_type"><?php esc_html_e( 'Select Badge Type:', 'quanto' ); ?></label>
         <select id="cmr_product_badge_type" name="_cmr_product_badge_type">
-            <option value="none" <?php selected( $badge_type, 'none' ); ?>><?php esc_html_e( 'None (No Badge)', 'quanto' ); ?></option>
-            <option value="featured" <?php selected( $badge_type, 'featured' ); ?>><?php esc_html_e( 'Featured (🔖 Bookmark)', 'quanto' ); ?></option>
-            <option value="new" <?php selected( $badge_type, 'new' ); ?>><?php esc_html_e( 'New (✓ Check)', 'quanto' ); ?></option>
-            <option value="trending" <?php selected( $badge_type, 'trending' ); ?>><?php esc_html_e( 'Trending (⚡ Bolt)', 'quanto' ); ?></option>
-            <option value="hot" <?php selected( $badge_type, 'hot' ); ?>><?php esc_html_e( 'Hot (🔥 Fire)', 'quanto' ); ?></option>
+            <option value="none" <?php selected( $badge_type, 'none' ); ?>><?php esc_html_e( 'None', 'quanto' ); ?></option>
+            <option value="featured" <?php selected( $badge_type, 'featured' ); ?>><?php esc_html_e( 'Featured', 'quanto' ); ?></option>
+            <option value="new" <?php selected( $badge_type, 'new' ); ?>><?php esc_html_e( 'New', 'quanto' ); ?></option>
+            <option value="trending" <?php selected( $badge_type, 'trending' ); ?>><?php esc_html_e( 'Trending', 'quanto' ); ?></option>
+            <option value="hot" <?php selected( $badge_type, 'hot' ); ?>><?php esc_html_e( 'Hot', 'quanto' ); ?></option>
             <option value="custom" <?php selected( $badge_type, 'custom' ); ?>><?php esc_html_e( 'Custom Badge...', 'quanto' ); ?></option>
         </select>
 
