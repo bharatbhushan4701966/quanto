@@ -361,34 +361,36 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             display: block; 
             transition: transform 0.3s ease;
         }
-        /* For Research Reports: Clean 270px container with object-fit: contain so the cover is 100% visible and the title/link below stays fully above fold */
+        /* For Research Reports: Use 1:1 aspect-ratio / width: 100% with object-fit: cover and center alignment so the image fills the card cleanly with no side whitespace/bars and no text cut */
         .cmr-wwt-card-research-reports .cmr-wwt-card-img,
         .cmr-wwt-slide[data-s="2"] .cmr-wwt-card-img {
-            height: 270px !important;
+            height: auto !important;
+            aspect-ratio: 1 / 1;
+            width: 100% !important;
             max-width: 354px !important;
-            background: #f4f5f8;
+            background: transparent !important;
             border-radius: 6px;
-            padding: 4px;
+            padding: 0 !important;
             box-sizing: border-box;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            overflow: hidden;
         }
         .cmr-wwt-card-research-reports .cmr-wwt-card-img a,
         .cmr-wwt-slide[data-s="2"] .cmr-wwt-card-img a {
             width: 100% !important;
             height: 100% !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
+            display: block !important;
         }
         .cmr-wwt-card-research-reports .cmr-wwt-card-img img,
         .cmr-wwt-slide[data-s="2"] .cmr-wwt-card-img img {
-            object-fit: contain !important;
-            object-position: center center !important;
+            object-fit: cover !important;
+            object-position: center top !important;
             width: 100% !important;
             height: 100% !important;
             max-width: 100% !important;
             max-height: 100% !important;
-            border-radius: 4px;
+            border-radius: 6px;
+            display: block;
         }
 
         .cmr-wwt-card-cat { display:flex; align-items:center; gap:8px; margin-bottom:8px; cursor:pointer; }
@@ -500,15 +502,19 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             
             .cmr-wwt-card-img { width: 100%; max-width: 100%; height: 240px; }
             .cmr-wwt-card-research-reports .cmr-wwt-card-img {
-                height: 320px !important;
-                background: #f4f5f8;
-                padding: 4px;
+                height: auto !important;
+                aspect-ratio: 1 / 1;
+                background: transparent !important;
+                padding: 0 !important;
                 box-sizing: border-box;
+                overflow: hidden;
             }
             .cmr-wwt-card-research-reports .cmr-wwt-card-img img {
-                object-fit: contain !important;
+                object-fit: cover !important;
+                object-position: center top !important;
                 width: 100% !important;
                 height: 100% !important;
+                display: block;
             }
             .cmr-wwt-card-title { font-size: 16px; min-height: auto; }
         }
