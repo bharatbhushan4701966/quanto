@@ -26,10 +26,11 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
         ?>
         <style>
             .cmr-featured-reports-section {
-                max-width: 1200px;
-                margin: 60px auto;
+                max-width: 1280px;
+                margin: 50px auto 20px;
                 padding: 0 20px;
                 font-family: 'Instrument Sans', sans-serif !important;
+                box-sizing: border-box;
             }
 
             .cmr-featured-reports-title {

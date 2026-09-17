@@ -28,7 +28,7 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
             .cmr-trending-section {
                 width: 100%;
                 background-color: #f8f9fa;
-                padding: 60px 0;
+                padding: 40px 0 50px;
                 font-family: 'Instrument Sans', sans-serif !important;
             }
 
@@ -36,6 +36,7 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
                 max-width: 1280px;
                 margin: 0 auto;
                 padding: 0 20px;
+                box-sizing: border-box;
             }
 
             .cmr-trending-header {

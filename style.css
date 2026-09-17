@@ -8394,6 +8394,24 @@ ul.wp-block-list ol li {
 }
 
 /* CMR Featured Reports & Trending Now Styling */
+.cmr-featured-reports-section {
+    max-width: 1280px !important;
+    margin: 50px auto 20px auto !important;
+    padding: 0 20px !important;
+    box-sizing: border-box !important;
+}
+
+.cmr-trending-section {
+    padding: 40px 0 50px !important;
+}
+
+.cmr-trending-inner {
+    max-width: 1280px !important;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
+    box-sizing: border-box !important;
+}
+
 .cmr-fr-large {
     height: 680px !important;
 }
@@ -8664,6 +8682,24 @@ ul.wp-block-list ol li {
         width: 100% !important;
         height: 40px !important;
     }
+}
+
+/* CMR Latest Reports Image 1:1 Square Fit */
+.cmr-lr-image-wrap {
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    height: auto !important;
+    position: relative !important;
+    overflow: hidden !important;
+    background: #f8f9fa !important;
+}
+
+.cmr-lr-image-wrap img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    display: block !important;
 }
 
 

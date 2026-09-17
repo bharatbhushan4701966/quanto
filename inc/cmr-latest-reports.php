@@ -179,14 +179,19 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
 
             .cmr-lr-image-wrap {
                 width: 100%;
-                height: 220px;
+                aspect-ratio: 1 / 1;
+                height: auto;
                 position: relative;
+                overflow: hidden;
+                background: #f8f9fa;
             }
 
             .cmr-lr-image-wrap img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+                object-position: center;
+                display: block;
             }
 
             .cmr-lr-badge {
@@ -667,8 +672,14 @@ if ( ! function_exists( 'cmr_load_reports_ajax' ) ) {
             $query->the_post();
             global $product;
             
-            $image_url = wp_get_attachment_image_src( $product->get_image_id(), 'medium' );
-            $image_url = $image_url ? $image_url[0] : 'https://via.placeholder.com/400x400';
+            $image_url = wp_get_attachment_image_src( $product->get_image_id(), 'medium_large' );
+            if ( ! $image_url ) {
+                $image_url = wp_get_attachment_image_src( $product->get_image_id(), 'large' );
+            }
+            if ( ! $image_url ) {
+                $image_url = wp_get_attachment_image_src( $product->get_image_id(), 'medium' );
+            }
+            $image_url = $image_url ? $image_url[0] : 'https://via.placeholder.com/600x600';
             
             $cats = $product->get_category_ids();
             $cat_name = 'Report';
