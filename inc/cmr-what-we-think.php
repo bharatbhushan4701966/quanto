@@ -281,6 +281,7 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             background: #ffffff;
             color: #1a1a2e;
             overflow: visible;
+            margin-bottom: 60px;
         }
 
         .cmr-wwt-panel {
@@ -292,7 +293,7 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             justify-content: center;
             z-index: 2;
             padding-top: 10px;
-            padding-bottom: 25px;
+            padding-bottom: 70px;
         }
 
         .cmr-wwt-inner {
