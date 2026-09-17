@@ -88,6 +88,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                 flex-direction: column;
                 height: 740px;
                 position: relative;
+                background: #0a0e1a;
             }
 
             .cmr-fr-large .cmr-fr-image-wrap {
@@ -96,12 +97,13 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                 position: absolute;
                 top: 0;
                 left: 0;
+                background: #0a0e1a;
             }
 
             .cmr-fr-large .cmr-fr-image-wrap img {
                 width: 100%;
                 height: 100%;
-                object-fit: cover;
+                object-fit: contain;
                 object-position: center top;
             }
 
@@ -109,25 +111,34 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                 content: '';
                 position: absolute;
                 top: 0; left: 0; right: 0; bottom: 0;
-                background: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.75) 100%);
+                background: linear-gradient(to top, rgba(10,14,26,0.95) 0%, rgba(10,14,26,0.65) 25%, rgba(10,14,26,0) 55%);
+                pointer-events: none;
             }
 
             .cmr-fr-large-content {
                 position: relative;
                 z-index: 2;
-                padding: 40px 30px 30px;
+                padding: 35px 30px;
                 display: flex;
                 flex-direction: column;
+                justify-content: flex-end;
                 height: 100%;
                 color: #ffffff;
                 box-sizing: border-box;
+            }
+
+            .cmr-fr-large-bottom-wrap {
+                margin-top: auto;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
             }
 
             .cmr-fr-large-title {
                 font-size: 28px;
                 font-weight: 600;
                 color: #ffffff;
-                margin-bottom: 10px;
+                margin-bottom: 12px;
                 line-height: 1.25;
                 text-decoration: none;
             }
@@ -146,7 +157,50 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
             .cmr-fr-brand {
                 font-size: 13px;
                 color: #d1d5db;
-                margin-bottom: auto;
+                margin-bottom: 16px;
+            }
+
+            .cmr-fr-large-footer {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 15px;
+                flex-wrap: wrap;
+                margin-top: 6px;
+            }
+
+            .cmr-fr-large-price {
+                font-size: 24px;
+                font-weight: 600;
+                color: #ffffff;
+            }
+
+            .cmr-fr-large-price del {
+                font-size: 16px;
+                color: #9ca3af;
+                margin-right: 6px;
+            }
+
+            .cmr-fr-btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                padding: 12px 26px;
+                background: #ffffff;
+                border: 1px solid #ffffff;
+                border-radius: 50px;
+                color: #111827;
+                font-size: 14px;
+                font-weight: 600;
+                text-decoration: none;
+                transition: all 0.2s ease;
+            }
+
+            .cmr-fr-btn:hover {
+                background: #6b46c1;
+                border-color: #6b46c1;
+                color: #ffffff;
             }
 
 
@@ -291,21 +345,30 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                         <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $product->get_name() ); ?>">
                     </div>
                     <div class="cmr-fr-large-content">
-                        <a href="<?php echo esc_url( $product->get_permalink() ); ?>" class="cmr-fr-large-title"><?php echo esc_html( $product->get_name() ); ?></a>
-                        <div class="cmr-fr-stars">
-                            <?php 
-                            $rating = floatval( $product->get_average_rating() );
-                            $count = intval( $product->get_review_count() );
-                            for ( $s = 1; $s <= 5; $s++ ) {
-                                if ( $s <= $rating ) echo '<i class="fa-solid fa-star"></i>';
-                                elseif ( $s - 0.5 <= $rating ) echo '<i class="fa-solid fa-star-half-stroke"></i>';
-                                else echo '<i class="fa-regular fa-star"></i>';
-                            }
-                            ?>
-                            <span>(<?php echo $count; ?>)</span>
+                        <div class="cmr-fr-large-bottom-wrap">
+                            <a href="<?php echo esc_url( $product->get_permalink() ); ?>" class="cmr-fr-large-title"><?php echo esc_html( $product->get_name() ); ?></a>
+                            <div class="cmr-fr-stars">
+                                <?php 
+                                $rating = floatval( $product->get_average_rating() );
+                                $count = intval( $product->get_review_count() );
+                                for ( $s = 1; $s <= 5; $s++ ) {
+                                    if ( $s <= $rating ) echo '<i class="fa-solid fa-star"></i>';
+                                    elseif ( $s - 0.5 <= $rating ) echo '<i class="fa-solid fa-star-half-stroke"></i>';
+                                    else echo '<i class="fa-regular fa-star"></i>';
+                                }
+                                ?>
+                                <span>(<?php echo $count; ?>)</span>
+                            </div>
+                            <div class="cmr-fr-brand">CyberMedia Research (CMR)</div>
+                            <div class="cmr-fr-large-footer">
+                                <?php if ( $product->get_price_html() ) : ?>
+                                    <div class="cmr-fr-large-price"><?php echo $product->get_price_html(); ?></div>
+                                <?php endif; ?>
+                                <a href="<?php echo esc_url( $product->get_permalink() ); ?>" class="cmr-fr-btn">
+                                    Download Report <i class="fa-solid fa-arrow-down"></i>
+                                </a>
+                            </div>
                         </div>
-                        <div class="cmr-fr-brand">CyberMedia Research (CMR)</div>
-                        
                     </div>
                 </div>
                 <?php endif; ?>
