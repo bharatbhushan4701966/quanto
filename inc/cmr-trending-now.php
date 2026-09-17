@@ -101,9 +101,8 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
                 transition: transform 0.3s ease;
                 display: flex;
                 flex-direction: row;
-                height: 450px;
-                flex: 0 0 740px;
-                max-width: 740px;
+                height: 346px;
+                flex: 0 0 calc(50% - 10px);
                 scroll-snap-align: start;
             }
 
@@ -113,8 +112,8 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
 
             .cmr-tn-image-wrap {
                 height: 100%;
-                flex: 0 0 450px;
-                width: 450px;
+                flex: 0 0 346px;
+                width: 346px;
                 aspect-ratio: 1 / 1;
                 position: relative;
                 overflow: hidden;
@@ -150,7 +149,7 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
             .cmr-tn-content {
                 flex: 1;
                 min-width: 0;
-                padding: 32px 28px;
+                padding: 24px 22px;
                 display: flex;
                 flex-direction: column;
                 box-sizing: border-box;
@@ -159,17 +158,17 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
             .cmr-tn-category {
                 font-size: 12px;
                 color: #9ca3af;
-                margin-bottom: 10px;
+                margin-bottom: 8px;
                 text-transform: uppercase;
                 font-weight: 600;
             }
 
             .cmr-tn-title {
-                font-size: 20px;
+                font-size: 18px;
                 font-weight: 600;
                 color: #111827;
-                margin-bottom: 14px;
-                line-height: 1.35;
+                margin-bottom: 12px;
+                line-height: 1.3;
                 text-decoration: none;
             }
 
@@ -180,7 +179,7 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
             .cmr-tn-stars {
                 color: #f59e0b;
                 font-size: 14px;
-                margin-bottom: 12px;
+                margin-bottom: 10px;
             }
             .cmr-tn-stars span {
                 color: #d1d5db;
@@ -191,12 +190,12 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
             .cmr-tn-brand {
                 font-size: 13px;
                 color: #6b7280;
-                margin-bottom: 14px;
+                margin-bottom: 12px;
             }
 
             .cmr-tn-price {
                 margin-top: auto;
-                font-size: 22px;
+                font-size: 20px;
                 font-weight: 600;
                 color: #111827;
             }
@@ -210,14 +209,12 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
 
             @media (max-width: 992px) {
                 .cmr-tn-card {
-                    flex: 0 0 100%;
-                    max-width: 100%;
-                    height: auto;
+                    flex: 0 0 calc(100% - 0px);
+                    height: 240px;
                 }
                 .cmr-tn-image-wrap {
-                    flex: 0 0 280px;
-                    width: 280px;
-                    height: 280px;
+                    flex: 0 0 240px;
+                    width: 240px;
                 }
                 .cmr-tn-title {
                     font-size: 18px;
@@ -250,8 +247,8 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
                 <div class="cmr-trending-header">
                     <h2 class="cmr-trending-title"><?php echo esc_html( $atts['title'] ); ?></h2>
                     <div class="cmr-trending-nav">
-                        <button class="cmr-nav-prev" onclick="document.querySelector('.cmr-trending-grid').scrollBy({left: -760, behavior: 'smooth'})"><i class="fa-solid fa-arrow-left"></i></button>
-                        <button class="cmr-nav-next" onclick="document.querySelector('.cmr-trending-grid').scrollBy({left: 760, behavior: 'smooth'})"><i class="fa-solid fa-arrow-right"></i></button>
+                        <button class="cmr-nav-prev" onclick="document.querySelector('.cmr-trending-grid').scrollBy({left: -600, behavior: 'smooth'})"><i class="fa-solid fa-arrow-left"></i></button>
+                        <button class="cmr-nav-next" onclick="document.querySelector('.cmr-trending-grid').scrollBy({left: 600, behavior: 'smooth'})"><i class="fa-solid fa-arrow-right"></i></button>
                     </div>
                 </div>
                 
