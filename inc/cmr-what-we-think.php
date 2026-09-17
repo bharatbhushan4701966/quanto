@@ -281,19 +281,19 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             background: #ffffff;
             color: #1a1a2e;
             overflow: visible;
-            margin-bottom: 60px;
+            margin-bottom: 140px;
         }
 
         .cmr-wwt-panel {
             width: 100%;
-            min-height: calc(100vh - 80px); /* Leave room for sticky headers */
+            min-height: calc(100vh - 40px);
             height: auto;
             display: flex;
-            align-items: flex-start; /* Align closer to top so card titles are always visible */
+            align-items: flex-start;
             justify-content: center;
             z-index: 2;
             padding-top: 10px;
-            padding-bottom: 70px;
+            padding-bottom: 140px;
         }
 
         .cmr-wwt-inner {
@@ -448,7 +448,12 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
         .cmr-wwt-menu-item:hover .cmr-wwt-bullet,
         .cmr-wwt-menu-item.cmr-wwt-on .cmr-wwt-bullet { background: #401083; }
 
-        .cmr-wwt-right-col { flex: 1; min-width: 0; position: relative; }
+        .cmr-wwt-right-col { 
+            flex: 1; 
+            min-width: 0; 
+            position: relative; 
+            min-height: 600px;
+        }
 
         .cmr-wwt-slide {
             position: absolute; top: 0; left: 0; width: 100%;
@@ -652,11 +657,25 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
                 
                 wraps.forEach(wrap => {
                     const panel = wrap.querySelector('.cmr-wwt-panel');
+                    const rightCol = wrap.querySelector('.cmr-wwt-right-col');
                     const slides = wrap.querySelectorAll('.cmr-wwt-slide');
                     const menuItems = wrap.querySelectorAll('.cmr-wwt-menu-item');
                     const totalSlides = slides.length;
                     
                     if (totalSlides <= 1) return; // No need to pin if only 1 slide
+
+                    // Dynamically calculate tallest slide height
+                    function syncColHeight() {
+                        let maxHeight = 0;
+                        slides.forEach(s => {
+                            if (s.scrollHeight > maxHeight) maxHeight = s.scrollHeight;
+                        });
+                        if (maxHeight > 0 && rightCol) {
+                            rightCol.style.minHeight = (maxHeight + 20) + 'px';
+                        }
+                    }
+                    syncColHeight();
+                    window.addEventListener('resize', syncColHeight);
                     
                     // Set scroll duration (amount of pinning)
                     const scrollDuration = totalSlides * window.innerHeight;
@@ -666,6 +685,7 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
                         start: "top top+=80", // Account for sticky headers if any
                         end: "+=" + scrollDuration,
                         pin: panel,
+                        pinSpacing: true,
                         scrub: true,
                         onUpdate: self => {
                             // Calculate current active slide index based on progress
