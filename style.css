@@ -8412,8 +8412,12 @@ ul.wp-block-list ol li {
     box-sizing: border-box !important;
 }
 
+.cmr-featured-grid {
+    grid-template-columns: 44% 1fr !important;
+}
+
 .cmr-fr-large {
-    height: 680px !important;
+    height: 740px !important;
 }
 
 .cmr-fr-large .cmr-fr-image-wrap img {
@@ -8422,14 +8426,14 @@ ul.wp-block-list ol li {
 }
 
 .cmr-fr-small {
-    height: 330px !important;
+    height: 360px !important;
     display: flex !important;
 }
 
 .cmr-fr-small .cmr-fr-image-wrap {
     height: 100% !important;
-    flex: 0 0 330px !important;
-    width: 330px !important;
+    flex: 0 0 360px !important;
+    width: 360px !important;
     aspect-ratio: 1 / 1 !important;
     position: relative !important;
     overflow: hidden !important;
@@ -8467,14 +8471,14 @@ ul.wp-block-list ol li {
 }
 
 .cmr-tn-card {
-    height: 330px !important;
+    height: 360px !important;
     display: flex !important;
 }
 
 .cmr-tn-image-wrap {
     height: 100% !important;
-    flex: 0 0 330px !important;
-    width: 330px !important;
+    flex: 0 0 360px !important;
+    width: 360px !important;
     aspect-ratio: 1 / 1 !important;
     position: relative !important;
     overflow: hidden !important;
@@ -8506,6 +8510,9 @@ ul.wp-block-list ol li {
 }
 
 @media (max-width: 992px) {
+    .cmr-featured-grid {
+        grid-template-columns: 1fr !important;
+    }
     .cmr-fr-large {
         height: 420px !important;
     }

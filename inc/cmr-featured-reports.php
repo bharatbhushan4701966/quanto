@@ -43,7 +43,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
 
             .cmr-featured-grid {
                 display: grid;
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 44% 1fr;
                 gap: 20px;
             }
 
@@ -86,7 +86,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
             /* Big Card (Left) */
             .cmr-fr-large {
                 flex-direction: column;
-                height: 680px;
+                height: 740px;
                 position: relative;
             }
 
@@ -160,14 +160,14 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
 
             .cmr-fr-small {
                 flex-direction: row;
-                height: 330px;
+                height: 360px;
                 display: flex;
             }
 
             .cmr-fr-small .cmr-fr-image-wrap {
                 height: 100%;
-                flex: 0 0 330px;
-                width: 330px;
+                flex: 0 0 360px;
+                width: 360px;
                 aspect-ratio: 1 / 1;
                 position: relative;
                 overflow: hidden;
