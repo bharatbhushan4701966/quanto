@@ -276,7 +276,7 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
                         ?>
                         <div class="cmr-tn-card">
                             <div class="cmr-tn-image-wrap">
-                                <div class="cmr-tn-badge"><i class="fa-solid fa-bolt"></i> Trending</div>
+                                <?php if ( function_exists( 'cmr_render_product_badge' ) ) { cmr_render_product_badge( $product, 'cmr-tn-badge' ); } ?>
                                 <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $product->get_name() ); ?>">
                             </div>
                             <div class="cmr-tn-content">

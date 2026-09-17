@@ -17,19 +17,10 @@ function cmr_render_custom_product_card($product = null) {
         }
     }
     
-    $badge_text = 'NEW';
-    $badge_icon = 'fa-solid fa-circle-check';
-    $badge_color = '#ea580c';
-    
-    if ( $product->is_featured() ) {
-        $badge_text = 'FEATURED';
-        $badge_icon = 'fa-solid fa-bookmark';
-        $badge_color = '#6b46c1';
-    }
     ?>
     <div class="cmr-lr-card">
         <div class="cmr-lr-image-wrap">
-            <div class="cmr-lr-badge" style="color: <?php echo esc_attr($badge_color); ?>;"><i class="<?php echo esc_attr($badge_icon); ?>"></i> <?php echo esc_html($badge_text); ?></div>
+            <?php if ( function_exists( 'cmr_render_product_badge' ) ) { cmr_render_product_badge( $product, 'cmr-lr-badge' ); } ?>
             <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $product->get_name() ); ?>">
         </div>
         <div class="cmr-lr-content">

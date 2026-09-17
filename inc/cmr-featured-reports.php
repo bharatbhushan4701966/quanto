@@ -342,7 +342,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                 <!-- Large Card -->
                 <div class="cmr-fr-card cmr-fr-large">
                     <div class="cmr-fr-image-wrap">
-                        <div class="cmr-fr-badge"><i class="fa-solid fa-bookmark"></i> Featured</div>
+                        <?php if ( function_exists( 'cmr_render_product_badge' ) ) { cmr_render_product_badge( $product, 'cmr-fr-badge' ); } ?>
                         <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $product->get_name() ); ?>">
                     </div>
                     <div class="cmr-fr-large-content">
@@ -394,7 +394,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                             ?>
                             <div class="cmr-fr-card cmr-fr-small">
                                 <div class="cmr-fr-image-wrap">
-                                    <div class="cmr-fr-badge"><i class="fa-solid fa-bookmark"></i> Featured</div>
+                                    <?php if ( function_exists( 'cmr_render_product_badge' ) ) { cmr_render_product_badge( $product, 'cmr-fr-badge' ); } ?>
                                     <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $product->get_name() ); ?>">
                                 </div>
                                 <div class="cmr-fr-small-content">

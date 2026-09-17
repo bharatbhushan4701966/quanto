@@ -42,11 +42,19 @@ if ( post_password_required() ) {
 
 		<!-- Right Column: Product Info -->
 		<div class="custom-product-info-col">
-			<!-- Badge: New/Featured -->
+			<!-- Badge: Custom / Dynamic -->
 			<?php
-			$is_new = ( time() - get_the_time( 'U' ) < 30 * DAY_IN_SECONDS );
-			if ( $product->is_featured() || $is_new ) {
-				echo '<span class="custom-new-badge"><i class="fa-solid fa-star"></i> NEW</span>';
+			if ( function_exists( 'cmr_get_product_badge' ) ) {
+				$single_badge = cmr_get_product_badge( $product );
+				if ( ! empty( $single_badge['show'] ) ) {
+					$color = ! empty( $single_badge['color'] ) ? $single_badge['color'] : '#ea580c';
+					echo '<span class="custom-new-badge" style="color:' . esc_attr( $color ) . '; border-color:' . esc_attr( $color ) . '; background: rgba(255,255,255,0.06);">';
+					if ( ! empty( $single_badge['icon'] ) ) {
+						echo '<i class="' . esc_attr( $single_badge['icon'] ) . '"></i> ';
+					}
+					echo esc_html( $single_badge['text'] );
+					echo '</span>';
+				}
 			}
 			?>
 

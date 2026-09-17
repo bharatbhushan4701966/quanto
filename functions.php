@@ -310,6 +310,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-author-sync.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-post-sync.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-product-sync.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-research-reports-hero.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-product-badge.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-featured-reports.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-trending-now.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-custom-report-cta.php';
