@@ -138,7 +138,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                 font-size: 28px;
                 font-weight: 600;
                 color: #ffffff;
-                margin-bottom: 12px;
+                margin-bottom: 0;
                 line-height: 1.25;
                 text-decoration: none;
             }
@@ -146,7 +146,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
             .cmr-fr-stars {
                 color: #f59e0b;
                 font-size: 14px;
-                margin-bottom: 10px;
+                margin: 6px 0;
             }
             .cmr-fr-stars span {
                 color: #d1d5db;
@@ -157,7 +157,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
             .cmr-fr-brand {
                 font-size: 13px;
                 color: #d1d5db;
-                margin-bottom: 16px;
+                margin-bottom: 0;
             }
 
             .cmr-fr-large-footer {
@@ -166,7 +166,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                 justify-content: space-between;
                 gap: 15px;
                 flex-wrap: wrap;
-                margin-top: 6px;
+                margin-top: 14px;
             }
 
             .cmr-fr-large-price {
@@ -181,26 +181,27 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                 margin-right: 6px;
             }
 
-            .cmr-fr-btn {
+            .cmr-fr-large-footer .cmr-lr-btn {
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
                 gap: 8px;
-                padding: 12px 26px;
+                padding: 10px 22px;
                 background: #ffffff;
-                border: 1px solid #ffffff;
+                border: 1px solid #d1d5db;
                 border-radius: 50px;
-                color: #111827;
+                color: #374151;
                 font-size: 14px;
                 font-weight: 600;
                 text-decoration: none;
                 transition: all 0.2s ease;
+                width: auto;
             }
 
-            .cmr-fr-btn:hover {
-                background: #6b46c1;
-                border-color: #6b46c1;
-                color: #ffffff;
+            .cmr-fr-large-footer .cmr-lr-btn:hover {
+                background: #f3f4f6;
+                border-color: #9ca3af;
+                color: #111827;
             }
 
 
@@ -364,7 +365,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                                 <?php if ( $product->get_price_html() ) : ?>
                                     <div class="cmr-fr-large-price"><?php echo $product->get_price_html(); ?></div>
                                 <?php endif; ?>
-                                <a href="<?php echo esc_url( $product->get_permalink() ); ?>" class="cmr-fr-btn">
+                                <a href="<?php echo esc_url( $product->get_permalink() ); ?>" class="cmr-lr-btn">
                                     Download Report <i class="fa-solid fa-arrow-down"></i>
                                 </a>
                             </div>

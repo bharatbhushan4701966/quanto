@@ -8457,13 +8457,34 @@ ul.wp-block-list ol li {
     flex-direction: column !important;
 }
 
+.cmr-fr-large-title {
+    font-size: 28px !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    margin-bottom: 0 !important;
+    line-height: 1.25 !important;
+    text-decoration: none !important;
+}
+
+.cmr-fr-large-content .cmr-fr-stars {
+    color: #f59e0b !important;
+    font-size: 14px !important;
+    margin: 6px 0 !important;
+}
+
+.cmr-fr-large-content .cmr-fr-brand {
+    font-size: 13px !important;
+    color: #d1d5db !important;
+    margin-bottom: 0 !important;
+}
+
 .cmr-fr-large-footer {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
     gap: 15px !important;
     flex-wrap: wrap !important;
-    margin-top: 6px !important;
+    margin-top: 14px !important;
 }
 
 .cmr-fr-large-price {
@@ -8478,26 +8499,27 @@ ul.wp-block-list ol li {
     margin-right: 6px !important;
 }
 
-.cmr-fr-btn {
+.cmr-fr-large-footer .cmr-lr-btn {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     gap: 8px !important;
-    padding: 12px 26px !important;
+    padding: 10px 22px !important;
     background: #ffffff !important;
-    border: 1px solid #ffffff !important;
+    border: 1px solid #d1d5db !important;
     border-radius: 50px !important;
-    color: #111827 !important;
+    color: #374151 !important;
     font-size: 14px !important;
     font-weight: 600 !important;
     text-decoration: none !important;
     transition: all 0.2s ease !important;
+    width: auto !important;
 }
 
-.cmr-fr-btn:hover {
-    background: #6b46c1 !important;
-    border-color: #6b46c1 !important;
-    color: #ffffff !important;
+.cmr-fr-large-footer .cmr-lr-btn:hover {
+    background: #f3f4f6 !important;
+    border-color: #9ca3af !important;
+    color: #111827 !important;
 }
 
 .cmr-fr-small {
