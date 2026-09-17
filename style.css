@@ -8921,6 +8921,18 @@ ul.wp-block-list ol li {
     display: block !important;
 }
 
+.cmr-badge-custom-icon {
+    width: 14px !important;
+    height: 14px !important;
+    max-width: 14px !important;
+    max-height: 14px !important;
+    object-fit: contain !important;
+    vertical-align: middle !important;
+    display: inline-block !important;
+    flex-shrink: 0 !important;
+}
+
+
 
 
 
