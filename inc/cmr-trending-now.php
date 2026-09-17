@@ -208,8 +208,15 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
             }
 
             @media (max-width: 992px) {
+                .cmr-trending-inner {
+                    padding: 0 16px !important;
+                }
+                .cmr-trending-grid {
+                    gap: 16px !important;
+                    scroll-padding-left: 16px !important;
+                }
                 .cmr-tn-card {
-                    flex: 0 0 calc(100% - 0px);
+                    flex: 0 0 calc(65% - 16px);
                     height: 240px;
                 }
                 .cmr-tn-image-wrap {
@@ -222,22 +229,30 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
             }
 
             @media (max-width: 576px) {
+                .cmr-trending-inner {
+                    padding: 0 16px !important;
+                }
+                .cmr-trending-grid {
+                    gap: 16px !important;
+                    scroll-padding-left: 16px !important;
+                }
                 .cmr-tn-card {
-                    flex-direction: column;
-                    height: auto;
+                    flex: 0 0 78% !important;
+                    flex-direction: column !important;
+                    height: auto !important;
                 }
                 .cmr-tn-image-wrap {
-                    width: 100%;
-                    height: auto;
-                    aspect-ratio: 1 / 1;
-                    flex: none;
+                    width: 100% !important;
+                    height: auto !important;
+                    aspect-ratio: 1 / 1 !important;
+                    flex: none !important;
                 }
                 .cmr-tn-content {
-                    width: 100%;
-                    padding: 20px;
+                    width: 100% !important;
+                    padding: 18px 16px !important;
                 }
                 .cmr-tn-title {
-                    font-size: 18px;
+                    font-size: 17px !important;
                 }
             }
         </style>
@@ -247,8 +262,8 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
                 <div class="cmr-trending-header">
                     <h2 class="cmr-trending-title"><?php echo esc_html( $atts['title'] ); ?></h2>
                     <div class="cmr-trending-nav">
-                        <button class="cmr-nav-prev" onclick="document.querySelector('.cmr-trending-grid').scrollBy({left: -600, behavior: 'smooth'})"><i class="fa-solid fa-arrow-left"></i></button>
-                        <button class="cmr-nav-next" onclick="document.querySelector('.cmr-trending-grid').scrollBy({left: 600, behavior: 'smooth'})"><i class="fa-solid fa-arrow-right"></i></button>
+                        <button class="cmr-nav-prev" onclick="var g=document.querySelector('.cmr-trending-grid'); g.scrollBy({left: (window.innerWidth < 768 ? -g.clientWidth * 0.8 : -600), behavior: 'smooth'})"><i class="fa-solid fa-arrow-left"></i></button>
+                        <button class="cmr-nav-next" onclick="var g=document.querySelector('.cmr-trending-grid'); g.scrollBy({left: (window.innerWidth < 768 ? g.clientWidth * 0.8 : 600), behavior: 'smooth'})"><i class="fa-solid fa-arrow-right"></i></button>
                     </div>
                 </div>
                 
