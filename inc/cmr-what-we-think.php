@@ -330,13 +330,14 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
         .cmr-wwt-card { 
             flex: 1; 
             min-width: 0; 
+            max-width: 433px;
             display: flex;
             flex-direction: column;
         }
 
         .cmr-wwt-card-img {
             width: 100%;
-            max-width: 354px;
+            max-width: 433px;
             aspect-ratio: 16 / 10;
             overflow: hidden;
             margin-bottom: 12px;
@@ -364,7 +365,7 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             height: auto !important;
             aspect-ratio: 1 / 1 !important;
             width: 100% !important;
-            max-width: 354px !important;
+            max-width: 433px !important;
             background: transparent !important;
             border-radius: 6px;
             padding: 0 !important;
