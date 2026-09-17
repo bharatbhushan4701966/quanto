@@ -85,7 +85,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
             /* Big Card (Left) */
             .cmr-fr-large {
                 flex-direction: column;
-                height: 580px;
+                height: 680px;
                 position: relative;
             }
 
@@ -159,14 +159,14 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
 
             .cmr-fr-small {
                 flex-direction: row;
-                height: 280px;
+                height: 330px;
                 display: flex;
             }
 
             .cmr-fr-small .cmr-fr-image-wrap {
                 height: 100%;
-                flex: 0 0 280px;
-                width: 280px;
+                flex: 0 0 330px;
+                width: 330px;
                 aspect-ratio: 1 / 1;
                 position: relative;
                 overflow: hidden;
@@ -184,7 +184,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
             .cmr-fr-small-content {
                 flex: 1;
                 min-width: 0;
-                padding: 22px 20px;
+                padding: 24px 22px;
                 display: flex;
                 flex-direction: column;
                 box-sizing: border-box;
@@ -222,6 +222,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                 font-size: 20px;
                 font-weight: 600;
                 color: #111827;
+                padding-top: 4px;
             }
 
             .cmr-fr-price del {

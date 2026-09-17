@@ -8395,7 +8395,7 @@ ul.wp-block-list ol li {
 
 /* CMR Featured Reports & Trending Now Styling */
 .cmr-fr-large {
-    height: 580px !important;
+    height: 680px !important;
 }
 
 .cmr-fr-large .cmr-fr-image-wrap img {
@@ -8404,14 +8404,14 @@ ul.wp-block-list ol li {
 }
 
 .cmr-fr-small {
-    height: 280px !important;
+    height: 330px !important;
     display: flex !important;
 }
 
 .cmr-fr-small .cmr-fr-image-wrap {
     height: 100% !important;
-    flex: 0 0 280px !important;
-    width: 280px !important;
+    flex: 0 0 330px !important;
+    width: 330px !important;
     aspect-ratio: 1 / 1 !important;
     position: relative !important;
     overflow: hidden !important;
@@ -8429,7 +8429,7 @@ ul.wp-block-list ol li {
 .cmr-fr-small-content {
     flex: 1 !important;
     min-width: 0 !important;
-    padding: 22px 20px !important;
+    padding: 24px 22px !important;
     display: flex !important;
     flex-direction: column !important;
     box-sizing: border-box !important;
@@ -8442,15 +8442,21 @@ ul.wp-block-list ol li {
     margin-bottom: 12px !important;
 }
 
+.cmr-fr-price,
+.cmr-tn-price {
+    margin-top: auto !important;
+    padding-top: 4px !important;
+}
+
 .cmr-tn-card {
-    height: 280px !important;
+    height: 330px !important;
     display: flex !important;
 }
 
 .cmr-tn-image-wrap {
     height: 100% !important;
-    flex: 0 0 280px !important;
-    width: 280px !important;
+    flex: 0 0 330px !important;
+    width: 330px !important;
     aspect-ratio: 1 / 1 !important;
     position: relative !important;
     overflow: hidden !important;
@@ -8468,7 +8474,7 @@ ul.wp-block-list ol li {
 .cmr-tn-content {
     flex: 1 !important;
     min-width: 0 !important;
-    padding: 22px 20px !important;
+    padding: 24px 22px !important;
     display: flex !important;
     flex-direction: column !important;
     box-sizing: border-box !important;

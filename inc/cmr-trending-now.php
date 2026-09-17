@@ -100,7 +100,7 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
                 transition: transform 0.3s ease;
                 display: flex;
                 flex-direction: row;
-                height: 280px;
+                height: 330px;
                 flex: 0 0 calc(50% - 10px);
                 scroll-snap-align: start;
             }
@@ -111,8 +111,8 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
 
             .cmr-tn-image-wrap {
                 height: 100%;
-                flex: 0 0 280px;
-                width: 280px;
+                flex: 0 0 330px;
+                width: 330px;
                 aspect-ratio: 1 / 1;
                 position: relative;
                 overflow: hidden;
@@ -148,7 +148,7 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
             .cmr-tn-content {
                 flex: 1;
                 min-width: 0;
-                padding: 22px 20px;
+                padding: 24px 22px;
                 display: flex;
                 flex-direction: column;
                 box-sizing: border-box;
@@ -197,6 +197,7 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
                 font-size: 20px;
                 font-weight: 600;
                 color: #111827;
+                padding-top: 4px;
             }
 
             .cmr-tn-price del {
