@@ -179,7 +179,7 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
 
             .cmr-lr-image-wrap {
                 width: 100%;
-                aspect-ratio: 1 / 1;
+                aspect-ratio: 4 / 4.8;
                 height: auto;
                 position: relative;
                 overflow: hidden;
