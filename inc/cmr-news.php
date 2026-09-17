@@ -136,12 +136,13 @@ function cmr_news_custom_column_fallback_content( $column_name, $post_id ) {
     }
 }
 
-// Keep cmr_news_category and core category in sync on save
+// Keep cmr_news_category and core category in sync on save (bidirectional)
 add_action( 'save_post_cmr_news', 'cmr_news_sync_categories_on_save', 25, 2 );
 function cmr_news_sync_categories_on_save( $post_id, $post ) {
     if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
     if ( wp_is_post_revision( $post_id ) ) return;
     
+    // Direction 1: cmr_news_category → standard category
     $news_terms = wp_get_object_terms( $post_id, 'cmr_news_category' );
     if ( ! empty( $news_terms ) && ! is_wp_error( $news_terms ) ) {
         $cat_ids = array();
@@ -163,12 +164,36 @@ function cmr_news_sync_categories_on_save( $post_id, $post ) {
             wp_set_object_terms( $post_id, $cat_ids, 'category', true );
         }
     }
+
+    // Direction 2: standard category → cmr_news_category
+    // If a post has a standard category assigned but no matching cmr_news_category, auto-assign it.
+    $cat_terms = wp_get_object_terms( $post_id, 'category' );
+    if ( ! empty( $cat_terms ) && ! is_wp_error( $cat_terms ) ) {
+        $existing_news_slugs = ! empty( $news_terms ) && ! is_wp_error( $news_terms )
+            ? wp_list_pluck( $news_terms, 'slug' )
+            : array();
+
+        $news_term_ids_to_add = array();
+        foreach ( $cat_terms as $ct ) {
+            // Only match categories that correspond to known cmr_news_category terms
+            $news_term = get_term_by( 'name', $ct->name, 'cmr_news_category' );
+            if ( ! $news_term ) {
+                $news_term = get_term_by( 'slug', $ct->slug, 'cmr_news_category' );
+            }
+            if ( $news_term && ! in_array( $news_term->slug, $existing_news_slugs ) ) {
+                $news_term_ids_to_add[] = (int) $news_term->term_id;
+            }
+        }
+        if ( ! empty( $news_term_ids_to_add ) ) {
+            wp_set_object_terms( $post_id, $news_term_ids_to_add, 'cmr_news_category', true );
+        }
+    }
 }
 
-// One-time backfill of core category terms from cmr_news_category for existing news posts
+// One-time backfill of core category terms from cmr_news_category for existing news posts (bidirectional)
 add_action( 'admin_init', 'cmr_news_backfill_categories_once' );
 function cmr_news_backfill_categories_once() {
-    if ( get_option( 'cmr_news_cat_backfilled_v1' ) === 'yes' ) {
+    if ( get_option( 'cmr_news_cat_backfilled_v2' ) === 'yes' ) {
         return;
     }
     
@@ -182,6 +207,8 @@ function cmr_news_backfill_categories_once() {
     if ( ! empty( $news_posts ) ) {
         foreach ( $news_posts as $p_id ) {
             $news_terms = wp_get_object_terms( $p_id, 'cmr_news_category' );
+            
+            // Direction 1: cmr_news_category → standard category
             if ( ! empty( $news_terms ) && ! is_wp_error( $news_terms ) ) {
                 $cat_ids = array();
                 foreach ( $news_terms as $nt ) {
@@ -202,10 +229,33 @@ function cmr_news_backfill_categories_once() {
                     wp_set_object_terms( $p_id, $cat_ids, 'category', true );
                 }
             }
+
+            // Direction 2: standard category → cmr_news_category
+            $cat_terms = wp_get_object_terms( $p_id, 'category' );
+            if ( ! empty( $cat_terms ) && ! is_wp_error( $cat_terms ) ) {
+                $existing_news_slugs = ! empty( $news_terms ) && ! is_wp_error( $news_terms )
+                    ? wp_list_pluck( $news_terms, 'slug' )
+                    : array();
+
+                $news_term_ids_to_add = array();
+                foreach ( $cat_terms as $ct ) {
+                    $news_term = get_term_by( 'name', $ct->name, 'cmr_news_category' );
+                    if ( ! $news_term ) {
+                        $news_term = get_term_by( 'slug', $ct->slug, 'cmr_news_category' );
+                    }
+                    if ( $news_term && ! in_array( $news_term->slug, $existing_news_slugs ) ) {
+                        $news_term_ids_to_add[] = (int) $news_term->term_id;
+                        $existing_news_slugs[]  = $news_term->slug;
+                    }
+                }
+                if ( ! empty( $news_term_ids_to_add ) ) {
+                    wp_set_object_terms( $p_id, $news_term_ids_to_add, 'cmr_news_category', true );
+                }
+            }
         }
     }
     
-    update_option( 'cmr_news_cat_backfilled_v1', 'yes' );
+    update_option( 'cmr_news_cat_backfilled_v2', 'yes' );
 }
 
 add_action( 'init', 'cmr_news_insert_default_terms' );
@@ -525,11 +575,17 @@ function cmr_news_tabs_shortcode( $atts ) {
                         $pinned_query = new WP_Query( array(
                             'post_type' => 'cmr_news',
                             'tax_query' => array(
+                                'relation' => 'OR',
                                 array(
                                     'taxonomy' => 'cmr_news_category',
                                     'field'    => 'term_id',
                                     'terms'    => $term->term_id,
-                                )
+                                ),
+                                array(
+                                    'taxonomy' => 'category',
+                                    'field'    => 'name',
+                                    'terms'    => $term->name,
+                                ),
                             ),
                             'meta_query' => array(
                                 array(
@@ -551,11 +607,17 @@ function cmr_news_tabs_shortcode( $atts ) {
                             $normal_args = array(
                                 'post_type' => 'cmr_news',
                                 'tax_query' => array(
+                                    'relation' => 'OR',
                                     array(
                                         'taxonomy' => 'cmr_news_category',
                                         'field'    => 'term_id',
                                         'terms'    => $term->term_id,
-                                    )
+                                    ),
+                                    array(
+                                        'taxonomy' => 'category',
+                                        'field'    => 'name',
+                                        'terms'    => $term->name,
+                                    ),
                                 ),
                                 'orderby' => 'date',
                                 'order'   => 'DESC',
