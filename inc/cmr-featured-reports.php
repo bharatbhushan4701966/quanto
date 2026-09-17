@@ -162,17 +162,24 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
             .cmr-fr-small .cmr-fr-image-wrap {
                 width: 45%;
                 position: relative;
+                background: #f8f9fa;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
             }
 
             .cmr-fr-small .cmr-fr-image-wrap img {
                 width: 100%;
                 height: 100%;
-                object-fit: cover;
+                object-fit: contain;
+                object-position: center;
+                display: block;
             }
 
             .cmr-fr-small-content {
                 width: 55%;
-                padding: 25px;
+                padding: 24px 22px;
                 display: flex;
                 flex-direction: column;
             }
@@ -186,11 +193,11 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
             }
 
             .cmr-fr-small-title {
-                font-size: 18px;
+                font-size: 28px;
                 font-weight: 600;
                 color: #111827;
                 margin-bottom: 15px;
-                line-height: 1.3;
+                line-height: 1.25;
                 text-decoration: none;
             }
 
@@ -227,6 +234,9 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                 .cmr-fr-small {
                     height: auto;
                 }
+                .cmr-fr-small-title {
+                    font-size: 22px;
+                }
             }
 
             @media (max-width: 576px) {
@@ -235,10 +245,14 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                 }
                 .cmr-fr-small .cmr-fr-image-wrap {
                     width: 100%;
-                    height: 200px;
+                    height: 220px;
                 }
                 .cmr-fr-small-content {
                     width: 100%;
+                    padding: 20px;
+                }
+                .cmr-fr-small-title {
+                    font-size: 18px;
                 }
             }
         </style>

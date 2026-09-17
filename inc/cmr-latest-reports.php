@@ -52,7 +52,8 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
 
             .cmr-filter-pills {
                 display: flex;
-                gap: 10px;
+                gap: 12px;
+                align-items: center;
                 flex-wrap: wrap;
             }
 
@@ -60,49 +61,99 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
                 background: #ffffff;
                 border: 1px solid #e5e7eb;
                 color: #374151;
-                padding: 8px 20px;
-                border-radius: 50px;
+                padding: 0 24px;
+                min-width: 72px;
+                height: 40px;
+                border-radius: 40px;
                 font-size: 14px;
                 font-weight: 500;
                 cursor: pointer;
                 transition: all 0.2s ease;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                line-height: 1;
+                box-sizing: border-box;
+                font-family: inherit;
             }
 
-            .cmr-filter-pill:hover, .cmr-filter-pill.active {
+            .cmr-filter-pill:hover {
+                border-color: #6b46c1;
+                color: #6b46c1;
+                background: #fdfcff;
+            }
+
+            .cmr-filter-pill.active {
                 background: #6b46c1;
                 border-color: #6b46c1;
                 color: #ffffff;
+                box-shadow: 0 2px 6px rgba(107, 70, 193, 0.25);
             }
 
             .cmr-search-wrapper {
                 position: relative;
-                width: 300px;
+                display: flex;
+                align-items: center;
+                background: #ffffff;
+                border: 1px solid #e5e7eb;
+                border-radius: 40px;
+                padding: 3px 4px 3px 18px;
+                width: 290px;
+                height: 40px;
+                box-sizing: border-box;
+                transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .cmr-search-wrapper:focus-within {
+                border-color: #6b46c1;
+                box-shadow: 0 0 0 3px rgba(107, 70, 193, 0.12);
             }
 
             .cmr-search-wrapper input {
-                width: 100%;
-                padding: 10px 40px 10px 20px;
-                border-radius: 50px;
-                border: 1px solid #e5e7eb;
-                font-size: 14px;
-                outline: none;
+                border: none !important;
+                outline: none !important;
+                background: transparent !important;
+                font-size: 14px !important;
+                width: 100% !important;
+                color: #111827 !important;
+                box-shadow: none !important;
+                padding: 0 10px 0 0 !important;
+                margin: 0 !important;
+                font-family: inherit !important;
+                height: 100% !important;
+                line-height: normal !important;
+            }
+
+            .cmr-search-wrapper input::placeholder {
+                color: #9ca3af !important;
+                font-size: 14px !important;
             }
 
             .cmr-search-wrapper button {
-                position: absolute;
-                right: 5px;
-                top: 50%;
-                transform: translateY(-50%);
-                width: 30px;
-                height: 30px;
-                border-radius: 50%;
-                background: #6b46c1;
-                color: #fff;
-                border: none;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
+                width: 32px !important;
+                height: 32px !important;
+                border-radius: 50% !important;
+                background: #6b46c1 !important;
+                color: #ffffff !important;
+                border: none !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                cursor: pointer !important;
+                flex-shrink: 0 !important;
+                padding: 0 !important;
+                transition: background 0.2s ease, transform 0.15s ease;
+            }
+
+            .cmr-search-wrapper button:hover {
+                background: #5b32b0 !important;
+                transform: scale(1.05);
+            }
+
+            .cmr-search-wrapper button i {
+                font-size: 13px !important;
+                line-height: 1 !important;
             }
 
             .cmr-latest-grid {
@@ -307,10 +358,33 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
                 }
                 .cmr-filter-bar {
                     flex-direction: column;
-                    align-items: flex-start;
+                    align-items: stretch;
+                    gap: 16px;
+                }
+                .cmr-filter-pills {
+                    display: flex;
+                    flex-wrap: nowrap;
+                    overflow-x: auto;
+                    -webkit-overflow-scrolling: touch;
+                    scrollbar-width: none;
+                    gap: 8px;
+                    width: 100%;
+                    padding-bottom: 4px;
+                }
+                .cmr-filter-pills::-webkit-scrollbar {
+                    display: none;
+                }
+                .cmr-filter-pill {
+                    flex-shrink: 0;
+                    white-space: nowrap;
+                    padding: 0 18px;
+                    font-size: 13px;
+                    height: 36px;
+                    min-width: 60px;
                 }
                 .cmr-search-wrapper {
                     width: 100%;
+                    height: 40px;
                 }
             }
 
@@ -457,7 +531,7 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
                             }
                         } else {
                             if ( reset ) {
-                                grid.innerHTML = '<p>No reports found.</p>';
+                                grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 50px 20px; color: #6b7280; font-size: 15px;"><i class="fa-solid fa-magnifying-glass" style="font-size: 24px; color: #9ca3af; margin-bottom: 12px; display: block;"></i>No reports found matching your criteria.</div>';
                             }
                         }
                     })
@@ -514,16 +588,33 @@ if ( ! function_exists( 'cmr_latest_reports_shortcode' ) ) {
                     });
                 });
 
-                // Search
-                searchBtn.addEventListener('click', function() {
-                    currentSearch = searchInput.value;
-                    loadProducts(true);
+                // Search with debounce & live clearing
+                let searchTimer = null;
+
+                function triggerSearch() {
+                    const val = searchInput.value.trim();
+                    if ( val !== currentSearch ) {
+                        currentSearch = val;
+                        loadProducts(true);
+                    }
+                }
+
+                searchInput.addEventListener('input', function() {
+                    clearTimeout(searchTimer);
+                    searchTimer = setTimeout(triggerSearch, 350);
                 });
 
-                searchInput.addEventListener('keypress', function(e) {
+                searchBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    clearTimeout(searchTimer);
+                    triggerSearch();
+                });
+
+                searchInput.addEventListener('keydown', function(e) {
                     if ( e.key === 'Enter' ) {
-                        currentSearch = searchInput.value;
-                        loadProducts(true);
+                        e.preventDefault();
+                        clearTimeout(searchTimer);
+                        triggerSearch();
                     }
                 });
             });
@@ -539,26 +630,8 @@ if ( ! function_exists( 'cmr_load_reports_ajax' ) ) {
     function cmr_load_reports_ajax() {
         $paged = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 1;
         $category = isset( $_POST['category'] ) ? sanitize_text_field( $_POST['category'] ) : '';
-        $search = isset( $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : '';
+        $search = isset( $_POST['search'] ) ? trim( sanitize_text_field( $_POST['search'] ) ) : '';
         $posts_per_page = isset( $_POST['posts_per_page'] ) ? intval( $_POST['posts_per_page'] ) : 8;
-
-        $args = array(
-            'limit' => $posts_per_page,
-            'page'  => $paged,
-            'status' => 'publish',
-            'orderby' => 'date',
-            'order' => 'DESC',
-        );
-
-        if ( ! empty( $category ) ) {
-            $args['category'] = array( $category );
-        }
-
-        $products = wc_get_products( $args );
-        
-        // Manual search filtering since wc_get_products 's' parameter can be inconsistent in some versions, but we'll try 's' first.
-        // Wait, 's' works for standard queries but for wc_get_products it might need a specific parameter if not using WP_Query. 
-        // We will use standard WP_Query for complex filtering just to be safe.
         
         $query_args = array(
             'post_type' => 'product',
