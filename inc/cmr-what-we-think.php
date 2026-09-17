@@ -212,7 +212,10 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             foreach ( $posts as $post_obj ) {
                 $post_title = get_the_title( $post_obj );
                 $post_link  = get_permalink( $post_obj->ID );
-                $thumbnail_url = get_the_post_thumbnail_url( $post_obj->ID, 'large' );
+                $thumbnail_url = get_the_post_thumbnail_url( $post_obj->ID, 'full' );
+                if ( ! $thumbnail_url ) {
+                    $thumbnail_url = get_the_post_thumbnail_url( $post_obj->ID, 'large' );
+                }
                 if ( ! $thumbnail_url ) {
                     $thumbnail_url = 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80';
                 }
@@ -282,13 +285,14 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
 
         .cmr-wwt-panel {
             width: 100%;
-            height: calc(100vh - 80px); /* Leave room for sticky headers */
+            min-height: calc(100vh - 80px); /* Leave room for sticky headers */
+            height: auto;
             display: flex;
             align-items: center; /* Vertically center the content */
             justify-content: center;
             z-index: 2;
-            padding-top: 0;
-            padding-bottom: 20px;
+            padding-top: 20px;
+            padding-bottom: 30px;
         }
 
         .cmr-wwt-inner {
@@ -324,20 +328,68 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             letter-spacing: -1px;
         }
 
-        .cmr-wwt-card { flex: 1; min-width: 0; }
+        .cmr-wwt-card { 
+            flex: 1; 
+            min-width: 0; 
+            display: flex;
+            flex-direction: column;
+        }
 
         .cmr-wwt-card-img {
-            height: 220px; /* Reduced from 272px to ensure text below is always visible */
+            height: 250px;
             width: 100%;
             max-width: 354px;
             overflow: hidden;
             margin-bottom: 14px;
+            background: #f4f5f8;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cmr-wwt-card-img a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
         }
         .cmr-wwt-card-img img {
-            height: 100%;
+            max-height: 100%;
             width: 100%;
+            height: 100%;
             object-fit: cover; 
             display: block; 
+            transition: transform 0.3s ease;
+        }
+        /* For Research Reports: Featured report covers are square (1:1) or tall portrait (3:4/A4).
+           We increase container height to 340px and enforce object-fit: contain so the image is never cropped/cut. */
+        .cmr-wwt-card-research-reports .cmr-wwt-card-img,
+        .cmr-wwt-slide[data-s="2"] .cmr-wwt-card-img {
+            height: 340px !important;
+            max-width: 354px !important;
+            background: #f4f5f8;
+            border-radius: 6px;
+            padding: 4px;
+            box-sizing: border-box;
+        }
+        .cmr-wwt-card-research-reports .cmr-wwt-card-img a,
+        .cmr-wwt-slide[data-s="2"] .cmr-wwt-card-img a {
+            width: 100% !important;
+            height: 100% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        .cmr-wwt-card-research-reports .cmr-wwt-card-img img,
+        .cmr-wwt-slide[data-s="2"] .cmr-wwt-card-img img {
+            object-fit: contain !important;
+            object-position: center center !important;
+            width: 100% !important;
+            height: 100% !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            border-radius: 4px;
         }
 
         .cmr-wwt-card-cat { display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer; }
@@ -448,6 +500,17 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             .cmr-wwt-acc-item.active .cmr-wwt-acc-icon { transform: rotate(90deg); }
             
             .cmr-wwt-card-img { width: 100%; max-width: 100%; height: 240px; }
+            .cmr-wwt-card-research-reports .cmr-wwt-card-img {
+                height: 320px !important;
+                background: #f4f5f8;
+                padding: 4px;
+                box-sizing: border-box;
+            }
+            .cmr-wwt-card-research-reports .cmr-wwt-card-img img {
+                object-fit: contain !important;
+                width: 100% !important;
+                height: 100% !important;
+            }
             .cmr-wwt-card-title { font-size: 16px; min-height: auto; }
         }
         </style>
@@ -475,10 +538,12 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
                         </div>
                         
                         <div class="cmr-wwt-right-col">
-                            <?php foreach($slides as $index => $slide): ?>
+                            <?php foreach($slides as $index => $slide): 
+                                $is_research_reports = ($index === 2);
+                            ?>
                                 <div class="cmr-wwt-slide <?php echo $index === 0 ? 'cmr-wwt-show' : ''; ?>" data-s="<?php echo esc_attr($index); ?>">
                                     <?php foreach($slide as $post): ?>
-                                        <div class="cmr-wwt-card">
+                                        <div class="cmr-wwt-card <?php echo $is_research_reports ? 'cmr-wwt-card-research-reports' : ''; ?>">
                                             <div class="cmr-wwt-card-img">
                                                 <a href="<?php echo esc_url($post['link']); ?>">
                                                     <img src="<?php echo esc_url($post['image']); ?>" alt="<?php echo esc_attr($post['title']); ?>">
@@ -505,6 +570,7 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
                     <div class="cmr-wwt-mobile-content">
                         <?php foreach($slides as $index => $slide): 
                             $menu_label = isset($preset_labels[$index]) ? $preset_labels[$index] : (isset($slide[0]['cat']) ? $slide[0]['cat'] : 'Insights');
+                            $is_research_reports = ($index === 2);
                         ?>
                             <div class="cmr-wwt-acc-item <?php echo $index === 0 ? 'active' : ''; ?>">
                                 <div class="cmr-wwt-acc-header">
@@ -519,7 +585,7 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
                                 <div class="cmr-wwt-acc-content" style="<?php echo $index === 0 ? 'max-height: 2000px;' : ''; ?>">
                                     <div class="cmr-wwt-acc-inner">
                                         <?php foreach($slide as $post): ?>
-                                            <div class="cmr-wwt-card">
+                                            <div class="cmr-wwt-card <?php echo $is_research_reports ? 'cmr-wwt-card-research-reports' : ''; ?>">
                                                 <div class="cmr-wwt-card-img">
                                                     <a href="<?php echo esc_url($post['link']); ?>">
                                                         <img src="<?php echo esc_url($post['image']); ?>" alt="<?php echo esc_attr($post['title']); ?>">
