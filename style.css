@@ -7962,7 +7962,7 @@ ul.wp-block-list ol li {
         -webkit-overflow-scrolling: touch !important;
         scrollbar-width: none !important;
         -ms-overflow-style: none !important;
-        gap: 10px !important;
+        gap: 8px !important;
         width: 100% !important;
         padding-bottom: 4px !important;
         margin: 0 !important;
@@ -7975,9 +7975,10 @@ ul.wp-block-list ol li {
     .cmr-mc-pill {
         flex-shrink: 0 !important;
         white-space: nowrap !important;
-        padding: 8px 22px !important;
-        font-size: 14px !important;
-        border-radius: 40px !important;
+        padding: 5px 14px !important;
+        font-size: 12.5px !important;
+        line-height: 1.2 !important;
+        border-radius: 30px !important;
         border: 1px solid #E2E8F0 !important;
         background: transparent !important;
         color: #111111 !important;
@@ -8224,6 +8225,175 @@ ul.wp-block-list ol li {
         object-position: center top !important;
     }
 }
+
+/* CMR News - Turn Headlines into Strategic Advantage CTA Banner Full Width Buttons (Mobile) */
+@media (max-width: 768px) {
+    .elementor-element.elementor-element-a943a9c,
+    .elementor-element-a943a9c {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        box-sizing: border-box !important;
+    }
+
+    .elementor-element-a943a9c .e-con-inner,
+    .elementor-element-a943a9c .elementor-element-db16ce6,
+    .elementor-element.elementor-element-db16ce6 {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .elementor-element-a943a9c .elementor-element-472df64,
+    .elementor-element.elementor-element-472df64,
+    .elementor .e-472df64-897c8e4 {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 14px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Button 1: Talk to an Analyst */
+    .elementor-element-a943a9c .elementor-element-5b1f524,
+    .elementor-element.elementor-element-5b1f524 {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: block !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+    }
+
+    .elementor-element-a943a9c .elementor-element-5b1f524 .elementor-button,
+    .elementor-element.elementor-element-5b1f524 .elementor-button {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+        padding: 13px 20px 12px 20px !important;
+    }
+
+    /* Button 2: Speak with an Analyst */
+    .elementor-element-a943a9c .elementor-element-fd2c8ec,
+    .elementor-element.elementor-element-fd2c8ec {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: block !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+    }
+
+    .elementor-element-a943a9c .elementor-element-fd2c8ec .elementor-button,
+    .elementor-element.elementor-element-fd2c8ec .elementor-button {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+        padding: 11px 20px 10px 20px !important;
+    }
+
+    /* Common Button Content Wrapper & Icon */
+    .elementor-element-a943a9c .elementor-element-5b1f524 .elementor-button-content-wrapper,
+    .elementor-element-a943a9c .elementor-element-fd2c8ec .elementor-button-content-wrapper,
+    .elementor-element.elementor-element-5b1f524 .elementor-button-content-wrapper,
+    .elementor-element.elementor-element-fd2c8ec .elementor-button-content-wrapper {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        flex-direction: row-reverse !important;
+    }
+
+    .elementor-element-a943a9c .elementor-button-icon,
+    .elementor-element-5b1f524 .elementor-button-icon,
+    .elementor-element-fd2c8ec .elementor-button-icon {
+        display: inline-flex !important;
+        align-items: center !important;
+        margin-left: 8px !important;
+    }
+}
+
+/* CMR Press Releases Header - Center Aligned & Font Sizes */
+.cmr-pr-header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    margin-bottom: 45px !important;
+    gap: 16px !important;
+}
+
+.cmr-pr-title-area {
+    text-align: center !important;
+    max-width: 650px !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+}
+
+.cmr-pr-title-area h2 {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 28px !important;
+    font-weight: 600 !important;
+    color: #fff !important;
+    margin: 0 0 12px 0 !important;
+    letter-spacing: -0.5px !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+}
+
+.cmr-pr-title-area p {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 14px !important;
+    color: #aaa !important;
+    margin: 0 auto !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+    max-width: 520px !important;
+}
+
+.cmr-pr-explore-btn {
+    font-family: 'Instrument Sans', sans-serif !important;
+    color: #fff !important;
+    text-decoration: none !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    border-bottom: 1px solid #fff !important;
+    padding-bottom: 3px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    transition: opacity 0.3s !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+}
+
+@media (max-width: 768px) {
+    .cmr-pr-section {
+        padding: 50px 0 !important;
+    }
+    .cmr-pr-header {
+        margin-bottom: 30px !important;
+        gap: 14px !important;
+    }
+    .cmr-pr-title-area h2 {
+        font-size: 28px !important;
+    }
+    .cmr-pr-title-area p {
+        font-size: 14px !important;
+        padding: 0 15px !important;
+    }
+}
+
+
 
 
 

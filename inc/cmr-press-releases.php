@@ -33,42 +33,79 @@ function cmr_render_press_releases_shortcode( $atts ) {
 
         .cmr-pr-header {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 60px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 45px;
+            gap: 16px;
+        }
+
+        .cmr-pr-title-area {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto;
+            width: 100%;
         }
 
         .cmr-pr-title-area h2 {
-            font-size: 56px;
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 28px;
             font-weight: 600;
             color: #fff;
-            margin: 0 0 10px 0;
-            letter-spacing: -1.5px;
+            margin: 0 0 12px 0;
+            letter-spacing: -0.5px;
+            line-height: 1.25;
+            text-align: center;
         }
 
         .cmr-pr-title-area p {
-            font-size: 16px;
+            font-family: 'Instrument Sans', sans-serif;
+            font-size: 14px;
             color: #aaa;
-            margin: 0;
+            margin: 0 auto;
+            line-height: 1.5;
+            text-align: center;
+            max-width: 520px;
         }
 
         .cmr-pr-explore-btn {
+            font-family: 'Instrument Sans', sans-serif;
             color: #fff;
             text-decoration: none;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             border-bottom: 1px solid #fff;
-            padding-bottom: 2px;
+            padding-bottom: 3px;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            justify-content: center;
+            gap: 6px;
             transition: opacity 0.3s;
-            margin-bottom: 5px;
+            margin: 0 auto;
+            text-align: center;
         }
 
         .cmr-pr-explore-btn:hover {
             opacity: 0.8;
             color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .cmr-pr-section {
+                padding: 50px 0;
+            }
+            .cmr-pr-header {
+                margin-bottom: 30px;
+                gap: 14px;
+            }
+            .cmr-pr-title-area h2 {
+                font-size: 28px !important;
+            }
+            .cmr-pr-title-area p {
+                font-size: 14px !important;
+                padding: 0 15px;
+            }
         }
 
         .cmr-pr-cards-track {

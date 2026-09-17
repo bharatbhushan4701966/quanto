@@ -221,7 +221,7 @@ function cmr_render_media_coverage_shortcode( $atts ) {
             overflow-x: auto !important;
             -webkit-overflow-scrolling: touch !important;
             scrollbar-width: none !important;
-            gap: 10px !important;
+            gap: 8px !important;
             width: 100% !important;
             padding-bottom: 4px !important;
             margin: 0 !important;
@@ -234,8 +234,10 @@ function cmr_render_media_coverage_shortcode( $atts ) {
         .cmr-mc-pill {
             flex-shrink: 0 !important;
             white-space: nowrap !important;
-            padding: 8px 22px !important;
-            font-size: 14px !important;
+            padding: 5px 14px !important;
+            font-size: 12.5px !important;
+            line-height: 1.2 !important;
+            border-radius: 30px !important;
         }
 
         /* Full Width Search Bar on Mobile */

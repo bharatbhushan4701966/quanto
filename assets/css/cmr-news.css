@@ -950,15 +950,21 @@
         overflow-x: auto !important;
         -webkit-overflow-scrolling: touch !important;
         scrollbar-width: none !important;
-        gap: 10px !important;
+        gap: 8px !important;
         width: 100% !important;
     }
     .cmr-media-coverage-wrapper .cmr-mc-filters::-webkit-scrollbar {
         display: none !important;
     }
-    .cmr-media-coverage-wrapper .cmr-mc-filter-btn {
+    .cmr-media-coverage-wrapper .cmr-mc-filter-btn,
+    .cmr-media-coverage-wrapper .cmr-mc-pill,
+    .cmr-mc-pill {
         flex-shrink: 0 !important;
         white-space: nowrap !important;
+        padding: 5px 14px !important;
+        font-size: 12.5px !important;
+        line-height: 1.2 !important;
+        border-radius: 30px !important;
     }
     .cmr-media-coverage-wrapper .cmr-mc-search {
         width: 100% !important;
@@ -1122,5 +1128,99 @@
     .cmr-dmc-filter-btn {
         flex-shrink: 0 !important;
         white-space: nowrap !important;
+    }
+}
+
+/* CMR News - Turn Headlines into Strategic Advantage CTA Banner Full Width Buttons (Mobile) */
+@media (max-width: 768px) {
+    .elementor-element.elementor-element-a943a9c,
+    .elementor-element-a943a9c {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        box-sizing: border-box !important;
+    }
+
+    .elementor-element-a943a9c .e-con-inner,
+    .elementor-element-a943a9c .elementor-element-db16ce6,
+    .elementor-element.elementor-element-db16ce6 {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .elementor-element-a943a9c .elementor-element-472df64,
+    .elementor-element.elementor-element-472df64,
+    .elementor .e-472df64-897c8e4 {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 14px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Button 1: Talk to an Analyst */
+    .elementor-element-a943a9c .elementor-element-5b1f524,
+    .elementor-element.elementor-element-5b1f524 {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: block !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+    }
+
+    .elementor-element-a943a9c .elementor-element-5b1f524 .elementor-button,
+    .elementor-element.elementor-element-5b1f524 .elementor-button {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+        padding: 13px 20px 12px 20px !important;
+    }
+
+    /* Button 2: Speak with an Analyst */
+    .elementor-element-a943a9c .elementor-element-fd2c8ec,
+    .elementor-element.elementor-element-fd2c8ec {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: block !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+    }
+
+    .elementor-element-a943a9c .elementor-element-fd2c8ec .elementor-button,
+    .elementor-element.elementor-element-fd2c8ec .elementor-button {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+        padding: 11px 20px 10px 20px !important;
+    }
+
+    /* Common Button Content Wrapper & Icon */
+    .elementor-element-a943a9c .elementor-element-5b1f524 .elementor-button-content-wrapper,
+    .elementor-element-a943a9c .elementor-element-fd2c8ec .elementor-button-content-wrapper,
+    .elementor-element.elementor-element-5b1f524 .elementor-button-content-wrapper,
+    .elementor-element.elementor-element-fd2c8ec .elementor-button-content-wrapper {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        flex-direction: row-reverse !important;
+    }
+
+    .elementor-element-a943a9c .elementor-button-icon,
+    .elementor-element-5b1f524 .elementor-button-icon,
+    .elementor-element-fd2c8ec .elementor-button-icon {
+        display: inline-flex !important;
+        align-items: center !important;
+        margin-left: 8px !important;
     }
 }
