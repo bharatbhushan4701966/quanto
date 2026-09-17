@@ -181,27 +181,12 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                 margin-right: 6px;
             }
 
-            .cmr-fr-large-footer .cmr-lr-btn {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                gap: 8px;
-                padding: 10px 22px;
-                background: #ffffff;
-                border: 1px solid #d1d5db;
-                border-radius: 50px;
-                color: #374151;
-                font-size: 14px;
-                font-weight: 600;
-                text-decoration: none;
-                transition: all 0.2s ease;
-                width: auto;
-            }
-
-            .cmr-fr-large-footer .cmr-lr-btn:hover {
-                background: #f3f4f6;
-                border-color: #9ca3af;
-                color: #111827;
+            .cmr-fr-large-footer a.button,
+            .cmr-fr-large-footer .button {
+                margin: 0 !important;
+                width: auto !important;
+                min-height: 44px !important;
+                padding: 10px 22px !important;
             }
 
 
@@ -293,8 +278,66 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                     grid-template-columns: 1fr;
                 }
                 .cmr-fr-large {
-                    height: 420px;
-                    min-height: 400px;
+                    height: auto !important;
+                    min-height: auto !important;
+                    flex-direction: column !important;
+                    background: #0a0e1a !important;
+                    border-radius: 12px !important;
+                    overflow: hidden !important;
+                }
+                .cmr-fr-large .cmr-fr-image-wrap {
+                    position: relative !important;
+                    top: auto !important;
+                    left: auto !important;
+                    width: 100% !important;
+                    height: auto !important;
+                    aspect-ratio: 1 / 1 !important;
+                    background: #0a0e1a !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    overflow: hidden !important;
+                }
+                .cmr-fr-large .cmr-fr-image-wrap img {
+                    width: 100% !important;
+                    height: 100% !important;
+                    object-fit: contain !important;
+                    object-position: center !important;
+                }
+                .cmr-fr-large .cmr-fr-image-wrap::after {
+                    display: none !important;
+                }
+                .cmr-fr-large-content {
+                    position: relative !important;
+                    width: 100% !important;
+                    height: auto !important;
+                    padding: 24px 20px !important;
+                    background: #0a0e1a !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                    justify-content: flex-start !important;
+                }
+                .cmr-fr-large-bottom-wrap {
+                    margin-top: 0 !important;
+                }
+                .cmr-fr-large-title {
+                    font-size: 22px !important;
+                    line-height: 1.3 !important;
+                    margin-bottom: 4px !important;
+                }
+                .cmr-fr-stars {
+                    margin: 2px 0 6px !important;
+                }
+                .cmr-fr-brand {
+                    margin-bottom: 12px !important;
+                }
+                .cmr-fr-large-footer {
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: space-between !important;
+                    flex-wrap: wrap !important;
+                    gap: 12px !important;
+                    margin-top: 8px !important;
                 }
                 .cmr-fr-small {
                     height: 240px;
@@ -309,6 +352,12 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
             }
 
             @media (max-width: 576px) {
+                .cmr-fr-large-title {
+                    font-size: 20px !important;
+                }
+                .cmr-fr-large-content {
+                    padding: 20px 16px !important;
+                }
                 .cmr-fr-small {
                     flex-direction: column;
                     height: auto;
@@ -365,8 +414,14 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                                 <?php if ( $product->get_price_html() ) : ?>
                                     <div class="cmr-fr-large-price"><?php echo $product->get_price_html(); ?></div>
                                 <?php endif; ?>
-                                <a href="<?php echo esc_url( $product->get_permalink() ); ?>" class="cmr-lr-btn">
-                                    Download Report <i class="fa-solid fa-arrow-down"></i>
+                                <a href="<?php echo esc_url( $product->add_to_cart_url() ); ?>" 
+                                   data-quantity="1" 
+                                   class="button product_type_simple add_to_cart_button ajax_add_to_cart" 
+                                   data-product_id="<?php echo esc_attr( $product->get_id() ); ?>" 
+                                   data-product_sku="<?php echo esc_attr( $product->get_sku() ); ?>" 
+                                   aria-label="<?php echo esc_attr( $product->add_to_cart_description() ); ?>" 
+                                   rel="nofollow">
+                                    Download Report
                                 </a>
                             </div>
                         </div>

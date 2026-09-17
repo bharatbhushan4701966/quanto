@@ -8499,27 +8499,12 @@ ul.wp-block-list ol li {
     margin-right: 6px !important;
 }
 
-.cmr-fr-large-footer .cmr-lr-btn {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 8px !important;
-    padding: 10px 22px !important;
-    background: #ffffff !important;
-    border: 1px solid #d1d5db !important;
-    border-radius: 50px !important;
-    color: #374151 !important;
-    font-size: 14px !important;
-    font-weight: 600 !important;
-    text-decoration: none !important;
-    transition: all 0.2s ease !important;
+.cmr-fr-large-footer a.button,
+.cmr-fr-large-footer .button {
+    margin: 0 !important;
     width: auto !important;
-}
-
-.cmr-fr-large-footer .cmr-lr-btn:hover {
-    background: #f3f4f6 !important;
-    border-color: #9ca3af !important;
-    color: #111827 !important;
+    min-height: 44px !important;
+    padding: 10px 22px !important;
 }
 
 .cmr-fr-small {
@@ -8636,7 +8621,66 @@ ul.wp-block-list ol li {
         grid-template-columns: 1fr !important;
     }
     .cmr-fr-large {
-        height: 420px !important;
+        height: auto !important;
+        min-height: auto !important;
+        flex-direction: column !important;
+        background: #0a0e1a !important;
+        border-radius: 12px !important;
+        overflow: hidden !important;
+    }
+    .cmr-fr-large .cmr-fr-image-wrap {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 1 / 1 !important;
+        background: #0a0e1a !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        overflow: hidden !important;
+    }
+    .cmr-fr-large .cmr-fr-image-wrap img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: contain !important;
+        object-position: center !important;
+    }
+    .cmr-fr-large .cmr-fr-image-wrap::after {
+        display: none !important;
+    }
+    .cmr-fr-large-content {
+        position: relative !important;
+        width: 100% !important;
+        height: auto !important;
+        padding: 24px 20px !important;
+        background: #0a0e1a !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+    }
+    .cmr-fr-large-bottom-wrap {
+        margin-top: 0 !important;
+    }
+    .cmr-fr-large-title {
+        font-size: 22px !important;
+        line-height: 1.3 !important;
+        margin-bottom: 4px !important;
+    }
+    .cmr-fr-stars {
+        margin: 2px 0 6px !important;
+    }
+    .cmr-fr-brand {
+        margin-bottom: 12px !important;
+    }
+    .cmr-fr-large-footer {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-wrap: wrap !important;
+        gap: 12px !important;
+        margin-top: 8px !important;
     }
     .cmr-fr-small {
         height: 240px !important;
@@ -8662,6 +8706,12 @@ ul.wp-block-list ol li {
 }
 
 @media (max-width: 576px) {
+    .cmr-fr-large-title {
+        font-size: 20px !important;
+    }
+    .cmr-fr-large-content {
+        padding: 20px 16px !important;
+    }
     .cmr-fr-small, .cmr-tn-card {
         flex-direction: column !important;
         height: auto !important;
