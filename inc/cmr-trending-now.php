@@ -262,8 +262,8 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
                 <div class="cmr-trending-header">
                     <h2 class="cmr-trending-title"><?php echo esc_html( $atts['title'] ); ?></h2>
                     <div class="cmr-trending-nav">
-                        <button class="cmr-nav-prev" onclick="var g=document.querySelector('.cmr-trending-grid'); g.scrollBy({left: (window.innerWidth < 768 ? -g.clientWidth * 0.8 : -600), behavior: 'smooth'})"><i class="fa-solid fa-arrow-left"></i></button>
-                        <button class="cmr-nav-next" onclick="var g=document.querySelector('.cmr-trending-grid'); g.scrollBy({left: (window.innerWidth < 768 ? g.clientWidth * 0.8 : 600), behavior: 'smooth'})"><i class="fa-solid fa-arrow-right"></i></button>
+                        <button type="button" class="cmr-nav-prev" aria-label="Previous slide"><i class="fa-solid fa-arrow-left"></i></button>
+                        <button type="button" class="cmr-nav-next" aria-label="Next slide"><i class="fa-solid fa-arrow-right"></i></button>
                     </div>
                 </div>
                 
@@ -299,7 +299,7 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
                                 <a href="<?php echo esc_url( $product->get_permalink() ); ?>" class="cmr-tn-title"><?php echo esc_html( $product->get_name() ); ?></a>
                                 <div class="cmr-tn-stars">
                                     <?php 
-                                    $rating = floatval( $product->get_average_rating() );
+                                     $rating = floatval( $product->get_average_rating() );
                                     $count = intval( $product->get_review_count() );
                                     for ( $s = 1; $s <= 5; $s++ ) {
                                         if ( $s <= $rating ) echo '<i class="fa-solid fa-star"></i>';
@@ -324,6 +324,116 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
                 </div>
             </div>
         </section>
+
+        <script>
+        (function() {
+            function initTrendingAutoScroll() {
+                var sections = document.querySelectorAll('.cmr-trending-section');
+                sections.forEach(function(section) {
+                    if (section.dataset.autoScrollInit) return;
+                    section.dataset.autoScrollInit = 'true';
+
+                    var grid = section.querySelector('.cmr-trending-grid');
+                    var prevBtn = section.querySelector('.cmr-nav-prev');
+                    var nextBtn = section.querySelector('.cmr-nav-next');
+                    if (!grid) return;
+
+                    var intervalTime = 3000; // 3 seconds
+                    var timer = null;
+                    var isPaused = false;
+
+                    function getScrollStep() {
+                        var card = grid.querySelector('.cmr-tn-card');
+                        if (!card) return 320;
+                        var style = window.getComputedStyle(grid);
+                        var gap = parseFloat(style.columnGap || style.gap) || 16;
+                        return card.offsetWidth + gap;
+                    }
+
+                    function scrollNext() {
+                        var step = getScrollStep();
+                        var maxScrollLeft = grid.scrollWidth - grid.clientWidth;
+                        // Loop back to start if at or near the end
+                        if (grid.scrollLeft >= maxScrollLeft - 15) {
+                            grid.scrollTo({ left: 0, behavior: 'smooth' });
+                        } else {
+                            grid.scrollBy({ left: step, behavior: 'smooth' });
+                        }
+                    }
+
+                    function scrollPrev() {
+                        var step = getScrollStep();
+                        if (grid.scrollLeft <= 15) {
+                            grid.scrollTo({ left: grid.scrollWidth, behavior: 'smooth' });
+                        } else {
+                            grid.scrollBy({ left: -step, behavior: 'smooth' });
+                        }
+                    }
+
+                    function startTimer() {
+                        stopTimer();
+                        timer = setInterval(function() {
+                            if (!isPaused && grid.scrollWidth > grid.clientWidth) {
+                                scrollNext();
+                            }
+                        }, intervalTime);
+                    }
+
+                    function stopTimer() {
+                        if (timer) {
+                            clearInterval(timer);
+                            timer = null;
+                        }
+                    }
+
+                    function restartTimer() {
+                        startTimer();
+                    }
+
+                    if (nextBtn) {
+                        nextBtn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            scrollNext();
+                            restartTimer();
+                        });
+                    }
+
+                    if (prevBtn) {
+                        prevBtn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            scrollPrev();
+                            restartTimer();
+                        });
+                    }
+
+                    // Hover pause (desktop)
+                    section.addEventListener('mouseenter', function() {
+                        isPaused = true;
+                    });
+                    section.addEventListener('mouseleave', function() {
+                        isPaused = false;
+                    });
+
+                    // Touch pause (mobile)
+                    grid.addEventListener('touchstart', function() {
+                        isPaused = true;
+                    }, { passive: true });
+                    grid.addEventListener('touchend', function() {
+                        isPaused = false;
+                        restartTimer();
+                    }, { passive: true });
+
+                    startTimer();
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initTrendingAutoScroll);
+            } else {
+                initTrendingAutoScroll();
+            }
+        })();
+        </script>
         <?php
         return ob_get_clean();
     }
