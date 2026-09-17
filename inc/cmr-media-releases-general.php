@@ -369,6 +369,9 @@ function cmr_media_releases_general_shortcode( $atts ) {
         }
 
         @media (max-width: 992px) {
+            .cmr-mrg-section {
+                padding: 40px 16px !important;
+            }
             .cmr-mrg-featured {
                 flex-direction: column;
             }
@@ -376,20 +379,55 @@ function cmr_media_releases_general_shortcode( $atts ) {
                 height: 300px;
             }
             .cmr-mrg-featured-content {
-                padding: 40px;
+                padding: 30px 20px;
             }
             .cmr-mrg-nav {
                 flex-direction: column;
             }
         }
         
-        @media (max-width: 576px) {
+        @media (max-width: 768px) {
+            .cmr-mrg-section {
+                padding: 20px 16px 40px 16px !important;
+                box-sizing: border-box !important;
+                max-width: 100% !important;
+            }
+            .cmr-mrg-featured {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            .cmr-mrg-featured-content {
+                padding: 24px 16px !important;
+                box-sizing: border-box !important;
+            }
             .cmr-mrg-title {
-                font-size: 28px;
+                font-size: 24px !important;
+                line-height: 1.25 !important;
+                margin-bottom: 12px !important;
+            }
+            .cmr-mrg-excerpt {
+                font-size: 14px !important;
+                line-height: 1.5 !important;
+                margin-bottom: 24px !important;
             }
             .cmr-mrg-actions {
-                flex-direction: column;
-                align-items: flex-start;
+                width: 100% !important;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 12px !important;
+            }
+            .cmr-mrg-btn-primary,
+            .cmr-mrg-btn-outline {
+                width: 100% !important;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                box-sizing: border-box !important;
+                text-align: center !important;
+                padding: 12px 20px !important;
+                font-size: 15px !important;
             }
             .cmr-mrg-nav-item {
                 flex-direction: column;
@@ -397,6 +435,15 @@ function cmr_media_releases_general_shortcode( $atts ) {
             .cmr-mrg-nav-img-wrap {
                 width: 100%;
                 height: 180px;
+            }
+            .cmr-mrg-nav-content {
+                padding: 16px !important;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .cmr-mrg-title {
+                font-size: 22px !important;
             }
         }
     </style>

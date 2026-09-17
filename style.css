@@ -8966,6 +8966,46 @@ ul.wp-block-list ol li {
     flex-shrink: 0 !important;
 }
 
+/* CMR Media Releases General / Press Releases Featured Mobile Spacing & Full Width Buttons */
+@media (max-width: 768px) {
+    .cmr-mrg-section {
+        padding: 20px 16px 40px 16px !important;
+        box-sizing: border-box !important;
+        max-width: 100% !important;
+    }
+    .cmr-mrg-featured {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .cmr-mrg-featured-content {
+        padding: 24px 16px !important;
+        box-sizing: border-box !important;
+    }
+    .cmr-mrg-actions {
+        width: 100% !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+    }
+    .cmr-mrg-btn-primary,
+    .cmr-mrg-btn-outline {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        box-sizing: border-box !important;
+        text-align: center !important;
+        padding: 12px 20px !important;
+        font-size: 15px !important;
+    }
+    .cmr-mrg-nav-content {
+        padding: 16px !important;
+    }
+}
+
+
 
 
 
