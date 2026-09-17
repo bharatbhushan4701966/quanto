@@ -101,7 +101,7 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
                 transition: transform 0.3s ease;
                 display: flex;
                 flex-direction: row;
-                height: 360px;
+                height: 450px;
                 flex: 0 0 calc(50% - 10px);
                 scroll-snap-align: start;
             }
@@ -112,8 +112,8 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
 
             .cmr-tn-image-wrap {
                 height: 100%;
-                flex: 0 0 360px;
-                width: 360px;
+                flex: 0 0 450px;
+                width: 450px;
                 aspect-ratio: 1 / 1;
                 position: relative;
                 overflow: hidden;

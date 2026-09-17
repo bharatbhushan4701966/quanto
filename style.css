@@ -8471,14 +8471,14 @@ ul.wp-block-list ol li {
 }
 
 .cmr-tn-card {
-    height: 360px !important;
+    height: 450px !important;
     display: flex !important;
 }
 
 .cmr-tn-image-wrap {
     height: 100% !important;
-    flex: 0 0 360px !important;
-    width: 360px !important;
+    flex: 0 0 450px !important;
+    width: 450px !important;
     aspect-ratio: 1 / 1 !important;
     position: relative !important;
     overflow: hidden !important;
