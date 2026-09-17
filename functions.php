@@ -3233,6 +3233,20 @@ function cmr_category_posts_per_page($query) {
 }
 add_action( 'pre_get_posts', 'cmr_category_posts_per_page' );
 
+// Include cmr_news in Category and Tag archive queries
+function cmr_include_news_in_taxonomies( $query ) {
+    if ( ! is_admin() && $query->is_main_query() && ( $query->is_category() || $query->is_tag() ) ) {
+        $post_types = $query->get( 'post_type' );
+        if ( empty( $post_types ) || $post_types === 'post' ) {
+            $query->set( 'post_type', array( 'post', 'cmr_news' ) );
+        } elseif ( is_array( $post_types ) && ! in_array( 'cmr_news', $post_types ) ) {
+            $post_types[] = 'cmr_news';
+            $query->set( 'post_type', $post_types );
+        }
+    }
+}
+add_action( 'pre_get_posts', 'cmr_include_news_in_taxonomies' );
+
 // Shortcode for Account Icon
 function cmr_account_icon_shortcode() {
     static $css_rendered = false;

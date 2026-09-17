@@ -140,6 +140,9 @@
                             // Custom Author Box for Media Releases
                             if ( get_post_type() === 'cmr_news' ) {
                                 $custom_author_id = get_post_meta( get_the_ID(), '_cmr_news_custom_author', true );
+                                if ( ! $custom_author_id ) {
+                                    $custom_author_id = get_the_author_meta( 'ID' );
+                                }
                                 if ( $custom_author_id ) {
                                     $author_data = get_userdata( $custom_author_id );
                                     if ( $author_data ) {

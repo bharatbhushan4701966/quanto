@@ -23,10 +23,13 @@ function cmr_news_add_author_meta_box() {
 function cmr_news_author_meta_box_callback( $post ) {
     wp_nonce_field( 'cmr_news_author_save', 'cmr_news_author_nonce' );
     $current_author = get_post_meta( $post->ID, '_cmr_news_custom_author', true );
+    if ( empty( $current_author ) && ! empty( $post->post_author ) ) {
+        $current_author = $post->post_author;
+    }
     
     $users = get_users();
     
-    echo '<p><label for="cmr_news_custom_author">' . esc_html__( 'Select an author for this media release:', 'quanto' ) . '</label></p>';
+    echo '<p><label for="cmr_news_custom_author">' . esc_html__( 'Select an author for this news item:', 'quanto' ) . '</label></p>';
     echo '<select name="cmr_news_custom_author" id="cmr_news_custom_author" style="width:100%;">';
     echo '<option value="">' . esc_html__( '-- Select Author --', 'quanto' ) . '</option>';
     foreach ( $users as $user ) {
@@ -48,8 +51,38 @@ function cmr_news_save_author_meta_box( $post_id ) {
         return;
     }
     
-    if ( isset( $_POST['cmr_news_custom_author'] ) ) {
-        update_post_meta( $post_id, '_cmr_news_custom_author', sanitize_text_field( $_POST['cmr_news_custom_author'] ) );
+    if ( ! empty( $_POST['cmr_news_custom_author'] ) ) {
+        $author_id = absint( $_POST['cmr_news_custom_author'] );
+        update_post_meta( $post_id, '_cmr_news_custom_author', $author_id );
+
+        // Sync core post_author if different
+        $post = get_post( $post_id );
+        if ( $post && (int) $post->post_author !== $author_id ) {
+            remove_action( 'save_post', 'cmr_news_save_author_meta_box' );
+            wp_update_post( array(
+                'ID'          => $post_id,
+                'post_author' => $author_id,
+            ) );
+            add_action( 'save_post', 'cmr_news_save_author_meta_box' );
+        }
+    } elseif ( ! empty( $_POST['post_author'] ) ) {
+        $author_id = absint( $_POST['post_author'] );
+        update_post_meta( $post_id, '_cmr_news_custom_author', $author_id );
+    }
+}
+
+// Sync core post_author to _cmr_news_custom_author when saved via core editor or quick edit
+add_action( 'save_post_cmr_news', 'cmr_news_sync_post_author_to_meta', 20, 2 );
+function cmr_news_sync_post_author_to_meta( $post_id, $post ) {
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+    if ( wp_is_post_revision( $post_id ) ) return;
+    if ( ! empty( $post->post_author ) ) {
+        $meta_author = get_post_meta( $post_id, '_cmr_news_custom_author', true );
+        if ( empty( $meta_author ) || (int) $meta_author !== (int) $post->post_author ) {
+            if ( empty( $_POST['cmr_news_custom_author'] ) ) {
+                update_post_meta( $post_id, '_cmr_news_custom_author', (int) $post->post_author );
+            }
+        }
     }
 }
 

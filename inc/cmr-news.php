@@ -36,7 +36,7 @@ function cmr_news_register_post_type() {
         'hierarchical'       => false,
         'menu_position'      => 5,
         'menu_icon'          => 'dashicons-media-document',
-        'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt', 'comments' ),
+        'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt', 'comments', 'author', 'revisions', 'trackbacks', 'custom-fields', 'post-formats' ),
         'taxonomies'         => array( 'category', 'post_tag' ),
         'show_in_rest'       => true,
     );
@@ -60,7 +60,7 @@ function cmr_news_register_post_type() {
         'update_item'       => 'Update Category',
         'add_new_item'      => 'Add New Category',
         'new_item_name'     => 'New Category Name',
-        'menu_name'         => 'Categories',
+        'menu_name'         => 'News Categories',
     );
 
     $tax_args = array(
@@ -74,6 +74,138 @@ function cmr_news_register_post_type() {
     );
 
     register_taxonomy( 'cmr_news_category', array( 'cmr_news' ), $tax_args );
+}
+
+// Enable extra blog-like post capabilities and Elementor support for cmr_news
+add_action( 'init', 'cmr_news_enable_extra_features', 20 );
+function cmr_news_enable_extra_features() {
+    add_post_type_support( 'cmr_news', array( 'author', 'revisions', 'trackbacks', 'custom-fields', 'post-formats', 'elementor' ) );
+    register_taxonomy_for_object_type( 'post_format', 'cmr_news' );
+}
+
+// Enable Elementor editor for cmr_news
+add_filter( 'option_elementor_cpt_support', 'cmr_news_elementor_support_filter' );
+add_filter( 'default_option_elementor_cpt_support', 'cmr_news_elementor_support_filter' );
+function cmr_news_elementor_support_filter( $value ) {
+    if ( ! is_array( $value ) ) {
+        $value = array( 'post', 'page' );
+    }
+    if ( ! in_array( 'cmr_news', $value ) ) {
+        $value[] = 'cmr_news';
+    }
+    return $value;
+}
+
+// Add dropdown filter for News Categories on admin edit.php
+add_action( 'restrict_manage_posts', 'cmr_news_filter_admin_by_category' );
+function cmr_news_filter_admin_by_category( $post_type ) {
+    if ( $post_type === 'cmr_news' ) {
+        $taxonomy = 'cmr_news_category';
+        $selected = isset( $_GET[$taxonomy] ) ? $_GET[$taxonomy] : '';
+        $info_taxonomy = get_taxonomy( $taxonomy );
+        if ( $info_taxonomy ) {
+            wp_dropdown_categories( array(
+                'show_option_all' => sprintf( __( 'All %s', 'quanto' ), $info_taxonomy->label ),
+                'taxonomy'        => $taxonomy,
+                'name'            => $taxonomy,
+                'orderby'         => 'name',
+                'selected'        => $selected,
+                'show_count'      => true,
+                'hide_empty'      => false,
+                'value_field'     => 'slug',
+            ) );
+        }
+    }
+}
+
+// Ensure the Categories column in the admin list falls back to News Categories if standard categories are not yet set
+add_action( 'manage_cmr_news_posts_custom_column', 'cmr_news_custom_column_fallback_content', 5, 2 );
+function cmr_news_custom_column_fallback_content( $column_name, $post_id ) {
+    if ( $column_name === 'taxonomy-category' ) {
+        $cats = get_the_terms( $post_id, 'category' );
+        if ( empty( $cats ) || is_wp_error( $cats ) ) {
+            $news_cats = get_the_terms( $post_id, 'cmr_news_category' );
+            if ( ! empty( $news_cats ) && ! is_wp_error( $news_cats ) ) {
+                $out = array();
+                foreach ( $news_cats as $nc ) {
+                    $out[] = sprintf( '<a href="%s">%s</a>', esc_url( admin_url( 'edit.php?post_type=cmr_news&cmr_news_category=' . $nc->slug ) ), esc_html( $nc->name ) );
+                }
+                echo implode( ', ', $out );
+            }
+        }
+    }
+}
+
+// Keep cmr_news_category and core category in sync on save
+add_action( 'save_post_cmr_news', 'cmr_news_sync_categories_on_save', 25, 2 );
+function cmr_news_sync_categories_on_save( $post_id, $post ) {
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+    if ( wp_is_post_revision( $post_id ) ) return;
+    
+    $news_terms = wp_get_object_terms( $post_id, 'cmr_news_category' );
+    if ( ! empty( $news_terms ) && ! is_wp_error( $news_terms ) ) {
+        $cat_ids = array();
+        foreach ( $news_terms as $nt ) {
+            $cat = get_term_by( 'slug', $nt->slug, 'category' );
+            if ( ! $cat ) {
+                $cat = get_term_by( 'name', $nt->name, 'category' );
+            }
+            if ( ! $cat ) {
+                $inserted = wp_insert_term( $nt->name, 'category', array( 'slug' => $nt->slug ) );
+                if ( ! is_wp_error( $inserted ) && isset( $inserted['term_id'] ) ) {
+                    $cat_ids[] = (int) $inserted['term_id'];
+                }
+            } else {
+                $cat_ids[] = (int) $cat->term_id;
+            }
+        }
+        if ( ! empty( $cat_ids ) ) {
+            wp_set_object_terms( $post_id, $cat_ids, 'category', true );
+        }
+    }
+}
+
+// One-time backfill of core category terms from cmr_news_category for existing news posts
+add_action( 'admin_init', 'cmr_news_backfill_categories_once' );
+function cmr_news_backfill_categories_once() {
+    if ( get_option( 'cmr_news_cat_backfilled_v1' ) === 'yes' ) {
+        return;
+    }
+    
+    $news_posts = get_posts( array(
+        'post_type'      => 'cmr_news',
+        'posts_per_page' => -1,
+        'post_status'    => 'any',
+        'fields'         => 'ids',
+    ) );
+    
+    if ( ! empty( $news_posts ) ) {
+        foreach ( $news_posts as $p_id ) {
+            $news_terms = wp_get_object_terms( $p_id, 'cmr_news_category' );
+            if ( ! empty( $news_terms ) && ! is_wp_error( $news_terms ) ) {
+                $cat_ids = array();
+                foreach ( $news_terms as $nt ) {
+                    $cat = get_term_by( 'slug', $nt->slug, 'category' );
+                    if ( ! $cat ) {
+                        $cat = get_term_by( 'name', $nt->name, 'category' );
+                    }
+                    if ( ! $cat ) {
+                        $inserted = wp_insert_term( $nt->name, 'category', array( 'slug' => $nt->slug ) );
+                        if ( ! is_wp_error( $inserted ) && isset( $inserted['term_id'] ) ) {
+                            $cat_ids[] = (int) $inserted['term_id'];
+                        }
+                    } else {
+                        $cat_ids[] = (int) $cat->term_id;
+                    }
+                }
+                if ( ! empty( $cat_ids ) ) {
+                    wp_set_object_terms( $p_id, $cat_ids, 'category', true );
+                }
+            }
+        }
+    }
+    
+    update_option( 'cmr_news_cat_backfilled_v1', 'yes' );
 }
 
 add_action( 'init', 'cmr_news_insert_default_terms' );

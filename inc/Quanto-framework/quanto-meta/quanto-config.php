@@ -37,7 +37,7 @@ function quanto_register_metabox() {
 	$quanto_post_meta = new_cmb2_box( array(
 		'id'            => $prefixpage . 'blog_post_control',
 		'title'         => esc_html__( 'Post Thumb Controller', 'quanto' ),
-		'object_types'  => array( 'post' ), // Post type
+		'object_types'  => array( 'post', 'cmr_news' ), // Post type
 		'closed'        => true
 	) );
 	$quanto_post_meta->add_field( array(
@@ -62,7 +62,7 @@ function quanto_register_metabox() {
 	$quanto_page_meta = new_cmb2_box( array(
 		'id'            => $prefixpage . 'page_meta_section',
 		'title'         => esc_html__( 'Page Meta', 'quanto' ),
-		'object_types'  => array( 'page' ), // Post type
+		'object_types'  => array( 'page', 'post', 'cmr_news' ), // Post type
         'closed'        => true
     ) );
 
@@ -147,7 +147,7 @@ function quanto_register_metabox() {
 		'title'         => esc_html__( 'Page Layout', 'quanto' ),
         'context' 		=> 'side',
         'priority' 		=> 'high',
-        'object_types'  => array( 'page' ), // Post type
+        'object_types'  => array( 'page', 'post', 'cmr_news' ), // Post type
         'closed'        => true
 	) );
 

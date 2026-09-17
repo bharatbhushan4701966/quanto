@@ -712,6 +712,16 @@
                 // Get taxonomy terms
                 $terms = get_the_terms( $post_id, 'cmr_news_category' );
                 $term_names = ! empty( $terms ) && ! is_wp_error( $terms ) ? wp_list_pluck( $terms, 'name' ) : array();
+                
+                $cat_terms = get_the_terms( $post_id, 'category' );
+                if ( ! empty( $cat_terms ) && ! is_wp_error( $cat_terms ) ) {
+                    $term_names = array_merge( $term_names, wp_list_pluck( $cat_terms, 'name' ) );
+                }
+                $tag_terms = get_the_terms( $post_id, 'post_tag' );
+                if ( ! empty( $tag_terms ) && ! is_wp_error( $tag_terms ) ) {
+                    $term_names = array_merge( $term_names, wp_list_pluck( $tag_terms, 'name' ) );
+                }
+                $term_names = array_unique( $term_names );
                 $tags_list = ! empty( $term_names ) ? implode( ', ', $term_names ) : esc_html__( 'General', 'quanto' );
                 
                 // Get document/external URL for download button
