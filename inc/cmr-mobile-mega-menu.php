@@ -128,6 +128,13 @@ function cmr_inject_mobile_mega_menu() {
                     Newsroom
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </a>
+
+                <div style="padding: 24px 20px;">
+                    <a href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6Ijc2MzciLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: #6A35FF; color: #fff; padding: 13px 20px; border-radius: 30px; font-weight: 600; text-decoration: none; font-size: 15px;">
+                        <span>Talk to Analyst</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                    </a>
+                </div>
             </div>
 
             <!-- Sub Panel: Who We Are -->
@@ -137,18 +144,22 @@ function cmr_inject_mobile_mega_menu() {
                     Who we are
                 </button>
                 <div class="cmr-mobile-nav-content">
-                    <div class="cmr-mobile-nav-label">ABOUT CMR</div>
-                    <a href="#" class="cmr-mobile-nav-link">
-                        <div class="cmr-mobile-nav-link-title">Company Overview</div>
-                        <div class="cmr-mobile-nav-link-desc">Learn about our mission and history</div>
+                    <div class="cmr-mobile-nav-label">WHO WE ARE</div>
+                    <a href="<?php echo esc_url( home_url( '/about-us/' ) ); ?>" class="cmr-mobile-nav-link">
+                        <div class="cmr-mobile-nav-link-title">About Us</div>
+                        <div class="cmr-mobile-nav-link-desc">Our story, expertise, and vision</div>
                     </a>
-                    <a href="#" class="cmr-mobile-nav-link">
+                    <a href="<?php echo esc_url( home_url( '/leadership/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">Leadership</div>
-                        <div class="cmr-mobile-nav-link-desc">Meet the team driving our vision</div>
+                        <div class="cmr-mobile-nav-link-desc">Meet the leaders driving innovation</div>
                     </a>
-                    <a href="#" class="cmr-mobile-nav-link">
+                    <a href="<?php echo esc_url( home_url( '/careers/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">Careers</div>
-                        <div class="cmr-mobile-nav-link-desc">Join our growing global team</div>
+                        <div class="cmr-mobile-nav-link-desc">Build the future with us</div>
+                    </a>
+                    <a href="<?php echo esc_url( home_url( '/contact-us/' ) ); ?>" class="cmr-mobile-nav-link">
+                        <div class="cmr-mobile-nav-link-title">Contact Us</div>
+                        <div class="cmr-mobile-nav-link-desc">Connect with our expert team</div>
                     </a>
                 </div>
             </div>
@@ -160,22 +171,18 @@ function cmr_inject_mobile_mega_menu() {
                     What we do
                 </button>
                 <div class="cmr-mobile-nav-content">
-                    <div class="cmr-mobile-nav-label">OUR SERVICES</div>
+                    <div class="cmr-mobile-nav-label">WHAT WE DO</div>
                     <a href="<?php echo esc_url( home_url( '/industry-intelligence/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">Industry Intelligence</div>
-                        <div class="cmr-mobile-nav-link-desc">Comprehensive market tracking and analysis</div>
+                        <div class="cmr-mobile-nav-link-desc">Market research and strategic insights</div>
                     </a>
-                    <a href="#" class="cmr-mobile-nav-link">
-                        <div class="cmr-mobile-nav-link-title">Custom Research</div>
-                        <div class="cmr-mobile-nav-link-desc">Tailored insights for your specific business needs</div>
+                    <a href="<?php echo esc_url( home_url( '/consulting-advisory/' ) ); ?>" class="cmr-mobile-nav-link">
+                        <div class="cmr-mobile-nav-link-title">Consulting & Advisory</div>
+                        <div class="cmr-mobile-nav-link-desc">Expert guidance for business growth</div>
                     </a>
-                    <a href="#" class="cmr-mobile-nav-link">
-                        <div class="cmr-mobile-nav-link-title">Consulting</div>
-                        <div class="cmr-mobile-nav-link-desc">Strategic advisory for technology companies</div>
-                    </a>
-                    <a href="#" class="cmr-mobile-nav-link">
-                        <div class="cmr-mobile-nav-link-title">Go-to-Market Services</div>
-                        <div class="cmr-mobile-nav-link-desc">Accelerate your product launch and growth</div>
+                    <a href="<?php echo esc_url( home_url( '/marketing-services/' ) ); ?>" class="cmr-mobile-nav-link">
+                        <div class="cmr-mobile-nav-link-title">Marketing Services</div>
+                        <div class="cmr-mobile-nav-link-desc">Research-backed marketing solutions</div>
                     </a>
                 </div>
             </div>
@@ -200,6 +207,10 @@ function cmr_inject_mobile_mega_menu() {
                         <div class="cmr-mobile-nav-link-title">Digital Supply Chain</div>
                         <div class="cmr-mobile-nav-link-desc">Intelligence for connected supply chains</div>
                     </a>
+                    <a href="<?php echo esc_url( home_url( '/msme-2/' ) ); ?>" class="cmr-mobile-nav-link">
+                        <div class="cmr-mobile-nav-link-title">MSME</div>
+                        <div class="cmr-mobile-nav-link-desc">Empowering small & medium enterprise growth</div>
+                    </a>
                     <a href="<?php echo esc_url( home_url( '/it-telecom/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">IT & Telecom</div>
                         <div class="cmr-mobile-nav-link-desc">Research across technology markets</div>
@@ -207,10 +218,6 @@ function cmr_inject_mobile_mega_menu() {
                     <a href="<?php echo esc_url( home_url( '/semiconductors/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">Semiconductors</div>
                         <div class="cmr-mobile-nav-link-desc">Tracking innovation and demand shifts</div>
-                    </a>
-                    <a href="<?php echo esc_url( home_url( '/msme/' ) ); ?>" class="cmr-mobile-nav-link">
-                        <div class="cmr-mobile-nav-link-title">MSME</div>
-                        <div class="cmr-mobile-nav-link-desc">Empowering small & medium enterprise growth</div>
                     </a>
                     <a href="<?php echo esc_url( home_url( '/ai/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">AI</div>
@@ -230,22 +237,32 @@ function cmr_inject_mobile_mega_menu() {
                     What we think
                 </button>
                 <div class="cmr-mobile-nav-content">
-                    <div class="cmr-mobile-nav-label">RESEARCH & INSIGHTS</div>
-                    <a href="#" class="cmr-mobile-nav-link">
-                        <div class="cmr-mobile-nav-link-title">Market Tracker Reports</div>
-                        <div class="cmr-mobile-nav-link-desc">Quarterly market share and shipment analysis</div>
+                    <div class="cmr-mobile-nav-label">WHAT WE THINK</div>
+                    <a href="<?php echo esc_url( home_url( '/research-reports/' ) ); ?>" class="cmr-mobile-nav-link">
+                        <div class="cmr-mobile-nav-link-title">Research Reports</div>
+                        <div class="cmr-mobile-nav-link-desc">Data-driven insights and forecasts</div>
                     </a>
-                    <a href="#" class="cmr-mobile-nav-link">
-                        <div class="cmr-mobile-nav-link-title">Whitepapers</div>
-                        <div class="cmr-mobile-nav-link-desc">In-depth analysis of emerging technology trends</div>
+                    <a href="<?php echo esc_url( home_url( '/viewpoints/' ) ); ?>" class="cmr-mobile-nav-link">
+                        <div class="cmr-mobile-nav-link-title">View Points</div>
+                        <div class="cmr-mobile-nav-link-desc">Expert analysis on emerging trends</div>
                     </a>
-                    <a href="#" class="cmr-mobile-nav-link">
-                        <div class="cmr-mobile-nav-link-title">Analyst Perspectives</div>
-                        <div class="cmr-mobile-nav-link-desc">Expert opinions on industry developments</div>
+                    <a href="<?php echo esc_url( home_url( '/market-updates/' ) ); ?>" class="cmr-mobile-nav-link">
+                        <div class="cmr-mobile-nav-link-title">Market Updates</div>
+                        <div class="cmr-mobile-nav-link-desc">Latest developments shaping industries</div>
                     </a>
-                    <a href="#" class="cmr-mobile-nav-link">
-                        <div class="cmr-mobile-nav-link-title">Infographics</div>
-                        <div class="cmr-mobile-nav-link-desc">Visual summaries of complex data</div>
+
+                    <div class="cmr-mobile-nav-label" style="margin-top: 24px;">CMR LIVE</div>
+                    <a href="<?php echo esc_url( home_url( '/cmr-live/' ) ); ?>" class="cmr-mobile-nav-link">
+                        <div class="cmr-mobile-nav-link-title">CMR Live</div>
+                        <div class="cmr-mobile-nav-link-desc">Exclusive podcasts and videos</div>
+                    </a>
+                    <a href="<?php echo esc_url( home_url( '/cmr-live/#top-view' ) ); ?>" class="cmr-mobile-nav-link">
+                        <div class="cmr-mobile-nav-link-title">Top View</div>
+                        <div class="cmr-mobile-nav-link-desc">Watch expert perspectives and industry conversations</div>
+                    </a>
+                    <a href="<?php echo esc_url( home_url( '/cmr-live/#podcasts' ) ); ?>" class="cmr-mobile-nav-link">
+                        <div class="cmr-mobile-nav-link-title">Podcasts</div>
+                        <div class="cmr-mobile-nav-link-desc">Expert conversations on trends and innovation</div>
                     </a>
                 </div>
             </div>
@@ -257,16 +274,16 @@ function cmr_inject_mobile_mega_menu() {
                     CMR Connect
                 </button>
                 <div class="cmr-mobile-nav-content">
-                    <div class="cmr-mobile-nav-label">CONNECT</div>
-                    <a href="#" class="cmr-mobile-nav-link">
+                    <div class="cmr-mobile-nav-label">CMR CONNECT</div>
+                    <a href="<?php echo esc_url( home_url( '/enterprise-connect/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">Enterprise Connect</div>
                         <div class="cmr-mobile-nav-link-desc">Insights for enterprise leaders</div>
                     </a>
-                    <a href="#" class="cmr-mobile-nav-link">
+                    <a href="<?php echo esc_url( home_url( '/smb-connect/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">SMB Connect</div>
                         <div class="cmr-mobile-nav-link-desc">Growth strategies for SMBs</div>
                     </a>
-                    <a href="#" class="cmr-mobile-nav-link">
+                    <a href="<?php echo esc_url( home_url( '/channel-connect/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">Channel Connect</div>
                         <div class="cmr-mobile-nav-link-desc">Opportunities for channel partners</div>
                     </a>
@@ -280,22 +297,18 @@ function cmr_inject_mobile_mega_menu() {
                     Newsroom
                 </button>
                 <div class="cmr-mobile-nav-content">
-                    <div class="cmr-mobile-nav-label">MEDIA & EVENTS</div>
-                    <a href="#" class="cmr-mobile-nav-link">
-                        <div class="cmr-mobile-nav-link-title">Press Releases</div>
-                        <div class="cmr-mobile-nav-link-desc">Official announcements from CMR</div>
+                    <div class="cmr-mobile-nav-label">NEWSROOM</div>
+                    <a href="<?php echo esc_url( home_url( '/press-releases/' ) ); ?>" class="cmr-mobile-nav-link">
+                        <div class="cmr-mobile-nav-link-title">Media Releases</div>
+                        <div class="cmr-mobile-nav-link-desc">Official company announcements and updates</div>
                     </a>
-                    <a href="#" class="cmr-mobile-nav-link">
-                        <div class="cmr-mobile-nav-link-title">In the News</div>
-                        <div class="cmr-mobile-nav-link-desc">CMR analysts quoted in the media</div>
+                    <a href="<?php echo esc_url( home_url( '/quarterly-results/' ) ); ?>" class="cmr-mobile-nav-link">
+                        <div class="cmr-mobile-nav-link-title">Quarterly Results</div>
+                        <div class="cmr-mobile-nav-link-desc">Financial performance and investor updates</div>
                     </a>
-                    <a href="#" class="cmr-mobile-nav-link">
-                        <div class="cmr-mobile-nav-link-title">Events & Webinars</div>
-                        <div class="cmr-mobile-nav-link-desc">Upcoming and past industry events</div>
-                    </a>
-                    <a href="#" class="cmr-mobile-nav-link">
-                        <div class="cmr-mobile-nav-link-title">Media Kit</div>
-                        <div class="cmr-mobile-nav-link-desc">Resources for journalists and partners</div>
+                    <a href="<?php echo esc_url( home_url( '/cmr-news/' ) ); ?>" class="cmr-mobile-nav-link">
+                        <div class="cmr-mobile-nav-link-title">CMR in News</div>
+                        <div class="cmr-mobile-nav-link-desc">Featured coverage across leading media</div>
                     </a>
                 </div>
             </div>

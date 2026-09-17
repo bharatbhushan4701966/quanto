@@ -795,13 +795,15 @@ if( ! function_exists( 'quanto_global_header' ) ){
 
                 echo '</div>';
 
-                if( has_nav_menu( 'mobile-menu' ) ){
+                $menu_location = has_nav_menu( 'mobile-menu' ) ? 'mobile-menu' : ( has_nav_menu( 'primary-menu' ) ? 'primary-menu' : '' );
+
+                if( $menu_location ){
 
                     echo '<div class="quanto-mobile-menu">';
 
                         wp_nav_menu( array(
 
-                            "theme_location"    => 'mobile-menu',
+                            "theme_location"    => $menu_location,
 
                             "container"         => '',
 
