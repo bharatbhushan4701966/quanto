@@ -335,37 +335,34 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
         }
 
         .cmr-wwt-card-img {
-            height: 230px;
             width: 100%;
             max-width: 354px;
+            aspect-ratio: 16 / 10;
             overflow: hidden;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             background: #f4f5f8;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border-radius: 6px;
+            display: block;
         }
         .cmr-wwt-card-img a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: block;
             width: 100%;
             height: 100%;
         }
         .cmr-wwt-card-img img {
-            max-height: 100%;
             width: 100%;
             height: 100%;
             object-fit: cover; 
+            object-position: center center;
             display: block; 
+            border-radius: 6px;
             transition: transform 0.3s ease;
         }
         /* For Research Reports: Use 1:1 aspect-ratio / width: 100% with object-fit: cover and center alignment so the image fills the card cleanly with no side whitespace/bars and no text cut */
         .cmr-wwt-card-research-reports .cmr-wwt-card-img,
         .cmr-wwt-slide[data-s="2"] .cmr-wwt-card-img {
             height: auto !important;
-            aspect-ratio: 1 / 1;
+            aspect-ratio: 1 / 1 !important;
             width: 100% !important;
             max-width: 354px !important;
             background: transparent !important;
@@ -500,7 +497,7 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             .cmr-wwt-acc-item.active .cmr-wwt-acc-title { color: #6B3FA0; }
             .cmr-wwt-acc-item.active .cmr-wwt-acc-icon { transform: rotate(90deg); }
             
-            .cmr-wwt-card-img { width: 100%; max-width: 100%; height: 240px; }
+            .cmr-wwt-card-img { width: 100%; max-width: 100%; height: auto; aspect-ratio: 16 / 10; }
             .cmr-wwt-card-research-reports .cmr-wwt-card-img {
                 height: auto !important;
                 aspect-ratio: 1 / 1;
