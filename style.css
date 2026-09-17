@@ -3936,7 +3936,8 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     .elementor-23190 .elementor-element.elementor-element-a6ac41e,
     .elementor-14 .elementor-element.elementor-element-82ef444,
     .elementor-element-a6ac41e,
-    .elementor-element-82ef444 {
+    .elementor-element-82ef444,
+    .elementor-element-d9c32ac {
         --padding-top: 0px !important;
         --padding-bottom: 0px !important;
         width: 100% !important;
@@ -3951,7 +3952,9 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     .elementor-23190 .elementor-element.elementor-element-283442d,
     .elementor-14 .elementor-element.elementor-element-748fff1,
     .elementor-element-283442d,
-    .elementor-element-748fff1 {
+    .elementor-element-748fff1,
+    .elementor-element-d9c32ac .e-con-inner,
+    .elementor-element-9e97fc3 {
         display: flex !important;
         flex-direction: row !important;
         flex-wrap: nowrap !important;
@@ -3969,7 +3972,8 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     #cmr-testimonials-section .elementor-element-6647a0b,
     #cmr-testimonials-section .elementor-element-0807bbc,
     .elementor-element-6647a0b,
-    .elementor-element-0807bbc {
+    .elementor-element-0807bbc,
+    .elementor-element-e60d8c3 {
         width: 360px !important;
         min-width: 360px !important;
         max-width: 360px !important;
@@ -3991,7 +3995,8 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     .elementor-23190 .elementor-element.elementor-element-cd36bd5,
     .elementor-14 .elementor-element.elementor-element-d9679c4,
     #cmr-testimonials-section .elementor-element-cd36bd5,
-    #cmr-testimonials-section .elementor-element-d9679c4 {
+    #cmr-testimonials-section .elementor-element-d9679c4,
+    .elementor-element-d46f054 {
         margin: 0 0 20px 0 !important;
         padding: 0 !important;
         text-align: left !important;
@@ -4001,7 +4006,8 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     .elementor-23190 .elementor-element.elementor-element-cd36bd5 p,
     .elementor-14 .elementor-element.elementor-element-d9679c4 p,
     #cmr-testimonials-section .elementor-element-cd36bd5 p,
-    #cmr-testimonials-section .elementor-element-d9679c4 p {
+    #cmr-testimonials-section .elementor-element-d9679c4 p,
+    .elementor-element-d46f054 p {
         font-family: "Instrument Sans", sans-serif !important;
         font-size: 13px !important;
         font-weight: 600 !important;
@@ -4015,6 +4021,7 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     /* Big Quote Mark Image */
     .elementor-23190 .elementor-element.elementor-element-1df5c74,
     .elementor-14 .elementor-element.elementor-element-7c38a95,
+    .elementor-element-0d5e543,
     #cmr-testimonials-section .elementor-widget-image {
         display: block !important;
         visibility: visible !important;
@@ -4025,6 +4032,7 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
 
     .elementor-23190 .elementor-element.elementor-element-1df5c74 img,
     .elementor-14 .elementor-element.elementor-element-7c38a95 img,
+    .elementor-element-0d5e543 img,
     #cmr-testimonials-section .elementor-widget-image img {
         width: 64px !important;
         height: auto !important;
@@ -4035,6 +4043,7 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     /* Heading: "What our <br> clients say <br> about us" */
     .elementor-23190 .elementor-element.elementor-element-aecd77b,
     .elementor-14 .elementor-element.elementor-element-8da86a5,
+    .elementor-element-f1c9546,
     #cmr-testimonials-section .elementor-element-aecd77b,
     #cmr-testimonials-section .elementor-element-8da86a5 {
         margin: 0 !important;
@@ -4045,6 +4054,7 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
 
     .elementor-23190 .elementor-element.elementor-element-aecd77b .elementor-heading-title,
     .elementor-14 .elementor-element.elementor-element-8da86a5 .elementor-heading-title,
+    .elementor-element-f1c9546 .elementor-heading-title,
     #cmr-testimonials-section .elementor-heading-title {
         font-family: "Instrument Sans", sans-serif !important;
         font-size: 46px !important;
@@ -4059,6 +4069,7 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
 
     .elementor-23190 .elementor-element.elementor-element-aecd77b .elementor-heading-title br,
     .elementor-14 .elementor-element.elementor-element-8da86a5 .elementor-heading-title br,
+    .elementor-element-f1c9546 .elementor-heading-title br,
     #cmr-testimonials-section .elementor-heading-title br {
         display: inline !important;
     }
@@ -4066,10 +4077,12 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     /* Right Column: Testimonials Slider (Takes full remaining space) */
     .elementor-23190 .elementor-element.elementor-element-acc3da4,
     .elementor-14 .elementor-element.elementor-element-3b754b6,
+    .elementor-element-eb2feff,
     #cmr-testimonials-section .elementor-element-acc3da4,
     #cmr-testimonials-section .elementor-element-3b754b6,
     .elementor-element-acc3da4,
     .elementor-element-3b754b6,
+    .elementor-element-eb2feff,
     .elementor-widget-wcf--a-testimonial,
     .wcf__t_slider-wrapper {
         flex: 1 1 0% !important;
@@ -4366,7 +4379,8 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     /* Outer testimonials container: exactly 20px side margins from screen edge, 50px top gap */
     #cmr-testimonials-section,
     .elementor-element-a6ac41e,
-    .elementor-element-82ef444 {
+    .elementor-element-82ef444,
+    .elementor-element-d9c32ac {
         padding-top: 50px !important;
         padding-bottom: 40px !important;
         padding-left: 20px !important;
@@ -4383,7 +4397,8 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
 
     /* Reset inner container padding when nested inside #cmr-testimonials-section */
     #cmr-testimonials-section .elementor-element-a6ac41e,
-    #cmr-testimonials-section .elementor-element-82ef444 {
+    #cmr-testimonials-section .elementor-element-82ef444,
+    #cmr-testimonials-section .elementor-element-d9c32ac {
         padding: 0 !important;
         margin-left: 0 !important;
         margin-right: 0 !important;
@@ -4393,10 +4408,12 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     #cmr-testimonials-section .e-con-inner,
     .elementor-element-a6ac41e .e-con-inner,
     .elementor-element-82ef444 .e-con-inner,
+    .elementor-element-d9c32ac .e-con-inner,
     #cmr-testimonials-section .elementor-element-283442d,
     #cmr-testimonials-section .elementor-element-748fff1,
     .elementor-element-a6ac41e .elementor-element-283442d,
-    .elementor-element-82ef444 .elementor-element-748fff1 {
+    .elementor-element-82ef444 .elementor-element-748fff1,
+    .elementor-element-d9c32ac .elementor-element-9e97fc3 {
         width: 100% !important;
         max-width: 100% !important;
         display: flex !important;
@@ -4413,7 +4430,9 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     #cmr-testimonials-section .elementor-element-6647a0b,
     #cmr-testimonials-section .elementor-element-0807bbc,
     .elementor-element-a6ac41e .elementor-element-6647a0b,
-    .elementor-element-82ef444 .elementor-element-0807bbc {
+    .elementor-element-82ef444 .elementor-element-0807bbc,
+    .elementor-element-d9c32ac .elementor-element-e60d8c3,
+    .elementor-element-e60d8c3 {
         width: 100% !important;
         max-width: 100% !important;
         border: none !important;
@@ -4431,6 +4450,8 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     #cmr-testimonials-section .elementor-element-d9679c4,
     .elementor-element-a6ac41e .elementor-element-cd36bd5,
     .elementor-element-82ef444 .elementor-element-d9679c4,
+    .elementor-element-d9c32ac .elementor-element-d46f054,
+    .elementor-element-d46f054,
     .elementor-23190 .elementor-element.elementor-element-cd36bd5,
     .elementor-14 .elementor-element.elementor-element-d9679c4 {
         width: 100% !important;
@@ -4444,6 +4465,8 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     #cmr-testimonials-section .elementor-element-d9679c4 p,
     .elementor-element-a6ac41e .elementor-element-cd36bd5 p,
     .elementor-element-82ef444 .elementor-element-d9679c4 p,
+    .elementor-element-d9c32ac .elementor-element-d46f054 p,
+    .elementor-element-d46f054 p,
     .elementor-23190 .elementor-element.elementor-element-cd36bd5 p,
     .elementor-14 .elementor-element.elementor-element-d9679c4 p {
         text-align: center !important;
@@ -4461,11 +4484,14 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     #cmr-testimonials-section .elementor-element-7c38a95,
     .elementor-element-a6ac41e .elementor-element-1df5c74,
     .elementor-element-82ef444 .elementor-element-7c38a95,
+    .elementor-element-d9c32ac .elementor-element-0d5e543,
+    .elementor-element-0d5e543,
     .elementor-23190 .elementor-element.elementor-element-1df5c74,
     .elementor-14 .elementor-element.elementor-element-7c38a95,
     #cmr-testimonials-section .elementor-widget-image,
     .elementor-element-a6ac41e .elementor-widget-image,
-    .elementor-element-82ef444 .elementor-widget-image {
+    .elementor-element-82ef444 .elementor-widget-image,
+    .elementor-element-d9c32ac .elementor-widget-image {
         display: none !important;
         visibility: hidden !important;
     }
@@ -4475,6 +4501,8 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     #cmr-testimonials-section .elementor-element-8da86a5,
     .elementor-element-a6ac41e .elementor-element-aecd77b,
     .elementor-element-82ef444 .elementor-element-8da86a5,
+    .elementor-element-d9c32ac .elementor-element-f1c9546,
+    .elementor-element-f1c9546,
     .elementor-23190 .elementor-element.elementor-element-aecd77b,
     .elementor-14 .elementor-element.elementor-element-8da86a5 {
         width: 100% !important;
@@ -4490,6 +4518,8 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     #cmr-testimonials-section .elementor-element-8da86a5 .elementor-heading-title,
     .elementor-element-a6ac41e .elementor-element-aecd77b .elementor-heading-title,
     .elementor-element-82ef444 .elementor-element-8da86a5 .elementor-heading-title,
+    .elementor-element-d9c32ac .elementor-element-f1c9546 .elementor-heading-title,
+    .elementor-element-f1c9546 .elementor-heading-title,
     .elementor-23190 .elementor-element.elementor-element-aecd77b .elementor-heading-title,
     .elementor-14 .elementor-element.elementor-element-8da86a5 .elementor-heading-title {
         text-align: center !important;
@@ -4507,6 +4537,8 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     #cmr-testimonials-section .elementor-element-8da86a5 .elementor-heading-title br,
     .elementor-element-a6ac41e .elementor-element-aecd77b .elementor-heading-title br,
     .elementor-element-82ef444 .elementor-element-8da86a5 .elementor-heading-title br,
+    .elementor-element-d9c32ac .elementor-element-f1c9546 .elementor-heading-title br,
+    .elementor-element-f1c9546 .elementor-heading-title br,
     .elementor-23190 .elementor-element.elementor-element-aecd77b .elementor-heading-title br,
     .elementor-14 .elementor-element.elementor-element-8da86a5 .elementor-heading-title br,
     .elementor-element-aecd77b .elementor-heading-title br,
@@ -4524,8 +4556,10 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     #cmr-testimonials-section .elementor-element-3b754b6,
     .elementor-element-a6ac41e .elementor-element-acc3da4,
     .elementor-element-82ef444 .elementor-element-3b754b6,
+    .elementor-element-d9c32ac .elementor-element-eb2feff,
     .elementor-element-acc3da4,
     .elementor-element-3b754b6,
+    .elementor-element-eb2feff,
     .elementor-widget-wcf--a-testimonial,
     .wcf__t_slider-wrapper,
     #cmr-testimonials-section .elementor-widget-wcf--a-testimonial,

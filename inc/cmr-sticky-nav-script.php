@@ -1773,25 +1773,29 @@ add_action('wp_footer', function() {
 
                     let boundaryBottom = sectionRect.bottom;
                     
-                    let testimonialsSection = document.getElementById('cmr-testimonials-section') || 
-                                              document.getElementById('testimonials') || 
-                                              document.querySelector('.elementor-element-82ef444') ||
-                                              document.querySelector('.elementor-widget-testimonial-carousel') ||
-                                              document.querySelector('.elementor-widget-testimonial');
-                                              
-                    if (!testimonialsSection) {
-                        const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')).filter(h => h.textContent.toLowerCase().includes('testimonial'));
-                        if (headings.length > 0) {
-                            testimonialsSection = headings[0].closest('.elementor-section') || headings[0].closest('section') || headings[0].parentElement;
+                    const isStandaloneWrapper = navBar.closest('.cmr-mrg-wrapper, .cmr-enterprisecgd-wrapper, .cmr-channelcgd-wrapper, .cmr-smbcgd-wrapper, .cmr-mc-wrapper');
+                    if (!isStandaloneWrapper) {
+                        let testimonialsSection = document.getElementById('cmr-testimonials-section') || 
+                                                  document.getElementById('testimonials') || 
+                                                  document.querySelector('.elementor-element-82ef444') ||
+                                                  document.querySelector('.elementor-element-d9c32ac') ||
+                                                  document.querySelector('.elementor-widget-testimonial-carousel') ||
+                                                  document.querySelector('.elementor-widget-testimonial');
+                                                  
+                        if (!testimonialsSection) {
+                            const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')).filter(h => h.textContent.toLowerCase().includes('testimonial'));
+                            if (headings.length > 0) {
+                                testimonialsSection = headings[0].closest('.elementor-section') || headings[0].closest('section') || headings[0].parentElement;
+                            }
                         }
-                    }
 
-                    if (testimonialsSection) {
-                        boundaryBottom = testimonialsSection.getBoundingClientRect().top;
-                    } else {
-                        const footer = document.querySelector('footer, .elementor-location-footer');
-                        if (footer) {
-                            boundaryBottom = footer.getBoundingClientRect().top;
+                        if (testimonialsSection) {
+                            boundaryBottom = Math.min(sectionRect.bottom, testimonialsSection.getBoundingClientRect().top);
+                        } else {
+                            const footer = document.querySelector('footer, .elementor-location-footer');
+                            if (footer) {
+                                boundaryBottom = Math.min(sectionRect.bottom, footer.getBoundingClientRect().top);
+                            }
                         }
                     }
 
