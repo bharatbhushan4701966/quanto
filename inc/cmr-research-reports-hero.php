@@ -101,45 +101,61 @@ if ( ! function_exists( 'cmr_research_reports_hero_shortcode' ) ) {
                 align-items: center;
                 background: #ffffff;
                 border-radius: 50px;
-                height: 48px;
-                padding: 0 4px 0 20px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                height: 54px;
+                padding: 0 6px 0 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.15);
                 border: 2px solid transparent;
-                transition: border-color 0.3s ease;
+                transition: all 0.3s ease;
+                box-sizing: border-box;
+                width: 100%;
             }
             
             .cmr-vp-hero-search:focus-within {
                 border-color: #7b4cf6;
+                box-shadow: 0 10px 30px rgba(123, 76, 246, 0.25);
             }
 
             .cmr-vp-hero-search-icon-left {
-                margin-right: 15px;
+                margin-right: 14px;
                 display: flex;
                 align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+
+            .cmr-vp-hero-search-icon-left img {
+                width: 24px;
+                height: 24px;
+                object-fit: contain;
+                display: block;
             }
 
             .cmr-vp-hero-search input[type="text"] {
                 flex: 1;
-                border: none;
-                background: transparent;
-                padding: 0;
+                min-width: 0;
+                border: none !important;
+                background: transparent !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
                 height: 100%;
                 font-size: 16px;
                 font-family: inherit;
-                color: #111;
-                outline: none;
+                color: #111827;
+                outline: none !important;
             }
 
             .cmr-vp-hero-search input[type="text"]::placeholder {
-                color: #a0a0a0;
+                color: #9ca3af;
+                font-size: 16px;
             }
 
             .cmr-vp-hero-search-btn {
                 background: #6b46c1;
                 color: #ffffff;
                 border: none;
-                width: 27px;
-                height: 27px;
+                width: 42px;
+                height: 42px;
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
@@ -147,11 +163,14 @@ if ( ! function_exists( 'cmr_research_reports_hero_shortcode' ) ) {
                 cursor: pointer;
                 transition: background 0.3s ease, transform 0.2s ease;
                 padding: 0;
+                flex-shrink: 0;
+                margin-left: 8px;
             }
 
             .cmr-vp-hero-search-btn svg {
-                width: 14px;
-                height: 14px;
+                width: 17px;
+                height: 17px;
+                display: block;
             }
 
             .cmr-vp-hero-search-btn:hover {
@@ -192,6 +211,34 @@ if ( ! function_exists( 'cmr_research_reports_hero_shortcode' ) ) {
                 .cmr-research-categories {
                     gap: 15px;
                 }
+                .cmr-research-search-wrapper {
+                    padding: 0 10px;
+                }
+                .cmr-vp-hero-search {
+                    height: 48px;
+                    padding: 0 5px 0 16px;
+                }
+                .cmr-vp-hero-search-icon-left {
+                    margin-right: 10px;
+                }
+                .cmr-vp-hero-search-icon-left img {
+                    width: 20px;
+                    height: 20px;
+                }
+                .cmr-vp-hero-search input[type="text"] {
+                    font-size: 14px;
+                }
+                .cmr-vp-hero-search input[type="text"]::placeholder {
+                    font-size: 14px;
+                }
+                .cmr-vp-hero-search-btn {
+                    width: 38px;
+                    height: 38px;
+                }
+                .cmr-vp-hero-search-btn svg {
+                    width: 15px;
+                    height: 15px;
+                }
             }
         </style>
 
@@ -213,7 +260,7 @@ if ( ! function_exists( 'cmr_research_reports_hero_shortcode' ) ) {
                         <div class="cmr-vp-hero-search-icon-left">
                             <img decoding="async" src="<?php echo esc_url( home_url( '/' ) ); ?>wp-content/uploads/2026/06/cmrlogo-with-oly-c.svg" alt="CMR Logo" style="width: 24px; height: auto;">
                         </div>
-                        <input type="text" name="s" placeholder="Search..." required="" value="<?php echo get_search_query(); ?>">
+                        <input type="text" name="s" placeholder="Search..." value="<?php echo get_search_query(); ?>">
                         <input type="hidden" name="post_type" value="product" />
                         <button type="submit" class="cmr-vp-hero-search-btn">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -234,15 +281,26 @@ if ( ! function_exists( 'cmr_research_reports_hero_shortcode' ) ) {
             document.addEventListener('DOMContentLoaded', function() {
                 const heroForm = document.getElementById('cmr-vp-hero-search-form');
                 if (heroForm) {
+                    const heroInput = heroForm.querySelector('input[name="s"]');
+                    const latestSearchInput = document.querySelector('input[id^="cmr-lr-search-"]');
+                    const latestSearchBtn = document.querySelector('button[id^="cmr-lr-search-btn-"]');
+                    const latestSection = document.querySelector('.cmr-latest-section');
+
+                    if (heroInput && latestSearchInput) {
+                        heroInput.addEventListener('input', function() {
+                            latestSearchInput.value = this.value;
+                            latestSearchInput.dispatchEvent(new Event('input', { bubbles: true }));
+                        });
+                    }
+
                     heroForm.addEventListener('submit', function(e) {
-                        const latestSearchInput = document.querySelector('input[id^="cmr-lr-search-"]');
-                        const latestSearchBtn = document.querySelector('button[id^="cmr-lr-search-btn-"]');
-                        const latestSection = document.querySelector('.cmr-latest-section');
-                        
-                        if (latestSearchInput && latestSearchBtn && latestSection) {
+                        if (latestSearchInput && latestSection) {
                             e.preventDefault();
-                            latestSearchInput.value = heroForm.querySelector('input[name="s"]').value;
-                            latestSearchBtn.click();
+                            latestSearchInput.value = heroInput ? heroInput.value.trim() : '';
+                            latestSearchInput.dispatchEvent(new Event('input', { bubbles: true }));
+                            if (latestSearchBtn) {
+                                latestSearchBtn.click();
+                            }
                             
                             // Scroll down so they can see the results
                             const yOffset = -80; // offset for sticky header
