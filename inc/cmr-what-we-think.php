@@ -288,11 +288,11 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             min-height: calc(100vh - 80px); /* Leave room for sticky headers */
             height: auto;
             display: flex;
-            align-items: center; /* Vertically center the content */
+            align-items: flex-start; /* Align closer to top so card titles are always visible */
             justify-content: center;
             z-index: 2;
-            padding-top: 20px;
-            padding-bottom: 30px;
+            padding-top: 10px;
+            padding-bottom: 25px;
         }
 
         .cmr-wwt-inner {
@@ -304,27 +304,26 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             margin: 0 auto;
         }
 
-        .cmr-wwt-header { margin-bottom: 20px; }
+        .cmr-wwt-header { margin-bottom: 12px; }
 
         .cmr-wwt-section-label {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 2.5px;
+            letter-spacing: 2px;
             color: #000;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             font-family: 'Instrument Sans', sans-serif;
         }
 
         .cmr-wwt-heading {
-            font-size: 42px; /* Slightly smaller to save vertical space */
+            font-size: 38px; /* Compact height to leave plenty of room for card titles */
             font-weight: 600;
-            line-height: 1.25;
+            line-height: 1.2;
             color: #1a1a2e;
             max-width: 100%;
             font-family: 'Instrument Sans', sans-serif;
             margin: 0;
-            letter-spacing: -1px;
             letter-spacing: -1px;
         }
 
@@ -336,11 +335,11 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
         }
 
         .cmr-wwt-card-img {
-            height: 250px;
+            height: 230px;
             width: 100%;
             max-width: 354px;
             overflow: hidden;
-            margin-bottom: 14px;
+            margin-bottom: 10px;
             background: #f4f5f8;
             border-radius: 4px;
             display: flex;
@@ -362,16 +361,16 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             display: block; 
             transition: transform 0.3s ease;
         }
-        /* For Research Reports: Featured report covers are square (1:1) or tall portrait (3:4/A4).
-           We increase container height to 340px and enforce object-fit: contain so the image is never cropped/cut. */
+        /* For Research Reports: Clean 270px container with object-fit: contain so the cover is 100% visible and the title/link below stays fully above fold */
         .cmr-wwt-card-research-reports .cmr-wwt-card-img,
         .cmr-wwt-slide[data-s="2"] .cmr-wwt-card-img {
-            height: 340px !important;
+            height: 270px !important;
             max-width: 354px !important;
             background: #f4f5f8;
             border-radius: 6px;
             padding: 4px;
             box-sizing: border-box;
+            margin-bottom: 10px;
         }
         .cmr-wwt-card-research-reports .cmr-wwt-card-img a,
         .cmr-wwt-slide[data-s="2"] .cmr-wwt-card-img a {
@@ -392,26 +391,26 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             border-radius: 4px;
         }
 
-        .cmr-wwt-card-cat { display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer; }
-        .cmr-wwt-card-cat-line { width:24px; height:2px; background:#6B3FA0; flex-shrink:0; }
+        .cmr-wwt-card-cat { display:flex; align-items:center; gap:8px; margin-bottom:8px; cursor:pointer; }
+        .cmr-wwt-card-cat-line { width:20px; height:2px; background:#6B3FA0; flex-shrink:0; }
         .cmr-wwt-card-cat-text { font-size:12px; font-weight:400; color:#6B3FA0; letter-spacing:0.3px; text-transform: uppercase; }
 
         .cmr-wwt-card-title {
-            font-size: 18px; font-weight: 600; line-height: 1.4;
-            color: #1a1a2e; margin-bottom: 14px; min-height: 44px;
+            font-size: 17px; font-weight: 600; line-height: 1.35;
+            color: #1a1a2e; margin-bottom: 10px; min-height: 38px;
             font-family: 'Instrument Sans', sans-serif;
         }
 
         .cmr-wwt-card-link {
-            display:inline-flex; align-items:center; gap:8px;
+            display:inline-flex; align-items:center; gap:6px;
             font-family:"Instrument Sans", sans-serif;
-            font-size:14px; font-weight:600; line-height:1.2; color:#111;
+            font-size:13px; font-weight:600; line-height:1.2; color:#111;
             text-decoration:none; background:none; border:none;
-            padding:0 0 6px 0; border-bottom:2px solid #111;
+            padding:0 0 4px 0; border-bottom:2px solid #111;
         }
         .cmr-wwt-card-link:hover { color:#6B3FA0; border-bottom-color: #6B3FA0; }
         .cmr-wwt-card-link::after {
-            content:""; width:12px; height:12px;
+            content:""; width:11px; height:11px;
             background-image:url('https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg');
             background-repeat:no-repeat; background-size:contain; background-position:center;
             display:inline-block;
@@ -419,7 +418,7 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
 
         .cmr-wwt-menu-item {
             display: flex; align-items: center; gap: 12px;
-            padding: 10px 0; cursor: pointer;
+            padding: 8px 0; cursor: pointer;
             color: #d1d1d1;
             transition: color 0.3s ease;
         }
@@ -429,7 +428,7 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             width: 10px; height: 10px; border-radius: 50%;
             background: #d1d1d1; transition: background 0.3s ease;
         }
-        .cmr-wwt-menu-label { font-size: 32px; font-weight: 600; letter-spacing: -1px; line-height: 1.2; }
+        .cmr-wwt-menu-label { font-size: 30px; font-weight: 600; letter-spacing: -1px; line-height: 1.2; }
 
         .cmr-wwt-menu-item:hover .cmr-wwt-bullet,
         .cmr-wwt-menu-item.cmr-wwt-on .cmr-wwt-bullet { background: #401083; }
@@ -452,15 +451,15 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
         }
 
         @media (max-width: 1024px) {
-            .cmr-wwt-heading { font-size: 34px; }
-            .cmr-wwt-left-col { flex: 0 0 200px; }
+            .cmr-wwt-heading { font-size: 32px; }
+            .cmr-wwt-left-col { flex: 0 0 190px; }
             .cmr-wwt-menu-label { font-size: 20px; }
-            .cmr-wwt-desktop-content { display: flex; align-items: flex-start; gap: 30px; margin-top: 20px; }
+            .cmr-wwt-desktop-content { display: flex; align-items: flex-start; gap: 24px; margin-top: 12px; }
             .cmr-wwt-mobile-content { display: none; }
         }
         
         @media (min-width: 1025px) {
-            .cmr-wwt-desktop-content { display: flex; align-items: flex-start; gap: 100px; margin-top: 20px; }
+            .cmr-wwt-desktop-content { display: flex; align-items: flex-start; gap: 80px; margin-top: 12px; }
             .cmr-wwt-mobile-content { display: none; }
         }
 
