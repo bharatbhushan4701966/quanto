@@ -9005,6 +9005,64 @@ ul.wp-block-list ol li {
     }
 }
 
+/* Newsroom Section Heading Line-Height & Compact Chips */
+.elementor-element-a76a8da .elementor-heading-title,
+.sec-title.elementor-element-a76a8da .elementor-heading-title,
+.elementor-14 .elementor-element.elementor-element-a76a8da .elementor-heading-title,
+.elementor-element-9952c6c .elementor-heading-title,
+.stay-updated-title {
+    line-height: 1.15 !important;
+    letter-spacing: -1.2px !important;
+}
+
+@media (max-width: 768px) {
+    .elementor-element-a76a8da .elementor-heading-title,
+    .sec-title.elementor-element-a76a8da .elementor-heading-title,
+    .elementor-14 .elementor-element.elementor-element-a76a8da .elementor-heading-title,
+    .elementor-element-9952c6c .elementor-heading-title,
+    .stay-updated-title {
+        line-height: 1.2 !important;
+        letter-spacing: -0.8px !important;
+    }
+}
+
+.cmr-news-tabs {
+    gap: 10px !important;
+    margin-bottom: 24px !important;
+}
+
+.cmr-news-tab-btn {
+    padding: 6px 16px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    border-radius: 40px !important;
+    gap: 6px !important;
+    line-height: 1.2 !important;
+}
+
+.cmr-news-tab-btn .cmr-tab-icon {
+    width: 15px !important;
+    height: 15px !important;
+}
+
+@media (max-width: 768px) {
+    .cmr-news-tabs {
+        gap: 8px !important;
+        padding-bottom: 8px !important;
+        margin-bottom: 20px !important;
+    }
+    .cmr-news-tab-btn {
+        padding: 5px 14px !important;
+        font-size: 12px !important;
+        gap: 5px !important;
+    }
+    .cmr-news-tab-btn .cmr-tab-icon {
+        width: 14px !important;
+        height: 14px !important;
+    }
+}
+
+
 
 
 
