@@ -16,13 +16,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * 1. Enqueue WordPress Media Library on Product Edit Screens
+ * 1. Enqueue WordPress Media Library & FontAwesome on Product Edit Screens
  */
 add_action( 'admin_enqueue_scripts', 'cmr_product_badge_admin_scripts' );
 function cmr_product_badge_admin_scripts( $hook ) {
     global $post_type;
     if ( ( 'post.php' === $hook || 'post-new.php' === $hook ) && 'product' === $post_type ) {
         wp_enqueue_media();
+        wp_enqueue_style( 'fontawesome-style-admin', get_theme_file_uri( '/assets/css/all.css' ), array(), '6.7.2' );
     }
 }
 
@@ -57,6 +58,7 @@ function cmr_render_product_badge_meta_box( $post ) {
         $badge_type = 'none';
     }
     ?>
+    <link rel="stylesheet" href="<?php echo esc_url( get_theme_file_uri( '/assets/css/all.css' ) ); ?>?ver=6.7.2" />
     <style>
         .cmr-badge-meta-wrap {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
@@ -126,21 +128,35 @@ function cmr_render_product_badge_meta_box( $post ) {
         }
         .cmr-badge-icon-chip {
             background: #f3f4f6;
-            border: 1px solid #e5e7eb;
+            border: 1px solid #d1d5db;
             border-radius: 4px;
-            padding: 3px 6px;
+            padding: 4px 8px;
             font-size: 11px;
             cursor: pointer;
             color: #374151;
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
+            line-height: 1.2;
             transition: all 0.15s ease;
+        }
+        .cmr-badge-icon-chip i {
+            font-size: 12px;
+            color: #4b5563;
         }
         .cmr-badge-icon-chip:hover {
             background: #e5e7eb;
-            border-color: #d1d5db;
+            border-color: #9ca3af;
             color: #111827;
+        }
+        .cmr-badge-icon-chip.active {
+            background: #ede9fe !important;
+            border-color: #8b5cf6 !important;
+            color: #6b46c1 !important;
+            font-weight: 600;
+        }
+        .cmr-badge-icon-chip.active i {
+            color: #6b46c1 !important;
         }
         .cmr-badge-url-row {
             display: flex;
@@ -180,6 +196,10 @@ function cmr_render_product_badge_meta_box( $post ) {
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
             transition: all 0.2s ease;
         }
+        .cmr-badge-preview-pill i {
+            font-size: 12px;
+            display: inline-block;
+        }
         .cmr-badge-preview-pill img {
             width: 14px;
             height: 14px;
@@ -204,10 +224,10 @@ function cmr_render_product_badge_meta_box( $post ) {
         <label for="cmr_product_badge_type"><?php esc_html_e( 'Select Badge Type:', 'quanto' ); ?></label>
         <select id="cmr_product_badge_type" name="_cmr_product_badge_type">
             <option value="none" <?php selected( $badge_type, 'none' ); ?>><?php esc_html_e( 'None (No Badge)', 'quanto' ); ?></option>
-            <option value="featured" <?php selected( $badge_type, 'featured' ); ?>><?php esc_html_e( 'Featured (🔖 Purple)', 'quanto' ); ?></option>
-            <option value="new" <?php selected( $badge_type, 'new' ); ?>><?php esc_html_e( 'New (✓ Orange)', 'quanto' ); ?></option>
-            <option value="trending" <?php selected( $badge_type, 'trending' ); ?>><?php esc_html_e( 'Trending (⚡ Cyan)', 'quanto' ); ?></option>
-            <option value="hot" <?php selected( $badge_type, 'hot' ); ?>><?php esc_html_e( 'Hot (🔥 Red)', 'quanto' ); ?></option>
+            <option value="featured" <?php selected( $badge_type, 'featured' ); ?>><?php esc_html_e( 'Featured (🔖 Bookmark)', 'quanto' ); ?></option>
+            <option value="new" <?php selected( $badge_type, 'new' ); ?>><?php esc_html_e( 'New (✓ Check)', 'quanto' ); ?></option>
+            <option value="trending" <?php selected( $badge_type, 'trending' ); ?>><?php esc_html_e( 'Trending (⚡ Bolt)', 'quanto' ); ?></option>
+            <option value="hot" <?php selected( $badge_type, 'hot' ); ?>><?php esc_html_e( 'Hot (🔥 Fire)', 'quanto' ); ?></option>
             <option value="custom" <?php selected( $badge_type, 'custom' ); ?>><?php esc_html_e( 'Custom Badge...', 'quanto' ); ?></option>
         </select>
 
@@ -342,6 +362,18 @@ function cmr_render_product_badge_meta_box( $post ) {
             if (colorPicker && color.match(/^#[0-9a-fA-F]{6}$/)) {
                 colorPicker.value = color;
             }
+
+            // Highlight active icon chip
+            var currentIcon = (iconInput && iconInput.value.trim() !== '') ? iconInput.value.trim() : icon;
+            var chips = document.querySelectorAll('.cmr-badge-icon-chip');
+            chips.forEach(function(chip) {
+                if (chip.getAttribute('data-icon') === currentIcon && iconUrl === '') {
+                    chip.classList.add('active');
+                } else {
+                    chip.classList.remove('active');
+                }
+            });
+
             if (emptyEl) emptyEl.style.display = 'none';
         }
 
@@ -350,16 +382,11 @@ function cmr_render_product_badge_meta_box( $post ) {
             typeSelect.addEventListener('change', function() {
                 var type = this.value;
                 if (type !== 'none' && presets[type]) {
-                    // Pre-fill fields if empty or user switched preset
-                    if (!textInput.value || Object.values(presets).some(function(x) { return x.text === textInput.value; })) {
-                        textInput.value = presets[type].text;
-                    }
-                    if (!colorInput.value || Object.values(presets).some(function(x) { return x.color === colorInput.value; })) {
-                        colorInput.value = presets[type].color;
-                    }
-                    if (!iconInput.value || Object.values(presets).some(function(x) { return x.icon === iconInput.value; })) {
-                        iconInput.value = presets[type].icon;
-                    }
+                    textInput.value = presets[type].text;
+                    colorInput.value = presets[type].color;
+                    if (colorPicker) colorPicker.value = presets[type].color;
+                    iconInput.value = presets[type].icon;
+                    if (iconUrlInput) iconUrlInput.value = '';
                 }
                 updatePreview();
             });
