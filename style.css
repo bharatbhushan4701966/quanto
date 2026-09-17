@@ -5032,7 +5032,6 @@ div[data-id="df14a6f"] .elementor-widget-image img {
 #cmr-footer-card-section,
 .elementor-23165,
 .elementor-23165 .elementor-element-66f0cc3,
-.elementor-14 .elementor-element-c95991a,
 .elementor-14 .elementor-element-88332ab {
     margin-top: 0 !important;
     padding-top: 0 !important;
@@ -9027,40 +9026,65 @@ ul.wp-block-list ol li {
 }
 
 .cmr-news-tabs {
-    gap: 10px !important;
+    gap: 12px !important;
     margin-bottom: 24px !important;
 }
 
 .cmr-news-tab-btn {
-    padding: 6px 16px !important;
-    font-size: 13px !important;
+    padding: 8px 22px !important;
+    font-size: 14px !important;
     font-weight: 500 !important;
     border-radius: 40px !important;
-    gap: 6px !important;
+    gap: 8px !important;
     line-height: 1.2 !important;
 }
 
 .cmr-news-tab-btn .cmr-tab-icon {
-    width: 15px !important;
-    height: 15px !important;
+    width: 17px !important;
+    height: 17px !important;
 }
 
 @media (max-width: 768px) {
     .cmr-news-tabs {
-        gap: 8px !important;
+        gap: 10px !important;
         padding-bottom: 8px !important;
         margin-bottom: 20px !important;
     }
     .cmr-news-tab-btn {
-        padding: 5px 14px !important;
-        font-size: 12px !important;
-        gap: 5px !important;
+        padding: 6px 16px !important;
+        font-size: 13px !important;
+        gap: 6px !important;
     }
     .cmr-news-tab-btn .cmr-tab-icon {
-        width: 14px !important;
-        height: 14px !important;
+        width: 15px !important;
+        height: 15px !important;
     }
 }
+
+/* What We Think Section Top Gap & Bottom Gap Tuning */
+.cmr-wwt-wrap {
+    padding-top: 70px !important;
+    margin-bottom: 0px !important;
+}
+
+.cmr-wwt-panel {
+    padding-top: 10px !important;
+    padding-bottom: 30px !important;
+    min-height: auto !important;
+}
+
+@media (max-width: 768px) {
+    .cmr-wwt-wrap {
+        padding-top: 40px !important;
+        margin-bottom: 0px !important;
+    }
+    .cmr-wwt-panel {
+        padding-top: 10px !important;
+        padding-bottom: 30px !important;
+        height: auto !important;
+    }
+}
+
 
 
 
