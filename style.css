@@ -9064,23 +9064,23 @@ ul.wp-block-list ol li {
 /* What We Think Section Top Gap & Bottom Gap Tuning */
 .cmr-wwt-wrap {
     padding-top: 70px !important;
-    margin-bottom: 0px !important;
+    margin-bottom: 70px !important;
 }
 
 .cmr-wwt-panel {
     padding-top: 10px !important;
-    padding-bottom: 30px !important;
+    padding-bottom: 80px !important;
     min-height: auto !important;
 }
 
 @media (max-width: 768px) {
     .cmr-wwt-wrap {
         padding-top: 40px !important;
-        margin-bottom: 0px !important;
+        margin-bottom: 40px !important;
     }
     .cmr-wwt-panel {
         padding-top: 10px !important;
-        padding-bottom: 30px !important;
+        padding-bottom: 20px !important;
         height: auto !important;
     }
 }
