@@ -100,7 +100,7 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
                 transition: transform 0.3s ease;
                 display: flex;
                 flex-direction: row;
-                height: 342px;
+                height: 280px;
                 flex: 0 0 calc(50% - 10px);
                 scroll-snap-align: start;
             }
@@ -110,14 +110,21 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
             }
 
             .cmr-tn-image-wrap {
-                width: 45%;
+                height: 100%;
+                flex: 0 0 280px;
+                width: 280px;
+                aspect-ratio: 1 / 1;
                 position: relative;
+                overflow: hidden;
+                background: #f8f9fa;
             }
 
             .cmr-tn-image-wrap img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+                object-position: center;
+                display: block;
             }
 
             .cmr-tn-badge {
@@ -139,10 +146,12 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
             }
 
             .cmr-tn-content {
-                width: 55%;
-                padding: 25px;
+                flex: 1;
+                min-width: 0;
+                padding: 22px 20px;
                 display: flex;
                 flex-direction: column;
+                box-sizing: border-box;
             }
 
             .cmr-tn-category {
@@ -154,11 +163,11 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
             }
 
             .cmr-tn-title {
-                font-size: 18px;
+                font-size: 26px;
                 font-weight: 600;
                 color: #111827;
-                margin-bottom: 15px;
-                line-height: 1.3;
+                margin-bottom: 12px;
+                line-height: 1.25;
                 text-decoration: none;
             }
 
@@ -180,7 +189,7 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
             .cmr-tn-brand {
                 font-size: 13px;
                 color: #6b7280;
-                margin-bottom: 15px;
+                margin-bottom: 12px;
             }
 
             .cmr-tn-price {
@@ -200,6 +209,14 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
             @media (max-width: 992px) {
                 .cmr-tn-card {
                     flex: 0 0 calc(100% - 0px);
+                    height: 240px;
+                }
+                .cmr-tn-image-wrap {
+                    flex: 0 0 240px;
+                    width: 240px;
+                }
+                .cmr-tn-title {
+                    font-size: 22px;
                 }
             }
 
@@ -210,10 +227,16 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
                 }
                 .cmr-tn-image-wrap {
                     width: 100%;
-                    height: 200px;
+                    height: auto;
+                    aspect-ratio: 1 / 1;
+                    flex: none;
                 }
                 .cmr-tn-content {
                     width: 100%;
+                    padding: 20px;
+                }
+                .cmr-tn-title {
+                    font-size: 18px;
                 }
             }
         </style>
