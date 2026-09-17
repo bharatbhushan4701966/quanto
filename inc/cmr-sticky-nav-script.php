@@ -635,6 +635,10 @@ add_action('wp_footer', function() {
         .cmr-latest-insights-section .intel-nav-bar:not(.intel-nav-fixed-js),
         .cmr-latest-insights-semiconductors .intel-nav-bar:not(.intel-nav-fixed-js),
         [class*="cmr-latest-insights"] .intel-nav-bar:not(.intel-nav-fixed-js),
+        .cmr-mrg-wrapper .intel-nav-bar:not(.intel-nav-fixed-js),
+        .cmr-enterprisecgd-wrapper .intel-nav-bar:not(.intel-nav-fixed-js),
+        .cmr-channelcgd-wrapper .intel-nav-bar:not(.intel-nav-fixed-js),
+        .cmr-smbcgd-wrapper .intel-nav-bar:not(.intel-nav-fixed-js),
         .cmr-mc-wrapper .intel-nav-bar:not(.intel-nav-fixed-js) {
             padding-left: 0 !important;
             padding-right: 0 !important;

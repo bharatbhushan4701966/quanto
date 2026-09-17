@@ -51,23 +51,83 @@ function cmr_inject_mobile_mega_menu() {
         display: flex; justify-content: space-between; align-items: center;
         padding: 20px 24px; font-size: 18px; font-weight: 600; color: #111;
         text-decoration: none; border-bottom: 1px solid #f0f0f0;
+        transition: color 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
     }
-    .cmr-mobile-nav-item svg { color: #666; }
+    .cmr-mobile-nav-item svg { color: #666; transition: color 0.2s ease, stroke 0.2s ease; }
+
+    /* Click, Active, Hover states for Main Menu Drill-down Items */
+    #cmrMobileNav .cmr-mobile-nav-item:hover,
+    #cmrMobileNav .cmr-mobile-nav-item:active,
+    #cmrMobileNav .cmr-mobile-nav-item:focus,
+    #cmrMobileNav .cmr-mobile-nav-item.active,
+    #cmrMobileNav .cmr-mobile-nav-item.cmr-active-link {
+        color: #6A35FF !important;
+    }
+    #cmrMobileNav .cmr-mobile-nav-item:hover svg,
+    #cmrMobileNav .cmr-mobile-nav-item:active svg,
+    #cmrMobileNav .cmr-mobile-nav-item:focus svg,
+    #cmrMobileNav .cmr-mobile-nav-item.active svg,
+    #cmrMobileNav .cmr-mobile-nav-item.cmr-active-link svg {
+        color: #6A35FF !important;
+        stroke: #6A35FF !important;
+    }
+
     .cmr-mobile-nav-back {
         display: flex; align-items: center; gap: 12px;
         padding: 20px 24px; font-size: 18px; font-weight: 600; color: #111;
         background: none; border: none; border-bottom: 1px solid #f0f0f0;
         width: 100%; text-align: left; cursor: pointer;
+        transition: color 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
     }
+    #cmrMobileNav .cmr-mobile-nav-back:hover,
+    #cmrMobileNav .cmr-mobile-nav-back:active,
+    #cmrMobileNav .cmr-mobile-nav-back:focus {
+        color: #6A35FF !important;
+    }
+    #cmrMobileNav .cmr-mobile-nav-back:hover svg,
+    #cmrMobileNav .cmr-mobile-nav-back:active svg,
+    #cmrMobileNav .cmr-mobile-nav-back:focus svg {
+        stroke: #6A35FF !important;
+    }
+
     .cmr-mobile-nav-content { padding: 24px; }
     .cmr-mobile-nav-label {
         font-size: 12px; font-weight: 600; color: #9ba4b5;
         letter-spacing: 1px; text-transform: uppercase; margin-bottom: 20px;
     }
-    .cmr-mobile-nav-link { display: block; text-decoration: none; margin-bottom: 24px; }
+    .cmr-mobile-nav-link { 
+        display: block; 
+        text-decoration: none; 
+        margin-bottom: 24px; 
+        transition: color 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
+    }
     .cmr-mobile-nav-link:last-child { margin-bottom: 0; }
-    .cmr-mobile-nav-link-title { font-size: 18px; font-weight: 600; color: #111; margin-bottom: 4px; }
-    .cmr-mobile-nav-link-desc { font-size: 15px; color: #666; line-height: 1.4; }
+    .cmr-mobile-nav-link-title { 
+        font-size: 18px; 
+        font-weight: 600; 
+        color: #111; 
+        margin-bottom: 4px; 
+        transition: color 0.2s ease; 
+    }
+    .cmr-mobile-nav-link-desc { font-size: 15px; color: #666; line-height: 1.4; transition: color 0.2s ease; }
+
+    /* Click, Active, Hover states for Submenu Links */
+    #cmrMobileNav .cmr-mobile-nav-link:hover .cmr-mobile-nav-link-title,
+    #cmrMobileNav .cmr-mobile-nav-link:active .cmr-mobile-nav-link-title,
+    #cmrMobileNav .cmr-mobile-nav-link:focus .cmr-mobile-nav-link-title,
+    #cmrMobileNav .cmr-mobile-nav-link.active .cmr-mobile-nav-link-title,
+    #cmrMobileNav .cmr-mobile-nav-link.cmr-active-link .cmr-mobile-nav-link-title {
+        color: #6A35FF !important;
+    }
+    #cmrMobileNav .cmr-mobile-nav-link:hover .cmr-mobile-nav-link-desc,
+    #cmrMobileNav .cmr-mobile-nav-link:active .cmr-mobile-nav-link-desc,
+    #cmrMobileNav .cmr-mobile-nav-link:focus .cmr-mobile-nav-link-desc {
+        color: #7c4dff !important;
+    }
+
     @media (max-width: 1024px) {
         .quanto-menu-wrapper,
         .quanto-body-visible .quanto-menu-wrapper {
@@ -128,13 +188,6 @@ function cmr_inject_mobile_mega_menu() {
                     Newsroom
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </a>
-
-                <div style="padding: 24px 20px;">
-                    <a href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6Ijc2MzciLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: #6A35FF; color: #fff; padding: 13px 20px; border-radius: 30px; font-weight: 600; text-decoration: none; font-size: 15px;">
-                        <span>Talk to Analyst</span>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                    </a>
-                </div>
             </div>
 
             <!-- Sub Panel: Who We Are -->
@@ -194,7 +247,7 @@ function cmr_inject_mobile_mega_menu() {
                     Who we serve
                 </button>
                 <div class="cmr-mobile-nav-content">
-                    <div class="cmr-mobile-nav-label">INDUSTRIES & SECTORS</div>
+                    <div class="cmr-mobile-nav-label">WHO WE SERVE</div>
                     <a href="<?php echo esc_url( home_url( '/automotive/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">Automotive</div>
                         <div class="cmr-mobile-nav-link-desc">Insights for the mobility ecosystem</div>
@@ -396,6 +449,9 @@ function cmr_inject_mobile_mega_menu() {
         }
     });
 
+    // Enable active touch state on mobile devices
+    document.addEventListener('touchstart', function() {}, {passive: true});
+
     // STEP 2: Click handlers using event delegation on capture phase
     document.addEventListener('click', function(e) {
         // 1. Toggle Open
@@ -439,6 +495,12 @@ function cmr_inject_mobile_mega_menu() {
             var targetId = navItem.getAttribute('data-target');
             if (targetId) {
                 e.preventDefault();
+                // Highlight clicked main menu item
+                document.querySelectorAll('.cmr-mobile-nav-item').forEach(function(el) {
+                    el.classList.remove('cmr-active-link', 'active');
+                });
+                navItem.classList.add('cmr-active-link', 'active');
+
                 var targetPanel = document.getElementById(targetId);
                 var mainPanel = document.getElementById('cmrPanelMain');
                 if (targetPanel && mainPanel) {
@@ -447,6 +509,15 @@ function cmr_inject_mobile_mega_menu() {
                 }
             }
             return;
+        }
+
+        // 3.5 Submenu Link Click
+        var navLink = e.target.closest('.cmr-mobile-nav-link');
+        if (navLink) {
+            document.querySelectorAll('.cmr-mobile-nav-link').forEach(function(el) {
+                el.classList.remove('cmr-active-link', 'active');
+            });
+            navLink.classList.add('cmr-active-link', 'active');
         }
 
         // 4. Back Button (Backward Navigation)
