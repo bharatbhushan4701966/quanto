@@ -88,28 +88,28 @@ function cmr_hero_banner_shortcode($atts) {
     ========================= */
     .buttons {
       display: flex;
-      gap: 15px;
+      gap: 16px;
       align-items: center;
     }
 
     .btn-primary {
-        min-width: 180px;
-        height: 52px;
+        min-width: 200px;
+        height: 58px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
+        gap: 10px;
         background: #FFFFFF;
         color: #0F0F0F !important;
         border: 1px solid #FFFFFF;
         border-radius: 50px;
         font-family: "Instrument Sans", sans-serif;
-        font-size: 15px;
+        font-size: 16px;
         font-weight: 600;
         line-height: 1;
         letter-spacing: -0.18px;
         text-decoration: none;
-        padding: 0 28px;
+        padding: 0 32px;
         box-sizing: border-box;
         transition: transform 0.2s ease, box-shadow 0.2s ease !important;
         cursor: pointer;
@@ -123,31 +123,31 @@ function cmr_hero_banner_shortcode($atts) {
 
     /* ===== BUTTON ICON ===== */
     .hero-arrow-button-white {
-        width: 14px;
-        height: 14px;
+        width: 15px;
+        height: 15px;
         object-fit: contain;
         flex-shrink: 0;
     }
 
     /* ===== TALK TO ANALYST BUTTON ===== */
     .btn-outline {
-        min-width: 180px;
-        height: 52px;
+        min-width: 200px;
+        height: 58px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
+        gap: 10px;
         background: transparent;
         color: #FFFFFF !important;
         border: 1px solid rgba(255,255,255,0.75);
         border-radius: 50px;
         font-family: "Instrument Sans", sans-serif;
-        font-size: 15px;
+        font-size: 16px;
         font-weight: 600;
         line-height: 1;
         letter-spacing: -0.14px;
         text-decoration: none;
-        padding: 0 28px;
+        padding: 0 32px;
         box-sizing: border-box;
         transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease !important;
         cursor: pointer;
@@ -163,8 +163,8 @@ function cmr_hero_banner_shortcode($atts) {
 
     /* ===== ICON ===== */
     .hero-arrow-button {
-        width: 14px;
-        height: 14px;
+        width: 15px;
+        height: 15px;
         object-fit: contain;
         flex-shrink: 0;
     }
