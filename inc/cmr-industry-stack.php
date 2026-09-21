@@ -48,7 +48,7 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
             }
             .cmr-stack-card {
                 background: #fff;
-                padding: 40px 40px 40px 40px;
+                padding: 20px;
                 border-radius: 4px;
                 display: flex;
                 flex-direction: column;
@@ -139,6 +139,7 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
                     height: auto;
                     min-height: 400px;
                     width: 100% !important;
+                    padding: 20px !important;
                     box-sizing: border-box !important;
                 }
             }
