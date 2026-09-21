@@ -89,78 +89,82 @@ function cmr_hero_banner_shortcode($atts) {
     .buttons {
       display: flex;
       gap: 15px;
+      align-items: center;
     }
 
     .btn-primary {
-        width: 181px; /* MATCH OUTLINE BUTTON SIZE */
-        height: 42px;
+        min-width: 180px;
+        height: 52px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 5px;
+        gap: 8px;
         background: #FFFFFF;
         color: #0F0F0F !important;
         border: 1px solid #FFFFFF;
-        border-radius: 40px;
+        border-radius: 50px;
         font-family: "Instrument Sans", sans-serif;
-        font-size: 14px;
+        font-size: 15px;
         font-weight: 600;
-        line-height: 24px;
+        line-height: 1;
         letter-spacing: -0.18px;
         text-decoration: none;
-        padding: 0 20px;
-        transition: none !important;
+        padding: 0 28px;
+        box-sizing: border-box;
+        transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+        cursor: pointer;
     }
 
     .btn-primary:hover {
         background: #FFFFFF !important;
         color: #0F0F0F !important;
-        transform: none !important;
+        transform: translateY(-2px) !important;
     }
 
     /* ===== BUTTON ICON ===== */
     .hero-arrow-button-white {
-        width: 16px;
-        height: 16px;
+        width: 14px;
+        height: 14px;
         object-fit: contain;
         flex-shrink: 0;
     }
 
     /* ===== TALK TO ANALYST BUTTON ===== */
     .btn-outline {
-        width: 181px; /* SAME SIZE */
-        height: 42px;
+        min-width: 180px;
+        height: 52px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 12px;
+        gap: 8px;
         background: transparent;
         color: #FFFFFF !important;
-        border: 1px solid rgba(255,255,255,0.6);
-        border-radius: 40px;
+        border: 1px solid rgba(255,255,255,0.75);
+        border-radius: 50px;
         font-family: "Instrument Sans", sans-serif;
-        font-size: 14px;
+        font-size: 15px;
         font-weight: 600;
-        line-height: 24px;
+        line-height: 1;
         letter-spacing: -0.14px;
         text-decoration: none;
-        padding: 0 22px;
-        transition: none !important;
+        padding: 0 28px;
+        box-sizing: border-box;
+        transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease !important;
         cursor: pointer;
     }
 
-    /* ===== NO HOVER CHANGE ===== */
+    /* ===== HOVER CHANGE ===== */
     .btn-outline:hover {
-        background: transparent !important;
+        background: rgba(255,255,255,0.1) !important;
         color: #FFFFFF !important;
-        border-color: rgba(255,255,255,0.6) !important;
-        transform: none !important;
+        border-color: #FFFFFF !important;
+        transform: translateY(-2px) !important;
     }
 
     /* ===== ICON ===== */
     .hero-arrow-button {
-        width: 16px;
-        height: 16px;
+        width: 14px;
+        height: 14px;
         object-fit: contain;
         flex-shrink: 0;
     }
@@ -179,13 +183,8 @@ function cmr_hero_banner_shortcode($atts) {
       margin-left: 10px;
     }
 
-    .hero-arrow-button,
-    .hero-arrow-button-white {
-      width: 12px;
-    }
-
     /* =========================
-       INDICATORS
+       INDICATORS WITH PROGRESS FILL
     ========================= */
     .hero-indicators {
       position: absolute;
@@ -193,21 +192,31 @@ function cmr_hero_banner_shortcode($atts) {
       right: 80px;
       z-index: 5;
       display: flex;
-      gap: 10px;
+      gap: 12px;
+      align-items: center;
     }
 
     .dot {
-      width: 40px;
+      width: 55px;
       height: 6px;
-      background: rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.35);
       border-radius: 10px;
-      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
       cursor: pointer;
+      display: block;
+      transition: background 0.3s ease;
     }
 
-    .dot.active {
-      background: white;
-      width: 60px;
+    .dot .dot-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background: #ffffff;
+      border-radius: 10px;
+      will-change: width;
     }
 
     /* =========================
@@ -271,7 +280,7 @@ function cmr_hero_banner_shortcode($atts) {
         width: 100%;
         max-width: none;
         height: 52px;
-        border-radius: 40px;
+        border-radius: 50px;
         font-size: 16px;
         font-weight: 600;
         background: #ffffff;
@@ -285,7 +294,7 @@ function cmr_hero_banner_shortcode($atts) {
         width: 100%;
         max-width: none;
         height: 52px;
-        border-radius: 40px;
+        border-radius: 50px;
         font-size: 16px;
         font-weight: 600;
         border: 1px solid #ffffff;
@@ -296,17 +305,13 @@ function cmr_hero_banner_shortcode($atts) {
         background: transparent;
       }
       
-      .dot {
-        display: none;
-      }
-
-      .dot.active {
+      .hero-indicators {
         display: none;
       }
       
       .btn-primary img,
       .btn-outline img{
-        width: 12px;
+        width: 14px;
         margin-left: 6px;
       }
     }
@@ -319,8 +324,8 @@ function cmr_hero_banner_shortcode($atts) {
 
       <!-- INDICATORS -->
       <div class="hero-indicators">
-        <span class="dot active"></span>
-        <span class="dot"></span>
+        <span class="dot active"><span class="dot-fill"></span></span>
+        <span class="dot"><span class="dot-fill"></span></span>
       </div>
 
       <!-- CONTENT -->
@@ -341,10 +346,10 @@ function cmr_hero_banner_shortcode($atts) {
 
         <div class="buttons">
           <a href="#" class="btn-primary open-report-popup">
-      Get Report
-      <img class="hero-arrow-button-white"
-           src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg">
-    </a>
+            Get Report
+            <img class="hero-arrow-button-white"
+                 src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg">
+          </a>
 
           <button class="btn-outline open-popup">
             Talk to Analyst
@@ -359,8 +364,10 @@ function cmr_hero_banner_shortcode($atts) {
 
     <script>
     document.addEventListener("DOMContentLoaded", function () {
-      const dots = document.querySelectorAll('.dot');
+      const dots = document.querySelectorAll('.hero-indicators .dot');
       const title = document.querySelector('.hero-title');
+
+      if (!dots.length || !title) return;
 
       const texts = [
       `Shaping the future <br>
@@ -374,35 +381,62 @@ function cmr_hero_banner_shortcode($atts) {
       with intelligence-led<br> insights`
       ];
 
-      let index = 0;
+      const SLIDE_DURATION = 6000; // 6 seconds per slide
+      let currentIndex = 0;
+      let slideTimer = null;
 
-      // Switch Texts automatically
-      setInterval(() => {
-        dots[index].classList.remove('active');
-        index = (index + 1) % texts.length;
-        dots[index].classList.add('active');
+      function startSlide(index) {
+        if (slideTimer) {
+          clearTimeout(slideTimer);
+          slideTimer = null;
+        }
 
+        currentIndex = index;
+
+        // Reset all indicators fill
+        dots.forEach((dot, i) => {
+          dot.classList.remove('active');
+          const fill = dot.querySelector('.dot-fill');
+          if (fill) {
+            fill.style.transition = 'none';
+            fill.style.width = '0%';
+          }
+        });
+
+        // Activate selected indicator & animate fill progress
+        const currentDot = dots[currentIndex];
+        if (currentDot) {
+          currentDot.classList.add('active');
+          const fill = currentDot.querySelector('.dot-fill');
+          if (fill) {
+            void fill.offsetWidth; // Force reflow
+            fill.style.transition = `width ${SLIDE_DURATION}ms linear`;
+            fill.style.width = '100%';
+          }
+        }
+
+        // Change title text with smooth fade
         title.classList.add('fade');
         setTimeout(() => {
-          title.innerHTML = texts[index];
+          title.innerHTML = texts[currentIndex];
           title.classList.remove('fade');
         }, 300);
-      }, 10000);
+
+        // Schedule next slide when progress fill completes
+        slideTimer = setTimeout(() => {
+          const nextIndex = (currentIndex + 1) % texts.length;
+          startSlide(nextIndex);
+        }, SLIDE_DURATION);
+      }
+
+      // Initial start
+      startSlide(0);
 
       // Dot Click handler
       dots.forEach((dot, i) => {
         dot.addEventListener('click', () => {
-          if (index === i) return;
-
-          dots[index].classList.remove('active');
-          index = i;
-          dots[index].classList.add('active');
-
-          title.classList.add('fade');
-          setTimeout(() => {
-            title.innerHTML = texts[index];
-            title.classList.remove('fade');
-          }, 300);
+          if (currentIndex === i) return;
+          startSlide(i);
         });
       });
 
