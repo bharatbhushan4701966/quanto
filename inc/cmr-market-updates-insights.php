@@ -293,66 +293,20 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                     grid-template-columns: 1fr;
                 }
             }
-            
             /* Sticky Nav CSS */
-            .cmr-mui-sticky-nav {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 15px 0;
-                margin-bottom: 20px;
-                border-bottom: 1px solid #eaeaea;
-                background: #fff;
-                z-index: 100;
-                width: 100%;
-            }
-            .cmr-mui-nav-title {
-                font-size: 22px;
-                font-weight: 600;
-                color: #111;
-            }
-            .cmr-mui-nav-links {
-                display: flex;
-                gap: 25px;
-                align-items: center;
-            }
-            .cmr-mui-nav-links a {
-                color: #111;
-                text-decoration: none;
-                font-size: 15px;
-                font-weight: 500;
-                transition: opacity 0.2s;
-            }
-            .cmr-mui-nav-links a:hover {
-                opacity: 0.7;
-            }
-            .cmr-mui-nav-links a.expert-btn {
-                font-weight: 600;
-            }
-            .cmr-mui-sticky-nav.intel-nav-fixed-js {
-                position: fixed !important;
-                left: 0;
-                right: 0;
-                padding: 15px 40px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-                border-bottom: none;
-                background: rgba(255, 255, 255, 0.95);
-                backdrop-filter: blur(10px);
-                transition: top 0.2s ease-out;
-            }
             @media (max-width: 768px) {
-                .cmr-mui-sticky-nav.intel-nav-fixed-js {
-                    padding: 15px 20px;
+                .cmr-mui-grid {
+                    grid-template-columns: 1fr;
                 }
             }
         </style>
 
         <div class="cmr-mui-section" id="cmr-latest-updates">
-            <div class="cmr-mui-sticky-nav intel-nav-bar">
-                <div class="cmr-mui-nav-title">
+            <div class="intel-nav-bar" style="margin-bottom: 30px;">
+                <div class="intel-nav-title">
                     Market Updates
                 </div>
-                <div class="cmr-mui-nav-links">
+                <div class="intel-nav-links" style="display: flex; align-items: center;">
                     <a href="#cmr-market-updates">Featured</a>
                     <a href="#cmr-latest-updates">Latest Updates</a>
                     <a href="#cmr-live-section">CMR live</a>

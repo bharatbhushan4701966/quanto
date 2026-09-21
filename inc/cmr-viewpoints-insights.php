@@ -293,71 +293,25 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
                     grid-template-columns: 1fr;
                 }
             }
-            
             /* Sticky Nav CSS */
-            .cmr-vpi-sticky-nav {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 15px 0;
-                margin-bottom: 20px;
-                border-bottom: 1px solid #eaeaea;
-                background: #fff;
-                z-index: 100;
-                width: 100%;
-            }
-            .cmr-vpi-nav-title {
-                font-size: 22px;
-                font-weight: 600;
-                color: #111;
-            }
-            .cmr-vpi-nav-links {
-                display: flex;
-                gap: 25px;
-                align-items: center;
-            }
-            .cmr-vpi-nav-links a {
-                color: #111;
-                text-decoration: none;
-                font-size: 15px;
-                font-weight: 500;
-                transition: opacity 0.2s;
-            }
-            .cmr-vpi-nav-links a:hover {
-                opacity: 0.7;
-            }
-            .cmr-vpi-nav-links a.expert-btn {
-                font-weight: 600;
-            }
-            .cmr-vpi-sticky-nav.intel-nav-fixed-js {
-                position: fixed !important;
-                left: 0;
-                right: 0;
-                padding: 15px 40px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-                border-bottom: none;
-                background: rgba(255, 255, 255, 0.95);
-                backdrop-filter: blur(10px);
-                transition: top 0.2s ease-out;
-            }
             @media (max-width: 768px) {
-                .cmr-vpi-sticky-nav.intel-nav-fixed-js {
-                    padding: 15px 20px;
+                .cmr-vpi-grid {
+                    grid-template-columns: 1fr;
                 }
             }
         </style>
 
         <div class="cmr-vpi-section">
-            <div class="cmr-vpi-sticky-nav intel-nav-bar">
-                <div class="cmr-vpi-nav-title">
+            <div class="intel-nav-bar" style="margin-bottom: 30px;">
+                <div class="intel-nav-title">
                     Viewpoints
                 </div>
-                <div class="cmr-vpi-nav-links">
-                    <a href="#">Featured</a>
-                    <a href="#">Latest Updates</a>
-                    <a href="#">CMR live</a>
-                    <a href="#">Reports</a>
-                    <a href="#" class="expert-btn" style="display: inline-flex; align-items: center;">
+                <div class="intel-nav-links" style="display: flex; align-items: center;">
+                    <a href="#featured">Featured</a>
+                    <a href="#latest-updates">Latest Updates</a>
+                    <a href="#cmr-live">CMR live</a>
+                    <a href="#reports">Reports</a>
+                    <a href="#expert-insights" class="expert-btn" style="display: inline-flex; align-items: center;">
                         Get expert insights 
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; margin-left: 4px;">
                             <line x1="7" y1="17" x2="17" y2="7"></line>
