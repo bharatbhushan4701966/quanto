@@ -175,7 +175,25 @@ add_action('wp_footer', function() {
         .e-con-inner:has(.cmr-market-updates-section),
         .elementor-widget:has(.cmr-market-updates-section),
         .elementor-widget-container:has(.cmr-market-updates-section),
-        .elementor-shortcode:has(.cmr-market-updates-section) {
+        .elementor-shortcode:has(.cmr-market-updates-section),
+        .elementor-element:has(.cmr-entcg-section),
+        .e-con:has(.cmr-entcg-section),
+        .e-con-inner:has(.cmr-entcg-section),
+        .elementor-element:has(.cmr-cancg-section),
+        .e-con:has(.cmr-cancg-section),
+        .e-con-inner:has(.cmr-cancg-section),
+        .elementor-element:has(.cmr-smbcg-section),
+        .e-con:has(.cmr-smbcg-section),
+        .e-con-inner:has(.cmr-smbcg-section),
+        .elementor-element:has(.cmr-mrg-section),
+        .e-con:has(.cmr-mrg-section),
+        .e-con-inner:has(.cmr-mrg-section),
+        .elementor-element:has(.cmr-vpi-section),
+        .e-con:has(.cmr-vpi-section),
+        .e-con-inner:has(.cmr-vpi-section),
+        .elementor-element:has(.cmr-mui-section),
+        .e-con:has(.cmr-mui-section),
+        .e-con-inner:has(.cmr-mui-section) {
             padding-left: 0 !important;
             padding-right: 0 !important;
             margin-left: 0 !important;
@@ -193,7 +211,13 @@ add_action('wp_footer', function() {
         .cmr-consulting-advisory-section,
         .cmr-fi-carousel-wrapper,
         .cmr-intel-trends-wrapper,
-        .cmr-market-updates-section {
+        .cmr-market-updates-section,
+        .cmr-entcg-section,
+        .cmr-cancg-section,
+        .cmr-smbcg-section,
+        .cmr-mrg-section,
+        .cmr-vpi-section,
+        .cmr-mui-section {
             padding-left: 16px !important;
             padding-right: 16px !important;
             margin-left: 0 !important;
