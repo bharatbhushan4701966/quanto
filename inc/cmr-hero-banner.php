@@ -186,6 +186,14 @@ function cmr_hero_banner_shortcode($atts) {
     /* =========================
        INDICATORS WITH PROGRESS FILL
     ========================= */
+    @-webkit-keyframes dotProgressFill {
+      0% {
+        width: 0%;
+      }
+      100% {
+        width: 100%;
+      }
+    }
     @keyframes dotProgressFill {
       0% {
         width: 0%;
@@ -195,39 +203,61 @@ function cmr_hero_banner_shortcode($atts) {
       }
     }
 
+    .hero .hero-indicators,
     .hero-indicators {
-      position: absolute;
-      bottom: 40px;
-      right: 80px;
-      z-index: 5;
-      display: flex;
-      gap: 12px;
-      align-items: center;
+      position: absolute !important;
+      bottom: 40px !important;
+      right: 80px !important;
+      z-index: 10 !important;
+      display: flex !important;
+      gap: 12px !important;
+      align-items: center !important;
     }
 
-    .dot {
-      width: 55px;
-      height: 6px;
-      background: rgba(255,255,255,0.35);
-      border-radius: 10px;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      display: block;
+    .hero .hero-indicators .dot,
+    .hero-indicators .dot,
+    .hero .dot {
+      width: 55px !important;
+      height: 6px !important;
+      background: rgba(255, 255, 255, 0.35) !important;
+      border-radius: 10px !important;
+      position: relative !important;
+      overflow: hidden !important;
+      cursor: pointer !important;
+      display: block !important;
+      box-shadow: none !important;
+      border: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      outline: none !important;
     }
 
-    .dot .dot-fill {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 0%;
-      background: #ffffff;
-      border-radius: 10px;
-      display: block;
+    /* CRITICAL: Keep container background semi-transparent when active so the fill inside is visible */
+    .hero .hero-indicators .dot.active,
+    .hero-indicators .dot.active,
+    .hero .dot.active {
+      background: rgba(255, 255, 255, 0.35) !important;
+      width: 55px !important;
     }
 
-    .dot.active .dot-fill {
+    .hero .hero-indicators .dot .dot-fill,
+    .hero-indicators .dot .dot-fill,
+    .hero .dot .dot-fill {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      height: 100% !important;
+      width: 0% !important;
+      background: #ffffff !important;
+      border-radius: 10px !important;
+      display: block !important;
+      pointer-events: none !important;
+    }
+
+    .hero .hero-indicators .dot.active .dot-fill,
+    .hero-indicators .dot.active .dot-fill,
+    .hero .dot.active .dot-fill {
+      -webkit-animation: dotProgressFill 6s linear forwards !important;
       animation: dotProgressFill 6s linear forwards !important;
     }
 
@@ -410,20 +440,27 @@ function cmr_hero_banner_shortcode($atts) {
 
           activeIdx = index;
 
-          // Reset dots
+          // Reset all dots
           dots.forEach(function(dot) {
             dot.classList.remove('active');
             const fill = dot.querySelector('.dot-fill');
             if (fill) {
+              fill.style.webkitAnimation = 'none';
               fill.style.animation = 'none';
-              void fill.offsetWidth; // Trigger reflow to restart CSS animation cleanly
-              fill.style.animation = '';
+              fill.style.width = '0%';
             }
           });
 
-          // Activate target dot
+          // Activate target dot and re-enable animation
           if (dots[activeIdx]) {
-            dots[activeIdx].classList.add('active');
+            const activeDot = dots[activeIdx];
+            activeDot.classList.add('active');
+            const fill = activeDot.querySelector('.dot-fill');
+            if (fill) {
+              void fill.offsetWidth; // Force reflow
+              fill.style.webkitAnimation = '';
+              fill.style.animation = '';
+            }
           }
 
           // Change text
