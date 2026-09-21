@@ -439,17 +439,6 @@ function cmr_hero_banner_shortcode($atts) {
         const DURATION = 6000; // 6 seconds per slide
         let activeIdx = 0;
         let slideTimer = null;
-        let isInternalUpdate = false;
-
-        // Guard title against any rogue external script attempting to desync text
-        const observer = new MutationObserver(function() {
-          if (!isInternalUpdate) {
-            isInternalUpdate = true;
-            title.innerHTML = texts[activeIdx];
-            isInternalUpdate = false;
-          }
-        });
-        observer.observe(title, { childList: true, characterData: true, subtree: true });
 
         function setSlide(index, isFirstRun) {
           if (slideTimer) {
@@ -499,15 +488,11 @@ function cmr_hero_banner_shortcode($atts) {
           if (!isFirstRun) {
             title.classList.add('fade');
             setTimeout(function() {
-              isInternalUpdate = true;
               title.innerHTML = texts[activeIdx];
-              isInternalUpdate = false;
               title.classList.remove('fade');
             }, 250);
           } else {
-            isInternalUpdate = true;
             title.innerHTML = texts[activeIdx];
-            isInternalUpdate = false;
           }
 
           // 4. Automatically switch to next slide the instant the fill completes
