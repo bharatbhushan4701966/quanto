@@ -413,16 +413,20 @@ function cmr_hero_banner_shortcode($atts) {
         const texts = [
           `Shaping the future <br>
           through insights powered <br>
-          by <span class="inline-wrap">intelligence
+          by <span class="inline-wrap"><span>intelligence</span>
             <img class="hero-arrow-inline"
             src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/hero5-arrow.svg.svg">
           </span>`,
 
           `Driving the future <br>
-          with intelligence-led<br> insights`
+          with intelligence-led<br>
+          <span class="inline-wrap"><span>insights</span>
+            <img class="hero-arrow-inline"
+            src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/hero5-arrow.svg.svg">
+          </span>`
         ];
 
-        const DURATION = 6000; // 6 seconds
+        const DURATION = 6000; // 6 seconds per slide
         let activeIdx = 0;
         let slideTimer = null;
 
@@ -434,7 +438,7 @@ function cmr_hero_banner_shortcode($atts) {
 
           activeIdx = index;
 
-          // Reset all dots
+          // 1. Reset all indicators
           dots.forEach(function(dot) {
             dot.classList.remove('active');
             let fill = dot.querySelector('.dot-fill');
@@ -448,7 +452,7 @@ function cmr_hero_banner_shortcode($atts) {
             fill.style.width = '0%';
           });
 
-          // Activate target dot and start progress fill
+          // 2. Activate target indicator & start 0 -> 100% progress fill
           if (dots[activeIdx]) {
             const activeDot = dots[activeIdx];
             activeDot.classList.add('active');
@@ -470,18 +474,18 @@ function cmr_hero_banner_shortcode($atts) {
             });
           }
 
-          // Change text
+          // 3. Smooth Text Fade Transition
           if (!isFirstRun) {
             title.classList.add('fade');
             setTimeout(function() {
               title.innerHTML = texts[activeIdx];
               title.classList.remove('fade');
-            }, 300);
+            }, 250);
           } else {
             title.innerHTML = texts[activeIdx];
           }
 
-          // Auto transition after duration
+          // 4. Trigger next slide exactly when fill completes
           slideTimer = setTimeout(function() {
             const nextIdx = (activeIdx + 1) % texts.length;
             setSlide(nextIdx, false);
