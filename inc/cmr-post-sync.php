@@ -25,6 +25,12 @@ add_action( 'rest_api_init', function () {
         'callback'            => 'cmr_migrate_press_releases_callback',
         'permission_callback' => '__return_true',
     ) );
+    
+    register_rest_route( 'cmr/v1', '/sync-sheet-categories', array(
+        'methods'             => 'GET, POST',
+        'callback'            => 'cmr_sync_sheet_categories_callback',
+        'permission_callback' => '__return_true',
+    ) );
 } );
 
 // Helper to require media functions for sideloading images
@@ -307,3 +313,272 @@ function cmr_sync_missing_posts_callback( WP_REST_Request $request ) {
         'log' => $log
     ), 200 );
 }
+
+/**
+ * Sync Google Sheet categories to WordPress posts
+ */
+function cmr_sync_sheet_categories_callback( WP_REST_Request $request ) {
+    global $wpdb;
+
+    @set_time_limit( 300 );
+    @ini_set( 'memory_limit', '512M' );
+
+    $items = $request->get_param( 'items' );
+
+    // Optional: Fetch directly from Google Sheets if fetch_gid is provided
+    $fetch_gid = $request->get_param( 'fetch_gid' );
+    if ( ! empty( $fetch_gid ) || ( empty( $items ) && $request->get_param( 'fetch_all' ) ) ) {
+        $sheet_id = '1YMoUBqDGlsZPmDDHv4gPStisElH8yIf1I1KvNxIExPk';
+        $gid = ! empty( $fetch_gid ) ? $fetch_gid : '0';
+        $csv_url = "https://docs.google.com/spreadsheets/d/{$sheet_id}/export?format=csv&gid={$gid}";
+        $resp = wp_remote_get( $csv_url, array( 'timeout' => 60 ) );
+        if ( ! is_wp_error( $resp ) && wp_remote_retrieve_response_code( $resp ) === 200 ) {
+            $csv_body = wp_remote_retrieve_body( $resp );
+            $lines = explode( "\n", $csv_body );
+            if ( ! empty( $lines ) ) {
+                $header = str_getcsv( array_shift( $lines ) );
+                $col_url = -1;
+                $col_target = -1;
+                $col_current = -1;
+                $col_title = -1;
+                foreach ( $header as $idx => $h ) {
+                    $hl = strtolower( trim( $h ) );
+                    if ( strpos( $hl, 'page url' ) !== false || ( strpos( $hl, 'page' ) !== false && strpos( $hl, 'url' ) !== false ) ) {
+                        $col_url = $idx;
+                    } elseif ( strpos( $hl, 'add this' ) !== false ) {
+                        $col_target = $idx;
+                    } elseif ( strpos( $hl, 'current' ) !== false ) {
+                        $col_current = $idx;
+                    } elseif ( in_array( $hl, array( 'heading', 'title' ) ) && $col_title === -1 ) {
+                        $col_title = $idx;
+                    }
+                }
+                $items = array();
+                foreach ( $lines as $line ) {
+                    $row = str_getcsv( $line );
+                    if ( empty( $row ) || count( $row ) < 2 ) continue;
+                    $target = ( $col_target !== -1 && isset( $row[ $col_target ] ) ) ? trim( $row[ $col_target ] ) : '';
+                    if ( empty( $target ) ) continue;
+                    $p_url = ( $col_url !== -1 && isset( $row[ $col_url ] ) ) ? trim( $row[ $col_url ] ) : '';
+                    $t_title = ( $col_title !== -1 && isset( $row[ $col_title ] ) ) ? trim( $row[ $col_title ] ) : '';
+                    if ( empty( $p_url ) && strpos( $t_title, 'http' ) === 0 ) {
+                        $p_url = $t_title;
+                    }
+                    $slug = '';
+                    if ( ! empty( $p_url ) ) {
+                        $parsed_path = trim( parse_url( $p_url, PHP_URL_PATH ), '/' );
+                        $segments = explode( '/', $parsed_path );
+                        $slug = end( $segments );
+                    }
+                    $current = ( $col_current !== -1 && isset( $row[ $col_current ] ) ) ? trim( $row[ $col_current ] ) : '';
+                    $items[] = array(
+                        'slug'        => $slug,
+                        'title'       => $t_title,
+                        'target_cat'  => $target,
+                        'current_cat' => $current,
+                    );
+                }
+            }
+        }
+    }
+
+    if ( empty( $items ) || ! is_array( $items ) ) {
+        return new WP_REST_Response( array(
+            'success' => false,
+            'message' => 'No items provided in request. Pass items array via POST or fetch_gid via GET.',
+        ), 400 );
+    }
+
+    $updated = 0;
+    $not_found = 0;
+    $log = array();
+    $cat_cache = array();
+    $news_cat_cache = array();
+
+    // Map common current category names to standardized term names
+    $current_cat_map = array(
+        'viewpoint'          => 'Viewpoints',
+        'viewpoints'         => 'Viewpoints',
+        'press release'      => 'Press Releases',
+        'press releases'     => 'Press Releases',
+        'smb connect'        => 'SMB Connect',
+        'enterprise connect' => 'Enterprise Connect',
+        'channel connect'    => 'Channel Connect',
+        'market updates'     => 'Market Updates',
+    );
+
+    foreach ( $items as $item ) {
+        $target_cat = ! empty( $item['target_cat'] ) ? trim( $item['target_cat'] ) : '';
+        if ( empty( $target_cat ) ) {
+            continue;
+        }
+
+        $slug        = ! empty( $item['slug'] ) ? trim( sanitize_title( $item['slug'] ) ) : '';
+        $raw_slug    = ! empty( $item['slug'] ) ? trim( $item['slug'] ) : '';
+        $title       = ! empty( $item['title'] ) ? trim( $item['title'] ) : '';
+        $current_cat = ! empty( $item['current_cat'] ) ? trim( $item['current_cat'] ) : '';
+
+        // 1. Resolve Target Category in 'category'
+        if ( ! isset( $cat_cache[ $target_cat ] ) ) {
+            $t = get_term_by( 'name', $target_cat, 'category' );
+            if ( ! $t ) {
+                $t = get_term_by( 'slug', sanitize_title( $target_cat ), 'category' );
+            }
+            if ( ! $t ) {
+                $ins = wp_insert_term( $target_cat, 'category', array( 'slug' => sanitize_title( $target_cat ) ) );
+                if ( ! is_wp_error( $ins ) && isset( $ins['term_id'] ) ) {
+                    $cat_cache[ $target_cat ] = (int) $ins['term_id'];
+                } else {
+                    $cat_cache[ $target_cat ] = 0;
+                }
+            } else {
+                $cat_cache[ $target_cat ] = (int) $t->term_id;
+            }
+        }
+        $target_cat_id = $cat_cache[ $target_cat ];
+
+        // 2. Resolve Target Category in 'cmr_news_category'
+        if ( ! isset( $news_cat_cache[ $target_cat ] ) ) {
+            $nt = get_term_by( 'name', $target_cat, 'cmr_news_category' );
+            if ( ! $nt ) {
+                $nt = get_term_by( 'slug', sanitize_title( $target_cat ), 'cmr_news_category' );
+            }
+            if ( ! $nt ) {
+                $ins_nt = wp_insert_term( $target_cat, 'cmr_news_category', array( 'slug' => sanitize_title( $target_cat ) ) );
+                if ( ! is_wp_error( $ins_nt ) && isset( $ins_nt['term_id'] ) ) {
+                    $news_cat_cache[ $target_cat ] = (int) $ins_nt['term_id'];
+                } else {
+                    $news_cat_cache[ $target_cat ] = 0;
+                }
+            } else {
+                $news_cat_cache[ $target_cat ] = (int) $nt->term_id;
+            }
+        }
+        $target_news_cat_id = $news_cat_cache[ $target_cat ];
+
+        // 3. Resolve Current Category in 'category' if specified
+        $current_cat_id = 0;
+        if ( ! empty( $current_cat ) ) {
+            $cur_clean = strtolower( $current_cat );
+            $cur_name = isset( $current_cat_map[ $cur_clean ] ) ? $current_cat_map[ $cur_clean ] : $current_cat;
+            if ( ! isset( $cat_cache[ $cur_name ] ) ) {
+                $ct = get_term_by( 'name', $cur_name, 'category' );
+                if ( ! $ct ) {
+                    $ct = get_term_by( 'slug', sanitize_title( $cur_name ), 'category' );
+                }
+                $cat_cache[ $cur_name ] = $ct ? (int) $ct->term_id : 0;
+            }
+            $current_cat_id = $cat_cache[ $cur_name ];
+        }
+
+        // 4. Find matching post(s)
+        $found_post_ids = array();
+
+        // 4a. Match by slug
+        if ( ! empty( $slug ) ) {
+            $ids = $wpdb->get_col( $wpdb->prepare(
+                "SELECT ID FROM {$wpdb->posts} WHERE post_name = %s AND post_status = 'publish'",
+                $slug
+            ) );
+            if ( ! empty( $ids ) ) {
+                $found_post_ids = array_merge( $found_post_ids, $ids );
+            }
+        }
+
+        // 4b. Match by raw slug if different
+        if ( empty( $found_post_ids ) && ! empty( $raw_slug ) && $raw_slug !== $slug ) {
+            $ids = $wpdb->get_col( $wpdb->prepare(
+                "SELECT ID FROM {$wpdb->posts} WHERE post_name = %s AND post_status = 'publish'",
+                $raw_slug
+            ) );
+            if ( ! empty( $ids ) ) {
+                $found_post_ids = array_merge( $found_post_ids, $ids );
+            }
+        }
+
+        // 4c. Match by exact title
+        if ( empty( $found_post_ids ) && ! empty( $title ) ) {
+            $ids = $wpdb->get_col( $wpdb->prepare(
+                "SELECT ID FROM {$wpdb->posts} WHERE post_title = %s AND post_status = 'publish'",
+                $title
+            ) );
+            if ( ! empty( $ids ) ) {
+                $found_post_ids = array_merge( $found_post_ids, $ids );
+            }
+        }
+
+        // 4d. Match by sanitized title as post_name
+        if ( empty( $found_post_ids ) && ! empty( $title ) ) {
+            $title_slug = sanitize_title( $title );
+            if ( ! empty( $title_slug ) ) {
+                $ids = $wpdb->get_col( $wpdb->prepare(
+                    "SELECT ID FROM {$wpdb->posts} WHERE post_name = %s AND post_status = 'publish'",
+                    $title_slug
+                ) );
+                if ( ! empty( $ids ) ) {
+                    $found_post_ids = array_merge( $found_post_ids, $ids );
+                }
+            }
+        }
+
+        // 4e. Match by LIKE search using first significant words of title
+        if ( empty( $found_post_ids ) && ! empty( $title ) ) {
+            $clean = preg_replace( '/[^a-zA-Z0-9\s]/', ' ', $title );
+            $words = array_values( array_filter( explode( ' ', $clean ), function( $w ) {
+                return strlen( $w ) >= 3;
+            } ) );
+            if ( count( $words ) >= 3 ) {
+                $search_pattern = '%' . implode( '%', array_slice( $words, 0, 4 ) ) . '%';
+                $ids = $wpdb->get_col( $wpdb->prepare(
+                    "SELECT ID FROM {$wpdb->posts} WHERE post_title LIKE %s AND post_status = 'publish' LIMIT 2",
+                    $search_pattern
+                ) );
+                if ( ! empty( $ids ) ) {
+                    $found_post_ids = array_merge( $found_post_ids, $ids );
+                }
+            }
+        }
+
+        $found_post_ids = array_unique( array_map( 'intval', $found_post_ids ) );
+
+        if ( empty( $found_post_ids ) ) {
+            $not_found++;
+            $log[] = "Not found: '{$slug}' / '{$title}'";
+            continue;
+        }
+
+        // 5. Assign categories
+        foreach ( $found_post_ids as $pid ) {
+            $ptype = get_post_type( $pid );
+
+            // Categories to append
+            $cats_to_add = array();
+            if ( $target_cat_id > 0 ) {
+                $cats_to_add[] = $target_cat_id;
+            }
+            if ( $current_cat_id > 0 ) {
+                $cats_to_add[] = $current_cat_id;
+            }
+            if ( ! empty( $cats_to_add ) ) {
+                wp_set_post_categories( $pid, $cats_to_add, true ); // true = append
+            }
+
+            // If cmr_news, also append in cmr_news_category
+            if ( $ptype === 'cmr_news' && $target_news_cat_id > 0 ) {
+                wp_set_object_terms( $pid, array( $target_news_cat_id ), 'cmr_news_category', true ); // append
+            }
+
+            $updated++;
+            $log[] = "Updated ID {$pid} ({$ptype}): added '{$target_cat}' (slug: {$slug})";
+        }
+    }
+
+    return new WP_REST_Response( array(
+        'success'   => true,
+        'updated'   => $updated,
+        'not_found' => $not_found,
+        'total'     => count( $items ),
+        'log'       => array_slice( $log, 0, 100 ),
+    ), 200 );
+}
+
