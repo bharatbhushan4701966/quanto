@@ -232,7 +232,7 @@ function cmr_hero_banner_shortcode($atts) {
       outline: none !important;
     }
 
-    /* CRITICAL: Keep container background semi-transparent when active so the fill inside is visible */
+    /* Keep container background semi-transparent when active so the white fill inside is visible */
     .hero .hero-indicators .dot.active,
     .hero-indicators .dot.active,
     .hero .dot.active {
@@ -247,18 +247,12 @@ function cmr_hero_banner_shortcode($atts) {
       top: 0 !important;
       left: 0 !important;
       height: 100% !important;
-      width: 0% !important;
+      width: 0%;
       background: #ffffff !important;
       border-radius: 10px !important;
       display: block !important;
       pointer-events: none !important;
-    }
-
-    .hero .hero-indicators .dot.active .dot-fill,
-    .hero-indicators .dot.active .dot-fill,
-    .hero .dot.active .dot-fill {
-      -webkit-animation: dotProgressFill 6s linear forwards !important;
-      animation: dotProgressFill 6s linear forwards !important;
+      z-index: 2 !important;
     }
 
     /* =========================
@@ -443,24 +437,37 @@ function cmr_hero_banner_shortcode($atts) {
           // Reset all dots
           dots.forEach(function(dot) {
             dot.classList.remove('active');
-            const fill = dot.querySelector('.dot-fill');
-            if (fill) {
-              fill.style.webkitAnimation = 'none';
-              fill.style.animation = 'none';
-              fill.style.width = '0%';
+            let fill = dot.querySelector('.dot-fill');
+            if (!fill) {
+              fill = document.createElement('span');
+              fill.className = 'dot-fill';
+              dot.appendChild(fill);
             }
+            fill.style.transition = 'none';
+            fill.style.webkitTransition = 'none';
+            fill.style.width = '0%';
           });
 
-          // Activate target dot and re-enable animation
+          // Activate target dot and start progress fill
           if (dots[activeIdx]) {
             const activeDot = dots[activeIdx];
             activeDot.classList.add('active');
-            const fill = activeDot.querySelector('.dot-fill');
-            if (fill) {
-              void fill.offsetWidth; // Force reflow
-              fill.style.webkitAnimation = '';
-              fill.style.animation = '';
+            let fill = activeDot.querySelector('.dot-fill');
+            if (!fill) {
+              fill = document.createElement('span');
+              fill.className = 'dot-fill';
+              activeDot.appendChild(fill);
             }
+            fill.style.transition = 'none';
+            fill.style.webkitTransition = 'none';
+            fill.style.width = '0%';
+            void fill.offsetWidth; // Force layout reflow
+
+            requestAnimationFrame(function() {
+              fill.style.transition = 'width ' + DURATION + 'ms linear';
+              fill.style.webkitTransition = 'width ' + DURATION + 'ms linear';
+              fill.style.width = '100%';
+            });
           }
 
           // Change text
