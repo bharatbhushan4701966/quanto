@@ -186,6 +186,15 @@ function cmr_hero_banner_shortcode($atts) {
     /* =========================
        INDICATORS WITH PROGRESS FILL
     ========================= */
+    @keyframes dotProgressFill {
+      0% {
+        width: 0%;
+      }
+      100% {
+        width: 100%;
+      }
+    }
+
     .hero-indicators {
       position: absolute;
       bottom: 40px;
@@ -205,7 +214,6 @@ function cmr_hero_banner_shortcode($atts) {
       overflow: hidden;
       cursor: pointer;
       display: block;
-      transition: background 0.3s ease;
     }
 
     .dot .dot-fill {
@@ -216,7 +224,11 @@ function cmr_hero_banner_shortcode($atts) {
       width: 0%;
       background: #ffffff;
       border-radius: 10px;
-      will-change: width;
+      display: block;
+    }
+
+    .dot.active .dot-fill {
+      animation: dotProgressFill 6s linear forwards !important;
     }
 
     /* =========================
@@ -363,108 +375,116 @@ function cmr_hero_banner_shortcode($atts) {
     </section>
 
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const dots = document.querySelectorAll('.hero-indicators .dot');
-      const title = document.querySelector('.hero-title');
+    (function() {
+      function initHeroBannerSlider() {
+        const hero = document.querySelector('.hero');
+        if (!hero) return;
+        if (hero.dataset.cmrHeroInit === 'true') return;
+        hero.dataset.cmrHeroInit = 'true';
 
-      if (!dots.length || !title) return;
+        const dots = hero.querySelectorAll('.hero-indicators .dot');
+        const title = hero.querySelector('.hero-title');
+        if (!dots.length || !title) return;
 
-      const texts = [
-      `Shaping the future <br>
-      through insights powered <br>
-      by <span class="inline-wrap">intelligence
-      <img class="hero-arrow-inline"
-      src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/hero5-arrow.svg.svg">
-      </span>`,
+        const texts = [
+          `Shaping the future <br>
+          through insights powered <br>
+          by <span class="inline-wrap">intelligence
+            <img class="hero-arrow-inline"
+            src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/hero5-arrow.svg.svg">
+          </span>`,
 
-      `Driving the future <br>
-      with intelligence-led<br> insights`
-      ];
+          `Driving the future <br>
+          with intelligence-led<br> insights`
+        ];
 
-      const SLIDE_DURATION = 6000; // 6 seconds per slide
-      let currentIndex = 0;
-      let slideTimer = null;
+        const DURATION = 6000; // 6 seconds
+        let activeIdx = 0;
+        let slideTimer = null;
 
-      function startSlide(index) {
-        if (slideTimer) {
-          clearTimeout(slideTimer);
-          slideTimer = null;
+        function setSlide(index, isFirstRun) {
+          if (slideTimer) {
+            clearTimeout(slideTimer);
+            slideTimer = null;
+          }
+
+          activeIdx = index;
+
+          // Reset dots
+          dots.forEach(function(dot) {
+            dot.classList.remove('active');
+            const fill = dot.querySelector('.dot-fill');
+            if (fill) {
+              fill.style.animation = 'none';
+              void fill.offsetWidth; // Trigger reflow to restart CSS animation cleanly
+              fill.style.animation = '';
+            }
+          });
+
+          // Activate target dot
+          if (dots[activeIdx]) {
+            dots[activeIdx].classList.add('active');
+          }
+
+          // Change text
+          if (!isFirstRun) {
+            title.classList.add('fade');
+            setTimeout(function() {
+              title.innerHTML = texts[activeIdx];
+              title.classList.remove('fade');
+            }, 300);
+          } else {
+            title.innerHTML = texts[activeIdx];
+          }
+
+          // Auto transition after duration
+          slideTimer = setTimeout(function() {
+            const nextIdx = (activeIdx + 1) % texts.length;
+            setSlide(nextIdx, false);
+          }, DURATION);
         }
 
-        currentIndex = index;
-
-        // Reset all indicators fill
-        dots.forEach((dot, i) => {
-          dot.classList.remove('active');
-          const fill = dot.querySelector('.dot-fill');
-          if (fill) {
-            fill.style.transition = 'none';
-            fill.style.width = '0%';
-          }
+        // Click handlers
+        dots.forEach(function(dot, i) {
+          dot.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (activeIdx === i) return;
+            setSlide(i, false);
+          });
         });
 
-        // Activate selected indicator & animate fill progress
-        const currentDot = dots[currentIndex];
-        if (currentDot) {
-          currentDot.classList.add('active');
-          const fill = currentDot.querySelector('.dot-fill');
-          if (fill) {
-            void fill.offsetWidth; // Force reflow
-            fill.style.transition = `width ${SLIDE_DURATION}ms linear`;
-            fill.style.width = '100%';
-          }
+        // Initialize first slide
+        setSlide(0, true);
+
+        // Popups
+        const popupTrigger = hero.querySelector('.open-popup');
+        if (popupTrigger) {
+          popupTrigger.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (typeof elementorProFrontend !== 'undefined') {
+              elementorProFrontend.modules.popup.showPopup({ id: 7637 });
+            }
+          });
         }
 
-        // Change title text with smooth fade
-        title.classList.add('fade');
-        setTimeout(() => {
-          title.innerHTML = texts[currentIndex];
-          title.classList.remove('fade');
-        }, 300);
-
-        // Schedule next slide when progress fill completes
-        slideTimer = setTimeout(() => {
-          const nextIndex = (currentIndex + 1) % texts.length;
-          startSlide(nextIndex);
-        }, SLIDE_DURATION);
+        const reportTrigger = hero.querySelector('.open-report-popup');
+        if (reportTrigger) {
+          reportTrigger.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (typeof elementorProFrontend !== 'undefined') {
+              elementorProFrontend.modules.popup.showPopup({ id: 7758 });
+            }
+          });
+        }
       }
 
-      // Initial start
-      startSlide(0);
-
-      // Dot Click handler
-      dots.forEach((dot, i) => {
-        dot.addEventListener('click', () => {
-          if (currentIndex === i) return;
-          startSlide(i);
-        });
-      });
-
-      // Popups
-      const popupTrigger = document.querySelector('.open-popup');
-      if (popupTrigger) {
-        popupTrigger.addEventListener('click', function(e) {
-          e.preventDefault();
-          if (typeof elementorProFrontend !== 'undefined') {
-            elementorProFrontend.modules.popup.showPopup({ id: 7637 });
-          } else {
-            console.log("Elementor Popup not loaded");
-          }
-        });
+      if (document.readyState === 'interactive' || document.readyState === 'complete') {
+        initHeroBannerSlider();
+      } else {
+        document.addEventListener('DOMContentLoaded', initHeroBannerSlider);
       }
-
-      const reportTrigger = document.querySelector('.open-report-popup');
-      if (reportTrigger) {
-        reportTrigger.addEventListener('click', function(e) {
-          e.preventDefault();
-          if (typeof elementorProFrontend !== 'undefined') {
-            elementorProFrontend.modules.popup.showPopup({ id: 7758 });
-          } else {
-            console.log("Elementor Popup not loaded");
-          }
-        });
-      }
-    });
+      window.addEventListener('load', initHeroBannerSlider);
+    })();
     </script>
     <?php
     return ob_get_clean();
