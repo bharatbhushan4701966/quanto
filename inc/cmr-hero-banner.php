@@ -406,9 +406,19 @@ function cmr_hero_banner_shortcode($atts) {
         if (hero.dataset.cmrHeroInit === 'true') return;
         hero.dataset.cmrHeroInit = 'true';
 
-        const dots = hero.querySelectorAll('.hero-indicators .dot');
-        const title = hero.querySelector('.hero-title');
-        if (!dots.length || !title) return;
+        // 1. Replace title & indicators with fresh nodes to detach any legacy external scripts holding references
+        const rawTitle = hero.querySelector('.hero-title');
+        const rawIndicators = hero.querySelector('.hero-indicators');
+        if (!rawTitle || !rawIndicators) return;
+
+        const title = rawTitle.cloneNode(true);
+        rawTitle.parentNode.replaceChild(title, rawTitle);
+
+        const indicators = rawIndicators.cloneNode(true);
+        rawIndicators.parentNode.replaceChild(indicators, rawIndicators);
+
+        const dots = indicators.querySelectorAll('.dot');
+        if (!dots.length) return;
 
         const texts = [
           `Shaping the future <br>
@@ -429,6 +439,17 @@ function cmr_hero_banner_shortcode($atts) {
         const DURATION = 6000; // 6 seconds per slide
         let activeIdx = 0;
         let slideTimer = null;
+        let isInternalUpdate = false;
+
+        // Guard title against any rogue external script attempting to desync text
+        const observer = new MutationObserver(function() {
+          if (!isInternalUpdate) {
+            isInternalUpdate = true;
+            title.innerHTML = texts[activeIdx];
+            isInternalUpdate = false;
+          }
+        });
+        observer.observe(title, { childList: true, characterData: true, subtree: true });
 
         function setSlide(index, isFirstRun) {
           if (slideTimer) {
@@ -452,7 +473,7 @@ function cmr_hero_banner_shortcode($atts) {
             fill.style.width = '0%';
           });
 
-          // 2. Activate target indicator & start 0 -> 100% progress fill
+          // 2. Activate target indicator & animate progress fill from 0 to 100%
           if (dots[activeIdx]) {
             const activeDot = dots[activeIdx];
             activeDot.classList.add('active');
@@ -474,25 +495,29 @@ function cmr_hero_banner_shortcode($atts) {
             });
           }
 
-          // 3. Smooth Text Fade Transition
+          // 3. Smooth Text Transition
           if (!isFirstRun) {
             title.classList.add('fade');
             setTimeout(function() {
+              isInternalUpdate = true;
               title.innerHTML = texts[activeIdx];
+              isInternalUpdate = false;
               title.classList.remove('fade');
             }, 250);
           } else {
+            isInternalUpdate = true;
             title.innerHTML = texts[activeIdx];
+            isInternalUpdate = false;
           }
 
-          // 4. Trigger next slide exactly when fill completes
+          // 4. Automatically switch to next slide the instant the fill completes
           slideTimer = setTimeout(function() {
             const nextIdx = (activeIdx + 1) % texts.length;
             setSlide(nextIdx, false);
           }, DURATION);
         }
 
-        // Click handlers
+        // Click handlers on indicators
         dots.forEach(function(dot, i) {
           dot.addEventListener('click', function(e) {
             e.preventDefault();
