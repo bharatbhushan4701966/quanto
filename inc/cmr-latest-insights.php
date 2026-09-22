@@ -186,29 +186,22 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
                     </h2>
                 <?php endif; ?>
                 
-                <?php if ( ! empty( $atts['section_desc'] ) ) : ?>
-                    <p class="cmr-latest-insights-desc" style="font-size: 18px; color: #555; margin: 0; max-width: 800px; line-height: 1.5;">
-                        <?php echo esc_html( $atts['section_desc'] ); ?>
-                    </p>
-                <?php endif; ?>
-            </div>
+                <div class="cmr-insights-desc-search-wrap" style="display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap;">
+                    <?php if ( ! empty( $atts['section_desc'] ) ) : ?>
+                        <p class="cmr-latest-insights-desc" style="font-size: 18px; color: #555; margin: 0; max-width: 750px; line-height: 1.5; flex: 1 1 500px;">
+                            <?php echo esc_html( $atts['section_desc'] ); ?>
+                        </p>
+                    <?php endif; ?>
 
-            <div class="cmr-insights-filters-bar">
-                <div class="cmr-insights-filters">
-                    <button class="filter-btn active" data-category="all">All</button>
-                    <button class="filter-btn" data-category="ev-growth">EV Growth</button>
-                    <button class="filter-btn" data-category="battery-innovation">Battery Innovation</button>
-                    <button class="filter-btn" data-category="oem-strategy">OEM Strategy</button>
-                    <button class="filter-btn" data-category="supply-chain">Supply Chain</button>
-                </div>
-                <div class="cmr-insights-search">
-                    <form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
-                        <input type="search" class="search-field" placeholder="Search by name" value="<?php echo get_search_query(); ?>" name="s" />
-                        <button type="submit" class="search-submit">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
-                        <input type="hidden" name="post_type" value="cmr_news" />
-                    </form>
+                    <div class="cmr-insights-search" style="margin: 0; flex: 0 0 auto;">
+                        <form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+                            <input type="search" class="search-field" placeholder="Search by name" value="<?php echo get_search_query(); ?>" name="s" />
+                            <button type="submit" class="search-submit">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                            <input type="hidden" name="post_type" value="cmr_news" />
+                        </form>
+                    </div>
                 </div>
             </div>
 
