@@ -2244,6 +2244,7 @@ function cmr_testimonials_global_mobile_css() {
        Global Brands & Logo Carousel Styles (Desktop & Responsive)
        ========================================================================== */
     #cmr-global-brands-section,
+    .elementor-element-92f6b3c,
     .elementor-element-7ec6a9b,
     .elementor-23198,
     .elementor-element-645a65a,
@@ -2251,10 +2252,15 @@ function cmr_testimonials_global_mobile_css() {
     .elementor-14 .elementor-element-c9502e0 {
         --padding-bottom: 0px !important;
         --padding-top: 0px !important;
-        margin-top: 0 !important;
-        margin-bottom: 40px !important;
+        margin-top: 60px !important;
+        margin-bottom: 80px !important;
         padding-top: 0 !important;
         padding-bottom: 0 !important;
+    }
+
+    .elementor-element.elementor-element-654b811,
+    .elementor-element-654b811 {
+        margin-bottom: 40px !important;
     }
 
     /* Global Brands Section Title */
@@ -2366,14 +2372,20 @@ function cmr_testimonials_global_mobile_css() {
 
     @media (max-width: 768px) {
         #cmr-global-brands-section,
+        .elementor-element-92f6b3c,
         .elementor-element-7ec6a9b,
         .elementor-23198,
         .elementor-23198 .elementor-element-645a65a,
         .elementor-14 .elementor-element-c9502e0 {
-            margin-top: 0 !important;
-            margin-bottom: 0 !important;
+            margin-top: 40px !important;
+            margin-bottom: 50px !important;
             padding-top: 0 !important;
             padding-bottom: 0 !important;
+        }
+
+        .elementor-element.elementor-element-654b811,
+        .elementor-element-654b811 {
+            margin-bottom: 30px !important;
         }
 
         .elementor-14 .elementor-element.elementor-element-adc3adf,
