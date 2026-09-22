@@ -301,19 +301,20 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
                 }
                 .cmr-vpi-search-wrap input {
                     width: 100% !important;
-                    height: 38px;
-                    font-size: 13px;
-                    padding: 6px 36px 6px 16px;
+                    height: 44px;
+                    font-size: 14px;
+                    padding: 8px 44px 8px 18px;
+                    border-radius: 30px;
                 }
                 .cmr-vpi-search-icon {
-                    width: 26px;
-                    height: 26px;
+                    width: 32px;
+                    height: 32px;
                     top: 6px;
                     right: 6px;
                 }
                 .cmr-vpi-search-icon svg {
-                    width: 12px;
-                    height: 12px;
+                    width: 14px;
+                    height: 14px;
                 }
                 .cmr-vpi-nav-links {
                     flex-wrap: wrap;
@@ -343,7 +344,7 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
                 .cmr-vpi-nav-bar {
                     position: static !important;
                     padding: 12px 0;
-                    gap: 12px;
+                    gap: 14px;
                 }
                 .cmr-vpi-filters {
                     width: 100%;
@@ -359,19 +360,20 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
                 }
                 .cmr-vpi-search-wrap input {
                     width: 100% !important;
-                    height: 38px;
-                    font-size: 13px;
-                    padding: 6px 36px 6px 16px;
+                    height: 44px;
+                    font-size: 14px;
+                    padding: 8px 44px 8px 18px;
+                    border-radius: 30px;
                 }
                 .cmr-vpi-search-icon {
-                    width: 26px;
-                    height: 26px;
+                    width: 32px;
+                    height: 32px;
                     top: 6px;
                     right: 6px;
                 }
                 .cmr-vpi-search-icon svg {
-                    width: 12px;
-                    height: 12px;
+                    width: 14px;
+                    height: 14px;
                 }
             }
         </style>
