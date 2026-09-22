@@ -72,12 +72,8 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                 padding: 20px 0;
                 margin-bottom: 30px;
                 background: #fff;
-                /* Sticky configuration */
-                position: -webkit-sticky;
-                position: sticky;
-                top: 0;
-                z-index: 100;
                 border-bottom: 1px solid #eaeaea;
+                position: static;
             }
             .cmr-mui-filters {
                 display: flex;
@@ -281,8 +277,25 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                 }
                 .cmr-mui-nav-bar {
                     flex-direction: column;
-                    align-items: flex-start;
-                    gap: 20px;
+                    align-items: stretch;
+                    gap: 16px;
+                    position: static !important;
+                }
+                .cmr-mui-filters {
+                    width: 100%;
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 8px;
+                }
+                .cmr-mui-search-wrap {
+                    width: 100% !important;
+                }
+                .cmr-mui-search-wrap input {
+                    width: 100% !important;
+                    height: 44px;
+                }
+                .cmr-mui-search-icon {
+                    top: 6px;
                 }
                 .cmr-mui-nav-links {
                     flex-wrap: wrap;
@@ -292,11 +305,19 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                 .cmr-mui-grid {
                     grid-template-columns: 1fr;
                 }
-            }
-            /* Sticky Nav CSS */
-            @media (max-width: 768px) {
-                .cmr-mui-grid {
-                    grid-template-columns: 1fr;
+                .cmr-mui-nav-bar {
+                    position: static !important;
+                    padding: 15px 0;
+                    gap: 16px;
+                }
+                .cmr-mui-filters {
+                    width: 100%;
+                }
+                .cmr-mui-search-wrap {
+                    width: 100% !important;
+                }
+                .cmr-mui-search-wrap input {
+                    width: 100% !important;
                 }
             }
         </style>

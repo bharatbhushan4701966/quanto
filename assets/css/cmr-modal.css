@@ -84,7 +84,7 @@ body.modal-open {
     z-index: 999998 !important;
 }
 
-/* Dialog Container Reset with Guaranteed Top/Bottom Breathing Room */
+/* Dialog Container Reset */
 .dialog-widget.dialog-type-lightbox .dialog-widget-content,
 .dialog-widget.dialog-lightbox-widget .dialog-widget-content,
 .elementor-popup-modal .dialog-widget-content {
@@ -94,8 +94,7 @@ body.modal-open {
     right: auto !important;
     bottom: auto !important;
     transform: none !important;
-    margin: 20px auto 30px auto !important;
-    flex-shrink: 0 !important;
+    margin: auto !important;
     max-height: none !important;
     max-width: 950px !important;
     width: 950px !important;
