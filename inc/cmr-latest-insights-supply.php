@@ -30,7 +30,7 @@ if ( ! function_exists( 'cmr_latest_insights_supply_shortcode' ) ) {
 
         $query_args = array(
             'post_type'      => array( 'post', 'cmr_news' ),
-            'posts_per_page' => $atts['posts_per_page'],
+            'posts_per_page' => max( 12, intval( $atts['posts_per_page'] ) * 3 ),
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
@@ -50,6 +50,26 @@ if ( ! function_exists( 'cmr_latest_insights_supply_shortcode' ) ) {
         );
 
         $insights_query = new WP_Query( $query_args );
+
+        $unique_posts = array();
+        $seen_ids = array();
+        $seen_titles = array();
+        $max_posts = intval( $atts['posts_per_page'] );
+
+        if ( $insights_query->have_posts() ) {
+            foreach ( $insights_query->posts as $p ) {
+                $norm_title = sanitize_title( $p->post_title );
+                if ( in_array( $p->ID, $seen_ids, true ) || ( ! empty( $norm_title ) && in_array( $norm_title, $seen_titles, true ) ) ) {
+                    continue;
+                }
+                $seen_ids[] = $p->ID;
+                $seen_titles[] = $norm_title;
+                $unique_posts[] = $p;
+                if ( count( $unique_posts ) >= $max_posts ) {
+                    break;
+                }
+            }
+        }
 
         ob_start();
         ?>
@@ -101,23 +121,26 @@ if ( ! function_exists( 'cmr_latest_insights_supply_shortcode' ) ) {
                 </div>
             </div>
 
-            <?php if ( $insights_query->have_posts() ) : ?>
+            <?php if ( ! empty( $unique_posts ) ) : ?>
                 <div class="cmr-insights-grid">
                     <?php
                     $post_count = 0;
-                    while ( $insights_query->have_posts() ) : $insights_query->the_post();
+                    foreach ( $unique_posts as $insight_post ) :
                         $post_count++;
                         
-                        $post_title = get_the_title();
-                        $post_link = get_permalink();
-                        $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+                        $post_title = get_the_title( $insight_post );
+                        $post_link = get_permalink( $insight_post );
+                        $thumbnail_url = get_the_post_thumbnail_url( $insight_post->ID, 'full' );
                         if ( ! $thumbnail_url ) {
                             $thumbnail_url = 'https://via.placeholder.com/800x600?text=No+Image';
                         }
                         
                         // Categories / Tags
-                        $category_name = 'Media Releases';
-                        $terms = get_the_terms( get_the_ID(), 'category' );
+                        $category_name = 'Digital Supply Chain';
+                        $terms = get_the_terms( $insight_post->ID, 'category' );
+                        if ( ! $terms || is_wp_error( $terms ) ) {
+                            $terms = get_the_terms( $insight_post->ID, 'cmr_news_category' );
+                        }
                         if ( $terms && ! is_wp_error( $terms ) ) {
                             $category_name = $terms[0]->name;
                         }
@@ -153,7 +176,7 @@ if ( ! function_exists( 'cmr_latest_insights_supply_shortcode' ) ) {
                             <?php
                         }
 
-                    endwhile;
+                    endforeach;
                     
                     if ( $post_count > 1 ) {
                         echo '</div>'; // close cmr-insights-stack
