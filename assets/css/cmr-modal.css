@@ -742,7 +742,30 @@ body.modal-open {
     padding: 0 !important;
 }
 
+/* --- Form Fields & Labels Gaping --- */
+.custom-report-form,
+.custom-consultation-form,
+.elementor-element-42f4ebe form,
+.elementor-popup-modal form,
+.elementor-popup-modal .wpcf7-form {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.custom-report-form p,
+.custom-consultation-form p,
+.elementor-element-42f4ebe form p,
+.elementor-popup-modal form p,
+.elementor-popup-modal .wpcf7-form p {
+    margin: 0 0 18px 0 !important;
+    padding: 0 !important;
+}
+
 .custom-report-form label,
+.custom-consultation-form label,
 .elementor-element-42f4ebe label,
 .elementor-popup-modal label {
     font-family: 'Instrument Sans', sans-serif !important;
@@ -757,17 +780,25 @@ body.modal-open {
 .custom-report-form input[type="text"],
 .custom-report-form input[type="email"],
 .custom-report-form input[type="tel"],
+.custom-consultation-form input[type="text"],
+.custom-consultation-form input[type="email"],
+.custom-consultation-form input[type="tel"],
+.custom-consultation-form input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]),
 .elementor-element-42f4ebe input[type="text"],
 .elementor-element-42f4ebe input[type="email"],
 .elementor-element-42f4ebe input[type="tel"],
 .elementor-popup-modal input[type="text"],
 .elementor-popup-modal input[type="email"],
-.elementor-popup-modal input[type="tel"] {
+.elementor-popup-modal input[type="tel"],
+.elementor-popup-modal input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]),
+.elementor-popup-modal .wpcf7-form-control:not([type="submit"]):not([type="checkbox"]):not([type="radio"]) {
     width: 100% !important;
     height: 50px !important;
     border: 1.5px solid #d1d5db !important;
     border-radius: 10px !important;
-    padding: 0 18px !important;
+    padding: 0 16px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
     font-family: 'Instrument Sans', sans-serif !important;
     font-size: 14px !important;
     color: #111827 !important;
@@ -779,15 +810,19 @@ body.modal-open {
 }
 
 .custom-report-form textarea,
+.custom-consultation-form textarea,
 .elementor-element-42f4ebe textarea,
 .elementor-element-052bc23 textarea,
-.elementor-popup-modal textarea {
+.elementor-popup-modal textarea,
+.elementor-popup-modal textarea.wpcf7-textarea {
     width: 100% !important;
     height: 75px !important;
     min-height: 70px !important;
     border: 1.5px solid #d1d5db !important;
     border-radius: 10px !important;
-    padding: 12px 18px !important;
+    padding: 12px 16px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
     font-family: 'Instrument Sans', sans-serif !important;
     font-size: 14px !important;
     color: #111827 !important;
