@@ -663,7 +663,9 @@ add_action('wp_footer', function() {
         .cmr-enterprisecgd-wrapper .intel-nav-bar:not(.intel-nav-fixed-js),
         .cmr-channelcgd-wrapper .intel-nav-bar:not(.intel-nav-fixed-js),
         .cmr-smbcgd-wrapper .intel-nav-bar:not(.intel-nav-fixed-js),
-        .cmr-mc-wrapper .intel-nav-bar:not(.intel-nav-fixed-js) {
+        .cmr-mc-wrapper .intel-nav-bar:not(.intel-nav-fixed-js),
+        .cmr-vpi-section .intel-nav-bar:not(.intel-nav-fixed-js),
+        .cmr-mui-section .intel-nav-bar:not(.intel-nav-fixed-js) {
             padding-left: 0 !important;
             padding-right: 0 !important;
         }

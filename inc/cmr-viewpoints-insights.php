@@ -272,52 +272,106 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
             }
 
             @media (max-width: 992px) {
+                .cmr-vpi-section {
+                    padding: 24px 16px !important;
+                }
                 .cmr-vpi-grid {
                     grid-template-columns: repeat(2, 1fr);
                 }
                 .cmr-vpi-nav-bar {
                     flex-direction: column;
                     align-items: stretch;
-                    gap: 16px;
+                    gap: 12px;
                     position: static !important;
                 }
                 .cmr-vpi-filters {
                     width: 100%;
                     display: flex;
                     flex-wrap: wrap;
-                    gap: 8px;
+                    gap: 6px 8px;
+                }
+                .cmr-vpi-filter-btn {
+                    padding: 6px 14px;
+                    font-size: 13px;
+                    border-radius: 20px;
+                    line-height: 1.2;
                 }
                 .cmr-vpi-search-wrap {
                     width: 100% !important;
                 }
                 .cmr-vpi-search-wrap input {
                     width: 100% !important;
-                    height: 44px;
+                    height: 38px;
+                    font-size: 13px;
+                    padding: 6px 36px 6px 16px;
                 }
                 .cmr-vpi-search-icon {
+                    width: 26px;
+                    height: 26px;
                     top: 6px;
+                    right: 6px;
+                }
+                .cmr-vpi-search-icon svg {
+                    width: 12px;
+                    height: 12px;
                 }
                 .cmr-vpi-nav-links {
                     flex-wrap: wrap;
                 }
             }
             @media (max-width: 768px) {
+                .cmr-vpi-section {
+                    padding: 20px 16px !important;
+                }
+                .cmr-vpi-header {
+                    margin-top: 20px !important;
+                    margin-bottom: 20px !important;
+                }
+                .cmr-vpi-title {
+                    font-size: 32px !important;
+                    line-height: 1.15 !important;
+                    letter-spacing: -0.5px !important;
+                    margin: 0 0 10px 0 !important;
+                }
+                .cmr-vpi-subtitle {
+                    font-size: 15px !important;
+                    line-height: 1.4 !important;
+                }
                 .cmr-vpi-grid {
                     grid-template-columns: 1fr;
                 }
                 .cmr-vpi-nav-bar {
                     position: static !important;
-                    padding: 15px 0;
-                    gap: 16px;
+                    padding: 12px 0;
+                    gap: 12px;
                 }
                 .cmr-vpi-filters {
                     width: 100%;
+                    gap: 6px 8px;
+                }
+                .cmr-vpi-filter-btn {
+                    padding: 6px 14px;
+                    font-size: 12.5px;
+                    border-radius: 20px;
                 }
                 .cmr-vpi-search-wrap {
                     width: 100% !important;
                 }
                 .cmr-vpi-search-wrap input {
                     width: 100% !important;
+                    height: 38px;
+                    font-size: 13px;
+                    padding: 6px 36px 6px 16px;
+                }
+                .cmr-vpi-search-icon {
+                    width: 26px;
+                    height: 26px;
+                    top: 6px;
+                    right: 6px;
+                }
+                .cmr-vpi-search-icon svg {
+                    width: 12px;
+                    height: 12px;
                 }
             }
         </style>
