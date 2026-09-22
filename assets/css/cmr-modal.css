@@ -576,19 +576,24 @@ body.modal-open {
 .elementor-popup-modal .elementor-element-5609af6,
 .elementor-popup-modal .elementor-element-49c9d22,
 .elementor-popup-modal .elementor-element-a26a79a,
-.elementor-popup-modal .elementor-element-2123f86 {
+.elementor-popup-modal .elementor-element-2123f86,
+.elementor-popup-modal .e-grid > .e-con:last-child {
     flex: 0 0 54% !important;
     width: 54% !important;
     max-width: 54% !important;
     background-color: #ffffff !important;
     background: #ffffff !important;
-    padding: 48px 42px 36px 42px !important;
+    padding: 38px 42px 32px 42px !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
     margin: 0 !important;
     box-sizing: border-box !important;
     position: relative !important;
+    overflow: visible !important;
+    overflow-y: visible !important;
+    height: auto !important;
+    min-height: 100% !important;
 }
 
 /* Right Title: Get Your Free Report / Request a Consultation / Subscribe to Insights */
@@ -608,6 +613,7 @@ body.modal-open {
     letter-spacing: -0.2px !important;
     color: #111827 !important;
     margin: 0 0 8px 0 !important;
+    padding-top: 0 !important;
     padding-right: 32px !important;
     text-transform: none !important;
 }
