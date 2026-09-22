@@ -583,15 +583,15 @@ body.modal-open {
     max-width: 54% !important;
     background-color: #ffffff !important;
     background: #ffffff !important;
-    --padding-top: 38px !important;
-    --padding-bottom: 32px !important;
-    --padding-left: 42px !important;
-    --padding-right: 42px !important;
-    padding: 38px 42px 32px 42px !important;
-    padding-top: 38px !important;
-    padding-bottom: 32px !important;
-    padding-left: 42px !important;
-    padding-right: 42px !important;
+    --padding-top: 32px !important;
+    --padding-bottom: 28px !important;
+    --padding-left: 28px !important;
+    --padding-right: 28px !important;
+    padding: 32px 28px 28px 28px !important;
+    padding-top: 32px !important;
+    padding-bottom: 28px !important;
+    padding-left: 28px !important;
+    padding-right: 28px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: flex-start !important;
@@ -627,12 +627,12 @@ body.modal-open {
 .elementor-popup-modal .elementor-element-a26a79a h2,
 .elementor-popup-modal .elementor-element-2123f86 h2 {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 32px !important;
+    font-size: 28px !important;
     font-weight: 600 !important;
-    line-height: 40px !important;
+    line-height: 36px !important;
     letter-spacing: -0.2px !important;
     color: #111827 !important;
-    margin: 0 0 8px 0 !important;
+    margin: 0 0 6px 0 !important;
     padding-top: 0 !important;
     padding-right: 32px !important;
     text-transform: none !important;
@@ -1061,7 +1061,7 @@ body.modal-open {
     .elementor-popup-modal .elementor-element-49c9d22,
     .elementor-popup-modal .elementor-element-a26a79a,
     .elementor-popup-modal .elementor-element-2123f86 {
-        padding: 44px 32px 30px 32px !important;
+        padding: 32px 24px 24px 24px !important;
         flex: 0 0 55% !important;
         width: 55% !important;
         max-width: 55% !important;
