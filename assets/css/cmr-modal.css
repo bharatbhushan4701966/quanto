@@ -70,8 +70,22 @@ body.modal-open {
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch !important;
     overscroll-behavior: contain !important;
-    padding: 30px 16px !important;
+    padding: 40px 16px !important;
     box-sizing: border-box !important;
+}
+
+/* Safe Vertical Centering: Collapses to 0 when content overflows so top is never cut off */
+.dialog-widget.dialog-type-lightbox:not([style*="display: none"]):not([style*="display:none"])::before,
+.dialog-widget.dialog-type-lightbox:not([style*="display: none"]):not([style*="display:none"])::after,
+.dialog-widget.dialog-lightbox-widget:not([style*="display: none"]):not([style*="display:none"])::before,
+.dialog-widget.dialog-lightbox-widget:not([style*="display: none"]):not([style*="display:none"])::after,
+.elementor-popup-modal:not([style*="display: none"]):not([style*="display:none"])::before,
+.elementor-popup-modal:not([style*="display: none"]):not([style*="display:none"])::after {
+    content: '' !important;
+    display: block !important;
+    flex: 1 0 auto !important;
+    min-height: 0 !important;
+    pointer-events: none !important;
 }
 
 .dialog-backdrop.dialog-backdrop-active {
@@ -94,7 +108,8 @@ body.modal-open {
     right: auto !important;
     bottom: auto !important;
     transform: none !important;
-    margin: auto !important;
+    margin: 0 auto !important;
+    flex-shrink: 0 !important;
     max-height: none !important;
     max-width: 950px !important;
     width: 950px !important;
@@ -165,18 +180,29 @@ body.modal-open {
     inset: 0 !important;
     z-index: 1055 !important;
     display: flex !important;
+    flex-direction: column !important;
     align-items: center !important;
-    justify-content: center !important;
-    padding: 20px !important;
+    justify-content: flex-start !important;
+    padding: 30px 20px !important;
     overflow-y: auto !important;
     overscroll-behavior: contain !important;
+}
+
+.modal.show::before,
+.modal.show::after {
+    content: '' !important;
+    display: block !important;
+    flex: 1 0 auto !important;
+    min-height: 0 !important;
+    pointer-events: none !important;
 }
 
 .modal-dialog {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    margin: auto !important;
+    margin: 0 auto !important;
+    flex-shrink: 0 !important;
     max-width: 600px;
     width: 100%;
 }
@@ -666,8 +692,10 @@ body.modal-open {
 }
 
 /* Right Subtitle Text */
+.elementor-7637 .elementor-element-25b17e4 p,
 .elementor-7637 .elementor-element-a2e6f47,
-.elementor-popup-modal .elementor-element-49c9d22 p.sub-desc {
+.elementor-popup-modal .elementor-element-49c9d22 p.sub-desc,
+.elementor-popup-modal .elementor-element-49c9d22 .elementor-widget-text-editor p {
     font-family: 'Instrument Sans', sans-serif !important;
     font-size: 14px !important;
     font-weight: 400 !important;
@@ -996,7 +1024,8 @@ body.modal-open {
         max-height: none !important;
         height: auto !important;
         overflow: visible !important;
-        margin: auto !important;
+        margin: 0 auto !important;
+        flex-shrink: 0 !important;
         transition: transform 0.25s ease, margin 0.25s ease !important;
     }
 
