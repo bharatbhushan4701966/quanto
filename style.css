@@ -8937,10 +8937,10 @@ ul.wp-block-list ol li {
     }
 }
 
-/* CMR Latest Reports Image 1:1 Fit */
+/* CMR Latest Reports Image Full Fit */
 .cmr-lr-image-wrap {
     width: 100% !important;
-    aspect-ratio: 1 / 1 !important;
+    aspect-ratio: auto !important;
     height: auto !important;
     position: relative !important;
     overflow: hidden !important;
@@ -8949,8 +8949,8 @@ ul.wp-block-list ol li {
 
 .cmr-lr-image-wrap img {
     width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
+    height: auto !important;
+    object-fit: contain !important;
     object-position: center !important;
     display: block !important;
 }
