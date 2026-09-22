@@ -2269,6 +2269,224 @@ function cmr_testimonials_global_mobile_css() {
         margin-bottom: 40px !important;
     }
 
+    /* Marketing Services v2 - Our Community Section & Funfacts (Mobile & Desktop) */
+    .elementor-element-1c353d5 .elementskit-funfact .funfact-content .number-percentage-wraper {
+        font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif !important;
+        font-weight: 700 !important;
+        color: #0071BC !important;
+    }
+
+    .elementor-element-1c353d5 .elementskit-funfact .funfact-title {
+        font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif !important;
+    }
+
+    @media (max-width: 768px) {
+        .elementor-element-ebccdd8,
+        .page-id-52409 .elementor-element-ebccdd8,
+        .elementor-page-52409 .elementor-element-ebccdd8 {
+            padding: 30px 16px 10px 16px !important;
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+        }
+
+        .elementor-element-0977755,
+        .elementor-element-0977755 .elementor-heading-title {
+            font-family: "Instrument Sans", sans-serif !important;
+            font-size: 28px !important;
+            line-height: 36px !important;
+            font-weight: 600 !important;
+            letter-spacing: -0.8px !important;
+            text-align: center !important;
+            margin-bottom: 8px !important;
+            padding-bottom: 0 !important;
+        }
+
+        .elementor-element-1c353d5,
+        .page-id-52409 .elementor-element-1c353d5,
+        .elementor-page-52409 .elementor-element-1c353d5 {
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 10px 16px 30px 16px !important;
+            margin-top: 0 !important;
+            --margin-top: 0px !important;
+            --width: 100% !important;
+        }
+
+        .elementor-element-1c353d5 > .e-con-inner {
+            width: 100% !important;
+            max-width: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 0 !important;
+        }
+
+        .elementor-element-56b6d08,
+        .elementor-element-1faccff,
+        .page-id-52409 .elementor-element-56b6d08,
+        .page-id-52409 .elementor-element-1faccff {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 12px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            --width: 100% !important;
+        }
+
+        .elementor-element-56b6d08 > .elementor-element:nth-child(3),
+        .elementor-element-1faccff > .elementor-element:nth-child(3) {
+            grid-column: 1 / -1 !important;
+            max-width: 260px !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            width: 100% !important;
+        }
+
+        .elementor-element-1c353d5 .elementor-widget-elementskit-funfact {
+            background: #FFFFFF !important;
+            border: 1px solid #E8ECF2 !important;
+            border-radius: 14px !important;
+            padding: 16px 10px !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            width: 100% !important;
+            margin-bottom: 0 !important;
+        }
+
+        .elementor-element-1c353d5 .elementskit-funfact {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 100% !important;
+            text-align: center !important;
+            padding: 0 !important;
+        }
+
+        .elementor-element-1c353d5 .elementskit-funfact .vertical-bar {
+            display: none !important;
+        }
+
+        .elementor-element-1c353d5 .elementskit-funfact .elementskit-funfact-inner {
+            padding: 0 !important;
+            width: 100% !important;
+            text-align: center !important;
+        }
+
+        .elementor-element-1c353d5 .elementskit-funfact .funfact-content {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            width: 100% !important;
+        }
+
+        .elementor-element-1c353d5 .number-percentage-wraper {
+            font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif !important;
+            font-size: 32px !important;
+            font-weight: 700 !important;
+            line-height: 1.1 !important;
+            letter-spacing: -1px !important;
+            color: #0071BC !important;
+            display: inline-flex !important;
+            align-items: baseline !important;
+            justify-content: center !important;
+            margin-bottom: 6px !important;
+            white-space: nowrap !important;
+            width: 100% !important;
+        }
+
+        .elementor-element-1c353d5 .number-percentage-wraper .number-percentage {
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            font-size: inherit !important;
+            color: inherit !important;
+            line-height: inherit !important;
+        }
+
+        .elementor-element-1c353d5 .number-percentage-wraper .super {
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            color: #0071BC !important;
+            margin-left: 2px !important;
+            top: 0 !important;
+            vertical-align: baseline !important;
+            position: static !important;
+        }
+
+        .elementor-element-1c353d5 .funfact-title {
+            font-family: "Instrument Sans", sans-serif !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            line-height: 1.3 !important;
+            color: #475569 !important;
+            letter-spacing: -0.2px !important;
+            margin: 0 !important;
+            text-align: center !important;
+        }
+
+        /* Center Badge "The CMR network" */
+        .elementor-element-e642823,
+        .page-id-52409 .elementor-element-e642823 {
+            width: 100% !important;
+            max-width: 100% !important;
+            --width: 100% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin: 18px 0 !important;
+            position: relative !important;
+        }
+
+        .elementor-element-e642823::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 50% !important;
+            left: 5% !important;
+            right: 5% !important;
+            height: 1px !important;
+            background: #E2E8F0 !important;
+            z-index: 1 !important;
+        }
+
+        .elementor-element-64a79c2 {
+            position: relative !important;
+            z-index: 2 !important;
+            display: inline-flex !important;
+            justify-content: center !important;
+            width: auto !important;
+            margin: 0 auto !important;
+        }
+
+        .elementor-element-788846b {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: #0F172A !important;
+            color: #FFFFFF !important;
+            border-radius: 9999px !important;
+            padding: 8px 24px !important;
+            border: none !important;
+            margin: 0 auto !important;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.15) !important;
+        }
+
+        .elementor-element-788846b p {
+            color: #FFFFFF !important;
+            font-family: "Instrument Sans", sans-serif !important;
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.8px !important;
+            text-transform: uppercase !important;
+            margin: 0 !important;
+            line-height: 1 !important;
+            white-space: nowrap !important;
+        }
+    }
+
     /* Global Brands Section Title */
     .elementor-23198 .elementor-element.elementor-element-2496f2f,
     .elementor-23198 .elementor-element-2496f2f,
