@@ -4487,3 +4487,24 @@ add_action( 'wp_footer', function() {
     </script>
     <?php
 }, 999 );
+
+/**
+ * Auto-sync enhanced Quanto_Process widget to quanto-core plugin
+ */
+add_action( 'init', 'quanto_sync_process_widget_to_plugin', 1 );
+function quanto_sync_process_widget_to_plugin() {
+    $theme_widget = get_template_directory() . '/inc/widgets/process.php';
+    $plugin_widget = WP_PLUGIN_DIR . '/quanto-core/addons/widgets/process.php';
+
+    if ( file_exists( $theme_widget ) && file_exists( $plugin_widget ) ) {
+        $theme_content = file_get_contents( $theme_widget );
+        $plugin_content = file_get_contents( $plugin_widget );
+
+        if ( strpos( $plugin_content, 'card_bg_color' ) === false || md5( $theme_content ) !== md5( $plugin_content ) ) {
+            if ( is_writable( $plugin_widget ) ) {
+                @file_put_contents( $plugin_widget, $theme_content );
+            }
+        }
+    }
+}
+

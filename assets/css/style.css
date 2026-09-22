@@ -6957,7 +6957,23 @@ body .elementor-element .process-box-wrapper {
   top: 0;
   left: 0;
   transform-origin: center;
-  z-index: -1;
+  z-index: 1;
+}
+
+.process-box .process-card-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.process-box .process-number,
+.process-box .process-info {
+  position: relative;
+  z-index: 2;
 }
 
 @media only screen and (max-width: 1199.98px) {
