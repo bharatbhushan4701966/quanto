@@ -11,13 +11,13 @@ add_shortcode( 'cmr_news_automotive', 'cmr_news_automotive_shortcode' );
 function cmr_news_automotive_shortcode( $atts ) {
     $atts = shortcode_atts( array(
         'category' => 'automotive', 
-        'limit'    => 3,
-        'count'    => 3,
+        'limit'    => 4,
+        'count'    => 4,
     ), $atts, 'cmr_news_automotive' );
 
-    $posts_count = ! empty( $atts['count'] ) && $atts['count'] != 3 ? intval( $atts['count'] ) : intval( $atts['limit'] );
+    $posts_count = ! empty( $atts['count'] ) && $atts['count'] != 4 ? intval( $atts['count'] ) : intval( $atts['limit'] );
     if ( ! $posts_count ) {
-        $posts_count = 3;
+        $posts_count = 4;
     }
 
     wp_enqueue_style( 'cmr-news-style', get_template_directory_uri() . '/assets/css/cmr-news.css', array(), time() );
