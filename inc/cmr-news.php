@@ -458,17 +458,54 @@ function cmr_news_tabs_shortcode( $atts ) {
         $include_slugs = !empty($atts['category']) ? array_map('trim', explode(',', $atts['category'])) : array();
         $exclude_slugs = !empty($atts['exclude']) ? array_map('trim', explode(',', $atts['exclude'])) : array();
         
-        // Force the media-releases tab to always be included if include_slugs is used
-        if ( !empty($include_slugs) && !in_array('media-releases', $include_slugs) && !in_array('media-release', $include_slugs) ) {
-            $include_slugs[] = 'media-releases';
-            $include_slugs[] = 'media-release';
+        // If no explicit category attribute is passed, default to the 2 main news tabs
+        if ( empty( $include_slugs ) ) {
+            $include_slugs = array( 'cmr-in-news', 'media-releases', 'media-release', 'press-releases', 'press-release' );
+        } else {
+            // Force the media-releases tab to always be included if include_slugs is used
+            if ( !in_array('media-releases', $include_slugs) && !in_array('media-release', $include_slugs) && !in_array('press-releases', $include_slugs) ) {
+                $include_slugs[] = 'media-releases';
+                $include_slugs[] = 'media-release';
+            }
         }
         
         foreach ( $all_terms as $term ) {
-            if ( !empty($include_slugs) && !in_array($term->slug, $include_slugs) ) continue;
-            if ( !empty($exclude_slugs) && in_array($term->slug, $exclude_slugs) ) continue;
+            $term_slug = $term->slug;
+            $term_name_slug = sanitize_title( $term->name );
+            
+            $is_included = false;
+            foreach ( $include_slugs as $inc ) {
+                $inc_clean = sanitize_title( $inc );
+                if ( $term_slug === $inc_clean || $term_name_slug === $inc_clean || $term->name === $inc ) {
+                    $is_included = true;
+                    break;
+                }
+            }
+            if ( ! $is_included ) continue;
+            
+            if ( ! empty( $exclude_slugs ) ) {
+                $is_excluded = false;
+                foreach ( $exclude_slugs as $ex ) {
+                    $ex_clean = sanitize_title( $ex );
+                    if ( $term_slug === $ex_clean || $term_name_slug === $ex_clean || $term->name === $ex ) {
+                        $is_excluded = true;
+                        break;
+                    }
+                }
+                if ( $is_excluded ) continue;
+            }
+            
             $terms[] = $term;
         }
+        
+        // Ensure "CMR In News" is first and "Media Releases" is second
+        usort( $terms, function( $a, $b ) {
+            $is_cin_a = ( $a->slug === 'cmr-in-news' || sanitize_title($a->name) === 'cmr-in-news' );
+            $is_cin_b = ( $b->slug === 'cmr-in-news' || sanitize_title($b->name) === 'cmr-in-news' );
+            if ( $is_cin_a && ! $is_cin_b ) return -1;
+            if ( ! $is_cin_a && $is_cin_b ) return 1;
+            return 0;
+        } );
     }
 
     if ( empty( $terms ) || is_wp_error( $terms ) ) {
@@ -570,7 +607,7 @@ function cmr_news_tabs_shortcode( $atts ) {
                     ?>
                     <div class="<?php echo esc_attr( $grid_class ); ?>">
                         <?php
-                        $target_count = $is_media_releases ? 4 : 5;
+                        $target_count = 4;
                         
                         $pinned_query = new WP_Query( array(
                             'post_type' => 'cmr_news',
