@@ -1764,21 +1764,10 @@ button.button.alt.single_add_to_cart_button:hover::after {
 
 
 .woocommerce ul.products li.product .woocommerce-loop-product__link img {
-
-
-
     width: 100% !important;
-
-
-
-    height: 406px !important;
-
-
-
-    object-fit: cover !important;
-
-
-
+    height: auto !important;
+    aspect-ratio: auto !important;
+    object-fit: contain !important;
 }
 
 
@@ -1856,21 +1845,10 @@ button.button.alt.single_add_to_cart_button:hover::after {
 
 
 .woocommerce ul.products li.product .woocommerce-loop-product__link img {
-
-
-
-    height: 406px !important;
-
-
-
+    height: auto !important;
+    aspect-ratio: auto !important;
     width: 100% !important;
-
-
-
-    object-fit: cover !important;
-
-
-
+    object-fit: contain !important;
 }
 
 
@@ -7543,10 +7521,14 @@ ul.wp-block-list ol li {
 
     /* Product Card Image */
     .woocommerce ul.products li.product .woocommerce-loop-product__link img,
-    .woocommerce ul.products li.product .woocommerce-LoopProduct-link img {
+    .woocommerce ul.products li.product .woocommerce-LoopProduct-link img,
+    .elementor-wc-products ul.products li.product .woocommerce-loop-product__link img,
+    .elementor-wc-products ul.products li.product .woocommerce-LoopProduct-link img,
+    .elementor-widget-woocommerce-products ul.products li.product img {
         width: 100% !important;
-        height: 280px !important;
-        object-fit: cover !important;
+        height: auto !important;
+        aspect-ratio: auto !important;
+        object-fit: contain !important;
         object-position: center top !important;
         border-top-left-radius: 7px !important;
         border-top-right-radius: 7px !important;
@@ -8253,9 +8235,13 @@ ul.wp-block-list ol li {
 /* Specific adjustment for mobile devices */
 @media (max-width: 767px) {
     .woocommerce ul.products li.product .woocommerce-loop-product__link img,
-    .woocommerce ul.products li.product .woocommerce-LoopProduct-link img {
-        height: 280px !important;
-        object-fit: cover !important;
+    .woocommerce ul.products li.product .woocommerce-LoopProduct-link img,
+    .elementor-wc-products ul.products li.product .woocommerce-loop-product__link img,
+    .elementor-wc-products ul.products li.product .woocommerce-LoopProduct-link img,
+    .elementor-widget-woocommerce-products ul.products li.product img {
+        height: auto !important;
+        aspect-ratio: auto !important;
+        object-fit: contain !important;
         object-position: center top !important;
     }
 }

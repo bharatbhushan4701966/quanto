@@ -909,10 +909,14 @@ add_action('wp_footer', function() {
         }
 
         .woocommerce ul.products li.product .woocommerce-loop-product__link img,
-        .woocommerce ul.products li.product .woocommerce-LoopProduct-link img {
+        .woocommerce ul.products li.product .woocommerce-LoopProduct-link img,
+        .elementor-wc-products ul.products li.product .woocommerce-loop-product__link img,
+        .elementor-wc-products ul.products li.product .woocommerce-LoopProduct-link img,
+        .elementor-widget-woocommerce-products ul.products li.product img {
             width: 100% !important;
-            height: 280px !important;
-            object-fit: cover !important;
+            height: auto !important;
+            aspect-ratio: auto !important;
+            object-fit: contain !important;
             object-position: center top !important;
         }
 
