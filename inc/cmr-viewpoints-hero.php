@@ -313,19 +313,176 @@ if ( ! function_exists( 'cmr_viewpoints_hero_shortcode' ) ) {
             }
 
             @media (max-width: 992px) {
-                .cmr-vp-slide {
-                    flex-direction: column;
-                    flex: 0 0 100%;
-                    margin-right: 0;
-                }
-                .cmr-vp-slide-img {
-                    height: 250px;
-                }
-                .cmr-vp-slide-content {
-                    padding: 30px 20px;
+                .cmr-vp-hero-wrap {
+                    margin: 30px auto;
+                    padding: 0 16px;
                 }
                 .cmr-vp-hero-title {
-                    font-size: 38px;
+                    font-size: 32px;
+                    letter-spacing: -1px;
+                }
+                .cmr-vp-hero-subtitle {
+                    font-size: 15px;
+                    margin-bottom: 25px;
+                }
+                .cmr-vp-hero-cats {
+                    gap: 8px;
+                    margin-bottom: 35px;
+                }
+                .cmr-vp-hero-cat-pill {
+                    padding: 8px 14px;
+                    font-size: 12px;
+                }
+
+                /* Mobile & Tablet Card: Full image card with dark overlay & white typography */
+                .cmr-vp-slide {
+                    position: relative;
+                    flex: 0 0 88%;
+                    margin-right: 16px;
+                    height: 480px;
+                    min-height: 480px;
+                    border-radius: 18px;
+                    overflow: hidden;
+                    background: #0F172A;
+                    border: none;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+                }
+                
+                .cmr-vp-slide-img {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 1;
+                    overflow: hidden;
+                }
+                .cmr-vp-slide-img img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                }
+                .cmr-vp-slide-img::after {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.6) 45%, rgba(15, 23, 42, 0.96) 100%);
+                    z-index: 2;
+                }
+                
+                .cmr-vp-slide-badge {
+                    position: absolute;
+                    top: 18px;
+                    left: 18px;
+                    z-index: 5;
+                    background: #FFFFFF;
+                    color: #0F172A;
+                    border-radius: 30px;
+                    padding: 6px 14px;
+                    font-size: 11px;
+                    font-weight: 700;
+                    letter-spacing: 0.5px;
+                    text-transform: uppercase;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                }
+                .cmr-vp-slide-badge svg {
+                    color: #6B3FA0;
+                    fill: #6B3FA0;
+                }
+                
+                .cmr-vp-slide-content {
+                    position: relative;
+                    z-index: 4;
+                    padding: 24px 20px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                    text-align: left;
+                    background: transparent;
+                }
+                .cmr-vp-slide-meta {
+                    font-size: 13px;
+                    font-weight: 500;
+                    color: rgba(255, 255, 255, 0.9);
+                    margin-bottom: 10px;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                }
+                .cmr-vp-slide-meta::before {
+                    content: "";
+                    display: inline-block;
+                    width: 20px;
+                    height: 2px;
+                    background: rgba(255, 255, 255, 0.85);
+                }
+                .cmr-vp-slide-title {
+                    font-family: "Instrument Sans", sans-serif;
+                    font-size: 22px;
+                    line-height: 1.25;
+                    font-weight: 700;
+                    color: #FFFFFF;
+                    letter-spacing: -0.5px;
+                    margin: 0 0 10px 0;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                }
+                .cmr-vp-slide-desc {
+                    font-size: 13.5px;
+                    color: rgba(255, 255, 255, 0.85);
+                    line-height: 1.45;
+                    margin-bottom: 18px;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                }
+                .cmr-vp-slide-link {
+                    color: #FFFFFF;
+                    font-size: 14px;
+                    font-weight: 600;
+                    border-bottom: none;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    padding: 0;
+                    text-decoration: none;
+                }
+                .cmr-vp-slide-link svg {
+                    stroke: #FFFFFF;
+                }
+                .cmr-vp-slide-link:hover {
+                    color: #FFFFFF;
+                    opacity: 0.9;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .cmr-vp-slide {
+                    height: 440px;
+                    min-height: 440px;
+                    flex: 0 0 92%;
+                    margin-right: 12px;
+                }
+                .cmr-vp-slide-content {
+                    padding: 20px 16px;
+                }
+                .cmr-vp-slide-title {
+                    font-size: 20px;
+                }
+                .cmr-vp-slide-desc {
+                    font-size: 13px;
+                    margin-bottom: 14px;
+                    -webkit-line-clamp: 2;
                 }
             }
         </style>
@@ -424,8 +581,6 @@ if ( ! function_exists( 'cmr_viewpoints_hero_shortcode' ) ) {
                     currentIndex = index;
                     const slideWidth = slides[0].getBoundingClientRect().width;
                     
-                    // Gap is 30px, plus we use 90% flex basis if there's more than 1 slide, 
-                    // but we can just measure exactly:
                     const slideStyle = window.getComputedStyle(slides[0]);
                     const marginRight = parseFloat(slideStyle.marginRight) || 0;
                     const moveAmount = (slideWidth + marginRight) * index;
@@ -448,6 +603,35 @@ if ( ! function_exists( 'cmr_viewpoints_hero_shortcode' ) ) {
                     });
                 });
                 
+                // Touch Swipe Support for Mobile & Tablet
+                let touchStartX = 0;
+                let touchCurrentX = 0;
+                let isSwiping = false;
+
+                slider.addEventListener('touchstart', function(e) {
+                    touchStartX = e.touches[0].clientX;
+                    isSwiping = true;
+                }, { passive: true });
+
+                slider.addEventListener('touchmove', function(e) {
+                    if (!isSwiping) return;
+                    touchCurrentX = e.touches[0].clientX;
+                }, { passive: true });
+
+                slider.addEventListener('touchend', function() {
+                    if (!isSwiping || touchCurrentX === 0) return;
+                    const diffX = touchStartX - touchCurrentX;
+                    const threshold = 35;
+                    if (diffX > threshold && currentIndex < slides.length - 1) {
+                        updateSlider(currentIndex + 1);
+                    } else if (diffX < -threshold && currentIndex > 0) {
+                        updateSlider(currentIndex - 1);
+                    }
+                    isSwiping = false;
+                    touchStartX = 0;
+                    touchCurrentX = 0;
+                });
+
                 window.addEventListener('resize', function() {
                     updateSlider(currentIndex);
                 });
