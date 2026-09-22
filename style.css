@@ -4823,7 +4823,6 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
    Global Brands & Logo Carousel Styles (Desktop & Responsive)
    ========================================================================== */
 #cmr-global-brands-section,
-.elementor-element-92f6b3c,
 .elementor-element-7ec6a9b,
 .elementor-23198,
 .elementor-element-645a65a,
@@ -4831,14 +4830,21 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
 .elementor-14 .elementor-element-c9502e0 {
     --padding-bottom: 0px !important;
     --padding-top: 0px !important;
-    margin-top: 60px !important;
-    margin-bottom: 80px !important;
+    margin-top: 0 !important;
+    margin-bottom: 40px !important;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
 }
 
-.elementor-element.elementor-element-654b811,
-.elementor-element-654b811 {
+/* Marketing Services v2 Page-Specific Spacing Fix */
+.page-id-52409 .elementor-element-92f6b3c,
+.elementor-page-52409 .elementor-element-92f6b3c {
+    margin-top: 60px !important;
+    margin-bottom: 80px !important;
+}
+
+.page-id-52409 .elementor-element-654b811,
+.elementor-page-52409 .elementor-element-654b811 {
     margin-bottom: 40px !important;
 }
 
@@ -4951,20 +4957,25 @@ div[data-id="df14a6f"] .elementor-widget-image img {
 
 @media (max-width: 768px) {
     #cmr-global-brands-section,
-    .elementor-element-92f6b3c,
     .elementor-element-7ec6a9b,
     .elementor-23198,
     .elementor-element-645a65a,
     .elementor-23198 .elementor-element-645a65a,
     .elementor-14 .elementor-element-c9502e0 {
-        margin-top: 40px !important;
-        margin-bottom: 50px !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
         padding-top: 0 !important;
         padding-bottom: 0 !important;
     }
 
-    .elementor-element.elementor-element-654b811,
-    .elementor-element-654b811 {
+    .page-id-52409 .elementor-element-92f6b3c,
+    .elementor-page-52409 .elementor-element-92f6b3c {
+        margin-top: 40px !important;
+        margin-bottom: 50px !important;
+    }
+
+    .page-id-52409 .elementor-element-654b811,
+    .elementor-page-52409 .elementor-element-654b811 {
         margin-bottom: 30px !important;
     }
 
