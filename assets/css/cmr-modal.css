@@ -70,22 +70,8 @@ body.modal-open {
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch !important;
     overscroll-behavior: contain !important;
-    padding: 40px 16px !important;
+    padding: 30px 16px !important;
     box-sizing: border-box !important;
-}
-
-/* Safe Vertical Centering: Collapses to 0 when content overflows so top is never cut off */
-.dialog-widget.dialog-type-lightbox:not([style*="display: none"]):not([style*="display:none"])::before,
-.dialog-widget.dialog-type-lightbox:not([style*="display: none"]):not([style*="display:none"])::after,
-.dialog-widget.dialog-lightbox-widget:not([style*="display: none"]):not([style*="display:none"])::before,
-.dialog-widget.dialog-lightbox-widget:not([style*="display: none"]):not([style*="display:none"])::after,
-.elementor-popup-modal:not([style*="display: none"]):not([style*="display:none"])::before,
-.elementor-popup-modal:not([style*="display: none"]):not([style*="display:none"])::after {
-    content: '' !important;
-    display: block !important;
-    flex: 1 0 auto !important;
-    min-height: 0 !important;
-    pointer-events: none !important;
 }
 
 .dialog-backdrop.dialog-backdrop-active {
@@ -98,7 +84,7 @@ body.modal-open {
     z-index: 999998 !important;
 }
 
-/* Dialog Container Reset */
+/* Dialog Container Reset with Guaranteed Top/Bottom Breathing Room */
 .dialog-widget.dialog-type-lightbox .dialog-widget-content,
 .dialog-widget.dialog-lightbox-widget .dialog-widget-content,
 .elementor-popup-modal .dialog-widget-content {
@@ -108,7 +94,7 @@ body.modal-open {
     right: auto !important;
     bottom: auto !important;
     transform: none !important;
-    margin: 0 auto !important;
+    margin: 20px auto 30px auto !important;
     flex-shrink: 0 !important;
     max-height: none !important;
     max-width: 950px !important;
@@ -348,13 +334,13 @@ body.modal-open {
 .elementor-popup-modal .elementor-element-5f053ae,
 .elementor-popup-modal .elementor-element-2f9a6aa,
 .elementor-popup-modal .elementor-element-3d97663 {
-    flex: 0 0 46% !important;
-    width: 46% !important;
-    max-width: 46% !important;
-    padding: 44px 38px !important;
+    flex: 0 0 45% !important;
+    width: 45% !important;
+    max-width: 45% !important;
+    padding: 30px 28px !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
     margin: 0 !important;
     box-sizing: border-box !important;
     background-color: #4318d1 !important;
@@ -362,7 +348,7 @@ body.modal-open {
     color: #ffffff !important;
     align-self: stretch !important;
     border-radius: 16px 0 0 16px !important;
-    height: 100% !important;
+    height: auto !important;
 }
 
 .elementor-7832 .elementor-element-ae8915e p,
@@ -370,12 +356,12 @@ body.modal-open {
 .elementor-popup-modal .elementor-element-2f9a6aa .elementor-element-ae8915e p,
 .elementor-popup-modal .elementor-element-3d97663 .elementor-element-6ae161a p {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 12px !important;
+    font-size: 11px !important;
     letter-spacing: 1.5px !important;
     text-transform: uppercase !important;
     font-weight: 600 !important;
     color: rgba(255, 255, 255, 0.8) !important;
-    margin: 0 0 12px 0 !important;
+    margin: 0 0 10px 0 !important;
 }
 
 .elementor-7758 .elementor-element-de500a4,
@@ -386,10 +372,10 @@ body.modal-open {
     background: transparent !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
 }
 
-/* Left Title (H2. Headline: SemiBold 600, 36px, -1.2px) */
+/* Left Title (H2. Headline: SemiBold 600, 28px) */
 .elementor-7758 .elementor-element-e5f2560 h2,
 .elementor-7637 .elementor-element-f9d72d8 h2,
 .elementor-7832 .elementor-element-7ccdac7 h2,
@@ -399,12 +385,12 @@ body.modal-open {
 .elementor-popup-modal .elementor-element-2f9a6aa h2,
 .elementor-popup-modal .elementor-element-3d97663 h2 {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 36px !important;
+    font-size: 28px !important;
     font-weight: 600 !important;
-    line-height: 44px !important;
-    letter-spacing: -1.2px !important;
+    line-height: 36px !important;
+    letter-spacing: -0.8px !important;
     color: #ffffff !important;
-    margin: 0 0 16px 0 !important;
+    margin: 0 0 12px 0 !important;
     text-transform: none !important;
 }
 
@@ -418,12 +404,12 @@ body.modal-open {
 .elementor-popup-modal .elementor-element-2f9a6aa p,
 .elementor-popup-modal .elementor-element-3d97663 p {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 15px !important;
+    font-size: 14px !important;
     font-weight: 400 !important;
-    line-height: 24px !important;
+    line-height: 22px !important;
     letter-spacing: 0px !important;
     color: rgba(255, 255, 255, 0.9) !important;
-    margin: 0 0 24px 0 !important;
+    margin: 0 0 18px 0 !important;
 }
 
 /* Left Bullet List with Icons */
@@ -438,7 +424,7 @@ body.modal-open {
 .elementor-popup-modal .elementor-element-3d97663 .elementor-icon-list-items {
     display: flex !important;
     flex-direction: column !important;
-    gap: 16px !important;
+    gap: 12px !important;
     padding: 0 !important;
     margin: 0 !important;
     list-style: none !important;
@@ -603,15 +589,15 @@ body.modal-open {
 .elementor-popup-modal .elementor-element-49c9d22,
 .elementor-popup-modal .elementor-element-a26a79a,
 .elementor-popup-modal .elementor-element-2123f86 {
-    flex: 0 0 54% !important;
-    width: 54% !important;
-    max-width: 54% !important;
+    flex: 0 0 55% !important;
+    width: 55% !important;
+    max-width: 55% !important;
     background-color: #ffffff !important;
     background: #ffffff !important;
-    padding: 38px 42px !important;
+    padding: 26px 32px 22px 32px !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
     margin: 0 !important;
     box-sizing: border-box !important;
     position: relative !important;
@@ -628,37 +614,37 @@ body.modal-open {
 .elementor-popup-modal .elementor-element-a26a79a h2,
 .elementor-popup-modal .elementor-element-2123f86 h2 {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 32px !important;
+    font-size: 26px !important;
     font-weight: 600 !important;
-    line-height: 40px !important;
+    line-height: 32px !important;
     letter-spacing: -0.2px !important;
     color: #111827 !important;
-    margin: 0 0 8px 0 !important;
+    margin: 0 0 4px 0 !important;
     text-transform: none !important;
 }
 
 /* Subscription Form Specifics */
 .custom-subscribe-form .subscription-heading {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 12px !important;
+    font-size: 11px !important;
     font-weight: 700 !important;
     letter-spacing: 1px !important;
     text-transform: uppercase !important;
     color: #4b5563 !important;
-    margin: 10px 0 8px 0 !important;
+    margin: 8px 0 6px 0 !important;
 }
 
 .custom-subscribe-form .subscription-item {
     display: flex !important;
     align-items: flex-start !important;
     gap: 10px !important;
-    margin-bottom: 10px !important;
+    margin-bottom: 8px !important;
     cursor: pointer !important;
 }
 
 .custom-subscribe-form .subscription-item input[type="checkbox"] {
-    width: 18px !important;
-    height: 18px !important;
+    width: 16px !important;
+    height: 16px !important;
     accent-color: #582cd7 !important;
     margin: 2px 0 0 0 !important;
     flex-shrink: 0 !important;
@@ -667,7 +653,7 @@ body.modal-open {
 
 .custom-subscribe-form .subscription-content .title {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 13.5px !important;
+    font-size: 13px !important;
     font-weight: 600 !important;
     color: #111827 !important;
     line-height: 1.2 !important;
@@ -675,7 +661,7 @@ body.modal-open {
 
 .custom-subscribe-form .subscription-content .desc {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 12px !important;
+    font-size: 11.5px !important;
     font-weight: 400 !important;
     color: #6b7280 !important;
     margin-top: 2px !important;
@@ -685,10 +671,10 @@ body.modal-open {
 .custom-subscribe-form .spam-note,
 .custom-subscribe-form .subscription-note {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 12px !important;
+    font-size: 11.5px !important;
     color: #6b7280 !important;
     text-align: center !important;
-    margin-top: 10px !important;
+    margin-top: 8px !important;
 }
 
 /* Right Subtitle Text */
@@ -697,10 +683,10 @@ body.modal-open {
 .elementor-popup-modal .elementor-element-49c9d22 p.sub-desc,
 .elementor-popup-modal .elementor-element-49c9d22 .elementor-widget-text-editor p {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 14px !important;
+    font-size: 13px !important;
     font-weight: 400 !important;
     color: #4b5563 !important;
-    margin: 0 0 18px 0 !important;
+    margin: 0 0 12px 0 !important;
 }
 
 /* Right Subtag: ⚡ Instant access. No waiting. */
@@ -708,7 +694,7 @@ body.modal-open {
 .elementor-popup-modal .elementor-element-5609af6 .elementor-icon-list-items {
     display: flex !important;
     align-items: center !important;
-    margin: 0 0 24px 0 !important;
+    margin: 0 0 14px 0 !important;
     padding: 0 !important;
     list-style: none !important;
 }
@@ -725,7 +711,7 @@ body.modal-open {
     display: inline-flex !important;
     align-items: center !important;
     color: #6366f1 !important;
-    font-size: 15px !important;
+    font-size: 14px !important;
     margin: 0 !important;
 }
 
@@ -740,7 +726,7 @@ body.modal-open {
 .elementor-7758 .elementor-element-770f953 .elementor-icon-list-text,
 .elementor-popup-modal .elementor-element-5609af6 .elementor-icon-list-text {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 14px !important;
+    font-size: 13px !important;
     font-weight: 500 !important;
     color: #4b5563 !important;
 }
@@ -759,7 +745,7 @@ body.modal-open {
 .custom-report-form p,
 .elementor-element-42f4ebe form p,
 .elementor-popup-modal form p {
-    margin: 0 0 20px 0 !important;
+    margin: 0 0 10px 0 !important;
     padding: 0 !important;
 }
 
@@ -767,12 +753,12 @@ body.modal-open {
 .elementor-element-42f4ebe label,
 .elementor-popup-modal label {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 15px !important;
+    font-size: 13.5px !important;
     font-weight: 600 !important;
     color: #111827 !important;
-    margin: 0 0 8px 0 !important;
+    margin: 0 0 3px 0 !important;
     display: block !important;
-    line-height: 1.3 !important;
+    line-height: 1.2 !important;
 }
 
 .custom-report-form input[type="text"],
@@ -785,17 +771,17 @@ body.modal-open {
 .elementor-popup-modal input[type="email"],
 .elementor-popup-modal input[type="tel"] {
     width: 100% !important;
-    height: 50px !important;
+    height: 40px !important;
     border: 1.5px solid #d1d5db !important;
-    border-radius: 10px !important;
-    padding: 0 18px !important;
+    border-radius: 8px !important;
+    padding: 0 14px !important;
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 14px !important;
+    font-size: 13.5px !important;
     color: #111827 !important;
     background: #ffffff !important;
     outline: none !important;
     box-sizing: border-box !important;
-    margin: 0 0 4px 0 !important;
+    margin: 0 0 2px 0 !important;
     transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
@@ -804,18 +790,18 @@ body.modal-open {
 .elementor-element-052bc23 textarea,
 .elementor-popup-modal textarea {
     width: 100% !important;
-    height: 75px !important;
-    min-height: 70px !important;
+    height: 56px !important;
+    min-height: 48px !important;
     border: 1.5px solid #d1d5db !important;
-    border-radius: 10px !important;
-    padding: 12px 18px !important;
+    border-radius: 8px !important;
+    padding: 8px 14px !important;
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 14px !important;
+    font-size: 13.5px !important;
     color: #111827 !important;
     background: #ffffff !important;
     outline: none !important;
     box-sizing: border-box !important;
-    margin: 0 0 4px 0 !important;
+    margin: 0 0 2px 0 !important;
     resize: none !important;
     transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
@@ -841,7 +827,7 @@ body.modal-open {
 .elementor-element-052bc23 textarea::placeholder,
 .elementor-popup-modal textarea::placeholder {
     color: #9ca3af !important;
-    font-size: 14px !important;
+    font-size: 13px !important;
     font-weight: 400 !important;
 }
 
@@ -852,24 +838,24 @@ body.modal-open {
 .elementor-popup-modal input[type="submit"],
 .elementor-popup-modal button[type="submit"] {
     width: 100% !important;
-    height: 52px !important;
+    height: 44px !important;
     background-color: #582cd7 !important;
     background: #582cd7 !important;
     color: #ffffff !important;
     border: none !important;
     border-radius: 50px !important;
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 16px !important;
+    font-size: 15px !important;
     font-weight: 600 !important;
     cursor: pointer !important;
-    margin-top: 10px !important;
-    margin-bottom: 8px !important;
+    margin-top: 6px !important;
+    margin-bottom: 4px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     text-align: center !important;
     transition: background-color 0.2s ease, transform 0.1s ease !important;
-    box-shadow: 0 4px 16px rgba(88, 44, 215, 0.28) !important;
+    box-shadow: 0 4px 14px rgba(88, 44, 215, 0.25) !important;
     padding: 0 !important;
 }
 
@@ -950,15 +936,16 @@ body.modal-open {
     .elementor-7758 .e-con-inner,
     .elementor-7637 .e-con-inner,
     .elementor-popup-modal .e-con-inner {
-        max-width: 90vw !important;
-        width: 90vw !important;
+        max-width: 92vw !important;
+        width: 92vw !important;
+        margin: 15px auto 25px auto !important;
     }
 
     .elementor-7758 .elementor-element-fc8da81,
     .elementor-7637 .elementor-element-5f053ae,
     .elementor-popup-modal .elementor-element-fc8da81,
     .elementor-popup-modal .elementor-element-5f053ae {
-        padding: 38px 30px !important;
+        padding: 24px 22px !important;
         flex: 0 0 45% !important;
         width: 45% !important;
         max-width: 45% !important;
@@ -968,16 +955,16 @@ body.modal-open {
     .elementor-7637 .elementor-element-f9d72d8 h2,
     .elementor-popup-modal .elementor-element-fc8da81 h2,
     .elementor-popup-modal .elementor-element-5f053ae h2 {
-        font-size: 30px !important;
-        line-height: 38px !important;
-        margin-bottom: 14px !important;
+        font-size: 24px !important;
+        line-height: 30px !important;
+        margin-bottom: 10px !important;
     }
 
     .elementor-7758 .elementor-element-5609af6,
     .elementor-7637 .elementor-element-49c9d22,
     .elementor-popup-modal .elementor-element-5609af6,
     .elementor-popup-modal .elementor-element-49c9d22 {
-        padding: 34px 32px !important;
+        padding: 22px 24px 18px 24px !important;
         flex: 0 0 55% !important;
         width: 55% !important;
         max-width: 55% !important;
@@ -987,8 +974,8 @@ body.modal-open {
     .elementor-7637 .elementor-element-c26c6d0 h2,
     .elementor-popup-modal .elementor-element-5609af6 h2,
     .elementor-popup-modal .elementor-popup-modal .elementor-element-49c9d22 h2 {
-        font-size: 28px !important;
-        line-height: 36px !important;
+        font-size: 24px !important;
+        line-height: 30px !important;
     }
 }
 
