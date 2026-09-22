@@ -2257,7 +2257,7 @@ function cmr_testimonials_global_mobile_css() {
         padding-bottom: 0 !important;
     }
 
-    /* Marketing Services v2 Page-Specific Spacing Fix */
+    /* Marketing Services v2 Page-Specific Spacing & Typography Fixes */
     .page-id-52409 .elementor-element-92f6b3c,
     .elementor-page-52409 .elementor-element-92f6b3c {
         margin-top: 60px !important;
@@ -2267,6 +2267,48 @@ function cmr_testimonials_global_mobile_css() {
     .page-id-52409 .elementor-element-654b811,
     .elementor-page-52409 .elementor-element-654b811 {
         margin-bottom: 40px !important;
+    }
+
+    /* Marketing Services v2 - WHO WE ARE & About Us typography */
+    .page-id-52409 .elementor-element-8bae85b .elementor-heading-title,
+    .elementor-page-52409 .elementor-element-8bae85b .elementor-heading-title,
+    .elementor-element-8bae85b .elementor-heading-title {
+        font-family: "Instrument Sans", sans-serif !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        letter-spacing: 1px !important;
+        text-transform: uppercase !important;
+        color: #0F0F0F !important;
+        margin-bottom: 8px !important;
+    }
+
+    .page-id-52409 .elementor-element-1c887cf .elementor-heading-title,
+    .elementor-page-52409 .elementor-element-1c887cf .elementor-heading-title,
+    .elementor-element-1c887cf .elementor-heading-title {
+        font-family: "Instrument Sans", sans-serif !important;
+        font-size: 52px !important;
+        font-weight: 600 !important;
+        line-height: 1.15 !important;
+        letter-spacing: -1.5px !important;
+        color: #000000 !important;
+    }
+
+    /* Marketing Services v2 - Brands Carousel Footer Space Fix (6rem margin bottom on e-con-inner) */
+    .page-id-52409 .elementor-element-222f861 > .e-con-inner,
+    .elementor-page-52409 .elementor-element-222f861 > .e-con-inner,
+    .page-id-52409 .elementor-element-645a65a > .e-con-inner,
+    .elementor-page-52409 .elementor-element-645a65a > .e-con-inner {
+        margin-bottom: 6rem !important;
+        --margin-bottom: 6rem !important;
+    }
+
+    .page-id-52409 .elementor-element-222f861,
+    .elementor-page-52409 .elementor-element-222f861,
+    .page-id-52409 .elementor-element-645a65a,
+    .elementor-page-52409 .elementor-element-645a65a {
+        margin-bottom: 6rem !important;
+        --margin-bottom: 6rem !important;
+        padding-bottom: 2rem !important;
     }
 
     /* Marketing Services v2 - Our Community Section & Funfacts (Desktop & Mobile) */
@@ -2694,6 +2736,39 @@ function cmr_testimonials_global_mobile_css() {
         .page-id-52409 .elementor-element-654b811,
         .elementor-page-52409 .elementor-element-654b811 {
             margin-bottom: 30px !important;
+        }
+
+        .page-id-52409 .elementor-element-8bae85b .elementor-heading-title,
+        .elementor-page-52409 .elementor-element-8bae85b .elementor-heading-title,
+        .elementor-element-8bae85b .elementor-heading-title {
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            letter-spacing: 0.8px !important;
+        }
+
+        .page-id-52409 .elementor-element-1c887cf .elementor-heading-title,
+        .elementor-page-52409 .elementor-element-1c887cf .elementor-heading-title,
+        .elementor-element-1c887cf .elementor-heading-title {
+            font-size: 36px !important;
+            line-height: 44px !important;
+            letter-spacing: -1px !important;
+        }
+
+        .page-id-52409 .elementor-element-222f861 > .e-con-inner,
+        .elementor-page-52409 .elementor-element-222f861 > .e-con-inner,
+        .page-id-52409 .elementor-element-645a65a > .e-con-inner,
+        .elementor-page-52409 .elementor-element-645a65a > .e-con-inner {
+            margin-bottom: 6rem !important;
+            --margin-bottom: 6rem !important;
+        }
+
+        .page-id-52409 .elementor-element-222f861,
+        .elementor-page-52409 .elementor-element-222f861,
+        .page-id-52409 .elementor-element-645a65a,
+        .elementor-page-52409 .elementor-element-645a65a {
+            margin-bottom: 6rem !important;
+            --margin-bottom: 6rem !important;
+            padding-bottom: 20px !important;
         }
 
         .elementor-14 .elementor-element.elementor-element-adc3adf,
