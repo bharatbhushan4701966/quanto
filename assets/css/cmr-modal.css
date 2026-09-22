@@ -583,7 +583,15 @@ body.modal-open {
     max-width: 54% !important;
     background-color: #ffffff !important;
     background: #ffffff !important;
+    --padding-top: 38px !important;
+    --padding-bottom: 32px !important;
+    --padding-left: 42px !important;
+    --padding-right: 42px !important;
     padding: 38px 42px 32px 42px !important;
+    padding-top: 38px !important;
+    padding-bottom: 32px !important;
+    padding-left: 42px !important;
+    padding-right: 42px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: flex-start !important;
@@ -594,6 +602,18 @@ body.modal-open {
     overflow-y: visible !important;
     height: auto !important;
     min-height: 100% !important;
+}
+
+.elementor-7637 .elementor-element-49c9d22 .elementor-widget-container,
+.elementor-popup-modal .elementor-element-49c9d22 .elementor-widget-container,
+.elementor-popup-modal .elementor-element-5609af6 .elementor-widget-container,
+.elementor-popup-modal .custom-consultation-form,
+.elementor-popup-modal .custom-report-form {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
 }
 
 /* Right Title: Get Your Free Report / Request a Consultation / Subscribe to Insights */
@@ -780,18 +800,26 @@ body.modal-open {
 .custom-report-form input[type="text"],
 .custom-report-form input[type="email"],
 .custom-report-form input[type="tel"],
+.custom-report-form input[type="number"],
+.custom-report-form input[type="url"],
 .custom-consultation-form input[type="text"],
 .custom-consultation-form input[type="email"],
 .custom-consultation-form input[type="tel"],
-.custom-consultation-form input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]),
+.custom-consultation-form input[type="number"],
+.custom-consultation-form input[type="url"],
 .elementor-element-42f4ebe input[type="text"],
 .elementor-element-42f4ebe input[type="email"],
 .elementor-element-42f4ebe input[type="tel"],
 .elementor-popup-modal input[type="text"],
 .elementor-popup-modal input[type="email"],
 .elementor-popup-modal input[type="tel"],
-.elementor-popup-modal input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]),
-.elementor-popup-modal .wpcf7-form-control:not([type="submit"]):not([type="checkbox"]):not([type="radio"]) {
+.elementor-popup-modal input[type="number"],
+.elementor-popup-modal input[type="url"],
+.elementor-popup-modal input.wpcf7-text,
+.elementor-popup-modal input.wpcf7-email,
+.elementor-popup-modal input.wpcf7-tel,
+.elementor-popup-modal select,
+.elementor-popup-modal .wpcf7-select {
     width: 100% !important;
     height: 50px !important;
     border: 1.5px solid #d1d5db !important;
@@ -895,8 +923,11 @@ body.modal-open {
 
 /* Privacy & Terms Checkbox */
 .custom-report-form .privacy-check,
+.custom-consultation-form .privacy-check,
 .elementor-element-42f4ebe .privacy-check,
-.elementor-popup-modal .privacy-check {
+.elementor-popup-modal .privacy-check,
+.elementor-popup-modal .wpcf7-acceptance,
+.elementor-popup-modal .wpcf7-form-control-wrap[data-name*="acceptance"] {
     margin-top: 14px !important;
     display: flex !important;
     align-items: center !important;
@@ -905,15 +936,41 @@ body.modal-open {
     font-size: 13px !important;
     color: #4b5563 !important;
     line-height: 1.4 !important;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    width: auto !important;
 }
 
 .custom-report-form .privacy-check .wpcf7-list-item,
-.elementor-element-42f4ebe .privacy-check .wpcf7-list-item {
+.custom-consultation-form .privacy-check .wpcf7-list-item,
+.elementor-element-42f4ebe .privacy-check .wpcf7-list-item,
+.elementor-popup-modal .wpcf7-list-item,
+.elementor-popup-modal .wpcf7-acceptance .wpcf7-list-item {
     margin: 0 !important;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    width: auto !important;
+    display: flex !important;
+    align-items: center !important;
 }
 
 .custom-report-form .privacy-check .wpcf7-list-item label,
-.elementor-element-42f4ebe .privacy-check .wpcf7-list-item label {
+.custom-consultation-form .privacy-check .wpcf7-list-item label,
+.elementor-element-42f4ebe .privacy-check .wpcf7-list-item label,
+.elementor-popup-modal .privacy-check label,
+.elementor-popup-modal .wpcf7-acceptance label {
     display: flex !important;
     align-items: center !important;
     gap: 8px !important;
@@ -922,20 +979,40 @@ body.modal-open {
     color: #4b5563 !important;
     margin: 0 !important;
     cursor: pointer !important;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    height: auto !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
 }
 
 .custom-report-form .privacy-check input[type="checkbox"],
-.elementor-element-42f4ebe .privacy-check input[type="checkbox"] {
+.custom-consultation-form .privacy-check input[type="checkbox"],
+.elementor-element-42f4ebe .privacy-check input[type="checkbox"],
+.elementor-popup-modal input[type="checkbox"],
+.elementor-popup-modal .wpcf7-acceptance input[type="checkbox"] {
     width: 16px !important;
     height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
     accent-color: #4318d1 !important;
     cursor: pointer !important;
     margin: 0 !important;
+    padding: 0 !important;
     flex-shrink: 0 !important;
+    border: 1.5px solid #d1d5db !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
 }
 
 .custom-report-form .privacy-check a,
-.elementor-element-42f4ebe .privacy-check a {
+.custom-consultation-form .privacy-check a,
+.elementor-element-42f4ebe .privacy-check a,
+.elementor-popup-modal .privacy-check a,
+.elementor-popup-modal .wpcf7-acceptance a {
     color: #111827 !important;
     text-decoration: underline !important;
     font-weight: 500 !important;
