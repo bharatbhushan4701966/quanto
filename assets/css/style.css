@@ -3253,25 +3253,35 @@ ins {
   }
 }
 
-.quanto-funfacts__wrapper .quanto-funfact-box h2 {
-  letter-spacing: -2.5px;
+.quanto-funfacts__wrapper .quanto-funfact-box h2,
+.quanto-funfact-box .counter-item,
+.quanto-funfacts__wrapper .quanto-funfact-box .counter-item {
+  letter-spacing: -1.5px !important;
+  font-size: clamp(38px, 4.2vw, 64px) !important;
+  line-height: 1.1 !important;
+  white-space: nowrap !important;
+  flex-wrap: nowrap !important;
+  word-break: keep-all !important;
+  display: inline-flex !important;
+  align-items: baseline !important;
+  max-width: 100% !important;
 }
 
 @media only screen and (min-width: 992px) {
   .quanto-funfacts__wrapper .quanto-funfact-box h2 {
-    font-size: 70px;
+    font-size: clamp(44px, 4.2vw, 60px) !important;
   }
 }
 
 @media only screen and (min-width: 1200px) {
   .quanto-funfacts__wrapper .quanto-funfact-box h2 {
-    font-size: 80px;
+    font-size: clamp(50px, 4.2vw, 68px) !important;
   }
 }
 
 @media only screen and (min-width: 1400px) {
   .quanto-funfacts__wrapper .quanto-funfact-box h2 {
-    font-size: 100px;
+    font-size: clamp(54px, 4.5vw, 76px) !important;
   }
 }
 
@@ -3287,6 +3297,25 @@ ins {
   }
 }
 
+.quanto-funfact-box .odometer,
+.quanto-funfact-box .odometer-inside,
+.quanto-funfacts__wrapper .odometer,
+.quanto-funfacts__wrapper .odometer-inside {
+  white-space: nowrap !important;
+  display: inline-flex !important;
+  flex-wrap: nowrap !important;
+  align-items: baseline !important;
+}
+
+.quanto-funfact-box .odometer-digit,
+.quanto-funfact-box .odometer-formatting-mark,
+.quanto-funfacts__wrapper .odometer-digit,
+.quanto-funfacts__wrapper .odometer-formatting-mark {
+  white-space: nowrap !important;
+  display: inline-block !important;
+  vertical-align: baseline !important;
+}
+
 .quanto-funfact-box .odometer-auto-theme {
   line-height: 1;
   vertical-align: unset;
@@ -3296,8 +3325,15 @@ ins {
   padding: 0 1px;
 }
 
-.quanto-funfact-box em {
-  font-style: normal;
+.quanto-funfact-box em,
+.quanto-funfacts__wrapper .quanto-funfact-box em {
+  font-style: normal !important;
+  white-space: nowrap !important;
+  display: inline-block !important;
+  margin-left: 2px !important;
+  flex-shrink: 0 !important;
+  font-size: 0.8em !important;
+  line-height: 1 !important;
 }
 
 .quanto-funfact-box .funfact-info {
