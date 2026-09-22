@@ -9159,17 +9159,218 @@ ul.wp-block-list ol li {
     line-height: 1 !important;
 }
 
-/* Marketing Services v2 - Our Community Section & Funfacts (Mobile & Desktop) */
-.elementor-element-1c353d5 .elementskit-funfact .funfact-content .number-percentage-wraper {
+/* Marketing Services v2 - Our Community Section & Funfacts (Desktop & Mobile) */
+.elementor-element-1c353d5,
+.page-id-52409 .elementor-element-1c353d5,
+.elementor-page-52409 .elementor-element-1c353d5 {
+    width: 100% !important;
+    max-width: 1240px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 10px 20px 40px 20px !important;
+}
+
+.elementor-element-1c353d5 > .e-con-inner {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0 !important;
+}
+
+/* Grids for Top and Bottom Rows (Desktop) */
+.elementor-element-56b6d08,
+.elementor-element-1faccff,
+.page-id-52409 .elementor-element-56b6d08,
+.page-id-52409 .elementor-element-1faccff {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 24px !important;
+    width: 100% !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    --width: 100% !important;
+}
+
+/* Card Styling for Each Funfact Widget (Desktop & Responsive) */
+.elementor-element-1c353d5 .elementor-widget-elementskit-funfact {
+    background: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 16px !important;
+    padding: 24px 20px !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin-bottom: 0 !important;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+}
+
+.elementor-element-1c353d5 .elementor-widget-elementskit-funfact:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 10px 28px rgba(0, 113, 188, 0.08) !important;
+    border-color: #BFDBFE !important;
+}
+
+.elementor-element-1c353d5 .elementskit-funfact {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    text-align: center !important;
+    padding: 0 !important;
+}
+
+.elementor-element-1c353d5 .elementskit-funfact .vertical-bar {
+    display: none !important;
+}
+
+.elementor-element-1c353d5 .elementskit-funfact .elementskit-funfact-inner {
+    padding: 0 !important;
+    width: 100% !important;
+    text-align: center !important;
+}
+
+.elementor-element-1c353d5 .elementskit-funfact .funfact-content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
+}
+
+/* Number Percentage Styling (Desktop) */
+.elementor-element-1c353d5 .number-percentage-wraper {
     font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-size: 44px !important;
     font-weight: 700 !important;
+    line-height: 1.1 !important;
+    letter-spacing: -1.5px !important;
     color: #0071BC !important;
+    display: inline-flex !important;
+    align-items: baseline !important;
+    justify-content: center !important;
+    margin-bottom: 8px !important;
+    white-space: nowrap !important;
+    width: 100% !important;
 }
 
-.elementor-element-1c353d5 .elementskit-funfact .funfact-title {
+.elementor-element-1c353d5 .number-percentage-wraper .number-percentage {
+    font-family: inherit !important;
+    font-weight: inherit !important;
+    font-size: inherit !important;
+    color: inherit !important;
+    line-height: inherit !important;
+}
+
+.elementor-element-1c353d5 .number-percentage-wraper .super {
+    font-size: 26px !important;
+    font-weight: 600 !important;
+    color: #0071BC !important;
+    margin-left: 3px !important;
+    top: 0 !important;
+    vertical-align: baseline !important;
+    position: static !important;
+}
+
+/* Title Styling (Desktop) */
+.elementor-element-1c353d5 .funfact-title {
     font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    line-height: 1.35 !important;
+    color: #334155 !important;
+    letter-spacing: -0.2px !important;
+    margin: 0 !important;
+    text-align: center !important;
 }
 
+/* Center Divider & Badge: "The CMR network" (Desktop) */
+.elementor-element-e642823,
+.page-id-52409 .elementor-element-e642823 {
+    width: 100% !important;
+    max-width: 1200px !important;
+    --width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 28px auto !important;
+    position: relative !important;
+}
+
+.elementor-element-e642823::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 1px !important;
+    background: #E2E8F0 !important;
+    z-index: 1 !important;
+}
+
+.elementor-element-64a79c2 {
+    position: relative !important;
+    z-index: 2 !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    width: auto !important;
+    margin: 0 auto !important;
+}
+
+.elementor-element-788846b {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #0F172A !important;
+    color: #FFFFFF !important;
+    border-radius: 9999px !important;
+    padding: 10px 28px !important;
+    border: none !important;
+    margin: 0 auto !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.15) !important;
+}
+
+.elementor-element-788846b p {
+    color: #FFFFFF !important;
+    font-family: "Instrument Sans", sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+    margin: 0 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+}
+
+/* Tablet adjustments */
+@media (max-width: 991.98px) {
+    .elementor-element-56b6d08,
+    .elementor-element-1faccff,
+    .page-id-52409 .elementor-element-56b6d08,
+    .page-id-52409 .elementor-element-1faccff {
+        gap: 16px !important;
+    }
+
+    .elementor-element-1c353d5 .number-percentage-wraper {
+        font-size: 36px !important;
+    }
+
+    .elementor-element-1c353d5 .number-percentage-wraper .super {
+        font-size: 22px !important;
+    }
+
+    .elementor-element-1c353d5 .funfact-title {
+        font-size: 14px !important;
+    }
+}
+
+/* Mobile adjustments */
 @media (max-width: 768px) {
     .elementor-element-ebccdd8,
     .page-id-52409 .elementor-element-ebccdd8,
@@ -9194,32 +9395,18 @@ ul.wp-block-list ol li {
     .elementor-element-1c353d5,
     .page-id-52409 .elementor-element-1c353d5,
     .elementor-page-52409 .elementor-element-1c353d5 {
-        width: 100% !important;
-        max-width: 100% !important;
         padding: 10px 16px 30px 16px !important;
         margin-top: 0 !important;
         --margin-top: 0px !important;
         --width: 100% !important;
     }
 
-    .elementor-element-1c353d5 > .e-con-inner {
-        width: 100% !important;
-        max-width: 100% !important;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 0 !important;
-    }
-
     .elementor-element-56b6d08,
     .elementor-element-1faccff,
     .page-id-52409 .elementor-element-56b6d08,
     .page-id-52409 .elementor-element-1faccff {
-        display: grid !important;
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 12px !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        --width: 100% !important;
     }
 
     .elementor-element-56b6d08 > .elementor-element:nth-child(3),
@@ -9232,150 +9419,43 @@ ul.wp-block-list ol li {
     }
 
     .elementor-element-1c353d5 .elementor-widget-elementskit-funfact {
-        background: #FFFFFF !important;
-        border: 1px solid #E8ECF2 !important;
-        border-radius: 14px !important;
         padding: 16px 10px !important;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03) !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-        width: 100% !important;
-        margin-bottom: 0 !important;
-    }
-
-    .elementor-element-1c353d5 .elementskit-funfact {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        width: 100% !important;
-        text-align: center !important;
-        padding: 0 !important;
-    }
-
-    .elementor-element-1c353d5 .elementskit-funfact .vertical-bar {
-        display: none !important;
-    }
-
-    .elementor-element-1c353d5 .elementskit-funfact .elementskit-funfact-inner {
-        padding: 0 !important;
-        width: 100% !important;
-        text-align: center !important;
-    }
-
-    .elementor-element-1c353d5 .elementskit-funfact .funfact-content {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-        width: 100% !important;
+        border-radius: 14px !important;
     }
 
     .elementor-element-1c353d5 .number-percentage-wraper {
-        font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif !important;
         font-size: 32px !important;
-        font-weight: 700 !important;
-        line-height: 1.1 !important;
-        letter-spacing: -1px !important;
-        color: #0071BC !important;
-        display: inline-flex !important;
-        align-items: baseline !important;
-        justify-content: center !important;
         margin-bottom: 6px !important;
-        white-space: nowrap !important;
-        width: 100% !important;
-    }
-
-    .elementor-element-1c353d5 .number-percentage-wraper .number-percentage {
-        font-family: inherit !important;
-        font-weight: inherit !important;
-        font-size: inherit !important;
-        color: inherit !important;
-        line-height: inherit !important;
     }
 
     .elementor-element-1c353d5 .number-percentage-wraper .super {
         font-size: 18px !important;
-        font-weight: 600 !important;
-        color: #0071BC !important;
-        margin-left: 2px !important;
-        top: 0 !important;
-        vertical-align: baseline !important;
-        position: static !important;
     }
 
     .elementor-element-1c353d5 .funfact-title {
-        font-family: "Instrument Sans", sans-serif !important;
         font-size: 13px !important;
-        font-weight: 500 !important;
-        line-height: 1.3 !important;
-        color: #475569 !important;
-        letter-spacing: -0.2px !important;
-        margin: 0 !important;
-        text-align: center !important;
     }
 
-    /* Center Badge "The CMR network" */
     .elementor-element-e642823,
     .page-id-52409 .elementor-element-e642823 {
-        width: 100% !important;
-        max-width: 100% !important;
-        --width: 100% !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
         margin: 18px 0 !important;
-        position: relative !important;
     }
 
     .elementor-element-e642823::before {
-        content: '' !important;
-        position: absolute !important;
-        top: 50% !important;
         left: 5% !important;
         right: 5% !important;
-        height: 1px !important;
-        background: #E2E8F0 !important;
-        z-index: 1 !important;
-    }
-
-    .elementor-element-64a79c2 {
-        position: relative !important;
-        z-index: 2 !important;
-        display: inline-flex !important;
-        justify-content: center !important;
-        width: auto !important;
-        margin: 0 auto !important;
     }
 
     .elementor-element-788846b {
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        background: #0F172A !important;
-        color: #FFFFFF !important;
-        border-radius: 9999px !important;
         padding: 8px 24px !important;
-        border: none !important;
-        margin: 0 auto !important;
-        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.15) !important;
     }
 
     .elementor-element-788846b p {
-        color: #FFFFFF !important;
-        font-family: "Instrument Sans", sans-serif !important;
         font-size: 12px !important;
-        font-weight: 600 !important;
         letter-spacing: 0.8px !important;
-        text-transform: uppercase !important;
-        margin: 0 !important;
-        line-height: 1 !important;
-        white-space: nowrap !important;
     }
 }
+
 
 
 
