@@ -4872,22 +4872,53 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     color: #000000 !important;
 }
 
-/* Marketing Services v2 - Brands Carousel Footer Space Fix (6rem margin bottom on e-con-inner) */
+/* Marketing Services v2 - Brands Carousel & Bottom Footer Space Fix */
+.page-id-52409 .elementor-element-47fa9c5 > .e-con-inner,
+.elementor-page-52409 .elementor-element-47fa9c5 > .e-con-inner,
 .page-id-52409 .elementor-element-222f861 > .e-con-inner,
 .elementor-page-52409 .elementor-element-222f861 > .e-con-inner,
 .page-id-52409 .elementor-element-645a65a > .e-con-inner,
-.elementor-page-52409 .elementor-element-645a65a > .e-con-inner {
-    margin-bottom: 6rem !important;
-    --margin-bottom: 6rem !important;
+.elementor-page-52409 .elementor-element-645a65a > .e-con-inner,
+.page-id-52409 .elementor-23198 > .elementor,
+.page-id-52409 .elementor-element-c9502e0 > .e-con-inner {
+    margin-bottom: 0 !important;
+    --margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    --padding-bottom: 0 !important;
 }
 
+.page-id-52409 .elementor-element-47fa9c5,
+.elementor-page-52409 .elementor-element-47fa9c5,
+.page-id-52409 div[data-id="47fa9c5"],
 .page-id-52409 .elementor-element-222f861,
 .elementor-page-52409 .elementor-element-222f861,
 .page-id-52409 .elementor-element-645a65a,
-.elementor-page-52409 .elementor-element-645a65a {
-    margin-bottom: 6rem !important;
-    --margin-bottom: 6rem !important;
-    padding-bottom: 2rem !important;
+.elementor-page-52409 .elementor-element-645a65a,
+.page-id-52409 .elementor-23198,
+.elementor-page-52409 .elementor-23198,
+.page-id-52409 .elementor-element-c9502e0,
+.elementor-page-52409 .elementor-element-c9502e0 {
+    margin-bottom: 25px !important;
+    --margin-bottom: 25px !important;
+    padding-bottom: 0 !important;
+    --padding-bottom: 0 !important;
+}
+
+.page-id-52409 .elementor-element-96c4d86,
+.elementor-page-52409 .elementor-element-96c4d86,
+.page-id-52409 .elementor-23165,
+.elementor-page-52409 .elementor-23165,
+.page-id-52409 .elementor-element-66f0cc3,
+.elementor-page-52409 .elementor-element-66f0cc3,
+.page-id-52409 .footer,
+.elementor-page-52409 .footer,
+.page-id-52409 footer,
+.elementor-page-52409 footer,
+.page-id-52409 .elementor-13499,
+.page-id-52409 .elementor-element-ba501f5,
+.page-id-52409 .elementor-element-21bcbf2 {
+    margin-top: 0 !important;
+    --margin-top: 0 !important;
 }
 
 /* Global Brands Section Title */
@@ -5037,21 +5068,53 @@ div[data-id="df14a6f"] .elementor-widget-image img {
         letter-spacing: -1px !important;
     }
 
+    /* Marketing Services v2 - Mobile Brands Carousel & Bottom Footer Space Fix */
+    .page-id-52409 .elementor-element-47fa9c5 > .e-con-inner,
+    .elementor-page-52409 .elementor-element-47fa9c5 > .e-con-inner,
     .page-id-52409 .elementor-element-222f861 > .e-con-inner,
     .elementor-page-52409 .elementor-element-222f861 > .e-con-inner,
     .page-id-52409 .elementor-element-645a65a > .e-con-inner,
-    .elementor-page-52409 .elementor-element-645a65a > .e-con-inner {
-        margin-bottom: 6rem !important;
-        --margin-bottom: 6rem !important;
+    .elementor-page-52409 .elementor-element-645a65a > .e-con-inner,
+    .page-id-52409 .elementor-23198 > .elementor,
+    .page-id-52409 .elementor-element-c9502e0 > .e-con-inner {
+        margin-bottom: 0 !important;
+        --margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+        --padding-bottom: 0 !important;
     }
 
+    .page-id-52409 .elementor-element-47fa9c5,
+    .elementor-page-52409 .elementor-element-47fa9c5,
+    .page-id-52409 div[data-id="47fa9c5"],
     .page-id-52409 .elementor-element-222f861,
     .elementor-page-52409 .elementor-element-222f861,
     .page-id-52409 .elementor-element-645a65a,
-    .elementor-page-52409 .elementor-element-645a65a {
-        margin-bottom: 6rem !important;
-        --margin-bottom: 6rem !important;
-        padding-bottom: 20px !important;
+    .elementor-page-52409 .elementor-element-645a65a,
+    .page-id-52409 .elementor-23198,
+    .elementor-page-52409 .elementor-23198,
+    .page-id-52409 .elementor-element-c9502e0,
+    .elementor-page-52409 .elementor-element-c9502e0 {
+        margin-bottom: 20px !important;
+        --margin-bottom: 20px !important;
+        padding-bottom: 0 !important;
+        --padding-bottom: 0 !important;
+    }
+
+    .page-id-52409 .elementor-element-96c4d86,
+    .elementor-page-52409 .elementor-element-96c4d86,
+    .page-id-52409 .elementor-23165,
+    .elementor-page-52409 .elementor-23165,
+    .page-id-52409 .elementor-element-66f0cc3,
+    .elementor-page-52409 .elementor-element-66f0cc3,
+    .page-id-52409 .footer,
+    .elementor-page-52409 .footer,
+    .page-id-52409 footer,
+    .elementor-page-52409 footer,
+    .page-id-52409 .elementor-13499,
+    .page-id-52409 .elementor-element-ba501f5,
+    .page-id-52409 .elementor-element-21bcbf2 {
+        margin-top: 0 !important;
+        --margin-top: 0 !important;
     }
 
     .quanto-logo-slide,
@@ -9701,13 +9764,11 @@ ul.wp-block-list ol li {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
+/* CMR Live Section Title */
+.cmr-ls-title-area h2 {
+    font-size: 32px !important;
+    font-weight: 700 !important;
+    color: #111 !important;
+    margin: 0 0 10px 0 !important;
+    letter-spacing: -0.5px !important;
+}

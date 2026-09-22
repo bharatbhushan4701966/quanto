@@ -40,7 +40,7 @@ if ( ! function_exists( 'cmr_live_section_shortcode' ) ) {
                 margin-bottom: 40px;
             }
             .cmr-ls-title-area h2 {
-                font-size: 42px;
+                font-size: 32px;
                 font-weight: 700;
                 color: #111;
                 margin: 0 0 10px 0;
