@@ -582,7 +582,7 @@ body.modal-open {
     max-width: 54% !important;
     background-color: #ffffff !important;
     background: #ffffff !important;
-    padding: 38px 42px !important;
+    padding: 48px 42px 36px 42px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
@@ -594,6 +594,7 @@ body.modal-open {
 /* Right Title: Get Your Free Report / Request a Consultation / Subscribe to Insights */
 .elementor-7758 .elementor-element-b034026 h2,
 .elementor-7637 .elementor-element-c26c6d0 h2,
+.elementor-7637 .elementor-element-dae68e3 h2,
 .elementor-7832 .elementor-element-112e4d5 h2,
 .elementor-7849 .elementor-element-004d71c h2,
 .elementor-popup-modal .elementor-element-5609af6 h2,
@@ -607,6 +608,7 @@ body.modal-open {
     letter-spacing: -0.2px !important;
     color: #111827 !important;
     margin: 0 0 8px 0 !important;
+    padding-right: 32px !important;
     text-transform: none !important;
 }
 
@@ -935,9 +937,13 @@ body.modal-open {
 
     .elementor-7758 .elementor-element-5609af6,
     .elementor-7637 .elementor-element-49c9d22,
+    .elementor-7832 .elementor-element-a26a79a,
+    .elementor-7849 .elementor-element-2123f86,
     .elementor-popup-modal .elementor-element-5609af6,
-    .elementor-popup-modal .elementor-element-49c9d22 {
-        padding: 34px 32px !important;
+    .elementor-popup-modal .elementor-element-49c9d22,
+    .elementor-popup-modal .elementor-element-a26a79a,
+    .elementor-popup-modal .elementor-element-2123f86 {
+        padding: 44px 32px 30px 32px !important;
         flex: 0 0 55% !important;
         width: 55% !important;
         max-width: 55% !important;
@@ -945,10 +951,16 @@ body.modal-open {
 
     .elementor-7758 .elementor-element-b034026 h2,
     .elementor-7637 .elementor-element-c26c6d0 h2,
+    .elementor-7637 .elementor-element-dae68e3 h2,
+    .elementor-7832 .elementor-element-112e4d5 h2,
+    .elementor-7849 .elementor-element-004d71c h2,
     .elementor-popup-modal .elementor-element-5609af6 h2,
-    .elementor-popup-modal .elementor-popup-modal .elementor-element-49c9d22 h2 {
+    .elementor-popup-modal .elementor-element-49c9d22 h2,
+    .elementor-popup-modal .elementor-element-a26a79a h2,
+    .elementor-popup-modal .elementor-element-2123f86 h2 {
         font-size: 28px !important;
         line-height: 36px !important;
+        padding-right: 32px !important;
     }
 }
 
