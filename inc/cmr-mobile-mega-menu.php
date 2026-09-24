@@ -135,6 +135,59 @@ function cmr_inject_mobile_mega_menu() {
         }
     }
     
+    /* Fix Mobile & Tablet Sticky Header 16px Side Spacing */
+    @media (max-width: 1024px) {
+        .mas-sticky-header,
+        .mas-sticky-header > .e-con-inner,
+        .mas-sticky-yes.mas-sticky-header,
+        .mas-sticky-yes.mas-sticky-header > .e-con-inner,
+        .elementor-element.mas-sticky-header,
+        .elementor-element.mas-sticky-header > .e-con-inner,
+        header.header .mas-sticky-header,
+        header.header .mas-sticky-header > .e-con-inner,
+        header.header .e-con-inner,
+        header.header .elementor-element.e-con {
+            padding-left: 16px !important;
+            padding-right: 16px !important;
+            box-sizing: border-box !important;
+        }
+
+        .mas-sticky-header .e-con-inner {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+    }
+
+    /* Standard 3-line Hamburger Menu Button */
+    .menuBar-toggle,
+    .quanto-menu-toggle:not(.mobile) {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 44px !important;
+        height: 40px !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: 1px solid #d1d5db !important;
+        border-radius: 6px !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+        box-sizing: border-box !important;
+        color: #111827 !important;
+    }
+    .menuBar-toggle:hover,
+    .quanto-menu-toggle:not(.mobile):hover {
+        background: rgba(0, 0, 0, 0.04) !important;
+        border-color: #9ca3af !important;
+    }
+    .menuBar-toggle svg,
+    .quanto-menu-toggle:not(.mobile) svg {
+        display: block !important;
+        width: 22px !important;
+        height: 22px !important;
+    }
+
     /* Active state for all mega menus */
     .cmr-mm-item.cmr-active-link h4,
     .cmr-mms-item.cmr-active-link h4,
@@ -533,6 +586,21 @@ function cmr_inject_mobile_mega_menu() {
             return;
         }
     }, true);
+
+    // Replace hamburger toggle icon with standard 3 clean lines
+    function cmrInitHamburgerIcons() {
+        var hamburgerSvg = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
+        document.querySelectorAll('.menuBar-toggle, .quanto-menu-toggle:not(.mobile)').forEach(function(btn) {
+            btn.innerHTML = hamburgerSvg;
+        });
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', cmrInitHamburgerIcons);
+    } else {
+        cmrInitHamburgerIcons();
+    }
+    setTimeout(cmrInitHamburgerIcons, 300);
+    setTimeout(cmrInitHamburgerIcons, 1000);
     </script>
     <?php
 }
