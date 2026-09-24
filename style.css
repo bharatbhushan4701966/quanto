@@ -9825,6 +9825,7 @@ ul.wp-block-list ol li {
         transition: all 0.2s ease !important;
         box-sizing: border-box !important;
         color: #111827 !important;
+        position: relative !important;
     }
 
     .menuBar-toggle:hover,
@@ -9833,11 +9834,23 @@ ul.wp-block-list ol li {
         border-color: #9ca3af !important;
     }
 
+    /* Hide old SVG completely so it never flashes on load */
     .menuBar-toggle svg,
     .quanto-menu-toggle:not(.mobile) svg {
+        display: none !important;
+    }
+
+    /* Render 3 clean vector lines instantly via CSS */
+    .menuBar-toggle::before,
+    .quanto-menu-toggle:not(.mobile):before {
+        content: '' !important;
         display: block !important;
-        width: 22px !important;
-        height: 22px !important;
+        width: 20px !important;
+        height: 2px !important;
+        background: #111827 !important;
+        border-radius: 2px !important;
+        box-shadow: 0 -6px 0 0 #111827, 0 6px 0 0 #111827 !important;
     }
 }
+
 

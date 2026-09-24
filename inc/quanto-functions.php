@@ -743,10 +743,10 @@ function quanto_global_header_option() {
 
                             echo '<button class="menuBar-toggle quanto-menu-toggle d-inline-block d-lg-none">';
 
-                                echo '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
-
-                                        <path d="M24.4444 26V28H0V26H24.4444ZM40 19V21H0V19H40ZM40 12V14H15.5556V12H40Z" fill="currentColor"></path>
-
+                                echo '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                                        <line x1="3" y1="18" x2="21" y2="18"></line>
                                     </svg>';
 
                             echo '</button>';

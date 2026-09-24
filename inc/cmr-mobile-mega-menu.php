@@ -187,17 +187,28 @@ function cmr_inject_mobile_mega_menu() {
             transition: all 0.2s ease !important;
             box-sizing: border-box !important;
             color: #111827 !important;
+            position: relative !important;
         }
         .menuBar-toggle:hover,
         .quanto-menu-toggle:not(.mobile):hover {
             background: rgba(0, 0, 0, 0.04) !important;
             border-color: #9ca3af !important;
         }
+        /* Hide old SVG completely so it never flashes on load */
         .menuBar-toggle svg,
         .quanto-menu-toggle:not(.mobile) svg {
+            display: none !important;
+        }
+        /* Render 3 clean vector lines instantly via CSS */
+        .menuBar-toggle::before,
+        .quanto-menu-toggle:not(.mobile):before {
+            content: '' !important;
             display: block !important;
-            width: 22px !important;
-            height: 22px !important;
+            width: 20px !important;
+            height: 2px !important;
+            background: #111827 !important;
+            border-radius: 2px !important;
+            box-shadow: 0 -6px 0 0 #111827, 0 6px 0 0 #111827 !important;
         }
     }
 
@@ -599,21 +610,6 @@ function cmr_inject_mobile_mega_menu() {
             return;
         }
     }, true);
-
-    // Replace hamburger toggle icon with standard 3 clean lines
-    function cmrInitHamburgerIcons() {
-        var hamburgerSvg = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
-        document.querySelectorAll('.menuBar-toggle, .quanto-menu-toggle:not(.mobile)').forEach(function(btn) {
-            btn.innerHTML = hamburgerSvg;
-        });
-    }
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', cmrInitHamburgerIcons);
-    } else {
-        cmrInitHamburgerIcons();
-    }
-    setTimeout(cmrInitHamburgerIcons, 300);
-    setTimeout(cmrInitHamburgerIcons, 1000);
     </script>
     <?php
 }
