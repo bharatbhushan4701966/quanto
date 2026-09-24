@@ -8,24 +8,52 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! function_exists( 'cmr_latest_insights_render_grid' ) ) {
-    function cmr_latest_insights_render_grid( $insights_query ) {
-        if ( $insights_query->have_posts() ) : ?>
+    function cmr_latest_insights_render_grid( $insights_query, $max_posts = 4 ) {
+        $unique_posts = array();
+        $seen_ids = array();
+        $seen_titles = array();
+
+        if ( is_array( $insights_query ) ) {
+            $posts_to_process = $insights_query;
+        } elseif ( is_a( $insights_query, 'WP_Query' ) && $insights_query->have_posts() ) {
+            $posts_to_process = $insights_query->posts;
+        } else {
+            $posts_to_process = array();
+        }
+
+        foreach ( $posts_to_process as $p ) {
+            $norm_title = sanitize_title( $p->post_title );
+            if ( in_array( $p->ID, $seen_ids, true ) || ( ! empty( $norm_title ) && in_array( $norm_title, $seen_titles, true ) ) ) {
+                continue;
+            }
+            $seen_ids[] = $p->ID;
+            $seen_titles[] = $norm_title;
+            $unique_posts[] = $p;
+            if ( count( $unique_posts ) >= $max_posts ) {
+                break;
+            }
+        }
+
+        if ( ! empty( $unique_posts ) ) : ?>
             <div class="cmr-insights-grid">
                 <?php
                 $post_count = 0;
-                while ( $insights_query->have_posts() ) : $insights_query->the_post();
+                foreach ( $unique_posts as $insight_post ) :
                     $post_count++;
                     
-                    $post_title = get_the_title();
-                    $post_link = get_permalink();
-                    $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+                    $post_title = get_the_title( $insight_post );
+                    $post_link = get_permalink( $insight_post );
+                    $thumbnail_url = get_the_post_thumbnail_url( $insight_post->ID, 'full' );
                     if ( ! $thumbnail_url ) {
                         $thumbnail_url = 'https://via.placeholder.com/800x600?text=No+Image';
                     }
                     
                     // Categories / Tags (simulated as "Media Releases" based on mockup)
-                    $category_name = 'Media Releases';
-                    $terms = get_the_terms( get_the_ID(), 'category' );
+                    $category_name = 'Automotive';
+                    $terms = get_the_terms( $insight_post->ID, 'category' );
+                    if ( ! $terms || is_wp_error( $terms ) ) {
+                        $terms = get_the_terms( $insight_post->ID, 'cmr_news_category' );
+                    }
                     if ( $terms && ! is_wp_error( $terms ) ) {
                         $category_name = $terms[0]->name;
                     }
@@ -61,7 +89,7 @@ if ( ! function_exists( 'cmr_latest_insights_render_grid' ) ) {
                         <?php
                     }
 
-                endwhile;
+                endforeach;
                 
                 if ( $post_count > 1 ) {
                     echo '</div>'; // close cmr-insights-stack
@@ -83,7 +111,7 @@ if ( ! function_exists( 'cmr_latest_insights_ajax_handler' ) ) {
         
         $query_args = array(
             'post_type'      => array( 'post', 'cmr_news' ),
-            'posts_per_page' => 4,
+            'posts_per_page' => 16,
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
@@ -109,7 +137,7 @@ if ( ! function_exists( 'cmr_latest_insights_ajax_handler' ) ) {
         }
         
         $insights_query = new WP_Query( $query_args );
-        cmr_latest_insights_render_grid( $insights_query );
+        cmr_latest_insights_render_grid( $insights_query, 4 );
         
         wp_die();
     }
@@ -138,7 +166,7 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
 
         $query_args = array(
             'post_type'      => array( 'post', 'cmr_news' ),
-            'posts_per_page' => $atts['posts_per_page'],
+            'posts_per_page' => max( 16, intval( $atts['posts_per_page'] ) * 4 ),
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
@@ -206,7 +234,7 @@ if ( ! function_exists( 'cmr_latest_insights_shortcode' ) ) {
             </div>
 
             <div class="cmr-insights-grid-container" style="transition: opacity 0.3s ease;">
-                <?php cmr_latest_insights_render_grid( $insights_query ); ?>
+                <?php cmr_latest_insights_render_grid( $insights_query, intval( $atts['posts_per_page'] ) ); ?>
             </div>
         </div>
         
