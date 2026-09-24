@@ -18,7 +18,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
 
         $query_args = array(
             'post_type'      => array( 'post', 'cmr_news' ),
-            'posts_per_page' => $atts['posts_per_page'],
+            'posts_per_page' => max( 20, intval( $atts['posts_per_page'] ) * 4 ),
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
@@ -42,6 +42,26 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
         }
 
         $insights_query = new WP_Query( $query_args );
+
+        $unique_posts = array();
+        $seen_ids = array();
+        $seen_titles = array();
+        $max_posts = intval( $atts['posts_per_page'] );
+
+        if ( $insights_query->have_posts() ) {
+            foreach ( $insights_query->posts as $p ) {
+                $norm_title = sanitize_title( $p->post_title );
+                if ( in_array( $p->ID, $seen_ids, true ) || ( ! empty( $norm_title ) && in_array( $norm_title, $seen_titles, true ) ) ) {
+                    continue;
+                }
+                $seen_ids[] = $p->ID;
+                $seen_titles[] = $norm_title;
+                $unique_posts[] = $p;
+                if ( count( $unique_posts ) >= $max_posts ) {
+                    break;
+                }
+            }
+        }
 
         ob_start();
         ?>
@@ -377,26 +397,29 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
         </style>
 
         <div class="cmr-intel-list-wrapper">
-            <?php if ( $insights_query->have_posts() ) : ?>
+            <?php if ( ! empty( $unique_posts ) ) : ?>
                 <div class="cmr-intel-list-items" style="display:flex; flex-direction:column; gap:40px; width: 100%;">
                 <?php
                 $count = 0;
-                while ( $insights_query->have_posts() ) : $insights_query->the_post();
+                foreach ( $unique_posts as $insight_post ) :
                     $count++;
-                    $post_title = get_the_title();
-                    $post_link = get_permalink();
-                    $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+                    $post_title = get_the_title( $insight_post );
+                    $post_link = get_permalink( $insight_post );
+                    $thumbnail_url = get_the_post_thumbnail_url( $insight_post->ID, 'full' );
                     if ( ! $thumbnail_url ) {
                         $thumbnail_url = 'https://via.placeholder.com/600x400?text=No+Image';
                     }
                     
                     $category_name = 'Industry Intelligence';
-                    $terms = get_the_terms( get_the_ID(), 'category' );
+                    $terms = get_the_terms( $insight_post->ID, 'category' );
+                    if ( ! $terms || is_wp_error( $terms ) ) {
+                        $terms = get_the_terms( $insight_post->ID, 'cmr_news_category' );
+                    }
                     if ( $terms && ! is_wp_error( $terms ) ) {
                         $category_name = $terms[0]->name;
                     }
 
-                    $content = get_post_field( 'post_content', get_the_ID() );
+                    $content = get_post_field( 'post_content', $insight_post->ID );
                     $word_count = str_word_count( strip_tags( $content ) );
                     $read_time = ceil( $word_count / 200 );
                     if ($read_time < 1) $read_time = 1;
@@ -418,7 +441,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                             </h3>
                             <div class="cmr-intel-list-excerpt">
                                 <?php 
-                                $excerpt = get_the_excerpt();
+                                $excerpt = get_the_excerpt( $insight_post );
                                 if ( empty( $excerpt ) ) {
                                     $excerpt = wp_trim_words( $content, 18 );
                                 } else {
@@ -457,7 +480,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                         </div>
                     <?php endif; ?>
 
-                <?php endwhile; ?>
+                <?php endforeach; ?>
                 </div> <!-- /.cmr-intel-list-items -->
                 
                 <?php
@@ -605,7 +628,7 @@ function cmr_industry_intel_list_load_more_ajax() {
     $paged = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
     $query_args = array(
         'post_type'      => array( 'post', 'cmr_news' ),
-        'posts_per_page' => 3,
+        'posts_per_page' => 15,
         'post_status'    => 'publish',
         'orderby'        => 'date',
         'order'          => 'DESC',
@@ -629,29 +652,49 @@ function cmr_industry_intel_list_load_more_ajax() {
     }
     
     $insights_query = new WP_Query( $query_args );
+    $unique_posts = array();
+    $seen_ids = array();
+    $seen_titles = array();
+
     if ( $insights_query->have_posts() ) {
-        while ( $insights_query->have_posts() ) {
-            $insights_query->the_post();
-            
-            $post_title = get_the_title();
-            $post_link = get_permalink();
-            $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+        foreach ( $insights_query->posts as $p ) {
+            $norm_title = sanitize_title( $p->post_title );
+            if ( in_array( $p->ID, $seen_ids, true ) || ( ! empty( $norm_title ) && in_array( $norm_title, $seen_titles, true ) ) ) {
+                continue;
+            }
+            $seen_ids[] = $p->ID;
+            $seen_titles[] = $norm_title;
+            $unique_posts[] = $p;
+            if ( count( $unique_posts ) >= 3 ) {
+                break;
+            }
+        }
+    }
+
+    if ( ! empty( $unique_posts ) ) {
+        foreach ( $unique_posts as $insight_post ) {
+            $post_title = get_the_title( $insight_post );
+            $post_link = get_permalink( $insight_post );
+            $thumbnail_url = get_the_post_thumbnail_url( $insight_post->ID, 'full' );
             if ( ! $thumbnail_url ) {
                 $thumbnail_url = 'https://via.placeholder.com/600x400?text=No+Image';
             }
             
             $category_name = 'Industry Intelligence';
-            $terms = get_the_terms( get_the_ID(), 'category' );
+            $terms = get_the_terms( $insight_post->ID, 'category' );
+            if ( ! $terms || is_wp_error( $terms ) ) {
+                $terms = get_the_terms( $insight_post->ID, 'cmr_news_category' );
+            }
             if ( $terms && ! is_wp_error( $terms ) ) {
                 $category_name = $terms[0]->name;
             }
 
-            $content = get_post_field( 'post_content', get_the_ID() );
+            $content = get_post_field( 'post_content', $insight_post->ID );
             $word_count = str_word_count( strip_tags( $content ) );
             $read_time = ceil( $word_count / 200 );
             if ($read_time < 1) $read_time = 1;
             
-            $excerpt = get_the_excerpt();
+            $excerpt = get_the_excerpt( $insight_post );
             if ( empty( $excerpt ) ) {
                 $excerpt = wp_trim_words( $content, 18 );
             } else {

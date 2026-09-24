@@ -46,7 +46,26 @@ if ( ! function_exists( 'cmr_marketing_services_shortcode' ) ) {
         );
 
         $insights_query = new WP_Query( $query_args );
-        $insights_posts = $insights_query->posts;
+        
+        $unique_posts = array();
+        $seen_ids = array();
+        $seen_titles = array();
+        $max_posts = intval( $atts['posts_per_page'] );
+
+        if ( $insights_query->have_posts() ) {
+            foreach ( $insights_query->posts as $p ) {
+                $norm_title = sanitize_title( $p->post_title );
+                if ( in_array( $p->ID, $seen_ids, true ) || ( ! empty( $norm_title ) && in_array( $norm_title, $seen_titles, true ) ) ) {
+                    continue;
+                }
+                $seen_ids[] = $p->ID;
+                $seen_titles[] = $norm_title;
+                $unique_posts[] = $p;
+                if ( count( $unique_posts ) >= $max_posts ) {
+                    break;
+                }
+            }
+        }
 
         ob_start();
         ?>
@@ -95,37 +114,29 @@ if ( ! function_exists( 'cmr_marketing_services_shortcode' ) ) {
                 </div>
             </div>
 
-            <?php if ( $insights_query->have_posts() ) : ?>
+            <?php if ( ! empty( $unique_posts ) ) : ?>
                 <div class="intel-grid" id="insights">
                     <?php
-                    $seen_titles = array();
-                    $displayed_count = 0;
-                    
-                    while ( $insights_query->have_posts() && $displayed_count < $atts['posts_per_page'] ) : $insights_query->the_post();
-                        $post_title = get_the_title();
-                        
-                        // Prevent duplicates if multiple copies of the same article exist
-                        if ( in_array( $post_title, $seen_titles ) ) {
-                            continue;
-                        }
-                        $seen_titles[] = $post_title;
-                        $displayed_count++;
-                        
-                        $post_link = get_permalink();
-                        $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+                    foreach ( $unique_posts as $insight_post ) :
+                        $post_title = get_the_title( $insight_post );
+                        $post_link = get_permalink( $insight_post );
+                        $thumbnail_url = get_the_post_thumbnail_url( $insight_post->ID, 'full' );
                         if ( ! $thumbnail_url ) {
                             $thumbnail_url = 'https://via.placeholder.com/600x400?text=No+Image';
                         }
                         
                         // Categories / Tags
                         $category_name = 'Marketing Services';
-                        $terms = get_the_terms( get_the_ID(), 'category' );
+                        $terms = get_the_terms( $insight_post->ID, 'category' );
+                        if ( ! $terms || is_wp_error( $terms ) ) {
+                            $terms = get_the_terms( $insight_post->ID, 'cmr_news_category' );
+                        }
                         if ( $terms && ! is_wp_error( $terms ) ) {
                             $category_name = $terms[0]->name;
                         }
 
                         // Calculate reading time
-                        $content = get_the_content();
+                        $content = get_post_field( 'post_content', $insight_post->ID );
                         $word_count = str_word_count( strip_tags( $content ) );
                         $read_time = ceil( $word_count / 200 );
                         if ($read_time < 1) $read_time = 1;
@@ -147,7 +158,7 @@ if ( ! function_exists( 'cmr_marketing_services_shortcode' ) ) {
                                 </h3>
                                 <div class="intel-excerpt">
                                     <?php 
-                                    $excerpt = get_the_excerpt();
+                                    $excerpt = get_the_excerpt( $insight_post );
                                     if ( empty( $excerpt ) ) {
                                         $excerpt = wp_trim_words( $content, 12 );
                                     } else {
@@ -165,7 +176,7 @@ if ( ! function_exists( 'cmr_marketing_services_shortcode' ) ) {
                                 </a>
                             </div>
                         </div>
-                    <?php endwhile; wp_reset_postdata(); ?>
+                    <?php endforeach; wp_reset_postdata(); ?>
                 </div>
                 
                 <?php
