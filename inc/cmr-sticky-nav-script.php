@@ -18,8 +18,6 @@ add_action('wp_footer', function() {
         max-width: 1280px;
         z-index: 999990;
         background: transparent !important;
-        padding-left: 20px !important;
-        padding-right: 20px !important;
         margin-bottom: 0 !important;
         font-family: 'Instrument Sans', sans-serif !important;
         box-sizing: border-box !important;
@@ -133,12 +131,6 @@ add_action('wp_footer', function() {
         .intel-nav-fixed-js .intel-nav-links a:hover,
         .intel-nav-fixed-js .intel-nav-links a.active {
             color: #5c24d3 !important;
-        }
-    }
-    @media (max-width: 1320px) {
-        .intel-nav-fixed-js {
-            padding-left: 20px !important;
-            padding-right: 20px !important;
         }
     }
     @media (max-width: 768px) {
