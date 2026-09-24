@@ -135,57 +135,70 @@ function cmr_inject_mobile_mega_menu() {
         }
     }
     
-    /* Fix Mobile & Tablet Sticky Header 16px Side Spacing */
+    /* Fix Mobile & Tablet Sticky Header strictly 16px Side Spacing */
     @media (max-width: 1024px) {
+        header.header,
+        header.header .elementor,
+        header.header .elementor-element,
+        header.header .e-con,
         .mas-sticky-header,
+        .mas-sticky-yes.mas-sticky-header {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        header.header .e-con.e-parent > .e-con-inner,
         .mas-sticky-header > .e-con-inner,
-        .mas-sticky-yes.mas-sticky-header,
-        .mas-sticky-yes.mas-sticky-header > .e-con-inner,
-        .elementor-element.mas-sticky-header,
-        .elementor-element.mas-sticky-header > .e-con-inner,
-        header.header .mas-sticky-header,
-        header.header .mas-sticky-header > .e-con-inner,
-        header.header .e-con-inner,
-        header.header .elementor-element.e-con {
+        .mas-sticky-yes.mas-sticky-header > .e-con-inner {
             padding-left: 16px !important;
             padding-right: 16px !important;
             box-sizing: border-box !important;
-        }
-
-        .mas-sticky-header .e-con-inner {
             width: 100% !important;
             max-width: 100% !important;
         }
     }
 
-    /* Standard 3-line Hamburger Menu Button */
-    .menuBar-toggle,
-    .quanto-menu-toggle:not(.mobile) {
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        width: 44px !important;
-        height: 40px !important;
-        padding: 0 !important;
-        background: transparent !important;
-        border: 1px solid #d1d5db !important;
-        border-radius: 6px !important;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
-        cursor: pointer !important;
-        transition: all 0.2s ease !important;
-        box-sizing: border-box !important;
-        color: #111827 !important;
+    /* Hide Hamburger on Desktop */
+    @media (min-width: 1025px) {
+        .menuBar-toggle,
+        .quanto-menu-toggle:not(.mobile),
+        .d-lg-none.quanto-menu-toggle {
+            display: none !important;
+        }
     }
-    .menuBar-toggle:hover,
-    .quanto-menu-toggle:not(.mobile):hover {
-        background: rgba(0, 0, 0, 0.04) !important;
-        border-color: #9ca3af !important;
-    }
-    .menuBar-toggle svg,
-    .quanto-menu-toggle:not(.mobile) svg {
-        display: block !important;
-        width: 22px !important;
-        height: 22px !important;
+
+    /* Standard 3-line Hamburger Menu Button (Mobile / Tablet Only) */
+    @media (max-width: 1024px) {
+        .menuBar-toggle,
+        .quanto-menu-toggle:not(.mobile) {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 44px !important;
+            height: 40px !important;
+            padding: 0 !important;
+            background: transparent !important;
+            border: 1px solid #d1d5db !important;
+            border-radius: 6px !important;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            box-sizing: border-box !important;
+            color: #111827 !important;
+        }
+        .menuBar-toggle:hover,
+        .quanto-menu-toggle:not(.mobile):hover {
+            background: rgba(0, 0, 0, 0.04) !important;
+            border-color: #9ca3af !important;
+        }
+        .menuBar-toggle svg,
+        .quanto-menu-toggle:not(.mobile) svg {
+            display: block !important;
+            width: 22px !important;
+            height: 22px !important;
+        }
     }
 
     /* Active state for all mega menus */
