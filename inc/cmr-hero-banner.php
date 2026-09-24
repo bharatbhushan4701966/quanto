@@ -44,7 +44,7 @@ function cmr_hero_banner_shortcode($atts) {
       padding: 80px;
       max-width: 1400px;
       padding-top: 287px;
-      padding-left: 230px !important;
+      padding-left: 260px !important;
     }
 
     /* 1920+ layout */
@@ -86,35 +86,39 @@ function cmr_hero_banner_shortcode($atts) {
     /* =========================
        BUTTONS
     ========================= */
+    .hero .buttons,
     .buttons {
       display: flex;
       gap: 16px;
       align-items: center;
     }
 
+    .hero .btn-primary,
     .btn-primary {
-        min-width: 200px;
-        height: 58px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        background: #FFFFFF;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        background: #FFFFFF !important;
         color: #0F0F0F !important;
-        border: 1px solid #FFFFFF;
-        border-radius: 50px;
-        font-family: "Instrument Sans", sans-serif;
-        font-size: 16px;
-        font-weight: 600;
-        line-height: 1;
-        letter-spacing: -0.18px;
-        text-decoration: none;
-        padding: 0 32px;
-        box-sizing: border-box;
-        transition: transform 0.2s ease, box-shadow 0.2s ease !important;
-        cursor: pointer;
+        border: 1px solid #FFFFFF !important;
+        border-radius: 50px !important;
+        font-family: "Instrument Sans", sans-serif !important;
+        font-size: 16px !important;
+        font-weight: 500 !important;
+        line-height: 1 !important;
+        letter-spacing: -0.18px !important;
+        text-decoration: none !important;
+        padding: 16px 28px !important;
+        box-sizing: border-box !important;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease !important;
+        cursor: pointer !important;
+        width: auto !important;
+        min-width: unset !important;
+        height: auto !important;
     }
 
+    .hero .btn-primary:hover,
     .btn-primary:hover {
         background: #FFFFFF !important;
         color: #0F0F0F !important;
@@ -122,51 +126,56 @@ function cmr_hero_banner_shortcode($atts) {
     }
 
     /* ===== BUTTON ICON ===== */
+    .hero .hero-arrow-button-white,
     .hero-arrow-button-white {
-        width: 15px;
-        height: 15px;
-        object-fit: contain;
-        flex-shrink: 0;
+        width: 14px !important;
+        height: 14px !important;
+        object-fit: contain !important;
+        flex-shrink: 0 !important;
     }
 
     /* ===== TALK TO ANALYST BUTTON ===== */
+    .hero .btn-outline,
     .btn-outline {
-        min-width: 200px;
-        height: 58px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        background: transparent;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        background: transparent !important;
         color: #FFFFFF !important;
-        border: 1px solid rgba(255,255,255,0.75);
-        border-radius: 50px;
-        font-family: "Instrument Sans", sans-serif;
-        font-size: 16px;
-        font-weight: 600;
-        line-height: 1;
-        letter-spacing: -0.14px;
-        text-decoration: none;
-        padding: 0 32px;
-        box-sizing: border-box;
+        border: 1px solid rgba(255,255,255,0.75) !important;
+        border-radius: 50px !important;
+        font-family: "Instrument Sans", sans-serif !important;
+        font-size: 16px !important;
+        font-weight: 500 !important;
+        line-height: 1 !important;
+        letter-spacing: -0.14px !important;
+        text-decoration: none !important;
+        padding: 16px 28px !important;
+        box-sizing: border-box !important;
         transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease !important;
-        cursor: pointer;
+        cursor: pointer !important;
+        width: auto !important;
+        min-width: unset !important;
+        height: auto !important;
     }
 
     /* ===== HOVER CHANGE ===== */
+    .hero .btn-outline:hover,
     .btn-outline:hover {
-        background: rgba(255,255,255,0.1) !important;
+        background: rgba(255,255,255,0.15) !important;
         color: #FFFFFF !important;
         border-color: #FFFFFF !important;
         transform: translateY(-2px) !important;
     }
 
     /* ===== ICON ===== */
+    .hero .hero-arrow-button,
     .hero-arrow-button {
-        width: 15px;
-        height: 15px;
-        object-fit: contain;
-        flex-shrink: 0;
+        width: 14px !important;
+        height: 14px !important;
+        object-fit: contain !important;
+        flex-shrink: 0 !important;
     }
 
     /* =========================
@@ -302,53 +311,56 @@ function cmr_hero_banner_shortcode($atts) {
         text-align: center;
       }
 
-      .buttons{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 16px;
-        margin-top: 10px;
-        width: 100%;
-        max-width: 340px;
+      .buttons {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 14px !important;
+        margin-top: 10px !important;
+        width: 100% !important;
+        max-width: 340px !important;
       }
 
-      .btn-primary{
-        width: 100%;
-        max-width: none;
-        height: 52px;
-        border-radius: 50px;
-        font-size: 16px;
-        font-weight: 600;
-        background: #ffffff;
+      .btn-primary {
+        width: 100% !important;
+        max-width: none !important;
+        border-radius: 50px !important;
+        font-size: 16px !important;
+        font-weight: 500 !important;
+        background: #ffffff !important;
         color: #000 !important;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 16px 28px !important;
+        box-sizing: border-box !important;
       }
 
-      .btn-outline{
-        width: 100%;
-        max-width: none;
-        height: 52px;
-        border-radius: 50px;
-        font-size: 16px;
-        font-weight: 600;
-        border: 1px solid #ffffff;
+      .btn-outline {
+        width: 100% !important;
+        max-width: none !important;
+        border-radius: 50px !important;
+        font-size: 16px !important;
+        font-weight: 500 !important;
+        border: 1px solid #ffffff !important;
         color: #ffffff !important;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: transparent;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: transparent !important;
+        padding: 16px 28px !important;
+        box-sizing: border-box !important;
       }
       
       .hero-indicators {
-        display: none;
+        display: none !important;
       }
       
       .btn-primary img,
-      .btn-outline img{
-        width: 14px;
-        margin-left: 6px;
+      .btn-outline img {
+        width: 14px !important;
+        height: 14px !important;
+        margin-left: 6px !important;
       }
     }
     </style>
