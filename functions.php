@@ -131,6 +131,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-industry-intelligence.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-marketing-services.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-consulting-advisory.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-explore-sectors.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-explore-sectors-custom.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-stay-updated.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-featured-insight.php';
 require_once get_theme_file_path( 'inc/cmr-what-we-think.php' );
