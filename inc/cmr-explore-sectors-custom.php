@@ -78,7 +78,7 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
         <div class="cmr-explore-sectors-section" id="<?php echo esc_attr( $unique_id ); ?>_section">
             <div class="explore-sectors-container">
                 <!-- Section Title: Aap title ko yahan se edit kar sakte hain -->
-                <h2 class="explore-sectors-title">Explore Industry Intelligence<br>Across Sectors</h2>
+                <h2 class="explore-sectors-title">Our Offerings </h2>
             </div>
             
             <div class="explore-sectors-track-wrapper">
