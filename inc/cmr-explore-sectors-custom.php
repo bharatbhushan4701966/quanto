@@ -22,40 +22,53 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
         $sectors = array(
             array(
                 'number' => '.01',
-                'title'  => 'Automotive',
-                'desc'   => 'EV adoption, connected mobility and the consumer shifts reshaping the industry.',
+                'title'  => 'Syndicate Events',
+                'desc'   => 'Curated, high-impact gatherings that bring together key decision-makers for focused discussions, meaningful networking, and strategic collaborations',
                 'link'   => '#', // Apna Link yahan dalein
             ),
             array(
                 'number' => '.02',
-                'title'  => 'Consumer Tech',
-                'desc'   => 'Device ecosystems, buying behaviour and the technologies redefining how people live.',
+                'title'  => 'Executive Round Tables',
+                'desc'   => 'Engage with C-suite executives and industry leaders in intimate, high-value conversations to explore market trends, challenges, and growth opportunities.',
                 'link'   => '#',
             ),
             array(
                 'number' => '.03',
-                'title'  => 'Digital Supply Chain',
-                'desc'   => 'Automation, transformation and resilience strategies for markets that never stand still.',
+                'title'  => 'Awards & Recognition',
+                'desc'   => 'Position your brand as an industry leader by recognizing and celebrating excellence, fostering brand credibility and deeper market engagement.',
                 'link'   => '#',
             ),
             array(
                 'number' => '.04',
-                'title'  => 'Healthcare & Pharma',
-                'desc'   => 'Digital health transformation, AI diagnostics and patient care innovations.',
+                'title'  => 'Bespoke Programs',
+                'desc'   => 'Customized engagement strategies designed to align with your business objectives,amplify brand influence, and drive customer engagement.',
                 'link'   => '#',
             ),
             array(
                 'number' => '.05',
-                'title'  => 'IT & Telecom',
-                'desc'   => 'Connectivity trends, network evolution and enterprise adoption driving the next wave.',
+                'title'  => 'Marketing Campaigns',
+                'desc'   => 'Craft and execute high-impact campaigns that enhance brand visibility, generate quality leads, and position your solutions as industry must-haves.',
                 'link'   => '#',
             ),
             array(
                 'number' => '.06',
-                'title'  => 'Energy & Sustainability',
-                'desc'   => 'Renewable tech, smart grids, and global decarbonization strategies.',
+                'title'  => 'Webinars',
+                'desc'   => 'Host insightful, interactive sessions featuring top industry experts, delivering thought leadership while engaging directly with your target audience.',
                 'link'   => '#',
             ),
+            array(
+                'number' => '.07',
+                'title'  => 'Offsites',
+                'desc'   => 'Interact with your target customers in an uninterrupted, remote environment to establish thought leadership of your brand.',
+                'link'   => '#',
+            ),
+            array(
+                'number' => '.08',
+                'title'  => 'Influencer Marketing',
+                'desc'   => 'Leverage trusted industry voices and technology influencers to amplify brand awareness, build credibility, and drive high-quality engagement with your target audience.',
+                'link'   => '#',
+            ),
+            
             // 👉 Naya card add karne ke liye upar wala block copy karke yahan paste kar sakte hain.
         );
         /* ========================================================================== */
