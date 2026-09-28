@@ -182,7 +182,9 @@ class Quanto_Process extends Widget_Base {
                 'label'     => esc_html__( 'Card Text & Number Color', 'quanto' ),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} {{CURRENT_ITEM}} .process-number, {{WRAPPER}} {{CURRENT_ITEM}} .process-title, {{WRAPPER}} {{CURRENT_ITEM}} .process-description, {{WRAPPER}} {{CURRENT_ITEM}} p, {{WRAPPER}} {{CURRENT_ITEM}} a' => 'color: {{VALUE}} !important;',
+                    '{{WRAPPER}} {{CURRENT_ITEM}}.process-box, {{WRAPPER}} {{CURRENT_ITEM}} .process-number, {{WRAPPER}} {{CURRENT_ITEM}} .process-title, {{WRAPPER}} {{CURRENT_ITEM}} .process-description, {{WRAPPER}} {{CURRENT_ITEM}} p, {{WRAPPER}} {{CURRENT_ITEM}} a, {{WRAPPER}} {{CURRENT_ITEM}} .custom-btn' => 'color: {{VALUE}} !important; border-color: {{VALUE}} !important;',
+                    '{{WRAPPER}} {{CURRENT_ITEM}} .custom-btn .arrow' => 'border-top-color: {{VALUE}} !important; border-right-color: {{VALUE}} !important; border-color: {{VALUE}} !important;',
+                    '{{WRAPPER}} {{CURRENT_ITEM}} .custom-btn i, {{WRAPPER}} {{CURRENT_ITEM}} .custom-btn svg' => 'color: {{VALUE}} !important; fill: {{VALUE}} !important;',
                 ],
             ]
         );
@@ -202,7 +204,7 @@ class Quanto_Process extends Widget_Base {
                 'label'     => esc_html__( 'Card Background Color', 'quanto' ),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover' => 'background-color: {{VALUE}} !important;',
+                    '{{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover' => 'background-color: {{VALUE}} !important; background-image: none !important;',
                 ],
             ]
         );
@@ -239,7 +241,9 @@ class Quanto_Process extends Widget_Base {
                 'label'     => esc_html__( 'Card Text & Number Color', 'quanto' ),
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover .process-number, {{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover .process-title, {{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover .process-description, {{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover p, {{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover a' => 'color: {{VALUE}} !important;',
+                    '{{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover, {{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover .process-number, {{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover .process-title, {{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover .process-description, {{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover p, {{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover a, {{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover .custom-btn' => 'color: {{VALUE}} !important; border-color: {{VALUE}} !important;',
+                    '{{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover .custom-btn .arrow' => 'border-top-color: {{VALUE}} !important; border-right-color: {{VALUE}} !important; border-color: {{VALUE}} !important;',
+                    '{{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover .custom-btn i, {{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover .custom-btn svg' => 'color: {{VALUE}} !important; fill: {{VALUE}} !important;',
                 ],
             ]
         );

@@ -3521,13 +3521,13 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     display: inline-flex !important;
     align-items: center !important;
     gap: 8px !important;
-    color: #ffffff !important;
+    color: inherit;
     font-family: 'Instrument Sans', sans-serif !important;
     font-size: 14px !important;
     font-weight: 600 !important;
     text-decoration: none !important;
     margin-top: 15px !important;
-    border-bottom: 1px solid #ffffff !important;
+    border-bottom: 1px solid currentColor;
     padding-bottom: 2px !important;
     transition: color 0.3s ease, border-color 0.3s ease !important;
 }
@@ -3537,36 +3537,26 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     display: inline-block !important;
     width: 7px !important;
     height: 7px !important;
-    border-top: 2px solid #ffffff !important;
-    border-right: 2px solid #ffffff !important;
+    border-top: 2px solid currentColor;
+    border-right: 2px solid currentColor;
     transform: rotate(45deg) !important;
     transition: transform 0.3s ease, border-color 0.3s ease !important;
     margin-left: 4px !important;
 }
 
-/* Hover Effect on Process Box & Button */
-.process-box:hover .custom-btn,
-.custom-btn:hover,
-.explore-sector-card:hover .custom-btn {
-    color: #000000 !important;
-    border-bottom-color: #000000 !important;
+.process-box .custom-btn i,
+.process-box .custom-btn svg,
+.custom-btn i,
+.custom-btn svg {
+    color: currentColor;
+    fill: currentColor;
+    transition: color 0.3s ease, fill 0.3s ease !important;
 }
 
-.process-box:hover .custom-btn .arrow,
 .custom-btn:hover .arrow,
+.process-box:hover .custom-btn .arrow,
 .explore-sector-card:hover .custom-btn .arrow {
-    border-top-color: #000000 !important;
-    border-right-color: #000000 !important;
-    border-color: #000000 !important;
     transform: rotate(45deg) translate(2px, -2px) !important;
-}
-
-.process-box:hover .custom-btn i,
-.process-box:hover .custom-btn svg,
-.custom-btn:hover i,
-.custom-btn:hover svg {
-    color: #000000 !important;
-    fill: #000000 !important;
 }
 
 /* ==========================================================================
