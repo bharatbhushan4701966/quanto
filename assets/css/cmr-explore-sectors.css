@@ -87,28 +87,56 @@
     margin: 0;
 }
 
-.sector-explore-link {
-    font-size: 13px;
-    font-weight: 600;
-    color: #111;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    transition: color 0.3s ease;
-    border-bottom: 1px solid #111;
-    padding-bottom: 2px;
-    align-self: flex-start;
+.cmr-explore-sectors-section .sector-explore-link,
+.explore-sector-card .sector-explore-link,
+a.sector-explore-link {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #111111 !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    transition: color 0.3s ease, border-color 0.3s ease !important;
+    border-bottom: 1px solid #111111 !important;
+    padding-bottom: 2px !important;
+    align-self: flex-start !important;
 }
 
-.sector-explore-link i {
-    font-size: 10px;
-    transition: transform 0.3s ease;
+.cmr-explore-sectors-section .sector-explore-link i,
+.cmr-explore-sectors-section .sector-explore-link svg,
+.explore-sector-card .sector-explore-link i,
+.explore-sector-card .sector-explore-link svg,
+a.sector-explore-link i,
+a.sector-explore-link svg {
+    font-size: 10px !important;
+    color: #111111 !important;
+    fill: #111111 !important;
+    display: inline-block !important;
+    transition: color 0.3s ease, transform 0.3s ease, fill 0.3s ease !important;
 }
 
-.explore-sector-card:hover .sector-explore-link {
-    color: #4625A9;
-    border-bottom-color: #4625A9;
+.cmr-explore-sectors-section .explore-sector-card:hover .sector-explore-link,
+.cmr-explore-sectors-section .sector-explore-link:hover,
+.explore-sector-card:hover .sector-explore-link,
+.sector-explore-link:hover,
+a.sector-explore-link:hover {
+    color: #4625A9 !important;
+    border-bottom-color: #4625A9 !important;
+}
+
+.cmr-explore-sectors-section .explore-sector-card:hover .sector-explore-link i,
+.cmr-explore-sectors-section .explore-sector-card:hover .sector-explore-link svg,
+.cmr-explore-sectors-section .sector-explore-link:hover i,
+.cmr-explore-sectors-section .sector-explore-link:hover svg,
+.explore-sector-card:hover .sector-explore-link i,
+.explore-sector-card:hover .sector-explore-link svg,
+.sector-explore-link:hover i,
+.sector-explore-link:hover svg,
+a.sector-explore-link:hover i,
+a.sector-explore-link:hover svg {
+    color: #4625A9 !important;
+    fill: #4625A9 !important;
 }
 
 /* Specific active/hover style matching the 3rd card in mockup */
