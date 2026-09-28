@@ -5538,6 +5538,87 @@ ul.wp-block-list ol li {
     margin-bottom: 8px !important;
 }
 
+/* ==============================================================
+   WooCommerce My Account Navigation & Lists Bullet Reset Fix
+   Completely removes duplicate bullets and all bullets from
+   WooCommerce My Account navigation links and menus.
+   ============================================================== */
+.woocommerce-MyAccount-navigation ul,
+.woocommerce-MyAccount-navigation ul:not(.custom-ul),
+.woocommerce-account .woocommerce-MyAccount-navigation ul,
+.woocommerce-account .woocommerce-MyAccount-navigation ul:not(.custom-ul),
+.elementor-widget-text-editor .woocommerce-MyAccount-navigation ul,
+.elementor-widget-text-editor .woocommerce-MyAccount-navigation ul:not(.custom-ul),
+.elementor-widget-text-editor .woocommerce-account .woocommerce-MyAccount-navigation ul,
+.page--content .woocommerce-MyAccount-navigation ul,
+.entry-content .woocommerce-MyAccount-navigation ul {
+    list-style: none !important;
+    list-style-type: none !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.woocommerce-MyAccount-navigation ul li,
+.woocommerce-MyAccount-navigation ul:not(.custom-ul) li,
+.woocommerce-account .woocommerce-MyAccount-navigation ul li,
+.woocommerce-account .woocommerce-MyAccount-navigation ul:not(.custom-ul) li,
+.elementor-widget-text-editor .woocommerce-MyAccount-navigation ul li,
+.elementor-widget-text-editor .woocommerce-MyAccount-navigation ul:not(.custom-ul) li,
+.elementor-widget-text-editor .woocommerce-account .woocommerce-MyAccount-navigation ul li,
+.page--content .woocommerce-MyAccount-navigation ul li,
+.entry-content .woocommerce-MyAccount-navigation ul li,
+li.woocommerce-MyAccount-navigation-link {
+    list-style: none !important;
+    list-style-type: none !important;
+    display: block !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 12px !important;
+}
+
+.woocommerce-MyAccount-navigation ul li::before,
+.woocommerce-MyAccount-navigation ul li::after,
+.woocommerce-MyAccount-navigation ul:not(.custom-ul) li::before,
+.woocommerce-MyAccount-navigation ul:not(.custom-ul) li::after,
+.woocommerce-account .woocommerce-MyAccount-navigation ul li::before,
+.woocommerce-account .woocommerce-MyAccount-navigation ul li::after,
+.elementor-widget-text-editor .woocommerce-MyAccount-navigation ul li::before,
+.elementor-widget-text-editor .woocommerce-MyAccount-navigation ul li::after,
+.elementor-widget-text-editor .woocommerce-account .woocommerce-MyAccount-navigation ul li::before,
+.elementor-widget-text-editor .woocommerce-account .woocommerce-MyAccount-navigation ul li::after,
+.page--content .woocommerce-MyAccount-navigation ul > li::before,
+.page--content .woocommerce-MyAccount-navigation ul > li::after,
+.entry-content .woocommerce-MyAccount-navigation ul > li::before,
+.entry-content .woocommerce-MyAccount-navigation ul > li::after,
+li.woocommerce-MyAccount-navigation-link::before,
+li.woocommerce-MyAccount-navigation-link::after,
+li.woocommerce-MyAccount-navigation-link a::before,
+li.woocommerce-MyAccount-navigation-link a::after {
+    display: none !important;
+    content: none !important;
+}
+
+.woocommerce-MyAccount-navigation ul li a,
+li.woocommerce-MyAccount-navigation-link a {
+    display: inline-block !important;
+    text-decoration: none !important;
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+    color: #0F0F0F !important;
+    font-weight: 500 !important;
+    transition: color 0.2s ease !important;
+}
+
+.woocommerce-MyAccount-navigation ul li a:hover,
+li.woocommerce-MyAccount-navigation-link a:hover,
+li.woocommerce-MyAccount-navigation-link.is-active a {
+    color: #4820B0 !important;
+    font-weight: 600 !important;
+}
+
 /* Foundation Scroll Section Spacing Fix */
 [data-id="0e46dc4"],
 [data-id="0e46dc4"] > .e-con-inner,

@@ -3627,12 +3627,97 @@ add_filter( 'woocommerce_account_menu_items', function( $items ) {
 }, 999 );
 
 /**
- * If the <br> tag is injected by Elementor/WooCommerce core outside the label,
- * this CSS will force it to be hidden.
+ * If the <br> tag or bullet points are injected by Elementor/theme CSS into WooCommerce My Account navigation,
+ * this CSS will force them to be hidden in frontend and Elementor preview.
  */
-add_action( 'wp_head', function() {
-    echo '<style>.woocommerce-MyAccount-navigation-link a br { display: none !important; }</style>';
-});
+add_action( 'wp_head', 'cmr_woocommerce_myaccount_css_fix', 999 );
+add_action( 'admin_head', 'cmr_woocommerce_myaccount_css_fix', 999 );
+add_action( 'elementor/editor/after_enqueue_styles', 'cmr_woocommerce_myaccount_css_fix', 999 );
+function cmr_woocommerce_myaccount_css_fix() {
+    ?>
+    <style id="cmr-myaccount-bullet-fix">
+        .woocommerce-MyAccount-navigation ul,
+        .woocommerce-MyAccount-navigation ul:not(.custom-ul),
+        .woocommerce-account .woocommerce-MyAccount-navigation ul,
+        .woocommerce-account .woocommerce-MyAccount-navigation ul:not(.custom-ul),
+        .elementor-widget-text-editor .woocommerce-MyAccount-navigation ul,
+        .elementor-widget-text-editor .woocommerce-MyAccount-navigation ul:not(.custom-ul),
+        .elementor-widget-text-editor .woocommerce-account .woocommerce-MyAccount-navigation ul,
+        .page--content .woocommerce-MyAccount-navigation ul,
+        .entry-content .woocommerce-MyAccount-navigation ul {
+            list-style: none !important;
+            list-style-type: none !important;
+            padding-left: 0 !important;
+            margin-left: 0 !important;
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+        }
+
+        .woocommerce-MyAccount-navigation ul li,
+        .woocommerce-MyAccount-navigation ul:not(.custom-ul) li,
+        .woocommerce-account .woocommerce-MyAccount-navigation ul li,
+        .woocommerce-account .woocommerce-MyAccount-navigation ul:not(.custom-ul) li,
+        .elementor-widget-text-editor .woocommerce-MyAccount-navigation ul li,
+        .elementor-widget-text-editor .woocommerce-MyAccount-navigation ul:not(.custom-ul) li,
+        .elementor-widget-text-editor .woocommerce-account .woocommerce-MyAccount-navigation ul li,
+        .page--content .woocommerce-MyAccount-navigation ul li,
+        .entry-content .woocommerce-MyAccount-navigation ul li,
+        li.woocommerce-MyAccount-navigation-link {
+            list-style: none !important;
+            list-style-type: none !important;
+            display: block !important;
+            padding-left: 0 !important;
+            margin-left: 0 !important;
+            margin-top: 0 !important;
+            margin-bottom: 12px !important;
+        }
+
+        .woocommerce-MyAccount-navigation ul li::before,
+        .woocommerce-MyAccount-navigation ul li::after,
+        .woocommerce-MyAccount-navigation ul:not(.custom-ul) li::before,
+        .woocommerce-MyAccount-navigation ul:not(.custom-ul) li::after,
+        .woocommerce-account .woocommerce-MyAccount-navigation ul li::before,
+        .woocommerce-account .woocommerce-MyAccount-navigation ul li::after,
+        .elementor-widget-text-editor .woocommerce-MyAccount-navigation ul li::before,
+        .elementor-widget-text-editor .woocommerce-MyAccount-navigation ul li::after,
+        .elementor-widget-text-editor .woocommerce-account .woocommerce-MyAccount-navigation ul li::before,
+        .elementor-widget-text-editor .woocommerce-account .woocommerce-MyAccount-navigation ul li::after,
+        .page--content .woocommerce-MyAccount-navigation ul > li::before,
+        .page--content .woocommerce-MyAccount-navigation ul > li::after,
+        .entry-content .woocommerce-MyAccount-navigation ul > li::before,
+        .entry-content .woocommerce-MyAccount-navigation ul > li::after,
+        li.woocommerce-MyAccount-navigation-link::before,
+        li.woocommerce-MyAccount-navigation-link::after,
+        li.woocommerce-MyAccount-navigation-link a::before,
+        li.woocommerce-MyAccount-navigation-link a::after {
+            display: none !important;
+            content: none !important;
+        }
+
+        .woocommerce-MyAccount-navigation-link a br {
+            display: none !important;
+        }
+
+        .woocommerce-MyAccount-navigation ul li a,
+        li.woocommerce-MyAccount-navigation-link a {
+            display: inline-block !important;
+            text-decoration: none !important;
+            font-size: 16px !important;
+            line-height: 1.6 !important;
+            color: #0F0F0F !important;
+            font-weight: 500 !important;
+            transition: color 0.2s ease !important;
+        }
+
+        .woocommerce-MyAccount-navigation ul li a:hover,
+        li.woocommerce-MyAccount-navigation-link a:hover,
+        li.woocommerce-MyAccount-navigation-link.is-active a {
+            color: #4820B0 !important;
+            font-weight: 600 !important;
+        }
+    </style>
+    <?php
+}
 
 /**
 /**
