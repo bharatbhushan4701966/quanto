@@ -331,16 +331,26 @@
     initTeamAnimations();
 
 
-    // Style "The CMR network" button badge
+    // Style "The CMR network" button badge & center divider line
     function initCmrNetworkBadge() {
-        document.querySelectorAll('.elementor-button, .elementor-widget-button a, .elementor-widget-text-editor, .elementor-element, a, div, button').forEach(function(el) {
-            if (el.children.length <= 2) {
-                var txt = el.innerText ? el.innerText.trim().toLowerCase() : '';
-                if (txt === 'the cmr network' || txt === 'cmr network') {
-                    var target = el.closest('.elementor-button') || el.closest('.elementor-element-788846b') || el;
-                    target.classList.add('cmr-network-badge-btn');
-                    if (target.parentElement && !target.parentElement.classList.contains('cmr-network-btn-parent')) {
-                        target.parentElement.classList.add('cmr-network-btn-parent');
+        document.querySelectorAll('p, a, span, button, .elementor-button, .elementor-heading-title, div').forEach(function(el) {
+            var txt = (el.textContent || el.innerText || '').trim();
+            if (/^the cmr network$/i.test(txt) || /^cmr network$/i.test(txt)) {
+                // Ignore large wrapper containers
+                if (el.children.length > 2 && el.classList.contains('e-con')) return;
+                
+                var btn = el.closest('.elementor-button') || el.closest('a') || el;
+                btn.innerHTML = 'THE CMR NETWORK';
+                btn.classList.add('cmr-network-pill-btn');
+                
+                // Add divider line on row container
+                var parentContainer = btn.closest('.elementor-widget-container') || btn.parentElement;
+                if (parentContainer) {
+                    var row = parentContainer.closest('.e-con') || parentContainer.closest('.elementor-container') || parentContainer.parentElement;
+                    if (row) {
+                        row.classList.add('cmr-network-divider-wrapper');
+                    } else {
+                        parentContainer.classList.add('cmr-network-divider-wrapper');
                     }
                 }
             }

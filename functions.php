@@ -2474,8 +2474,8 @@ function cmr_testimonials_global_mobile_css() {
         text-align: center !important;
     }
 
-    /* Center Divider & Badge: "The CMR network" (Desktop) */
-    .cmr-network-btn-parent,
+    /* Center Divider & Badge: "The CMR network" (Desktop & All Pages) */
+    .cmr-network-divider-wrapper,
     .elementor-element-e642823,
     .page-id-52409 .elementor-element-e642823 {
         width: 100% !important;
@@ -2484,10 +2484,13 @@ function cmr_testimonials_global_mobile_css() {
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        margin: 28px auto !important;
+        margin: 36px auto !important;
         position: relative !important;
+        background: transparent !important;
+        border: none !important;
     }
 
+    .cmr-network-divider-wrapper::before,
     .elementor-element-e642823::before {
         content: '' !important;
         position: absolute !important;
@@ -2495,53 +2498,65 @@ function cmr_testimonials_global_mobile_css() {
         left: 0 !important;
         right: 0 !important;
         height: 1px !important;
-        background: #E2E8F0 !important;
+        background: #E5E7EB !important;
         z-index: 1 !important;
     }
 
-    .elementor-element-64a79c2 {
-        position: relative !important;
-        z-index: 2 !important;
-        display: inline-flex !important;
-        justify-content: center !important;
-        width: auto !important;
-        margin: 0 auto !important;
-    }
-
+    .cmr-network-pill-btn,
     .cmr-network-badge-btn,
     .elementor-element-788846b,
     .elementor-element-788846b .elementor-button,
     .elementor-element-64a79c2 .elementor-button,
+    a.cmr-network-pill-btn,
     a.cmr-network-badge-btn {
+        position: relative !important;
+        z-index: 2 !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
-        background: #4E26E2 !important;
-        background-color: #4E26E2 !important;
+        background: #5028E4 !important;
+        background-color: #5028E4 !important;
         color: #FFFFFF !important;
         fill: #FFFFFF !important;
         border-radius: 9999px !important;
-        padding: 10px 32px !important;
+        padding: 12px 36px !important;
+        width: auto !important;
+        max-width: max-content !important;
+        min-width: 200px !important;
+        height: auto !important;
+        min-height: 48px !important;
         border: none !important;
         outline: none !important;
         margin: 0 auto !important;
-        box-shadow: 0 4px 16px rgba(78, 38, 226, 0.25) !important;
+        box-shadow: 0 4px 14px rgba(80, 40, 228, 0.25) !important;
         text-decoration: none !important;
-        transition: all 0.3s ease !important;
+        font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.6px !important;
+        text-transform: uppercase !important;
+        line-height: 1 !important;
+        white-space: nowrap !important;
+        transition: all 0.25s ease !important;
         cursor: pointer !important;
+        box-sizing: border-box !important;
     }
 
+    .cmr-network-pill-btn:hover,
     .cmr-network-badge-btn:hover,
     .elementor-element-788846b:hover,
     .elementor-element-788846b .elementor-button:hover,
     .elementor-element-64a79c2 .elementor-button:hover {
-        background: #3E1CBF !important;
-        background-color: #3E1CBF !important;
+        background: #411ec5 !important;
+        background-color: #411ec5 !important;
         color: #FFFFFF !important;
         transform: translateY(-2px) !important;
-        box-shadow: 0 6px 22px rgba(78, 38, 226, 0.4) !important;
+        box-shadow: 0 6px 20px rgba(80, 40, 228, 0.35) !important;
     }
 
+    .cmr-network-pill-btn *,
+    .cmr-network-pill-btn p,
+    .cmr-network-pill-btn span,
     .cmr-network-badge-btn *,
     .cmr-network-badge-btn p,
     .cmr-network-badge-btn span,
@@ -2549,10 +2564,10 @@ function cmr_testimonials_global_mobile_css() {
     .elementor-element-788846b span,
     .elementor-element-788846b .elementor-button-text {
         color: #FFFFFF !important;
-        font-family: "Instrument Sans", sans-serif !important;
-        font-size: 13px !important;
+        font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif !important;
+        font-size: 14px !important;
         font-weight: 600 !important;
-        letter-spacing: 0.8px !important;
+        letter-spacing: 0.6px !important;
         text-transform: uppercase !important;
         margin: 0 !important;
         line-height: 1 !important;
