@@ -47,11 +47,11 @@ get_header();
 
 <style id="cmr-404-styles">
 .cmr-404-section {
-    min-height: calc(80vh - 100px);
+    min-height: calc(90vh - 60px);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 70px 20px 100px 20px;
+    padding: clamp(130px, 15vh, 170px) 24px clamp(90px, 12vh, 130px) 24px;
     background: radial-gradient(ellipse at 50% 25%, rgba(99, 102, 241, 0.05) 0%, rgba(255, 255, 255, 0) 70%);
     position: relative;
     overflow: hidden;
@@ -197,12 +197,12 @@ get_header();
 /* Tablet and Mobile adjustments */
 @media (max-width: 767.98px) {
     .cmr-404-section {
-        padding: 50px 16px 80px 16px;
+        padding: 120px 20px 80px 20px;
         min-height: auto;
     }
     
     .cmr-404-card {
-        margin-bottom: 5rem;
+        margin-bottom: 0;
     }
     
     .cmr-404-badge {
@@ -247,7 +247,7 @@ get_header();
 
 @media (max-width: 420px) {
     .cmr-404-section {
-        padding: 40px 14px 75px 14px;
+        padding: 110px 16px 70px 16px;
     }
     
     .cmr-404-hero-num {

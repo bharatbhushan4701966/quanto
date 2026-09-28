@@ -2475,43 +2475,45 @@ function cmr_testimonials_global_mobile_css() {
     }
 
     /* Center Divider & Badge: "The CMR network" (Desktop & All Pages) */
-    .cmr-network-divider-wrapper,
+    .cmr-network-widget-fullwidth,
     .elementor-element-e642823,
     .page-id-52409 .elementor-element-e642823 {
         width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+        flex-basis: 100% !important;
+        grid-column: 1 / -1 !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .cmr-network-divider-bar {
+        width: 100% !important;
         max-width: 1200px !important;
-        --width: 100% !important;
+        margin: 36px auto !important;
+        padding: 0 16px !important;
         display: flex !important;
         flex-direction: row !important;
         align-items: center !important;
         justify-content: center !important;
-        margin: 36px auto !important;
-        padding: 0 16px !important;
+        gap: 0 !important;
         box-sizing: border-box !important;
-        background: transparent !important;
-        border: none !important;
         position: relative !important;
+        z-index: 5 !important;
+        clear: both !important;
     }
 
-    .cmr-network-divider-wrapper::before,
-    .cmr-network-divider-wrapper::after,
-    .elementor-element-e642823::before,
-    .elementor-element-e642823::after {
-        content: '' !important;
+    .cmr-network-divider-bar .cmr-network-line,
+    .cmr-network-divider-bar .cmr-network-line-left,
+    .cmr-network-divider-bar .cmr-network-line-right {
         flex: 1 1 0% !important;
         height: 1px !important;
         background: #E5E7EB !important;
+        background-color: #E5E7EB !important;
+        border: none !important;
         display: block !important;
-        position: static !important;
-        transform: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        z-index: 1 !important;
-    }
-
-    .cmr-network-divider-wrapper .elementor-widget,
-    .cmr-network-divider-wrapper .elementor-widget-container {
-        display: contents !important;
+        min-width: 20px !important;
     }
 
     .cmr-network-pill-btn,
@@ -2532,21 +2534,21 @@ function cmr_testimonials_global_mobile_css() {
         color: #FFFFFF !important;
         fill: #FFFFFF !important;
         border-radius: 9999px !important;
-        padding: 0 36px !important;
+        padding: 0 32px !important;
         width: auto !important;
         max-width: max-content !important;
-        min-width: 200px !important;
-        height: 48px !important;
-        min-height: 48px !important;
-        max-height: 48px !important;
-        line-height: 48px !important;
+        min-width: 190px !important;
+        height: 46px !important;
+        min-height: 46px !important;
+        max-height: 46px !important;
+        line-height: 46px !important;
         border: none !important;
         outline: none !important;
         margin: 0 !important;
         box-shadow: 0 4px 14px rgba(80, 40, 228, 0.25) !important;
         text-decoration: none !important;
         font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif !important;
-        font-size: 14px !important;
+        font-size: 13.5px !important;
         font-weight: 600 !important;
         letter-spacing: 0.6px !important;
         text-transform: uppercase !important;
@@ -2561,7 +2563,8 @@ function cmr_testimonials_global_mobile_css() {
     .cmr-network-badge-btn:hover,
     .elementor-element-788846b:hover,
     .elementor-element-788846b .elementor-button:hover,
-    .elementor-element-64a79c2 .elementor-button:hover {
+    .elementor-element-64a79c2 .elementor-button:hover,
+    a.cmr-network-pill-btn:hover {
         background: #411ec5 !important;
         background-color: #411ec5 !important;
         color: #FFFFFF !important;
@@ -2580,12 +2583,12 @@ function cmr_testimonials_global_mobile_css() {
     .elementor-element-788846b .elementor-button-text {
         color: #FFFFFF !important;
         font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif !important;
-        font-size: 14px !important;
+        font-size: inherit !important;
         font-weight: 600 !important;
         letter-spacing: 0.6px !important;
         text-transform: uppercase !important;
         margin: 0 !important;
-        line-height: 1 !important;
+        line-height: inherit !important;
         white-space: nowrap !important;
     }
 
@@ -2677,23 +2680,28 @@ function cmr_testimonials_global_mobile_css() {
             font-size: 13px !important;
         }
 
-        .elementor-element-e642823,
-        .page-id-52409 .elementor-element-e642823 {
-            margin: 18px 0 !important;
+        .cmr-network-divider-bar {
+            margin: 28px auto !important;
+            padding: 0 12px !important;
         }
 
-        .elementor-element-e642823::before {
-            left: 5% !important;
-            right: 5% !important;
+        .cmr-network-pill-btn,
+        .cmr-network-badge-btn,
+        .elementor-element-788846b,
+        .elementor-element-788846b .elementor-button,
+        a.cmr-network-pill-btn {
+            padding: 0 20px !important;
+            min-width: 150px !important;
+            height: 38px !important;
+            min-height: 38px !important;
+            max-height: 38px !important;
+            line-height: 38px !important;
+            font-size: 11.5px !important;
+            letter-spacing: 0.5px !important;
         }
 
-        .elementor-element-788846b {
-            padding: 8px 24px !important;
-        }
-
-        .elementor-element-788846b p {
-            font-size: 12px !important;
-            letter-spacing: 0.8px !important;
+        .cmr-network-divider-bar .cmr-network-line {
+            min-width: 15px !important;
         }
     }
 

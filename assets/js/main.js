@@ -331,32 +331,59 @@
     initTeamAnimations();
 
 
-    // Style "The CMR network" button badge & center divider line
+    // Style "The CMR network" button badge & center divider line across all screens & pages
     function initCmrNetworkBadge() {
-        document.querySelectorAll('p, a, span, button, .elementor-button, .elementor-heading-title, div').forEach(function(el) {
-            var txt = (el.textContent || el.innerText || '').trim();
-            if (/^the cmr network$/i.test(txt) || /^cmr network$/i.test(txt)) {
-                // Ignore large wrapper containers
-                if (el.children.length > 2 && el.classList.contains('e-con')) return;
+        var elements = document.querySelectorAll('.elementor-button, .elementor-button-text, .elementor-heading-title, a, button, p');
+        elements.forEach(function(el) {
+            var rawTxt = (el.textContent || el.innerText || '').trim();
+            if (/^(the\s+)?cmr\s+network$/i.test(rawTxt)) {
+                if (el.children.length > 2) return;
                 
                 var btn = el.closest('.elementor-button') || el.closest('a') || el;
-                btn.innerHTML = 'THE CMR NETWORK';
+                if (btn.dataset.cmrDone === 'true') return;
+                btn.dataset.cmrDone = 'true';
+                
+                btn.innerHTML = '<span>THE CMR NETWORK</span>';
                 btn.classList.add('cmr-network-pill-btn');
                 
-                // Add divider line on row container
-                var parentContainer = btn.closest('.elementor-widget-container') || btn.parentElement;
-                if (parentContainer) {
-                    var row = parentContainer.closest('.e-con') || parentContainer.closest('.elementor-container') || parentContainer.parentElement;
-                    if (row) {
-                        row.classList.add('cmr-network-divider-wrapper');
-                    } else {
-                        parentContainer.classList.add('cmr-network-divider-wrapper');
+                // Ensure parent widget spans 100% width
+                var widget = btn.closest('.elementor-widget') || btn.closest('.elementor-widget-button') || btn.parentElement;
+                if (widget) {
+                    widget.classList.add('cmr-network-widget-fullwidth');
+                    var container = widget.closest('.e-con') || widget.closest('.elementor-container') || widget.parentElement;
+                    if (container && container.children.length === 1) {
+                        container.classList.add('cmr-network-widget-fullwidth');
                     }
+                }
+                
+                // Wrap in full-width divider bar with left & right lines
+                if (!btn.parentElement.classList.contains('cmr-network-divider-bar')) {
+                    var bar = document.createElement('div');
+                    bar.className = 'cmr-network-divider-bar';
+                    
+                    var lineLeft = document.createElement('span');
+                    lineLeft.className = 'cmr-network-line cmr-network-line-left';
+                    
+                    var lineRight = document.createElement('span');
+                    lineRight.className = 'cmr-network-line cmr-network-line-right';
+                    
+                    btn.parentNode.insertBefore(bar, btn);
+                    bar.appendChild(lineLeft);
+                    bar.appendChild(btn);
+                    bar.appendChild(lineRight);
                 }
             }
         });
     }
-    initCmrNetworkBadge();
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initCmrNetworkBadge);
+    } else {
+        initCmrNetworkBadge();
+    }
+    $(document).ready(initCmrNetworkBadge);
     $(window).on('elementor/frontend/init', initCmrNetworkBadge);
-})(jQuery);
+    window.addEventListener('load', initCmrNetworkBadge);
+})(jQuery);
+
 

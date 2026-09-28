@@ -98,33 +98,45 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
             
             <script>
             document.addEventListener("DOMContentLoaded", function() {
-                if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-                    gsap.registerPlugin(ScrollTrigger);
-                    
-                    let track = document.getElementById("<?php echo esc_js( $unique_id ); ?>_track");
-                    let section = document.getElementById("<?php echo esc_js( $unique_id ); ?>_section");
-                    
-                    if (track && section) {
-                        function getScrollAmount() {
-                            let trackWidth = track.scrollWidth;
-                            return -(trackWidth - window.innerWidth + 40); 
-                        }
+                function initCmrExploreScroll() {
+                    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                        gsap.registerPlugin(ScrollTrigger);
                         
-                        const tween = gsap.to(track, {
-                            x: getScrollAmount,
-                            ease: "none"
-                        });
-        
-                        ScrollTrigger.create({
-                            trigger: section,
-                            start: "center center",
-                            end: () => `+=${getScrollAmount() * -1}`,
-                            pin: true,
-                            animation: tween,
-                            scrub: 1,
-                            invalidateOnRefresh: true
-                        });
+                        let track = document.getElementById("<?php echo esc_js( $unique_id ); ?>_track");
+                        let section = document.getElementById("<?php echo esc_js( $unique_id ); ?>_section");
+                        
+                        if (track && section) {
+                            function getHeaderOffset() {
+                                let hdr = document.querySelector('header.header, .blog-header-wrapper, header');
+                                return hdr ? hdr.offsetHeight : 90;
+                            }
+
+                            function getScrollAmount() {
+                                let trackWidth = track.scrollWidth;
+                                return -(trackWidth - window.innerWidth + 60); 
+                            }
+                            
+                            const tween = gsap.to(track, {
+                                x: getScrollAmount,
+                                ease: "none"
+                            });
+            
+                            ScrollTrigger.create({
+                                trigger: section,
+                                start: () => "top " + getHeaderOffset() + "px",
+                                end: () => `+=${getScrollAmount() * -1}`,
+                                pin: true,
+                                animation: tween,
+                                scrub: 1,
+                                invalidateOnRefresh: true
+                            });
+                        }
                     }
+                }
+                
+                initCmrExploreScroll();
+                if (window.jQuery) {
+                    jQuery(window).on('elementor/frontend/init', initCmrExploreScroll);
                 }
             });
             </script>
