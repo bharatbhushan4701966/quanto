@@ -708,7 +708,7 @@ class Quanto_Process extends Widget_Base {
             <?php foreach ($settings['process_list'] as $process) : 
                 $item_id = !empty($process['_id']) ? $process['_id'] : '';
                 $repeater_class = $item_id ? ' elementor-repeater-item-' . esc_attr($item_id) : '';
-
+            ?>
                 <div class="process-box scroll-item<?php echo $repeater_class; ?>">
                     <div class="process-card-overlay" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; border-radius: inherit;"></div>
 
