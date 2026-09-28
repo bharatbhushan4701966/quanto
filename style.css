@@ -5753,18 +5753,23 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
 }
 
 /* ==========================================================================
-   Leadership Page - Management Team Cards (#manager) - Figma Design Match
+   Management Team & Leadership Cards (.quanto-team-box) - Figma Design Match
    ========================================================================== */
 
 /* 1. Row Container: Centered with max-width */
-#manager .row {
+.elementor-widget-quanto-team-theme .row,
+.elementor-widget-team .row,
+#manager .row,
+#practice .row {
     max-width: 1040px !important;
     margin-left: auto !important;
     margin-right: auto !important;
 }
 
 /* 2. Card Container: Wider cards (~460px-480px) */
-#manager .quanto-team-box {
+.quanto-team-box,
+#manager .quanto-team-box,
+#practice .quanto-team-box {
     margin: 0 auto 30px auto !important;
     display: block !important;
     max-width: 480px !important;
@@ -5772,7 +5777,9 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
 }
 
 /* 3. Image Container: Perfect SQUARE (1:1 aspect ratio) like Figma */
-#manager .quanto-team-box .team-thumb {
+.quanto-team-box .team-thumb,
+#manager .quanto-team-box .team-thumb,
+#practice .quanto-team-box .team-thumb {
     position: relative !important;
     width: 100% !important;
     max-width: 100% !important;
@@ -5784,8 +5791,8 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     cursor: pointer !important;
 }
 
-#manager .quanto-team-box .team-thumb a.team-thumb-link,
-.quanto-team-box .team-thumb a.team-thumb-link {
+.quanto-team-box .team-thumb a.team-thumb-link,
+#manager .quanto-team-box .team-thumb a.team-thumb-link {
     display: block !important;
     width: 100% !important;
     height: 100% !important;
@@ -5795,7 +5802,9 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
 }
 
 /* 4. Image: Fills Square, focused on face & shoulders */
-#manager .quanto-team-box .team-thumb img {
+.quanto-team-box .team-thumb img,
+#manager .quanto-team-box .team-thumb img,
+#practice .quanto-team-box .team-thumb img {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
@@ -5805,6 +5814,10 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
 }
 
 /* 5. Remove arrow icon and dark gradient overlay */
+.quanto-team-box .team-thumb::before,
+.quanto-team-box .team-thumb::after,
+.quanto-team-box:hover .team-thumb::before,
+.quanto-team-box:hover .team-thumb::after,
 #manager .quanto-team-box .team-thumb::before,
 #manager .quanto-team-box .team-thumb::after,
 #manager .quanto-team-box:hover .team-thumb::before,
@@ -5820,13 +5833,19 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
 }
 
 /* 6. Typography & Content Alignment */
-#manager .quanto-team-box .team-content {
+.quanto-team-box .team-content,
+#manager .quanto-team-box .team-content,
+#practice .quanto-team-box .team-content {
     margin-top: 20px !important;
     text-align: left !important;
 }
 
+.quanto-team-box .team-member-name,
+.quanto-team-box .team-member-name a,
 #manager .quanto-team-box .team-member-name,
-#manager .quanto-team-box .team-member-name a {
+#manager .quanto-team-box .team-member-name a,
+#practice .quanto-team-box .team-member-name,
+#practice .quanto-team-box .team-member-name a {
     font-family: 'Instrument Sans', sans-serif !important;
     font-size: 28px !important;
     font-weight: 700 !important;
@@ -5837,7 +5856,9 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     text-decoration: none !important;
 }
 
-#manager .quanto-team-box .team-member-position {
+.quanto-team-box .team-member-position,
+#manager .quanto-team-box .team-member-position,
+#practice .quanto-team-box .team-member-position {
     font-family: 'Instrument Sans', sans-serif !important;
     font-size: 15px !important;
     color: #555555 !important;
@@ -5847,6 +5868,7 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
 }
 
 /* Social Icons */
+.quanto-team-box .team-content .custom-ul,
 #manager .quanto-team-box .team-content .custom-ul,
 #practice .quanto-team-box .team-content .custom-ul {
     display: flex !important;
@@ -5856,12 +5878,14 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     list-style: none !important;
 }
 
+.quanto-team-box .team-content .custom-ul li,
 #manager .quanto-team-box .team-content .custom-ul li,
 #practice .quanto-team-box .team-content .custom-ul li {
     margin: 0 !important;
     padding: 0 !important;
 }
 
+.quanto-team-box .team-content .custom-ul li a,
 #manager .quanto-team-box .team-content .custom-ul li a,
 #practice .quanto-team-box .team-content .custom-ul li a {
     display: inline-flex !important;
@@ -5878,12 +5902,14 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     transition: color 0.2s ease !important;
 }
 
+.quanto-team-box .team-content .custom-ul li a:hover,
 #manager .quanto-team-box .team-content .custom-ul li a:hover,
 #practice .quanto-team-box .team-content .custom-ul li a:hover {
     color: #6A35FF !important;
     background: transparent !important;
 }
 
+.quanto-team-box .team-content .custom-ul li a svg,
 #manager .quanto-team-box .team-content .custom-ul li a svg,
 #practice .quanto-team-box .team-content .custom-ul li a svg {
     width: 22px !important;
@@ -5892,6 +5918,7 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     color: inherit !important;
 }
 
+.quanto-team-box .team-content .custom-ul li a i,
 #manager .quanto-team-box .team-content .custom-ul li a i,
 #practice .quanto-team-box .team-content .custom-ul li a i {
     font-size: 22px !important;
@@ -5900,11 +5927,15 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
 
 /* 7. Column alignment on desktop to keep gap balanced like Figma */
 @media (min-width: 992px) {
+    .elementor-widget-quanto-team-theme .col-xl-6:nth-child(odd) .quanto-team-box,
+    .elementor-widget-quanto-team-theme .col-md-6:nth-child(odd) .quanto-team-box,
     #manager .col-xl-6:nth-child(odd) .quanto-team-box,
     #manager .col-md-6:nth-child(odd) .quanto-team-box {
         margin-right: 20px !important;
         margin-left: auto !important;
     }
+    .elementor-widget-quanto-team-theme .col-xl-6:nth-child(even) .quanto-team-box,
+    .elementor-widget-quanto-team-theme .col-md-6:nth-child(even) .quanto-team-box,
     #manager .col-xl-6:nth-child(even) .quanto-team-box,
     #manager .col-md-6:nth-child(even) .quanto-team-box {
         margin-left: 20px !important;
@@ -6031,7 +6062,9 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     }
 
     #manager,
-    #practice {
+    #practice,
+    .elementor-widget-quanto-team-theme,
+    .elementor-widget-team {
         padding-left: 16px !important;
         padding-right: 16px !important;
         width: 100% !important;
@@ -6041,7 +6074,9 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     }
 
     #manager .elementor-widget-container,
-    #practice .elementor-widget-container {
+    #practice .elementor-widget-container,
+    .elementor-widget-quanto-team-theme .elementor-widget-container,
+    .elementor-widget-team .elementor-widget-container {
         width: 100% !important;
         max-width: 100% !important;
         margin: 0 !important;
@@ -6050,6 +6085,8 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     }
 
     /* 2. Grid layout: exactly 2 equal columns on mobile */
+    .elementor-widget-quanto-team-theme .row,
+    .elementor-widget-team .row,
     #manager .row,
     #practice .row {
         display: grid !important;
@@ -6064,6 +6101,9 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
         box-sizing: border-box !important;
     }
 
+    .elementor-widget-quanto-team-theme .col-xl-6,
+    .elementor-widget-quanto-team-theme .col-md-6,
+    .elementor-widget-quanto-team-theme .col-sm-12,
     #manager .col-xl-6,
     #manager .col-md-6,
     #manager .col-sm-12,
@@ -6077,6 +6117,7 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     }
 
     /* 3. Card Container */
+    .quanto-team-box,
     #manager .quanto-team-box,
     #practice .quanto-team-box {
         display: flex !important;
@@ -6088,6 +6129,7 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     }
 
     /* 4. Card Image Thumb: 3:4 portrait like Figma */
+    .quanto-team-box .team-thumb,
     #manager .quanto-team-box .team-thumb,
     #practice .quanto-team-box .team-thumb {
         position: relative !important;
@@ -6100,6 +6142,7 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
         border-radius: 0 !important;
     }
 
+    .quanto-team-box .team-thumb img,
     #manager .quanto-team-box .team-thumb img,
     #practice .quanto-team-box .team-thumb img {
         width: 100% !important;
@@ -6109,6 +6152,7 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     }
 
     /* 5. Card Content Box with 1px border */
+    .quanto-team-box .team-content,
     #manager .quanto-team-box .team-content,
     #practice .quanto-team-box .team-content {
         margin-top: 0 !important;
@@ -6123,6 +6167,8 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
         text-align: left !important;
     }
 
+    .quanto-team-box .team-member-name,
+    .quanto-team-box .team-member-name a,
     #manager .quanto-team-box .team-member-name,
     #manager .quanto-team-box .team-member-name a,
     #practice .quanto-team-box .team-member-name,
@@ -6136,6 +6182,7 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
         text-decoration: none !important;
     }
 
+    .quanto-team-box .team-member-position,
     #manager .quanto-team-box .team-member-position,
     #practice .quanto-team-box .team-member-position {
         font-size: 12px !important;
@@ -6146,6 +6193,7 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
         min-height: 33px !important;
     }
 
+    .quanto-team-box .team-content .custom-ul,
     #manager .quanto-team-box .team-content .custom-ul,
     #practice .quanto-team-box .team-content .custom-ul {
         display: flex !important;
@@ -6155,6 +6203,7 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
         list-style: none !important;
     }
 
+    .quanto-team-box .team-content .custom-ul li a,
     #manager .quanto-team-box .team-content .custom-ul li a,
     #practice .quanto-team-box .team-content .custom-ul li a {
         width: auto !important;
@@ -6163,6 +6212,7 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
         background-color: transparent !important;
     }
 
+    .quanto-team-box .team-content .custom-ul li a svg,
     #manager .quanto-team-box .team-content .custom-ul li a svg,
     #practice .quanto-team-box .team-content .custom-ul li a svg {
         width: 18px !important;
@@ -6170,6 +6220,7 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
         fill: currentColor !important;
     }
 
+    .quanto-team-box .team-content .custom-ul li a i,
     #manager .quanto-team-box .team-content .custom-ul li a i,
     #practice .quanto-team-box .team-content .custom-ul li a i {
         font-size: 18px !important;

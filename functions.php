@@ -1018,49 +1018,7 @@ add_action('wp_footer', function() {
     <?php
 });
 
-// Re-add Hover CSS for Team Box Image
-add_action('wp_head', function() {
-    ?>
-    <style id="quanto-team-hover-css">
-    html body .quanto-team-box .team-thumb::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: rgba(0,0,0,0.4);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        pointer-events: none;
-        z-index: 1;
-    }
-    html body .quanto-team-box:hover .team-thumb::after {
-        opacity: 1;
-    }
-    html body .quanto-team-box .team-thumb::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 60px;
-        height: 60px;
-        background-color: transparent;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='7' y1='17' x2='17' y2='7'%3E%3C/line%3E%3Cpolyline points='7 7 17 7 17 17'%3E%3C/polyline%3E%3C/svg%3E");
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-        border-radius: 0;
-        opacity: 0;
-        transition: all 0.3s ease;
-        z-index: 2;
-        pointer-events: none;
-    }
-    html body .quanto-team-box:hover .team-thumb::before {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.1);
-    }
-    </style>
-    <?php
-});
+// Clean Figma Style for Team Box (no arrow overlay, clean 1:1 photos)
 
 // Move social icons from image thumb to below text, and link team image to member profile
 add_action('wp_footer', function() {
