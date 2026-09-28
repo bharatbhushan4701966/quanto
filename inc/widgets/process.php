@@ -159,7 +159,7 @@ class Quanto_Process extends Widget_Base {
                     'url' => '',
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} {{CURRENT_ITEM}}.process-box' => 'background-image: url("{{URL}}") !important; background-size: cover !important; background-position: center center !important; background-repeat: no-repeat !important;',
+                    '{{WRAPPER}} {{CURRENT_ITEM}}.process-box .process-card-bg-layer, {{WRAPPER}} {{CURRENT_ITEM}}.process-box' => 'background-image: url("{{URL}}") !important; background-size: cover !important; background-position: center center !important; background-repeat: no-repeat !important;',
                 ],
             ]
         );
@@ -205,6 +205,7 @@ class Quanto_Process extends Widget_Base {
                 'type'      => Controls_Manager::COLOR,
                 'selectors' => [
                     '{{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover' => 'background-color: {{VALUE}} !important; background-image: none !important;',
+                    '{{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover .process-card-bg-layer' => 'opacity: 0 !important;',
                 ],
             ]
         );
@@ -218,7 +219,7 @@ class Quanto_Process extends Widget_Base {
                     'url' => '',
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover' => 'background-image: url("{{URL}}") !important; background-size: cover !important; background-position: center center !important; background-repeat: no-repeat !important;',
+                    '{{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover .process-card-bg-layer' => 'background-image: url("{{URL}}") !important; opacity: 1 !important;',
                 ],
             ]
         );
@@ -714,7 +715,8 @@ class Quanto_Process extends Widget_Base {
                 $repeater_class = $item_id ? ' elementor-repeater-item-' . esc_attr($item_id) : '';
             ?>
                 <div class="process-box scroll-item<?php echo $repeater_class; ?>">
-                    <div class="process-card-overlay" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; border-radius: inherit;"></div>
+                    <div class="process-card-bg-layer" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; border-radius: inherit; transition: opacity 0.35s ease-in-out; background-size: cover; background-position: center center; background-repeat: no-repeat;"></div>
+                    <div class="process-card-overlay" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; border-radius: inherit; transition: background 0.35s ease-in-out, opacity 0.35s ease-in-out;"></div>
 
                     <?php if (!empty($process['number'])) : ?>
                         <span class="process-number text-color-white" style="position: relative; z-index: 2;">

@@ -159,7 +159,7 @@ max-width:512px !important ;
 
 /* ===== HOVER ===== */
 .process-box:hover {
-  background-color: #ffffff;
+  /* Dynamic hover controlled via Elementor */
 }
 
 /* ===== BUTTON ===== */
