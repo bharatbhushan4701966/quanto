@@ -7041,9 +7041,12 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     }
 }
 
-/* Industry Stack Section Wrapper Padding */
+/* Industry Stack Section Wrapper Padding & List Alignment */
 .cmr-stack-wrapper {
     padding: 20px 0px !important;
+}
+.cmr-stack-list {
+    margin-top: 0 !important;
 }
 
 /* Featured Insight Wrapper Padding Reset */

@@ -94,7 +94,6 @@ if ( ! function_exists( 'cmr_industry_stack_shortcode' ) ) {
                 list-style: none;
                 padding: 0;
                 margin: 0;
-                margin-top: auto;
             }
             .cmr-stack-list li {
                 position: relative;
