@@ -2482,24 +2482,36 @@ function cmr_testimonials_global_mobile_css() {
         max-width: 1200px !important;
         --width: 100% !important;
         display: flex !important;
+        flex-direction: row !important;
         align-items: center !important;
         justify-content: center !important;
         margin: 36px auto !important;
-        position: relative !important;
+        padding: 0 16px !important;
+        box-sizing: border-box !important;
         background: transparent !important;
         border: none !important;
+        position: relative !important;
     }
 
     .cmr-network-divider-wrapper::before,
-    .elementor-element-e642823::before {
+    .cmr-network-divider-wrapper::after,
+    .elementor-element-e642823::before,
+    .elementor-element-e642823::after {
         content: '' !important;
-        position: absolute !important;
-        top: 50% !important;
-        left: 0 !important;
-        right: 0 !important;
+        flex: 1 1 0% !important;
         height: 1px !important;
         background: #E5E7EB !important;
+        display: block !important;
+        position: static !important;
+        transform: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
         z-index: 1 !important;
+    }
+
+    .cmr-network-divider-wrapper .elementor-widget,
+    .cmr-network-divider-wrapper .elementor-widget-container {
+        display: contents !important;
     }
 
     .cmr-network-pill-btn,
@@ -2509,6 +2521,7 @@ function cmr_testimonials_global_mobile_css() {
     .elementor-element-64a79c2 .elementor-button,
     a.cmr-network-pill-btn,
     a.cmr-network-badge-btn {
+        flex-shrink: 0 !important;
         position: relative !important;
         z-index: 2 !important;
         display: inline-flex !important;
@@ -2519,15 +2532,17 @@ function cmr_testimonials_global_mobile_css() {
         color: #FFFFFF !important;
         fill: #FFFFFF !important;
         border-radius: 9999px !important;
-        padding: 12px 36px !important;
+        padding: 0 36px !important;
         width: auto !important;
         max-width: max-content !important;
         min-width: 200px !important;
-        height: auto !important;
+        height: 48px !important;
         min-height: 48px !important;
+        max-height: 48px !important;
+        line-height: 48px !important;
         border: none !important;
         outline: none !important;
-        margin: 0 auto !important;
+        margin: 0 !important;
         box-shadow: 0 4px 14px rgba(80, 40, 228, 0.25) !important;
         text-decoration: none !important;
         font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif !important;
@@ -2535,11 +2550,11 @@ function cmr_testimonials_global_mobile_css() {
         font-weight: 600 !important;
         letter-spacing: 0.6px !important;
         text-transform: uppercase !important;
-        line-height: 1 !important;
         white-space: nowrap !important;
         transition: all 0.25s ease !important;
         cursor: pointer !important;
         box-sizing: border-box !important;
+        vertical-align: middle !important;
     }
 
     .cmr-network-pill-btn:hover,
