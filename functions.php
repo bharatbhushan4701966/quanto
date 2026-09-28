@@ -2475,6 +2475,7 @@ function cmr_testimonials_global_mobile_css() {
     }
 
     /* Center Divider & Badge: "The CMR network" (Desktop) */
+    .cmr-network-btn-parent,
     .elementor-element-e642823,
     .page-id-52409 .elementor-element-e642823 {
         width: 100% !important;
@@ -2507,25 +2508,51 @@ function cmr_testimonials_global_mobile_css() {
         margin: 0 auto !important;
     }
 
-    .elementor-element-788846b {
+    .cmr-network-badge-btn,
+    .elementor-element-788846b,
+    .elementor-element-788846b .elementor-button,
+    .elementor-element-64a79c2 .elementor-button,
+    a.cmr-network-badge-btn {
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
-        background: #0F172A !important;
+        background: #4E26E2 !important;
+        background-color: #4E26E2 !important;
         color: #FFFFFF !important;
+        fill: #FFFFFF !important;
         border-radius: 9999px !important;
-        padding: 10px 28px !important;
+        padding: 10px 32px !important;
         border: none !important;
+        outline: none !important;
         margin: 0 auto !important;
-        box-shadow: 0 4px 16px rgba(15, 23, 42, 0.15) !important;
+        box-shadow: 0 4px 16px rgba(78, 38, 226, 0.25) !important;
+        text-decoration: none !important;
+        transition: all 0.3s ease !important;
+        cursor: pointer !important;
     }
 
-    .elementor-element-788846b p {
+    .cmr-network-badge-btn:hover,
+    .elementor-element-788846b:hover,
+    .elementor-element-788846b .elementor-button:hover,
+    .elementor-element-64a79c2 .elementor-button:hover {
+        background: #3E1CBF !important;
+        background-color: #3E1CBF !important;
+        color: #FFFFFF !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 22px rgba(78, 38, 226, 0.4) !important;
+    }
+
+    .cmr-network-badge-btn *,
+    .cmr-network-badge-btn p,
+    .cmr-network-badge-btn span,
+    .elementor-element-788846b p,
+    .elementor-element-788846b span,
+    .elementor-element-788846b .elementor-button-text {
         color: #FFFFFF !important;
         font-family: "Instrument Sans", sans-serif !important;
         font-size: 13px !important;
         font-weight: 600 !important;
-        letter-spacing: 1px !important;
+        letter-spacing: 0.8px !important;
         text-transform: uppercase !important;
         margin: 0 !important;
         line-height: 1 !important;

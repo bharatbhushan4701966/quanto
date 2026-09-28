@@ -331,17 +331,22 @@
     initTeamAnimations();
 
 
-    // Remove number and dash from service titles dynamically
-    if ($('.service-title').length > 0) {
-        $('.service-title').each(function() {
-            $(this).find('span').remove();
-            var content = $(this).html();
-            // Remove leading dashes, spaces, and special dash characters
-            content = content.replace(/^\s*[─—\-–•·\s|~]+\s*/, '');
-            content = content.replace(/\s*[─—\-–]\s*/g, ' ');
-            $(this).html(content.trim());
-            $(this).css('visibility', 'visible');
+    // Style "The CMR network" button badge
+    function initCmrNetworkBadge() {
+        document.querySelectorAll('.elementor-button, .elementor-widget-button a, .elementor-widget-text-editor, .elementor-element, a, div, button').forEach(function(el) {
+            if (el.children.length <= 2) {
+                var txt = el.innerText ? el.innerText.trim().toLowerCase() : '';
+                if (txt === 'the cmr network' || txt === 'cmr network') {
+                    var target = el.closest('.elementor-button') || el.closest('.elementor-element-788846b') || el;
+                    target.classList.add('cmr-network-badge-btn');
+                    if (target.parentElement && !target.parentElement.classList.contains('cmr-network-btn-parent')) {
+                        target.parentElement.classList.add('cmr-network-btn-parent');
+                    }
+                }
+            }
         });
     }
+    initCmrNetworkBadge();
+    $(window).on('elementor/frontend/init', initCmrNetworkBadge);
 })(jQuery);
 
