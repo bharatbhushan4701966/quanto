@@ -6041,6 +6041,128 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     line-height: 1.35 !important;
 }
 
+/* ==========================================================================
+   Advisory Board Cards (Vijay Sethi & V Srinivasa Rao) - Match Practice Heads Layout
+   ========================================================================== */
+.row:has(a[href*="vijay-sethi"]),
+.row:has(a[href*="srinivasa"]),
+.elementor-widget:has(a[href*="vijay-sethi"]) .row,
+.elementor-widget:has(a[href*="srinivasa"]) .row,
+.e-con:has(a[href*="vijay-sethi"]) .row,
+.e-con:has(a[href*="srinivasa"]) .row,
+#advisory .row,
+.advisory-board .row {
+    max-width: 760px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100% !important;
+}
+
+.quanto-team-box:has(a[href*="vijay-sethi"]),
+.quanto-team-box:has(a[href*="srinivasa"]),
+#advisory .quanto-team-box,
+.advisory-board .quanto-team-box {
+    max-width: 360px !important;
+    width: 100% !important;
+    margin: 0 auto 24px auto !important;
+}
+
+.quanto-team-box:has(a[href*="vijay-sethi"]) .team-thumb,
+.quanto-team-box:has(a[href*="srinivasa"]) .team-thumb,
+#advisory .quanto-team-box .team-thumb,
+.advisory-board .quanto-team-box .team-thumb {
+    width: 100% !important;
+    max-width: 360px !important;
+    aspect-ratio: 1 / 1 !important;
+    height: auto !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+}
+
+.quanto-team-box:has(a[href*="vijay-sethi"]) .team-thumb img,
+.quanto-team-box:has(a[href*="srinivasa"]) .team-thumb img,
+#advisory .quanto-team-box .team-thumb img,
+.advisory-board .quanto-team-box .team-thumb img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center 10% !important;
+}
+
+.quanto-team-box:has(a[href*="vijay-sethi"]) .team-content,
+.quanto-team-box:has(a[href*="srinivasa"]) .team-content,
+#advisory .quanto-team-box .team-content,
+.advisory-board .quanto-team-box .team-content {
+    margin-top: 16px !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+.quanto-team-box:has(a[href*="vijay-sethi"]) .team-member-name,
+.quanto-team-box:has(a[href*="vijay-sethi"]) .team-member-name a,
+.quanto-team-box:has(a[href*="srinivasa"]) .team-member-name,
+.quanto-team-box:has(a[href*="srinivasa"]) .team-member-name a,
+#advisory .quanto-team-box .team-member-name,
+#advisory .quanto-team-box .team-member-name a,
+.advisory-board .quanto-team-box .team-member-name,
+.advisory-board .quanto-team-box .team-member-name a {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    color: #000000 !important;
+    margin: 0 0 5px 0 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.3px !important;
+}
+
+.quanto-team-box:has(a[href*="vijay-sethi"]) .team-member-position,
+.quanto-team-box:has(a[href*="srinivasa"]) .team-member-position,
+#advisory .quanto-team-box .team-member-position,
+.advisory-board .quanto-team-box .team-member-position {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 13.5px !important;
+    line-height: 1.4 !important;
+    color: #555555 !important;
+    margin: 0 0 12px 0 !important;
+    font-weight: 400 !important;
+}
+
+.quanto-team-box:has(a[href*="vijay-sethi"]) .team-content .custom-ul,
+.quanto-team-box:has(a[href*="srinivasa"]) .team-content .custom-ul,
+#advisory .quanto-team-box .team-content .custom-ul,
+.advisory-board .quanto-team-box .team-content .custom-ul {
+    display: flex !important;
+    gap: 10px !important;
+    margin-top: 12px !important;
+    padding: 0 !important;
+}
+
+.quanto-team-box:has(a[href*="vijay-sethi"]) .team-content .custom-ul li a svg,
+.quanto-team-box:has(a[href*="srinivasa"]) .team-content .custom-ul li a svg,
+.quanto-team-box:has(a[href*="vijay-sethi"]) .team-content .custom-ul li a i,
+.quanto-team-box:has(a[href*="srinivasa"]) .team-content .custom-ul li a i {
+    width: 18px !important;
+    height: 18px !important;
+    font-size: 18px !important;
+}
+
+@media (min-width: 992px) {
+    .row:has(a[href*="vijay-sethi"]) [class*="col-"]:nth-child(odd) .quanto-team-box,
+    .row:has(a[href*="srinivasa"]) [class*="col-"]:nth-child(odd) .quanto-team-box,
+    .quanto-team-box:has(a[href*="vijay-sethi"]) {
+        margin-right: 12px !important;
+        margin-left: auto !important;
+    }
+
+    .row:has(a[href*="vijay-sethi"]) [class*="col-"]:nth-child(even) .quanto-team-box,
+    .row:has(a[href*="srinivasa"]) [class*="col-"]:nth-child(even) .quanto-team-box,
+    .quanto-team-box:has(a[href*="srinivasa"]) {
+        margin-left: 12px !important;
+        margin-right: auto !important;
+    }
+}
+
 .elementor-22337 .elementor-element.elementor-element-ae742f9,
 .elementor-element.elementor-element-ae742f9 {
     --margin-top: 0px !important;
