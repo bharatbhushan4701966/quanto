@@ -139,15 +139,6 @@ class Quanto_Process extends Widget_Base {
             ]
         );
 
-        $repeater->start_controls_tabs('card_style_tabs');
-
-        $repeater->start_controls_tab(
-            'card_style_normal',
-            [
-                'label' => __( 'Normal', 'quanto' ),
-            ]
-        );
-
         $repeater->add_control(
             'card_bg_color',
             [
@@ -196,12 +187,12 @@ class Quanto_Process extends Widget_Base {
             ]
         );
 
-        $repeater->end_controls_tab();
-
-        $repeater->start_controls_tab(
-            'card_style_hover',
+        $repeater->add_control(
+            'card_hover_heading',
             [
-                'label' => __( 'Hover', 'quanto' ),
+                'label'     => esc_html__( 'Hover Style', 'quanto' ),
+                'type'      => Controls_Manager::HEADING,
+                'separator' => 'before',
             ]
         );
 
@@ -252,9 +243,6 @@ class Quanto_Process extends Widget_Base {
                 ],
             ]
         );
-
-        $repeater->end_controls_tab();
-        $repeater->end_controls_tabs();
 
 
 
