@@ -1183,6 +1183,10 @@ add_action('elementor/widgets/register', function($widgets_manager) {
     // Register Industry Intel List widget
     require_once get_template_directory() . '/inc/widgets/industry-intel-list.php';
     $widgets_manager->register(new \Quanto_Industry_Intel_List_Widget());
+
+    // Register CMR Featured Video Insight widget
+    require_once get_template_directory() . '/inc/widgets/featured-video-insight.php';
+    $widgets_manager->register(new \Quanto_Featured_Video_Insight_Widget());
 }, 20); // Priority 20 to run after the plugin registers its widgets
 require_once get_template_directory() . '/inc/cmr-footer-css-fix.php';
 

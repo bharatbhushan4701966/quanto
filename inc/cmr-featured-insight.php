@@ -1,215 +1,364 @@
 <?php
 /**
- * Shortcode for Featured Insight
+ * Shortcode & Helper for Featured Video / Insight
+ * Matches the Figma Card Design: Video on top, Date + Duration, Bold Title, Watch Link
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+if ( ! function_exists( 'cmr_get_video_embed_html' ) ) {
+    function cmr_get_video_embed_html( $video_url, $poster_url = '' ) {
+        if ( empty( $video_url ) ) {
+            return '';
+        }
+
+        $video_url = trim( $video_url );
+
+        // Raw iframe / embed code
+        if ( strpos( $video_url, '<iframe' ) !== false || strpos( $video_url, '<video' ) !== false ) {
+            return $video_url;
+        }
+
+        // YouTube
+        if ( preg_match( '/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i', $video_url, $matches ) ) {
+            $yt_id = $matches[1];
+            return '<iframe src="https://www.youtube.com/embed/' . esc_attr( $yt_id ) . '?rel=0&modestbranding=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>';
+        }
+
+        // Vimeo
+        if ( preg_match( '/(?:vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)(\d+))/i', $video_url, $matches ) ) {
+            $vimeo_id = end( $matches );
+            return '<iframe src="https://player.vimeo.com/video/' . esc_attr( $vimeo_id ) . '?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+        }
+
+        // Direct video file (mp4, webm, ogg)
+        if ( preg_match( '/\.(mp4|webm|ogg)(\?.*)?$/i', $video_url ) ) {
+            $poster_attr = ! empty( $poster_url ) ? ' poster="' . esc_url( $poster_url ) . '"' : '';
+            return '<video controls preload="metadata"' . $poster_attr . ' playsinline><source src="' . esc_url( $video_url ) . '" type="video/mp4">Your browser does not support the video tag.</video>';
+        }
+
+        // WordPress oEmbed fallback
+        $oembed = wp_oembed_get( $video_url );
+        if ( $oembed ) {
+            return $oembed;
+        }
+
+        return '<iframe src="' . esc_url( $video_url ) . '" frameborder="0" allowfullscreen loading="lazy"></iframe>';
+    }
+}
+
 if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
     function cmr_featured_insight_shortcode( $atts ) {
         $atts = shortcode_atts( array(
-            'post_type' => 'cmr_news',
+            'video_url'    => '',
+            'poster'       => '',
+            'title'        => '',
+            'date'         => '',
+            'duration'     => '',
+            'btn_text'     => 'Watch',
+            'link'         => '#',
+            'target'       => '_self',
+            'max_width'    => '600px',
+            'post_type'    => 'cmr_news',
         ), $atts );
 
-        $query_args = array(
-            'post_type'      => array('post', 'cmr_news'),
-            'posts_per_page' => 1,
-            'post_status'    => 'publish',
-            'orderby'        => 'date',
-            'order'          => 'DESC',
-            'meta_query'     => array(
-                array(
-                    'key'     => '_thumbnail_id',
-                    'compare' => 'EXISTS'
-                ),
-            ),
-        );
+        $video_url = $atts['video_url'];
+        $poster    = $atts['poster'];
+        $title     = $atts['title'];
+        $date      = $atts['date'];
+        $duration  = $atts['duration'];
+        $btn_text  = ! empty( $atts['btn_text'] ) ? $atts['btn_text'] : 'Watch';
+        $link      = ! empty( $atts['link'] ) ? $atts['link'] : '#';
+        $target    = $atts['target'];
+        $max_width = $atts['max_width'];
 
-        $featured_posts = get_posts( $query_args );
+        // If manual video or title not supplied, query latest post as fallback
+        if ( empty( $video_url ) && empty( $title ) ) {
+            $query_args = array(
+                'post_type'      => array( 'post', 'cmr_news' ),
+                'posts_per_page' => 1,
+                'post_status'    => 'publish',
+                'orderby'        => 'date',
+                'order'          => 'DESC',
+            );
+            $posts = get_posts( $query_args );
+            if ( ! empty( $posts ) ) {
+                $p = $posts[0];
+                $title = get_the_title( $p );
+                $date  = get_the_date( 'd F Y', $p );
+                $link  = get_permalink( $p->ID );
+
+                // Try to get video from custom field or content
+                $custom_video = get_post_meta( $p->ID, 'video_url', true );
+                if ( ! empty( $custom_video ) ) {
+                    $video_url = $custom_video;
+                } else {
+                    $thumb_id = get_post_thumbnail_id( $p->ID );
+                    if ( $thumb_id ) {
+                        $poster = wp_get_attachment_image_url( $thumb_id, 'full' );
+                    }
+                }
+
+                // Approximate reading / video time
+                if ( empty( $duration ) ) {
+                    $content = $p->post_content;
+                    $words = str_word_count( strip_tags( $content ) );
+                    $mins = max( 1, ceil( $words / 200 ) );
+                    $duration = $mins . ':00 min';
+                }
+            }
+        }
+
+        if ( empty( $date ) ) {
+            $date = date( 'd F Y' );
+        }
+
+        if ( empty( $title ) ) {
+            $title = 'From ideas to innovation – Exclusive conversations with the trailblazers of India’s EV journey';
+        }
+
+        if ( empty( $duration ) ) {
+            $duration = '22:44 min';
+        }
+
+        $video_embed = ! empty( $video_url ) ? cmr_get_video_embed_html( $video_url, $poster ) : '';
 
         ob_start();
         ?>
-        <style>
-            .cmr-fi-container {
-                font-family: 'Instrument Sans', sans-serif !important;
+        <div class="cmr-fvi-card-wrapper" style="width: 100%; max-width: <?php echo esc_attr( $max_width ); ?>; margin: 0 auto;">
+            <div class="cmr-fvi-card">
+                
+                <!-- Video / Media Box -->
+                <div class="cmr-fvi-video-wrap">
+                    <?php if ( ! empty( $video_embed ) ) : ?>
+                        <?php echo $video_embed; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                    <?php elseif ( ! empty( $poster ) ) : ?>
+                        <a href="<?php echo esc_url( $link ); ?>" class="cmr-fvi-poster-link" <?php echo ( $target === '_blank' ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?>>
+                            <img src="<?php echo esc_url( $poster ); ?>" alt="<?php echo esc_attr( $title ); ?>" class="cmr-fvi-poster-img">
+                            <span class="cmr-fvi-play-icon" aria-hidden="true">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                </svg>
+                            </span>
+                        </a>
+                    <?php else : ?>
+                        <!-- Default Embedded Demo Video -->
+                        <iframe src="https://www.youtube.com/embed/ScMzIvxBSi4?rel=0&modestbranding=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+                    <?php endif; ?>
+                </div>
+
+                <!-- Body Content -->
+                <div class="cmr-fvi-body">
+                    <!-- Meta info: Date & Duration -->
+                    <div class="cmr-fvi-meta">
+                        <div class="cmr-fvi-date">
+                            <span class="cmr-fvi-dash"></span>
+                            <span class="cmr-fvi-date-txt"><?php echo esc_html( $date ); ?></span>
+                        </div>
+                        <?php if ( ! empty( $duration ) ) : ?>
+                            <div class="cmr-fvi-duration"><?php echo esc_html( $duration ); ?></div>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- Main Title -->
+                    <h3 class="cmr-fvi-title">
+                        <a href="<?php echo esc_url( $link ); ?>" <?php echo ( $target === '_blank' ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?>>
+                            <?php echo esc_html( $title ); ?>
+                        </a>
+                    </h3>
+
+                    <!-- Action Link / Watch Button -->
+                    <div class="cmr-fvi-action">
+                        <a href="<?php echo esc_url( $link ); ?>" class="cmr-fvi-btn" <?php echo ( $target === '_blank' ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?>>
+                            <span><?php echo esc_html( $btn_text ); ?></span>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <style id="cmr-fvi-styles">
+            .cmr-fvi-card-wrapper {
+                box-sizing: border-box;
+            }
+            .cmr-fvi-card {
+                font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
                 width: 100%;
-                max-width: 447px;
-                background: #fff;
+                background: #FFFFFF;
+                border: 1px solid #E5E7EB;
+                border-radius: 0px;
+                overflow: hidden;
                 display: flex;
                 flex-direction: column;
-                border: 1px solid #eaeaea;
+                box-sizing: border-box;
+                transition: border-color 0.25s ease, box-shadow 0.25s ease;
             }
-            .cmr-fi-image-wrap {
+            .cmr-fvi-card:hover {
+                border-color: #CBD5E1;
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+            }
+            .cmr-fvi-video-wrap {
                 position: relative;
                 width: 100%;
-                height: 342px;
-                margin-bottom: 0;
+                padding-top: 56.25%; /* 16:9 Aspect Ratio */
+                background: #000000;
                 overflow: hidden;
             }
-            .cmr-fi-content {
-                background: #F8F9FB;
-                flex-grow: 1;
-                padding: 22px 23px;
-                box-sizing: border-box;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
+            .cmr-fvi-video-wrap iframe,
+            .cmr-fvi-video-wrap video,
+            .cmr-fvi-video-wrap object,
+            .cmr-fvi-video-wrap embed {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+                object-fit: cover;
+                display: block;
             }
-            .cmr-fi-image-wrap img {
+            .cmr-fvi-poster-link {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: block;
+            }
+            .cmr-fvi-poster-img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
                 display: block;
             }
-            .cmr-fi-badge {
+            .cmr-fvi-play-icon {
                 position: absolute;
-                top: 20px;
-                left: 20px;
-                background: rgba(0, 0, 0, 0.4);
-                color: #fff;
-                padding: 6px 16px;
-                border-radius: 20px;
-                font-size: 14px;
-                font-weight: 500;
-                backdrop-filter: blur(4px);
-            }
-            .cmr-fi-meta {
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 60px;
+                height: 60px;
+                background: rgba(15, 23, 42, 0.8);
+                color: #FFFFFF;
+                border-radius: 50%;
                 display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: transform 0.25s ease, background-color 0.25s ease;
+            }
+            .cmr-fvi-poster-link:hover .cmr-fvi-play-icon {
+                background: #4F46E5;
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+            .cmr-fvi-play-icon svg {
+                margin-left: 3px;
+            }
+            .cmr-fvi-body {
+                padding: 28px 32px 34px 32px;
+                background: #FFFFFF;
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                box-sizing: border-box;
+            }
+            .cmr-fvi-meta {
+                display: flex;
+                align-items: center;
                 justify-content: space-between;
-                align-items: center;
-                margin-bottom: 7px;
-                font-size: 14px;
-                color: #666;
+                margin-bottom: 18px;
+                font-size: 14.5px;
+                color: #475569;
+                font-weight: 500;
             }
-            .cmr-fi-date {
-                display: flex;
-                align-items: center;
-                gap: 15px;
-            }
-            .cmr-fi-date::before {
-                content: '';
-                display: block;
-                width: 30px;
-                height: 1px;
-                background: #ccc;
-            }
-            .cmr-fi-read-time {
-                color: #666;
-            }
-            .cmr-fi-title {
-                font-size: 18px;
-                font-weight: 600;
-                color: #111;
-                margin: 0 0 7px 0;
-                line-height: 1.3;
-                letter-spacing: -0.5px;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-            }
-            .cmr-fi-excerpt {
-                font-size: 15px;
-                color: #333;
-                line-height: 1.6;
-                margin-bottom: 12px;
-                display: -webkit-box;
-                -webkit-line-clamp: 3;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-            }
-            .cmr-fi-read-link {
+            .cmr-fvi-date {
                 display: inline-flex;
                 align-items: center;
-                gap: 8px;
-                font-size: 15px;
-                font-weight: 600;
-                color: #111;
-                text-decoration: none;
-                transition: color 0.3s ease;
+                gap: 12px;
             }
-            .cmr-fi-read-link:hover {
-                color: #555;
+            .cmr-fvi-dash {
+                display: inline-block;
+                width: 24px;
+                height: 1.5px;
+                background-color: #64748B;
             }
-            .cmr-fi-read-link svg {
-                width: 14px;
-                height: 14px;
-                transition: transform 0.3s ease;
+            .cmr-fvi-duration {
+                color: #475569;
+                font-size: 14px;
+                font-weight: 500;
             }
-            .cmr-fi-read-link:hover svg {
+            .cmr-fvi-title {
+                font-family: inherit !important;
+                font-size: 26px !important;
+                font-weight: 700 !important;
+                line-height: 1.34 !important;
+                color: #0F172A !important;
+                letter-spacing: -0.5px !important;
+                margin: 0 0 32px 0 !important;
+                padding: 0 !important;
+            }
+            .cmr-fvi-title a {
+                color: #0F172A !important;
+                text-decoration: none !important;
+                transition: color 0.2s ease;
+            }
+            .cmr-fvi-title a:hover {
+                color: #4F46E5 !important;
+            }
+            .cmr-fvi-action {
+                margin-top: auto;
+                display: flex;
+                align-items: center;
+            }
+            .cmr-fvi-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 7px;
+                font-size: 16.5px;
+                font-weight: 700;
+                color: #0F172A !important;
+                text-decoration: none !important;
+                transition: all 0.25s ease;
+                cursor: pointer;
+            }
+            .cmr-fvi-btn svg {
+                width: 16px;
+                height: 16px;
+                transition: transform 0.25s ease;
+            }
+            .cmr-fvi-btn:hover {
+                color: #4F46E5 !important;
+            }
+            .cmr-fvi-btn:hover svg {
                 transform: translate(3px, -3px);
             }
-            @media (max-width: 768px) {
-                .cmr-fi-title {
-                    font-size: 26px;
+            @media (max-width: 767.98px) {
+                .cmr-fvi-body {
+                    padding: 22px 20px 24px 20px;
                 }
-                .cmr-fi-excerpt {
-                    font-size: 16px;
+                .cmr-fvi-title {
+                    font-size: 21px !important;
+                    line-height: 1.35 !important;
+                    margin-bottom: 24px !important;
                 }
-                .cmr-fi-badge {
-                    top: 15px;
-                    left: 15px;
+                .cmr-fvi-meta {
+                    font-size: 13.5px;
+                    margin-bottom: 14px;
+                }
+                .cmr-fvi-btn {
+                    font-size: 15px;
                 }
             }
         </style>
-        <?php if ( !empty($featured_posts) ) : ?>
-            <div class="cmr-fi-wrapper" style="display: flex; justify-content: flex-end; width: 100%;">
-                <div class="cmr-fi-container">
-                <?php foreach ( $featured_posts as $post_obj ) : 
-                    $thumbnail_url = get_the_post_thumbnail_url( $post_obj->ID, 'full' );
-                    if ( ! $thumbnail_url ) {
-                        $thumbnail_url = 'https://via.placeholder.com/800x500?text=Featured+Image';
-                    }
-                    $post_date = get_the_date('d F Y', $post_obj);
-                    // Calculate reading time (approx 200 words per min)
-                    $content = $post_obj->post_content;
-                    $word_count = str_word_count( strip_tags( $content ) );
-                    $read_time = ceil( $word_count / 200 );
-                    if ($read_time < 1) $read_time = 1;
-                ?>
-                <div class="cmr-fi-image-wrap">
-                    <img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="<?php echo esc_attr( get_the_title($post_obj) ); ?>">
-                    <span class="cmr-fi-badge">Featured</span>
-                </div>
-                
-                <div class="cmr-fi-content">
-                    <div class="cmr-fi-meta">
-                        <div class="cmr-fi-date"><?php echo esc_html( $post_date ); ?></div>
-                        <div class="cmr-fi-read-time"><?php echo esc_html( $read_time ); ?> min Read</div>
-                    </div>
-                    
-                    <h2 class="cmr-fi-title"><?php echo esc_html( get_the_title($post_obj) ); ?></h2>
-                    
-                    <div class="cmr-fi-excerpt">
-                        <?php 
-                        $excerpt = get_the_excerpt($post_obj);
-                        if ( empty( $excerpt ) ) {
-                            $excerpt = wp_trim_words( $content, 25 );
-                        }
-                        echo esc_html( wp_strip_all_tags( $excerpt ) ); 
-                        ?>
-                    </div>
-                    
-                    <a href="<?php echo esc_url( get_permalink($post_obj->ID) ); ?>" class="cmr-fi-read-link">
-                        Read Insight
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="7" y1="17" x2="17" y2="7"></line>
-                            <polyline points="7 7 17 7 17 17"></polyline>
-                        </svg>
-                    </a>
-                </div>
-                <?php endforeach; ?>
-                </div>
-            </div>
-        <?php else : ?>
-            <p>No featured insight found.</p>
-        <?php endif; 
-        ?>
         <?php
         return ob_get_clean();
     }
 }
 add_shortcode( 'cmr_featured_insight', 'cmr_featured_insight_shortcode' );
-
+add_shortcode( 'cmr_featured_video_insight', 'cmr_featured_insight_shortcode' );

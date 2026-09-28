@@ -51,7 +51,7 @@ get_header();
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: clamp(130px, 15vh, 170px) 24px clamp(90px, 12vh, 130px) 24px;
+    padding: clamp(120px, 12vh, 150px) 24px clamp(130px, 16vh, 180px) 24px;
     background: radial-gradient(ellipse at 50% 25%, rgba(99, 102, 241, 0.05) 0%, rgba(255, 255, 255, 0) 70%);
     position: relative;
     overflow: hidden;
@@ -194,10 +194,19 @@ get_header();
     transform: translateY(-2px);
 }
 
+/* Short height screens (laptops / inspect mode) */
+@media (max-height: 850px) {
+    .cmr-404-section {
+        padding-top: 110px !important;
+        padding-bottom: 130px !important;
+        min-height: auto !important;
+    }
+}
+
 /* Tablet and Mobile adjustments */
 @media (max-width: 767.98px) {
     .cmr-404-section {
-        padding: 120px 20px 80px 20px;
+        padding: 110px 20px 100px 20px;
         min-height: auto;
     }
     
@@ -247,7 +256,7 @@ get_header();
 
 @media (max-width: 420px) {
     .cmr-404-section {
-        padding: 110px 16px 70px 16px;
+        padding: 100px 16px 90px 16px;
     }
     
     .cmr-404-hero-num {
