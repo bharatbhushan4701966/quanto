@@ -139,6 +139,15 @@ class Quanto_Process extends Widget_Base {
             ]
         );
 
+        $repeater->start_controls_tabs('card_style_tabs');
+
+        $repeater->start_controls_tab(
+            'card_style_normal',
+            [
+                'label' => __( 'Normal', 'quanto' ),
+            ]
+        );
+
         $repeater->add_control(
             'card_bg_color',
             [
@@ -169,6 +178,9 @@ class Quanto_Process extends Widget_Base {
             [
                 'label'       => esc_html__( 'Card Overlay Tint', 'quanto' ),
                 'type'        => Controls_Manager::COLOR,
+                'selectors'   => [
+                    '{{WRAPPER}} {{CURRENT_ITEM}}.process-box .process-card-overlay' => 'background: {{VALUE}} !important;',
+                ],
                 'description' => esc_html__( 'Color overlay on top of image so text remains readable.', 'quanto' ),
             ]
         );
@@ -183,6 +195,66 @@ class Quanto_Process extends Widget_Base {
                 ],
             ]
         );
+
+        $repeater->end_controls_tab();
+
+        $repeater->start_controls_tab(
+            'card_style_hover',
+            [
+                'label' => __( 'Hover', 'quanto' ),
+            ]
+        );
+
+        $repeater->add_control(
+            'card_bg_color_hover',
+            [
+                'label'     => esc_html__( 'Card Background Color', 'quanto' ),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover' => 'background-color: {{VALUE}} !important;',
+                ],
+            ]
+        );
+
+        $repeater->add_control(
+            'card_bg_image_hover',
+            [
+                'label'     => esc_html__( 'Card Background Image', 'quanto' ),
+                'type'      => Controls_Manager::MEDIA,
+                'default'   => [
+                    'url' => '',
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover' => 'background-image: url("{{URL}}") !important; background-size: cover !important; background-position: center center !important; background-repeat: no-repeat !important;',
+                ],
+            ]
+        );
+
+        $repeater->add_control(
+            'card_overlay_color_hover',
+            [
+                'label'       => esc_html__( 'Card Overlay Tint', 'quanto' ),
+                'type'        => Controls_Manager::COLOR,
+                'selectors'   => [
+                    '{{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover .process-card-overlay' => 'background: {{VALUE}} !important;',
+                ],
+                'description' => esc_html__( 'Color overlay on top of image so text remains readable.', 'quanto' ),
+            ]
+        );
+
+        $repeater->add_control(
+            'card_text_color_hover',
+            [
+                'label'     => esc_html__( 'Card Text & Number Color', 'quanto' ),
+                'type'      => Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover .process-number, {{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover .process-title, {{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover .process-description, {{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover p, {{WRAPPER}} {{CURRENT_ITEM}}.process-box:hover a' => 'color: {{VALUE}} !important;',
+                ],
+            ]
+        );
+
+        $repeater->end_controls_tab();
+        $repeater->end_controls_tabs();
 
 
 
@@ -649,38 +721,22 @@ class Quanto_Process extends Widget_Base {
                 $item_id = !empty($process['_id']) ? $process['_id'] : '';
                 $repeater_class = $item_id ? ' elementor-repeater-item-' . esc_attr($item_id) : '';
 
-                $inline_styles = [];
-                if (!empty($process['card_bg_color'])) {
-                    $inline_styles[] = 'background-color: ' . esc_attr($process['card_bg_color']) . ' !important';
-                }
-                if (!empty($process['card_bg_image']['url'])) {
-                    $inline_styles[] = 'background-image: url("' . esc_url($process['card_bg_image']['url']) . '") !important';
-                    $inline_styles[] = 'background-size: cover !important';
-                    $inline_styles[] = 'background-position: center center !important';
-                    $inline_styles[] = 'background-repeat: no-repeat !important';
-                }
-                $style_attr = !empty($inline_styles) ? ' style="' . implode('; ', $inline_styles) . '"' : '';
-
-                $text_color_inline = !empty($process['card_text_color']) ? ' style="color: ' . esc_attr($process['card_text_color']) . ' !important;"' : '';
-            ?>
-                <div class="process-box scroll-item<?php echo $repeater_class; ?>"<?php echo $style_attr; ?>>
-                    <?php if (!empty($process['card_overlay_color'])) : ?>
-                        <div class="process-card-overlay" style="position: absolute; inset: 0; width: 100%; height: 100%; background: <?php echo esc_attr($process['card_overlay_color']); ?>; z-index: 1; pointer-events: none; border-radius: inherit;"></div>
-                    <?php endif; ?>
+                <div class="process-box scroll-item<?php echo $repeater_class; ?>">
+                    <div class="process-card-overlay" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; border-radius: inherit;"></div>
 
                     <?php if (!empty($process['number'])) : ?>
-                        <span class="process-number text-color-white" style="position: relative; z-index: 2;<?php echo !empty($process['card_text_color']) ? ' color: ' . esc_attr($process['card_text_color']) . ' !important;' : ''; ?>">
+                        <span class="process-number text-color-white" style="position: relative; z-index: 2;">
                             <?php echo esc_html($process['number']); ?>
                         </span>
                     <?php endif; ?>
         
                     <div class="process-info" style="position: relative; z-index: 2;">
                         <?php if (!empty($process['title'])) : ?>
-                            <h5 class="process-title text-color-white"<?php echo $text_color_inline; ?>><?php echo esc_html($process['title']); ?></h5>
+                            <h5 class="process-title text-color-white"><?php echo esc_html($process['title']); ?></h5>
                         <?php endif; ?>
         
                         <?php if (!empty($process['description'])) : ?>
-                            <p class="process-description text-color-white"<?php echo $text_color_inline; ?>><?php echo wp_kses_post($process['description']); ?></p>
+                            <p class="process-description text-color-white"><?php echo wp_kses_post($process['description']); ?></p>
                         <?php endif; ?>
                     </div>
                 </div>
