@@ -5756,23 +5756,36 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
    Management Team & Leadership Cards (.quanto-team-box) - Figma Design Match
    ========================================================================== */
 
-/* 1. Row Container: Centered with max-width */
+/* 1. Row & Widget Container: Centered with compact max-width */
+.elementor-widget-quanto-team-theme,
+.elementor-widget-team,
+#manager,
+#practice {
+    max-width: 880px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100% !important;
+}
+
 .elementor-widget-quanto-team-theme .row,
 .elementor-widget-team .row,
 #manager .row,
 #practice .row {
-    max-width: 1040px !important;
+    max-width: 880px !important;
     margin-left: auto !important;
     margin-right: auto !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
 }
 
-/* 2. Card Container: Wider cards (~460px-480px) */
+/* 2. Card Container: Compact width (~400px-420px) */
 .quanto-team-box,
 #manager .quanto-team-box,
 #practice .quanto-team-box {
     margin: 0 auto 30px auto !important;
     display: block !important;
-    max-width: 480px !important;
+    max-width: 410px !important;
     width: 100% !important;
 }
 
@@ -5847,7 +5860,7 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
 #practice .quanto-team-box .team-member-name,
 #practice .quanto-team-box .team-member-name a {
     font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 28px !important;
+    font-size: 26px !important;
     font-weight: 700 !important;
     color: #000000 !important;
     margin: 0 0 6px 0 !important;
@@ -5925,20 +5938,20 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     color: inherit !important;
 }
 
-/* 7. Column alignment on desktop to keep gap balanced like Figma */
+/* 7. Column alignment on desktop to keep tight & centered gap */
 @media (min-width: 992px) {
     .elementor-widget-quanto-team-theme .col-xl-6:nth-child(odd) .quanto-team-box,
     .elementor-widget-quanto-team-theme .col-md-6:nth-child(odd) .quanto-team-box,
     #manager .col-xl-6:nth-child(odd) .quanto-team-box,
     #manager .col-md-6:nth-child(odd) .quanto-team-box {
-        margin-right: 20px !important;
+        margin-right: 12px !important;
         margin-left: auto !important;
     }
     .elementor-widget-quanto-team-theme .col-xl-6:nth-child(even) .quanto-team-box,
     .elementor-widget-quanto-team-theme .col-md-6:nth-child(even) .quanto-team-box,
     #manager .col-xl-6:nth-child(even) .quanto-team-box,
     #manager .col-md-6:nth-child(even) .quanto-team-box {
-        margin-left: 20px !important;
+        margin-left: 12px !important;
         margin-right: auto !important;
     }
 }
