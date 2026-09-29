@@ -603,7 +603,7 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
                 // Sticky Nav Functionality
                 const sections = document.querySelectorAll('.cmr-vpi-section');
                 sections.forEach(section => {
-                    const navBar = section.querySelector('.cmr-vpi-sticky-nav');
+                    const navBar = section.querySelector('.intel-nav-bar');
                     if (!navBar) return;
                     
                     // Create a placeholder to prevent grid jumping when bar becomes fixed
@@ -633,8 +633,31 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
                             }
                         });
 
+                        let boundaryBottom = sectionRect.bottom;
+                        
+                        let testimonialsSection = document.getElementById('cmr-testimonials-section') || 
+                                                  document.getElementById('testimonials') || 
+                                                  document.querySelector('.elementor-widget-testimonial-carousel') ||
+                                                  document.querySelector('.elementor-widget-testimonial');
+                                                  
+                        if (!testimonialsSection) {
+                            const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')).filter(h => h.textContent.toLowerCase().includes('testimonial'));
+                            if (headings.length > 0) {
+                                testimonialsSection = headings[0].closest('.elementor-section') || headings[0].closest('section') || headings[0].parentElement;
+                            }
+                        }
+
+                        if (testimonialsSection) {
+                            boundaryBottom = testimonialsSection.getBoundingClientRect().top;
+                        } else {
+                            const footer = document.querySelector('footer, .elementor-location-footer');
+                            if (footer) {
+                                boundaryBottom = footer.getBoundingClientRect().top;
+                            }
+                        }
+
                         // Trigger sticky as soon as the section touches the sticky offset
-                        if (sectionRect.top <= stickyOffset && sectionRect.bottom > (navBar.offsetHeight + stickyOffset)) {
+                        if (sectionRect.top <= stickyOffset && boundaryBottom > (navBar.offsetHeight + stickyOffset)) {
                             if (!navBar.classList.contains('intel-nav-fixed-js')) {
                                 // Save original height
                                 placeholder.style.height = navBar.offsetHeight + 'px';
@@ -645,8 +668,8 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
                                 document.body.appendChild(navBar); // Escaping elementor transform context
                             }
                             
-                            if (sectionRect.bottom <= (navBar.offsetHeight + stickyOffset)) {
-                                navBar.style.top = (sectionRect.bottom - navBar.offsetHeight) + 'px';
+                            if (boundaryBottom <= (navBar.offsetHeight + stickyOffset)) {
+                                navBar.style.top = (boundaryBottom - navBar.offsetHeight) + 'px';
                             } else {
                                 navBar.style.top = (stickyOffset > 0 ? (Math.floor(stickyOffset) - 1) : 0) + 'px';
                             }
@@ -664,6 +687,69 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
                     window.addEventListener('scroll', updateSticky, { passive: true });
                     window.addEventListener('resize', updateSticky, { passive: true });
                     setTimeout(updateSticky, 100);
+                    
+                    // Add smooth scrolling logic
+                    const navLinks = navBar.querySelectorAll('.intel-nav-links a');
+                    navLinks.forEach(link => {
+                        link.addEventListener('click', function(e) {
+                            const href = this.getAttribute('href');
+                            if (!href || href.indexOf('#') === -1) return;
+                            
+                            const targetId = href.substring(href.indexOf('#') + 1);
+                            if (!targetId) return;
+                            
+                            let targetElement = null;
+                            
+                            if (targetId === 'reports') {
+                                const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title'));
+                                let matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('reports by industry'));
+                                if (!matchingHeading) {
+                                    // Fallback to any heading with 'reports'
+                                    matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('reports') && !h.closest('.intel-nav-bar'));
+                                }
+                                
+                                if (matchingHeading) {
+                                    targetElement = matchingHeading.closest('.elementor-section') || matchingHeading.closest('.e-con') || matchingHeading.parentElement;
+                                }
+                                
+                                if (!targetElement) {
+                                    targetElement = document.getElementById(targetId);
+                                }
+                            } else if (targetId === 'expert-insights' || targetId === 'cmr-footer-card-section') {
+                                // Try finding the footer card if the explicit ID doesn't exist
+                                targetElement = document.getElementById(targetId);
+                                if (!targetElement) {
+                                    const possibleCards = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title, .elementor-button-text'));
+                                    const matchingHeading = possibleCards.find(el => {
+                                        const txt = el.textContent.toLowerCase();
+                                        return txt.includes('cmr connect') || txt.includes('monthly digest') || (txt.includes('subscribe now') && !el.closest('.intel-nav-bar'));
+                                    });
+                                    if (matchingHeading) {
+                                        targetElement = matchingHeading.closest('.elementor-section') || matchingHeading.closest('.e-con') || matchingHeading.parentElement;
+                                    }
+                                }
+                            } else {
+                                targetElement = document.getElementById(targetId);
+                            }
+                            
+                            if (targetElement) {
+                                e.preventDefault();
+                                
+                                let stickyOffset = 0;
+                                const wpAdminBar = document.getElementById('wpadminbar');
+                                if (wpAdminBar && window.getComputedStyle(wpAdminBar).position === 'fixed') {
+                                    stickyOffset = wpAdminBar.offsetHeight;
+                                }
+                                
+                                const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - stickyOffset - 80;
+                                
+                                window.scrollTo({
+                                    top: targetPosition,
+                                    behavior: 'smooth'
+                                });
+                            }
+                        });
+                    });
                 });
             });
         </script>

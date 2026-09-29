@@ -606,7 +606,7 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                 // Sticky Nav Functionality
                 const sections = document.querySelectorAll('.cmr-mui-section');
                 sections.forEach(section => {
-                    const navBar = section.querySelector('.cmr-mui-sticky-nav');
+                    const navBar = section.querySelector('.intel-nav-bar');
                     if (!navBar) return;
                     
                     // Create a placeholder to prevent grid jumping when bar becomes fixed
@@ -692,7 +692,7 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                     setTimeout(updateSticky, 100);
                     
                     // Add smooth scrolling logic
-                    const navLinks = navBar.querySelectorAll('.cmr-mui-nav-links a');
+                    const navLinks = navBar.querySelectorAll('.intel-nav-links a');
                     navLinks.forEach(link => {
                         link.addEventListener('click', function(e) {
                             const href = this.getAttribute('href');
