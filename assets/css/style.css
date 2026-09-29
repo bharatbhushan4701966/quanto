@@ -3976,8 +3976,9 @@ ins {
 .quanto-service-box4 .service-title {
   order: 1 !important;
   visibility: visible !important;
-  width: 340px !important;
-  max-width: 340px !important;
+  width: auto !important;
+  max-width: none !important;
+  white-space: nowrap !important;
   flex-shrink: 0 !important;
   font-size: 36px !important;
   font-weight: 600 !important;
@@ -4067,6 +4068,7 @@ ins {
     letter-spacing: -0.5px !important;
     width: 100% !important;
     max-width: 100% !important;
+    white-space: normal !important;
     margin-bottom: 14px !important;
   }
 
