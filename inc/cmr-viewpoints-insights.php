@@ -702,30 +702,50 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
                     window.addEventListener('resize', updateSticky, { passive: true });
                     setTimeout(updateSticky, 100);
                     
+                    // Helper: find an Elementor section by heading text and inject an ID
+                    function cmrInjectId(id, matchFn) {
+                        if (document.getElementById(id)) return;
+                        const allHeadings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title, .elementor-widget-heading .elementor-heading-title'));
+                        const heading = allHeadings.find(h => !h.closest('.intel-nav-bar') && matchFn(h.textContent.toLowerCase().trim()));
+                        if (!heading) return;
+                        // Walk up to find the nearest Elementor section/container (max 6 levels)
+                        let target = heading;
+                        for (let i = 0; i < 6; i++) {
+                            const p = target.parentElement;
+                            if (!p || p === document.body) break;
+                            const et = p.getAttribute('data-element_type');
+                            if (et === 'section' || et === 'container') { target = p; break; }
+                            target = p;
+                        }
+                        target.id = id;
+                    }
+
                     // AUTO-INJECT IDs on page load so nav links always work
                     function cmrAutoInjectIds() {
-                        // Inject id="reports" onto the Similar Reports by Industry section
-                        if (!document.getElementById('reports')) {
-                            const allHeadings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title'));
-                            let reportsHeading = allHeadings.find(h => h.textContent.toLowerCase().includes('reports by industry'));
-                            if (!reportsHeading) {
-                                reportsHeading = allHeadings.find(h => h.textContent.toLowerCase().includes('similar reports') && !h.closest('.intel-nav-bar'));
-                            }
-                            if (reportsHeading) {
-                                const reportsSection = reportsHeading.closest('[data-element_type="container"]') || reportsHeading.closest('.elementor-section') || reportsHeading.closest('.e-con') || reportsHeading.parentElement;
-                                if (reportsSection) reportsSection.id = 'reports';
-                            }
-                        }
+                        // id="featured" — Featured posts section
+                        cmrInjectId('featured', t => t.includes('featured') || t.includes('top stories') || t.includes('highlighted'));
 
-                        // Inject id="expert-insights" onto the footer card section (tight target)
+                        // id="latest-updates" — Latest Updates section
+                        cmrInjectId('latest-updates', t => t.includes('latest updates') || t.includes('latest insights') || t.includes('recent updates') || t.includes('recent insights'));
+
+                        // id="cmr-live" — CMR Live section
+                        cmrInjectId('cmr-live', t => t.includes('cmr live') || t.includes('cmr tv') || t.includes('live session') || t.includes('live video'));
+
+                        // id="reports" — Reports by Industry section
+                        cmrInjectId('reports', t => t.includes('reports by industry') || t.includes('similar reports'));
+
+                        // id="expert-insights" — Footer card (tight target, max 3 levels)
                         if (!document.getElementById('expert-insights')) {
                             const allEls = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title'));
-                            let footerCardHeading = allEls.find(h => {
+                            const footerCardHeading = allEls.find(h => {
                                 const t = h.textContent.toLowerCase();
-                                return (t.includes('let') && t.includes('connect')) || t.includes('speak directly') || t.includes('market expert') || t.includes('your challenge') || t.includes('your ambition');
+                                return !h.closest('.intel-nav-bar') && (
+                                    (t.includes('let') && t.includes('connect')) ||
+                                    t.includes('speak directly') || t.includes('market expert') ||
+                                    t.includes('your challenge') || t.includes('your ambition')
+                                );
                             });
                             if (footerCardHeading) {
-                                // Walk up max 3 levels to find an e-con/section — avoids grabbing huge ancestor containers
                                 let target = footerCardHeading;
                                 for (let i = 0; i < 3; i++) {
                                     const p = target.parentElement;
@@ -738,7 +758,7 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
                             }
                         }
                     }
-                    // Run on DOM ready and after a short delay to handle lazy-loaded Elementor widgets
+                    // Run immediately and after 1s for lazy-loaded Elementor widgets
                     cmrAutoInjectIds();
                     setTimeout(cmrAutoInjectIds, 1000);
 
