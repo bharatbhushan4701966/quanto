@@ -722,13 +722,8 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
 
                     // AUTO-INJECT IDs on page load so nav links always work
                     function cmrAutoInjectIds() {
-                        // id="featured" — Featured posts section (fallback: top of shortcode section)
+                        // id="featured" — Featured posts section (try to match heading only, no fallback needed — handled in click)
                         cmrInjectId('featured', t => t.includes('featured') || t.includes('top stories') || t.includes('highlighted'));
-                        // Fallback: if no heading found, use the top of the .cmr-vpi-section (this shortcode's wrapper)
-                        if (!document.getElementById('featured')) {
-                            const vpiSection = document.querySelector('.cmr-vpi-section');
-                            if (vpiSection) vpiSection.id = 'featured';
-                        }
 
                         // id="latest-updates" — Points to Expert Viewpoints & Strategic Perspectives (the shortcode grid)
                         cmrInjectId('latest-updates', t => 
@@ -784,6 +779,13 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
 
                             const targetId = href.substring(href.indexOf('#') + 1);
                             if (!targetId) return;
+
+                            // "Featured" always scrolls to page top
+                            if (targetId === 'featured') {
+                                e.preventDefault();
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                                return;
+                            }
 
                             // Re-run auto-inject in case page changed
                             cmrAutoInjectIds();
