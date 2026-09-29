@@ -722,7 +722,7 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
                                     const possibleCards = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title, .elementor-button-text'));
                                     const matchingHeading = possibleCards.find(el => {
                                         const txt = el.textContent.toLowerCase();
-                                        return txt.includes('cmr connect') || txt.includes('monthly digest') || (txt.includes('subscribe now') && !el.closest('.intel-nav-bar'));
+                                        return txt.includes('cmr connect') || txt.includes('monthly digest') || txt.includes('your challenge') || txt.includes('let\'s connect') || (txt.includes('subscribe now') && !el.closest('.intel-nav-bar'));
                                     });
                                     if (matchingHeading) {
                                         targetElement = matchingHeading.closest('.elementor-section') || matchingHeading.closest('.e-con') || matchingHeading.parentElement;
