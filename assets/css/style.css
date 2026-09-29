@@ -3932,9 +3932,9 @@ ins {
 .quanto-service-box4 {
   display: flex !important;
   flex-direction: row !important;
-  justify-content: space-between !important;
+  justify-content: flex-start !important;
   align-items: flex-start !important;
-  gap: 30px !important;
+  gap: 24px !important;
   border: none !important;
   border-top: 1px solid #E5E5E5 !important;
   border-radius: 0 !important;
@@ -3959,8 +3959,9 @@ ins {
 .quanto-service-box4 .quanto-iconbox-icon {
   order: 0 !important;
   flex-shrink: 0 !important;
-  width: 60px !important;
+  width: 48px !important;
   margin-bottom: 0 !important;
+  margin-right: 0 !important;
 }
 
 .quanto-service-box4 .quanto-iconbox-icon img,
@@ -3983,7 +3984,7 @@ ins {
   line-height: 1.15 !important;
   letter-spacing: -1.5px !important;
   color: #0F0F0F !important;
-  margin-bottom: 0 !important;
+  margin: 0 !important;
 }
 
 .quanto-service-box4 .service-title span {
@@ -3995,6 +3996,7 @@ ins {
   max-width: 520px !important;
   width: 100% !important;
   flex-shrink: 1 !important;
+  margin-left: auto !important;
 }
 
 .quanto-service-box4 .service-info p {
