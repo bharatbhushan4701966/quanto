@@ -980,21 +980,23 @@ if( ! function_exists( 'quanto_blog_category' ) ){
     function quanto_blog_category(){
 
         $quanto_post_categories = get_the_category();
+        if ( empty( $quanto_post_categories ) && get_post_type() === 'cmr_news' ) {
+            $quanto_post_categories = get_the_terms( get_the_ID(), 'cmr_news_category' );
+        }
 
         if( is_array( $quanto_post_categories ) && ! empty( $quanto_post_categories ) ){
-
-            if( is_single() ) {
-
-                echo '<li><span><a href="'.esc_url( get_term_link( $quanto_post_categories[0]->term_id ) ).'">'.esc_html( $quanto_post_categories[0]->name ).'</a></span></li>';
-
-            } else{
-
-                echo '<li><span><a href="'.esc_url( get_term_link( $quanto_post_categories[0]->term_id ) ).'">'.esc_html( $quanto_post_categories[0]->name ).'</a></span></li>';
-
+            $cat_links = array();
+            foreach( $quanto_post_categories as $cat ){
+                $term_link = get_term_link( $cat );
+                if ( ! is_wp_error( $term_link ) ) {
+                    $cat_links[] = '<a href="'.esc_url( $term_link ).'">'.esc_html( $cat->name ).'</a>';
+                } else {
+                    $cat_links[] = esc_html( $cat->name );
+                }
             }
-
-                
-
+            if ( ! empty( $cat_links ) ) {
+                echo '<li><span>' . implode( ', ', $cat_links ) . '</span></li>';
+            }
         }
 
     }

@@ -1374,6 +1374,22 @@ add_action('wp_footer', function() {
             gap: 6px !important;
             border-bottom: 1px solid #ffffff !important;
             padding-bottom: 2px !important;
+            transition: color 0.3s ease, border-color 0.3s ease !important;
+        }
+
+        .insights-featured-content .insights-title:hover {
+            color: #4625A9 !important;
+        }
+
+        .insights-featured-content .insights-more-link:hover {
+            color: #4625A9 !important;
+            border-bottom-color: #4625A9 !important;
+        }
+
+        .insights-featured-content .insights-more-link:hover i,
+        .insights-featured-content .insights-more-link:hover svg {
+            color: #4625A9 !important;
+            fill: #4625A9 !important;
         }
 
         /* Stacked Cards on Mobile - Keep Horizontal List View */
@@ -1444,6 +1460,11 @@ add_action('wp_footer', function() {
             -webkit-box-orient: vertical !important;
             overflow: hidden !important;
             word-break: break-word !important;
+            transition: color 0.3s ease !important;
+        }
+
+        .insights-stacked-content .insights-title:hover {
+            color: #4625A9 !important;
         }
 
         .insights-stacked-content .insights-more-link {
@@ -1455,6 +1476,18 @@ add_action('wp_footer', function() {
             gap: 5px !important;
             border-bottom: 1px solid #0f172a !important;
             padding-bottom: 1px !important;
+            transition: color 0.3s ease, border-color 0.3s ease !important;
+        }
+
+        .insights-stacked-content .insights-more-link:hover {
+            color: #4625A9 !important;
+            border-bottom-color: #4625A9 !important;
+        }
+
+        .insights-stacked-content .insights-more-link:hover i,
+        .insights-stacked-content .insights-more-link:hover svg {
+            color: #4625A9 !important;
+            fill: #4625A9 !important;
         }
 
         /* Stay Updated Section Mobile Edge-to-Edge 16px */
