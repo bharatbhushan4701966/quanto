@@ -423,7 +423,6 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
                     <button class="cmr-vpi-filter-btn">Automotive</button>
                     <button class="cmr-vpi-filter-btn">Consumer Tech</button>
                     <button class="cmr-vpi-filter-btn">Digital Supply Chain</button>
-                    <button class="cmr-vpi-filter-btn">More <svg style="width:10px;margin-left:4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
                 </div>
                 <div class="cmr-vpi-search-wrap">
                     <input type="text" placeholder="Search by name">
