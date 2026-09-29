@@ -14,6 +14,10 @@ function cmr_hero_banner_shortcode($atts) {
       position: relative;
       min-height: 100vh;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-sizing: border-box;
     }
 
     /* =========================
@@ -35,25 +39,20 @@ function cmr_hero_banner_shortcode($atts) {
     }
 
     /* =========================
-       CONTENT
+       CONTENT (Dynamic Real-Time Alignment with Header)
     ========================= */
     .hero-content {
       position: relative;
       z-index: 3;
       color: white;
-      padding: 80px;
-      max-width: 1400px;
-      padding-top: 287px;
-      padding-left: 260px !important;
-    }
-
-    /* 1920+ layout */
-    @media (min-width: 1920px) {
-      .hero-content {
-        width: 1440px;
-        max-width: none;
-        margin-left: clamp(150px, 20vw, 500px);
-      }
+      width: 100%;
+      box-sizing: border-box !important;
+      padding-top: clamp(140px, 18vh, 220px) !important;
+      padding-bottom: 80px !important;
+      padding-left: clamp(20px, 10vw, 220px);
+      padding-right: 20px;
+      margin: 0 !important;
+      max-width: 100% !important;
     }
 
     /* =========================
@@ -548,12 +547,61 @@ function cmr_hero_banner_shortcode($atts) {
         }
       }
 
+      function alignHeroWithHeader() {
+        var hero = document.querySelector('.hero');
+        var heroContent = hero ? hero.querySelector('.hero-content') : null;
+        if (!heroContent) return;
+
+        if (window.innerWidth <= 768) {
+          heroContent.style.paddingLeft = '';
+          heroContent.style.paddingRight = '';
+          return;
+        }
+
+        var headerLogo = document.querySelector('#quanto-header-desktop .header-logo, .header .header-logo, .header-logo img, .header-logo, .elementor-element-7ed4f5b');
+        if (headerLogo) {
+          var logoRect = headerLogo.getBoundingClientRect();
+          if (logoRect.left > 0) {
+            heroContent.style.paddingLeft = Math.round(logoRect.left) + 'px';
+          }
+        }
+
+        var heroIndicators = hero.querySelector('.hero-indicators');
+        if (heroIndicators) {
+          var headerBtn = document.querySelector('#quanto-header-desktop .download-btn, #quanto-header-desktop .elementor-button, .header .download-btn, .header .elementor-button, #quanto-header-desktop .elementor-element-200fa94');
+          if (headerBtn) {
+            var btnRect = headerBtn.getBoundingClientRect();
+            var rightOffset = window.innerWidth - btnRect.right;
+            if (rightOffset > 0) {
+              heroIndicators.style.right = Math.round(rightOffset) + 'px';
+            }
+          }
+        }
+      }
+
       if (document.readyState === 'interactive' || document.readyState === 'complete') {
         initHeroBannerSlider();
+        alignHeroWithHeader();
       } else {
-        document.addEventListener('DOMContentLoaded', initHeroBannerSlider);
+        document.addEventListener('DOMContentLoaded', function() {
+          initHeroBannerSlider();
+          alignHeroWithHeader();
+        });
       }
-      window.addEventListener('load', initHeroBannerSlider);
+      window.addEventListener('load', function() {
+        initHeroBannerSlider();
+        alignHeroWithHeader();
+      });
+      window.addEventListener('resize', alignHeroWithHeader);
+
+      if (window.ResizeObserver) {
+        var ro = new ResizeObserver(function() {
+          alignHeroWithHeader();
+        });
+        ro.observe(document.body);
+        var headerEl = document.querySelector('#quanto-header-desktop, .header');
+        if (headerEl) ro.observe(headerEl);
+      }
     })();
     </script>
     <?php
