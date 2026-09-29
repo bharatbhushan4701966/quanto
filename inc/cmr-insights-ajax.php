@@ -69,7 +69,7 @@ function cmr_insights_ajax_search_callback() {
             $excerpt = wp_trim_words( $content, 20 );
         }
     ?>
-    <div class="<?php echo esc_attr($prefix); ?>card">
+    <a href="<?php echo esc_url(get_permalink($post_obj->ID)); ?>" class="<?php echo esc_attr($prefix); ?>card">
         <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr(get_the_title($post_obj)); ?>" class="<?php echo esc_attr($prefix); ?>card-img">
         <div class="<?php echo esc_attr($prefix); ?>card-meta">
             <div class="<?php echo esc_attr($prefix); ?>card-cat-date">
@@ -80,14 +80,14 @@ function cmr_insights_ajax_search_callback() {
         </div>
         <h3 class="<?php echo esc_attr($prefix); ?>card-title"><?php echo esc_html(get_the_title($post_obj)); ?></h3>
         <p class="<?php echo esc_attr($prefix); ?>card-excerpt"><?php echo esc_html(wp_strip_all_tags($excerpt)); ?></p>
-        <a href="<?php echo esc_url(get_permalink($post_obj->ID)); ?>" class="<?php echo esc_attr($prefix); ?>read-more">
+        <span class="<?php echo esc_attr($prefix); ?>read-more">
             Read More 
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="7" y1="17" x2="17" y2="7"></line>
                 <polyline points="7 7 17 7 17 17"></polyline>
             </svg>
-        </a>
-    </div>
+        </span>
+    </a>
     <?php endforeach;
     wp_die();
 }

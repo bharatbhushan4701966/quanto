@@ -142,6 +142,9 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                 flex-direction: column;
                 background: #fff;
                 height: 100%;
+                text-decoration: none;
+                color: inherit;
+                cursor: pointer;
             }
             .cmr-mui-card-img {
                 width: 100%;
@@ -150,6 +153,7 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                 display: block;
                 border-radius: 4px;
                 margin-bottom: 20px;
+                transition: transform 0.3s ease;
             }
             .cmr-mui-card-meta {
                 display: flex;
@@ -182,6 +186,11 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
+                transition: color 0.3s ease;
+            }
+            .cmr-mui-card:hover .cmr-mui-card-title,
+            .cmr-mui-card-title:hover {
+                color: #4625A9 !important;
             }
             .cmr-mui-card-excerpt {
                 font-size: 15px;
@@ -204,12 +213,23 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                 padding-bottom: 2px;
                 align-self: flex-start;
                 margin-top: auto;
-                transition: opacity 0.2s;
+                transition: color 0.3s ease, border-color 0.3s ease;
             }
             .cmr-mui-read-more svg {
                 width: 16px;
                 height: 16px;
                 margin-left: 5px;
+                transition: color 0.3s ease, stroke 0.3s ease, transform 0.3s ease;
+            }
+            .cmr-mui-card:hover .cmr-mui-read-more,
+            .cmr-mui-read-more:hover {
+                color: #4625A9 !important;
+                border-bottom-color: #4625A9 !important;
+            }
+            .cmr-mui-card:hover .cmr-mui-read-more svg,
+            .cmr-mui-read-more:hover svg {
+                color: #4625A9 !important;
+                stroke: #4625A9 !important;
             }
             .cmr-mui-card-hidden {
                 display: none !important;
@@ -266,9 +286,6 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
             }
             .cmr-mui-pagination .page-numbers.dots {
                 width: auto;
-            }
-            .cmr-mui-read-more:hover {
-                opacity: 0.7;
             }
 
             @media (max-width: 992px) {
@@ -453,7 +470,7 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                             $excerpt = wp_trim_words( $content, 20 );
                         }
                     ?>
-                    <div class="cmr-mui-card<?php echo $hidden_class; ?>">
+                    <a href="<?php echo esc_url(get_permalink($post_obj->ID)); ?>" class="cmr-mui-card<?php echo $hidden_class; ?>">
                         <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr(get_the_title($post_obj)); ?>" class="cmr-mui-card-img">
                         <div class="cmr-mui-card-meta">
                             <div class="cmr-mui-card-cat-date">
@@ -464,14 +481,14 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                         </div>
                         <h3 class="cmr-mui-card-title"><?php echo esc_html(get_the_title($post_obj)); ?></h3>
                         <p class="cmr-mui-card-excerpt"><?php echo esc_html(wp_strip_all_tags($excerpt)); ?></p>
-                        <a href="<?php echo esc_url(get_permalink($post_obj->ID)); ?>" class="cmr-mui-read-more">
+                        <span class="cmr-mui-read-more">
                             Read More 
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="7" y1="17" x2="17" y2="7"></line>
                                 <polyline points="7 7 17 7 17 17"></polyline>
                             </svg>
-                        </a>
-                    </div>
+                        </span>
+                    </a>
                     <?php endforeach; ?>
                 <?php else : ?>
                     <p>No insights found.</p>
