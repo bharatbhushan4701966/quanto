@@ -447,10 +447,20 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                             $thumbnail_url = 'https://via.placeholder.com/600x400?text=Insight+Image';
                         }
                         
-                        $category_name = 'Uncategorized';
+                        $category_name = 'Market Updates';
                         $terms = get_the_terms( $post_obj->ID, 'category' );
                         if ( $terms && ! is_wp_error( $terms ) ) {
-                            $category_name = $terms[0]->name;
+                            $has_mu = false;
+                            foreach ( $terms as $term ) {
+                                if ( in_array( strtolower( $term->slug ), array( 'market-updates', 'market-update', 'market updates' ) ) || in_array( strtolower( $term->name ), array( 'market-updates', 'market-update', 'market updates' ) ) ) {
+                                    $category_name = $term->name;
+                                    $has_mu = true;
+                                    break;
+                                }
+                            }
+                            if ( ! $has_mu ) {
+                                $category_name = $terms[0]->name;
+                            }
                         }
                         
                         $post_date = get_the_date('d M Y', $post_obj);

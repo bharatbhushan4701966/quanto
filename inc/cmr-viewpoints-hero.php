@@ -43,7 +43,17 @@ if ( ! function_exists( 'cmr_viewpoints_hero_shortcode' ) ) {
                 $category_name = 'Viewpoints';
                 $terms = get_the_terms( $post_obj->ID, 'category' );
                 if ( $terms && ! is_wp_error( $terms ) ) {
-                    $category_name = $terms[0]->name;
+                    $has_viewpoint = false;
+                    foreach ( $terms as $term ) {
+                        if ( in_array( strtolower( $term->slug ), array( 'viewpoint', 'viewpoints' ) ) || in_array( strtolower( $term->name ), array( 'viewpoint', 'viewpoints' ) ) ) {
+                            $category_name = $term->name;
+                            $has_viewpoint = true;
+                            break;
+                        }
+                    }
+                    if ( ! $has_viewpoint ) {
+                        $category_name = $terms[0]->name;
+                    }
                 }
                 
                 $post_date = get_the_date('M d, Y', $post_obj);

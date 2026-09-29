@@ -55,6 +55,15 @@ function cmr_insights_ajax_search_callback() {
         $terms = get_the_terms( $post_obj->ID, 'category' );
         if ( $terms && ! is_wp_error( $terms ) ) {
             $category_name = $terms[0]->name;
+            if ( ! empty( $category ) ) {
+                $cats_to_match = array_map( 'trim', explode( ',', strtolower( $category ) ) );
+                foreach ( $terms as $term ) {
+                    if ( in_array( strtolower( $term->slug ), $cats_to_match ) || in_array( strtolower( $term->name ), $cats_to_match ) ) {
+                        $category_name = $term->name;
+                        break;
+                    }
+                }
+            }
         }
         
         $post_date = get_the_date('d M Y', $post_obj);
