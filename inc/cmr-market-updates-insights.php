@@ -419,10 +419,10 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
 
             <div class="cmr-mui-nav-bar">
                 <div class="cmr-mui-filters">
-                    <button class="cmr-mui-filter-btn active">All</button>
-                    <button class="cmr-mui-filter-btn">Automotive</button>
-                    <button class="cmr-mui-filter-btn">Consumer Tech</button>
-                    <button class="cmr-mui-filter-btn">Digital Supply Chain</button>
+                    <button class="cmr-mui-filter-btn active" data-filter="all">All</button>
+                    <button class="cmr-mui-filter-btn" data-filter="automotive">Automotive</button>
+                    <button class="cmr-mui-filter-btn" data-filter="consumer-tech">Consumer Tech</button>
+                    <button class="cmr-mui-filter-btn" data-filter="digital-supply-chain">Digital Supply Chain</button>
                 </div>
                 <div class="cmr-mui-search-wrap">
                     <input type="text" placeholder="Search by name">
@@ -447,21 +447,17 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                             $thumbnail_url = 'https://via.placeholder.com/600x400?text=Insight+Image';
                         }
                         
-                        $category_name = 'Market Updates';
+                        $category_name = 'Uncategorized';
+                        $all_term_names = array();
                         $terms = get_the_terms( $post_obj->ID, 'category' );
                         if ( $terms && ! is_wp_error( $terms ) ) {
-                            $has_mu = false;
-                            foreach ( $terms as $term ) {
-                                if ( in_array( strtolower( $term->slug ), array( 'market-updates', 'market-update', 'market updates' ) ) || in_array( strtolower( $term->name ), array( 'market-updates', 'market-update', 'market updates' ) ) ) {
-                                    $category_name = $term->name;
-                                    $has_mu = true;
-                                    break;
-                                }
-                            }
-                            if ( ! $has_mu ) {
-                                $category_name = $terms[0]->name;
+                            $category_name = $terms[0]->name;
+                            foreach ($terms as $t) {
+                                $all_term_names[] = $t->name;
+                                $all_term_names[] = $t->slug;
                             }
                         }
+                        $cat_data_attr = esc_attr(strtolower(implode(' ', array_unique($all_term_names))));
                         
                         $post_date = get_the_date('d M Y', $post_obj);
                         
@@ -476,7 +472,7 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                             $excerpt = wp_trim_words( $content, 20 );
                         }
                     ?>
-                    <a href="<?php echo esc_url(get_permalink($post_obj->ID)); ?>" class="cmr-mui-card<?php echo $hidden_class; ?>">
+                    <a href="<?php echo esc_url(get_permalink($post_obj->ID)); ?>" class="cmr-mui-card<?php echo $hidden_class; ?>" data-category="<?php echo $cat_data_attr; ?>">
                         <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr(get_the_title($post_obj)); ?>" class="cmr-mui-card-img">
                         <div class="cmr-mui-card-meta">
                             <div class="cmr-mui-card-cat-date">
@@ -565,41 +561,116 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
         </div>
 
         <script>
-            // Filter functionality (AJAX Search)
+            // Filter functionality (Pills and AJAX Search)
             document.addEventListener('DOMContentLoaded', function() {
                 var searchInput = document.querySelector('.cmr-mui-search-wrap input');
+                var filterBtns = document.querySelectorAll('.cmr-mui-filter-btn');
+                var grid = document.querySelector('.cmr-mui-grid');
+                var loadMoreBtn = document.getElementById('cmr-mui-load-more');
+                var paginationWrap = document.getElementById('cmr-mui-pagination-wrap');
+                var currentFilter = 'all';
                 var searchTimer;
+
+                // Function to filter rendered cards client-side
+                function applyFilter(filterVal) {
+                    currentFilter = (filterVal || 'all').toLowerCase().trim();
+                    var cards = grid ? grid.querySelectorAll('.cmr-mui-card') : [];
+                    var visibleCount = 0;
+
+                    cards.forEach(function(card) {
+                        var cardCat = (card.getAttribute('data-category') || '').toLowerCase();
+                        var cardText = card.textContent.toLowerCase();
+                        
+                        var matches = false;
+                        if (currentFilter === 'all') {
+                            matches = true;
+                        } else if (currentFilter === 'automotive') {
+                            matches = cardCat.indexOf('automotive') !== -1 || cardCat.indexOf('auto') !== -1 || cardText.indexOf('automotive') !== -1 || cardText.indexOf('auto') !== -1;
+                        } else if (currentFilter === 'consumer-tech') {
+                            matches = cardCat.indexOf('consumer') !== -1 || cardCat.indexOf('tech') !== -1 || cardText.indexOf('consumer') !== -1;
+                        } else if (currentFilter === 'digital-supply-chain') {
+                            matches = cardCat.indexOf('supply') !== -1 || cardCat.indexOf('chain') !== -1 || cardCat.indexOf('digital') !== -1 || cardText.indexOf('supply chain') !== -1;
+                        } else {
+                            matches = cardCat.indexOf(currentFilter) !== -1 || cardText.indexOf(currentFilter.replace(/-/g, ' ')) !== -1;
+                        }
+
+                        if (matches) {
+                            card.style.display = '';
+                            visibleCount++;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+
+                    // Manage load more & pagination visibility
+                    if (currentFilter === 'all') {
+                        if (paginationWrap) paginationWrap.style.display = 'block';
+                    } else {
+                        if (paginationWrap) paginationWrap.style.display = 'none';
+                        if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+                    }
+
+                    // If no visible cards found client-side, query the server via AJAX
+                    var noResultsMsg = grid ? grid.querySelector('.cmr-mui-no-results') : null;
+                    if (visibleCount === 0 && currentFilter !== 'all') {
+                        if (!noResultsMsg) {
+                            fetchServerResults('', currentFilter);
+                        }
+                    } else if (noResultsMsg) {
+                        noResultsMsg.remove();
+                    }
+                }
+
+                function fetchServerResults(searchTerm, catFilter) {
+                    if (!grid) return;
+                    grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; padding:40px; font-size:18px;">Loading insights...</p>';
+                    if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+                    if (paginationWrap) paginationWrap.style.display = 'none';
+
+                    var formData = new FormData();
+                    formData.append('action', 'cmr_insights_ajax_search');
+                    formData.append('search_term', searchTerm || '');
+                    formData.append('cat_filter', catFilter || '');
+                    formData.append('prefix', 'cmr-mui-');
+                    formData.append('category', 'market-updates');
+
+                    fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(function(res) { return res.text(); })
+                    .then(function(html) {
+                        grid.innerHTML = html;
+                    });
+                }
+
+                // Attach pill click events
+                filterBtns.forEach(function(btn) {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        filterBtns.forEach(function(b) { b.classList.remove('active'); });
+                        this.classList.add('active');
+                        var filterVal = this.getAttribute('data-filter') || this.textContent.trim().toLowerCase().replace(/\s+/g, '-');
+                        
+                        // Clear search input if user clicks a filter pill
+                        if (searchInput) searchInput.value = '';
+                        applyFilter(filterVal);
+                    });
+                });
+
+                // Search input event
                 if (searchInput) {
                     searchInput.addEventListener('keyup', function(e) {
                         clearTimeout(searchTimer);
                         var val = e.target.value.trim();
                         
                         searchTimer = setTimeout(function() {
-                            var grid = document.querySelector('.cmr-mui-grid');
-                            if (!grid) return;
-
-                            grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; padding:40px; font-size:18px;">Searching...</p>';
-                            
-                            var loadMoreBtn = document.getElementById('cmr-mui-load-more');
-                            if (loadMoreBtn) loadMoreBtn.style.display = 'none';
-                            var paginationWrap = document.getElementById('cmr-mui-pagination-wrap');
-                            if (paginationWrap) paginationWrap.style.display = 'none';
-
-                            var formData = new FormData();
-                            formData.append('action', 'cmr_insights_ajax_search');
-                            formData.append('search_term', val);
-                            formData.append('prefix', 'cmr-mui-');
-                            formData.append('category', 'market-updates');
-                            
-                            fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
-                                method: 'POST',
-                                body: formData
-                            })
-                            .then(function(res) { return res.text(); })
-                            .then(function(html) {
-                                grid.innerHTML = html;
-                            });
-                        }, 600); // 600ms debounce
+                            if (!val && currentFilter !== 'all') {
+                                applyFilter(currentFilter);
+                                return;
+                            }
+                            fetchServerResults(val, currentFilter);
+                        }, 500); // 500ms debounce
                     });
                 }
                 
