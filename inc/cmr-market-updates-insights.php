@@ -720,16 +720,24 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                             }
                         }
 
-                        // Inject id="expert-insights" onto the footer card section
+                        // Inject id="expert-insights" onto the footer card section (tight target)
                         if (!document.getElementById('expert-insights')) {
                             const allEls = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title'));
                             let footerCardHeading = allEls.find(h => {
                                 const t = h.textContent.toLowerCase();
-                                return (t.includes('let') && t.includes('connect')) || t.includes('speak directly') || t.includes('market expert') || t.includes('your challenge');
+                                return (t.includes('let') && t.includes('connect')) || t.includes('speak directly') || t.includes('market expert') || t.includes('your challenge') || t.includes('your ambition');
                             });
                             if (footerCardHeading) {
-                                const footerSection = footerCardHeading.closest('[data-element_type="container"]') || footerCardHeading.closest('.elementor-section') || footerCardHeading.closest('.e-con') || footerCardHeading.parentElement;
-                                if (footerSection) footerSection.id = 'expert-insights';
+                                // Walk up max 3 levels to find an e-con/section — avoids grabbing huge ancestor containers
+                                let target = footerCardHeading;
+                                for (let i = 0; i < 3; i++) {
+                                    const p = target.parentElement;
+                                    if (!p) break;
+                                    target = p;
+                                    const et = p.getAttribute('data-element_type');
+                                    if (et === 'container' || et === 'section' || et === 'column') break;
+                                }
+                                target.id = 'expert-insights';
                             }
                         }
                     }
