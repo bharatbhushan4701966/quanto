@@ -171,8 +171,8 @@ if ( post_password_required() ) {
 					<a href="https://twitter.com/intent/tweet?url=<?php echo $share_url; ?>&text=<?php echo $share_title; ?>" class="share-btn" target="_blank" rel="noopener" title="Share on Twitter/X">
 						<i class="fa-brands fa-x-twitter"></i>
 					</a>
-					<a href="https://pinterest.com/pin/create/button/?url=<?php echo $share_url; ?>" class="share-btn" target="_blank" rel="noopener" title="Pin on Pinterest">
-						<i class="fa-brands fa-pinterest-p"></i>
+					<a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $share_url; ?>" class="share-btn" target="_blank" rel="noopener" title="Share on Facebook">
+						<i class="fa-brands fa-facebook-f"></i>
 					</a>
 					<a href="https://api.whatsapp.com/send?text=<?php echo $share_title; ?>%20<?php echo $share_url; ?>" class="share-btn" target="_blank" rel="noopener" title="Share on WhatsApp">
 						<i class="fa-brands fa-whatsapp"></i>

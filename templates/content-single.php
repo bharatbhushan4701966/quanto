@@ -85,11 +85,14 @@
                     // Share Links
                     if( class_exists('ReduxFramework') ) {
                         $quanto_post_details_share_options = quanto_opt('quanto_post_details_share_options');
+                        if ( ! isset($quanto_post_details_share_options) || $quanto_post_details_share_options === '' ) {
+                            $quanto_post_details_share_options = true;
+                        }
                     } else {
-                        $quanto_post_details_share_options = false;
+                        $quanto_post_details_share_options = true;
                     }
 
-                    if( function_exists( 'quanto_social_sharing_buttons' ) && $quanto_post_details_share_options ){
+                    if( $quanto_post_details_share_options ){
                         echo '<div class="social-links">';
                             /**
                             *
@@ -105,12 +108,7 @@
                     }
 
                     echo '<div class="row justify-content-center social-links-scroll position-relative">';
-                        if( class_exists('ReduxFramework') ) {
-                            $quanto_post_details_share_options = quanto_opt('quanto_post_details_share_options');
-                        } else {
-                            $quanto_post_details_share_options = false;
-                        }
-                        if( function_exists( 'quanto_social_sharing_buttons' ) && $quanto_post_details_share_options ) {
+                        if( $quanto_post_details_share_options ) {
                             echo '<div class="col-xl-9 col-xxl-8">';
                         } else {
                             echo '<div class="col-xl-12 col-xxl-12">';

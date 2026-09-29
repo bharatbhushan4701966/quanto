@@ -742,18 +742,48 @@
         }
     }
 
+    // Blog details share options helper function
+    if( !function_exists('quanto_social_sharing_buttons') ) {
+        function quanto_social_sharing_buttons() {
+            $post_url   = rawurlencode( esc_url( get_permalink() ) );
+            $post_title = rawurlencode( html_entity_decode( get_the_title(), ENT_COMPAT, 'UTF-8' ) );
+
+            $output = '';
+            // 1. LinkedIn
+            $output .= '<li><a href="https://www.linkedin.com/sharing/share-offsite/?url=' . $post_url . '" target="_blank" rel="noopener noreferrer" title="Share on LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a></li>';
+            // 2. Twitter / X
+            $output .= '<li><a href="https://twitter.com/intent/tweet?url=' . $post_url . '&text=' . $post_title . '" target="_blank" rel="noopener noreferrer" title="Share on Twitter" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a></li>';
+            // 3. Facebook
+            $output .= '<li><a href="https://www.facebook.com/sharer/sharer.php?u=' . $post_url . '" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a></li>';
+            // 4. WhatsApp
+            $output .= '<li><a href="https://api.whatsapp.com/send?text=' . $post_title . '%20' . $post_url . '" target="_blank" rel="noopener noreferrer" title="Share on WhatsApp" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a></li>';
+
+            return $output;
+        }
+    }
+
     // blog details share options hook function
     if( !function_exists('quanto_blog_details_share_options_cb') ) {
         function quanto_blog_details_share_options_cb( ) {
             if( class_exists('ReduxFramework') ) {
                 $quanto_post_details_share_options = quanto_opt('quanto_post_details_share_options');
             } else {
-                $quanto_post_details_share_options = false;
+                $quanto_post_details_share_options = true;
             }
-            if( function_exists( 'quanto_social_sharing_buttons' ) && $quanto_post_details_share_options ) {
-                    echo '<ul class="custom-ul">';
-                        echo quanto_social_sharing_buttons();
-                    echo '</ul>';
+            if( $quanto_post_details_share_options ) {
+                $post_url   = rawurlencode( esc_url( get_permalink() ) );
+                $post_title = rawurlencode( html_entity_decode( get_the_title(), ENT_COMPAT, 'UTF-8' ) );
+
+                echo '<ul class="custom-ul">';
+                    // 1. LinkedIn
+                    echo '<li><a href="https://www.linkedin.com/sharing/share-offsite/?url=' . $post_url . '" target="_blank" rel="noopener noreferrer" title="Share on LinkedIn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a></li>';
+                    // 2. Twitter / X
+                    echo '<li><a href="https://twitter.com/intent/tweet?url=' . $post_url . '&text=' . $post_title . '" target="_blank" rel="noopener noreferrer" title="Share on Twitter" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a></li>';
+                    // 3. Facebook
+                    echo '<li><a href="https://www.facebook.com/sharer/sharer.php?u=' . $post_url . '" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a></li>';
+                    // 4. WhatsApp
+                    echo '<li><a href="https://api.whatsapp.com/send?text=' . $post_title . '%20' . $post_url . '" target="_blank" rel="noopener noreferrer" title="Share on WhatsApp" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a></li>';
+                echo '</ul>';
             }
         }
     }
