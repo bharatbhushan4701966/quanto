@@ -3934,7 +3934,7 @@ ins {
   flex-direction: row !important;
   justify-content: flex-start !important;
   align-items: flex-start !important;
-  gap: 24px !important;
+  gap: 48px !important;
   border: none !important;
   border-top: 1px solid #E5E5E5 !important;
   border-radius: 0 !important;
