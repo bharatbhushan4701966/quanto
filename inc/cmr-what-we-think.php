@@ -401,6 +401,16 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             font-size: 17px; font-weight: 600; line-height: 1.35;
             color: #1a1a2e; margin-bottom: 10px; min-height: 38px;
             font-family: 'Instrument Sans', sans-serif;
+            transition: color 0.3s ease;
+        }
+        .cmr-wwt-card-title a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+        .cmr-wwt-card-title:hover,
+        .cmr-wwt-card-title a:hover {
+            color: #4625A9 !important;
         }
 
         .cmr-wwt-card-link {
@@ -419,17 +429,27 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             border: none;
             padding: 0 0 4px 0;
             border-bottom: 2px solid #111 !important;
+            transition: color 0.3s ease, border-color 0.3s ease;
         }
-        .cmr-wwt-card-link:hover { color: #6B3FA0 !important; border-bottom-color: #6B3FA0 !important; }
+        .cmr-wwt-card-link:hover { 
+            color: #4625A9 !important; 
+            border-bottom-color: #4625A9 !important; 
+        }
         .cmr-wwt-card-link::after {
             content: "";
             width: 11px;
             height: 11px;
-            background-image: url('https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg');
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-position: center;
+            background-color: currentColor;
+            -webkit-mask-image: url('https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg');
+            mask-image: url('https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg');
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-position: center;
+            mask-position: center;
             display: inline-block;
+            transition: background-color 0.3s ease;
         }
 
         .cmr-wwt-menu-item {

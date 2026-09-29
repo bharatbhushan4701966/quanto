@@ -10384,5 +10384,53 @@ a.sector-explore-link:hover svg {
     fill: #4625A9 !important;
 }
 
+/* Global Header Logo Uniform Size - Matches Homepage Exact 144px */
+header .header-logo,
+.header .header-logo,
+.header-logo,
+.elementor-widget-quantologo .header-logo {
+    max-width: 144px !important;
+    width: 144px !important;
+}
+
+header .header-logo a,
+.header .header-logo a,
+.header-logo a,
+.elementor-widget-quantologo .header-logo a {
+    display: inline-block !important;
+    width: 100% !important;
+    max-width: 144px !important;
+}
+
+header .header-logo img,
+.header .header-logo img,
+.header-logo img,
+.elementor-widget-quantologo .header-logo img {
+    max-width: 144px !important;
+    width: 144px !important;
+    height: auto !important;
+    display: block !important;
+}
+
+@media (max-width: 767.98px) {
+    header .header-logo,
+    .header .header-logo,
+    .header-logo,
+    .elementor-widget-quantologo .header-logo,
+    .mobile-logo {
+        max-width: 120px !important;
+        width: auto !important;
+    }
+    header .header-logo img,
+    .header .header-logo img,
+    .header-logo img,
+    .elementor-widget-quantologo .header-logo img,
+    .mobile-logo img {
+        max-width: 120px !important;
+        width: auto !important;
+        height: auto !important;
+    }
+}
+
 
 
