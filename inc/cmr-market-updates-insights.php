@@ -188,7 +188,6 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                 overflow: hidden;
                 transition: color 0.3s ease;
             }
-            .cmr-mui-card:hover .cmr-mui-card-title,
             .cmr-mui-card-title:hover {
                 color: #4625A9 !important;
             }
@@ -221,12 +220,10 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                 margin-left: 5px;
                 transition: color 0.3s ease, stroke 0.3s ease, transform 0.3s ease;
             }
-            .cmr-mui-card:hover .cmr-mui-read-more,
             .cmr-mui-read-more:hover {
                 color: #4625A9 !important;
                 border-bottom-color: #4625A9 !important;
             }
-            .cmr-mui-card:hover .cmr-mui-read-more svg,
             .cmr-mui-read-more:hover svg {
                 color: #4625A9 !important;
                 stroke: #4625A9 !important;
