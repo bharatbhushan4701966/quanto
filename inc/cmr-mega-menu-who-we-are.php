@@ -275,7 +275,7 @@ function cmr_mega_menu_who_we_are_shortcode($atts) {
                             Mumbai
                         </li>
                     </ul>
-                    <a href="<?php echo esc_url( home_url( '/explore/' ) ); ?>" class="cmr-mm-explore">
+                    <a href="<?php echo esc_url( home_url( '/contact-us/' ) ); ?>" class="cmr-mm-explore">
                         <span class="cmr-mm-explore-text">Explore</span> 
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                     </a>
