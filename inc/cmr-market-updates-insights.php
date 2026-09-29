@@ -707,8 +707,8 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                     
                     // AUTO-INJECT IDs on page load so nav links always work
                     function cmrAutoInjectIds() {
-                        // Inject id="reports" onto the Similar Reports by Industry section
-                        if (!document.getElementById('reports')) {
+                        // Inject id="cmr-latest-reports" onto the Similar Reports by Industry section
+                        if (!document.getElementById('cmr-latest-reports')) {
                             const allHeadings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title'));
                             let reportsHeading = allHeadings.find(h => h.textContent.toLowerCase().includes('reports by industry'));
                             if (!reportsHeading) {
@@ -716,7 +716,7 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                             }
                             if (reportsHeading) {
                                 const reportsSection = reportsHeading.closest('[data-element_type="container"]') || reportsHeading.closest('.elementor-section') || reportsHeading.closest('.e-con') || reportsHeading.parentElement;
-                                if (reportsSection) reportsSection.id = 'reports';
+                                if (reportsSection) reportsSection.id = 'cmr-latest-reports';
                             }
                         }
 
