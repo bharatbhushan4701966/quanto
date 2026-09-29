@@ -688,65 +688,63 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
                     window.addEventListener('resize', updateSticky, { passive: true });
                     setTimeout(updateSticky, 100);
                     
-                    // Add smooth scrolling logic
+                    // AUTO-INJECT IDs on page load so nav links always work
+                    function cmrAutoInjectIds() {
+                        // Inject id="reports" onto the Similar Reports by Industry section
+                        if (!document.getElementById('reports')) {
+                            const allHeadings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title'));
+                            let reportsHeading = allHeadings.find(h => h.textContent.toLowerCase().includes('reports by industry'));
+                            if (!reportsHeading) {
+                                reportsHeading = allHeadings.find(h => h.textContent.toLowerCase().includes('similar reports') && !h.closest('.intel-nav-bar'));
+                            }
+                            if (reportsHeading) {
+                                const reportsSection = reportsHeading.closest('[data-element_type="container"]') || reportsHeading.closest('.elementor-section') || reportsHeading.closest('.e-con') || reportsHeading.parentElement;
+                                if (reportsSection) reportsSection.id = 'reports';
+                            }
+                        }
+
+                        // Inject id="expert-insights" onto the footer card section
+                        if (!document.getElementById('expert-insights')) {
+                            const allEls = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title'));
+                            let footerCardHeading = allEls.find(h => {
+                                const t = h.textContent.toLowerCase();
+                                return (t.includes('let') && t.includes('connect')) || t.includes('speak directly') || t.includes('market expert') || t.includes('your challenge');
+                            });
+                            if (footerCardHeading) {
+                                const footerSection = footerCardHeading.closest('[data-element_type="container"]') || footerCardHeading.closest('.elementor-section') || footerCardHeading.closest('.e-con') || footerCardHeading.parentElement;
+                                if (footerSection) footerSection.id = 'expert-insights';
+                            }
+                        }
+                    }
+                    // Run on DOM ready and after a short delay to handle lazy-loaded Elementor widgets
+                    cmrAutoInjectIds();
+                    setTimeout(cmrAutoInjectIds, 1000);
+
+                    // Smooth scroll on nav link click
                     const navLinks = navBar.querySelectorAll('.intel-nav-links a');
                     navLinks.forEach(link => {
                         link.addEventListener('click', function(e) {
                             const href = this.getAttribute('href');
                             if (!href || href.indexOf('#') === -1) return;
-                            
+
                             const targetId = href.substring(href.indexOf('#') + 1);
                             if (!targetId) return;
-                            
-                            let targetElement = null;
-                            
-                            if (targetId === 'reports') {
-                                const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title'));
-                                let matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('reports by industry'));
-                                if (!matchingHeading) {
-                                    // Fallback to any heading with 'reports'
-                                    matchingHeading = headings.find(h => h.textContent.toLowerCase().includes('reports') && !h.closest('.intel-nav-bar'));
-                                }
-                                
-                                if (matchingHeading) {
-                                    targetElement = matchingHeading.closest('.elementor-section') || matchingHeading.closest('.e-con') || matchingHeading.parentElement;
-                                }
-                                
-                                if (!targetElement) {
-                                    targetElement = document.getElementById(targetId);
-                                }
-                            } else if (targetId === 'expert-insights' || targetId === 'cmr-footer-card-section') {
-                                // Try finding the footer card if the explicit ID doesn't exist
-                                targetElement = document.getElementById(targetId);
-                                if (!targetElement) {
-                                    const possibleCards = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, .elementor-heading-title, .elementor-button-text'));
-                                    const matchingHeading = possibleCards.find(el => {
-                                        const txt = el.textContent.toLowerCase();
-                                        return txt.includes('cmr connect') || txt.includes('monthly digest') || txt.includes('your challenge') || txt.includes('let\'s connect') || (txt.includes('subscribe now') && !el.closest('.intel-nav-bar'));
-                                    });
-                                    if (matchingHeading) {
-                                        targetElement = matchingHeading.closest('.elementor-section') || matchingHeading.closest('.e-con') || matchingHeading.parentElement;
-                                    }
-                                }
-                            } else {
-                                targetElement = document.getElementById(targetId);
-                            }
-                            
+
+                            // Re-run auto-inject in case page changed
+                            cmrAutoInjectIds();
+
+                            const targetElement = document.getElementById(targetId);
                             if (targetElement) {
                                 e.preventDefault();
-                                
+
                                 let stickyOffset = 0;
                                 const wpAdminBar = document.getElementById('wpadminbar');
                                 if (wpAdminBar && window.getComputedStyle(wpAdminBar).position === 'fixed') {
                                     stickyOffset = wpAdminBar.offsetHeight;
                                 }
-                                
+
                                 const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - stickyOffset - 80;
-                                
-                                window.scrollTo({
-                                    top: targetPosition,
-                                    behavior: 'smooth'
-                                });
+                                window.scrollTo({ top: targetPosition, behavior: 'smooth' });
                             }
                         });
                     });
