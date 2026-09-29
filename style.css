@@ -10021,12 +10021,7 @@ a.cmr-network-pill-btn:hover {
         margin-bottom: 25px !important;
     }
     .cmr-vp-hero-cats {
-        gap: 8px !important;
-        margin-bottom: 35px !important;
-    }
-    .cmr-vp-hero-cat-pill {
-        padding: 8px 14px !important;
-        font-size: 12px !important;
+        display: none !important;
     }
 
     .cmr-vp-slide {
