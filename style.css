@@ -5826,16 +5826,46 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     cursor: pointer !important;
 }
 
-/* 4. Image: Fills Square, focused on face & shoulders */
+/* 4. Image: Fills Square, focused on face & shoulders - NO ANIMATION */
 .quanto-team-box .team-thumb img,
+.quanto-team-box .team-thumb img:first-child,
+.quanto-team-box .team-thumb img:nth-child(2),
+.quanto-team-box:hover .team-thumb img,
+.quanto-team-box:hover .team-thumb img:first-child,
+.quanto-team-box:hover .team-thumb img:nth-child(2),
 #manager .quanto-team-box .team-thumb img,
-#practice .quanto-team-box .team-thumb img {
+#manager .quanto-team-box:hover .team-thumb img,
+#practice .quanto-team-box .team-thumb img,
+#practice .quanto-team-box:hover .team-thumb img,
+#advisory .quanto-team-box .team-thumb img,
+#advisory .quanto-team-box:hover .team-thumb img,
+.advisory-board .quanto-team-box .team-thumb img,
+.advisory-board .quanto-team-box:hover .team-thumb img {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
     object-position: center 15% !important;
     display: block !important;
     border-radius: 0 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+}
+
+.quanto-team-box .team-thumb,
+.quanto-team-box:hover .team-thumb,
+.quanto-team-box a.team-thumb-link,
+.quanto-team-box:hover a.team-thumb-link {
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
 }
 
 /* 5. Remove arrow icon and dark gradient overlay */

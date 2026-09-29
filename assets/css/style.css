@@ -6394,19 +6394,19 @@ ins {
   display: block;
   -o-object-fit: cover;
   object-fit: cover;
-  transition: all 500ms ease;
+  transition: none;
 }
 
 .quanto-team-box .team-thumb img:first-child {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  transform: translateX(50%) scaleX(2);
-  opacity: 0;
-  filter: blur(10px);
-  transition: all 0.4s ease-in-out;
+  position: relative;
+  left: auto;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  transform: none;
+  opacity: 1;
+  filter: none;
+  transition: none;
 }
 
 .quanto-team-box .team-thumb ul {
@@ -6470,15 +6470,15 @@ ins {
 }
 
 .quanto-team-box:hover .team-thumb img:first-child {
-  transform: translateX(0) scaleX(1);
+  transform: none;
   opacity: 1;
-  filter: blur(0);
+  filter: none;
 }
 
 .quanto-team-box:hover .team-thumb img:nth-child(2) {
-  transform: translateX(-50%) scaleX(2);
-  opacity: 0;
-  filter: blur(10px);
+  transform: none;
+  opacity: 1;
+  filter: none;
 }
 
 .quanto-team-box:hover .team-thumb ul {
