@@ -722,11 +722,24 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
 
                     // AUTO-INJECT IDs on page load so nav links always work
                     function cmrAutoInjectIds() {
-                        // id="featured" — Featured posts section
+                        // id="featured" — Featured posts section (fallback: top of shortcode section)
                         cmrInjectId('featured', t => t.includes('featured') || t.includes('top stories') || t.includes('highlighted'));
+                        // Fallback: if no heading found, use the top of the .cmr-vpi-section (this shortcode's wrapper)
+                        if (!document.getElementById('featured')) {
+                            const vpiSection = document.querySelector('.cmr-vpi-section');
+                            if (vpiSection) vpiSection.id = 'featured';
+                        }
 
-                        // id="latest-updates" — Latest Updates section
-                        cmrInjectId('latest-updates', t => t.includes('latest updates') || t.includes('latest insights') || t.includes('recent updates') || t.includes('recent insights'));
+                        // id="latest-updates" — Points to Expert Viewpoints & Strategic Perspectives (the shortcode grid)
+                        cmrInjectId('latest-updates', t => 
+                            t.includes('expert viewpoints') || t.includes('strategic perspectives') ||
+                            t.includes('latest updates') || t.includes('latest insights') || t.includes('recent updates')
+                        );
+                        // Fallback: inject on the .cmr-vpi-nav-bar (the filter/search bar row) so it scrolls to the articles
+                        if (!document.getElementById('latest-updates')) {
+                            const vpiNav = document.querySelector('.cmr-vpi-nav-bar');
+                            if (vpiNav) vpiNav.id = 'latest-updates';
+                        }
 
                         // id="cmr-live" — CMR Live section
                         cmrInjectId('cmr-live', t => t.includes('cmr live') || t.includes('cmr tv') || t.includes('live session') || t.includes('live video'));
