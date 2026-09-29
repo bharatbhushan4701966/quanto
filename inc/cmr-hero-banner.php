@@ -47,8 +47,8 @@ function cmr_hero_banner_shortcode($atts) {
       color: white;
       width: 100%;
       box-sizing: border-box !important;
-      padding-top: clamp(140px, 18vh, 220px) !important;
-      padding-bottom: 80px !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
       padding-left: clamp(20px, 10vw, 220px);
       padding-right: 20px;
       margin: 0 !important;
