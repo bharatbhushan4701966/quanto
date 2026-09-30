@@ -478,10 +478,11 @@ function cmr_market_updates_shortcode($atts) {
 
         .cmr-mu-category {
             font-weight: 500;
+            color: #00A8B5;
         }
-        .cmr-mu-category.policy { color: #F5A623; }
-        .cmr-mu-category.investment { color: #2ECC71; }
-        .cmr-mu-category.supply { color: #E74C3C; }
+        .cmr-mu-category.policy { color: #00A8B5; }
+        .cmr-mu-category.investment { color: #00A8B5; }
+        .cmr-mu-category.supply { color: #00A8B5; }
 
         .cmr-mu-item-title {
             font-size: 18px;
@@ -490,15 +491,22 @@ function cmr_market_updates_shortcode($atts) {
             margin: 0;
             line-height: 1.4;
             color: #111;
+            transition: color 0.3s ease;
         }
 
         .cmr-mu-arrow svg {
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, color 0.3s ease, stroke 0.3s ease;
             color: #111;
+        }
+
+        .cmr-mu-item:hover .cmr-mu-item-title {
+            color: #4625A9 !important;
         }
 
         .cmr-mu-item:hover .cmr-mu-arrow svg {
             transform: translate(3px, -3px);
+            color: #4625A9 !important;
+            stroke: #4625A9 !important;
         }
 
         @media (max-width: 992px) {
@@ -521,9 +529,9 @@ function cmr_market_updates_shortcode($atts) {
             <h2 class="cmr-mu-title">Market Updates</h2>
             <p class="cmr-mu-desc">Need real-time market updates for your business?</p>
             <div class="elementor-element elementor-element-c4dcb9f download-btn animejs-disable elementor-widget elementor-widget-button" data-id="c4dcb9f" data-element_type="widget" data-e-type="widget" data-settings="{&quot;mas-animation&quot;:&quot;none&quot;}" data-widget_type="button.default" style="align-self: flex-start; width: 53%;">
-                <a class="elementor-button elementor-button-link elementor-size-sm insights-cta-button secondary" href="#" style="justify-content: center; width: 100%; background-color: transparent !important; border: 1px solid #111 !important; display: flex; align-items: center; border-radius: 40px; padding: 12px 24px;">
+                <a class="elementor-button elementor-button-link elementor-size-sm insights-cta-button secondary" href="<?php echo esc_url(home_url('/market-updates/')); ?>" style="justify-content: center; width: 100%; background-color: transparent !important; border: 1px solid #111 !important; display: flex; align-items: center; border-radius: 40px; padding: 12px 24px; text-decoration: none;">
                     <span class="elementor-button-content-wrapper" style="width: 100%; display: flex; align-items: center; justify-content: center;">
-                        <span class="elementor-button-text" style="margin-right: 6px; font-size: 14px; font-weight: 600 !important; color: #111 !important; line-height: 1; white-space: nowrap;">Talk to Analyst</span>
+                        <span class="elementor-button-text" style="margin-right: 6px; font-size: 14px; font-weight: 600 !important; color: #111 !important; line-height: 1; white-space: nowrap;">View all</span>
                         <span class="elementor-button-icon" style="display: flex; align-items: center;">
                             <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg" alt="Icon" width="16" height="14" style="object-fit: contain;">
                         </span>
