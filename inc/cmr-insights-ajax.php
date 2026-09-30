@@ -20,79 +20,56 @@ function cmr_insights_ajax_search_callback() {
         $query_args['s'] = $search_term;
     }
 
+    $filter_slugs = array();
+    if ( ! empty( $cat_filter ) && strtolower( $cat_filter ) !== 'all' ) {
+        $clean_filter = strtolower( trim( $cat_filter ) );
+        if ( $clean_filter === 'automotive' ) {
+            $filter_slugs = array( 'automotive', 'automobile', 'automobiles', 'auto-tech', 'auto-industry', 'auto' );
+        } elseif ( $clean_filter === 'consumer-tech' ) {
+            $filter_slugs = array( 'consumer-tech', 'consumer-technology', 'consumer-electronics', 'consumer' );
+        } elseif ( $clean_filter === 'digital-supply-chain' ) {
+            $filter_slugs = array( 'digital-supply-chain', 'supply-chain', 'supply-chains', 'logistics', 'supply' );
+        } else {
+            $filter_slugs = array( $clean_filter, str_replace( ' ', '-', $clean_filter ) );
+        }
+    }
+
     $tax_queries = array();
-    if (!empty($category)) {
+    if ( ! empty( $category ) ) {
         $tax_queries[] = array(
             'taxonomy' => 'category',
             'field'    => 'slug',
-            'terms'    => array_map('trim', explode(',', $category)),
+            'terms'    => array_map( 'trim', explode( ',', $category ) ),
             'operator' => 'IN',
         );
     }
 
-    if (!empty($cat_filter) && strtolower($cat_filter) !== 'all') {
+    if ( ! empty( $filter_slugs ) ) {
         $tax_queries[] = array(
             'taxonomy' => 'category',
             'field'    => 'slug',
-            'terms'    => array_map('trim', explode(',', $cat_filter)),
+            'terms'    => $filter_slugs,
             'operator' => 'IN',
         );
     }
 
-    if (count($tax_queries) > 1) {
-        $query_args['tax_query'] = array_merge(array('relation' => 'AND'), $tax_queries);
-    } elseif (count($tax_queries) === 1) {
+    if ( count( $tax_queries ) > 1 ) {
+        $query_args['tax_query'] = array_merge( array( 'relation' => 'AND' ), $tax_queries );
+    } elseif ( count( $tax_queries ) === 1 ) {
         $query_args['tax_query'] = $tax_queries;
     }
 
-    $all_query = new WP_Query($query_args);
+    $all_query = new WP_Query( $query_args );
     $posts = $all_query->posts;
 
-    // If no direct category term match, try matching by category name or title/content
-    if (empty($posts) && !empty($cat_filter) && strtolower($cat_filter) !== 'all') {
-        $filter_slug_readable = str_replace('-', ' ', $cat_filter);
-        $search_args = array(
-            'post_type'      => array('post', 'cmr_news'),
-            'posts_per_page' => 24,
-            'post_status'    => 'publish',
-            's'              => $filter_slug_readable,
-            'orderby'        => 'date',
-            'order'          => 'DESC',
-        );
-        if (!empty($category)) {
-            $search_args['tax_query'] = array(
-                array(
-                    'taxonomy' => 'category',
-                    'field'    => 'slug',
-                    'terms'    => array_map('trim', explode(',', $category)),
-                    'operator' => 'IN',
-                )
-            );
+    if ( empty( $posts ) ) {
+        if ( ! empty( $cat_filter ) && strtolower( $cat_filter ) !== 'all' ) {
+            $cat_label = ucwords( str_replace( '-', ' ', $cat_filter ) );
+            echo '<p class="' . esc_attr( $prefix ) . 'no-results" style="grid-column: 1 / -1; font-size: 17px; color: #666; text-align: center; padding: 50px 20px;">No insights found under ' . esc_html( $cat_label ) . '.</p>';
+        } else {
+            echo '<p class="' . esc_attr( $prefix ) . 'no-results" style="grid-column: 1 / -1; font-size: 17px; color: #666; text-align: center; padding: 50px 20px;">No insights found matching "' . esc_html( $search_term ) . '".</p>';
         }
-        $search_query = new WP_Query($search_args);
-        $posts = $search_query->posts;
-    }
-
-    if (empty($posts)) {
-        $not_found_label = !empty($cat_filter) ? ucwords(str_replace('-', ' ', $cat_filter)) : $search_term;
-        echo '<p style="grid-column: 1 / -1; font-size: 18px; color: #444; text-align: center; padding: 40px 20px 0;">No insights found for "'.esc_html($not_found_label).'". Here are some related articles you might like:</p>';
-        
-        // Fallback query
-        $fallback_args = array(
-            'post_type'      => array('post', 'cmr_news'),
-            'posts_per_page' => 3,
-            'post_status'    => 'publish',
-        );
-        if (!empty($category)) {
-            $fallback_args['category_name'] = $category;
-        }
-        $fallback_query = new WP_Query($fallback_args);
-        $posts = $fallback_query->posts;
-        
-        if (empty($posts)) {
-            echo '<p style="grid-column: 1 / -1; text-align: center; color: #888;">No articles available.</p>';
-            wp_die();
-        }
+        wp_die();
     }
 
     foreach ( $posts as $post_obj ) : 

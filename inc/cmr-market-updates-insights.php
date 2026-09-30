@@ -571,27 +571,34 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                 var currentFilter = 'all';
                 var searchTimer;
 
+                var filterAliases = {
+                    'all': [],
+                    'automotive': ['automotive', 'automobile', 'automobiles', 'auto-tech', 'auto-industry'],
+                    'consumer-tech': ['consumer-tech', 'consumer-technology', 'consumer-electronics'],
+                    'digital-supply-chain': ['digital-supply-chain', 'supply-chain', 'supply-chains', 'logistics']
+                };
+
                 // Function to filter rendered cards client-side
                 function applyFilter(filterVal) {
                     currentFilter = (filterVal || 'all').toLowerCase().trim();
                     var cards = grid ? grid.querySelectorAll('.cmr-mui-card') : [];
                     var visibleCount = 0;
+                    var noResultsMsg = grid ? grid.querySelector('.cmr-mui-no-results') : null;
+                    if (noResultsMsg) noResultsMsg.remove();
+
+                    var aliases = filterAliases[currentFilter] || [currentFilter];
 
                     cards.forEach(function(card) {
                         var cardCat = (card.getAttribute('data-category') || '').toLowerCase();
-                        var cardText = card.textContent.toLowerCase();
+                        var cardCatTerms = cardCat.split(/[\s,|]+/).filter(Boolean);
                         
                         var matches = false;
                         if (currentFilter === 'all') {
                             matches = true;
-                        } else if (currentFilter === 'automotive') {
-                            matches = cardCat.indexOf('automotive') !== -1 || cardCat.indexOf('auto') !== -1 || cardText.indexOf('automotive') !== -1 || cardText.indexOf('auto') !== -1;
-                        } else if (currentFilter === 'consumer-tech') {
-                            matches = cardCat.indexOf('consumer') !== -1 || cardCat.indexOf('tech') !== -1 || cardText.indexOf('consumer') !== -1;
-                        } else if (currentFilter === 'digital-supply-chain') {
-                            matches = cardCat.indexOf('supply') !== -1 || cardCat.indexOf('chain') !== -1 || cardCat.indexOf('digital') !== -1 || cardText.indexOf('supply chain') !== -1;
                         } else {
-                            matches = cardCat.indexOf(currentFilter) !== -1 || cardText.indexOf(currentFilter.replace(/-/g, ' ')) !== -1;
+                            matches = aliases.some(function(alias) {
+                                return cardCatTerms.indexOf(alias) !== -1 || cardCat.indexOf(alias) !== -1;
+                            });
                         }
 
                         if (matches) {
@@ -611,13 +618,8 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                     }
 
                     // If no visible cards found client-side, query the server via AJAX
-                    var noResultsMsg = grid ? grid.querySelector('.cmr-mui-no-results') : null;
                     if (visibleCount === 0 && currentFilter !== 'all') {
-                        if (!noResultsMsg) {
-                            fetchServerResults('', currentFilter);
-                        }
-                    } else if (noResultsMsg) {
-                        noResultsMsg.remove();
+                        fetchServerResults('', currentFilter);
                     }
                 }
 
