@@ -267,14 +267,6 @@ if ( ! function_exists( 'cmr_research_reports_hero_shortcode' ) ) {
                         </button>
                     </form>
                 </div>
-
-                <div class="cmr-research-categories">
-                    <!-- Link these to your actual product categories or pages -->
-                    <a href="<?php echo esc_url( home_url('/product-category/automotive/') ); ?>">Automotive</a>
-                    <a href="<?php echo esc_url( home_url('/product-category/consumer-tech/') ); ?>">Consumer Tech</a>
-                    <a href="<?php echo esc_url( home_url('/product-category/digital-supply-chain/') ); ?>">Digital Supply Chain</a>
-                    <a href="<?php echo esc_url( home_url('/product-category/it-telecom/') ); ?>">IT & Telecom</a>
-                </div>
             </div>
         </section>
         <script>
