@@ -133,8 +133,9 @@ function cmr_media_releases_general_shortcode( $atts ) {
         .cmr-mrg-featured-img {
             width: 100% !important;
             height: 100% !important;
-            object-fit: fill !important;
-            background-color: #fff;
+            object-fit: cover !important;
+            object-position: center !important;
+            background-color: #f4f4f4;
             position: absolute;
             top: 0;
             left: 0;
@@ -324,8 +325,9 @@ function cmr_media_releases_general_shortcode( $atts ) {
             height: 100% !important;
             min-height: 100% !important;
             max-height: none !important;
-            object-fit: fill !important;
-            background-color: #fff;
+            object-fit: cover !important;
+            object-position: center !important;
+            background-color: #f4f4f4;
             display: block;
             position: absolute;
             top: 0;
