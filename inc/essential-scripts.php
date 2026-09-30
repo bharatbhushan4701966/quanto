@@ -349,9 +349,119 @@ add_action( 'wp_footer', function() {
                 setTimeout(checkActiveModals, 50);
             }
 
-            // Unified click handler for all popups
+            // Helper: Setup Hero CTAs ("Explore Insights" scroll & "Connect with us" popup)
+            function initHeroCTAButtons() {
+                var talkButtons = document.querySelectorAll(
+                    '.talk-btn .elementor-button-text, ' +
+                    '.elementor-element-d2bb779 .elementor-button-text, ' +
+                    '.elementor-element-ecd03c0 .elementor-button-text, ' +
+                    '#smooth-content .talk-btn .elementor-button-text, ' +
+                    '.hero .btn-outline'
+                );
+                
+                talkButtons.forEach(function(btnText) {
+                    var txt = btnText.textContent.trim().toLowerCase();
+                    if (txt.includes('talk to') || txt.includes('analyst') || txt.includes('download latest report')) {
+                        // Check if it's not the main header button
+                        var inHeader = btnText.closest('header, [data-elementor-type="header"], #quanto-header-desktop');
+                        if (!inHeader) {
+                            btnText.textContent = 'Connect with us';
+                        }
+                    }
+                });
+
+                document.querySelectorAll('.elementor-button-text').forEach(function(btnText) {
+                    var inHeader = btnText.closest('header, [data-elementor-type="header"], #quanto-header-desktop');
+                    if (inHeader) return;
+                    var txt = btnText.textContent.trim().toLowerCase();
+                    if (txt === 'talk to our analyst' || txt === 'talk to analyst') {
+                        btnText.textContent = 'Connect with us';
+                    }
+                });
+            }
+
+            initHeroCTAButtons();
+            setTimeout(initHeroCTAButtons, 400);
+            setTimeout(initHeroCTAButtons, 1200);
+
+            // Unified click handler for all popups & hero CTAs
             document.body.addEventListener('click', function(e) {
-                // 1. Check if clicked element or parent is a popup trigger
+                // 1. Check for "Connect with us" / Talk to Analyst CTA (open popup 7637)
+                var connectTrigger = e.target.closest('.talk-btn, .elementor-element-d2bb779, .elementor-element-ecd03c0, .custom-talk-analyst-btn');
+                if (!connectTrigger) {
+                    var btnEl = e.target.closest('.elementor-button, button, a');
+                    if (btnEl) {
+                        var bTxt = (btnEl.textContent || '').trim().toLowerCase();
+                        if (bTxt.includes('connect with us') || bTxt.includes('talk to our analyst')) {
+                            connectTrigger = btnEl;
+                        }
+                    }
+                }
+
+                if (connectTrigger) {
+                    var inHeader = connectTrigger.closest('header, [data-elementor-type="header"], #quanto-header-desktop');
+                    if (!inHeader) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        openPopup(7637, connectTrigger);
+                        return;
+                    }
+                }
+
+                // 2. Check for "Explore Insights" CTA (smooth scroll to Latest Insights)
+                var exploreTrigger = e.target.closest('.download-btn, .elementor-element-37736ef, .elementor-element-b44d429 .download-btn');
+                if (!exploreTrigger) {
+                    var btnEl2 = e.target.closest('.elementor-button, button, a');
+                    if (btnEl2) {
+                        var bTxt2 = (btnEl2.textContent || '').trim().toLowerCase();
+                        if (bTxt2.includes('explore insights')) {
+                            exploreTrigger = btnEl2;
+                        }
+                    }
+                }
+
+                if (exploreTrigger) {
+                    var inHeader2 = exploreTrigger.closest('header, [data-elementor-type="header"], #quanto-header-desktop');
+                    if (!inHeader2) {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        var targetSection = document.getElementById('overview') ||
+                                            document.getElementById('insights') ||
+                                            document.getElementById('latest-insights') ||
+                                            document.querySelector('.cmr-latest-section') ||
+                                            document.querySelector('.cmr-industry-intel-section') ||
+                                            document.querySelector('.cmr-vpi-section') ||
+                                            document.querySelector('.cmr-mui-section');
+
+                        if (!targetSection) {
+                            var allHeadings = Array.from(document.querySelectorAll('h1, h2, h3, h4, .elementor-heading-title'));
+                            var matchHeading = allHeadings.find(function(h) {
+                                var t = h.textContent.toLowerCase();
+                                return t.includes('latest insights') || t.includes('expert viewpoints') || t.includes('latest industry');
+                            });
+                            if (matchHeading) {
+                                targetSection = matchHeading.closest('.elementor-section, .elementor-element, section, .e-con') || matchHeading;
+                            }
+                        }
+
+                        if (targetSection) {
+                            var headerOffset = 80;
+                            var wpAdminBar = document.getElementById('wpadminbar');
+                            if (wpAdminBar) headerOffset += wpAdminBar.offsetHeight;
+                            var elPosition = targetSection.getBoundingClientRect().top + window.pageYOffset;
+                            var offsetPosition = elPosition - headerOffset;
+
+                            window.scrollTo({
+                                top: offsetPosition,
+                                behavior: 'smooth'
+                            });
+                        }
+                        return;
+                    }
+                }
+
+                // 3. Check if clicked element or parent is a popup trigger
                 var trigger = e.target.closest(
                     'a[href*="popup:open"], a[href*="elementor-action"], ' +
                     '.open-report-popup, .slide-cta-button, [href="#open-report-popup"], ' +
@@ -385,7 +495,7 @@ add_action( 'wp_footer', function() {
                     }
                 }
 
-                // 2. Handle close button click
+                // 4. Handle close button click
                 var closeBtn = e.target.closest('.dialog-close-button, .dialog-lightbox-close-button, .btn-close, .mfp-close, #cmr-close-review-modal, #cmr-review-modal-close');
                 if (closeBtn) {
                     e.preventDefault();
@@ -394,7 +504,7 @@ add_action( 'wp_footer', function() {
                     return;
                 }
 
-                // 3. Close on clicking backdrop (outside dialog content)
+                // 5. Close on clicking backdrop (outside dialog content)
                 if (e.target.classList.contains('dialog-type-lightbox') || e.target.classList.contains('dialog-widget') || e.target.classList.contains('dialog-backdrop') || e.target.id === 'cmr-review-modal-overlay') {
                     e.preventDefault();
                     closeAllModals(e);
