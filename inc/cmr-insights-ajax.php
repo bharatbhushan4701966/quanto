@@ -10,7 +10,7 @@ function cmr_insights_ajax_search_callback() {
 
     $query_args = array(
         'post_type'      => array('post', 'cmr_news'),
-        'posts_per_page' => 24,
+        'posts_per_page' => 9,
         'post_status'    => 'publish',
         'orderby'        => 'date',
         'order'          => 'DESC',

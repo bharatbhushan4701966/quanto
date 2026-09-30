@@ -18,7 +18,7 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
         
         $query_args = array(
             'post_type'      => 'post',
-            'posts_per_page' => 27, // 9 items * 3 pages (2 load mores)
+            'posts_per_page' => 9,
             'paged'          => $paged,
             'post_status'    => 'publish',
             'orderby'        => 'date',
@@ -566,67 +566,50 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                 var searchInput = document.querySelector('.cmr-mui-search-wrap input');
                 var filterBtns = document.querySelectorAll('.cmr-mui-filter-btn');
                 var grid = document.querySelector('.cmr-mui-grid');
-                var loadMoreBtn = document.getElementById('cmr-mui-load-more');
+                var viewAllWrap = document.querySelector('.cmr-mui-actions');
+                var viewAllBtn = viewAllWrap ? viewAllWrap.querySelector('.cmr-mui-btn') : null;
                 var paginationWrap = document.getElementById('cmr-mui-pagination-wrap');
+                
+                var initialGridHtml = grid ? grid.innerHTML : '';
+                var initialViewAllUrl = viewAllBtn ? viewAllBtn.getAttribute('href') : '<?php echo esc_url( home_url( '/category/market-updates/' ) ); ?>';
                 var currentFilter = 'all';
                 var searchTimer;
 
-                var filterAliases = {
-                    'all': [],
-                    'automotive': ['automotive', 'automobile', 'automobiles', 'auto-tech', 'auto-industry'],
-                    'consumer-tech': ['consumer-tech', 'consumer-technology', 'consumer-electronics'],
-                    'digital-supply-chain': ['digital-supply-chain', 'supply-chain', 'supply-chains', 'logistics']
+                // Category URL mapping for View All button
+                var categoryUrls = {
+                    'all': initialViewAllUrl,
+                    'automotive': '<?php echo esc_url( home_url( '/category/automotive/' ) ); ?>',
+                    'consumer-tech': '<?php echo esc_url( home_url( '/category/consumer-tech/' ) ); ?>',
+                    'digital-supply-chain': '<?php echo esc_url( home_url( '/category/digital-supply-chain/' ) ); ?>'
                 };
 
-                // Function to filter rendered cards client-side
+                // Function to filter rendered cards or restore initial state
                 function applyFilter(filterVal) {
                     currentFilter = (filterVal || 'all').toLowerCase().trim();
-                    var cards = grid ? grid.querySelectorAll('.cmr-mui-card') : [];
-                    var visibleCount = 0;
-                    var noResultsMsg = grid ? grid.querySelector('.cmr-mui-no-results') : null;
-                    if (noResultsMsg) noResultsMsg.remove();
 
-                    var aliases = filterAliases[currentFilter] || [currentFilter];
+                    if (searchInput) searchInput.value = '';
 
-                    cards.forEach(function(card) {
-                        var cardCat = (card.getAttribute('data-category') || '').toLowerCase();
-                        var cardCatTerms = cardCat.split(/[\s,|]+/).filter(Boolean);
-                        
-                        var matches = false;
-                        if (currentFilter === 'all') {
-                            matches = true;
-                        } else {
-                            matches = aliases.some(function(alias) {
-                                return cardCatTerms.indexOf(alias) !== -1 || cardCat.indexOf(alias) !== -1;
-                            });
-                        }
-
-                        if (matches) {
-                            card.style.display = '';
-                            visibleCount++;
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-
-                    // Manage load more & pagination visibility
+                    // If returning to "All", restore exact initial state
                     if (currentFilter === 'all') {
-                        if (paginationWrap) paginationWrap.style.display = 'block';
-                    } else {
+                        if (grid) grid.innerHTML = initialGridHtml;
+                        if (viewAllBtn) viewAllBtn.setAttribute('href', initialViewAllUrl);
+                        if (viewAllWrap) viewAllWrap.style.display = 'block';
                         if (paginationWrap) paginationWrap.style.display = 'none';
-                        if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+                        return;
                     }
 
-                    // If no visible cards found client-side, query the server via AJAX
-                    if (visibleCount === 0 && currentFilter !== 'all') {
-                        fetchServerResults('', currentFilter);
-                    }
+                    // Update View All button link to current category
+                    var targetCatUrl = categoryUrls[currentFilter] || initialViewAllUrl;
+                    if (viewAllBtn) viewAllBtn.setAttribute('href', targetCatUrl);
+                    if (viewAllWrap) viewAllWrap.style.display = 'block';
+
+                    // Fetch 9 posts of this category from server
+                    fetchServerResults('', currentFilter);
                 }
 
                 function fetchServerResults(searchTerm, catFilter) {
                     if (!grid) return;
                     grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; padding:40px; font-size:18px;">Loading insights...</p>';
-                    if (loadMoreBtn) loadMoreBtn.style.display = 'none';
                     if (paginationWrap) paginationWrap.style.display = 'none';
 
                     var formData = new FormData();
@@ -643,6 +626,7 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                     .then(function(res) { return res.text(); })
                     .then(function(html) {
                         grid.innerHTML = html;
+                        if (viewAllWrap) viewAllWrap.style.display = 'block';
                     });
                 }
 
@@ -653,9 +637,6 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                         filterBtns.forEach(function(b) { b.classList.remove('active'); });
                         this.classList.add('active');
                         var filterVal = this.getAttribute('data-filter') || this.textContent.trim().toLowerCase().replace(/\s+/g, '-');
-                        
-                        // Clear search input if user clicks a filter pill
-                        if (searchInput) searchInput.value = '';
                         applyFilter(filterVal);
                     });
                 });
@@ -667,8 +648,9 @@ if ( ! function_exists( 'cmr_market_updates_insights_shortcode' ) ) {
                         var val = e.target.value.trim();
                         
                         searchTimer = setTimeout(function() {
-                            if (!val && currentFilter !== 'all') {
-                                applyFilter(currentFilter);
+                            if (!val && currentFilter === 'all') {
+                                if (grid) grid.innerHTML = initialGridHtml;
+                                if (viewAllWrap) viewAllWrap.style.display = 'block';
                                 return;
                             }
                             fetchServerResults(val, currentFilter);
