@@ -1623,127 +1623,130 @@
                 // JavaScript for Listen / Audio reading
 
                 echo '<script>
-
                 document.addEventListener("DOMContentLoaded", function() {
-
                     const listenBtn = document.getElementById("cmr-listen-btn");
-
                     if (!listenBtn) return;
-
                     
-
                     const playIcon = listenBtn.querySelector(".cmr-icon-play");
-
                     const pauseIcon = listenBtn.querySelector(".cmr-icon-pause");
-
                     
-
                     if (!("speechSynthesis" in window)) {
-
                         listenBtn.style.display = "none";
-
                         return;
-
                     }
-
                     
+                    // Preload available voices
+                    if (window.speechSynthesis.onvoiceschanged !== undefined) {
+                        window.speechSynthesis.onvoiceschanged = function() {
+                            window.speechSynthesis.getVoices();
+                        };
+                    }
+                    window.speechSynthesis.getVoices();
 
-                    let speaking = false;
-
-                    
-
-                    listenBtn.addEventListener("click", function(e) {
-
-                        e.preventDefault();
-
-                        if (window.speechSynthesis.speaking && speaking) {
-
-                            if (window.speechSynthesis.paused) {
-
-                                window.speechSynthesis.resume();
-
-                                if (playIcon) playIcon.style.display = "none";
-
-                                if (pauseIcon) pauseIcon.style.display = "inline-block";
-
-                            } else {
-
-                                window.speechSynthesis.pause();
-
-                                if (playIcon) playIcon.style.display = "inline-block";
-
-                                if (pauseIcon) pauseIcon.style.display = "none";
-
-                            }
-
-                        } else {
-
-                            window.speechSynthesis.cancel();
-
-                            const titleEl = document.querySelector(".blog-title h2");
-
-                            const excerptEl = document.querySelector(".cmr-single-lead-excerpt");
-
-                            const bodyEl = document.querySelector(".blog-body");
-
-                            
-
-                            let textToRead = "";
-
-                            if (titleEl) textToRead += titleEl.innerText + ". ";
-
-                            if (excerptEl) textToRead += excerptEl.innerText + ". ";
-
-                            if (bodyEl) textToRead += bodyEl.innerText;
-
-                            
-
-                            if (!textToRead.trim()) return;
-
-                            
-
-                            const utterance = new SpeechSynthesisUtterance(textToRead);
-
-                            utterance.rate = 0.95;
-
-                            utterance.onstart = function() {
-
-                                speaking = true;
-
-                                if (playIcon) playIcon.style.display = "none";
-
-                                if (pauseIcon) pauseIcon.style.display = "inline-block";
-
-                            };
-
-                            utterance.onend = function() {
-
-                                speaking = false;
-
-                                if (playIcon) playIcon.style.display = "inline-block";
-
-                                if (pauseIcon) pauseIcon.style.display = "none";
-
-                            };
-
-                            utterance.onerror = function() {
-
-                                speaking = false;
-
-                                if (playIcon) playIcon.style.display = "inline-block";
-
-                                if (pauseIcon) pauseIcon.style.display = "none";
-
-                            };
-
-                            window.speechSynthesis.speak(utterance);
-
+                    function getFemaleVoice() {
+                        const voices = window.speechSynthesis.getVoices();
+                        if (!voices || !voices.length) return null;
+                        
+                        const femaleNames = [
+                            "female", "zira", "samantha", "victoria", "karen", "jenny", 
+                            "aria", "sonia", "neerja", "heera", "serena", "susan", 
+                            "ava", "allison", "catherine", "hazel", "linda", "helena"
+                        ];
+                        
+                        // 1. English voice with known female names (natural/neural preferred)
+                        let matched = voices.find(function(v) {
+                            const name = v.name.toLowerCase();
+                            const isEng = v.lang && v.lang.toLowerCase().indexOf("en") === 0;
+                            return isEng && femaleNames.some(function(fn) { return name.indexOf(fn) !== -1; });
+                        });
+                        
+                        // 2. Any voice with "female" in name
+                        if (!matched) {
+                            matched = voices.find(function(v) {
+                                return v.name.toLowerCase().indexOf("female") !== -1;
+                            });
+                        }
+                        
+                        // 3. Any English voice with female name
+                        if (!matched) {
+                            matched = voices.find(function(v) {
+                                const name = v.name.toLowerCase();
+                                return femaleNames.some(function(fn) { return name.indexOf(fn) !== -1; });
+                            });
                         }
 
+                        // 4. Fallback to any English voice
+                        if (!matched) {
+                            matched = voices.find(function(v) {
+                                return v.lang && v.lang.toLowerCase().indexOf("en") === 0;
+                            });
+                        }
+                        
+                        return matched;
+                    }
+                    
+                    let speaking = false;
+                    
+                    listenBtn.addEventListener("click", function(e) {
+                        e.preventDefault();
+                        if (window.speechSynthesis.speaking && speaking) {
+                            if (window.speechSynthesis.paused) {
+                                window.speechSynthesis.resume();
+                                if (playIcon) playIcon.style.display = "none";
+                                if (pauseIcon) pauseIcon.style.display = "inline-block";
+                            } else {
+                                window.speechSynthesis.pause();
+                                if (playIcon) playIcon.style.display = "inline-block";
+                                if (pauseIcon) pauseIcon.style.display = "none";
+                            }
+                        } else {
+                            window.speechSynthesis.cancel();
+                            const titleEl = document.querySelector(".blog-title h2");
+                            const excerptEl = document.querySelector(".cmr-single-lead-excerpt");
+                            const bodyEl = document.querySelector(".blog-body");
+                            
+                            let textToRead = "";
+                            if (titleEl) textToRead += titleEl.innerText + ". ";
+                            if (excerptEl) textToRead += excerptEl.innerText + ". ";
+                            if (bodyEl) textToRead += bodyEl.innerText;
+                            
+                            if (!textToRead.trim()) return;
+                            
+                            const utterance = new SpeechSynthesisUtterance(textToRead);
+                            const femaleVoice = getFemaleVoice();
+                            if (femaleVoice) {
+                                utterance.voice = femaleVoice;
+                                utterance.lang = femaleVoice.lang || "en-US";
+                            }
+                            utterance.rate = 0.95;
+                            utterance.pitch = 1.05; // Slightly elevated pitch for clear, natural female voice
+                            
+                            utterance.onstart = function() {
+                                speaking = true;
+                                if (playIcon) playIcon.style.display = "none";
+                                if (pauseIcon) pauseIcon.style.display = "inline-block";
+                            };
+                            utterance.onend = function() {
+                                speaking = false;
+                                if (playIcon) playIcon.style.display = "inline-block";
+                                if (pauseIcon) pauseIcon.style.display = "none";
+                            };
+                            utterance.onerror = function() {
+                                speaking = false;
+                                if (playIcon) playIcon.style.display = "inline-block";
+                                if (pauseIcon) pauseIcon.style.display = "none";
+                            };
+                            window.speechSynthesis.speak(utterance);
+                        }
                     });
 
+                    // Stop speaking if user navigates away
+                    window.addEventListener("beforeunload", function() {
+                        if ("speechSynthesis" in window) {
+                            window.speechSynthesis.cancel();
+                        }
+                    });
                 });
-
                 </script>';
 
                 return;
