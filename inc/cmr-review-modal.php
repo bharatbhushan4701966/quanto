@@ -34,7 +34,7 @@ add_action('wp_footer', function() {
     padding: 40px;
     position: relative;
     box-shadow: 0 8px 40px rgba(0,0,0,0.10);
-    border-radius: 12px;
+    border-radius: 0;
     margin: auto;
 }
 #cmr-review-modal-close {

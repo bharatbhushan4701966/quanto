@@ -9775,7 +9775,7 @@ Single Product - Custom Sections (Related, Rating)
     padding: 40px;
     position: relative;
     box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-    border-radius: 12px;
+    border-radius: 0;
 }
 .cmr-modal-close {
     position: absolute;
