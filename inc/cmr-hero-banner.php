@@ -417,17 +417,17 @@ function cmr_hero_banner_shortcode($atts) {
         </p>
 
         <div class="buttons">
-          <a href="#" class="btn-primary open-report-popup">
+          <a href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6Ijc3NTgiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D" class="btn-primary open-report-popup" data-popup-id="7758">
             Get Report
             <img class="hero-arrow-button-white"
                  src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg">
           </a>
 
-          <button class="btn-outline open-popup">
-            Talk to Analyst
+          <a href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6Ijc2MzciLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D" class="btn-outline open-popup" data-popup-id="7637">
+            Connect with us
             <img class="hero-arrow-button"
                  src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg">
-          </button>
+          </a>
         </div>
 
       </div>
@@ -562,13 +562,56 @@ function cmr_hero_banner_shortcode($atts) {
         setSlide(0, true);
 
         // Popups
+        function triggerCmrPopup(id, triggerEl) {
+          id = parseInt(id);
+          if (!id) return;
+
+          var targets = document.querySelectorAll(
+            '.elementor-popup-modal[data-elementor-id="' + id + '"], ' +
+            '.dialog-widget[data-elementor-id="' + id + '"], ' +
+            '#elementor-popup-modal-' + id + ', ' +
+            '.elementor-' + id
+          );
+          targets.forEach(function(el) {
+            el.style.removeProperty('display');
+            el.style.removeProperty('opacity');
+            el.style.removeProperty('visibility');
+          });
+
+          var opened = false;
+          if (typeof elementorProFrontend !== 'undefined' && elementorProFrontend.modules && elementorProFrontend.modules.popup) {
+            try {
+              elementorProFrontend.modules.popup.showPopup({ id: id }, triggerEl);
+              opened = true;
+            } catch(err) {
+              console.warn('showPopup error:', err);
+            }
+          }
+
+          if (window.jQuery) {
+            try {
+              window.jQuery(document).trigger('elementor/popup/show', [{ id: id }]);
+            } catch(e) {}
+          }
+
+          var modal = document.querySelector('#elementor-popup-modal-' + id) || document.querySelector('.elementor-' + id + '.elementor-location-popup');
+          if (modal) {
+            var dialogWidget = modal.closest('.dialog-widget') || modal;
+            dialogWidget.style.setProperty('display', 'block', 'important');
+            dialogWidget.style.setProperty('opacity', '1', 'important');
+            dialogWidget.style.setProperty('visibility', 'visible', 'important');
+            dialogWidget.style.setProperty('z-index', '999999', 'important');
+          }
+
+          document.documentElement.classList.add('cmr-modal-open');
+          document.body.classList.add('cmr-modal-open');
+        }
+
         const popupTrigger = hero.querySelector('.open-popup');
         if (popupTrigger) {
           popupTrigger.addEventListener('click', function(e) {
             e.preventDefault();
-            if (typeof elementorProFrontend !== 'undefined') {
-              elementorProFrontend.modules.popup.showPopup({ id: 7637 });
-            }
+            triggerCmrPopup(7637, popupTrigger);
           });
         }
 
@@ -576,9 +619,7 @@ function cmr_hero_banner_shortcode($atts) {
         if (reportTrigger) {
           reportTrigger.addEventListener('click', function(e) {
             e.preventDefault();
-            if (typeof elementorProFrontend !== 'undefined') {
-              elementorProFrontend.modules.popup.showPopup({ id: 7758 });
-            }
+            triggerCmrPopup(7758, reportTrigger);
           });
         }
       }
