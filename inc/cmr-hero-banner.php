@@ -579,12 +579,19 @@ function cmr_hero_banner_shortcode($atts) {
           });
 
           var opened = false;
-          if (typeof elementorProFrontend !== 'undefined' && elementorProFrontend.modules && elementorProFrontend.modules.popup) {
-            try {
-              elementorProFrontend.modules.popup.showPopup({ id: id }, triggerEl);
-              opened = true;
-            } catch(err) {
-              console.warn('showPopup error:', err);
+          if (typeof elementorProFrontend !== 'undefined' && elementorProFrontend.modules) {
+            if (elementorProFrontend.modules.actionHash) {
+              try {
+                var actionUrl = 'elementor-action:action=popup:open&settings=' + btoa(JSON.stringify({ id: id.toString(), toggle: false }));
+                elementorProFrontend.modules.actionHash.runAction(actionUrl);
+                opened = true;
+              } catch(err) {}
+            }
+            if (!opened && elementorProFrontend.modules.popup) {
+              try {
+                elementorProFrontend.modules.popup.showPopup({ id: id }, triggerEl);
+                opened = true;
+              } catch(err) {}
             }
           }
 
@@ -597,7 +604,7 @@ function cmr_hero_banner_shortcode($atts) {
           var modal = document.querySelector('#elementor-popup-modal-' + id) || document.querySelector('.elementor-' + id + '.elementor-location-popup');
           if (modal) {
             var dialogWidget = modal.closest('.dialog-widget') || modal;
-            dialogWidget.style.setProperty('display', 'block', 'important');
+            dialogWidget.style.setProperty('display', 'flex', 'important');
             dialogWidget.style.setProperty('opacity', '1', 'important');
             dialogWidget.style.setProperty('visibility', 'visible', 'important');
             dialogWidget.style.setProperty('z-index', '999999', 'important');

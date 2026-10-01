@@ -62,7 +62,7 @@ body.modal-open {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    justify-content: flex-start !important;
+    justify-content: center !important;
     background: rgba(15, 23, 42, 0.5) !important;
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
@@ -70,7 +70,7 @@ body.modal-open {
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch !important;
     overscroll-behavior: contain !important;
-    padding: 30px 16px !important;
+    padding: 20px 16px !important;
     box-sizing: border-box !important;
 }
 
