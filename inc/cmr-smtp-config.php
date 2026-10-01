@@ -33,6 +33,11 @@ function cmr_clean_cf7_mail_headers( $components, $form, $mail ) {
         $components['additional_headers'] = str_ireplace( 'Staging - cmrindia.com', 'CyberMedia Research (CMR)', $components['additional_headers'] );
     }
 
+    // Automatically convert newlines to line breaks so every field appears on a separate line
+    if ( ! empty( $components['body'] ) && strpos( $components['body'], '<br' ) === false && strpos( $components['body'], '<p>' ) === false ) {
+        $components['body'] = nl2br( $components['body'] );
+    }
+
     return $components;
 }
 
