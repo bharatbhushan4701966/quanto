@@ -566,63 +566,56 @@ function cmr_hero_banner_shortcode($atts) {
           id = parseInt(id);
           if (!id) return;
 
-          var targets = document.querySelectorAll(
-            '.elementor-popup-modal[data-elementor-id="' + id + '"], ' +
-            '.dialog-widget[data-elementor-id="' + id + '"], ' +
-            '#elementor-popup-modal-' + id + ', ' +
-            '.elementor-' + id
-          );
-          targets.forEach(function(el) {
-            el.style.removeProperty('display');
-            el.style.removeProperty('opacity');
-            el.style.removeProperty('visibility');
-          });
-
           var opened = false;
+
+          // Primary: use elementorProFrontend.modules.popup.showPopup directly
+          // (most reliable — this is what initializes the dialog widget properly)
           if (typeof elementorProFrontend !== 'undefined' && elementorProFrontend.modules) {
-            if (elementorProFrontend.modules.actionHash) {
+            if (elementorProFrontend.modules.popup) {
+              try {
+                elementorProFrontend.modules.popup.showPopup({ id: id });
+                opened = true;
+              } catch(err) {}
+            }
+            // Fallback: actionHash
+            if (!opened && elementorProFrontend.modules.actionHash) {
               try {
                 var actionUrl = 'elementor-action:action=popup:open&settings=' + btoa(JSON.stringify({ id: id.toString(), toggle: false }));
                 elementorProFrontend.modules.actionHash.runAction(actionUrl);
                 opened = true;
               } catch(err) {}
             }
-            if (!opened && elementorProFrontend.modules.popup) {
-              try {
-                elementorProFrontend.modules.popup.showPopup({ id: id }, triggerEl);
-                opened = true;
-              } catch(err) {}
-            }
           }
 
+          // jQuery event fallback
           if (window.jQuery) {
             try {
               window.jQuery(document).trigger('elementor/popup/show', [{ id: id }]);
             } catch(e) {}
           }
 
-          var modal = document.querySelector('#elementor-popup-modal-' + id) || document.querySelector('.elementor-' + id + '.elementor-location-popup');
-          if (modal) {
-            var dialogWidget = modal.closest('.dialog-widget') || modal;
-            dialogWidget.style.setProperty('display', 'flex', 'important');
-            dialogWidget.style.setProperty('opacity', '1', 'important');
-            dialogWidget.style.setProperty('visibility', 'visible', 'important');
-            dialogWidget.style.setProperty('z-index', '999999', 'important');
+          // Last-resort: manually force display of the popup DOM element
+          if (!opened) {
+            var modal = document.querySelector('#elementor-popup-modal-' + id) ||
+                        document.querySelector('.elementor-' + id + '.elementor-location-popup');
+            if (modal) {
+              var dialogWidget = modal.closest('.dialog-widget') || modal;
+              dialogWidget.style.setProperty('display', 'flex', 'important');
+              dialogWidget.style.setProperty('opacity', '1', 'important');
+              dialogWidget.style.setProperty('visibility', 'visible', 'important');
+              dialogWidget.style.setProperty('z-index', '999999', 'important');
+            }
           }
 
           document.documentElement.classList.add('cmr-modal-open');
           document.body.classList.add('cmr-modal-open');
         }
 
-        // NOTE: Do NOT use e.preventDefault() here.
-        // Elementor listens for native clicks on elements whose href contains
-        // 'elementor-action:...' — preventing default blocks that handler.
-        // We call triggerCmrPopup() as an additional JS fallback only.
         const popupTrigger = hero.querySelector('.open-popup');
         if (popupTrigger) {
           popupTrigger.addEventListener('click', function(e) {
-            // Let the href propagate so Elementor's actionHash module can fire.
-            // JS fallback runs in parallel.
+            e.preventDefault();
+            e.stopPropagation();
             triggerCmrPopup(7637, popupTrigger);
           });
         }
@@ -630,8 +623,8 @@ function cmr_hero_banner_shortcode($atts) {
         const reportTrigger = hero.querySelector('.open-report-popup');
         if (reportTrigger) {
           reportTrigger.addEventListener('click', function(e) {
-            // Let the href propagate so Elementor's actionHash module can fire.
-            // JS fallback runs in parallel.
+            e.preventDefault();
+            e.stopPropagation();
             triggerCmrPopup(7758, reportTrigger);
           });
         }
