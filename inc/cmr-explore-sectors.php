@@ -14,64 +14,58 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
         $atts = shortcode_atts( array(
             'tagline'  => 'WHO WE SERVE',
             'title'    => 'Every industry has a question. Our insights<br>deliver the answer and the impact.',
-            'all'      => 'no',
         ), $atts );
 
         $sectors = array(
             array(
                 'number' => '.01',
                 'title'  => 'Automotive',
-                'desc'   => 'EV adoption, connected mobility and the consumer shifts reshaping the industry.',
+                'desc'   => 'Mapping mobility technology, markets, and adoption.',
                 'link'   => home_url( '/automotive/' ),
             ),
             array(
                 'number' => '.02',
                 'title'  => 'Consumer Tech',
-                'desc'   => 'Device ecosystems, buying behaviour and the technologies redefining how people live.',
+                'desc'   => 'Decoding consumers, markets, and technology dynamics.',
                 'link'   => home_url( '/consumer-tech/' ),
             ),
             array(
                 'number' => '.03',
                 'title'  => 'Digital Supply Chain',
-                'desc'   => 'Automation, transformation and resilience strategies for markets that never stand still.',
+                'desc'   => 'Research for connected, resilient supply chains.',
                 'link'   => home_url( '/digital-supply-chain/' ),
             ),
             array(
                 'number' => '.04',
                 'title'  => 'IT & Telecom',
-                'desc'   => 'Connectivity trends, network evolution and enterprise adoption driving the next wave.',
+                'desc'   => 'Strategic research across technology, connectivity, and markets.',
                 'link'   => home_url( '/it-telecom/' ),
             ),
             array(
                 'number' => '.05',
                 'title'  => 'Semiconductors',
-                'desc'   => 'Chip innovation, supply dynamics and the global forces shaping the technology economy.',
+                'desc'   => 'Tracking markets, innovation, and demand shifts.',
                 'link'   => home_url( '/semiconductors/' ),
             ),
-        );
-
-        $include_all = ( ! empty( $atts['all'] ) && in_array( strtolower( $atts['all'] ), array( 'yes', 'true', '1', 'all' ), true ) );
-
-        if ( $include_all ) {
-            $sectors[] = array(
+            array(
                 'number' => '.06',
                 'title'  => 'MSME',
-                'desc'   => 'Empowering small & medium enterprise growth with tailored market insights.',
+                'desc'   => 'Actionable intelligence on India’s small businesses.',
                 'link'   => home_url( '/msme-2/' ),
-            );
-            $sectors[] = array(
+            ),
+            array(
                 'number' => '.07',
                 'title'  => 'AI',
-                'desc'   => 'Artificial Intelligence & transformation insights for future-ready enterprises.',
+                'desc'   => 'Navigating enterprise AI transformation and ROI.',
                 'link'   => home_url( '/ai/' ),
-            );
-            $sectors[] = array(
+            ),
+            array(
                 'number' => '.08',
                 'title'  => 'Enterprise Tech',
-                'desc'   => 'Cloud, infrastructure & enterprise IT solutions powering digital acceleration.',
+                'desc'   => 'Strategic insights across cloud, infrastructure, and IT.',
                 'link'   => home_url( '/enterprise-tech/' ),
-            );
-        }
+            ),
+        );
 
         ob_start();
         ?>
