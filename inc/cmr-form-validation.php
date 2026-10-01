@@ -170,9 +170,15 @@ add_action( 'wp_footer', function() {
             if (crModal) crModal.style.display = 'none';
         };
 
-        // Render Success State inside Modal (Uses Contact Form 7 custom message if configured)
+        // Render Success State inside Modal (Hides form completely, shows clean Thank You card, auto-closes in 2s)
         function showFormSuccessState(form, customMsg) {
-            var parentContainer = form.closest('.elementor-widget-wrap, .cmr-modal-form-wrapper, .elementor-element-5609af6, .elementor-element-49c9d22, .elementor-element-a26a79a, .elementor-element-2123f86, #cmr-review-modal-box, .custom-report-form') || form.parentElement;
+            if (!form) return;
+
+            // Find the entire right column / modal form side container
+            var rightSide = form.closest(
+                '.elementor-element-5609af6, .elementor-element-49c9d22, .elementor-element-a26a79a, .elementor-element-2123f86, ' +
+                '.elementor-column:last-child, .e-con:last-child, .cmr-modal-form-wrapper, #cmr-review-modal-box, .custom-report-form, .elementor-widget-wrap'
+            ) || form.parentElement;
 
             var cf7Msg = customMsg;
             if (!cf7Msg) {
@@ -182,25 +188,49 @@ add_action( 'wp_footer', function() {
                 }
             }
 
-            if (!cf7Msg || cf7Msg === 'Please fill in all required fields before submitting.') {
+            if (!cf7Msg || cf7Msg === 'Please fill in all required fields before submitting.' || cf7Msg.indexOf('Validation error') !== -1) {
                 cf7Msg = 'Your request has been successfully submitted. Our team will review your details and get back to you shortly.';
             }
 
-            form.style.display = 'none';
+            // Hide the form itself completely
+            form.style.setProperty('display', 'none', 'important');
 
-            // Also hide titles & subtitles on the right form side
-            var rightSide = form.closest('.elementor-element-5609af6, .elementor-element-49c9d22, .elementor-element-a26a79a, .elementor-element-2123f86') || parentContainer;
+            // Hide all siblings/widgets on the right side except close button
             if (rightSide) {
-                rightSide.querySelectorAll('h2, .sub-desc, .elementor-widget-text-editor, .elementor-widget-heading').forEach(function(h) {
-                    if (!h.closest('.cmr-form-success-wrapper')) {
-                        h.style.display = 'none';
+                var allChildren = rightSide.querySelectorAll('*');
+                allChildren.forEach(function(el) {
+                    if (el.tagName === 'FORM' || 
+                        el.classList.contains('elementor-widget-heading') || 
+                        el.classList.contains('elementor-widget-text-editor') || 
+                        el.classList.contains('elementor-widget-form') || 
+                        el.classList.contains('wpcf7') || 
+                        el.classList.contains('sub-desc') ||
+                        el.tagName === 'H2' || 
+                        el.tagName === 'H3' || 
+                        el.tagName === 'LABEL' || 
+                        el.tagName === 'INPUT' || 
+                        el.tagName === 'TEXTAREA' || 
+                        el.tagName === 'BUTTON') {
+                        if (!el.closest('.cmr-form-success-wrapper') && !el.classList.contains('dialog-close-button')) {
+                            el.style.setProperty('display', 'none', 'important');
+                        }
                     }
                 });
+
+                // Hide direct children widgets
+                for (var i = 0; i < rightSide.children.length; i++) {
+                    var ch = rightSide.children[i];
+                    if (!ch.classList.contains('cmr-form-success-wrapper') && !ch.classList.contains('dialog-close-button')) {
+                        ch.style.setProperty('display', 'none', 'important');
+                    }
+                }
             }
 
-            var prevSuccess = parentContainer.querySelector('.cmr-form-success-wrapper');
+            // Remove any previous success wrapper
+            var prevSuccess = rightSide.querySelector('.cmr-form-success-wrapper');
             if (prevSuccess) prevSuccess.remove();
 
+            // Create clean centered Thank You screen
             var successWrapper = document.createElement('div');
             successWrapper.className = 'cmr-form-success-wrapper';
             successWrapper.innerHTML = 
@@ -213,7 +243,12 @@ add_action( 'wp_footer', function() {
                 '<p>' + cf7Msg + '</p>' +
                 '<button type="button" class="cmr-form-success-close-btn" onclick="cmrCloseModalAndReset()">Done</button>';
 
-            parentContainer.appendChild(successWrapper);
+            rightSide.appendChild(successWrapper);
+
+            // Auto-close modal after 2 seconds (2000ms)
+            setTimeout(function() {
+                cmrCloseModalAndReset();
+            }, 2000);
         }
 
         // Listen for Contact Form 7 native AJAX success event
@@ -224,6 +259,16 @@ add_action( 'wp_footer', function() {
                 showFormSuccessState(form, msg);
             }
         });
+
+        // Listen for Elementor Pro Form native AJAX success event
+        if (typeof jQuery !== 'undefined') {
+            jQuery(document).on('submit_success', function(evt, response) {
+                var form = evt.target;
+                if (form) {
+                    showFormSuccessState(form);
+                }
+            });
+        }
 
         // Initialize validators
         function initFormValidation() {

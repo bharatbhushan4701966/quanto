@@ -5065,6 +5065,54 @@ add_action( 'wp_footer', function() {
         }
         initMobileGalleryParallax();
         window.addEventListener('resize', initMobileGalleryParallax);
+
+        // Single Team Member Sticky Image Controller (Pins profile photo while bio scrolls)
+        function initSingleTeamSticky() {
+            if (window.innerWidth < 768) return;
+
+            var isTeamPage = document.body.classList.contains('single-teams') || 
+                             document.body.classList.contains('single-team') || 
+                             document.body.classList.contains('single-quanto_team') || 
+                             window.location.pathname.indexOf('/teams/') !== -1 || 
+                             window.location.pathname.indexOf('/team/') !== -1;
+
+            if (!isTeamPage) return;
+
+            var memberImgs = document.querySelectorAll('.elementor-widget-image img, .elementor-widget-theme-post-featured-image img, .elementor-image img');
+            var targetCol = null;
+
+            memberImgs.forEach(function(img) {
+                if (img.closest('header, #quanto-header-desktop, footer, .header, nav, .elementor-location-header')) return;
+                var col = img.closest('.e-con, .elementor-column, .elementor-widget-image, .elementor-widget-theme-post-featured-image');
+                if (col && !targetCol) {
+                    targetCol = col;
+                }
+            });
+
+            if (targetCol) {
+                targetCol.classList.add('cmr-team-sticky-col');
+
+                var parent = targetCol.parentElement;
+                while (parent && parent !== document.body) {
+                    parent.style.setProperty('overflow', 'visible', 'important');
+                    if (parent.classList.contains('e-con') || parent.classList.contains('elementor-row') || parent.classList.contains('elementor-container') || parent.classList.contains('e-con-inner')) {
+                        parent.style.setProperty('align-items', 'flex-start', 'important');
+                        parent.style.setProperty('display', 'flex', 'important');
+                    }
+                    parent = parent.parentElement;
+                }
+
+                var header = document.querySelector('#quanto-header-desktop, header.header, .elementor-location-header, .header');
+                var headerHeight = header ? header.offsetHeight : 90;
+                targetCol.style.setProperty('position', 'sticky', 'important');
+                targetCol.style.setProperty('top', (headerHeight + 20) + 'px', 'important');
+                targetCol.style.setProperty('align-self', 'flex-start', 'important');
+                targetCol.style.setProperty('z-index', '10', 'important');
+            }
+        }
+        initSingleTeamSticky();
+        window.addEventListener('resize', initSingleTeamSticky);
+        window.addEventListener('load', initSingleTeamSticky);
     });
     </script>
     <?php

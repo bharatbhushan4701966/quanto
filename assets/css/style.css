@@ -9977,3 +9977,51 @@ Single Product - Custom Sections (Related, Rating)
 .blog-body .executive-summary-box li:last-child {
   margin-bottom: 0;
 }
+
+/* ==========================================================================
+   Single Team Member Page Sticky Image Layout
+   ========================================================================== */
+body.single-teams,
+body.single-team,
+body.single-quanto_team,
+body[class*="single-team"] {
+  overflow-x: hidden;
+}
+
+body.single-teams .elementor-section,
+body.single-teams .e-con,
+body.single-teams .e-con-inner,
+body.single-teams .elementor-container,
+body.single-team .elementor-section,
+body.single-team .e-con,
+body.single-team .e-con-inner,
+body.single-team .elementor-container {
+  overflow: visible !important;
+}
+
+@media (min-width: 768px) {
+  .cmr-team-sticky-col,
+  body.single-teams .e-con > .e-con:first-child:has(img),
+  body.single-teams .elementor-column:first-child:has(img),
+  body.single-team .e-con > .e-con:first-child:has(img),
+  body.single-team .elementor-column:first-child:has(img) {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 110px !important;
+    align-self: flex-start !important;
+    z-index: 10 !important;
+    height: fit-content !important;
+    margin-top: 0 !important;
+    transition: top 0.2s ease !important;
+  }
+
+  .cmr-team-sticky-col img,
+  body.single-teams .e-con > .e-con:first-child img,
+  body.single-teams .elementor-column:first-child img,
+  body.single-team .e-con > .e-con:first-child img,
+  body.single-team .elementor-column:first-child img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+  }
+}

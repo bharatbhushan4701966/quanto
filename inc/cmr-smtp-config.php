@@ -1,25 +1,48 @@
 <?php
-// SMTP Configuration for outbound emails
-// Fill in your "host credentials" below to bypass the staging server's default mailer
+/**
+ * CMR Email Configuration
+ * Respects all custom email IDs configured inside Contact Form 7 settings.
+ * Ensures clean From Name "CyberMedia Research (CMR)" and Indian Standard Time (IST).
+ */
 
-add_action( 'phpmailer_init', 'cmr_custom_smtp_mailer' );
-function cmr_custom_smtp_mailer( $phpmailer ) {
-    $phpmailer->isSMTP();
-    
-    // ---------------------------------------------------------
-    // USE GMAIL AS YOUR FREE MAIL SERVER
-    // 1. Go to Google Account -> Security -> App Passwords
-    // 2. Generate a 16-digit password and paste it below
-    // ---------------------------------------------------------
-    $phpmailer->Host       = 'smtp.gmail.com'; 
-    $phpmailer->SMTPAuth   = true;
-    $phpmailer->Port       = 587; 
-    $phpmailer->Username   = 'beastbad270@gmail.com'; // Your Gmail
-    $phpmailer->Password   = 'fcyvrhnvohoobkgw'; // Paste the 16-digit app password here
-    $phpmailer->SMTPSecure = 'tls'; 
-    // ---------------------------------------------------------
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 
-    if ( empty( $phpmailer->FromName ) || $phpmailer->FromName === 'WordPress' || $phpmailer->FromName === 'Quanto Careers' ) {
-        $phpmailer->FromName = 'CyberMedia Research (CMR)';
+// 1. Universal WordPress Email From Name Filter (Replaces "WordPress" or "Staging - cmrindia.com" with clean company name)
+add_filter( 'wp_mail_from_name', 'cmr_custom_wp_mail_from_name', 999 );
+function cmr_custom_wp_mail_from_name( $original_name ) {
+    if ( empty( $original_name ) || $original_name === 'WordPress' || $original_name === 'Quanto Careers' || stripos( $original_name, 'Staging' ) !== false ) {
+        return 'CyberMedia Research (CMR)';
+    }
+    return $original_name;
+}
+
+// 2. Clean up sender display name in Contact Form 7 while keeping whatever Email ID you configure in CF7
+add_filter( 'wpcf7_mail_components', 'cmr_clean_cf7_mail_headers', 999, 3 );
+function cmr_clean_cf7_mail_headers( $components, $form, $mail ) {
+    // If sender has "Staging - cmrindia.com" or "WordPress", replace the name portion with "CyberMedia Research (CMR)"
+    // but keep the exact email ID configured in your form
+    if ( ! empty( $components['sender'] ) ) {
+        if ( stripos( $components['sender'], 'Staging' ) !== false || stripos( $components['sender'], 'WordPress' ) !== false ) {
+            $components['sender'] = preg_replace( '/^.*<([^>]+)>/', 'CyberMedia Research (CMR) <$1>', $components['sender'] );
+        }
+    }
+
+    if ( ! empty( $components['additional_headers'] ) ) {
+        $components['additional_headers'] = str_ireplace( 'Staging - cmrindia.com', 'CyberMedia Research (CMR)', $components['additional_headers'] );
+    }
+
+    return $components;
+}
+
+// 3. Automatically enforce accurate India Timezone (Asia/Kolkata UTC+5:30) for WordPress and Email Logs
+add_action( 'init', 'cmr_enforce_site_timezone' );
+function cmr_enforce_site_timezone() {
+    if ( get_option( 'timezone_string' ) !== 'Asia/Kolkata' ) {
+        update_option( 'timezone_string', 'Asia/Kolkata' );
+        update_option( 'gmt_offset', '5.5' );
     }
 }
+
+
