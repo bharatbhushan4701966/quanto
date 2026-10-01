@@ -9984,7 +9984,8 @@ Single Product - Custom Sections (Related, Rating)
 body.single-teams,
 body.single-team,
 body.single-quanto_team,
-body[class*="single-team"] {
+body[class*="single-team"],
+body[class*="single-quanto_team"] {
   overflow-x: hidden;
 }
 
@@ -9992,34 +9993,48 @@ body.single-teams .elementor-section,
 body.single-teams .e-con,
 body.single-teams .e-con-inner,
 body.single-teams .elementor-container,
+body.single-teams .elementor-row,
 body.single-team .elementor-section,
 body.single-team .e-con,
 body.single-team .e-con-inner,
-body.single-team .elementor-container {
+body.single-team .elementor-container,
+body.single-team .elementor-row,
+body.single-quanto_team .elementor-section,
+body.single-quanto_team .e-con,
+body.single-quanto_team .e-con-inner,
+body.single-quanto_team .elementor-container,
+body.single-quanto_team .elementor-row {
   overflow: visible !important;
+  align-items: flex-start !important;
 }
 
 @media (min-width: 768px) {
   .cmr-team-sticky-col,
-  body.single-teams .e-con > .e-con:first-child:has(img),
-  body.single-teams .elementor-column:first-child:has(img),
-  body.single-team .e-con > .e-con:first-child:has(img),
-  body.single-team .elementor-column:first-child:has(img) {
+  body.single-teams .elementor-widget-theme-post-featured-image,
+  body.single-team .elementor-widget-theme-post-featured-image,
+  body.single-quanto_team .elementor-widget-theme-post-featured-image,
+  body.single-teams .e-con > .e-con:first-child,
+  body.single-teams .elementor-column:first-child,
+  body.single-team .e-con > .e-con:first-child,
+  body.single-team .elementor-column:first-child,
+  body.single-quanto_team .e-con > .e-con:first-child,
+  body.single-quanto_team .elementor-column:first-child {
     position: -webkit-sticky !important;
     position: sticky !important;
-    top: 110px !important;
+    top: 130px !important;
     align-self: flex-start !important;
     z-index: 10 !important;
     height: fit-content !important;
     margin-top: 0 !important;
-    transition: top 0.2s ease !important;
   }
 
   .cmr-team-sticky-col img,
-  body.single-teams .e-con > .e-con:first-child img,
+  body.single-teams .elementor-widget-theme-post-featured-image img,
+  body.single-team .elementor-widget-theme-post-featured-image img,
+  body.single-quanto_team .elementor-widget-theme-post-featured-image img,
   body.single-teams .elementor-column:first-child img,
-  body.single-team .e-con > .e-con:first-child img,
-  body.single-team .elementor-column:first-child img {
+  body.single-team .elementor-column:first-child img,
+  body.single-quanto_team .elementor-column:first-child img {
     max-width: 100% !important;
     height: auto !important;
     display: block !important;

@@ -5102,10 +5102,11 @@ add_action( 'wp_footer', function() {
                     parent = parent.parentElement;
                 }
 
-                var header = document.querySelector('#quanto-header-desktop, header.header, .elementor-location-header, .header');
-                var headerHeight = header ? header.offsetHeight : 90;
+                var header = document.querySelector('#quanto-header-desktop, header.header, .elementor-location-header, .header, .mas-sticky-header');
+                var headerHeight = header ? header.offsetHeight : 95;
+                var safeTop = Math.max(headerHeight + 25, 130);
                 targetCol.style.setProperty('position', 'sticky', 'important');
-                targetCol.style.setProperty('top', (headerHeight + 20) + 'px', 'important');
+                targetCol.style.setProperty('top', safeTop + 'px', 'important');
                 targetCol.style.setProperty('align-self', 'flex-start', 'important');
                 targetCol.style.setProperty('z-index', '10', 'important');
             }
@@ -5113,6 +5114,13 @@ add_action( 'wp_footer', function() {
         initSingleTeamSticky();
         window.addEventListener('resize', initSingleTeamSticky);
         window.addEventListener('load', initSingleTeamSticky);
+        window.addEventListener('scroll', function() {
+            var stickyHeader = document.querySelector('.mas-sticky-header');
+            if (stickyHeader && targetCol) {
+                var h = stickyHeader.offsetHeight || 95;
+                targetCol.style.setProperty('top', Math.max(h + 25, 130) + 'px', 'important');
+            }
+        }, { passive: true });
     });
     </script>
     <?php
