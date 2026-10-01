@@ -53,6 +53,9 @@ require_once QUANTO_DIR_PATH_INC . 'wp-html-helper.php';
 // pagination
 require_once QUANTO_DIR_PATH_INC . 'wp_bootstrap_pagination.php';
 
+// Universal Form Validation Enforcer
+require_once QUANTO_DIR_PATH_INC . 'cmr-form-validation.php';
+
 // quanto options
 function quanto_setup_ab() { 
     require_once QUANTO_DIR_PATH_INC . 'Quanto-framework/quanto-options/quanto-options.php';

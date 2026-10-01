@@ -844,6 +844,19 @@ body.modal-open {
     box-shadow: 0 0 0 3px rgba(88, 44, 215, 0.1) !important;
 }
 
+.cmr-input-error,
+.custom-report-form input.cmr-input-error,
+.custom-report-form textarea.cmr-input-error,
+.elementor-popup-modal input.cmr-input-error,
+.elementor-popup-modal textarea.cmr-input-error,
+.wpcf7-form input.cmr-input-error,
+.wpcf7-form textarea.cmr-input-error,
+input.cmr-input-error,
+textarea.cmr-input-error {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.18) !important;
+}
+
 .custom-report-form input::placeholder,
 .elementor-element-42f4ebe input::placeholder,
 .elementor-element-052bc23 input::placeholder,
