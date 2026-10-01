@@ -3160,6 +3160,72 @@ add_shortcode('cmr_global_brands', function() {
     return ob_get_clean();
 });
 
+// Shortcode to display the Global CTA Banner section by rendering the quanto_tab_build post
+function cmr_global_cta_banner_shortcode( $atts = array() ) {
+    ob_start();
+    
+    // Find the post by slug or fallback to ID
+    $posts = get_posts(array(
+        'name'           => 'global-cta-banner',
+        'post_type'      => 'quanto_tab_build',
+        'posts_per_page' => 1,
+        'post_status'    => 'publish'
+    ));
+    
+    $post_id = ( $posts && !empty($posts[0]) ) ? $posts[0]->ID : 52927;
+    $output  = '';
+    
+    if ( $post_id ) {
+        // Print CSS link inline
+        if ( function_exists('cmr_print_elementor_css') ) {
+            cmr_print_elementor_css($post_id);
+        }
+        
+        // Render via Elementor frontend
+        if ( class_exists( '\\Elementor\\Plugin' ) && isset(\Elementor\Plugin::$instance) && isset(\Elementor\Plugin::$instance->frontend) ) {
+            $builder_content = \Elementor\Plugin::$instance->frontend->get_builder_content_for_display( $post_id, true );
+            if ( ! empty( $builder_content ) ) {
+                $output = $builder_content;
+            }
+        }
+    }
+    
+    // Fallback: If builder content is empty, fetch and cache rendered output
+    if ( empty( $output ) ) {
+        $transient_key = 'cmr_global_cta_banner_cache';
+        $cached_html   = get_transient( $transient_key );
+        
+        if ( false === $cached_html || ( is_user_logged_in() && isset($_GET['refresh_cta']) ) ) {
+            $url      = home_url( '/?quanto_tab_build=global-cta-banner' );
+            $response = wp_remote_get( $url, array( 'timeout' => 5 ) );
+            if ( ! is_wp_error( $response ) ) {
+                $body = wp_remote_retrieve_body( $response );
+                if ( preg_match( '/<div[^>]*class="[^"]*elementor-(?:52927|\d+)[^"]*"[^>]*>.*?<\/body>/is', $body, $matches ) ) {
+                    if ( preg_match( '/<div[^>]*class="[^"]*elementor-(?:52927|\d+)[^"]*"[^>]*>.*<\/div>\s*<\/div>\s*<\/div>/is', $body, $inner_matches ) ) {
+                        $cached_html = $inner_matches[0];
+                        set_transient( $transient_key, $cached_html, WEEK_IN_SECONDS );
+                    }
+                }
+            }
+        }
+        
+        if ( ! empty( $cached_html ) ) {
+            $output = $cached_html;
+        }
+    }
+    
+    if ( ! empty( $output ) ) {
+        echo '<div id="cmr-global-cta-banner-section">';
+        echo $output;
+        echo '</div>';
+    }
+    
+    return ob_get_clean();
+}
+add_shortcode('cmr_global_cta_banner', 'cmr_global_cta_banner_shortcode');
+add_shortcode('cmr_global_cta', 'cmr_global_cta_banner_shortcode');
+add_shortcode('global_cta_banner', 'cmr_global_cta_banner_shortcode');
+
 // Helper function to get the post thumbnail, or fallback to scraping the og:image from the media URL, or a hardcoded fallback
 if ( ! function_exists( 'cmr_get_thumbnail_with_fallback' ) ) {
     function cmr_get_thumbnail_with_fallback($post_id, $size = 'full') {
@@ -3503,6 +3569,7 @@ function cmr_regenerate_tab_css_on_cache_clear() {
 // Also delete the footer transient whenever post cache or object cache is flushed
 add_action( 'wp_cache_flush', function() {
     delete_transient( 'cmr_footer_html_cache' );
+    delete_transient( 'cmr_global_cta_banner_cache' );
 });
 
 // Also delete the footer transient when any quanto_footer post is saved
@@ -3510,9 +3577,10 @@ add_action( 'save_post_quanto_footer', function() {
     delete_transient( 'cmr_footer_html_cache' );
 });
 
-// Also delete the footer transient when any quanto_tab_build post is saved
+// Also delete the footer and CTA banner transients when any quanto_tab_build post is saved
 add_action( 'save_post_quanto_tab_build', function() {
     delete_transient( 'cmr_footer_html_cache' );
+    delete_transient( 'cmr_global_cta_banner_cache' );
 });
 
 /**
