@@ -614,10 +614,15 @@ function cmr_hero_banner_shortcode($atts) {
           document.body.classList.add('cmr-modal-open');
         }
 
+        // NOTE: Do NOT use e.preventDefault() here.
+        // Elementor listens for native clicks on elements whose href contains
+        // 'elementor-action:...' — preventing default blocks that handler.
+        // We call triggerCmrPopup() as an additional JS fallback only.
         const popupTrigger = hero.querySelector('.open-popup');
         if (popupTrigger) {
           popupTrigger.addEventListener('click', function(e) {
-            e.preventDefault();
+            // Let the href propagate so Elementor's actionHash module can fire.
+            // JS fallback runs in parallel.
             triggerCmrPopup(7637, popupTrigger);
           });
         }
@@ -625,7 +630,8 @@ function cmr_hero_banner_shortcode($atts) {
         const reportTrigger = hero.querySelector('.open-report-popup');
         if (reportTrigger) {
           reportTrigger.addEventListener('click', function(e) {
-            e.preventDefault();
+            // Let the href propagate so Elementor's actionHash module can fire.
+            // JS fallback runs in parallel.
             triggerCmrPopup(7758, reportTrigger);
           });
         }
