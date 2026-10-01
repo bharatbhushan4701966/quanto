@@ -380,20 +380,22 @@ add_action( 'wp_footer', function() {
 
                 var opened = false;
                 if (typeof elementorProFrontend !== 'undefined' && elementorProFrontend.modules) {
-                    if (elementorProFrontend.modules.actionHash) {
+                    // Primary: popup.showPopup is the most reliable method and supports re-opening
+                    if (elementorProFrontend.modules.popup) {
+                        try {
+                            elementorProFrontend.modules.popup.showPopup({ id: id, toggle: false });
+                            opened = true;
+                        } catch(err) {
+                            console.error(err);
+                        }
+                    }
+                    // Fallback: actionHash (can silently fail on re-open)
+                    if (!opened && elementorProFrontend.modules.actionHash) {
                         try {
                             var actionUrl = 'elementor-action:action=popup:open&settings=' + btoa(JSON.stringify({ id: id.toString(), toggle: false }));
                             elementorProFrontend.modules.actionHash.runAction(actionUrl);
                             opened = true;
                         } catch(err) {}
-                    }
-                    if (!opened && elementorProFrontend.modules.popup) {
-                        try {
-                            elementorProFrontend.modules.popup.showPopup({ id: id }, triggerEl);
-                            opened = true;
-                        } catch(err) {
-                            console.error(err);
-                        }
                     }
                 }
 

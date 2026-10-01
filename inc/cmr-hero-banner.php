@@ -561,73 +561,9 @@ function cmr_hero_banner_shortcode($atts) {
         // Initialize first slide
         setSlide(0, true);
 
-        // Popups
-        function triggerCmrPopup(id, triggerEl) {
-          id = parseInt(id);
-          if (!id) return;
-
-          var opened = false;
-
-          // Primary: use elementorProFrontend.modules.popup.showPopup directly
-          // (most reliable — this is what initializes the dialog widget properly)
-          if (typeof elementorProFrontend !== 'undefined' && elementorProFrontend.modules) {
-            if (elementorProFrontend.modules.popup) {
-              try {
-                elementorProFrontend.modules.popup.showPopup({ id: id });
-                opened = true;
-              } catch(err) {}
-            }
-            // Fallback: actionHash
-            if (!opened && elementorProFrontend.modules.actionHash) {
-              try {
-                var actionUrl = 'elementor-action:action=popup:open&settings=' + btoa(JSON.stringify({ id: id.toString(), toggle: false }));
-                elementorProFrontend.modules.actionHash.runAction(actionUrl);
-                opened = true;
-              } catch(err) {}
-            }
-          }
-
-          // jQuery event fallback
-          if (window.jQuery) {
-            try {
-              window.jQuery(document).trigger('elementor/popup/show', [{ id: id }]);
-            } catch(e) {}
-          }
-
-          // Last-resort: manually force display of the popup DOM element
-          if (!opened) {
-            var modal = document.querySelector('#elementor-popup-modal-' + id) ||
-                        document.querySelector('.elementor-' + id + '.elementor-location-popup');
-            if (modal) {
-              var dialogWidget = modal.closest('.dialog-widget') || modal;
-              dialogWidget.style.setProperty('display', 'flex', 'important');
-              dialogWidget.style.setProperty('opacity', '1', 'important');
-              dialogWidget.style.setProperty('visibility', 'visible', 'important');
-              dialogWidget.style.setProperty('z-index', '999999', 'important');
-            }
-          }
-
-          document.documentElement.classList.add('cmr-modal-open');
-          document.body.classList.add('cmr-modal-open');
-        }
-
-        const popupTrigger = hero.querySelector('.open-popup');
-        if (popupTrigger) {
-          popupTrigger.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            triggerCmrPopup(7637, popupTrigger);
-          });
-        }
-
-        const reportTrigger = hero.querySelector('.open-report-popup');
-        if (reportTrigger) {
-          reportTrigger.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            triggerCmrPopup(7758, reportTrigger);
-          });
-        }
+        // NOTE: Popup triggers (.open-report-popup, .open-popup) are handled
+        // by the unified body click listener in essential-scripts.php.
+        // No separate click handlers needed here.
       }
 
       function alignHeroWithHeader() {
