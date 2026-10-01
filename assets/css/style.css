@@ -9898,3 +9898,82 @@ Single Product - Custom Sections (Related, Rating)
 .cmr-modal-form-wrapper .form-submit input[type="submit"]:hover {
     background: #000;
 }
+
+/* CMR News Single Post Template Enhancements */
+.cmr-btn-listen {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: #0F0F0F;
+  border: 1px solid #C5C5C5;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.cmr-btn-listen:hover {
+  border-color: #0F0F0F;
+  background-color: #F8F9FA;
+  color: #000000;
+  transform: scale(1.05);
+}
+
+.cmr-single-lead-excerpt {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  color: #2D3748;
+  margin-top: 18px;
+  margin-bottom: 24px;
+}
+.cmr-single-lead-excerpt p {
+  margin-bottom: 0;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* Executive Summary Box */
+.cmr-executive-summary,
+.blog-body .executive-summary-box {
+  background: #FFFFFF;
+  border: 1px solid #EAEAEA;
+  border-radius: 12px;
+  padding: 32px 36px;
+  margin: 30px 0;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+}
+
+.cmr-executive-summary h3,
+.blog-body .executive-summary-box h3 {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #0F0F0F;
+  margin-bottom: 20px;
+}
+
+.cmr-executive-summary ul,
+.blog-body .executive-summary-box ul {
+  list-style: disc;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.cmr-executive-summary li,
+.blog-body .executive-summary-box li {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #2D3748;
+  margin-bottom: 12px;
+}
+.cmr-executive-summary li:last-child,
+.blog-body .executive-summary-box li:last-child {
+  margin-bottom: 0;
+}
