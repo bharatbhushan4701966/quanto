@@ -932,6 +932,216 @@ add_action('wp_head', function() {
     <?php
 });
 
+// Force Header Desktop flex row, perfect alignment, and prevent menu wrapping across ALL pages
+add_action('wp_head', function() {
+    ?>
+    <style id="cmr-header-align-perfect">
+        @media (min-width: 992px) {
+            /* 1. Header and Elementor container must be full width block/flex */
+            header.header,
+            .main-header-wrapper,
+            .blog-header-wrapper,
+            #quanto-header-desktop,
+            .elementor-location-header {
+                width: 100% !important;
+                display: block !important;
+            }
+
+            header.header > .elementor,
+            .main-header-wrapper > .elementor,
+            .blog-header-wrapper > .elementor,
+            #quanto-header-desktop > .elementor {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            /* 2. Top-level parent row flex layout */
+            .elementor-element-bea96aa > .e-con-inner,
+            .elementor-element-88e448f > .e-con-inner,
+            #quanto-header-desktop .e-con-inner,
+            .main-header-wrapper .e-con-inner,
+            .blog-header-wrapper .e-con-inner {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                width: 100% !important;
+                gap: 16px !important;
+            }
+
+            /* 3. Logo column: auto shrink/grow to its natural width */
+            .elementor-element-5f97056,
+            .elementor-element-2ec5f25 {
+                flex: 0 0 auto !important;
+                width: auto !important;
+                max-width: 170px !important;
+                display: flex !important;
+                align-items: center !important;
+            }
+
+            .header-logo img {
+                max-height: 42px !important;
+                width: auto !important;
+            }
+
+            /* 4. Menu column: takes all available middle space */
+            .elementor-element-af0ffb4,
+            .elementor-element-b97e211 {
+                flex: 1 1 auto !important;
+                width: auto !important;
+                max-width: none !important;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                overflow: visible !important;
+            }
+
+            .elementor-element-640d6ce,
+            .elementor-element-74164a6,
+            .elementor-element-af0ffb4 .elementor-widget-container,
+            .elementor-element-b97e211 .elementor-widget-container {
+                width: 100% !important;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+            }
+
+            /* 5. Nav menu list: strict single straight row, no wrapping ever */
+            .main-menu,
+            .main-menu > ul,
+            #menu-main-1,
+            .elementor-nav-menu--main,
+            .elementor-nav-menu--main ul {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                align-items: center !important;
+                justify-content: center !important;
+                white-space: nowrap !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                gap: clamp(8px, 1.2vw, 24px) !important;
+            }
+
+            .main-menu > ul > li,
+            .elementor-nav-menu--main > li {
+                display: inline-flex !important;
+                align-items: center !important;
+                flex-shrink: 0 !important;
+                white-space: nowrap !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                position: relative !important;
+            }
+
+            .main-menu > ul > li > a,
+            .elementor-nav-menu--main > li > a,
+            .main-menu a {
+                white-space: nowrap !important;
+                font-size: clamp(13px, 1.05vw, 15px) !important;
+                font-weight: 500 !important;
+                padding: 6px 0 !important;
+                margin: 0 !important;
+                display: inline-block !important;
+                line-height: 1.2 !important;
+            }
+
+            /* 6. Right Actions container (Search, Cart, User, Talk to Analyst): auto width, never wrap */
+            .elementor-element-219e18d,
+            .elementor-element-200fa94,
+            .elementor-element-c3cee6b {
+                flex: 0 0 auto !important;
+                width: auto !important;
+                max-width: none !important;
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                align-items: center !important;
+                justify-content: flex-end !important;
+                gap: 14px !important;
+            }
+
+            .elementor-element-f67c2d7 {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                align-items: center !important;
+                justify-content: flex-end !important;
+                width: auto !important;
+                gap: 12px !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .elementor-element-f67c2d7 .elementor-widget,
+            .elementor-element-200fa94 .elementor-widget {
+                margin: 0 !important;
+                padding: 0 !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+
+            /* Talk to Analyst Button (both templates: b3cba9e and 9219cb5) */
+            .elementor-element-b3cba9e,
+            .elementor-element-9219cb5,
+            .elementor-location-header .download-btn,
+            .main-header-wrapper .download-btn,
+            .blog-header-wrapper .download-btn {
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                flex-shrink: 0 !important;
+            }
+
+            .elementor-element-b3cba9e a.elementor-button,
+            .elementor-element-9219cb5 a.elementor-button,
+            .download-btn a.elementor-button {
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                background-color: #6241ca !important;
+                color: #ffffff !important;
+                border-radius: 40px !important;
+                padding: 10px 22px !important;
+                font-family: 'Instrument Sans', sans-serif !important;
+                font-size: 14px !important;
+                font-weight: 600 !important;
+                line-height: 1 !important;
+                text-decoration: none !important;
+                margin: 0 !important;
+                box-sizing: border-box !important;
+                white-space: nowrap !important;
+                border: none !important;
+                transition: all 0.25s ease !important;
+            }
+
+            .elementor-element-b3cba9e a.elementor-button:hover,
+            .elementor-element-9219cb5 a.elementor-button:hover,
+            .download-btn a.elementor-button:hover {
+                background-color: #4f28c2 !important;
+                transform: translateY(-1px) !important;
+            }
+
+            .elementor-element-b3cba9e a.elementor-button .elementor-button-text,
+            .elementor-element-9219cb5 a.elementor-button .elementor-button-text,
+            .download-btn a.elementor-button .elementor-button-text {
+                color: #ffffff !important;
+                font-weight: 600 !important;
+            }
+
+            .elementor-element-b3cba9e a.elementor-button svg path,
+            .elementor-element-9219cb5 a.elementor-button svg path,
+            .download-btn a.elementor-button svg path {
+                fill: #ffffff !important;
+            }
+        }
+    </style>
+    <?php
+}, 1);
 
 // Fix 60 MIN / 38 MIN duration tag sizing, horizontal straight-line alignment, and oversized section headings
 add_action('wp_head', function() {

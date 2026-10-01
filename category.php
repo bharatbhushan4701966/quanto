@@ -78,7 +78,7 @@ get_header();
         width: 100%;
         height: 60px;
         padding: 0 70px;
-        border: 1px solid #6B3FA0;
+        border: 1px solid #6241CA;
         border-radius: 40px;
         font-size: 16px;
         color: #333;
@@ -96,7 +96,7 @@ get_header();
         left: 25px;
         top: 50%;
         transform: translateY(-50%);
-        color: #6B3FA0;
+        color: #6241CA;
         display: flex;
     }
 
@@ -107,7 +107,7 @@ get_header();
         width: 44px;
         height: 44px;
         border-radius: 50%;
-        background: #6B3FA0;
+        background: #6241CA;
         border: none;
         color: #fff;
         display: flex;
@@ -118,7 +118,7 @@ get_header();
     }
 
     .cmr-cat-search-submit:hover {
-        background: #502e7a;
+        background: #4e2ea8;
     }
 
     /* Year Filter */
@@ -145,8 +145,8 @@ get_header();
 
     .cmr-cat-year-pill:hover,
     .cmr-cat-year-pill.active {
-        background: #6A35FF;
-        border-color: #6A35FF;
+        background: #6241CA;
+        border-color: #6241CA;
         color: #fff;
     }
 
@@ -266,7 +266,7 @@ get_header();
     }
 
     .cmr-cat-card-title a:hover {
-        color: #6A35FF;
+        color: #6241CA;
     }
 
     .cmr-cat-card-excerpt {
@@ -297,8 +297,8 @@ get_header();
     }
 
     .cmr-cat-read-more:hover {
-        color: #6A35FF;
-        border-color: #6A35FF;
+        color: #6241CA;
+        border-color: #6241CA;
         gap: 10px;
     }
 
@@ -347,8 +347,8 @@ get_header();
 
     .cmr-cat-pagination .page-numbers:hover,
     .cmr-cat-pagination .page-numbers.current {
-        background: #6A35FF;
-        border-color: #6A35FF;
+        background: #6241CA;
+        border-color: #6241CA;
         color: #fff;
     }
 
@@ -471,8 +471,8 @@ get_header();
         <div class="cmr-cat-pagination">
             <?php
             $paginate_args = array(
-                'prev_text' => '<svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M7 1L1 7L7 13" stroke="#6A35FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-                'next_text' => '<svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1L7 7L1 13" stroke="#6A35FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+                'prev_text' => '<svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M7 1L1 7L7 13" stroke="#6241CA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+                'next_text' => '<svg width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1L7 7L1 13" stroke="#6241CA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
             );
             if ( ! empty($active_year) ) {
                 $paginate_args['add_args'] = array( 'y' => $active_year );
