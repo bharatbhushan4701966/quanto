@@ -283,7 +283,7 @@ function cmr_inject_mobile_mega_menu() {
                         <div class="cmr-mobile-nav-link-title">Leadership</div>
                         <div class="cmr-mobile-nav-link-desc">Meet the leaders driving innovation</div>
                     </a>
-                    <a href="<?php echo esc_url( home_url( '/careers/' ) ); ?>" class="cmr-mobile-nav-link">
+                    <a href="https://cybermedia.co.in/careers/" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">Careers</div>
                         <div class="cmr-mobile-nav-link-desc">Build the future with us</div>
                     </a>

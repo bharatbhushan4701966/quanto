@@ -237,7 +237,7 @@ function cmr_mega_menu_who_we_are_shortcode($atts) {
                     <h4>Leadership</h4>
                     <p>Meet the leaders driving innovation</p>
                 </a>
-                <a href="<?php echo esc_url( home_url( '/careers/' ) ); ?>" class="cmr-mm-item">
+                <a href="https://cybermedia.co.in/careers/" class="cmr-mm-item">
                     <h4>Careers</h4>
                     <p>Build the future with us</p>
                 </a>
