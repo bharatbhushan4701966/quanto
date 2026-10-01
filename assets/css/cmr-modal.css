@@ -245,13 +245,53 @@ body.modal-open {
     font-family: 'Instrument Sans', sans-serif !important;
 }
 
-.elementor-popup-modal *,
-.dialog-widget.dialog-type-lightbox *,
-.modal *,
-#cmr-review-modal-overlay *,
-#cmr-review-modal *,
-.mfp-wrap * {
+.elementor-popup-modal *:not(i):not([class*="fa-"]):not([class*="fa"]):not([class*="fas"]):not([class*="far"]):not([class*="fab"]):not([class*="eicon"]):not([class*="bi-"]):not([class*="ri-"]):not(svg):not(path):not(circle):not(g):not(polygon):not(rect),
+.dialog-widget.dialog-type-lightbox *:not(i):not([class*="fa-"]):not([class*="fa"]):not([class*="fas"]):not([class*="far"]):not([class*="fab"]):not([class*="eicon"]):not([class*="bi-"]):not([class*="ri-"]):not(svg):not(path):not(circle):not(g):not(polygon):not(rect),
+.modal *:not(i):not([class*="fa-"]):not([class*="fa"]):not([class*="fas"]):not([class*="far"]):not([class*="fab"]):not([class*="eicon"]):not([class*="bi-"]):not([class*="ri-"]):not(svg):not(path):not(circle):not(g):not(polygon):not(rect),
+#cmr-review-modal-overlay *:not(i):not([class*="fa-"]):not([class*="fa"]):not([class*="fas"]):not([class*="far"]):not([class*="fab"]):not([class*="eicon"]):not([class*="bi-"]):not([class*="ri-"]):not(svg):not(path):not(circle):not(g):not(polygon):not(rect),
+#cmr-review-modal *:not(i):not([class*="fa-"]):not([class*="fa"]):not([class*="fas"]):not([class*="far"]):not([class*="fab"]):not([class*="eicon"]):not([class*="bi-"]):not([class*="ri-"]):not(svg):not(path):not(circle):not(g):not(polygon):not(rect),
+.mfp-wrap *:not(i):not([class*="fa-"]):not([class*="fa"]):not([class*="fas"]):not([class*="far"]):not([class*="fab"]):not([class*="eicon"]):not([class*="bi-"]):not([class*="ri-"]):not(svg):not(path):not(circle):not(g):not(polygon):not(rect) {
     font-family: 'Instrument Sans', sans-serif !important;
+}
+
+/* Ensure FontAwesome and Icon fonts are preserved across all modals */
+.elementor-popup-modal [class*="fa-"],
+.elementor-popup-modal .fa,
+.elementor-popup-modal .fas,
+.elementor-popup-modal .far,
+.elementor-popup-modal .fab,
+.elementor-popup-modal .fa-solid,
+.elementor-popup-modal .fa-regular,
+.elementor-popup-modal .fa-brands,
+.elementor-popup-modal i,
+.elementor-popup-modal .elementor-icon-list-icon i,
+.modal [class*="fa-"],
+.modal .fa,
+.modal .fas,
+.modal .fa-solid {
+    font-family: 'Font Awesome 6 Free', 'Font Awesome 5 Free', 'FontAwesome' !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    text-rendering: auto !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+}
+
+.elementor-popup-modal .fas,
+.elementor-popup-modal .fa-solid,
+.elementor-popup-modal i.fas {
+    font-weight: 900 !important;
+}
+
+.elementor-popup-modal .far,
+.elementor-popup-modal .fa-regular {
+    font-weight: 400 !important;
+}
+
+.elementor-popup-modal .fab,
+.elementor-popup-modal .fa-brands {
+    font-family: 'Font Awesome 6 Brands', 'Font Awesome 5 Brands', 'FontAwesome' !important;
+    font-weight: 400 !important;
 }
 
 /* ==========================================================================
@@ -463,89 +503,72 @@ body.modal-open {
 .elementor-7637 .elementor-element-a35c3d8 .elementor-icon-list-icon,
 .elementor-7832 .elementor-element-2122c0a .elementor-icon-list-icon,
 .elementor-7849 .elementor-element-bb13090 .elementor-icon-list-icon,
-.elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-icon,
-.elementor-popup-modal .elementor-element-5f053ae .elementor-icon-list-icon,
-.elementor-popup-modal .elementor-element-2f9a6aa .elementor-icon-list-icon,
-.elementor-popup-modal .elementor-element-3d97663 .elementor-icon-list-icon {
-    display: flex !important;
+.elementor-popup-modal .elementor-icon-list-icon {
+    display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     width: 20px !important;
     height: 20px !important;
+    min-width: 20px !important;
     flex-shrink: 0 !important;
     margin: 0 !important;
     padding: 0 !important;
     color: #ffffff !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
 }
 
-/* Bullet 1 Icon: Chart/Trend or Message */
-.elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-item:nth-child(1) .elementor-icon-list-icon::before,
-.elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-item:nth-child(1) .elementor-icon-list-icon::before {
-    content: "\f201" !important;
-    font-family: "Font Awesome 6 Free" !important;
+.elementor-popup-modal .elementor-icon-list-icon i,
+.elementor-popup-modal .elementor-icon-list-icon [class*="fa-"],
+.elementor-popup-modal .elementor-icon-list-icon .fa,
+.elementor-popup-modal .elementor-icon-list-icon .fas,
+.elementor-popup-modal .elementor-icon-list-icon .far {
+    font-family: 'Font Awesome 6 Free', 'Font Awesome 5 Free', 'FontAwesome' !important;
     font-weight: 900 !important;
+    font-style: normal !important;
     font-size: 16px !important;
     color: #ffffff !important;
-    display: block !important;
+    display: inline-block !important;
+    line-height: 1 !important;
 }
 
-.elementor-7637 .elementor-element-32ec6cc .elementor-icon-list-item:nth-child(1) .elementor-icon-list-icon::before,
-.elementor-popup-modal .elementor-element-5f053ae .elementor-element-32ec6cc .elementor-icon-list-item:nth-child(1) .elementor-icon-list-icon::before {
-    content: "\f075" !important; /* fa-comment */
-    font-family: "Font Awesome 6 Free" !important;
-    font-weight: 900 !important;
-    font-size: 16px !important;
+.elementor-popup-modal .elementor-icon-list-icon svg {
+    display: inline-block !important;
+    width: 16px !important;
+    height: 16px !important;
+    fill: #ffffff !important;
     color: #ffffff !important;
-    display: block !important;
+    vertical-align: middle !important;
 }
 
-/* Bullet 2 Icon: Lightbulb or Check */
-.elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-item:nth-child(2) .elementor-icon-list-icon::before,
-.elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-item:nth-child(2) .elementor-icon-list-icon::before {
-    content: "\f0eb" !important;
-    font-family: "Font Awesome 6 Free" !important;
-    font-weight: 900 !important;
-    font-size: 16px !important;
-    color: #ffffff !important;
-    display: block !important;
+.elementor-popup-modal .elementor-icon-list-icon svg path,
+.elementor-popup-modal .elementor-icon-list-icon svg circle,
+.elementor-popup-modal .elementor-icon-list-icon svg g {
+    fill: #ffffff !important;
 }
 
-.elementor-7637 .elementor-element-32ec6cc .elementor-icon-list-item:nth-child(2) .elementor-icon-list-icon::before,
-.elementor-popup-modal .elementor-element-5f053ae .elementor-element-32ec6cc .elementor-icon-list-item:nth-child(2) .elementor-icon-list-icon::before {
-    content: "\f058" !important; /* fa-circle-check */
-    font-family: "Font Awesome 6 Free" !important;
-    font-weight: 900 !important;
-    font-size: 16px !important;
-    color: #ffffff !important;
-    display: block !important;
-}
-
-/* Bullet 3 Icon: Building or Trend */
-.elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-item:nth-child(3) .elementor-icon-list-icon::before,
-.elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-item:nth-child(3) .elementor-icon-list-icon::before {
-    content: "\f1ad" !important;
-    font-family: "Font Awesome 6 Free" !important;
-    font-weight: 900 !important;
-    font-size: 16px !important;
-    color: #ffffff !important;
-    display: block !important;
-}
-
-.elementor-7637 .elementor-element-32ec6cc .elementor-icon-list-item:nth-child(3) .elementor-icon-list-icon::before,
-.elementor-popup-modal .elementor-element-5f053ae .elementor-element-32ec6cc .elementor-icon-list-item:nth-child(3) .elementor-icon-list-icon::before {
+/* Fallback icons if icon list item has empty icon container */
+.elementor-popup-modal .elementor-icon-list-item:nth-child(1) .elementor-icon-list-icon:empty::before {
     content: "\f201" !important; /* fa-chart-line */
-    font-family: "Font Awesome 6 Free" !important;
+    font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", "FontAwesome" !important;
     font-weight: 900 !important;
     font-size: 16px !important;
     color: #ffffff !important;
     display: block !important;
 }
 
-/* Bullet 4 Icon (Popup 7637): Analysts / Team */
-.elementor-7637 .elementor-element-a35c3d8 .elementor-icon-list-item .elementor-icon-list-icon::before,
-.elementor-popup-modal .elementor-element-5f053ae .elementor-element-a35c3d8 .elementor-icon-list-item .elementor-icon-list-icon::before {
+.elementor-popup-modal .elementor-icon-list-item:nth-child(2) .elementor-icon-list-icon:empty::before {
     content: "\f0c0" !important; /* fa-users */
-    font-family: "Font Awesome 6 Free" !important;
+    font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", "FontAwesome" !important;
+    font-weight: 900 !important;
+    font-size: 16px !important;
+    color: #ffffff !important;
+    display: block !important;
+}
+
+.elementor-popup-modal .elementor-icon-list-item:nth-child(3) .elementor-icon-list-icon:empty::before {
+    content: "\f1ad" !important; /* fa-building */
+    font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", "FontAwesome" !important;
     font-weight: 900 !important;
     font-size: 16px !important;
     color: #ffffff !important;
@@ -554,14 +577,6 @@ body.modal-open {
 
 .elementor-7637 .elementor-element-7dfe0ab,
 .elementor-7637 .elementor-element-a19596a {
-    display: none !important;
-}
-
-.elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-icon svg,
-.elementor-7637 .elementor-element-32ec6cc .elementor-icon-list-icon svg,
-.elementor-7637 .elementor-element-a35c3d8 .elementor-icon-list-icon svg,
-.elementor-popup-modal .elementor-element-fc8da81 .elementor-icon-list-icon svg,
-.elementor-popup-modal .elementor-element-5f053ae .elementor-icon-list-icon svg {
     display: none !important;
 }
 
