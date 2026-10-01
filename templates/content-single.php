@@ -206,7 +206,7 @@
 
                         if( $quanto_post_details_share_options ) {
 
-                            echo '<div class="col-xl-9 col-xxl-8">';
+                            echo '<div class="col-12 col-xl-10 col-xxl-10">';
 
                         } else {
 
