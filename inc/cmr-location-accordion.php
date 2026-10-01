@@ -328,6 +328,39 @@ function cmr_location_accordion_shortcode($atts) {
                 </div>
             </div>
         </div>
+
+        <!-- Item 4: Singapore -->
+        <div class="cmr-loc-item">
+            <div class="cmr-loc-header">
+                <h3 class="cmr-loc-title">Singapore</h3>
+                <div class="cmr-loc-icon"></div>
+            </div>
+            <div class="cmr-loc-content">
+                <div class="cmr-loc-content-inner">
+                    <div class="cmr-loc-map">
+                        <iframe src="https://maps.google.com/maps?q=1%20North%20Bridge%20Road%2C%20High%20Street%20Centre%2C%20Singapore%20179094&t=&z=16&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <div class="cmr-loc-details">
+                        <h4>Address</h4>
+                        <div class="cmr-loc-address-block">
+                            <div class="icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            </div>
+                            <div class="cmr-loc-company">CYBER MEDIA SERVICES PTE. LIMITED</div>
+                            <div class="cmr-loc-address">
+                                1 North Bridge Road,<br>
+                                #07-10 High Street Centre,<br>
+                                Singapore - 179094
+                            </div>
+                        </div>
+                        <div class="cmr-loc-contact">
+                            <div class="cmr-loc-row"><span class="cmr-loc-lbl">Tel:</span> <a href="tel:+6563369142">+65-63369142</a></div>
+                            <div class="cmr-loc-row"><span class="cmr-loc-lbl">Fax:</span> <span>+65-63369145</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
