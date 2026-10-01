@@ -34,12 +34,11 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
         }
 
         .cmr-mms-top {
-            padding: 0px 30px 20px;
+            padding: 0px 30px 30px;
             position: relative;
             z-index: 1;
             background: #fff;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
+            border-radius: 12px;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
@@ -58,10 +57,6 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
             letter-spacing: 1px;
             text-transform: uppercase;
             margin-bottom: 0px;
-        }
-
-        .cmr-mms-bottom .cmr-mms-label {
-            margin-bottom: 5px;
         }
 
         .cmr-mms-item {
@@ -105,77 +100,12 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
             line-height: 1.4;
         }
 
-        .cmr-mms-bottom {
-            padding: 10px 20px 30px;
-            background: linear-gradient(135deg, #f3f5ff 0%, #edf9fb 50%, #e6faf7 100%);
-            border-bottom-left-radius: 12px;
-            border-bottom-right-radius: 12px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .cmr-mms-bottom .cmr-mms-label {
-            margin-bottom: 20px;
-        }
-
-        .cmr-mms-insight-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .cmr-mms-insight-item {
-            display: flex !important;
-            flex-direction: row !important;
-            align-items: center !important;
-            gap: 15px;
-            text-decoration: none;
-            color: #000 !important;
-            font-weight: 600;
-            font-size: 16px;
-            white-space: nowrap;
-            transition: color 0.2s ease;
-        }
-
-        .cmr-mms-insight-item:hover {
-            color: #6A35FF;
-        }
-
-        .cmr-mms-insight-icon {
-            color: #6A35FF;
-            width: 20px;
-            height: 20px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .cmr-mms-insight-icon svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .cmr-mms-insight-arrow {
-            color: #9ba4b5;
-            width: 14px;
-            height: 14px;
-            margin-left: 5px;
-            transition: transform 0.2s;
-        }
-
-        .cmr-mms-insight-item:hover .cmr-mms-insight-arrow {
-            transform: translateX(3px);
-            color: #6A35FF;
-        }
-
         @media (max-width: 768px) {
             .cmr-mms-top {
                 grid-template-columns: 1fr;
             }
         }
-                        @media (max-width: 1024px) {
-            .cmr-mms-bottom { display: none !important; }
+        @media (max-width: 1024px) {
             .cmr-has-mega-menu-serve .cmr-mms-wrapper {
                 position: static !important;
                 transform: none !important;
@@ -271,54 +201,6 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
                         <span class="cmr-mms-badge">New</span>
                     </div>
                     <p>Cloud, infrastructure & enterprise IT solutions</p>
-                </a>
-            </div>
-        </div>
-
-        <div class="cmr-mms-bottom">
-            <div class="cmr-mms-label">INSIGHT</div>
-            <div class="cmr-mms-insight-list">
-                <a href="<?php echo esc_url( home_url( '/insight-1/' ) ); ?>" class="cmr-mms-insight-item">
-                    <div class="cmr-mms-insight-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="9" y1="18" x2="15" y2="18"></line>
-                            <line x1="10" y1="22" x2="14" y2="22"></line>
-                            <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 12 3a4.65 4.65 0 0 0-4.5 4.5c0 .89.28 1.5.83 2.1.84.89 1.47 1.83 1.67 2.9"></path>
-                            <line x1="12" y1="7" x2="12" y2="10"></line>
-                            <line x1="8" y1="11" x2="10" y2="11"></line>
-                            <line x1="14" y1="11" x2="16" y2="11"></line>
-                        </svg>
-                    </div>
-                    Debugging with product analytics
-                    <svg class="cmr-mms-insight-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </a>
-                <a href="<?php echo esc_url( home_url( '/insight-2/' ) ); ?>" class="cmr-mms-insight-item">
-                    <div class="cmr-mms-insight-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="9" y1="18" x2="15" y2="18"></line>
-                            <line x1="10" y1="22" x2="14" y2="22"></line>
-                            <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 12 3a4.65 4.65 0 0 0-4.5 4.5c0 .89.28 1.5.83 2.1.84.89 1.47 1.83 1.67 2.9"></path>
-                            <line x1="12" y1="7" x2="12" y2="10"></line>
-                            <line x1="8" y1="11" x2="10" y2="11"></line>
-                            <line x1="14" y1="11" x2="16" y2="11"></line>
-                        </svg>
-                    </div>
-                    Why it's never too early to add product ana...
-                    <svg class="cmr-mms-insight-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </a>
-                <a href="<?php echo esc_url( home_url( '/insight-3/' ) ); ?>" class="cmr-mms-insight-item">
-                    <div class="cmr-mms-insight-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="9" y1="18" x2="15" y2="18"></line>
-                            <line x1="10" y1="22" x2="14" y2="22"></line>
-                            <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 12 3a4.65 4.65 0 0 0-4.5 4.5c0 .89.28 1.5.83 2.1.84.89 1.47 1.83 1.67 2.9"></path>
-                            <line x1="12" y1="7" x2="12" y2="10"></line>
-                            <line x1="8" y1="11" x2="10" y2="11"></line>
-                            <line x1="14" y1="11" x2="16" y2="11"></line>
-                        </svg>
-                    </div>
-                    Data implementation, starting with the 'why'
-                    <svg class="cmr-mms-insight-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </a>
             </div>
         </div>
