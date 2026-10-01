@@ -5236,3 +5236,35 @@ function cmr_redirect_quarterly_results_to_cmrsl() {
         exit;
     }
 }
+
+/**
+ * Replace "CMR Pulse" with "CMR GTM" in newsletter subscription modal
+ */
+add_filter( 'elementor/frontend/the_content', function( $content ) {
+    if ( is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+        return $content;
+    }
+    if ( strpos( $content, 'custom-subscribe-form' ) !== false || strpos( $content, 'Stay Ahead with CMR' ) !== false || strpos( $content, '7832' ) !== false || strpos( $content, '7849' ) !== false ) {
+        $content = str_replace( 'CMR Pulse', 'CMR GTM', $content );
+    }
+    return $content;
+}, 999 );
+
+add_filter( 'wpcf7_form_elements', function( $content ) {
+    if ( strpos( $content, 'CMR Pulse' ) !== false ) {
+        $content = str_replace( 'CMR Pulse', 'CMR GTM', $content );
+    }
+    return $content;
+}, 999 );
+
+add_filter( 'wpcf7_posted_data', function( $posted_data ) {
+    if ( isset( $posted_data['subscriptions'] ) && is_array( $posted_data['subscriptions'] ) ) {
+        foreach ( $posted_data['subscriptions'] as $k => $val ) {
+            if ( $val === 'CMR Pulse' ) {
+                $posted_data['subscriptions'][$k] = 'CMR GTM';
+            }
+        }
+    }
+    return $posted_data;
+}, 999 );
+

@@ -212,8 +212,50 @@ add_action( 'wp_footer', function() {
     ?>
     <script id="cmr-modal-controller-js">
     (function() {
+        // Replace "CMR Pulse" with "CMR GTM" in modal (text and checkbox value)
+        function updateCMRModalTexts() {
+            var modalContainers = document.querySelectorAll(
+                '.elementor-popup-modal, ' +
+                '.elementor-7832, .elementor-7849, ' +
+                '[data-elementor-id="7832"], [data-elementor-id="7849"], ' +
+                '.dialog-widget-content, ' +
+                '.dialog-lightbox-widget-content, ' +
+                '.custom-subscribe-form, ' +
+                '.dialog-widget, ' +
+                '[data-elementor-type="popup"]'
+            );
+
+            modalContainers.forEach(function(modal) {
+                try {
+                    var walker = document.createTreeWalker(modal, NodeFilter.SHOW_TEXT, null, false);
+                    var node;
+                    while (node = walker.nextNode()) {
+                        if (node.nodeValue && node.nodeValue.indexOf('CMR Pulse') !== -1) {
+                            node.nodeValue = node.nodeValue.replace(/CMR Pulse/g, 'CMR GTM');
+                        }
+                    }
+                } catch(e) {}
+
+                modal.querySelectorAll('input[type="checkbox"]').forEach(function(input) {
+                    if (input.value === 'CMR Pulse') {
+                        input.value = 'CMR GTM';
+                    }
+                });
+            });
+        }
+
+        var updateCMRModalDebounce = null;
+        function scheduleCMRModalUpdate() {
+            if (updateCMRModalDebounce) return;
+            updateCMRModalDebounce = requestAnimationFrame(function() {
+                updateCMRModalDebounce = null;
+                updateCMRModalTexts();
+            });
+        }
+
         // Universal modal scroll lock checker (Event-driven, 0 CPU overhead)
         function checkActiveModals() {
+            updateCMRModalTexts();
             var active = false;
 
             // Elementor Popups
@@ -599,6 +641,12 @@ add_action( 'wp_footer', function() {
             }
 
             checkActiveModals();
+            updateCMRModalTexts();
+
+            if (window.MutationObserver) {
+                var modalObserver = new MutationObserver(scheduleCMRModalUpdate);
+                modalObserver.observe(document.body, { childList: true, subtree: true });
+            }
         });
     })();
     </script>
