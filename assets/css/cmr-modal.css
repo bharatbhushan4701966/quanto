@@ -857,6 +857,15 @@ textarea.cmr-input-error {
     box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.18) !important;
 }
 
+.cmr-req-star {
+    color: #ef4444 !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    line-height: 1 !important;
+    margin-left: 3px !important;
+    display: inline !important;
+}
+
 .custom-report-form input::placeholder,
 .elementor-element-42f4ebe input::placeholder,
 .elementor-element-052bc23 input::placeholder,

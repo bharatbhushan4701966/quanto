@@ -84,10 +84,81 @@ add_action( 'wp_footer', function() {
             });
         }
 
+        // Add red asterisk (*) to all required form field labels
+        function addRequiredStarsToLabels() {
+            var forms = document.querySelectorAll(
+                'form.wpcf7-form, ' +
+                '.elementor-popup-modal form, ' +
+                '.custom-report-form, ' +
+                '.custom-consultation-form, ' +
+                '.custom-subscribe-form, ' +
+                '#cmr-job-form, ' +
+                '.cmr-modal-form-wrapper form, ' +
+                '#cmr-review-modal-box form, ' +
+                '.dialog-widget-content form, ' +
+                '.cmr-form'
+            );
+
+            forms.forEach(function(form) {
+                // 1. Process all labels
+                var labels = form.querySelectorAll('label');
+                labels.forEach(function(label) {
+                    // Skip privacy / terms / acceptance / radio / checkbox labels
+                    if (label.closest('.privacy-check') || 
+                        label.closest('.cmr-privacy') || 
+                        label.closest('.wpcf7-acceptance') || 
+                        label.classList.contains('subscription-item') || 
+                        label.querySelector('input[type="checkbox"]') || 
+                        label.querySelector('input[type="radio"]')) {
+                        return;
+                    }
+
+                    if (label.querySelector('.cmr-req-star')) {
+                        return;
+                    }
+
+                    var star = document.createElement('span');
+                    star.className = 'cmr-req-star';
+                    star.setAttribute('aria-hidden', 'true');
+                    star.textContent = ' *';
+                    star.style.cssText = 'color: #ef4444 !important; font-weight: 700 !important; font-size: 15px !important; margin-left: 3px !important; display: inline !important; line-height: 1 !important;';
+
+                    var wrap = label.querySelector('.wpcf7-form-control-wrap, input, textarea, select');
+                    if (wrap) {
+                        label.insertBefore(star, wrap);
+                    } else {
+                        label.appendChild(star);
+                    }
+                });
+
+                // 2. Process paragraphs with input wraps but no inner label
+                var pTags = form.querySelectorAll('p');
+                pTags.forEach(function(p) {
+                    if (p.querySelector('label') || p.querySelector('.cmr-req-star') || p.querySelector('input[type="submit"]')) {
+                        return;
+                    }
+                    var wrap = p.querySelector('.wpcf7-form-control-wrap');
+                    if (wrap) {
+                        var star = document.createElement('span');
+                        star.className = 'cmr-req-star';
+                        star.setAttribute('aria-hidden', 'true');
+                        star.textContent = ' *';
+                        star.style.cssText = 'color: #ef4444 !important; font-weight: 700 !important; font-size: 15px !important; margin-left: 3px !important; display: inline !important; line-height: 1 !important;';
+                        p.insertBefore(star, wrap);
+                    }
+                });
+            });
+        }
+
         // Run on DOM load and whenever popups/DOM change
-        document.addEventListener('DOMContentLoaded', enforceRequiredAttributes);
-        window.addEventListener('load', enforceRequiredAttributes);
-        setInterval(enforceRequiredAttributes, 1500);
+        function initFormValidation() {
+            enforceRequiredAttributes();
+            addRequiredStarsToLabels();
+        }
+
+        document.addEventListener('DOMContentLoaded', initFormValidation);
+        window.addEventListener('load', initFormValidation);
+        setInterval(initFormValidation, 1500);
 
         // Pre-Submit Validation Listener (Capturing phase to run before CF7/Elementor handlers)
         document.addEventListener('submit', function(e) {
