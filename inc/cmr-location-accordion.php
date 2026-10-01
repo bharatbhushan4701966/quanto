@@ -312,38 +312,6 @@ function cmr_location_accordion_shortcode($atts) {
                 </div>
             </div>
         </div>
-
-        <!-- Item 4: Singapore -->
-        <div class="cmr-loc-item">
-            <div class="cmr-loc-header">
-                <h3 class="cmr-loc-title">Singapore</h3>
-                <div class="cmr-loc-icon"></div>
-            </div>
-            <div class="cmr-loc-content">
-                <div class="cmr-loc-content-inner">
-                    <div class="cmr-loc-map">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255282.3235282208!2d103.70416551604928!3d1.313996123018251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da11238a8b9375%3A0x887869cf52abf5c4!2sSingapore!5e0!3m2!1sen!2sin!4v1718880000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
-                    <div class="cmr-loc-details">
-                        <h4>Address</h4>
-                        <div class="cmr-loc-address-block">
-                            <div class="icon">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                            </div>
-                            <div class="cmr-loc-company">CMR Singapore</div>
-                            <div class="cmr-loc-address">
-                                [Singapore Address Line 1]<br>
-                                [Singapore Address Line 2]
-                            </div>
-                        </div>
-                        <div class="cmr-loc-contact">
-                            <a href="mailto:info@cmrindia.com" class="email">info@cmrindia.com</a>
-                            <a href="tel:+911244822222" class="phone">+91-124-4822222</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <script>
