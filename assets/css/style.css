@@ -9982,41 +9982,41 @@ Single Product - Custom Sections (Related, Rating)
 /* ==========================================================================
    Single Team Member Page Sticky Left Column (Photo + LinkedIn Icon)
    ========================================================================== */
-body.single-teams,
-body.single-team,
-body.single-quanto_team,
-body[class*="single-team"],
-body[class*="single-quanto_team"] {
+body.single-teams #smooth-content,
+body.single-team #smooth-content,
+body.single-quanto_team #smooth-content,
+body[class*="single-team"] #smooth-content,
+body[class*="single-quanto_team"] #smooth-content {
   overflow-x: hidden;
 }
 
-body.single-teams .elementor-section,
-body.single-teams .e-con,
-body.single-teams .e-con-inner,
-body.single-teams .elementor-container,
-body.single-teams .elementor-row,
-body.single-team .elementor-section,
-body.single-team .e-con,
-body.single-team .e-con-inner,
-body.single-team .elementor-container,
-body.single-team .elementor-row,
-body.single-quanto_team .elementor-section,
-body.single-quanto_team .e-con,
-body.single-quanto_team .e-con-inner,
-body.single-quanto_team .elementor-container,
-body.single-quanto_team .elementor-row {
+body.single-teams #smooth-content .elementor-section,
+body.single-teams #smooth-content .e-con,
+body.single-teams #smooth-content .e-con-inner,
+body.single-teams #smooth-content .elementor-container,
+body.single-teams #smooth-content .elementor-row,
+body.single-team #smooth-content .elementor-section,
+body.single-team #smooth-content .e-con,
+body.single-team #smooth-content .e-con-inner,
+body.single-team #smooth-content .elementor-container,
+body.single-team #smooth-content .elementor-row,
+body.single-quanto_team #smooth-content .elementor-section,
+body.single-quanto_team #smooth-content .e-con,
+body.single-quanto_team #smooth-content .e-con-inner,
+body.single-quanto_team #smooth-content .elementor-container,
+body.single-quanto_team #smooth-content .elementor-row {
   overflow: visible !important;
   align-items: flex-start !important;
 }
 
 @media (min-width: 768px) {
   .cmr-team-sticky-col,
-  body.single-teams .e-con > .e-con:first-child,
-  body.single-teams .elementor-column:first-child,
-  body.single-team .e-con > .e-con:first-child,
-  body.single-team .elementor-column:first-child,
-  body.single-quanto_team .e-con > .e-con:first-child,
-  body.single-quanto_team .elementor-column:first-child {
+  body.single-teams #smooth-content .e-con > .e-con:first-child,
+  body.single-teams #smooth-content .elementor-column:first-child,
+  body.single-team #smooth-content .e-con > .e-con:first-child,
+  body.single-team #smooth-content .elementor-column:first-child,
+  body.single-quanto_team #smooth-content .e-con > .e-con:first-child,
+  body.single-quanto_team #smooth-content .elementor-column:first-child {
     position: -webkit-sticky !important;
     position: sticky !important;
     top: 130px !important;
@@ -10027,9 +10027,9 @@ body.single-quanto_team .elementor-row {
   }
 
   .cmr-team-sticky-col img,
-  body.single-teams .elementor-column:first-child img,
-  body.single-team .elementor-column:first-child img,
-  body.single-quanto_team .elementor-column:first-child img {
+  body.single-teams #smooth-content .elementor-column:first-child img,
+  body.single-team #smooth-content .elementor-column:first-child img,
+  body.single-quanto_team #smooth-content .elementor-column:first-child img {
     max-width: 100% !important;
     height: auto !important;
     display: block !important;

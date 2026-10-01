@@ -5164,7 +5164,8 @@ add_action( 'wp_footer', function() {
                 targetCol.classList.add('cmr-team-sticky-col');
 
                 var parent = targetCol.parentElement;
-                while (parent && parent !== document.body) {
+                while (parent && parent !== document.body && parent.id !== 'smooth-wrapper' && parent.id !== 'smooth-content') {
+                    if (parent.closest('header, #quanto-header-desktop, .elementor-location-header')) break;
                     parent.style.setProperty('overflow', 'visible', 'important');
                     if (parent.classList.contains('e-con') || parent.classList.contains('elementor-row') || parent.classList.contains('elementor-container') || parent.classList.contains('e-con-inner') || parent.classList.contains('elementor-section')) {
                         parent.style.setProperty('align-items', 'flex-start', 'important');
