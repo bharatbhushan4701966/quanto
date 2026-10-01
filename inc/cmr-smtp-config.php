@@ -19,6 +19,7 @@ function cmr_custom_smtp_mailer( $phpmailer ) {
     $phpmailer->SMTPSecure = 'tls'; 
     // ---------------------------------------------------------
 
-    $phpmailer->From       = 'beastbad270@gmail.com';
-    $phpmailer->FromName   = 'Quanto Careers';
+    if ( empty( $phpmailer->FromName ) || $phpmailer->FromName === 'WordPress' || $phpmailer->FromName === 'Quanto Careers' ) {
+        $phpmailer->FromName = 'CyberMedia Research (CMR)';
+    }
 }
