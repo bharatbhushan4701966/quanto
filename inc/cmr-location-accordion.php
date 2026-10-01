@@ -175,16 +175,28 @@ function cmr_location_accordion_shortcode($atts) {
 
         .cmr-loc-contact {
             margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .cmr-loc-row {
+            font-size: 15px;
+            color: #333;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+
+        .cmr-loc-lbl {
+            font-weight: 600;
+            color: #111;
+            margin-right: 4px;
         }
 
         .cmr-loc-contact a {
-            display: block;
             color: #111;
             text-decoration: none;
-            margin-bottom: 12px;
-            font-size: 20px;
-            letter-spacing: -0.5px;
-            transition: color 0.3s;
+            transition: color 0.2s ease;
         }
 
         .cmr-loc-contact a:hover {
@@ -193,6 +205,7 @@ function cmr_location_accordion_shortcode($atts) {
 
         .cmr-loc-contact a.email {
             font-weight: 600;
+            color: #8B5CF6;
         }
 
         @media (max-width: 992px) {
@@ -236,13 +249,15 @@ function cmr_location_accordion_shortcode($atts) {
                             </div>
                             <div class="cmr-loc-company">CYBER HOUSE</div>
                             <div class="cmr-loc-address">
-                                B-35, Sector 32<br>
-                                Gurgaon-122001
+                                B-35, Sector-32<br>
+                                Gurugram – 122003, Haryana, India
                             </div>
                         </div>
                         <div class="cmr-loc-contact">
-                            <a href="mailto:info@cmrindia.com" class="email">info@cmrindia.com</a>
-                            <a href="tel:+911244822222" class="phone">+91-124-4822222</a>
+                            <div class="cmr-loc-row"><span class="cmr-loc-lbl">Tel:</span> <a href="tel:+9101244237517">+91-0124-4237517</a></div>
+                            <div class="cmr-loc-row"><span class="cmr-loc-lbl">Fax:</span> <span>+91-0124-2380694</span></div>
+                            <div class="cmr-loc-row"><span class="cmr-loc-lbl">Business Enquiries:</span> <a href="mailto:marketing@cybermedia.co.in" class="email">marketing@cybermedia.co.in</a></div>
+                            <div class="cmr-loc-row"><span class="cmr-loc-lbl">Web:</span> <a href="https://www.cybermedia.co.in/" target="_blank" rel="noopener">cybermedia.co.in</a></div>
                         </div>
                     </div>
                 </div>
@@ -258,7 +273,7 @@ function cmr_location_accordion_shortcode($atts) {
             <div class="cmr-loc-content">
                 <div class="cmr-loc-content-inner">
                     <div class="cmr-loc-map">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.001696423075!2d77.5912997148219!3d12.971598690855901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0xf8dfc3e8517e4fe0!2sBengaluru%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1718880000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <iframe src="https://maps.google.com/maps?q=Shree%20Complex%2C%2073%20St%20John%27s%20Road%2C%20Bangalore%20560042&t=&z=16&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                     <div class="cmr-loc-details">
                         <h4>Address</h4>
@@ -266,15 +281,16 @@ function cmr_location_accordion_shortcode($atts) {
                             <div class="icon">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                             </div>
-                            <div class="cmr-loc-company">CMR Bengaluru</div>
+                            <div class="cmr-loc-company">CYBER MEDIA ( INDIA ) LTD</div>
                             <div class="cmr-loc-address">
-                                [Bengaluru Address Line 1]<br>
-                                [Bengaluru Address Line 2]
+                                # 205, 2nd Floor, Shree Complex,<br>
+                                #73, St.John’s Road,<br>
+                                Bangalore - 560042
                             </div>
                         </div>
                         <div class="cmr-loc-contact">
-                            <a href="mailto:info@cmrindia.com" class="email">info@cmrindia.com</a>
-                            <a href="tel:+911244822222" class="phone">+91-124-4822222</a>
+                            <div class="cmr-loc-row"><span class="cmr-loc-lbl">Tel:</span> <a href="tel:+918043412000">+91(80)43412000</a></div>
+                            <div class="cmr-loc-row"><span class="cmr-loc-lbl">Fax:</span> <span>+91(80)25576002</span></div>
                         </div>
                     </div>
                 </div>
@@ -290,7 +306,7 @@ function cmr_location_accordion_shortcode($atts) {
             <div class="cmr-loc-content">
                 <div class="cmr-loc-content-inner">
                     <div class="cmr-loc-map">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241317.116099518!2d72.7410988628036!3d19.082197839352945!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1718880000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <iframe src="https://maps.google.com/maps?q=INS%20Tower%2C%20Bandra%20Kurla%20Complex%2C%20Bandra%20East%2C%20Mumbai%20400051&t=&z=16&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                     <div class="cmr-loc-details">
                         <h4>Address</h4>
@@ -298,15 +314,15 @@ function cmr_location_accordion_shortcode($atts) {
                             <div class="icon">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                             </div>
-                            <div class="cmr-loc-company">CMR Mumbai</div>
+                            <div class="cmr-loc-company">CYBER MEDIA ( INDIA ) LTD</div>
                             <div class="cmr-loc-address">
-                                [Mumbai Address Line 1]<br>
-                                [Mumbai Address Line 2]
+                                326, INS Tower, Wing-B, C-63, G-Block,<br>
+                                Bandra Kurla Complex,<br>
+                                Bandra (E), Mumbai - 400051
                             </div>
                         </div>
                         <div class="cmr-loc-contact">
-                            <a href="mailto:info@cmrindia.com" class="email">info@cmrindia.com</a>
-                            <a href="tel:+911244822222" class="phone">+91-124-4822222</a>
+                            <div class="cmr-loc-row"><span class="cmr-loc-lbl">Tel:</span> <a href="tel:+9102242085100">91.022 – 42085100</a></div>
                         </div>
                     </div>
                 </div>
