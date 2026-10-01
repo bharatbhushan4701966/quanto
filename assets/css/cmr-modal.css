@@ -874,6 +874,81 @@ textarea.cmr-input-error {
     display: none !important;
 }
 
+/* CMR Modal Form Success State */
+.cmr-form-success-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 60px 24px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    animation: cmrFadeIn 0.35s ease-in-out !important;
+}
+
+.cmr-form-success-icon {
+    width: 68px !important;
+    height: 68px !important;
+    background: #ecfdf5 !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 auto 22px auto !important;
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.2) !important;
+}
+
+.cmr-form-success-icon svg {
+    width: 36px !important;
+    height: 36px !important;
+    stroke: #10b981 !important;
+    stroke-width: 3 !important;
+}
+
+.cmr-form-success-wrapper h3 {
+    font-size: 26px !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+    margin: 0 0 10px 0 !important;
+    font-family: 'Instrument Sans', sans-serif !important;
+    line-height: 1.2 !important;
+}
+
+.cmr-form-success-wrapper p {
+    font-size: 15px !important;
+    color: #4b5563 !important;
+    line-height: 1.5 !important;
+    margin: 0 0 28px 0 !important;
+    max-width: 380px !important;
+    font-family: 'Instrument Sans', sans-serif !important;
+    text-align: center !important;
+}
+
+.cmr-form-success-close-btn {
+    background: #582cd7 !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 13px 40px !important;
+    border-radius: 50px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: background 0.2s ease, transform 0.1s ease !important;
+    font-family: 'Instrument Sans', sans-serif !important;
+    box-shadow: 0 4px 14px rgba(88, 44, 215, 0.25) !important;
+}
+
+.cmr-form-success-close-btn:hover {
+    background: #4318d1 !important;
+    transform: translateY(-1px) !important;
+}
+
+@keyframes cmrFadeIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+}
+
 .custom-report-form input::placeholder,
 .elementor-element-42f4ebe input::placeholder,
 .elementor-element-052bc23 input::placeholder,

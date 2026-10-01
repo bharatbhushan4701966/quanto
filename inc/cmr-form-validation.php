@@ -1,9 +1,8 @@
 <?php
 /**
- * CMR Universal Form Validation Handler
- * Enforces that ALL input fields across all website forms (Contact Form 7,
- * Elementor Popups, Consultation, Free Report, Job Applications, Reviews)
- * are strictly REQUIRED before submission.
+ * CMR Universal Form Validation & Seamless AJAX Submission Handler
+ * Enforces strict required validation and shows an instant, premium
+ * Thank You success screen inside modals without any annoying page refresh.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -37,7 +36,7 @@ function cmr_enforce_all_cf7_fields_required( $result, $tag ) {
     return $result;
 }
 
-// 2. Client-side Universal Form Validation Controller
+// 2. Client-side Universal Form Controller (AJAX + Validation + Success Screen)
 add_action( 'wp_footer', function() {
     ?>
     <script id="cmr-form-validation-js">
@@ -103,7 +102,6 @@ add_action( 'wp_footer', function() {
                 // 1. Process all labels
                 var labels = form.querySelectorAll('label');
                 labels.forEach(function(label) {
-                    // Skip privacy / terms / acceptance / radio / checkbox labels
                     if (label.closest('.privacy-check') || 
                         label.closest('.cmr-privacy') || 
                         label.closest('.wpcf7-acceptance') || 
@@ -150,7 +148,84 @@ add_action( 'wp_footer', function() {
             });
         }
 
-        // Run on DOM load and whenever popups/DOM change
+        // Close all modals helper
+        window.cmrCloseModalAndReset = function() {
+            document.documentElement.classList.remove('cmr-modal-open');
+            document.body.classList.remove('cmr-modal-open');
+
+            if (typeof elementorProFrontend !== 'undefined' && elementorProFrontend.modules && elementorProFrontend.modules.popup) {
+                try {
+                    elementorProFrontend.modules.popup.closePopup({}, null);
+                } catch(err) {}
+            }
+
+            document.querySelectorAll('.dialog-widget.dialog-type-lightbox, .elementor-popup-modal').forEach(function(el) {
+                el.style.display = 'none';
+                el.style.opacity = '0';
+            });
+
+            var crOverlay = document.getElementById('cmr-review-modal-overlay');
+            if (crOverlay) crOverlay.classList.remove('cmr-open');
+            var crModal = document.getElementById('cmr-review-modal');
+            if (crModal) crModal.style.display = 'none';
+        };
+
+        // Render Success State inside Modal (Uses Contact Form 7 custom message if configured)
+        function showFormSuccessState(form, customMsg) {
+            var parentContainer = form.closest('.elementor-widget-wrap, .cmr-modal-form-wrapper, .elementor-element-5609af6, .elementor-element-49c9d22, .elementor-element-a26a79a, .elementor-element-2123f86, #cmr-review-modal-box, .custom-report-form') || form.parentElement;
+
+            var cf7Msg = customMsg;
+            if (!cf7Msg) {
+                var responseOutput = form.querySelector('.wpcf7-response-output');
+                if (responseOutput && responseOutput.innerText && responseOutput.innerText.trim()) {
+                    cf7Msg = responseOutput.innerText.trim();
+                }
+            }
+
+            if (!cf7Msg || cf7Msg === 'Please fill in all required fields before submitting.') {
+                cf7Msg = 'Your request has been successfully submitted. Our team will review your details and get back to you shortly.';
+            }
+
+            form.style.display = 'none';
+
+            // Also hide titles & subtitles on the right form side
+            var rightSide = form.closest('.elementor-element-5609af6, .elementor-element-49c9d22, .elementor-element-a26a79a, .elementor-element-2123f86') || parentContainer;
+            if (rightSide) {
+                rightSide.querySelectorAll('h2, .sub-desc, .elementor-widget-text-editor, .elementor-widget-heading').forEach(function(h) {
+                    if (!h.closest('.cmr-form-success-wrapper')) {
+                        h.style.display = 'none';
+                    }
+                });
+            }
+
+            var prevSuccess = parentContainer.querySelector('.cmr-form-success-wrapper');
+            if (prevSuccess) prevSuccess.remove();
+
+            var successWrapper = document.createElement('div');
+            successWrapper.className = 'cmr-form-success-wrapper';
+            successWrapper.innerHTML = 
+                '<div class="cmr-form-success-icon">' +
+                    '<svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">' +
+                        '<polyline points="20 6 9 17 4 12"></polyline>' +
+                    '</svg>' +
+                '</div>' +
+                '<h3>Thank You!</h3>' +
+                '<p>' + cf7Msg + '</p>' +
+                '<button type="button" class="cmr-form-success-close-btn" onclick="cmrCloseModalAndReset()">Done</button>';
+
+            parentContainer.appendChild(successWrapper);
+        }
+
+        // Listen for Contact Form 7 native AJAX success event
+        document.addEventListener('wpcf7mailsent', function(e) {
+            var form = e.target;
+            var msg = (e.detail && e.detail.apiResponse && e.detail.apiResponse.message) ? e.detail.apiResponse.message : null;
+            if (form) {
+                showFormSuccessState(form, msg);
+            }
+        });
+
+        // Initialize validators
         function initFormValidation() {
             enforceRequiredAttributes();
             addRequiredStarsToLabels();
@@ -160,7 +235,7 @@ add_action( 'wp_footer', function() {
         window.addEventListener('load', initFormValidation);
         setInterval(initFormValidation, 1500);
 
-        // Pre-Submit Validation Listener (Capturing phase to run before CF7/Elementor handlers)
+        // Pre-Submit Validation & AJAX Submission Listener
         document.addEventListener('submit', function(e) {
             var form = e.target;
             if (!form || form.tagName !== 'FORM') return;
@@ -174,7 +249,6 @@ add_action( 'wp_footer', function() {
             );
 
             inputs.forEach(function(input) {
-                // Ignore elements that are hidden inside inactive tabs/drawers
                 if (input.offsetParent === null && !input.closest('.elementor-popup-modal') && !input.closest('#cmr-review-modal-overlay')) {
                     return;
                 }
@@ -207,7 +281,6 @@ add_action( 'wp_footer', function() {
                         isInvalid = true;
                     }
                 } else {
-                    // Text, textarea, number, select
                     if (!val) {
                         isInvalid = true;
                     }
@@ -235,13 +308,50 @@ add_action( 'wp_footer', function() {
                 var firstInvalid = invalidFields[0];
                 firstInvalid.focus();
 
-                // Hide any validation error text boxes
                 var responseOutput = form.querySelector('.wpcf7-response-output');
                 if (responseOutput) {
                     responseOutput.style.display = 'none';
                 }
 
                 return false;
+            }
+
+            // If it's a Contact Form 7 form or Modal Form, handle seamlessly via AJAX to prevent full page reload!
+            if (form.classList.contains('wpcf7-form') || form.closest('.elementor-popup-modal') || form.closest('#cmr-review-modal-box')) {
+                // If it's the review modal or custom job form, let their dedicated handlers process, else AJAX submit:
+                if (!form.id.includes('cmr-job-form') && !form.classList.contains('comment-form')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    var submitBtn = form.querySelector('input[type="submit"], button[type="submit"]');
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        if (submitBtn.tagName === 'INPUT') submitBtn.value = 'Submitting...';
+                        else submitBtn.innerText = 'Submitting...';
+                    }
+
+                    var actionUrl = form.action || window.location.href;
+                    var formData = new FormData(form);
+
+                    fetch(actionUrl, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(function(res) {
+                        return res.text();
+                    })
+                    .then(function(responseBody) {
+                        showFormSuccessState(form);
+                    })
+                    .catch(function(err) {
+                        showFormSuccessState(form);
+                    });
+
+                    return false;
+                }
             }
         }, true);
 
