@@ -432,7 +432,7 @@ function cmr_inject_mobile_mega_menu() {
                         <div class="cmr-mobile-nav-link-title">Media Releases</div>
                         <div class="cmr-mobile-nav-link-desc">Official company announcements and updates</div>
                     </a>
-                    <a href="<?php echo esc_url( home_url( '/quarterly-results/' ) ); ?>" class="cmr-mobile-nav-link">
+                    <a href="https://www.cmrsl.net/financial-results/" target="_blank" rel="noopener noreferrer" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">Quarterly Results</div>
                         <div class="cmr-mobile-nav-link-desc">Financial performance and investor updates</div>
                     </a>

@@ -5342,3 +5342,19 @@ function quanto_sync_process_widget_to_plugin() {
     }
 }
 
+/**
+ * Redirect /quarterly-results/ to external financial results page
+ */
+add_action( 'template_redirect', 'cmr_redirect_quarterly_results_to_cmrsl' );
+function cmr_redirect_quarterly_results_to_cmrsl() {
+    if ( is_admin() ) {
+        return;
+    }
+    if ( function_exists( 'quanto_is_elementor_editor' ) && quanto_is_elementor_editor() ) {
+        return;
+    }
+    if ( is_page( 'quarterly-results' ) || ( isset( $_SERVER['REQUEST_URI'] ) && preg_match( '#^/quarterly-results/?(\?.*)?$#i', $_SERVER['REQUEST_URI'] ) ) ) {
+        wp_redirect( 'https://www.cmrsl.net/financial-results/', 301 );
+        exit;
+    }
+}

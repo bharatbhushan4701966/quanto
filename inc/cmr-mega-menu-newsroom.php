@@ -215,7 +215,7 @@ function cmr_mega_menu_newsroom_shortcode($atts) {
                 <h4>Media Releases</h4>
                 <p>Official company announcements and updates</p>
             </a>
-            <a href="<?php echo esc_url( home_url( '/quarterly-results/' ) ); ?>" class="cmr-mmn-item">
+            <a href="https://www.cmrsl.net/financial-results/" target="_blank" rel="noopener noreferrer" class="cmr-mmn-item">
                 <h4>Quarterly Results</h4>
                 <p>Financial performance and investor updates</p>
             </a>
