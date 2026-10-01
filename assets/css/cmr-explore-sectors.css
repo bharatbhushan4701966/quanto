@@ -13,6 +13,15 @@
     padding-left: 0;
 }
 
+.explore-sectors-tagline {
+    font-size: 13px;
+    font-weight: 600;
+    color: #9ba4b5;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+
 .explore-sectors-title {
     font-size: 42px;
     font-weight: 600;
