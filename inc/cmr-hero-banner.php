@@ -4,6 +4,10 @@
 add_shortcode('cmr_hero_banner', 'cmr_hero_banner_shortcode');
 
 function cmr_hero_banner_shortcode($atts) {
+    $atts = shortcode_atts( array(
+        'slider_1' => 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/10/CMR-Lead-Slider-1.jpg.jpeg',
+        'slider_2' => 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/10/CMR-Lead-Slider-2.jpg.jpeg',
+    ), $atts );
     ob_start();
     ?>
     <style>
@@ -28,14 +32,32 @@ function cmr_hero_banner_shortcode($atts) {
       inset: 0;
       z-index: 1;
       overflow: hidden;
-      
-      background:
-        linear-gradient(282.61deg, rgba(3, 191, 188, 0.83) -10.41%, rgba(0, 63, 235, 0.83) 32.78%, rgba(72, 32, 176, 0.83) 89.34%),
-        url("https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/hero-05-bg.png");
-      
+      background-color: #0b132b;
+    }
+
+    .hero-video-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.25) 100%);
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .hero-bg-slide {
+      position: absolute;
+      inset: 0;
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
+      opacity: 0;
+      transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1;
+    }
+
+    .hero-bg-slide.active {
+      opacity: 1;
+      z-index: 2;
     }
 
     /* =========================
@@ -366,8 +388,11 @@ function cmr_hero_banner_shortcode($atts) {
 
     <section class="hero">
 
-      <!-- BACKGROUND (No Videos) -->
-      <div class="hero-video-wrapper"></div>
+      <!-- BACKGROUND -->
+      <div class="hero-video-wrapper">
+        <div class="hero-bg-slide active" style="background-image: url('<?php echo esc_url( $atts['slider_1'] ); ?>');"></div>
+        <div class="hero-bg-slide" style="background-image: url('<?php echo esc_url( $atts['slider_2'] ); ?>');"></div>
+      </div>
 
       <!-- INDICATORS -->
       <div class="hero-indicators">
@@ -431,6 +456,8 @@ function cmr_hero_banner_shortcode($atts) {
         const dots = indicators.querySelectorAll('.dot');
         if (!dots.length) return;
 
+        const bgSlides = hero.querySelectorAll('.hero-bg-slide');
+
         const texts = [
           `Shaping the future <br>
           through insights powered <br>
@@ -458,6 +485,15 @@ function cmr_hero_banner_shortcode($atts) {
           }
 
           activeIdx = index;
+
+          // Background transition
+          bgSlides.forEach(function(slide, i) {
+            if (i === activeIdx) {
+              slide.classList.add('active');
+            } else {
+              slide.classList.remove('active');
+            }
+          });
 
           // 1. Reset all indicators
           dots.forEach(function(dot) {
