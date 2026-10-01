@@ -5134,7 +5134,7 @@ add_action( 'wp_footer', function() {
         initMobileGalleryParallax();
         window.addEventListener('resize', initMobileGalleryParallax);
 
-        // Single Team Member Sticky Image Controller (Pins profile photo while bio scrolls)
+        // Single Team Member Sticky Image & Social Controller (Pins entire left column)
         function initSingleTeamSticky() {
             if (window.innerWidth < 768) return;
 
@@ -5151,9 +5151,11 @@ add_action( 'wp_footer', function() {
 
             memberImgs.forEach(function(img) {
                 if (img.closest('header, #quanto-header-desktop, footer, .header, nav, .elementor-location-header')) return;
-                var col = img.closest('.e-con, .elementor-column, .elementor-widget-image, .elementor-widget-theme-post-featured-image');
-                if (col && !targetCol) {
-                    targetCol = col;
+                if (!targetCol) {
+                    var col = img.closest('.elementor-column') || img.closest('.e-con');
+                    if (col) {
+                        targetCol = col;
+                    }
                 }
             });
 
@@ -5163,7 +5165,7 @@ add_action( 'wp_footer', function() {
                 var parent = targetCol.parentElement;
                 while (parent && parent !== document.body) {
                     parent.style.setProperty('overflow', 'visible', 'important');
-                    if (parent.classList.contains('e-con') || parent.classList.contains('elementor-row') || parent.classList.contains('elementor-container') || parent.classList.contains('e-con-inner')) {
+                    if (parent.classList.contains('e-con') || parent.classList.contains('elementor-row') || parent.classList.contains('elementor-container') || parent.classList.contains('e-con-inner') || parent.classList.contains('elementor-section')) {
                         parent.style.setProperty('align-items', 'flex-start', 'important');
                         parent.style.setProperty('display', 'flex', 'important');
                     }
@@ -5184,9 +5186,10 @@ add_action( 'wp_footer', function() {
         window.addEventListener('load', initSingleTeamSticky);
         window.addEventListener('scroll', function() {
             var stickyHeader = document.querySelector('.mas-sticky-header');
-            if (stickyHeader && targetCol) {
+            var stickyCol = document.querySelector('.cmr-team-sticky-col');
+            if (stickyHeader && stickyCol) {
                 var h = stickyHeader.offsetHeight || 95;
-                targetCol.style.setProperty('top', Math.max(h + 25, 130) + 'px', 'important');
+                stickyCol.style.setProperty('top', Math.max(h + 25, 130) + 'px', 'important');
             }
         }, { passive: true });
     });
