@@ -9978,53 +9978,6 @@ Single Product - Custom Sections (Related, Rating)
   margin-bottom: 0;
 }
 
-/* ==========================================================================
-   Header Desktop Vertical Alignment & Button Fix
-   ========================================================================== */
-#quanto-header-desktop,
-.main-header-wrapper,
-.elementor-location-header {
-  display: flex !important;
-  align-items: center !important;
-}
-
-#quanto-header-desktop .elementor-container,
-.main-header-wrapper .elementor-container,
-#quanto-header-desktop .e-con-inner,
-.main-header-wrapper .e-con-inner {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-}
-
-#quanto-header-desktop .elementor-nav-menu--main,
-.main-header-wrapper .elementor-nav-menu--main {
-  display: flex !important;
-  align-items: center !important;
-}
-
-#quanto-header-desktop .elementor-widget-quanto_button,
-#quanto-header-desktop .elementor-widget-button,
-#quanto-header-desktop .download-btn,
-#quanto-header-desktop .header-actions,
-.main-header-wrapper .elementor-widget-quanto_button,
-.main-header-wrapper .elementor-widget-button,
-.main-header-wrapper .download-btn,
-.main-header-wrapper .header-actions {
-  display: inline-flex !important;
-  align-items: center !important;
-  margin: 0 !important;
-  align-self: center !important;
-}
-
-#quanto-header-desktop .elementor-button,
-.main-header-wrapper .elementor-button {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  vertical-align: middle !important;
-  line-height: 1 !important;
-}
 
 /* ==========================================================================
    Single Team Member Page Sticky Left Column (Photo + LinkedIn Icon)
