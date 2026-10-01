@@ -5,8 +5,8 @@ add_shortcode('cmr_hero_banner', 'cmr_hero_banner_shortcode');
 
 function cmr_hero_banner_shortcode($atts) {
     $atts = shortcode_atts( array(
-        'slider_1' => 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/10/CMR-Lead-Slider-1.jpg.jpeg',
-        'slider_2' => 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/10/CMR-Lead-Slider-2.jpg.jpeg',
+        'slider_1' => 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/10/1CMR-Lead-Slider-1.jpg',
+        'slider_2' => 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/10/2CMR-Lead-Slider-2.jpg',
     ), $atts );
     ob_start();
     ?>
