@@ -3336,11 +3336,20 @@ ins {
   line-height: 1 !important;
 }
 
-.quanto-funfact-box .funfact-info {
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 144.444%;
+.quanto-funfact-box .funfact-info,
+.funfact-info,
+.quanto-funfacts__wrapper .funfact-info,
+.elementor-widget-quanto_counter .funfact-info,
+.elementor-counter-title,
+.elementor-widget-counter .elementor-counter-title {
+  font-family: "Instrument Sans", sans-serif !important;
+  font-size: 14px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 22px !important;
+  letter-spacing: -0.1px !important;
+  color: #0F0F0F !important;
+  margin-top: 8px !important;
 }
 
 /*================================================
