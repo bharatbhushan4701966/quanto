@@ -932,6 +932,131 @@ add_action('wp_head', function() {
     <?php
 });
 
+// Force Header Desktop flex row and vertical centering across ALL pages
+add_action('wp_head', function() {
+    ?>
+    <style id="cmr-header-align-perfect">
+        #quanto-header-desktop,
+        .main-header-wrapper,
+        .header,
+        .elementor-location-header {
+            display: flex !important;
+            align-items: center !important;
+        }
+
+        #quanto-header-desktop .elementor-container,
+        .main-header-wrapper .elementor-container,
+        #quanto-header-desktop .e-con-inner,
+        .main-header-wrapper .e-con-inner {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+        }
+
+        /* Right Header Elements Wrapper (Search, Cart, User icon) */
+        [data-id="200fa94"],
+        .elementor-element-200fa94 {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin: 0 !important;
+            gap: 16px !important;
+            align-self: center !important;
+        }
+
+        [data-id="200fa94"] .elementor-widget,
+        .elementor-element-200fa94 .elementor-widget {
+            margin: 0 !important;
+            padding: 0 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            align-self: center !important;
+        }
+
+        /* Talk to Analyst Button Container */
+        [data-id="c3cee6b"],
+        .elementor-element-c3cee6b,
+        [data-id="9219cb5"],
+        .elementor-element-9219cb5,
+        #quanto-header-desktop .download-btn,
+        .main-header-wrapper .download-btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            align-self: center !important;
+        }
+
+        /* Talk to Analyst Button Style */
+        [data-id="9219cb5"] a.elementor-button,
+        .elementor-element-9219cb5 a.elementor-button,
+        #quanto-header-desktop .download-btn a.elementor-button,
+        .main-header-wrapper .download-btn a.elementor-button {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background-color: #6241ca !important;
+            color: #ffffff !important;
+            border-radius: 40px !important;
+            padding: 10px 22px !important;
+            font-family: 'Instrument Sans', sans-serif !important;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            line-height: 1 !important;
+            text-decoration: none !important;
+            margin: 0 !important;
+            box-sizing: border-box !important;
+            vertical-align: middle !important;
+            transition: all 0.25s ease !important;
+            white-space: nowrap !important;
+            align-self: center !important;
+        }
+
+        [data-id="9219cb5"] a.elementor-button .elementor-button-content-wrapper,
+        .elementor-element-9219cb5 a.elementor-button .elementor-button-content-wrapper {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 6px !important;
+            line-height: 1 !important;
+        }
+
+        [data-id="9219cb5"] a.elementor-button .elementor-button-text,
+        .elementor-element-9219cb5 a.elementor-button .elementor-button-text {
+            color: #ffffff !important;
+            font-weight: 600 !important;
+            line-height: 1 !important;
+        }
+
+        [data-id="9219cb5"] a.elementor-button .elementor-button-icon,
+        .elementor-element-9219cb5 a.elementor-button .elementor-button-icon {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin-left: 4px !important;
+        }
+
+        [data-id="9219cb5"] a.elementor-button .elementor-button-icon svg,
+        [data-id="9219cb5"] a.elementor-button .elementor-button-icon svg path,
+        .elementor-element-9219cb5 a.elementor-button .elementor-button-icon svg,
+        .elementor-element-9219cb5 a.elementor-button .elementor-button-icon svg path {
+            fill: #ffffff !important;
+            color: #ffffff !important;
+        }
+
+        [data-id="9219cb5"] a.elementor-button:hover,
+        .elementor-element-9219cb5 a.elementor-button:hover {
+            background-color: #4f28c2 !important;
+            transform: translateY(-1px) !important;
+        }
+    </style>
+    <?php
+}, 1);
+
 // Fix 60 MIN / 38 MIN duration tag sizing, horizontal straight-line alignment, and oversized section headings
 add_action('wp_head', function() {
     ?>
