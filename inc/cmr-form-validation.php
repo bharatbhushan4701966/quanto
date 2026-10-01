@@ -235,17 +235,10 @@ add_action( 'wp_footer', function() {
                 var firstInvalid = invalidFields[0];
                 firstInvalid.focus();
 
-                // Trigger browser native validation bubble if supported
-                if (typeof firstInvalid.reportValidity === 'function') {
-                    firstInvalid.reportValidity();
-                }
-
-                // Show validation message in form response area if present
+                // Hide any validation error text boxes
                 var responseOutput = form.querySelector('.wpcf7-response-output');
                 if (responseOutput) {
-                    responseOutput.innerText = 'Please fill in all required fields before submitting.';
-                    responseOutput.style.display = 'block';
-                    responseOutput.classList.add('wpcf7-validation-errors');
+                    responseOutput.style.display = 'none';
                 }
 
                 return false;

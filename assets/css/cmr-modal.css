@@ -866,6 +866,14 @@ textarea.cmr-input-error {
     display: inline !important;
 }
 
+/* Hide extra validation error message boxes and tips */
+.wpcf7-response-output.wpcf7-validation-errors,
+.wpcf7-not-valid-tip,
+.wpcf7 form.invalid .wpcf7-response-output,
+.wpcf7 form.unaccepted .wpcf7-response-output {
+    display: none !important;
+}
+
 .custom-report-form input::placeholder,
 .elementor-element-42f4ebe input::placeholder,
 .elementor-element-052bc23 input::placeholder,
