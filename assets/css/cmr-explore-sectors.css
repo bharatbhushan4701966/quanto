@@ -33,8 +33,10 @@
 
 .explore-sectors-track {
     display: flex;
+    flex-wrap: nowrap !important;   /* Elementor overrides default nowrap — force it */
     gap: 20px;
     width: max-content;
+    min-width: max-content;         /* Extra safety so the track never collapses */
     padding-bottom: 20px;
     padding-left: calc((100vw - 1280px) / 2);
     padding-right: 40px;

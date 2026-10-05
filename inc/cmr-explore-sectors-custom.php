@@ -106,12 +106,7 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
                     
                     if (track && section) {
                         function getScrollAmount() {
-                            let trackWidth = track.scrollWidth;
-                            let viewportWidth = document.documentElement.clientWidth;
-                            let style = window.getComputedStyle(track);
-                            let padLeft  = parseFloat(style.paddingLeft)  || 0;
-                            let padRight = parseFloat(style.paddingRight) || 0;
-                            return -(trackWidth - viewportWidth - padRight - padLeft);
+                            return -(track.scrollWidth - section.offsetWidth);
                         }
                         
                         const tween = gsap.to(track, {

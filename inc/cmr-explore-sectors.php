@@ -107,16 +107,9 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
                         
                         if (track && section) {
                             function getScrollAmount() {
-                                let trackWidth = track.scrollWidth;
-                                let viewportWidth = document.documentElement.clientWidth;
-                                let style = window.getComputedStyle(track);
-                                // padding-right is baked into scrollWidth — subtract it so we
-                                // stop exactly when the last card's right edge hits the viewport.
-                                // padding-left uses 100vw (includes scrollbar) vs clientWidth
-                                // (no scrollbar), so subtract it too to cancel the mismatch.
-                                let padLeft  = parseFloat(style.paddingLeft)  || 0;
-                                let padRight = parseFloat(style.paddingRight) || 0;
-                                return -(trackWidth - viewportWidth - padRight - padLeft);
+                                // Use section.offsetWidth (actual rendered width)
+                                // so Elementor container constraints are respected.
+                                return -(track.scrollWidth - section.offsetWidth);
                             }
                             
                             const tween = gsap.to(track, {
