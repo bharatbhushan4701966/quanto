@@ -141,6 +141,7 @@ require_once get_theme_file_path( 'inc/cmr-what-we-think.php' );
 require_once get_theme_file_path( 'inc/cmr-slide-of-the-day.php' );
 require_once get_theme_file_path( 'inc/cmr-team-scroll.php' );
 require_once get_theme_file_path( 'inc/cmr-media-cpt.php' );
+require_once get_theme_file_path( 'inc/cmr-gtm.php' );
 function cmr_get_unique_smb_post_ids() {
     global $wpdb;
     $results = $wpdb->get_results("
