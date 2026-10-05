@@ -292,26 +292,33 @@ function cmr_hero_banner_shortcode($atts) {
 
       section.hero,
       .hero {
-        position: relative;
-        min-height: 65vh !important;
-        overflow: hidden;
+        position: relative !important;
+        min-height: 100vh !important;
+        overflow: hidden !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
       }
 
-      .hero-content{
-        padding: 100px 20px 40px !important;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
+      .hero .hero-content,
+      .hero-content {
+        padding: 100px 20px 85px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+        width: 100% !important;
+        max-width: 100% !important;
       }
 
       .hero-title{
-        font-size: 38px;
-        line-height: 48px;
+        font-size: 36px;
+        line-height: 46px;
         letter-spacing: -1px;
         font-weight: 600;
-        max-width: 340px;
-        margin: 0 auto 20px;
+        max-width: 360px;
+        margin: 0 auto 18px;
         text-align: center;
       }
 
@@ -324,57 +331,87 @@ function cmr_hero_banner_shortcode($atts) {
       }
 
       .hero p{
-        font-size: 16px;
+        font-size: 15px;
         line-height: 24px;
         color: #ffffff;
-        max-width: 340px;
-        margin: 0 auto 30px;
+        max-width: 360px;
+        margin: 0 auto 26px;
         text-align: center;
       }
 
+      .hero .buttons,
       .buttons {
         display: flex !important;
         flex-direction: column !important;
-        align-items: center !important;
+        align-items: stretch !important;
         gap: 14px !important;
-        margin-top: 10px !important;
+        margin-top: 5px !important;
+        margin-bottom: 25px !important;
         width: 100% !important;
         max-width: 340px !important;
-      }
-
-      .btn-primary {
-        width: 100% !important;
-        max-width: none !important;
-        border-radius: 50px !important;
-        font-size: 16px !important;
-        font-weight: 500 !important;
-        background: #ffffff !important;
-        color: #000 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        padding: 16px 28px !important;
         box-sizing: border-box !important;
       }
 
+      .hero .btn-primary,
+      .hero .btn-outline,
+      .btn-primary,
       .btn-outline {
         width: 100% !important;
-        max-width: none !important;
+        max-width: 100% !important;
+        min-width: 100% !important;
         border-radius: 50px !important;
         font-size: 16px !important;
         font-weight: 500 !important;
-        border: 1px solid #ffffff !important;
-        color: #ffffff !important;
-        display: flex !important;
+        display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
-        background: transparent !important;
         padding: 16px 28px !important;
         box-sizing: border-box !important;
+        text-align: center !important;
+      }
+
+      .hero .btn-primary,
+      .btn-primary {
+        background: #ffffff !important;
+        color: #0f0f0f !important;
+        border: 1px solid #ffffff !important;
+      }
+
+      .hero .btn-outline,
+      .btn-outline {
+        background: transparent !important;
+        border: 1px solid rgba(255,255,255,0.85) !important;
+        color: #ffffff !important;
       }
       
+      /* Indicators on Mobile: Centered at bottom with clean spacing */
+      .hero .hero-indicators,
       .hero-indicators {
-        display: none !important;
+        position: absolute !important;
+        bottom: 25px !important;
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) !important;
+        z-index: 10 !important;
+        display: flex !important;
+        gap: 10px !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 0 auto !important;
+        width: auto !important;
+      }
+
+      .hero .hero-indicators .dot,
+      .hero-indicators .dot,
+      .hero .dot {
+        width: 48px !important;
+        height: 5px !important;
+      }
+
+      .hero .hero-indicators .dot.active,
+      .hero-indicators .dot.active,
+      .hero .dot.active {
+        width: 48px !important;
       }
       
       .btn-primary img,
@@ -417,7 +454,7 @@ function cmr_hero_banner_shortcode($atts) {
         </p>
 
         <div class="buttons">
-          <a href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6Ijc3NTgiLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D" class="btn-primary open-report-popup" data-popup-id="7758">
+          <a href="<?php echo esc_url( home_url( '/research-reports/' ) ); ?>" class="btn-primary">
             Get Report
             <img class="hero-arrow-button-white"
                  src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg">
@@ -569,12 +606,23 @@ function cmr_hero_banner_shortcode($atts) {
       function alignHeroWithHeader() {
         var hero = document.querySelector('.hero');
         var heroContent = hero ? hero.querySelector('.hero-content') : null;
+        var heroIndicators = hero ? hero.querySelector('.hero-indicators') : null;
         if (!heroContent) return;
 
         if (window.innerWidth <= 768) {
           heroContent.style.paddingLeft = '';
           heroContent.style.paddingRight = '';
+          if (heroIndicators) {
+            heroIndicators.style.right = '';
+            heroIndicators.style.left = '';
+            heroIndicators.style.transform = '';
+          }
           return;
+        }
+
+        if (heroIndicators) {
+          heroIndicators.style.left = '';
+          heroIndicators.style.transform = '';
         }
 
         var headerLogo = document.querySelector('#quanto-header-desktop .header-logo, .header .header-logo, .header-logo img, .header-logo, .elementor-element-7ed4f5b');
@@ -585,7 +633,6 @@ function cmr_hero_banner_shortcode($atts) {
           }
         }
 
-        var heroIndicators = hero.querySelector('.hero-indicators');
         if (heroIndicators) {
           var headerBtn = document.querySelector('#quanto-header-desktop .download-btn, #quanto-header-desktop .elementor-button, .header .download-btn, .header .elementor-button, #quanto-header-desktop .elementor-element-200fa94');
           if (headerBtn) {
