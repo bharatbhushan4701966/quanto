@@ -10101,3 +10101,41 @@ article ul > li::after,
   padding-left: 4px !important;
 }
 
+/* ============================================================= */
+/* FIX: PREVENT IMAGE OVERLAPPING SOCIAL ICONS ON TEAM PAGES     */
+/* ============================================================= */
+body.single-teams #mas_smooth_scroller,
+body.single-team #mas_smooth_scroller,
+body.single-quanto_team #mas_smooth_scroller,
+.single-teams .cmr-team-sticky-col #mas_smooth_scroller,
+.single-team .cmr-team-sticky-col #mas_smooth_scroller,
+.single-teams .cmr-team-sticky-col [data-speed],
+.single-team .cmr-team-sticky-col [data-speed],
+.single-teams .elementor-widget-quanto-feature-image,
+.single-team .elementor-widget-quanto-feature-image {
+  transform: none !important;
+  will-change: auto !important;
+}
+
+.cmr-team-sticky-col {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+}
+
+.cmr-team-sticky-col .elementor-widget-quanto-feature-image,
+.cmr-team-sticky-col .elementor-widget-image {
+  margin-bottom: 20px !important;
+  position: relative !important;
+  width: 100% !important;
+}
+
+.cmr-team-sticky-col .elementor-widget-social-icons,
+.cmr-team-sticky-col .elementor-social-icons-wrapper {
+  position: relative !important;
+  z-index: 5 !important;
+  margin-top: 10px !important;
+}
+
+

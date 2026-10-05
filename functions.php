@@ -5164,6 +5164,14 @@ add_action( 'wp_footer', function() {
             if (targetCol) {
                 targetCol.classList.add('cmr-team-sticky-col');
 
+                // Disable GSAP parallax on member image so it never translates over social icons
+                var parallaxImgs = targetCol.querySelectorAll('#mas_smooth_scroller, [data-speed], .elementor-widget-quanto-feature-image');
+                parallaxImgs.forEach(function(pEl) {
+                    pEl.removeAttribute('data-speed');
+                    if (pEl.id === 'mas_smooth_scroller') pEl.removeAttribute('id');
+                    pEl.style.setProperty('transform', 'none', 'important');
+                });
+
                 var parent = targetCol.parentElement;
                 while (parent && parent !== document.body && parent.id !== 'smooth-wrapper' && parent.id !== 'smooth-content') {
                     if (parent.closest('header, #quanto-header-desktop, .elementor-location-header')) break;
