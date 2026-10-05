@@ -599,7 +599,7 @@ function cmr_market_updates_shortcode($atts) {
 // Apply Instrument Sans globally
 add_action('wp_head', 'cmr_global_font_style', 999);
 function cmr_global_font_style() {
-    echo '<style>
+    echo '<style>.elementor-element-b8bc623 { width: 100% !important; flex: 1 !important; max-width: 100% !important; }
         body, p, h1, h2, h3, h4, h5, h6, a, button, input, select, textarea, .elementor-button, .elementor-button-text {
             font-family: "Instrument Sans", sans-serif !important;
         }
@@ -4189,7 +4189,7 @@ function cmr_update_table_page_slugs_and_titles() {
  * Hide Elementor popups (like the consultation form) on the login page.
  */
 function quanto_hide_elementor_popup_on_login() {
-    echo '<style>.elementor-location-popup { display: none !important; }</style>';
+    echo '<style>.elementor-element-b8bc623 { width: 100% !important; flex: 1 !important; max-width: 100% !important; }.elementor-location-popup { display: none !important; }</style>';
 }
 add_action( 'login_head', 'quanto_hide_elementor_popup_on_login' );
 
@@ -5269,7 +5269,7 @@ add_filter( 'wpcf7_posted_data', function( $posted_data ) {
 }, 999 );
 
 add_action('wp_head', function() {
-    echo '<style>
+    echo '<style>.elementor-element-b8bc623 { width: 100% !important; flex: 1 !important; max-width: 100% !important; }
     .elementor-element-376796b { width: 100% !important; height: 100% !important; }
     .elementor-element-376796b .elementor-widget-container { width: 100% !important; height: 100% !important; }
     .elementor-element-376796b .swiper-container, .elementor-element-376796b .swiper, .elementor-element-376796b .swiper-wrapper { width: 100% !important; height: 100% !important; }
