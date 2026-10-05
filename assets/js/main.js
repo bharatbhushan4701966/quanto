@@ -376,14 +376,70 @@
         });
     }
 
+    // Auto-handle counters with extra text (e.g., "20 K", "16 K", "10 K", "20K") in Number field
+    function initCustomCounters() {
+        document.querySelectorAll('.odometer, [data-odometer-final], .counter-item').forEach(function(el) {
+            var rawFinal = el.getAttribute('data-odometer-final') || (el.classList.contains('odometer') ? el.innerText : '');
+            if (!rawFinal) return;
+
+            var trimmed = rawFinal.trim();
+            var match = trimmed.match(/^([\d.,]+)\s*([a-zA-Z\s%]+)$/);
+            if (match) {
+                var numPart = match[1];
+                var suffixPart = match[2];
+                
+                if (el.classList.contains('odometer') || el.hasAttribute('data-odometer-final')) {
+                    el.setAttribute('data-odometer-final', numPart);
+                    
+                    var parent = el.closest('.counter-item') || el.parentElement;
+                    if (parent) {
+                        var existingExtra = parent.querySelector('.odometer-extra-suffix');
+                        if (!existingExtra) {
+                            var span = document.createElement('span');
+                            span.className = 'odometer-extra-suffix';
+                            span.textContent = ' ' + suffixPart.trim();
+                            if (el.nextSibling) {
+                                parent.insertBefore(span, el.nextSibling);
+                            } else {
+                                parent.appendChild(span);
+                            }
+                        } else {
+                            existingExtra.textContent = ' ' + suffixPart.trim();
+                        }
+                    }
+                }
+            }
+        });
+    }
+
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initCmrNetworkBadge);
+        document.addEventListener('DOMContentLoaded', function() {
+            initCmrNetworkBadge();
+            initCustomCounters();
+        });
     } else {
         initCmrNetworkBadge();
+        initCustomCounters();
     }
-    $(document).ready(initCmrNetworkBadge);
-    $(window).on('elementor/frontend/init', initCmrNetworkBadge);
-    window.addEventListener('load', initCmrNetworkBadge);
+    $(document).ready(function() {
+        initCmrNetworkBadge();
+        initCustomCounters();
+    });
+    $(window).on('elementor/frontend/init', function() {
+        initCmrNetworkBadge();
+        initCustomCounters();
+    });
+    window.addEventListener('load', function() {
+        initCmrNetworkBadge();
+        initCustomCounters();
+    });
+    // Recurring check for dynamic elementor rendering
+    var counterIntervalCount = 0;
+    var counterInterval = setInterval(function() {
+        initCustomCounters();
+        counterIntervalCount++;
+        if (counterIntervalCount > 20) clearInterval(counterInterval);
+    }, 250);
 })(jQuery);
 
 

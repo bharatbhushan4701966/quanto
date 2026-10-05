@@ -3336,6 +3336,20 @@ ins {
   line-height: 1 !important;
 }
 
+.odometer-extra-suffix {
+  font-style: normal !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  color: inherit !important;
+  line-height: 1 !important;
+  letter-spacing: inherit !important;
+  display: inline-block !important;
+  margin-left: 3px !important;
+  margin-right: 1px !important;
+  vertical-align: baseline !important;
+  white-space: nowrap !important;
+}
+
 .quanto-funfact-box .funfact-info,
 .funfact-info,
 .quanto-funfacts__wrapper .funfact-info,

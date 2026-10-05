@@ -9674,6 +9674,20 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     line-height: 1 !important;
 }
 
+.odometer-extra-suffix {
+    font-style: normal !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    color: inherit !important;
+    line-height: 1 !important;
+    letter-spacing: inherit !important;
+    display: inline-block !important;
+    margin-left: 3px !important;
+    margin-right: 1px !important;
+    vertical-align: baseline !important;
+    white-space: nowrap !important;
+}
+
 /* Marketing Services v2 - Our Community Section & Funfacts (Desktop & Mobile) */
 .elementor-element-1c353d5,
 .page-id-52409 .elementor-element-1c353d5,
