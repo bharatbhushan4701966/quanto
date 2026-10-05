@@ -464,6 +464,20 @@ body.modal-open {
 }
 
 /* Left Bullet List with Icons */
+.elementor-7758 .elementor-element-c1e30ed,
+.elementor-7637 .elementor-element-32ec6cc,
+.elementor-7637 .elementor-element-a35c3d8,
+.elementor-7832 .elementor-element-2122c0a,
+.elementor-7849 .elementor-element-bb13090,
+.elementor-popup-modal .elementor-element-c1e30ed,
+.elementor-popup-modal .elementor-element-de500a4,
+.elementor-popup-modal .elementor-element-fc8da81 .elementor-widget {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+    background: transparent !important;
+}
+
 .elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-items,
 .elementor-7637 .elementor-element-32ec6cc .elementor-icon-list-items,
 .elementor-7637 .elementor-element-a35c3d8 .elementor-icon-list-items,
@@ -479,6 +493,8 @@ body.modal-open {
     padding: 0 !important;
     margin: 0 !important;
     list-style: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
 }
 
 .elementor-7758 .elementor-element-c1e30ed .elementor-icon-list-item,
@@ -493,7 +509,7 @@ body.modal-open {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    gap: 12px !important;
+    gap: 0 !important;
     margin: 0 !important;
     padding: 0 !important;
 }
