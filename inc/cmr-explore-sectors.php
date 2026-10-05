@@ -108,8 +108,9 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
                         if (track && section) {
                             function getScrollAmount() {
                                 let trackWidth = track.scrollWidth;
-                                // Move left enough to show the end of the track. Add padding offset
-                                return -(trackWidth - window.innerWidth + 40); 
+                                let viewportWidth = document.documentElement.clientWidth || window.innerWidth;
+                                // Move left enough to show the end of the track without extra blank space
+                                return -(trackWidth - viewportWidth); 
                             }
                             
                             const tween = gsap.to(track, {

@@ -107,7 +107,8 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
                     if (track && section) {
                         function getScrollAmount() {
                             let trackWidth = track.scrollWidth;
-                            return -(trackWidth - window.innerWidth + 40); 
+                            let viewportWidth = document.documentElement.clientWidth || window.innerWidth;
+                            return -(trackWidth - viewportWidth); 
                         }
                         
                         const tween = gsap.to(track, {
