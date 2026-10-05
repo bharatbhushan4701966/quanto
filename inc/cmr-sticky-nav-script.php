@@ -1830,26 +1830,38 @@ add_action('wp_footer', function() {
                     
                     const isStandaloneWrapper = navBar.closest('.cmr-mrg-wrapper, .cmr-enterprisecgd-wrapper, .cmr-channelcgd-wrapper, .cmr-smbcgd-wrapper, .cmr-mc-wrapper');
                     if (!isStandaloneWrapper) {
-                        let testimonialsSection = document.getElementById('cmr-testimonials-section') || 
-                                                  document.getElementById('testimonials') || 
-                                                  document.querySelector('.elementor-element-82ef444') ||
-                                                  document.querySelector('.elementor-element-d9c32ac') ||
-                                                  document.querySelector('.elementor-widget-testimonial-carousel') ||
-                                                  document.querySelector('.elementor-widget-testimonial');
-                                                  
-                        if (!testimonialsSection) {
-                            const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')).filter(h => h.textContent.toLowerCase().includes('testimonial'));
-                            if (headings.length > 0) {
-                                testimonialsSection = headings[0].closest('.elementor-section') || headings[0].closest('section') || headings[0].parentElement;
+                        // First see if there is a market updates section to stop at
+                        let stopSection = document.querySelector('.cmr-market-updates-section, .cmr-mui-section, #cmr-market-updates');
+                        
+                        if (!stopSection) {
+                            stopSection = document.getElementById('cmr-testimonials-section') || 
+                                          document.getElementById('testimonials') || 
+                                          document.querySelector('.elementor-element-82ef444') ||
+                                          document.querySelector('.elementor-element-d9c32ac') ||
+                                          document.querySelector('.elementor-widget-testimonial-carousel') ||
+                                          document.querySelector('.elementor-widget-testimonial');
+                                          
+                            if (!stopSection) {
+                                const headings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')).filter(h => h.textContent.toLowerCase().includes('testimonial'));
+                                if (headings.length > 0) {
+                                    stopSection = headings[0].closest('.elementor-section') || headings[0].closest('section') || headings[0].parentElement;
+                                }
                             }
                         }
 
-                        if (testimonialsSection) {
-                            boundaryBottom = Math.min(sectionRect.bottom, testimonialsSection.getBoundingClientRect().top);
+                        if (stopSection) {
+                            // If we have a specific stop section (like market updates), we want the nav to stick 
+                            // UNTIL that section, even if it means sticking past the navBar's immediate parent section.
+                            // We use the page-level parent to ensure we don't unstick too early.
+                            const pageWrapper = navBar.closest('.elementor-location-single, .elementor-location-archive, body');
+                            const maxBottom = pageWrapper ? pageWrapper.getBoundingClientRect().bottom : sectionRect.bottom;
+                            boundaryBottom = Math.min(maxBottom, stopSection.getBoundingClientRect().top);
                         } else {
                             const footer = document.querySelector('footer, .elementor-location-footer');
                             if (footer) {
-                                boundaryBottom = Math.min(sectionRect.bottom, footer.getBoundingClientRect().top);
+                                const pageWrapper = navBar.closest('.elementor-location-single, .elementor-location-archive, body');
+                                const maxBottom = pageWrapper ? pageWrapper.getBoundingClientRect().bottom : sectionRect.bottom;
+                                boundaryBottom = Math.min(maxBottom, footer.getBoundingClientRect().top);
                             }
                         }
                     }
