@@ -10189,7 +10189,7 @@ article ul > li::after,
 }
 
 /* ============================================================= */
-/* FIX: PREVENT IMAGE OVERLAPPING SOCIAL ICONS ON TEAM PAGES     */
+/* FIX: PREVENT IMAGE OVERLAPPING SOCIAL ICONS & LEFT ALIGN ICONS */
 /* ============================================================= */
 body.single-teams #mas_smooth_scroller,
 body.single-team #mas_smooth_scroller,
@@ -10204,11 +10204,15 @@ body.single-quanto_team #mas_smooth_scroller,
   will-change: auto !important;
 }
 
-.cmr-team-sticky-col {
+.cmr-team-sticky-col,
+body.single-teams [data-id="953c2ba"],
+body.single-team [data-id="953c2ba"],
+body.single-quanto_team [data-id="953c2ba"] {
   display: flex !important;
   flex-direction: column !important;
   justify-content: flex-start !important;
   align-items: flex-start !important;
+  text-align: left !important;
 }
 
 .cmr-team-sticky-col .elementor-widget-quanto-feature-image,
@@ -10219,10 +10223,48 @@ body.single-quanto_team #mas_smooth_scroller,
 }
 
 .cmr-team-sticky-col .elementor-widget-social-icons,
-.cmr-team-sticky-col .elementor-social-icons-wrapper {
+.cmr-team-sticky-col .elementor-social-icons-wrapper,
+.cmr-team-sticky-col .elementor-grid,
+.cmr-team-sticky-col [data-id="9a93deb"],
+.cmr-team-sticky-col [data-id="ec6f9a4"],
+.cmr-team-sticky-col [data-id="7f007f0"],
+body.single-teams [data-id="953c2ba"] .elementor-widget-social-icons,
+body.single-teams [data-id="953c2ba"] .elementor-social-icons-wrapper,
+body.single-teams [data-id="953c2ba"] .elementor-grid,
+body.single-team [data-id="953c2ba"] .elementor-widget-social-icons,
+body.single-team [data-id="953c2ba"] .elementor-social-icons-wrapper,
+body.single-team [data-id="953c2ba"] .elementor-grid,
+body.single-quanto_team [data-id="953c2ba"] .elementor-widget-social-icons,
+body.single-quanto_team [data-id="953c2ba"] .elementor-social-icons-wrapper,
+body.single-quanto_team [data-id="953c2ba"] .elementor-grid {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  text-align: left !important;
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  align-self: flex-start !important;
   position: relative !important;
   z-index: 5 !important;
   margin-top: 10px !important;
+  width: auto !important;
+}
+
+.cmr-team-sticky-col .elementor-grid-item,
+.cmr-team-sticky-col .elementor-social-icon,
+body.single-teams [data-id="953c2ba"] .elementor-grid-item,
+body.single-teams [data-id="953c2ba"] .elementor-social-icon,
+body.single-team [data-id="953c2ba"] .elementor-grid-item,
+body.single-team [data-id="953c2ba"] .elementor-social-icon,
+body.single-quanto_team [data-id="953c2ba"] .elementor-grid-item,
+body.single-quanto_team [data-id="953c2ba"] .elementor-social-icon {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  text-align: left !important;
+  display: inline-flex !important;
 }
 
 /* Ensure left column stays sticky throughout the right side content scroll */
