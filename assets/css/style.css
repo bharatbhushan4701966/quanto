@@ -9997,37 +9997,15 @@ body.single-quanto_team #smooth-content,
 body[class*="single-team"] #smooth-content,
 body[class*="single-quanto_team"] #smooth-content {
   overflow-x: hidden;
-  height: auto !important;
+  height: auto;
   min-height: 100vh;
 }
 
 @media (min-width: 769px) {
-  body.single-teams #smooth-content .elementor-section,
-  body.single-teams #smooth-content .e-con,
-  body.single-teams #smooth-content .e-con-inner,
-  body.single-teams #smooth-content .elementor-container,
-  body.single-teams #smooth-content .elementor-row,
-  body.single-team #smooth-content .elementor-section,
-  body.single-team #smooth-content .e-con,
-  body.single-team #smooth-content .e-con-inner,
-  body.single-team #smooth-content .elementor-container,
-  body.single-team #smooth-content .elementor-row,
-  body.single-quanto_team #smooth-content .elementor-section,
-  body.single-quanto_team #smooth-content .e-con,
-  body.single-quanto_team #smooth-content .e-con-inner,
-  body.single-quanto_team #smooth-content .elementor-container,
-  body.single-quanto_team #smooth-content .elementor-row {
-    overflow: visible !important;
-    align-items: flex-start !important;
-  }
-
   .cmr-team-sticky-col,
-  body.single-teams #smooth-content .e-con > .e-con:first-child,
-  body.single-teams #smooth-content .elementor-column:first-child,
-  body.single-team #smooth-content .e-con > .e-con:first-child,
-  body.single-team #smooth-content .elementor-column:first-child,
-  body.single-quanto_team #smooth-content .e-con > .e-con:first-child,
-  body.single-quanto_team #smooth-content .elementor-column:first-child {
+  body.single-teams [data-id="953c2ba"],
+  body.single-team [data-id="953c2ba"],
+  body.single-quanto_team [data-id="953c2ba"] {
     position: -webkit-sticky !important;
     position: sticky !important;
     top: 130px !important;
@@ -10038,9 +10016,8 @@ body[class*="single-quanto_team"] #smooth-content {
   }
 
   .cmr-team-sticky-col img,
-  body.single-teams #smooth-content .elementor-column:first-child img,
-  body.single-team #smooth-content .elementor-column:first-child img,
-  body.single-quanto_team #smooth-content .elementor-column:first-child img {
+  body.single-teams [data-id="953c2ba"] img,
+  body.single-team [data-id="953c2ba"] img {
     max-width: 100% !important;
     height: auto !important;
     display: block !important;
@@ -10056,41 +10033,10 @@ body[class*="single-quanto_team"] #smooth-content {
 }
 
 @media (max-width: 768px) {
-  body.single-teams #smooth-content .elementor-section,
-  body.single-teams #smooth-content .e-con,
-  body.single-teams #smooth-content .e-con-inner,
-  body.single-teams #smooth-content .elementor-container,
-  body.single-teams #smooth-content .elementor-row,
-  body.single-team #smooth-content .elementor-section,
-  body.single-team #smooth-content .e-con,
-  body.single-team #smooth-content .e-con-inner,
-  body.single-team #smooth-content .elementor-container,
-  body.single-team #smooth-content .elementor-row,
-  body.single-quanto_team #smooth-content .elementor-section,
-  body.single-quanto_team #smooth-content .e-con,
-  body.single-quanto_team #smooth-content .e-con-inner,
-  body.single-quanto_team #smooth-content .elementor-container,
-  body.single-quanto_team #smooth-content .elementor-row,
-  body.single-teams .elementor-element-341916f,
-  body.single-team .elementor-element-341916f,
-  body.single-quanto_team .elementor-element-341916f,
-  .single-teams [data-id="341916f"],
-  .single-team [data-id="341916f"] {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    height: auto !important;
-    min-height: auto !important;
-    overflow: visible !important;
-    width: 100% !important;
-  }
-
-  body.single-teams .elementor-element-953c2ba,
-  body.single-team .elementor-element-953c2ba,
-  body.single-quanto_team .elementor-element-953c2ba,
-  .single-teams [data-id="953c2ba"],
-  .single-team [data-id="953c2ba"],
-  .cmr-team-sticky-col {
+  .cmr-team-sticky-col,
+  body.single-teams [data-id="953c2ba"],
+  body.single-team [data-id="953c2ba"],
+  body.single-quanto_team [data-id="953c2ba"] {
     position: relative !important;
     top: auto !important;
     align-self: stretch !important;
@@ -10110,6 +10056,30 @@ body[class*="single-quanto_team"] #smooth-content {
     width: 100% !important;
     margin-top: 40px !important;
     z-index: 10 !important;
+  }
+}
+
+/* Ensure Elementor Responsive Visibility (Hide on Mobile/Tablet/Desktop) is ALWAYS respected */
+@media (max-width: 767.98px) {
+  html body .elementor-hidden-mobile,
+  html body .elementor-hidden-phone,
+  html body [class*="elementor-hidden-mobile"],
+  html body [class*="elementor-hidden-phone"] {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024.98px) {
+  html body .elementor-hidden-tablet,
+  html body [class*="elementor-hidden-tablet"] {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1025px) {
+  html body .elementor-hidden-desktop,
+  html body [class*="elementor-hidden-desktop"] {
+    display: none !important;
   }
 }
 
