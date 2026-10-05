@@ -470,13 +470,6 @@ function cmr_media_releases_general_shortcode( $atts ) {
                         Read full Release
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
                     </a>
-                    <a href="<?php echo $top_post['pdf_link'] ? esc_url($top_post['pdf_link']) : '#'; ?>" 
-                       class="cmr-mrg-btn-outline" 
-                       id="cmr-mrg-main-pdf" 
-                       target="_blank">
-                        Download PDF
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                    </a>
                 </div>
             </div>
         </div>
@@ -510,7 +503,6 @@ function cmr_media_releases_general_shortcode( $atts ) {
         const mainTitle = document.getElementById('cmr-mrg-main-title');
         const mainExcerpt = document.getElementById('cmr-mrg-main-excerpt');
         const mainLink = document.getElementById('cmr-mrg-main-link');
-        const mainPdf = document.getElementById('cmr-mrg-main-pdf');
 
         let currentIndex = 0;
         let rotationInterval;
@@ -542,13 +534,6 @@ function cmr_media_releases_general_shortcode( $atts ) {
                     mainTitle.innerHTML = data.title;
                     mainExcerpt.innerHTML = data.excerpt;
                     mainLink.href = data.link;
-                    
-                    if (data.pdf_link) {
-                        mainPdf.href = data.pdf_link;
-                    } else {
-                        mainPdf.href = '#';
-                    }
-                    mainPdf.style.display = 'inline-flex';
                     
                     mainImg.style.opacity = 1;
                 }, 200);
