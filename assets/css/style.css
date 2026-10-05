@@ -10355,32 +10355,31 @@ body.single-quanto_team [data-id="953c2ba"] .elementor-social-icon svg {
   text-align: right !important;
 }
 
-/* Fix for Elementor Image Carousel 376796b - fill full hero column */
+
+/* =====================================================
+   CAROUSEL IMAGE SIZE — Edit values below to adjust
+   Widget: elementor-element-376796b (Marketing Services Hero)
+   ===================================================== */
+
+/* Set the WIDTH of the carousel container */
 .elementor-element-b8bc623 {
-    align-self: stretch !important;
+    width: 500px !important; /* <-- Change this value */
 }
-.elementor-element-376796b,
-.elementor-element-376796b .elementor-widget-container,
-.elementor-element-376796b .elementor-image-carousel-wrapper,
-.elementor-element-376796b .elementor-image-carousel,
+
+/* Set the HEIGHT of the carousel (swiper) */
 .elementor-element-376796b .swiper,
-.elementor-element-376796b .swiper-wrapper,
-.elementor-element-376796b .swiper-slide {
-    width: 100% !important;
-    height: 100% !important;
-    max-width: 100% !important;
+.elementor-element-376796b .elementor-image-carousel-wrapper {
+    height: 400px !important; /* <-- Change this value */
 }
-.elementor-element-376796b .swiper-slide-inner {
-    display: block !important;
-    width: 100% !important;
-    height: 100% !important;
-}
+
+/* Image fills the carousel fully */
+.elementor-element-376796b .swiper-slide,
+.elementor-element-376796b .swiper-slide-inner,
 .elementor-element-376796b .swiper-slide-image {
     width: 100% !important;
     height: 100% !important;
-    max-width: 100% !important;
-    display: block !important;
     object-fit: cover !important;
+    display: block !important;
 }
 
 
