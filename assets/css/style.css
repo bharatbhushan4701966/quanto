@@ -10352,7 +10352,9 @@ body.single-quanto_team [data-id="953c2ba"] .elementor-social-icon svg {
 .elementor-element-376796b .swiper,
 .elementor-element-376796b .swiper-wrapper,
 .elementor-element-376796b .swiper-slide {
+    width: 100% !important;
     height: 100% !important;
+    max-width: 100% !important;
 }
 .elementor-element-376796b .swiper-slide-inner {
     display: block !important;
@@ -10362,7 +10364,9 @@ body.single-quanto_team [data-id="953c2ba"] .elementor-social-icon svg {
 .elementor-element-376796b .swiper-slide-image {
     width: 100% !important;
     height: 100% !important;
+    max-width: 100% !important;
     display: block !important;
     object-fit: cover !important;
 }
+
 
