@@ -5268,13 +5268,4 @@ add_filter( 'wpcf7_posted_data', function( $posted_data ) {
     return $posted_data;
 }, 999 );
 
-add_action('wp_head', function() {
-    echo '<style>.elementor-element-b8bc623 { width: 100% !important; flex: 1 !important; max-width: 100% !important; }
-    .elementor-element-376796b { width: 100% !important; height: 100% !important; }
-    .elementor-element-376796b .elementor-widget-container { width: 100% !important; height: 100% !important; }
-    .elementor-element-376796b .swiper-container, .elementor-element-376796b .swiper, .elementor-element-376796b .swiper-wrapper { width: 100% !important; height: 100% !important; }
-    .elementor-element-376796b .swiper-slide { width: 100% !important; height: 100% !important; display: flex !important; justify-content: center !important; align-items: center !important; }
-    .elementor-element-376796b .swiper-slide-inner { width: 100% !important; height: 100% !important; }
-    .elementor-element-376796b .swiper-slide-image { width: 100% !important; height: 100% !important; object-fit: cover !important; }
-    </style>';
-});
+
