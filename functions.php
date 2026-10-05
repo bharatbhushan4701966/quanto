@@ -5184,6 +5184,12 @@ add_action( 'wp_footer', function() {
                 setTimeout(function() {
                     ScrollTrigger.refresh();
                 }, 100);
+                setTimeout(function() {
+                    ScrollTrigger.refresh();
+                }, 500);
+                setTimeout(function() {
+                    ScrollTrigger.refresh();
+                }, 1500);
             }
         }
         initSingleTeamSticky();
