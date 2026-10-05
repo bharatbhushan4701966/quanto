@@ -81,8 +81,26 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
                 <h2 class="explore-sectors-title">Our Offerings </h2>
             </div>
             
-            <div class="explore-sectors-track-wrapper">
-                <div class="explore-sectors-track" id="<?php echo esc_attr( $unique_id ); ?>_track">
+
+            <style>
+                #<?php echo esc_attr( $unique_id ); ?>_section { overflow: hidden !important; position: relative !important; }
+                #<?php echo esc_attr( $unique_id ); ?>_track {
+                    display: flex !important;
+                    flex-wrap: nowrap !important;
+                    width: max-content !important;
+                    min-width: max-content !important;
+                    will-change: transform;
+                }
+                #<?php echo esc_attr( $unique_id ); ?>_track .explore-sector-card {
+                    flex: 0 0 323px !important;
+                    min-width: 323px !important;
+                    max-width: 323px !important;
+                }
+            </style>
+
+            <div class="explore-sectors-track-wrapper" style="overflow:hidden; width:100%;">
+                <div class="explore-sectors-track" id="<?php echo esc_attr( $unique_id ); ?>_track"
+                     style="display:flex !important; flex-wrap:nowrap !important; width:max-content !important;">
                     <?php foreach ( $sectors as $sector ) : ?>
                         <div class="explore-sector-card">
                             <span class="sector-number"><?php echo esc_html( $sector['number'] ); ?></span>
@@ -98,33 +116,37 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
             
             <script>
             document.addEventListener("DOMContentLoaded", function() {
-                if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-                    gsap.registerPlugin(ScrollTrigger);
-                    
-                    let track = document.getElementById("<?php echo esc_js( $unique_id ); ?>_track");
-                    let section = document.getElementById("<?php echo esc_js( $unique_id ); ?>_section");
-                    
-                    if (track && section) {
-                        function getScrollAmount() {
-                            return -(track.scrollWidth - section.offsetWidth);
-                        }
-                        
-                        const tween = gsap.to(track, {
-                            x: getScrollAmount,
-                            ease: "none"
-                        });
-        
-                        ScrollTrigger.create({
-                            trigger: section,
-                            start: "center center",
-                            end: () => `+=${getScrollAmount() * -1}`,
-                            pin: true,
-                            animation: tween,
-                            scrub: 1,
-                            invalidateOnRefresh: true
-                        });
-                    }
+                if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+                gsap.registerPlugin(ScrollTrigger);
+
+                let track   = document.getElementById("<?php echo esc_js( $unique_id ); ?>_track");
+                let section = document.getElementById("<?php echo esc_js( $unique_id ); ?>_section");
+                if (!track || !section) return;
+
+                ScrollTrigger.getAll().forEach(function(st) {
+                    if (st.trigger === section) st.kill();
+                });
+
+                function getScrollAmount() {
+                    return -(track.scrollWidth - section.offsetWidth);
                 }
+
+                const tween = gsap.to(track, {
+                    x: getScrollAmount,
+                    ease: "none"
+                });
+
+                ScrollTrigger.create({
+                    trigger: section,
+                    start: "top top",
+                    end: () => `+=${Math.abs(getScrollAmount())}`,
+                    pin: true,
+                    pinSpacing: true,
+                    animation: tween,
+                    scrub: 1,
+                    invalidateOnRefresh: true,
+                    anticipatePin: 1
+                });
             });
             </script>
         </div>

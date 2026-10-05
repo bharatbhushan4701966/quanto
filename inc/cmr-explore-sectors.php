@@ -77,8 +77,27 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
                 <h2 class="explore-sectors-title"><?php echo wp_kses_post( $atts['title'] ); ?></h2>
             </div>
             
-            <div class="explore-sectors-track-wrapper">
-                <div class="explore-sectors-track" id="cmr-explore-track">
+
+            <!-- Inline style: highest specificity, cannot be overridden by Elementor -->
+            <style>
+                #cmr-explore-section { overflow: hidden !important; position: relative !important; }
+                #cmr-explore-track {
+                    display: flex !important;
+                    flex-wrap: nowrap !important;
+                    width: max-content !important;
+                    min-width: max-content !important;
+                    will-change: transform;
+                }
+                #cmr-explore-track .explore-sector-card {
+                    flex: 0 0 323px !important;
+                    min-width: 323px !important;
+                    max-width: 323px !important;
+                }
+            </style>
+
+            <div class="explore-sectors-track-wrapper" style="overflow:hidden; width:100%;">
+                <div class="explore-sectors-track" id="cmr-explore-track"
+                     style="display:flex !important; flex-wrap:nowrap !important; width:max-content !important;">
                     <?php foreach ( $sectors as $sector ) : ?>
                         <div class="explore-sector-card">
                             <span class="sector-number"><?php echo esc_html( $sector['number'] ); ?></span>
@@ -99,40 +118,46 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
             <script>
             document.addEventListener("DOMContentLoaded", function() {
                 function initExploreScroll() {
-                    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-                        gsap.registerPlugin(ScrollTrigger);
-                        
-                        let track = document.getElementById("cmr-explore-track");
-                        let section = document.getElementById("cmr-explore-section");
-                        
-                        if (track && section) {
-                            function getScrollAmount() {
-                                // Use section.offsetWidth (actual rendered width)
-                                // so Elementor container constraints are respected.
-                                return -(track.scrollWidth - section.offsetWidth);
-                            }
-                            
-                            const tween = gsap.to(track, {
-                                x: getScrollAmount,
-                                ease: "none"
-                            });
-            
-                            ScrollTrigger.create({
-                                trigger: section,
-                                start: "center center", // Pin when section reaches center
-                                end: () => `+=${getScrollAmount() * -1}`, // Scroll length based on track width
-                                pin: true,
-                                animation: tween,
-                                scrub: 1,
-                                invalidateOnRefresh: true
-                            });
-                        }
+                    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+                    gsap.registerPlugin(ScrollTrigger);
+
+                    let track   = document.getElementById("cmr-explore-track");
+                    let section = document.getElementById("cmr-explore-section");
+                    if (!track || !section) return;
+
+                    // Kill any pre-existing ScrollTrigger on this section to avoid duplicates
+                    ScrollTrigger.getAll().forEach(function(st) {
+                        if (st.trigger === section) st.kill();
+                    });
+
+                    function getScrollAmount() {
+                        // Full horizontal distance: track content - one visible viewport
+                        return -(track.scrollWidth - section.offsetWidth);
                     }
+
+                    const tween = gsap.to(track, {
+                        x: getScrollAmount,
+                        ease: "none"
+                    });
+
+                    ScrollTrigger.create({
+                        trigger: section,
+                        start: "top top",         // Pin when section top hits viewport top
+                        end: () => `+=${Math.abs(getScrollAmount())}`,
+                        pin: true,
+                        pinSpacing: true,
+                        animation: tween,
+                        scrub: 1,
+                        invalidateOnRefresh: true,
+                        anticipatePin: 1
+                    });
                 }
 
                 initExploreScroll();
                 if (window.jQuery) {
-                    jQuery(window).on('elementor/frontend/init', initExploreScroll);
+                    jQuery(window).on('elementor/frontend/init', function() {
+                        setTimeout(initExploreScroll, 300);
+                    });
                 }
             });
             </script>
