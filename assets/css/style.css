@@ -10341,15 +10341,28 @@ body.single-quanto_team [data-id="953c2ba"] .elementor-social-icon svg {
   text-align: right !important;
 }
 
-/* Fix for Elementor Image Carousel 376796b - image fill fix */
-.elementor-element-376796b .swiper-slide-image {
-    width: 100% !important;
-    height: auto !important;
-    display: block !important;
-    object-fit: cover !important;
+/* Fix for Elementor Image Carousel 376796b - fill full hero column */
+.elementor-element-b8bc623 {
+    align-self: stretch !important;
+}
+.elementor-element-376796b,
+.elementor-element-376796b .elementor-widget-container,
+.elementor-element-376796b .elementor-image-carousel-wrapper,
+.elementor-element-376796b .elementor-image-carousel,
+.elementor-element-376796b .swiper,
+.elementor-element-376796b .swiper-wrapper,
+.elementor-element-376796b .swiper-slide {
+    height: 100% !important;
 }
 .elementor-element-376796b .swiper-slide-inner {
     display: block !important;
     width: 100% !important;
+    height: 100% !important;
+}
+.elementor-element-376796b .swiper-slide-image {
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    object-fit: cover !important;
 }
 
