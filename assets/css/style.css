@@ -10138,4 +10138,32 @@ body.single-quanto_team #mas_smooth_scroller,
   margin-top: 10px !important;
 }
 
+/* Ensure left column stays sticky throughout the right side content scroll */
+@media (min-width: 769px) {
+  body.single-teams .elementor-element-341916f,
+  body.single-team .elementor-element-341916f,
+  body.single-quanto_team .elementor-element-341916f,
+  .single-teams [data-id="341916f"],
+  .single-team [data-id="341916f"] {
+    display: flex !important;
+    align-items: flex-start !important;
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  body.single-teams .elementor-element-953c2ba,
+  body.single-team .elementor-element-953c2ba,
+  body.single-quanto_team .elementor-element-953c2ba,
+  .single-teams [data-id="953c2ba"],
+  .single-team [data-id="953c2ba"],
+  .cmr-team-sticky-col {
+    position: sticky !important;
+    top: 130px !important;
+    align-self: flex-start !important;
+    z-index: 10 !important;
+    height: fit-content !important;
+  }
+}
+
+
 
