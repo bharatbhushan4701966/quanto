@@ -28,6 +28,33 @@ if ( ! function_exists( 'cmr_stay_updated_shortcode' ) ) {
         ob_start();
         ?>
         <style>
+        .cmr-stay-updated-section .stay-updated-meta,
+        .stay-updated-meta {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            width: 100% !important;
+            margin-bottom: 12px !important;
+            box-sizing: border-box !important;
+        }
+        .cmr-stay-updated-section .stay-updated-tag,
+        .stay-updated-tag {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            color: #64748b !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+        }
+        .cmr-stay-updated-section .stay-updated-read-time,
+        .stay-updated-read-time {
+            color: #888888 !important;
+            font-size: 13px !important;
+            margin-left: auto !important;
+            white-space: nowrap !important;
+            text-align: right !important;
+        }
+
         @media (max-width: 768px) {
             .elementor-element:has(.cmr-stay-updated-section),
             .e-con:has(.cmr-stay-updated-section),
@@ -206,9 +233,9 @@ if ( ! function_exists( 'cmr_stay_updated_shortcode' ) ) {
                                     </div>
                                 </a>
                                 
-                                <div class="stay-updated-meta">
-                                    <span class="stay-updated-tag">&mdash; <?php echo esc_html( $category_name ); ?></span>
-                                    <span class="stay-updated-read-time"><?php echo esc_html( $read_time ); ?></span>
+                                <div class="stay-updated-meta" style="display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; margin-bottom: 12px !important; box-sizing: border-box !important;">
+                                    <span class="stay-updated-tag" style="display: inline-flex !important; align-items: center !important; gap: 6px !important; color: #64748b !important; font-size: 13px !important; font-weight: 500 !important;">&mdash; <?php echo esc_html( $category_name ); ?></span>
+                                    <span class="stay-updated-read-time" style="margin-left: auto !important; color: #888888 !important; font-size: 13px !important; text-align: right !important; white-space: nowrap !important;"><?php echo esc_html( $read_time ); ?></span>
                                 </div>
                                 
                                 <h3 class="stay-updated-card-title">

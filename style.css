@@ -10432,5 +10432,40 @@ header .header-logo img,
     }
 }
 
+/* ============================================================= */
+/* FIX: INDUSTRY INTELLIGENCE & STAY UPDATED META ALIGNMENT */
+/* ============================================================= */
+.intel-meta,
+.stay-updated-meta,
+.cmr-stay-updated-section .stay-updated-meta {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
+  font-size: 13px !important;
+  color: #666 !important;
+  margin-bottom: 14px !important;
+  box-sizing: border-box !important;
+}
+
+.intel-category,
+.stay-updated-tag,
+.cmr-stay-updated-section .stay-updated-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  color: #666 !important;
+  font-weight: 500 !important;
+}
+
+.intel-read-time,
+.stay-updated-read-time,
+.cmr-stay-updated-section .stay-updated-read-time {
+  color: #888 !important;
+  margin-left: auto !important;
+  white-space: nowrap !important;
+  text-align: right !important;
+}
+
 
 

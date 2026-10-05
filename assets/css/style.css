@@ -10166,9 +10166,10 @@ body.single-quanto_team #mas_smooth_scroller,
 }
 
 /* ============================================================= */
-/* FIX: INDUSTRY INTELLIGENCE META (CATEGORY LEFT, READ TIME RIGHT) */
+/* FIX: INDUSTRY INTELLIGENCE & STAY UPDATED META ALIGNMENT */
 /* ============================================================= */
-.intel-meta {
+.intel-meta,
+.stay-updated-meta {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
@@ -10179,7 +10180,8 @@ body.single-quanto_team #mas_smooth_scroller,
   box-sizing: border-box !important;
 }
 
-.intel-category {
+.intel-category,
+.stay-updated-tag {
   display: inline-flex !important;
   align-items: center !important;
   gap: 8px !important;
@@ -10187,12 +10189,14 @@ body.single-quanto_team #mas_smooth_scroller,
   font-weight: 500 !important;
 }
 
-.intel-read-time {
+.intel-read-time,
+.stay-updated-read-time {
   color: #888 !important;
   margin-left: auto !important;
   white-space: nowrap !important;
   text-align: right !important;
 }
+
 
 
 
