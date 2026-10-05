@@ -10052,3 +10052,52 @@ body.single-quanto_team #smooth-content .elementor-row {
     display: inline-flex !important;
   }
 }
+
+/* ============================================================= */
+/* FIX: REMOVE DUPLICATE BULLETS / DOUBLE DOTS ACROSS ALL PAGES */
+/* ============================================================= */
+.page--content ul > li:after,
+.page--content ul > li::after,
+.blog-content ul > li:after,
+.blog-content ul > li::after,
+.comment-content ul > li:after,
+.comment-content ul > li::after,
+.elementor-widget-text-editor ul > li:after,
+.elementor-widget-text-editor ul > li::after,
+.entry-content ul > li:after,
+.entry-content ul > li::after,
+article ul > li:after,
+article ul > li::after,
+.single-post-details ul > li:after,
+.single-post-details ul > li::after,
+.page--content ul > li:before,
+.page--content ul > li::before,
+.blog-content ul > li:before,
+.blog-content ul > li::before,
+.comment-content ul > li:before,
+.comment-content ul > li::before,
+.elementor-widget-text-editor ul:not(.elementor-icon-list-items) > li:before,
+.elementor-widget-text-editor ul:not(.elementor-icon-list-items) > li::before,
+.entry-content ul > li:before,
+.entry-content ul > li::before {
+  display: none !important;
+  content: none !important;
+}
+
+.page--content ul:not(.elementor-icon-list-items),
+.blog-content ul:not(.elementor-icon-list-items),
+.entry-content ul:not(.elementor-icon-list-items),
+.elementor-widget-text-editor ul:not(.elementor-icon-list-items) {
+  list-style-type: disc !important;
+  padding-left: 24px !important;
+}
+
+.page--content ul:not(.elementor-icon-list-items) > li,
+.blog-content ul:not(.elementor-icon-list-items) > li,
+.entry-content ul:not(.elementor-icon-list-items) > li,
+.elementor-widget-text-editor ul:not(.elementor-icon-list-items) > li {
+  list-style: disc !important;
+  display: list-item !important;
+  padding-left: 4px !important;
+}
+

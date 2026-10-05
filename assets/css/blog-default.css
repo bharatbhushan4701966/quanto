@@ -833,17 +833,11 @@ h4.wp-block-heading,
 }
 
 .page--content ul>li,
-
 .page--content ul>li,
-
 .comment-content ul>li {
-
-  padding-left: 18px;
-
+  padding-left: 4px;
   color: var(--color-primary);
-
   font-size: 18px;
-
   line-height: 24px;
 
   font-weight: 400;
