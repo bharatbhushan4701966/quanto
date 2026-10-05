@@ -149,9 +149,9 @@ if ( ! function_exists( 'cmr_consulting_advisory_shortcode' ) ) {
                                 </a>
                             </div>
                             <div class="intel-card-content">
-                                <div class="intel-meta">
+                                <div class="intel-meta" style="display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; margin-bottom: 14px !important;">
                                     <span class="intel-category"><?php echo esc_html( $category_name ); ?></span>
-                                    <span class="intel-read-time"><?php echo esc_html( $read_time ); ?> min read</span>
+                                    <span class="intel-read-time" style="margin-left: auto !important;"><?php echo esc_html( $read_time ); ?> min read</span>
                                 </div>
                                 <h3 class="intel-title">
                                     <a href="<?php echo esc_url( $post_link ); ?>"><?php echo esc_html( $post_title ); ?></a>

@@ -61,9 +61,9 @@ function cmr_load_more_intel_ajax() {
                     </a>
                 </div>
                 <div class="intel-card-content">
-                    <div class="intel-meta">
+                    <div class="intel-meta" style="display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; margin-bottom: 14px !important;">
                         <span class="intel-category">Industry Intelligence</span>
-                        <span class="intel-read-time"><?php echo esc_html( $read_time ); ?> min read</span>
+                        <span class="intel-read-time" style="margin-left: auto !important;"><?php echo esc_html( $read_time ); ?> min read</span>
                     </div>
                     <h3 class="intel-title">
                         <a href="<?php echo esc_url( $post_link ); ?>"><?php echo esc_html( $post_title ); ?></a>
@@ -733,9 +733,9 @@ function cmr_load_more_consulting_ajax() {
                     </a>
                 </div>
                 <div class="intel-card-content">
-                    <div class="intel-meta">
+                    <div class="intel-meta" style="display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; margin-bottom: 14px !important;">
                         <span class="intel-category">Consulting & Advisory</span>
-                        <span class="intel-read-time"><?php echo esc_html( $read_time ); ?> min read</span>
+                        <span class="intel-read-time" style="margin-left: auto !important;"><?php echo esc_html( $read_time ); ?> min read</span>
                     </div>
                     <h3 class="intel-title">
                         <a href="<?php echo esc_url( $post_link ); ?>"><?php echo esc_html( $post_title ); ?></a>
@@ -832,9 +832,9 @@ function cmr_load_more_marketing_ajax() {
                     </a>
                 </div>
                 <div class="intel-card-content">
-                    <div class="intel-meta">
+                    <div class="intel-meta" style="display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; margin-bottom: 14px !important;">
                         <span class="intel-category">Marketing Services</span>
-                        <span class="intel-read-time"><?php echo esc_html( $read_time ); ?> min read</span>
+                        <span class="intel-read-time" style="margin-left: auto !important;"><?php echo esc_html( $read_time ); ?> min read</span>
                     </div>
                     <h3 class="intel-title">
                         <a href="<?php echo esc_url( $post_link ); ?>"><?php echo esc_html( $post_title ); ?></a>
