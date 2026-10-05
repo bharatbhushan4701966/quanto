@@ -599,7 +599,7 @@ function cmr_market_updates_shortcode($atts) {
 // Apply Instrument Sans globally
 add_action('wp_head', 'cmr_global_font_style', 999);
 function cmr_global_font_style() {
-    echo '<style>.elementor-element-b8bc623 { width: 100% !important; flex: 1 !important; max-width: 100% !important; }
+    echo '<style>
         body, p, h1, h2, h3, h4, h5, h6, a, button, input, select, textarea, .elementor-button, .elementor-button-text {
             font-family: "Instrument Sans", sans-serif !important;
         }
