@@ -5136,10 +5136,8 @@ add_action( 'wp_footer', function() {
         initMobileGalleryParallax();
         window.addEventListener('resize', initMobileGalleryParallax);
 
-        // Single Team Member Sticky Image & Social Controller (Pins entire left column)
+        // Single Team Member Sticky Image & Social Controller (Pins entire left column on desktop)
         function initSingleTeamSticky() {
-            if (window.innerWidth < 768) return;
-
             var isTeamPage = document.body.classList.contains('single-teams') || 
                              document.body.classList.contains('single-team') || 
                              document.body.classList.contains('single-quanto_team') || 
@@ -5172,37 +5170,23 @@ add_action( 'wp_footer', function() {
                     pEl.style.setProperty('transform', 'none', 'important');
                 });
 
-                var parent = targetCol.parentElement;
-                while (parent && parent !== document.body && parent.id !== 'smooth-wrapper' && parent.id !== 'smooth-content') {
-                    if (parent.closest('header, #quanto-header-desktop, .elementor-location-header')) break;
-                    parent.style.setProperty('overflow', 'visible', 'important');
-                    if (parent.classList.contains('e-con') || parent.classList.contains('elementor-row') || parent.classList.contains('elementor-container') || parent.classList.contains('e-con-inner') || parent.classList.contains('elementor-section')) {
-                        parent.style.setProperty('align-items', 'flex-start', 'important');
-                        parent.style.setProperty('display', 'flex', 'important');
-                    }
-                    parent = parent.parentElement;
+                if (window.innerWidth < 769) {
+                    targetCol.style.removeProperty('position');
+                    targetCol.style.removeProperty('top');
+                    targetCol.style.removeProperty('align-self');
+                    targetCol.style.removeProperty('z-index');
                 }
+            }
 
-                var header = document.querySelector('#quanto-header-desktop, header.header, .elementor-location-header, .header, .mas-sticky-header');
-                var headerHeight = header ? header.offsetHeight : 95;
-                var safeTop = Math.max(headerHeight + 25, 130);
-                targetCol.style.setProperty('position', 'sticky', 'important');
-                targetCol.style.setProperty('top', safeTop + 'px', 'important');
-                targetCol.style.setProperty('align-self', 'flex-start', 'important');
-                targetCol.style.setProperty('z-index', '10', 'important');
+            if (window.ScrollTrigger) {
+                setTimeout(function() {
+                    ScrollTrigger.refresh();
+                }, 100);
             }
         }
         initSingleTeamSticky();
         window.addEventListener('resize', initSingleTeamSticky);
         window.addEventListener('load', initSingleTeamSticky);
-        window.addEventListener('scroll', function() {
-            var stickyHeader = document.querySelector('.mas-sticky-header');
-            var stickyCol = document.querySelector('.cmr-team-sticky-col');
-            if (stickyHeader && stickyCol) {
-                var h = stickyHeader.offsetHeight || 95;
-                stickyCol.style.setProperty('top', Math.max(h + 25, 130) + 'px', 'important');
-            }
-        }, { passive: true });
     });
     </script>
     <?php

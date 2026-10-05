@@ -10467,5 +10467,114 @@ header .header-logo img,
   text-align: right !important;
 }
 
+/* ============================================================= */
+/* FIX: TEAM SINGLE PAGE LAYOUT & FOOTER OVERLAP FIX            */
+/* ============================================================= */
+body.single-teams #smooth-content,
+body.single-team #smooth-content,
+body.single-quanto_team #smooth-content,
+body[class*="single-team"] #smooth-content,
+body[class*="single-quanto_team"] #smooth-content {
+  overflow-x: hidden;
+  height: auto !important;
+  min-height: 100vh;
+}
+
+@media (min-width: 769px) {
+  body.single-teams #smooth-content .elementor-section,
+  body.single-teams #smooth-content .e-con,
+  body.single-teams #smooth-content .e-con-inner,
+  body.single-teams #smooth-content .elementor-container,
+  body.single-teams #smooth-content .elementor-row,
+  body.single-team #smooth-content .elementor-section,
+  body.single-team #smooth-content .e-con,
+  body.single-team #smooth-content .e-con-inner,
+  body.single-team #smooth-content .elementor-container,
+  body.single-team #smooth-content .elementor-row,
+  body.single-quanto_team #smooth-content .elementor-section,
+  body.single-quanto_team #smooth-content .e-con,
+  body.single-quanto_team #smooth-content .e-con-inner,
+  body.single-quanto_team #smooth-content .elementor-container,
+  body.single-quanto_team #smooth-content .elementor-row {
+    overflow: visible !important;
+    align-items: flex-start !important;
+  }
+
+  .cmr-team-sticky-col,
+  body.single-teams #smooth-content .e-con > .e-con:first-child,
+  body.single-teams #smooth-content .elementor-column:first-child,
+  body.single-team #smooth-content .e-con > .e-con:first-child,
+  body.single-team #smooth-content .elementor-column:first-child,
+  body.single-quanto_team #smooth-content .e-con > .e-con:first-child,
+  body.single-quanto_team #smooth-content .elementor-column:first-child {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 130px !important;
+    align-self: flex-start !important;
+    z-index: 10 !important;
+    height: fit-content !important;
+    margin-top: 0 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  body.single-teams #smooth-content .elementor-section,
+  body.single-teams #smooth-content .e-con,
+  body.single-teams #smooth-content .e-con-inner,
+  body.single-teams #smooth-content .elementor-container,
+  body.single-teams #smooth-content .elementor-row,
+  body.single-team #smooth-content .elementor-section,
+  body.single-team #smooth-content .e-con,
+  body.single-team #smooth-content .e-con-inner,
+  body.single-team #smooth-content .elementor-container,
+  body.single-team #smooth-content .elementor-row,
+  body.single-quanto_team #smooth-content .elementor-section,
+  body.single-quanto_team #smooth-content .e-con,
+  body.single-quanto_team #smooth-content .e-con-inner,
+  body.single-quanto_team #smooth-content .elementor-container,
+  body.single-quanto_team #smooth-content .elementor-row,
+  body.single-teams .elementor-element-341916f,
+  body.single-team .elementor-element-341916f,
+  body.single-quanto_team .elementor-element-341916f,
+  .single-teams [data-id="341916f"],
+  .single-team [data-id="341916f"] {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    width: 100% !important;
+  }
+
+  body.single-teams .elementor-element-953c2ba,
+  body.single-team .elementor-element-953c2ba,
+  body.single-quanto_team .elementor-element-953c2ba,
+  .single-teams [data-id="953c2ba"],
+  .single-team [data-id="953c2ba"],
+  .cmr-team-sticky-col {
+    position: relative !important;
+    top: auto !important;
+    align-self: stretch !important;
+    height: auto !important;
+    width: 100% !important;
+    margin-bottom: 24px !important;
+  }
+
+  body.single-teams footer.footer,
+  body.single-teams .footer,
+  body.single-team footer.footer,
+  body.single-team .footer,
+  body.single-quanto_team footer.footer,
+  body.single-quanto_team .footer {
+    position: relative !important;
+    clear: both !important;
+    width: 100% !important;
+    margin-top: 40px !important;
+    z-index: 10 !important;
+  }
+}
+
+
 
 
