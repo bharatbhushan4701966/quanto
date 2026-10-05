@@ -1160,6 +1160,10 @@ add_action('elementor/widgets/register', function($widgets_manager) {
     // Register CMR Featured Video Insight widget
     require_once get_template_directory() . '/inc/widgets/featured-video-insight.php';
     $widgets_manager->register(new \Quanto_Featured_Video_Insight_Widget());
+
+    // Register CMR Custom Image Carousel (with Width & Height controls)
+    require_once get_template_directory() . '/inc/widgets/custom-carousel.php';
+    $widgets_manager->register(new \Quanto_Custom_Carousel_Widget());
 }, 20); // Priority 20 to run after the plugin registers its widgets
 require_once get_template_directory() . '/inc/cmr-footer-css-fix.php';
 
@@ -4189,7 +4193,7 @@ function cmr_update_table_page_slugs_and_titles() {
  * Hide Elementor popups (like the consultation form) on the login page.
  */
 function quanto_hide_elementor_popup_on_login() {
-    echo '<style>.elementor-element-b8bc623 { width: 100% !important; flex: 1 !important; max-width: 100% !important; }.elementor-location-popup { display: none !important; }</style>';
+    echo '<style>.elementor-location-popup { display: none !important; }</style>';
 }
 add_action( 'login_head', 'quanto_hide_elementor_popup_on_login' );
 

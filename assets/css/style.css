@@ -10356,30 +10356,3 @@ body.single-quanto_team [data-id="953c2ba"] .elementor-social-icon svg {
 }
 
 
-/* =====================================================
-   CAROUSEL IMAGE SIZE — Edit values below to adjust
-   Widget: elementor-element-376796b (Marketing Services Hero)
-   ===================================================== */
-
-/* Set the WIDTH of the carousel container */
-.elementor-element-b8bc623 {
-    width: 500px !important; /* <-- Change this value */
-}
-
-/* Set the HEIGHT of the carousel (swiper) */
-.elementor-element-376796b .swiper,
-.elementor-element-376796b .elementor-image-carousel-wrapper {
-    height: 400px !important; /* <-- Change this value */
-}
-
-/* Image fills the carousel fully */
-.elementor-element-376796b .swiper-slide,
-.elementor-element-376796b .swiper-slide-inner,
-.elementor-element-376796b .swiper-slide-image {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    display: block !important;
-}
-
-
