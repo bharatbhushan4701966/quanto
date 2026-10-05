@@ -241,6 +241,24 @@ add_action( 'wp_footer', function() {
                         input.value = 'CMR GTM';
                     }
                 });
+
+                // Restore missing icons in modal list items if empty
+                modal.querySelectorAll('.elementor-icon-list-item').forEach(function(item) {
+                    var iconSpan = item.querySelector('.elementor-icon-list-icon');
+                    var textEl = item.querySelector('.elementor-icon-list-text');
+                    if (!iconSpan || !textEl) return;
+                    
+                    var text = textEl.textContent.trim().toLowerCase();
+                    if (!iconSpan.querySelector('svg') && !iconSpan.querySelector('i')) {
+                        if (text.indexOf('key market') !== -1 || text.indexOf('trends') !== -1) {
+                            iconSpan.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="12" viewBox="0 0 20 12" fill="none"><path d="M1.4 12L0 10.6L7.4 3.15L11.4 7.15L16.6 2H14V0H20V6H18V3.4L11.4 10L7.4 6L1.4 12Z" fill="white"></path></svg>';
+                        } else if (text.indexOf('actionable') !== -1 || text.indexOf('insights') !== -1) {
+                            iconSpan.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 15 20" fill="none"><path d="M7.5 20C6.95 20 6.47917 19.8042 6.0875 19.4125C5.69583 19.0208 5.5 18.55 5.5 18H9.5C9.5 18.55 9.30417 19.0208 8.9125 19.4125C8.52083 19.8042 8.05 20 7.5 20ZM3.5 17V15H11.5V17H3.5ZM3.75 14C2.6 13.3167 1.6875 12.4 1.0125 11.25C0.3375 10.1 0 8.85 0 7.5C0 5.41667 0.729167 3.64583 2.1875 2.1875C3.64583 0.729167 5.41667 0 7.5 0C9.58333 0 11.3542 0.729167 12.8125 2.1875C14.2708 3.64583 15 5.41667 15 7.5C15 8.85 14.6625 10.1 13.9875 11.25C13.3125 12.4 12.4 13.3167 11.25 14H3.75ZM4.35 12H10.65C11.4 11.4667 11.9792 10.8083 12.3875 10.025C12.7958 9.24167 13 8.4 13 7.5C13 5.96667 12.4667 4.66667 11.4 3.6C10.3333 2.53333 9.03333 2 7.5 2C5.96667 2 4.66667 2.53333 3.6 3.6C2.53333 4.66667 2 5.96667 2 7.5C2 8.4 2.20417 9.24167 2.6125 10.025C3.02083 10.8083 3.6 11.4667 4.35 12Z" fill="white"></path></svg>';
+                        } else if (text.indexOf('industry') !== -1 || text.indexOf('analysis') !== -1) {
+                            iconSpan.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 20 18" fill="none"><path d="M0 18V0H10V4H20V18H0ZM2 16H4V14H2V16ZM2 12H4V10H2V12ZM2 8H4V6H2V8ZM2 4H4V2H2V4ZM6 16H8V14H6V16ZM6 12H8V10H6V12ZM6 8H8V6H6V8ZM6 4H8V2H6V4ZM10 16H18V6H10V8H12V10H10V12H12V14H10V16ZM14 10V8H16V10H14ZM14 14V12H16V14H14Z" fill="white"></path></svg>';
+                        }
+                    }
+                });
             });
         }
 
