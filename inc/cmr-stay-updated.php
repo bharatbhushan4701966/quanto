@@ -221,8 +221,20 @@ if ( ! function_exists( 'cmr_stay_updated_shortcode' ) ) {
                                 $thumbnail_url = 'https://via.placeholder.com/600x400?text=No+Image';
                             }
                             
-                            $category_name = 'Industry Intelligence';
-                            $read_time = '5 min read'; // Simulated or custom field
+                            $category_name = 'CMR in News';
+                            $terms = get_the_terms( get_the_ID(), 'cmr_news_category' );
+                            if ( ! $terms || is_wp_error( $terms ) ) {
+                                $terms = get_the_terms( get_the_ID(), 'category' );
+                            }
+                            if ( $terms && ! is_wp_error( $terms ) ) {
+                                $category_name = $terms[0]->name;
+                            }
+                            
+                            $content = get_post_field( 'post_content', get_the_ID() );
+                            $word_count = str_word_count( strip_tags( $content ) );
+                            $calc_time = ceil( $word_count / 200 );
+                            if ( $calc_time < 1 ) $calc_time = 1;
+                            $read_time = $calc_time . ' min read';
                             $excerpt = wp_trim_words( get_the_excerpt(), 18, '...' );
                             ?>
                             
