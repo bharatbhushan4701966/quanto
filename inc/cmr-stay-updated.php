@@ -133,7 +133,7 @@ if ( ! function_exists( 'cmr_stay_updated_shortcode' ) ) {
 
             .cmr-stay-updated-section .stay-updated-image {
                 width: 100% !important;
-                border-radius: 8px !important;
+                border-radius: 0 !important;
                 overflow: hidden !important;
                 text-align: left !important;
                 margin-left: 0 !important;
@@ -147,7 +147,7 @@ if ( ! function_exists( 'cmr_stay_updated_shortcode' ) ) {
                 aspect-ratio: 16 / 9 !important;
                 object-fit: cover !important;
                 object-position: center left !important;
-                border-radius: 8px !important;
+                border-radius: 0 !important;
                 display: block !important;
                 margin: 0 !important;
                 margin-left: 0 !important;
@@ -227,9 +227,9 @@ if ( ! function_exists( 'cmr_stay_updated_shortcode' ) ) {
                             ?>
                             
                             <div class="stay-updated-card" style="text-align: left; align-items: flex-start;">
-                                <a href="<?php echo esc_url( $post_link ); ?>" class="stay-updated-img-link" style="display: block; width: 100%; text-align: left; margin: 0 0 14px 0; padding: 0;">
-                                    <div class="stay-updated-image" style="width: 100%; text-align: left; margin-left: 0; margin-right: auto; border-radius: 8px; overflow: hidden;">
-                                        <img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="<?php echo esc_attr( $post_title ); ?>" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: center left; display: block; border-radius: 8px; margin: 0; margin-left: 0; margin-right: auto;" />
+                                <a href="<?php echo esc_url( $post_link ); ?>" class="stay-updated-img-link" style="display: block; width: 100%; text-align: left; margin: 0 0 14px 0; padding: 0; border-radius: 0 !important;">
+                                    <div class="stay-updated-image" style="width: 100%; text-align: left; margin-left: 0; margin-right: auto; border-radius: 0 !important; overflow: hidden;">
+                                        <img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="<?php echo esc_attr( $post_title ); ?>" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: center left; display: block; border-radius: 0 !important; margin: 0; margin-left: 0; margin-right: auto;" />
                                     </div>
                                 </a>
                                 

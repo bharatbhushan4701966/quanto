@@ -8954,7 +8954,30 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
 
 .cmr-pr-card,
 .cmr-pr-card-img,
-.cmr-pr-card-content {
+.cmr-pr-card-content,
+.stay-updated-image,
+.stay-updated-image img,
+.stay-updated-img-link,
+.cmr-stay-updated-section img,
+.cmr-stay-updated-section .stay-updated-image,
+.cmr-card-bg,
+.cmr-card-image-wrap,
+.cmr-card,
+.cmr-mc-bg,
+.cmr-mc-image-wrap,
+.cmr-mc-card,
+.insights-featured-card,
+.insights-stacked-image,
+.insights-stacked-image img,
+.insights-stacked-card,
+.cmr-fvi-card,
+.cmr-fvi-thumbnail img,
+.cmr-slide-img,
+.cmr-slide-img img,
+.cmr-mu-slide-img,
+.cmr-mu-slide-img img,
+.cmr-vp-slide-img,
+.cmr-vp-slide-img img {
     border-radius: 0 !important;
 }
 

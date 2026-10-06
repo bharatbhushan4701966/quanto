@@ -105,6 +105,26 @@ function cmr_news_automotive_shortcode( $atts ) {
     ob_start();
     ?>
     <style>
+    .cmr-news-container .cmr-card-image-wrap {
+        position: relative !important;
+        overflow: hidden !important;
+    }
+    .cmr-news-container .cmr-card-image-wrap .cmr-card-logo {
+        position: absolute !important;
+        bottom: 15px !important;
+        left: 15px !important;
+        z-index: 3 !important;
+        max-height: 38px !important;
+        max-width: 140px !important;
+        width: auto !important;
+        height: auto !important;
+        object-fit: contain !important;
+        object-position: left center !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        display: block !important;
+    }
     @media (max-width: 768px) {
         .cmr-news-container .cmr-news-grid {
             display: flex !important;
@@ -171,11 +191,11 @@ function cmr_news_automotive_shortcode( $atts ) {
                                         <?php if ( $bg_image ) : ?>
                                             <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
                                         <?php endif; ?>
-                                    </div>
-                                    <div class="cmr-card-content">
                                         <?php if ( $logo_url ) : ?>
                                             <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo" alt="Source Logo">
                                         <?php endif; ?>
+                                    </div>
+                                    <div class="cmr-card-content">
                                         <div class="cmr-card-meta">
                                             <div class="cmr-meta-left">
                                                 <?php if ( $publisher ) : ?>

@@ -101,7 +101,7 @@
     display: block;
     margin-bottom: 20px;
     overflow: hidden;
-    border-radius: 4px;
+    border-radius: 0 !important;
 }
 
 .stay-updated-image {
@@ -257,7 +257,7 @@
 
     .stay-updated-image {
         width: 100% !important;
-        border-radius: 8px !important;
+        border-radius: 0 !important;
         overflow: hidden !important;
         margin-bottom: 14px !important;
     }
@@ -267,7 +267,7 @@
         height: auto !important;
         aspect-ratio: 16 / 9 !important;
         object-fit: cover !important;
-        border-radius: 8px !important;
+        border-radius: 0 !important;
         display: block !important;
     }
 
