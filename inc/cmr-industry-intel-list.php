@@ -209,7 +209,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 background: #ffffff !important;
                 color: #111111 !important;
                 text-decoration: none;
-                padding: 12px 24px;
+                padding: 8px 24px;
                 border-radius: 40px;
                 font-weight: 600;
                 font-size: 14px;
