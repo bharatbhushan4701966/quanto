@@ -231,16 +231,19 @@ if ( ! function_exists( 'cmr_viewpoints_hero_shortcode' ) ) {
                 position: absolute;
                 top: 20px;
                 left: 20px;
-                background: rgba(255,255,255,0.9);
+                background: rgba(255,255,255,0.95);
                 color: #6B3FA0;
-                padding: 6px 14px;
-                border-radius: 4px;
+                height: 30px !important;
+                padding: 0 12px !important;
+                box-sizing: border-box !important;
+                border-radius: 0 !important;
                 font-size: 11px;
                 font-weight: 600;
                 letter-spacing: 1px;
-                display: flex;
+                display: inline-flex;
                 align-items: center;
                 gap: 6px;
+                line-height: 1;
             }
             
             .cmr-vp-slide-content {
@@ -389,13 +392,19 @@ if ( ! function_exists( 'cmr_viewpoints_hero_shortcode' ) ) {
                     z-index: 5;
                     background: #FFFFFF;
                     color: #0F172A;
-                    border-radius: 30px;
-                    padding: 6px 14px;
+                    border-radius: 0 !important;
+                    height: 30px !important;
+                    padding: 0 12px !important;
+                    box-sizing: border-box !important;
                     font-size: 11px;
-                    font-weight: 700;
+                    font-weight: 600;
                     letter-spacing: 0.5px;
                     text-transform: uppercase;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    line-height: 1;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
                 }
                 .cmr-vp-slide-badge svg {
                     color: #6B3FA0;

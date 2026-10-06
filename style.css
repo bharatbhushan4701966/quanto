@@ -8959,11 +8959,36 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
 }
 
 .cmr-mc-wrapper .cmr-mc-logo,
-.cmr-mc-logo {
+.cmr-mc-logo,
+.cmr-nc-logo {
+    max-width: none !important;
+    width: auto !important;
+    max-height: 44px !important;
+    height: auto !important;
+    object-fit: contain !important;
     object-position: left center !important;
     margin-left: 0 !important;
     padding-left: 0 !important;
     align-self: flex-start !important;
+}
+
+/* Universal Badge Height: 30px */
+.cmr-nc-badge,
+.cmr-mc-trending-tag,
+.cmr-mc-trending-badge,
+.cmr-mu-slide-badge,
+.cmr-vp-slide-badge,
+.cmr-pr-card-badge,
+.cmr-lr-badge,
+.custom-new-badge,
+.slide-badge,
+.insights-tag {
+    height: 30px !important;
+    box-sizing: border-box !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    line-height: 1 !important;
+    border-radius: 0 !important;
 }
 
 /* CMR Featured Reports & Trending Now Styling */

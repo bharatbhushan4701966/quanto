@@ -240,16 +240,19 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
                 position: absolute;
                 top: 20px;
                 left: 20px;
-                background: rgba(255,255,255,0.9);
+                background: rgba(255,255,255,0.95);
                 color: #6B3FA0;
-                padding: 6px 14px;
-                border-radius: 4px;
+                height: 30px !important;
+                padding: 0 12px !important;
+                box-sizing: border-box !important;
+                border-radius: 0 !important;
                 font-size: 11px;
                 font-weight: 600;
                 letter-spacing: 1px;
-                display: flex;
+                display: inline-flex;
                 align-items: center;
                 gap: 6px;
+                line-height: 1;
             }
             
             .cmr-mu-slide-content {

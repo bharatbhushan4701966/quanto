@@ -728,7 +728,9 @@
     left: 20px;
     background: rgba(255, 255, 255, 0.95) !important;
     backdrop-filter: blur(4px);
-    padding: 6px 12px !important;
+    height: 30px !important;
+    padding: 0 12px !important;
+    box-sizing: border-box !important;
     border-radius: 0 !important;
     font-size: 11px !important;
     font-weight: 600 !important;
@@ -737,6 +739,7 @@
     align-items: center !important;
     gap: 6px !important;
     letter-spacing: 0.5px !important;
+    line-height: 1 !important;
     z-index: 2;
 }
 .cmr-media-coverage-wrapper .cmr-mc-logo {

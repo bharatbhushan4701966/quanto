@@ -133,12 +133,14 @@ function cmr_render_news_carousel_shortcode( $atts ) {
         font-weight: 600;
         letter-spacing: 0.8px;
         text-transform: uppercase;
-        padding: 4px 10px;
+        height: 30px !important;
+        padding: 0 12px !important;
+        box-sizing: border-box !important;
         border-radius: 0 !important;
-        display: inline-flex;
-        align-items: center;
+        display: inline-flex !important;
+        align-items: center !important;
         gap: 5px;
-        line-height: 1.2;
+        line-height: 1;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
 
@@ -171,13 +173,14 @@ function cmr_render_news_carousel_shortcode( $atts ) {
     }
 
     .cmr-nc-logo {
-        max-height: 48px;
-        max-width: 150px;
-        width: auto;
-        height: auto;
-        object-fit: contain;
-        border-radius: 0;
-        display: block;
+        max-height: 44px !important;
+        max-width: none !important;
+        width: auto !important;
+        height: auto !important;
+        object-fit: contain !important;
+        object-position: left center !important;
+        border-radius: 0 !important;
+        display: block !important;
     }
 
     .cmr-nc-logo-bbc {
