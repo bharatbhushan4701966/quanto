@@ -8432,16 +8432,16 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     }
 
     .cmr-nc-card {
-        height: 440px !important;
-        border-radius: 12px !important;
+        height: 480px !important;
+        border-radius: 0 !important;
     }
 
     .cmr-nc-top-bar {
-        padding: 14px 16px !important;
+        padding: 18px 20px 0 20px !important;
     }
 
     .cmr-nc-card-content {
-        padding: 16px 16px 20px 16px !important;
+        padding: 20px 20px 24px 20px !important;
     }
 
     .cmr-nc-post-title {

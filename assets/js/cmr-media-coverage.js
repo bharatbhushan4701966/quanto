@@ -4,7 +4,8 @@ jQuery(document).ready(function($) {
     var currentSearch = '';
     var isLoading = false;
 
-    function loadMediaCoverage(append = false) {
+    function loadMediaCoverage(append) {
+        if (typeof append === 'undefined') append = false;
         if (isLoading) return;
         isLoading = true;
 
@@ -56,20 +57,50 @@ jQuery(document).ready(function($) {
     // Initial load
     loadMediaCoverage();
 
-    // Publisher Pill Click
-    $('.cmr-mc-pill').on('click', function(e) {
-        // Ignore if it's the 'More' button itself
-        if ($(this).hasClass('cmr-mc-more-btn')) return;
+    // Dropdown toggle
+    $(document).on('click', '.cmr-mc-dropdown-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $(this).closest('.cmr-mc-filter-dropdown').toggleClass('open');
+    });
+
+    // Close dropdown on outside click
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('.cmr-mc-filter-dropdown').length) {
+            $('.cmr-mc-filter-dropdown').removeClass('open');
+        }
+    });
+
+    // Top Level Publisher Pill Click
+    $(document).on('click', '.cmr-mc-pills > .cmr-mc-pill', function(e) {
+        if ($(this).hasClass('cmr-mc-dropdown-toggle')) return;
 
         $('.cmr-mc-pill').removeClass('active');
+        $('.cmr-mc-dropdown-item').removeClass('active');
+        $('.cmr-mc-dropdown-toggle span').text('More');
+        $('.cmr-mc-filter-dropdown').removeClass('open');
         $(this).addClass('active');
 
-        // Also if it was inside dropdown, mark the dropdown trigger active too
-        if ($(this).hasClass('cmr-mc-dropdown-item')) {
-            $('.cmr-mc-more-btn').addClass('active');
-        }
+        currentPublisher = $(this).data('publisher') || '';
+        currentPage = 1;
+        loadMediaCoverage(false);
+    });
 
-        currentPublisher = $(this).data('publisher');
+    // Dropdown Item Click
+    $(document).on('click', '.cmr-mc-dropdown-item', function(e) {
+        e.preventDefault();
+        var pub = $(this).data('publisher');
+        
+        $('.cmr-mc-pill').removeClass('active');
+        $('.cmr-mc-dropdown-item').removeClass('active');
+        $(this).addClass('active');
+
+        var dropdown = $(this).closest('.cmr-mc-filter-dropdown');
+        dropdown.find('.cmr-mc-dropdown-toggle').addClass('active');
+        dropdown.find('.cmr-mc-dropdown-toggle span').text(pub);
+        dropdown.removeClass('open');
+
+        currentPublisher = pub;
         currentPage = 1;
         loadMediaCoverage(false);
     });
@@ -83,7 +114,7 @@ jQuery(document).ready(function($) {
             currentSearch = val;
             currentPage = 1;
             loadMediaCoverage(false);
-        }, 500); // 500ms delay
+        }, 400);
     });
 
     // Load More Click

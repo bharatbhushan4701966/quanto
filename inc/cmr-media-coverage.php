@@ -20,14 +20,24 @@ function cmr_render_media_coverage_shortcode( $atts ) {
         'ajax_url' => admin_url( 'admin-ajax.php' )
     ) );
 
-    // Fetch distinct publishers
+    // Fetch distinct publishers that have published posts in this category
     global $wpdb;
     $publishers = $wpdb->get_col("
-        SELECT DISTINCT meta_value 
-        FROM {$wpdb->postmeta} 
-        WHERE meta_key = '_cmr_news_publisher_name' 
-        AND meta_value != ''
-        ORDER BY meta_value ASC
+        SELECT DISTINCT pm.meta_value 
+        FROM {$wpdb->postmeta} pm
+        INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+        WHERE pm.meta_key = '_cmr_news_publisher_name' 
+        AND TRIM(pm.meta_value) != ''
+        AND p.post_type = 'cmr_news'
+        AND p.post_status = 'publish'
+        AND p.ID NOT IN (
+            SELECT tr.object_id FROM {$wpdb->term_relationships} tr
+            INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id
+            INNER JOIN {$wpdb->terms} t ON t.term_id = tt.term_id
+            WHERE t.slug IN ('media-releases', 'media-release', 'media_releases', 'media_release', 'press-releases', 'press-release', 'pressreleases', 'press-releases-2', 'press-release-2')
+        )
+        GROUP BY pm.meta_value
+        ORDER BY COUNT(p.ID) DESC, pm.meta_value ASC
     ");
 
     ob_start();
@@ -106,7 +116,7 @@ function cmr_render_media_coverage_shortcode( $atts ) {
     }
 
     .cmr-mc-pill {
-        background: transparent;
+        background: #ffffff;
         border: 1px solid #E2E8F0;
         border-radius: 40px;
         padding: 8px 24px;
@@ -114,8 +124,12 @@ function cmr_render_media_coverage_shortcode( $atts ) {
         font-weight: 500;
         color: #111111;
         cursor: pointer;
-        transition: all 0.25s ease;
+        transition: all 0.2s ease;
         outline: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        line-height: 1.2;
     }
 
     .cmr-mc-pill:hover {
@@ -124,9 +138,72 @@ function cmr_render_media_coverage_shortcode( $atts ) {
     }
 
     .cmr-mc-pill.active {
-        background: #5842c3 !important;
+        background: #ffffff !important;
         border-color: #5842c3 !important;
-        color: #ffffff !important;
+        color: #5842c3 !important;
+        font-weight: 600 !important;
+        box-shadow: 0 0 0 1px #5842c3;
+    }
+
+    /* Dropdown */
+    .cmr-mc-filter-dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .cmr-mc-dropdown-toggle svg {
+        transition: transform 0.2s ease;
+    }
+
+    .cmr-mc-filter-dropdown.open .cmr-mc-dropdown-toggle svg {
+        transform: rotate(180deg);
+    }
+
+    .cmr-mc-dropdown-menu {
+        display: none;
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        background: #ffffff;
+        border: 1px solid #E2E8F0;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        padding: 6px;
+        min-width: 170px;
+        z-index: 100;
+        max-height: 260px;
+        overflow-y: auto;
+    }
+
+    .cmr-mc-filter-dropdown.open .cmr-mc-dropdown-menu {
+        display: block;
+    }
+
+    .cmr-mc-dropdown-item {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 8px 14px;
+        border: none;
+        background: transparent;
+        font-size: 13.5px;
+        font-weight: 500;
+        color: #333333;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background 0.15s ease, color 0.15s ease;
+        box-sizing: border-box;
+    }
+
+    .cmr-mc-dropdown-item:hover {
+        background: #f1effd;
+        color: #5842c3;
+    }
+
+    .cmr-mc-dropdown-item.active {
+        background: #f1effd;
+        color: #5842c3;
+        font-weight: 600;
     }
 
     /* Search Bar */
@@ -138,11 +215,11 @@ function cmr_render_media_coverage_shortcode( $atts ) {
 
     .cmr-mc-search input {
         width: 100%;
-        height: 48px;
+        height: 46px;
         border-radius: 40px;
         border: 1px solid #E2E8F0;
-        padding: 10px 50px 10px 22px;
-        font-size: 14.5px;
+        padding: 10px 48px 10px 20px;
+        font-size: 14px;
         color: #111111;
         background: #ffffff;
         box-sizing: border-box;
@@ -156,7 +233,7 @@ function cmr_render_media_coverage_shortcode( $atts ) {
 
     .cmr-mc-search-icon {
         position: absolute;
-        right: 6px;
+        right: 5px;
         top: 50%;
         transform: translateY(-50%);
         width: 36px;
@@ -457,10 +534,28 @@ function cmr_render_media_coverage_shortcode( $atts ) {
             <div class="cmr-mc-pills">
                 <button class="cmr-mc-pill active" data-publisher="">All</button>
                 <?php 
-                foreach ( $publishers as $pub ) {
+                $top_publishers = array_slice( $publishers, 0, 4 );
+                $more_publishers = array_slice( $publishers, 4 );
+
+                foreach ( $top_publishers as $pub ) {
                     echo '<button class="cmr-mc-pill" data-publisher="' . esc_attr( $pub ) . '">' . esc_html( $pub ) . '</button>';
                 }
-                ?>
+
+                if ( ! empty( $more_publishers ) ) : ?>
+                    <div class="cmr-mc-filter-dropdown">
+                        <button class="cmr-mc-pill cmr-mc-dropdown-toggle" type="button">
+                            <span>More</span>
+                            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <div class="cmr-mc-dropdown-menu">
+                            <?php foreach ( $more_publishers as $pub ) : ?>
+                                <button class="cmr-mc-dropdown-item" data-publisher="<?php echo esc_attr( $pub ); ?>"><?php echo esc_html( $pub ); ?></button>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="cmr-mc-search">
                 <input type="text" id="cmr-mc-search-input" placeholder="Search by name">

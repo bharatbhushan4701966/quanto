@@ -35,7 +35,7 @@ function cmr_render_news_carousel_shortcode( $atts ) {
     <style>
     .cmr-nc-wrapper {
         width: 100%;
-        max-width: 1280px;
+        max-width: 100%;
         margin: 0 auto;
         padding: 0;
         font-family: 'Instrument Sans', sans-serif;
@@ -80,7 +80,7 @@ function cmr_render_news_carousel_shortcode( $atts ) {
         transition: opacity 0.4s ease, transform 0.4s ease;
         opacity: 0.55;
         transform: scale(0.96);
-        border-radius: 12px;
+        border-radius: 0 !important;
         box-sizing: border-box;
         height: auto;
     }
@@ -92,8 +92,8 @@ function cmr_render_news_carousel_shortcode( $atts ) {
 
     .cmr-nc-card {
         position: relative;
-        height: 480px;
-        border-radius: 12px;
+        height: 740px !important;
+        border-radius: 0 !important;
         overflow: hidden;
         background-size: cover;
         background-position: center;
@@ -110,58 +110,19 @@ function cmr_render_news_carousel_shortcode( $atts ) {
         background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.25) 30%, rgba(10, 15, 30, 0.72) 62%, rgba(10, 15, 30, 0.95) 100%);
         z-index: 1;
         pointer-events: none;
+        border-radius: 0 !important;
     }
 
-    /* Top Bar: Logo on left, Badge on right */
+    /* Top Bar: Featured Badge on top-left */
     .cmr-nc-top-bar {
         position: relative;
         z-index: 3;
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: center;
-        padding: 18px 20px;
+        padding: 40px 60px 0 60px;
         width: 100%;
         box-sizing: border-box;
-    }
-
-    .cmr-nc-logo-wrap {
-        display: flex;
-        align-items: center;
-    }
-
-    .cmr-nc-logo {
-        max-height: 38px;
-        max-width: 120px;
-        width: auto;
-        height: auto;
-        object-fit: contain;
-        border-radius: 4px;
-        display: block;
-    }
-
-    .cmr-nc-logo-bbc {
-        background: #bb1919;
-        color: #ffffff;
-        font-weight: 800;
-        font-size: 11px;
-        padding: 3px 6px;
-        border-radius: 3px;
-        display: flex;
-        flex-direction: column;
-        line-height: 1.1;
-        letter-spacing: 0.5px;
-        text-align: center;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    }
-
-    .cmr-nc-logo-fallback {
-        background: rgba(0, 0, 0, 0.5);
-        color: #ffffff;
-        font-size: 13px;
-        font-weight: 700;
-        padding: 4px 10px;
-        border-radius: 4px;
-        backdrop-filter: blur(4px);
     }
 
     /* Featured Badge */
@@ -172,7 +133,7 @@ function cmr_render_news_carousel_shortcode( $atts ) {
         font-weight: 700;
         letter-spacing: 0.6px;
         text-transform: uppercase;
-        padding: 6px 14px;
+        padding: 7px 15px;
         border-radius: 6px;
         display: inline-flex;
         align-items: center;
@@ -184,34 +145,76 @@ function cmr_render_news_carousel_shortcode( $atts ) {
         fill: #5842c3;
         display: inline-block;
         vertical-align: -1px;
-        margin-right: 5px;
+        margin-right: 6px;
     }
 
     /* Bottom Card Content */
     .cmr-nc-card-content {
         position: relative;
         z-index: 3;
-        padding: 20px;
+        padding: 30px 60px 60px 60px !important;
         color: #ffffff;
         display: flex;
         flex-direction: column;
         box-sizing: border-box;
     }
 
+    /* Logo inside bottom content */
+    .cmr-nc-logo-wrap {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .cmr-nc-logo {
+        max-height: 48px;
+        max-width: 150px;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        border-radius: 0;
+        display: block;
+    }
+
+    .cmr-nc-logo-bbc {
+        background: #bb1919;
+        color: #ffffff;
+        font-weight: 800;
+        font-size: 13px;
+        padding: 5px 8px;
+        border-radius: 4px;
+        display: inline-flex;
+        flex-direction: column;
+        line-height: 1.1;
+        letter-spacing: 0.5px;
+        text-align: center;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    .cmr-nc-logo-fallback {
+        background: rgba(0, 0, 0, 0.55);
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 700;
+        padding: 6px 12px;
+        border-radius: 4px;
+        backdrop-filter: blur(4px);
+    }
+
     .cmr-nc-meta-info {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        font-size: 13px;
+        font-size: 14px;
         color: #e2e8f0;
-        margin-bottom: 10px;
-        line-height: 1.3;
+        margin-bottom: 12px;
+        line-height: 1.4;
     }
 
     .cmr-nc-meta-left {
         display: flex;
         align-items: center;
-        gap: 6px;
+        flex-wrap: wrap;
+        gap: 8px;
         font-weight: 500;
     }
 
@@ -230,7 +233,7 @@ function cmr_render_news_carousel_shortcode( $atts ) {
     }
 
     .cmr-nc-time {
-        font-size: 13px;
+        font-size: 14px;
         color: #cbd5e1;
         font-weight: 500;
         white-space: nowrap;
@@ -238,20 +241,22 @@ function cmr_render_news_carousel_shortcode( $atts ) {
 
     .cmr-nc-post-title {
         font-family: 'Instrument Sans', sans-serif;
-        font-size: 21px;
+        font-size: 28px;
         font-weight: 700;
         line-height: 1.3;
         color: #ffffff;
-        margin: 0 0 10px 0;
-        letter-spacing: -0.3px;
+        margin: 0 0 12px 0;
+        letter-spacing: -0.4px;
+        max-width: 950px;
     }
 
     .cmr-nc-excerpt {
         font-family: 'Instrument Sans', sans-serif;
-        font-size: 13.5px;
-        line-height: 1.5;
+        font-size: 15px;
+        line-height: 1.55;
         color: rgba(255, 255, 255, 0.9);
-        margin: 0 0 16px 0;
+        margin: 0 0 22px 0;
+        max-width: 850px;
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
@@ -280,7 +285,7 @@ function cmr_render_news_carousel_shortcode( $atts ) {
     /* Pagination: Horizontal Rounded Dashes */
     .cmr-nc-carousel .swiper-pagination {
         position: static !important;
-        margin-top: 22px !important;
+        margin-top: 24px !important;
         display: flex !important;
         justify-content: center !important;
         align-items: center !important;
@@ -303,6 +308,21 @@ function cmr_render_news_carousel_shortcode( $atts ) {
     .cmr-nc-carousel .swiper-pagination-bullet-active {
         background: #5842c3 !important;
         opacity: 1 !important;
+    }
+
+    @media (max-width: 1024px) {
+        .cmr-nc-card {
+            height: 580px !important;
+        }
+        .cmr-nc-top-bar {
+            padding: 30px 40px 0 40px !important;
+        }
+        .cmr-nc-card-content {
+            padding: 24px 40px 40px 40px !important;
+        }
+        .cmr-nc-post-title {
+            font-size: 24px !important;
+        }
     }
 
     /* Mobile Edge-to-Edge and Card Peeking */
@@ -351,16 +371,20 @@ function cmr_render_news_carousel_shortcode( $atts ) {
         }
 
         .cmr-nc-card {
-            height: 440px !important;
-            border-radius: 12px !important;
+            height: 480px !important;
+            border-radius: 0 !important;
         }
 
         .cmr-nc-top-bar {
-            padding: 14px 16px !important;
+            padding: 18px 20px 0 20px !important;
         }
 
         .cmr-nc-card-content {
-            padding: 16px 16px 20px 16px !important;
+            padding: 20px 20px 24px 20px !important;
+        }
+
+        .cmr-nc-logo-wrap {
+            margin-bottom: 12px !important;
         }
 
         .cmr-nc-post-title {
@@ -438,20 +462,8 @@ function cmr_render_news_carousel_shortcode( $atts ) {
                     <div class="cmr-nc-card" style="background-image: url('<?php echo esc_url( $bg_image ); ?>');">
                         <div class="cmr-nc-overlay"></div>
                         
-                        <!-- Top Bar: Logo on left, Featured badge on right -->
+                        <!-- Top Bar: Featured Badge on top-left -->
                         <div class="cmr-nc-top-bar">
-                            <div class="cmr-nc-logo-wrap">
-                                <?php if ( $logo_url ) : ?>
-                                    <img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php echo esc_attr( $publisher_name ); ?>" class="cmr-nc-logo">
-                                <?php elseif ( stripos( $publisher_name, 'bbc' ) !== false ) : ?>
-                                    <div class="cmr-nc-logo-bbc">
-                                        <span>BBC</span><span>NEWS</span>
-                                    </div>
-                                <?php elseif ( $publisher_name ) : ?>
-                                    <span class="cmr-nc-logo-fallback"><?php echo esc_html( $publisher_name ); ?></span>
-                                <?php endif; ?>
-                            </div>
-
                             <?php if ( $show_featured ) : ?>
                                 <span class="cmr-nc-badge">
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
@@ -464,13 +476,29 @@ function cmr_render_news_carousel_shortcode( $atts ) {
 
                         <!-- Bottom Card Content -->
                         <div class="cmr-nc-card-content">
+                            <!-- Publisher Logo placed above metadata -->
+                            <div class="cmr-nc-logo-wrap">
+                                <?php if ( $logo_url ) : ?>
+                                    <img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php echo esc_attr( $publisher_name ); ?>" class="cmr-nc-logo">
+                                <?php elseif ( stripos( $publisher_name, 'bbc' ) !== false ) : ?>
+                                    <div class="cmr-nc-logo-bbc">
+                                        <span>BBC</span><span>NEWS</span>
+                                    </div>
+                                <?php elseif ( $publisher_name ) : ?>
+                                    <span class="cmr-nc-logo-fallback"><?php echo esc_html( $publisher_name ); ?></span>
+                                <?php endif; ?>
+                            </div>
+
                             <div class="cmr-nc-meta-info">
                                 <div class="cmr-nc-meta-left">
                                     <span class="cmr-nc-publisher"><?php echo esc_html( $publisher_name ); ?></span>
                                     <span class="cmr-nc-meta-sep">|</span>
                                     <span class="cmr-nc-date">Published <?php echo get_the_date('M d, Y'); ?></span>
+                                    <?php if ( $reading_time ) : ?>
+                                        <span class="cmr-nc-meta-sep">|</span>
+                                        <span class="cmr-nc-time"><?php echo esc_html( $reading_time ); ?><?php echo is_numeric($reading_time) ? ' mins' : ''; ?></span>
+                                    <?php endif; ?>
                                 </div>
-                                <span class="cmr-nc-time"><?php echo esc_html( $reading_time ); ?> mins</span>
                             </div>
                             
                             <h3 class="cmr-nc-post-title"><?php the_title(); ?></h3>
@@ -500,8 +528,8 @@ function cmr_render_news_carousel_shortcode( $atts ) {
                 document.querySelectorAll('.cmr-nc-carousel:not(.swiper-initialized)').forEach(function(carouselEl) {
                     var slideCount = carouselEl.querySelectorAll('.swiper-slide').length;
                     new Swiper(carouselEl, {
-                        slidesPerView: 1.2,
-                        spaceBetween: 12,
+                        slidesPerView: 1.18,
+                        spaceBetween: 24,
                         centeredSlides: true,
                         loop: slideCount > 1,
                         speed: 400,
@@ -511,18 +539,23 @@ function cmr_render_news_carousel_shortcode( $atts ) {
                         },
                         breakpoints: {
                             640: {
-                                slidesPerView: 1.3,
-                                spaceBetween: 16,
-                                centeredSlides: true,
-                            },
-                            768: {
-                                slidesPerView: 1.45,
+                                slidesPerView: 1.25,
                                 spaceBetween: 20,
                                 centeredSlides: true,
                             },
+                            768: {
+                                slidesPerView: 1.35,
+                                spaceBetween: 24,
+                                centeredSlides: true,
+                            },
                             1024: {
-                                slidesPerView: 1.25,
-                                spaceBetween: 28,
+                                slidesPerView: 1.2,
+                                spaceBetween: 30,
+                                centeredSlides: true,
+                            },
+                            1400: {
+                                slidesPerView: 1.15,
+                                spaceBetween: 36,
                                 centeredSlides: true,
                             }
                         }
