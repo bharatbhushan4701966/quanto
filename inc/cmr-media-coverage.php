@@ -20,10 +20,10 @@ function cmr_render_media_coverage_shortcode( $atts ) {
         'ajax_url' => admin_url( 'admin-ajax.php' )
     ) );
 
-    // Fetch distinct publishers that have published posts in this category
+    // Fetch distinct publishers that have valid published posts in this category
     global $wpdb;
-    $publishers = $wpdb->get_col("
-        SELECT DISTINCT pm.meta_value 
+    $raw_publishers = $wpdb->get_col("
+        SELECT pm.meta_value 
         FROM {$wpdb->postmeta} pm
         INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
         WHERE pm.meta_key = '_cmr_news_publisher_name' 
@@ -34,15 +34,76 @@ function cmr_render_media_coverage_shortcode( $atts ) {
             SELECT tr.object_id FROM {$wpdb->term_relationships} tr
             INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id
             INNER JOIN {$wpdb->terms} t ON t.term_id = tt.term_id
-            WHERE t.slug IN ('media-releases', 'media-release', 'media_releases', 'media_release', 'press-releases', 'press-release', 'pressreleases', 'press-releases-2', 'press-release-2')
+            WHERE tt.taxonomy IN ('cmr_news_category', 'category')
+            AND (
+                t.slug IN ('media-releases', 'media-release', 'media_releases', 'media_release', 'press-releases', 'press-release', 'pressreleases', 'press-releases-2', 'press-release-2', 'quarterly-results')
+                OR t.name LIKE '%Media Release%'
+                OR t.name LIKE '%Press Release%'
+                OR t.name LIKE '%Quarterly%'
+            )
         )
         GROUP BY pm.meta_value
         ORDER BY COUNT(p.ID) DESC, pm.meta_value ASC
     ");
 
+    $publishers = array();
+    if ( ! empty( $raw_publishers ) ) {
+        foreach ( $raw_publishers as $r_pub ) {
+            $r_pub = trim( $r_pub );
+            if ( empty( $r_pub ) || in_array( $r_pub, $publishers ) ) continue;
+
+            // Verify with exact WP_Query criteria
+            $chk = new WP_Query( array(
+                'post_type'      => 'cmr_news',
+                'post_status'    => 'publish',
+                'posts_per_page' => 1,
+                'fields'         => 'ids',
+                'tax_query'      => array(
+                    'relation' => 'AND',
+                    array(
+                        'taxonomy' => 'cmr_news_category',
+                        'field'    => 'slug',
+                        'terms'    => array('media-releases', 'media-release', 'media_releases', 'media_release', 'press-releases', 'press-release', 'pressreleases', 'press-releases-2', 'press-release-2', 'quarterly-results'),
+                        'operator' => 'NOT IN'
+                    ),
+                ),
+                'meta_query'     => array(
+                    array(
+                        'key'     => '_cmr_news_publisher_name',
+                        'value'   => $r_pub,
+                        'compare' => '='
+                    )
+                )
+            ) );
+
+            if ( $chk->have_posts() ) {
+                $publishers[] = $r_pub;
+            }
+        }
+    }
+
     ob_start();
     ?>
     <style>
+    /* Zero Border Radius on all media/news images & cards across the board */
+    .cmr-mc-wrapper img,
+    .cmr-mc-wrapper .cmr-mc-card,
+    .cmr-mc-wrapper .cmr-mc-image-wrap,
+    .cmr-mc-wrapper .cmr-mc-featured-image,
+    .cmr-mc-wrapper .cmr-mc-card-image,
+    .cmr-mc-wrapper .cmr-mc-bg,
+    .cmr-media-coverage-wrapper img,
+    .cmr-media-coverage-wrapper .cmr-mc-card,
+    .cmr-media-coverage-wrapper .cmr-mc-featured-image,
+    .cmr-media-coverage-wrapper .cmr-mc-card-image,
+    .cmr-media-coverage-wrapper .cmr-mc-bg,
+    .cmr-card,
+    .cmr-card-image-wrap,
+    .cmr-card-bg,
+    .cmr-nc-card,
+    .cmr-nc-card img {
+        border-radius: 0 !important;
+    }
     /* Sticky Intel Nav Bar for Media Coverage - Desktop */
     @media (min-width: 769px) {
         .cmr-mc-wrapper .intel-nav-bar,
@@ -534,8 +595,8 @@ function cmr_render_media_coverage_shortcode( $atts ) {
             <div class="cmr-mc-pills">
                 <button class="cmr-mc-pill active" data-publisher="">All</button>
                 <?php 
-                $top_publishers = array_slice( $publishers, 0, 4 );
-                $more_publishers = array_slice( $publishers, 4 );
+                $top_publishers = array_slice( $publishers, 0, 5 );
+                $more_publishers = array_slice( $publishers, 5 );
 
                 foreach ( $top_publishers as $pub ) {
                     echo '<button class="cmr-mc-pill" data-publisher="' . esc_attr( $pub ) . '">' . esc_html( $pub ) . '</button>';
@@ -661,17 +722,23 @@ function cmr_ajax_filter_media_coverage() {
                             <?php if ( $bg_image ) : ?>
                                 <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-mc-bg" alt="<?php the_title_attribute(); ?>">
                             <?php endif; ?>
-                            <?php if ( $logo_url ) : ?>
-                                <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-mc-logo" alt="Source Logo">
-                            <?php endif; ?>
                             <span class="cmr-mc-trending-tag">✦ TRENDING</span>
                         </div>
                         <div class="cmr-mc-content">
+                            <?php if ( $logo_url ) : ?>
+                                <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-mc-logo" alt="Source Logo">
+                            <?php endif; ?>
                             <div class="cmr-mc-meta">
-                                <?php if ( $publisher_name ) : ?>
-                                    <span class="cmr-mc-publisher"><?php echo esc_html( $publisher_name ); ?></span> <span class="cmr-mc-separator">|</span> 
-                                <?php endif; ?>
-                                <span class="cmr-mc-date">Published <?php echo esc_html( $date ); ?></span>
+                                <div class="cmr-mc-meta-left">
+                                    <?php if ( $publisher_name ) : ?>
+                                        <span class="cmr-mc-publisher"><?php echo esc_html( $publisher_name ); ?></span> <span class="cmr-mc-separator">|</span> 
+                                    <?php endif; ?>
+                                    <span class="cmr-mc-date">Published <?php echo esc_html( $date ); ?></span>
+                                    <?php if ( $reading_time ) : ?>
+                                        <span class="cmr-mc-separator">|</span>
+                                        <span class="cmr-mc-read-time"><?php echo esc_html( $reading_time ); ?><?php echo is_numeric($reading_time) ? ' mins' : ''; ?></span>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                             <h2 class="cmr-mc-title" style="text-align: left !important;"><?php the_title(); ?></h2>
                             <?php if ( has_excerpt() ) : ?>
@@ -691,23 +758,22 @@ function cmr_ajax_filter_media_coverage() {
                             <?php if ( $bg_image ) : ?>
                                 <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-mc-bg" alt="<?php the_title_attribute(); ?>">
                             <?php endif; ?>
+                        </div>
+                        <div class="cmr-mc-content">
                             <?php if ( $logo_url ) : ?>
                                 <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-mc-logo" alt="Source Logo">
                             <?php endif; ?>
-                        </div>
-                        <div class="cmr-mc-content">
                             <div class="cmr-mc-meta">
                                 <div class="cmr-mc-meta-left">
                                     <?php if ( $publisher_name ) : ?>
                                         <span class="cmr-mc-publisher"><?php echo esc_html( $publisher_name ); ?></span> <span class="cmr-mc-separator">|</span> 
                                     <?php endif; ?>
                                     <span class="cmr-mc-date">Published <?php echo esc_html( $date ); ?></span>
+                                    <?php if ( $reading_time ) : ?>
+                                        <span class="cmr-mc-separator">|</span>
+                                        <span class="cmr-mc-read-time"><?php echo esc_html( $reading_time ); ?><?php echo is_numeric($reading_time) ? ' mins' : ''; ?></span>
+                                    <?php endif; ?>
                                 </div>
-                                <?php if ( $reading_time ) : ?>
-                                    <div class="cmr-mc-meta-right">
-                                        <span class="cmr-mc-read-time"><?php echo esc_html( $reading_time ); ?></span>
-                                    </div>
-                                <?php endif; ?>
                             </div>
                             <h3 class="cmr-mc-title" style="text-align: left !important;"><?php the_title(); ?></h3>
                             <span class="cmr-mc-read-coverage">View Coverage <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg" class="cmr-mc-arrow" alt=""></span>

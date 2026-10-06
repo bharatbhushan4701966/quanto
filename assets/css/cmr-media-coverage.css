@@ -283,13 +283,15 @@
 }
 
 .cmr-mc-wrapper .cmr-mc-logo {
-    position: absolute;
-    bottom: 15px;
-    left: 15px;
-    width: 40px;
-    height: 40px;
+    position: relative;
+    width: auto !important;
+    max-width: 150px;
+    max-height: 44px;
+    height: auto;
     object-fit: contain;
-    border-radius: 4px;
+    border-radius: 0;
+    margin-bottom: 14px;
+    display: block;
 }
 
 .cmr-mc-wrapper .cmr-mc-trending-tag {
@@ -310,8 +312,9 @@
     color: #666;
     margin-bottom: 10px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+    gap: 8px;
 }
 
 .cmr-mc-wrapper .cmr-mc-publisher {
@@ -604,7 +607,7 @@
         max-width: 100% !important;
         height: 220px !important;
         min-height: 0 !important;
-        border-radius: 12px !important;
+        border-radius: 0 !important;
         position: relative !important;
         overflow: hidden !important;
     }
@@ -691,7 +694,7 @@
         width: 100% !important;
         height: 200px !important;
         aspect-ratio: auto !important;
-        border-radius: 12px !important;
+        border-radius: 0 !important;
         position: relative !important;
         overflow: hidden !important;
         margin-bottom: 0 !important;

@@ -734,23 +734,22 @@ function cmr_news_tabs_shortcode( $atts ) {
                                                 <?php if ( $bg_image ) : ?>
                                                     <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
                                                 <?php endif; ?>
+                                            </div>
+                                            <div class="cmr-card-content">
                                                 <?php if ( $logo_url ) : ?>
                                                     <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo" alt="Source Logo">
                                                 <?php endif; ?>
-                                            </div>
-                                            <div class="cmr-card-content">
                                                 <div class="cmr-card-meta">
                                                     <div class="cmr-meta-left">
                                                         <?php if ( $publisher ) : ?>
                                                             <span class="cmr-publisher"><?php echo esc_html( $publisher ); ?></span> <span class="cmr-separator">|</span> 
                                                         <?php endif; ?>
                                                         <span class="cmr-date">Published <?php echo esc_html( $date ); ?></span>
+                                                        <?php if ( $reading_time ) : ?>
+                                                            <span class="cmr-separator">|</span>
+                                                            <span class="cmr-read-time"><?php echo esc_html( $reading_time ); ?><?php echo is_numeric($reading_time) ? ' mins' : ''; ?></span>
+                                                        <?php endif; ?>
                                                     </div>
-                                                    <?php if ( $reading_time ) : ?>
-                                                        <div class="cmr-meta-right">
-                                                            <span class="cmr-read-time"><?php echo esc_html( $reading_time ); ?></span>
-                                                        </div>
-                                                    <?php endif; ?>
                                                 </div>
                                                 <h3 class="cmr-card-title"><?php the_title(); ?></h3>
                                                 <?php
