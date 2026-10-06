@@ -240,10 +240,11 @@ class Quanto_Custom_Carousel_Widget extends \Elementor\Widget_Base {
                 ],
                 'selectors'  => [
                     '{{WRAPPER}} .quanto-custom-carousel' => 'height: {{SIZE}}{{UNIT}} !important;',
-                    '{{WRAPPER}} .quanto-custom-carousel .swiper' => 'height: {{SIZE}}{{UNIT}} !important;',
-                    '{{WRAPPER}} .quanto-custom-carousel .swiper-wrapper' => 'height: {{SIZE}}{{UNIT}} !important;',
-                    '{{WRAPPER}} .quanto-custom-carousel .swiper-slide' => 'height: {{SIZE}}{{UNIT}} !important;',
-                    '{{WRAPPER}} .quanto-custom-carousel .quanto-carousel-img' => 'height: {{SIZE}}{{UNIT}} !important;',
+                    '{{WRAPPER}} .quanto-custom-carousel .swiper' => 'height: 100% !important;',
+                    '{{WRAPPER}} .quanto-custom-carousel .swiper-wrapper' => 'height: 100% !important;',
+                    '{{WRAPPER}} .quanto-custom-carousel .swiper-slide' => 'height: 100% !important;',
+                    '{{WRAPPER}} .quanto-custom-carousel .swiper-slide img' => 'height: 100% !important;',
+                    '{{WRAPPER}} .quanto-custom-carousel img' => 'height: 100% !important;',
                 ],
             ]
         );
@@ -292,7 +293,8 @@ class Quanto_Custom_Carousel_Widget extends \Elementor\Widget_Base {
                     'scale-down' => esc_html__('Scale Down', 'quanto'),
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .quanto-custom-carousel .quanto-carousel-img' => 'object-fit: {{VALUE}} !important;',
+                    '{{WRAPPER}} .quanto-custom-carousel img' => 'object-fit: {{VALUE}} !important;',
+                    '{{WRAPPER}} .quanto-custom-carousel .swiper-slide img' => 'object-fit: {{VALUE}} !important;',
                 ],
             ]
         );
@@ -311,7 +313,8 @@ class Quanto_Custom_Carousel_Widget extends \Elementor\Widget_Base {
                     'center right'  => esc_html__('Center Right', 'quanto'),
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .quanto-custom-carousel .quanto-carousel-img' => 'object-position: {{VALUE}} !important;',
+                    '{{WRAPPER}} .quanto-custom-carousel img' => 'object-position: {{VALUE}} !important;',
+                    '{{WRAPPER}} .quanto-custom-carousel .swiper-slide img' => 'object-position: {{VALUE}} !important;',
                 ],
             ]
         );
@@ -326,7 +329,7 @@ class Quanto_Custom_Carousel_Widget extends \Elementor\Widget_Base {
                     '{{WRAPPER}} .quanto-custom-carousel' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                     '{{WRAPPER}} .quanto-custom-carousel .swiper' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                     '{{WRAPPER}} .quanto-custom-carousel .swiper-slide' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    '{{WRAPPER}} .quanto-custom-carousel .quanto-carousel-img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .quanto-custom-carousel img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
         );
@@ -480,29 +483,39 @@ class Quanto_Custom_Carousel_Widget extends \Elementor\Widget_Base {
                     box-sizing: border-box;
                 }
                 #<?php echo esc_attr($uid); ?> .swiper {
-                    width: 100%;
-                    height: 100%;
+                    width: 100% !important;
+                    height: 100% !important;
                     position: relative;
                     overflow: hidden;
                 }
                 #<?php echo esc_attr($uid); ?> .swiper-wrapper {
                     display: flex;
-                    width: 100%;
-                    height: 100%;
+                    width: 100% !important;
+                    height: 100% !important;
                 }
-                #<?php echo esc_attr($uid); ?> .swiper-slide {
-                    width: 100%;
-                    height: 100%;
+                #<?php echo esc_attr($uid); ?> .swiper-slide,
+                #<?php echo esc_attr($uid); ?> .quanto-single-slide {
+                    width: 100% !important;
+                    max-width: 100% !important;
+                    height: 100% !important;
+                    max-height: 100% !important;
                     flex-shrink: 0;
                     overflow: hidden;
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    box-sizing: border-box !important;
                 }
+                #<?php echo esc_attr($uid); ?> .swiper-slide img,
+                #<?php echo esc_attr($uid); ?> .quanto-single-slide img,
+                #<?php echo esc_attr($uid); ?> img,
                 #<?php echo esc_attr($uid); ?> .quanto-carousel-img {
                     width: 100% !important;
+                    max-width: 100% !important;
                     height: 100% !important;
+                    max-height: 100% !important;
                     display: block !important;
+                    box-sizing: border-box !important;
                 }
                 #<?php echo esc_attr($uid); ?> .quanto-carousel-arrow {
                     position: absolute;
@@ -595,17 +608,17 @@ class Quanto_Custom_Carousel_Widget extends \Elementor\Widget_Base {
             <?php if ($is_slider): ?>
             <script>
             (function() {
+                var swiperInstance = null;
+
                 function initSwiper_<?php echo $uid_safe; ?>() {
                     var container = document.getElementById("<?php echo esc_js($uid); ?>");
                     if (!container) return;
-                    if (container.dataset.swiperInit === 'true' && container.swiper) return;
 
                     if (typeof Swiper !== 'undefined') {
                         try {
                             if (container.swiper) {
                                 container.swiper.destroy(true, true);
                             }
-                            container.dataset.swiperInit = 'true';
 
                             var swiperOptions = {
                                 slidesPerView: 1,
@@ -614,6 +627,11 @@ class Quanto_Custom_Carousel_Widget extends \Elementor\Widget_Base {
                                 speed: <?php echo intval($speed); ?>,
                                 loop: <?php echo $loop ? 'true' : 'false'; ?>,
                                 watchOverflow: true,
+                                observer: true,
+                                observeParents: true,
+                                observeSlideChildren: true,
+                                resizeObserver: true,
+                                autoHeight: false,
                             };
 
                             <?php if ($autoplay): ?>
@@ -647,7 +665,14 @@ class Quanto_Custom_Carousel_Widget extends \Elementor\Widget_Base {
                             }
                             <?php endif; ?>
 
-                            new Swiper(container, swiperOptions);
+                            swiperInstance = new Swiper(container, swiperOptions);
+
+                            // Force swiper to update slide dimensions
+                            setTimeout(function() {
+                                if (swiperInstance && swiperInstance.update) {
+                                    swiperInstance.update();
+                                }
+                            }, 100);
                         } catch(err) {
                             console.error('Swiper Init Error:', err);
                         }
