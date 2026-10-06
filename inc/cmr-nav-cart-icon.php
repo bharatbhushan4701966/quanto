@@ -15,26 +15,27 @@ function cmr_nav_cart_shortcode() {
         text-decoration: none;
         width: 40px;
         height: 40px;
-        color: #333; /* Black by default on all inner pages */
+        color: #fff; /* White by default matching search icon */
         transition: color 0.3s ease;
     }
     
-    /* Make it white ONLY on the home page initially */
-    body.home .cmr-nav-cart-container,
-    body.home-page .cmr-nav-cart-container {
-        color: #fff;
-    }
-
     .cmr-nav-cart-container:hover {
-        color: #4820B0 !important; /* Purple on hover */
+        color: #d1d1d1 !important; /* Matches search icon hover */
     }
     
-    /* Force black when header is sticky (overrides home page white) */
+    /* Change to black when header is sticky */
     .elementor-sticky--effects .cmr-nav-cart-container,
     .is-sticky .cmr-nav-cart-container,
     header.sticky .cmr-nav-cart-container,
     .intel-nav-fixed-js .cmr-nav-cart-container {
         color: #333 !important;
+    }
+
+    .elementor-sticky--effects .cmr-nav-cart-container:hover,
+    .is-sticky .cmr-nav-cart-container:hover,
+    header.sticky .cmr-nav-cart-container:hover,
+    .intel-nav-fixed-js .cmr-nav-cart-container:hover {
+        color: #4820B0 !important;
     }
 
     .cmr-nav-cart-container svg {

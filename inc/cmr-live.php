@@ -1034,7 +1034,7 @@ if ( ! function_exists( 'cmr_cta_banner_shortcode' ) ) {
         $atts = shortcode_atts( array(
             'title'       => 'Need deeper insights?',
             'text'        => 'Talk to our analysts for tailored recommendations across your sector.',
-            'button_text' => 'Connect Industry Insights',
+            'button_text' => 'Connect to Analyst',
             'button_link' => '#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6Ijc2MzciLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D',
             'popup_id'    => '7637',
         ), $atts, 'cmr_cta_banner' );

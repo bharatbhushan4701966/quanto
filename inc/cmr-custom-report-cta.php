@@ -12,7 +12,7 @@ if ( ! function_exists( 'cmr_custom_report_cta_shortcode' ) ) {
         $atts = shortcode_atts( array(
             'title'       => 'Need Custom Report?',
             'text'        => 'Get tailored insights, market analysis, and strategic recommendations designed around your specific requirements.',
-            'button_text' => 'Connect Industry Insights',
+            'button_text' => 'Connect to Analyst',
             'button_link' => '#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6Ijc2MzciLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D',
             'popup_id'    => '7637',
         ), $atts );

@@ -7559,11 +7559,11 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     }
 
     .cmr-intel-trends-card {
-        border-radius: 8px !important;
+        border-radius: 0 !important;
     }
 
     .cmr-intel-trends-img {
-        border-radius: 8px !important;
+        border-radius: 0 !important;
         overflow: hidden !important;
         margin-bottom: 14px !important;
     }
@@ -7783,7 +7783,7 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
         max-width: 100% !important;
         flex: none !important;
         aspect-ratio: 16 / 9 !important;
-        border-radius: 8px !important;
+        border-radius: 0 !important;
         overflow: hidden !important;
         margin: 0 0 14px 0 !important;
         margin-left: 0 !important;
@@ -7797,6 +7797,7 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
         display: block !important;
         width: 100% !important;
         height: 100% !important;
+        border-radius: 0 !important;
         text-align: left !important;
         margin: 0 !important;
         padding: 0 !important;
@@ -7809,7 +7810,7 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
         aspect-ratio: 16 / 9 !important;
         object-fit: cover !important;
         object-position: center left !important;
-        border-radius: 8px !important;
+        border-radius: 0 !important;
         display: block !important;
         margin: 0 !important;
         margin-left: 0 !important;
@@ -9006,8 +9007,19 @@ figure img,
 .cmr-news-container .cmr-card-image-wrap,
 .cmr-news-grid img,
 .cmr-news-grid .cmr-card,
+.cmr-intel-list-img,
+.cmr-intel-list-img a,
+.cmr-intel-list-img img,
+.intel-card-img,
+.intel-card-img a,
+.intel-card-img img,
+.cmr-intel-trends-img,
+.cmr-intel-trends-img img,
+.cmr-intel-trends-card,
 [class*="automotive"] img,
 [class*="automotive"] .cmr-card,
+[class*="automotive"] .cmr-intel-list-img,
+[class*="automotive"] .cmr-intel-list-img img,
 [class*="automotive"] .elementor-widget-image img {
     border-radius: 0 !important;
 }
@@ -10838,14 +10850,41 @@ body[class*="single-quanto_team"] #smooth-content {
     line-height: 32px !important;
 }
 
-/* Header Search & Nav Icons Hover State (Matches Newsroom Nav Hover #d1d1d1) */
+/* Header Search & Nav Icons (Cart, Search) Colors & Hover State (Matches Newsroom Nav Hover #d1d1d1) */
+.cmr-nav-search-container,
+.cmr-nav-search-trigger,
+.cmr-nav-cart-container {
+    color: #fff !important;
+}
+
 .cmr-nav-search-trigger:hover,
 .cmr-nav-search-trigger:hover svg,
 .cmr-nav-search-trigger:hover i,
 .cmr-nav-search-container:hover .cmr-nav-search-trigger,
-.cmr-nav-search-container:hover .cmr-nav-search-trigger svg {
+.cmr-nav-search-container:hover .cmr-nav-search-trigger svg,
+.cmr-nav-cart-container:hover,
+.cmr-nav-cart-container:hover svg,
+.cmr-nav-cart-container:hover path {
     color: #d1d1d1 !important;
+    stroke: #d1d1d1 !important;
 }
+
+/* When sticky header is active, switch to dark with purple hover */
+.elementor-sticky--effects .cmr-nav-cart-container,
+.is-sticky .cmr-nav-cart-container,
+header.sticky .cmr-nav-cart-container,
+.intel-nav-fixed-js .cmr-nav-cart-container {
+    color: #333 !important;
+}
+
+.elementor-sticky--effects .cmr-nav-cart-container:hover,
+.is-sticky .cmr-nav-cart-container:hover,
+header.sticky .cmr-nav-cart-container:hover,
+.intel-nav-fixed-js .cmr-nav-cart-container:hover {
+    color: #4820B0 !important;
+    stroke: #4820B0 !important;
+}
+
 
 
 
