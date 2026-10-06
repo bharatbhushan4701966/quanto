@@ -10359,5 +10359,12 @@ body.single-quanto_team [data-id="953c2ba"] .elementor-social-icon svg {
 .quanto-custom-carousel {
   height: 85% !important;
 }
+.quanto-custom-carousel .swiper-slide img,
+.quanto-custom-carousel .quanto-single-slide img,
+.quanto-custom-carousel img,
+.quanto-custom-carousel .quanto-carousel-img {
+  height: 85% !important;
+  max-height: 85% !important;
+}
 
 

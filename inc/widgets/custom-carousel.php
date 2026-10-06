@@ -243,8 +243,8 @@ class Quanto_Custom_Carousel_Widget extends \Elementor\Widget_Base {
                     '{{WRAPPER}} .quanto-custom-carousel .swiper' => 'height: 100% !important;',
                     '{{WRAPPER}} .quanto-custom-carousel .swiper-wrapper' => 'height: 100% !important;',
                     '{{WRAPPER}} .quanto-custom-carousel .swiper-slide' => 'height: 100% !important;',
-                    '{{WRAPPER}} .quanto-custom-carousel .swiper-slide img' => 'height: 100% !important;',
-                    '{{WRAPPER}} .quanto-custom-carousel img' => 'height: 100% !important;',
+                    '{{WRAPPER}} .quanto-custom-carousel .swiper-slide img' => 'height: {{SIZE}}{{UNIT}} !important; max-height: {{SIZE}}{{UNIT}} !important;',
+                    '{{WRAPPER}} .quanto-custom-carousel img' => 'height: {{SIZE}}{{UNIT}} !important; max-height: {{SIZE}}{{UNIT}} !important;',
                 ],
             ]
         );
@@ -513,8 +513,8 @@ class Quanto_Custom_Carousel_Widget extends \Elementor\Widget_Base {
                 #<?php echo esc_attr($uid); ?> .quanto-carousel-img {
                     width: 100% !important;
                     max-width: 100% !important;
-                    height: 100% !important;
-                    max-height: 100% !important;
+                    height: 85% !important;
+                    max-height: 85% !important;
                     display: block !important;
                     box-sizing: border-box !important;
                 }
