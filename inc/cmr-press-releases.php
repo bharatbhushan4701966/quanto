@@ -126,7 +126,7 @@ function cmr_render_press_releases_shortcode( $atts ) {
         .cmr-pr-card {
             display: flex;
             background: #1a1a1a;
-            border-radius: 12px;
+            border-radius: 0 !important;
             overflow: hidden;
             width: 800px; /* Fixed width for the scroll effect */
             height: 400px;
@@ -138,6 +138,7 @@ function cmr_render_press_releases_shortcode( $atts ) {
                 width: 85vw;
                 flex-direction: column;
                 height: auto;
+                border-radius: 0 !important;
             }
         }
 
@@ -145,6 +146,7 @@ function cmr_render_press_releases_shortcode( $atts ) {
             width: 50%;
             background-size: cover;
             background-position: center;
+            border-radius: 0 !important;
         }
 
         @media (max-width: 900px) {

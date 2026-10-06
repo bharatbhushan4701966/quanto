@@ -429,7 +429,7 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             border: none;
             padding: 0 0 4px 0;
             border-bottom: 2px solid #111 !important;
-            margin-top: 55px !important;
+            margin-top: 40px !important;
             transition: color 0.3s ease, border-color 0.3s ease;
         }
         .cmr-wwt-card-link:hover { 

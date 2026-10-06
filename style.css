@@ -8952,6 +8952,20 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     }
 }
 
+.cmr-pr-card,
+.cmr-pr-card-img,
+.cmr-pr-card-content {
+    border-radius: 0 !important;
+}
+
+.cmr-mc-wrapper .cmr-mc-logo,
+.cmr-mc-logo {
+    object-position: left center !important;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    align-self: flex-start !important;
+}
+
 /* CMR Featured Reports & Trending Now Styling */
 .cmr-featured-reports-section {
     max-width: 1280px !important;

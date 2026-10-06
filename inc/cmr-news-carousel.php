@@ -129,15 +129,17 @@ function cmr_render_news_carousel_shortcode( $atts ) {
     .cmr-nc-badge {
         background: #ffffff;
         color: #5842c3;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.6px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.8px;
         text-transform: uppercase;
-        padding: 7px 15px;
-        border-radius: 6px;
+        padding: 4px 10px;
+        border-radius: 0 !important;
         display: inline-flex;
         align-items: center;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        gap: 5px;
+        line-height: 1.2;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
 
     .cmr-nc-badge svg {
@@ -145,7 +147,9 @@ function cmr_render_news_carousel_shortcode( $atts ) {
         fill: #5842c3;
         display: inline-block;
         vertical-align: -1px;
-        margin-right: 6px;
+        margin-right: 0;
+        width: 10px;
+        height: 10px;
     }
 
     /* Bottom Card Content */
@@ -466,7 +470,7 @@ function cmr_render_news_carousel_shortcode( $atts ) {
                         <div class="cmr-nc-top-bar">
                             <?php if ( $show_featured ) : ?>
                                 <span class="cmr-nc-badge">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
                                         <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
                                     </svg>
                                     FEATURED

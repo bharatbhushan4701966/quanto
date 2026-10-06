@@ -253,7 +253,7 @@
 
 /* Base Card Styles */
 .cmr-mc-wrapper .cmr-mc-card {
-    border-radius: 8px;
+    border-radius: 0 !important;
     overflow: hidden;
 }
 
@@ -268,7 +268,7 @@
 .cmr-mc-wrapper .cmr-mc-image-wrap {
     position: relative;
     overflow: hidden;
-    border-radius: 8px;
+    border-radius: 0 !important;
 }
 
 .cmr-mc-wrapper .cmr-mc-bg {
@@ -289,9 +289,12 @@
     max-height: 44px;
     height: auto;
     object-fit: contain;
-    border-radius: 0;
-    margin-bottom: 14px;
+    object-position: left center !important;
+    border-radius: 0 !important;
+    margin: 0 0 14px 0 !important;
+    padding: 0 !important;
     display: block;
+    align-self: flex-start !important;
 }
 
 .cmr-mc-wrapper .cmr-mc-trending-tag {
@@ -850,15 +853,17 @@
 .cmr-nc-badge {
     background: #ffffff;
     color: #5842c3;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
     text-transform: uppercase;
-    padding: 7px 15px;
-    border-radius: 6px;
+    padding: 4px 10px;
+    border-radius: 0 !important;
     display: inline-flex;
     align-items: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    gap: 5px;
+    line-height: 1.2;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .cmr-nc-badge svg {
@@ -866,7 +871,9 @@
     fill: #5842c3;
     display: inline-block;
     vertical-align: -1px;
-    margin-right: 6px;
+    margin-right: 0;
+    width: 10px;
+    height: 10px;
 }
 
 /* Bottom Card Content */

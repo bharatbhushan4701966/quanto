@@ -595,8 +595,8 @@ function cmr_render_media_coverage_shortcode( $atts ) {
             <div class="cmr-mc-pills">
                 <button class="cmr-mc-pill active" data-publisher="">All</button>
                 <?php 
-                $top_publishers = array_slice( $publishers, 0, 5 );
-                $more_publishers = array_slice( $publishers, 5 );
+                $top_publishers = array_slice( $publishers, 0, 4 );
+                $more_publishers = array_slice( $publishers, 4 );
 
                 foreach ( $top_publishers as $pub ) {
                     echo '<button class="cmr-mc-pill" data-publisher="' . esc_attr( $pub ) . '">' . esc_html( $pub ) . '</button>';
