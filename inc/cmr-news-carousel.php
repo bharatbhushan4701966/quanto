@@ -170,11 +170,12 @@ function cmr_render_news_carousel_shortcode( $atts ) {
         display: flex;
         align-items: center;
         margin-bottom: 20px;
+        max-width: 100%;
     }
 
     .cmr-nc-logo {
         max-height: 44px !important;
-        max-width: none !important;
+        max-width: 240px !important;
         width: auto !important;
         height: auto !important;
         object-fit: contain !important;
@@ -439,7 +440,14 @@ function cmr_render_news_carousel_shortcode( $atts ) {
                     $logo_id = get_post_meta( $post_id, '_cmr_news_source_logo_id', true );
                     $logo_url = '';
                     if ( $logo_id ) {
-                        $logo_url = wp_get_attachment_image_url( $logo_id, 'thumbnail' );
+                        if ( is_numeric( $logo_id ) ) {
+                            $logo_url = wp_get_attachment_url( $logo_id );
+                            if ( ! $logo_url ) {
+                                $logo_url = wp_get_attachment_image_url( $logo_id, 'full' );
+                            }
+                        } else {
+                            $logo_url = $logo_id;
+                        }
                     }
                     
                     // Word count or custom reading time
