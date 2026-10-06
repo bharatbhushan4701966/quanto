@@ -126,13 +126,34 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
                         }
                         
                         // Categories / Tags
-                        $category_name = 'Industry Intelligence';
+                        $default_cat_name = 'Industry Intelligence';
+                        if ( ! empty( $atts['category'] ) ) {
+                            $term_obj = get_term_by( 'slug', $atts['category'], 'category' );
+                            if ( ! $term_obj || is_wp_error( $term_obj ) ) {
+                                $term_obj = get_term_by( 'slug', $atts['category'], 'cmr_news_category' );
+                            }
+                            if ( $term_obj && ! is_wp_error( $term_obj ) ) {
+                                $default_cat_name = $term_obj->name;
+                            }
+                        }
+
+                        $category_name = $default_cat_name;
                         $terms = get_the_terms( $insight_post->ID, 'category' );
                         if ( ! $terms || is_wp_error( $terms ) ) {
                             $terms = get_the_terms( $insight_post->ID, 'cmr_news_category' );
                         }
                         if ( $terms && ! is_wp_error( $terms ) ) {
-                            $category_name = $terms[0]->name;
+                            $found_valid = false;
+                            foreach ( $terms as $t ) {
+                                if ( ! in_array( strtolower( trim( $t->name ) ), array( 'cmr in news', 'media releases', 'quarterly results', 'uncategorized' ) ) ) {
+                                    $category_name = $t->name;
+                                    $found_valid = true;
+                                    break;
+                                }
+                            }
+                            if ( ! $found_valid ) {
+                                $category_name = $default_cat_name;
+                            }
                         }
 
                         // Calculate reading time
