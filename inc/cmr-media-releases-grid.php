@@ -92,7 +92,7 @@ function cmr_media_releases_grid_shortcode( $atts = array() ) {
             left: 0;
             right: 0;
             width: 100% !important;
-            z-index: 999999 !important;
+            z-index: 990 !important;
             background: rgba(255, 255, 255, 0.95);
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             padding: 15px max(20px, calc(50vw - 640px)) !important;

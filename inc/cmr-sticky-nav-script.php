@@ -16,7 +16,7 @@ add_action('wp_footer', function() {
         transform: translateX(-50%);
         width: 100%;
         max-width: 1280px;
-        z-index: 999990;
+        z-index: 990;
         background: transparent !important;
         margin-bottom: 0 !important;
         font-family: 'Instrument Sans', sans-serif !important;
@@ -1101,7 +1101,7 @@ add_action('wp_footer', function() {
             padding-left: 16px !important;
             padding-right: 16px !important;
             margin: 0 !important;
-            z-index: 999990 !important;
+            z-index: 990 !important;
         }
 
         .intel-nav-bar.intel-nav-fixed-js::before {
