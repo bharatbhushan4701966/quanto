@@ -105,11 +105,11 @@ function cmr_news_automotive_shortcode( $atts ) {
     ob_start();
     ?>
     <style>
-    .cmr-news-container .cmr-card-image-wrap {
+    .cmr-news-container .cmr-card-standard .cmr-card-image-wrap {
         position: relative !important;
         overflow: hidden !important;
     }
-    .cmr-news-container .cmr-card-image-wrap .cmr-card-logo {
+    .cmr-news-container .cmr-card-standard .cmr-card-image-wrap .cmr-card-logo {
         position: absolute !important;
         bottom: 15px !important;
         left: 15px !important;
@@ -122,6 +122,21 @@ function cmr_news_automotive_shortcode( $atts ) {
         object-position: left center !important;
         margin: 0 !important;
         padding: 0 !important;
+        border-radius: 0 !important;
+        display: block !important;
+    }
+    .cmr-news-container .cmr-card-featured .cmr-card-content .cmr-card-logo {
+        position: relative !important;
+        top: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+        margin-bottom: 16px !important;
+        max-height: 48px !important;
+        max-width: 160px !important;
+        width: auto !important;
+        height: auto !important;
+        object-fit: contain !important;
+        object-position: left center !important;
         border-radius: 0 !important;
         display: block !important;
     }
@@ -183,37 +198,71 @@ function cmr_news_automotive_shortcode( $atts ) {
                             }
                             $date = get_the_date( 'M j, Y' );
                             
-                            $card_class = ( $count === 0 ) ? 'cmr-card cmr-card-featured' : 'cmr-card cmr-card-standard';
-                            ?>
-                            <div class="<?php echo esc_attr( $card_class ); ?>">
-                                <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-card-link-wrapper">
-                                    <div class="cmr-card-image-wrap">
-                                        <?php if ( $bg_image ) : ?>
-                                            <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
-                                        <?php endif; ?>
-                                        <?php if ( $logo_url ) : ?>
-                                            <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo" alt="Source Logo">
-                                        <?php endif; ?>
-                                    </div>
-                                    <div class="cmr-card-content">
-                                        <div class="cmr-card-meta">
-                                            <div class="cmr-meta-left">
-                                                <?php if ( $publisher ) : ?>
-                                                    <span class="cmr-publisher"><?php echo esc_html( $publisher ); ?></span> <span class="cmr-separator">|</span> 
-                                                <?php endif; ?>
-                                                <span class="cmr-date">Published <?php echo esc_html( $date ); ?></span>
-                                                <?php if ( $reading_time ) : ?>
-                                                    <span class="cmr-separator">|</span>
-                                                    <span class="cmr-read-time"><?php echo esc_html( $reading_time ); ?><?php echo is_numeric($reading_time) ? ' mins' : ''; ?></span>
-                                                <?php endif; ?>
-                                            </div>
+                            if ( $count === 0 ) {
+                                // Featured Big Card: Logo inside content above meta
+                                ?>
+                                <div class="cmr-card cmr-card-featured">
+                                    <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-card-link-wrapper">
+                                        <div class="cmr-card-image-wrap">
+                                            <?php if ( $bg_image ) : ?>
+                                                <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
+                                            <?php endif; ?>
                                         </div>
-                                        <h3 class="cmr-card-title"><?php the_title(); ?></h3>
-                                        <span class="cmr-read-coverage">Read Coverage <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg" class="cmr-arrow-icon" alt="Arrow"></span>
-                                    </div>
-                                </a>
-                            </div>
-                            <?php
+                                        <div class="cmr-card-content">
+                                            <?php if ( $logo_url ) : ?>
+                                                <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo" alt="Source Logo">
+                                            <?php endif; ?>
+                                            <div class="cmr-card-meta">
+                                                <div class="cmr-meta-left">
+                                                    <?php if ( $publisher ) : ?>
+                                                        <span class="cmr-publisher"><?php echo esc_html( $publisher ); ?></span> <span class="cmr-separator">|</span> 
+                                                    <?php endif; ?>
+                                                    <span class="cmr-date">Published <?php echo esc_html( $date ); ?></span>
+                                                    <?php if ( $reading_time ) : ?>
+                                                        <span class="cmr-separator">|</span>
+                                                        <span class="cmr-read-time"><?php echo esc_html( $reading_time ); ?><?php echo is_numeric($reading_time) ? ' mins' : ''; ?></span>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                            <h3 class="cmr-card-title"><?php the_title(); ?></h3>
+                                            <span class="cmr-read-coverage">Read Coverage <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg" class="cmr-arrow-icon" alt="Arrow"></span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <?php
+                            } else {
+                                // Standard Cards: Logo overlaid on top of image
+                                ?>
+                                <div class="cmr-card cmr-card-standard">
+                                    <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-card-link-wrapper">
+                                        <div class="cmr-card-image-wrap">
+                                            <?php if ( $bg_image ) : ?>
+                                                <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
+                                            <?php endif; ?>
+                                            <?php if ( $logo_url ) : ?>
+                                                <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo" alt="Source Logo">
+                                            <?php endif; ?>
+                                        </div>
+                                        <div class="cmr-card-content">
+                                            <div class="cmr-card-meta">
+                                                <div class="cmr-meta-left">
+                                                    <?php if ( $publisher ) : ?>
+                                                        <span class="cmr-publisher"><?php echo esc_html( $publisher ); ?></span> <span class="cmr-separator">|</span> 
+                                                    <?php endif; ?>
+                                                    <span class="cmr-date">Published <?php echo esc_html( $date ); ?></span>
+                                                    <?php if ( $reading_time ) : ?>
+                                                        <span class="cmr-separator">|</span>
+                                                        <span class="cmr-read-time"><?php echo esc_html( $reading_time ); ?><?php echo is_numeric($reading_time) ? ' mins' : ''; ?></span>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                            <h3 class="cmr-card-title"><?php the_title(); ?></h3>
+                                            <span class="cmr-read-coverage">Read Coverage <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg" class="cmr-arrow-icon" alt="Arrow"></span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <?php
+                            }
                             $count++;
                         }
                         wp_reset_postdata();

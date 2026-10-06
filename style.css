@@ -8952,17 +8952,39 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     }
 }
 
+/* Universal Zero Border Radius for All Images, Cards & Wrappers (Automotive & Sitewide) */
+img,
+picture,
+picture img,
+figure,
+figure img,
+.wp-post-image,
+.elementor-widget-image,
+.elementor-widget-image img,
+.elementor-image,
+.elementor-image img,
+.elementor-post__thumbnail,
+.elementor-post__thumbnail img,
+.elementor-post__thumbnail__link,
+.elementor-gallery-item,
+.elementor-gallery-item img,
+.elementor-carousel-image,
+.swiper-slide img,
 .cmr-pr-card,
 .cmr-pr-card-img,
+.cmr-pr-card-img img,
 .cmr-pr-card-content,
 .stay-updated-image,
 .stay-updated-image img,
 .stay-updated-img-link,
+.cmr-stay-updated-section,
 .cmr-stay-updated-section img,
 .cmr-stay-updated-section .stay-updated-image,
 .cmr-card-bg,
 .cmr-card-image-wrap,
 .cmr-card,
+.cmr-card-featured,
+.cmr-card-standard,
 .cmr-mc-bg,
 .cmr-mc-image-wrap,
 .cmr-mc-card,
@@ -8971,19 +8993,29 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
 .insights-stacked-image img,
 .insights-stacked-card,
 .cmr-fvi-card,
+.cmr-fvi-thumbnail,
 .cmr-fvi-thumbnail img,
 .cmr-slide-img,
 .cmr-slide-img img,
 .cmr-mu-slide-img,
 .cmr-mu-slide-img img,
 .cmr-vp-slide-img,
-.cmr-vp-slide-img img {
+.cmr-vp-slide-img img,
+.cmr-news-container img,
+.cmr-news-container .cmr-card,
+.cmr-news-container .cmr-card-image-wrap,
+.cmr-news-grid img,
+.cmr-news-grid .cmr-card,
+[class*="automotive"] img,
+[class*="automotive"] .cmr-card,
+[class*="automotive"] .elementor-widget-image img {
     border-radius: 0 !important;
 }
 
 .cmr-mc-wrapper .cmr-mc-logo,
 .cmr-mc-logo,
-.cmr-nc-logo {
+.cmr-nc-logo,
+.cmr-card-logo {
     max-width: none !important;
     width: auto !important;
     max-height: 44px !important;
@@ -8993,6 +9025,46 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     margin-left: 0 !important;
     padding-left: 0 !important;
     align-self: flex-start !important;
+}
+
+/* Featured Large Card Logo: inside content block above metadata */
+.cmr-card-featured .cmr-card-content .cmr-card-logo {
+    position: relative !important;
+    top: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    margin-bottom: 16px !important;
+    max-height: 48px !important;
+    max-width: 160px !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+    object-position: left center !important;
+    border-radius: 0 !important;
+    display: block !important;
+}
+
+/* Standard Bottom Cards Logo: overlaid on image thumbnail */
+.cmr-card-standard .cmr-card-image-wrap {
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.cmr-card-standard .cmr-card-image-wrap .cmr-card-logo {
+    position: absolute !important;
+    bottom: 15px !important;
+    left: 15px !important;
+    z-index: 3 !important;
+    max-height: 38px !important;
+    max-width: 140px !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+    object-position: left center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    display: block !important;
 }
 
 /* Ensure Underline Wraps Exactly to the Text Width */
