@@ -8972,6 +8972,20 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     align-self: flex-start !important;
 }
 
+/* Ensure Underline Wraps Exactly to the Text Width */
+.cmr-nc-read-btn,
+.cmr-read-coverage,
+.cmr-pr-read-btn,
+.cmr-mc-read-coverage,
+.cmr-wwt-card-link,
+.cmr-pr-explore-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    width: fit-content !important;
+    max-width: max-content !important;
+    align-self: flex-start !important;
+}
+
 /* Universal Badge Height: 30px */
 .cmr-nc-badge,
 .cmr-mc-trending-tag,
