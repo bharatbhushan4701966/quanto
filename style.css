@@ -10838,6 +10838,16 @@ body[class*="single-quanto_team"] #smooth-content {
     line-height: 32px !important;
 }
 
+/* Header Search & Nav Icons Hover State (Matches Newsroom Nav Hover #d1d1d1) */
+.cmr-nav-search-trigger:hover,
+.cmr-nav-search-trigger:hover svg,
+.cmr-nav-search-trigger:hover i,
+.cmr-nav-search-container:hover .cmr-nav-search-trigger,
+.cmr-nav-search-container:hover .cmr-nav-search-trigger svg {
+    color: #d1d1d1 !important;
+}
+
+
 
 
 

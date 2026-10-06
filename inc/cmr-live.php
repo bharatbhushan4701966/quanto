@@ -1032,10 +1032,11 @@ add_shortcode( 'cmr_trending_topview', 'cmr_trending_topview_shortcode' );
 if ( ! function_exists( 'cmr_cta_banner_shortcode' ) ) {
     function cmr_cta_banner_shortcode( $atts ) {
         $atts = shortcode_atts( array(
-            'title' => 'Need deeper insights?',
-            'text' => 'Talk to our analysts for tailored recommendations across your sector.',
-            'button_text' => 'Get Industry Insights',
-            'button_link' => '#',
+            'title'       => 'Need deeper insights?',
+            'text'        => 'Talk to our analysts for tailored recommendations across your sector.',
+            'button_text' => 'Connect Industry Insights',
+            'button_link' => '#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6Ijc2MzciLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D',
+            'popup_id'    => '7637',
         ), $atts, 'cmr_cta_banner' );
 
         ob_start();
@@ -1087,6 +1088,7 @@ if ( ! function_exists( 'cmr_cta_banner_shortcode' ) ) {
                 transition: all 0.3s ease;
                 white-space: nowrap;
                 flex-shrink: 0;
+                cursor: pointer;
             }
             .cmr-cta-btn:hover {
                 transform: translateY(-2px);
@@ -1123,7 +1125,7 @@ if ( ! function_exists( 'cmr_cta_banner_shortcode' ) ) {
                 
                 <p class="cmr-cta-text"><?php echo esc_html( $atts['text'] ); ?></p>
                 
-                <a href="<?php echo esc_url( $atts['button_link'] ); ?>" class="cmr-cta-btn">
+                <a href="<?php echo esc_attr( $atts['button_link'] ); ?>" class="cmr-cta-btn open-popup" data-popup-id="<?php echo esc_attr( $atts['popup_id'] ); ?>" onclick="if(window.cmrOpenPopup){window.cmrOpenPopup('<?php echo esc_js( $atts['popup_id'] ); ?>');event.preventDefault();}">
                     <?php echo esc_html( $atts['button_text'] ); ?>
                     <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="7" y1="17" x2="17" y2="7"></line>

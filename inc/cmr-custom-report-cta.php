@@ -10,10 +10,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'cmr_custom_report_cta_shortcode' ) ) {
     function cmr_custom_report_cta_shortcode( $atts ) {
         $atts = shortcode_atts( array(
-            'title' => 'Need Custom Report?',
-            'text'  => 'Get tailored insights, market analysis, and strategic recommendations designed around your specific requirements.',
-            'button_text' => 'Get Industry Insights',
-            'button_link' => '#',
+            'title'       => 'Need Custom Report?',
+            'text'        => 'Get tailored insights, market analysis, and strategic recommendations designed around your specific requirements.',
+            'button_text' => 'Connect Industry Insights',
+            'button_link' => '#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6Ijc2MzciLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D',
+            'popup_id'    => '7637',
         ), $atts );
 
         ob_start();
@@ -113,7 +114,7 @@ if ( ! function_exists( 'cmr_custom_report_cta_shortcode' ) ) {
                     <p><?php echo esc_html( $atts['text'] ); ?></p>
                 </div>
                 <div class="cmr-crc-right">
-                    <a href="<?php echo esc_url( $atts['button_link'] ); ?>" class="cmr-crc-btn">
+                    <a href="<?php echo esc_attr( $atts['button_link'] ); ?>" class="cmr-crc-btn open-popup" data-popup-id="<?php echo esc_attr( $atts['popup_id'] ); ?>" onclick="if(window.cmrOpenPopup){window.cmrOpenPopup('<?php echo esc_js( $atts['popup_id'] ); ?>');event.preventDefault();}">
                         <?php echo esc_html( $atts['button_text'] ); ?>
                         <i class="fa-solid fa-arrow-up-right"></i>
                     </a>
