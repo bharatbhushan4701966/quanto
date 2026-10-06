@@ -411,11 +411,6 @@ class Quanto_Featured_Video_Insight_Widget extends \Elementor\Widget_Base {
                     <?php elseif ( ! empty( $poster ) ) : ?>
                         <a href="<?php echo esc_url( $link_url ); ?>" class="cmr-fvi-poster-link" target="<?php echo esc_attr( $target ); ?>" <?php echo esc_attr( $nofollow ); ?>>
                             <img src="<?php echo esc_url( $poster ); ?>" alt="<?php echo esc_attr( $title ); ?>" class="cmr-fvi-poster-img">
-                            <span class="cmr-fvi-play-icon" aria-hidden="true">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                                </svg>
-                            </span>
                         </a>
                     <?php else : ?>
                         <iframe src="https://www.youtube.com/embed/ScMzIvxBSi4?rel=0&modestbranding=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
@@ -442,19 +437,6 @@ class Quanto_Featured_Video_Insight_Widget extends \Elementor\Widget_Base {
                                 <?php echo esc_html( $title ); ?>
                             </a>
                         </h3>
-                    <?php endif; ?>
-
-                    <!-- Action Link / Watch Button -->
-                    <?php if ( ! empty( $btn_text ) ) : ?>
-                        <div class="cmr-fvi-action">
-                            <a href="<?php echo esc_url( $link_url ); ?>" class="cmr-fvi-btn" target="<?php echo esc_attr( $target ); ?>" <?php echo esc_attr( $nofollow ); ?>>
-                                <span><?php echo esc_html( $btn_text ); ?></span>
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="7" y1="17" x2="17" y2="7"></line>
-                                    <polyline points="7 7 17 7 17 17"></polyline>
-                                </svg>
-                            </a>
-                        </div>
                     <?php endif; ?>
                 </div>
 

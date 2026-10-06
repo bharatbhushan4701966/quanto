@@ -137,11 +137,6 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                     <?php elseif ( ! empty( $poster ) ) : ?>
                         <a href="<?php echo esc_url( $link ); ?>" class="cmr-fvi-poster-link" <?php echo ( $target === '_blank' ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?>>
                             <img src="<?php echo esc_url( $poster ); ?>" alt="<?php echo esc_attr( $title ); ?>" class="cmr-fvi-poster-img">
-                            <span class="cmr-fvi-play-icon" aria-hidden="true">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                                </svg>
-                            </span>
                         </a>
                     <?php else : ?>
                         <!-- Default Embedded Demo Video -->
@@ -168,17 +163,6 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                             <?php echo esc_html( $title ); ?>
                         </a>
                     </h3>
-
-                    <!-- Action Link / Watch Button -->
-                    <div class="cmr-fvi-action">
-                        <a href="<?php echo esc_url( $link ); ?>" class="cmr-fvi-btn" <?php echo ( $target === '_blank' ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?>>
-                            <span><?php echo esc_html( $btn_text ); ?></span>
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="7" y1="17" x2="17" y2="7"></line>
-                                <polyline points="7 7 17 7 17 17"></polyline>
-                            </svg>
-                        </a>
-                    </div>
                 </div>
 
             </div>
@@ -239,26 +223,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 display: block;
             }
             .cmr-fvi-play-icon {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                width: 60px;
-                height: 60px;
-                background: rgba(15, 23, 42, 0.8);
-                color: #FFFFFF;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: transform 0.25s ease, background-color 0.25s ease;
-            }
-            .cmr-fvi-poster-link:hover .cmr-fvi-play-icon {
-                background: #4F46E5;
-                transform: translate(-50%, -50%) scale(1.1);
-            }
-            .cmr-fvi-play-icon svg {
-                margin-left: 3px;
+                display: none !important;
             }
             .cmr-fvi-body {
                 padding: 28px 32px 34px 32px;
@@ -300,7 +265,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 line-height: 1.34 !important;
                 color: #0F172A !important;
                 letter-spacing: -0.5px !important;
-                margin: 0 0 32px 0 !important;
+                margin: 0 !important;
                 padding: 0 !important;
             }
             .cmr-fvi-title a {
@@ -312,9 +277,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 color: #4F46E5 !important;
             }
             .cmr-fvi-action {
-                margin-top: auto;
-                display: flex;
-                align-items: center;
+                display: none !important;
             }
             .cmr-fvi-btn {
                 display: inline-flex;
