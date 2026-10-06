@@ -96,6 +96,12 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
                     min-width: 323px !important;
                     max-width: 323px !important;
                 }
+                #<?php echo esc_attr( $unique_id ); ?>_section .sector-explore-link {
+                    display: none !important;
+                }
+                #<?php echo esc_attr( $unique_id ); ?>_section .sector-content {
+                    margin-bottom: 0 !important;
+                }
             </style>
 
             <div class="explore-sectors-track-wrapper" style="overflow:hidden; width:100%;">
@@ -108,7 +114,6 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
                                 <h3 class="sector-title"><?php echo esc_html( $sector['title'] ); ?></h3>
                                 <p class="sector-desc"><?php echo esc_html( $sector['desc'] ); ?></p>
                             </div>
-                            <a href="<?php echo esc_url( !empty($sector['link']) ? $sector['link'] : '#' ); ?>" class="sector-explore-link">Explore <i class="fa-solid fa-arrow-right" style="transform: rotate(-45deg);"></i></a>
                         </div>
                     <?php endforeach; ?>
                 </div>
