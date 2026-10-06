@@ -261,7 +261,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
             .cmr-fvi-title {
                 font-family: inherit !important;
                 font-size: 26px !important;
-                font-weight: 700 !important;
+                font-weight: 600 !important;
                 line-height: 1.34 !important;
                 color: #0F172A !important;
                 letter-spacing: -0.5px !important;
@@ -270,6 +270,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
             }
             .cmr-fvi-title a {
                 color: #0F172A !important;
+                font-weight: 600 !important;
                 text-decoration: none !important;
                 transition: color 0.2s ease;
             }
@@ -284,7 +285,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 align-items: center;
                 gap: 7px;
                 font-size: 16.5px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #0F172A !important;
                 text-decoration: none !important;
                 transition: all 0.25s ease;
@@ -307,8 +308,9 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 }
                 .cmr-fvi-title {
                     font-size: 21px !important;
+                    font-weight: 600 !important;
                     line-height: 1.35 !important;
-                    margin-bottom: 24px !important;
+                    margin: 0 !important;
                 }
                 .cmr-fvi-meta {
                     font-size: 13.5px;
