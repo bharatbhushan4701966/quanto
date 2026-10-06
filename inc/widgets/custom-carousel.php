@@ -50,11 +50,18 @@ class Quanto_Custom_Carousel_Widget extends \Elementor\Widget_Base {
             ]
         );
 
-        $this->add_group_control(
-            \Elementor\Group_Control_Image_Size::get_type(),
+        $this->add_control(
+            'thumbnail_size',
             [
-                'name'    => 'image',
+                'label'   => esc_html__('Image Resolution', 'quanto'),
+                'type'    => \Elementor\Controls_Manager::SELECT,
                 'default' => 'full',
+                'options' => [
+                    'full'         => esc_html__('Full Resolution', 'quanto'),
+                    'large'        => esc_html__('Large (1024x1024)', 'quanto'),
+                    'medium_large' => esc_html__('Medium Large (768x768)', 'quanto'),
+                    'medium'       => esc_html__('Medium (300x300)', 'quanto'),
+                ],
             ]
         );
 
@@ -324,15 +331,6 @@ class Quanto_Custom_Carousel_Widget extends \Elementor\Widget_Base {
             ]
         );
 
-        $this->add_group_control(
-            \Elementor\Group_Control_Box_Shadow::get_type(),
-            [
-                'name'     => 'box_shadow',
-                'label'    => esc_html__('Box Shadow', 'quanto'),
-                'selector' => '{{WRAPPER}} .quanto-custom-carousel',
-            ]
-        );
-
         $this->end_controls_section();
 
         // STYLE TAB - Arrows
@@ -434,228 +432,251 @@ class Quanto_Custom_Carousel_Widget extends \Elementor\Widget_Base {
     }
 
     protected function render() {
-        $settings = $this->get_settings_for_display();
-        $gallery  = !empty($settings['gallery']) && is_array($settings['gallery']) ? $settings['gallery'] : [];
+        try {
+            $settings = $this->get_settings_for_display();
+            $gallery  = (!empty($settings['gallery']) && is_array($settings['gallery'])) ? $settings['gallery'] : [];
 
-        if (empty($gallery)) {
-            if (\Elementor\Plugin::$instance->editor->is_edit_mode()) {
-                ?>
-                <div style="border: 2px dashed #9ca3af; padding: 40px; text-align: center; border-radius: 12px; background: #f9fafb; color: #4b5563;">
-                    <i class="eicon-slider-album" style="font-size: 36px; color: #3b82f6; display: block; margin-bottom: 12px;"></i>
-                    <strong style="font-size: 16px;"><?php esc_html_e('CMR Image Carousel', 'quanto'); ?></strong>
-                    <p style="margin: 8px 0 0; font-size: 13px;"><?php esc_html_e('Click here to select images in the sidebar and configure height and width.', 'quanto'); ?></p>
-                </div>
-                <?php
+            $is_edit = false;
+            if ( class_exists('\Elementor\Plugin') && isset(\Elementor\Plugin::$instance) && isset(\Elementor\Plugin::$instance->editor) && method_exists(\Elementor\Plugin::$instance->editor, 'is_edit_mode') ) {
+                $is_edit = \Elementor\Plugin::$instance->editor->is_edit_mode();
             }
-            return;
-        }
 
-        $uid        = uniqid('cmr-carousel-');
-        $uid_safe   = str_replace('-', '_', $uid);
-        $count      = count($gallery);
-        $is_slider  = ($count > 1);
-
-        $effect     = !empty($settings['effect']) ? $settings['effect'] : 'slide';
-        $autoplay   = ($settings['autoplay'] === 'yes');
-        $delay      = !empty($settings['autoplay_delay']) ? intval($settings['autoplay_delay']) : 3500;
-        $hover      = ($settings['pause_on_hover'] === 'yes');
-        $loop       = ($settings['loop'] === 'yes' && $is_slider);
-        $speed      = !empty($settings['speed']) ? intval($settings['speed']) : 600;
-        $show_arrows= ($settings['show_arrows'] === 'yes' && $is_slider);
-        $show_dots  = ($settings['show_dots'] === 'yes' && $is_slider);
-        ?>
-
-        <style>
-            #<?php echo esc_attr($uid); ?>-wrapper {
-                width: 100%;
-            }
-            #<?php echo esc_attr($uid); ?> {
-                position: relative;
-                overflow: hidden;
-                box-sizing: border-box;
-            }
-            #<?php echo esc_attr($uid); ?> .swiper {
-                width: 100%;
-                height: 100%;
-                position: relative;
-                overflow: hidden;
-            }
-            #<?php echo esc_attr($uid); ?> .swiper-wrapper {
-                display: flex;
-                width: 100%;
-                height: 100%;
-            }
-            #<?php echo esc_attr($uid); ?> .swiper-slide {
-                width: 100%;
-                height: 100%;
-                flex-shrink: 0;
-                overflow: hidden;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            #<?php echo esc_attr($uid); ?> .quanto-carousel-img {
-                width: 100% !important;
-                height: 100% !important;
-                display: block !important;
-            }
-            #<?php echo esc_attr($uid); ?> .quanto-carousel-arrow {
-                position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
-                z-index: 10;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                border-radius: 50%;
-                transition: all 0.25s ease;
-                border: none;
-                outline: none;
-                user-select: none;
-            }
-            #<?php echo esc_attr($uid); ?> .quanto-carousel-prev {
-                left: 16px;
-            }
-            #<?php echo esc_attr($uid); ?> .quanto-carousel-next {
-                right: 16px;
-            }
-            #<?php echo esc_attr($uid); ?> .quanto-carousel-arrow:hover {
-                transform: translateY(-50%) scale(1.08);
-            }
-            #<?php echo esc_attr($uid); ?> .swiper-pagination {
-                position: absolute;
-                bottom: 16px;
-                left: 0;
-                width: 100%;
-                text-align: center;
-                z-index: 10;
-            }
-            #<?php echo esc_attr($uid); ?> .swiper-pagination-bullet {
-                display: inline-block;
-                width: 10px;
-                height: 10px;
-                border-radius: 50%;
-                margin: 0 4px;
-                cursor: pointer;
-                transition: all 0.25s ease;
-            }
-        </style>
-
-        <div class="quanto-custom-carousel-wrapper" id="<?php echo esc_attr($uid); ?>-wrapper">
-            <div class="quanto-custom-carousel <?php echo $is_slider ? 'swiper' : ''; ?>" id="<?php echo esc_attr($uid); ?>">
-                <div class="<?php echo $is_slider ? 'swiper-wrapper' : 'quanto-single-wrapper'; ?>" style="width:100%;height:100%;">
-                    <?php foreach ($gallery as $img): 
-                        $image_html = \Elementor\Group_Control_Image_Size::get_attachment_image_html($settings, 'image', $img);
-                        // Inject class into img tag
-                        if (!empty($image_html)) {
-                            $image_html = str_replace('<img ', '<img class="quanto-carousel-img" ', $image_html);
-                        } else {
-                            $img_url = !empty($img['url']) ? $img['url'] : '';
-                            $image_html = '<img src="' . esc_url($img_url) . '" alt="' . esc_attr__('Carousel Image', 'quanto') . '" class="quanto-carousel-img" />';
-                        }
+            if (empty($gallery)) {
+                if ($is_edit) {
                     ?>
-                        <div class="<?php echo $is_slider ? 'swiper-slide' : 'quanto-single-slide'; ?>" style="width:100%;height:100%;">
-                            <?php echo $image_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-                        </div>
-                    <?php endforeach; ?>
+                    <div style="border: 2px dashed #9ca3af; padding: 40px; text-align: center; border-radius: 12px; background: #f9fafb; color: #4b5563;">
+                        <i class="eicon-slider-album" style="font-size: 36px; color: #3b82f6; display: block; margin-bottom: 12px;"></i>
+                        <strong style="font-size: 16px;"><?php esc_html_e('CMR Image Carousel', 'quanto'); ?></strong>
+                        <p style="margin: 8px 0 0; font-size: 13px;"><?php esc_html_e('Click here to select images in the sidebar and configure height and width.', 'quanto'); ?></p>
+                    </div>
+                    <?php
+                }
+                return;
+            }
+
+            $uid        = uniqid('cmr-carousel-');
+            $uid_safe   = str_replace('-', '_', $uid);
+            $count      = count($gallery);
+            $is_slider  = ($count > 1);
+
+            $effect      = !empty($settings['effect']) ? $settings['effect'] : 'slide';
+            $autoplay    = (!empty($settings['autoplay']) && $settings['autoplay'] === 'yes');
+            $delay       = !empty($settings['autoplay_delay']) ? intval($settings['autoplay_delay']) : 3500;
+            $hover       = (!empty($settings['pause_on_hover']) && $settings['pause_on_hover'] === 'yes');
+            $loop        = (!empty($settings['loop']) && $settings['loop'] === 'yes' && $is_slider);
+            $speed       = !empty($settings['speed']) ? intval($settings['speed']) : 600;
+            $show_arrows = (!empty($settings['show_arrows']) && $settings['show_arrows'] === 'yes' && $is_slider);
+            $show_dots   = (!empty($settings['show_dots']) && $settings['show_dots'] === 'yes' && $is_slider);
+            $img_size    = !empty($settings['thumbnail_size']) ? $settings['thumbnail_size'] : 'full';
+            ?>
+
+            <style>
+                #<?php echo esc_attr($uid); ?>-wrapper {
+                    width: 100%;
+                }
+                #<?php echo esc_attr($uid); ?> {
+                    position: relative;
+                    overflow: hidden;
+                    box-sizing: border-box;
+                }
+                #<?php echo esc_attr($uid); ?> .swiper {
+                    width: 100%;
+                    height: 100%;
+                    position: relative;
+                    overflow: hidden;
+                }
+                #<?php echo esc_attr($uid); ?> .swiper-wrapper {
+                    display: flex;
+                    width: 100%;
+                    height: 100%;
+                }
+                #<?php echo esc_attr($uid); ?> .swiper-slide {
+                    width: 100%;
+                    height: 100%;
+                    flex-shrink: 0;
+                    overflow: hidden;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                #<?php echo esc_attr($uid); ?> .quanto-carousel-img {
+                    width: 100% !important;
+                    height: 100% !important;
+                    display: block !important;
+                }
+                #<?php echo esc_attr($uid); ?> .quanto-carousel-arrow {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    z-index: 10;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    border-radius: 50%;
+                    transition: all 0.25s ease;
+                    border: none;
+                    outline: none;
+                    user-select: none;
+                }
+                #<?php echo esc_attr($uid); ?> .quanto-carousel-prev {
+                    left: 16px;
+                }
+                #<?php echo esc_attr($uid); ?> .quanto-carousel-next {
+                    right: 16px;
+                }
+                #<?php echo esc_attr($uid); ?> .quanto-carousel-arrow:hover {
+                    transform: translateY(-50%) scale(1.08);
+                }
+                #<?php echo esc_attr($uid); ?> .swiper-pagination {
+                    position: absolute;
+                    bottom: 16px;
+                    left: 0;
+                    width: 100%;
+                    text-align: center;
+                    z-index: 10;
+                }
+                #<?php echo esc_attr($uid); ?> .swiper-pagination-bullet {
+                    display: inline-block;
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    margin: 0 4px;
+                    cursor: pointer;
+                    transition: all 0.25s ease;
+                }
+            </style>
+
+            <div class="quanto-custom-carousel-wrapper" id="<?php echo esc_attr($uid); ?>-wrapper">
+                <div class="quanto-custom-carousel <?php echo $is_slider ? 'swiper' : ''; ?>" id="<?php echo esc_attr($uid); ?>">
+                    <div class="<?php echo $is_slider ? 'swiper-wrapper' : 'quanto-single-wrapper'; ?>" style="width:100%;height:100%;">
+                        <?php foreach ($gallery as $img): 
+                            $image_html = '';
+                            $img_id = (is_array($img) && !empty($img['id'])) ? intval($img['id']) : 0;
+                            $img_url = (is_array($img) && !empty($img['url'])) ? $img['url'] : (is_string($img) ? $img : '');
+
+                            if ($img_id > 0) {
+                                $image_html = wp_get_attachment_image(
+                                    $img_id,
+                                    $img_size,
+                                    false,
+                                    [
+                                        'class' => 'quanto-carousel-img',
+                                        'alt'   => esc_attr__('Carousel Image', 'quanto'),
+                                    ]
+                                );
+                            }
+
+                            if (empty($image_html) && !empty($img_url)) {
+                                $image_html = '<img src="' . esc_url($img_url) . '" alt="' . esc_attr__('Carousel Image', 'quanto') . '" class="quanto-carousel-img" />';
+                            }
+                        ?>
+                            <div class="<?php echo $is_slider ? 'swiper-slide' : 'quanto-single-slide'; ?>" style="width:100%;height:100%;">
+                                <?php echo $image_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <?php if ($show_arrows): ?>
+                        <button class="quanto-carousel-arrow quanto-carousel-prev" aria-label="<?php esc_attr_e('Previous', 'quanto'); ?>">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                        </button>
+                        <button class="quanto-carousel-arrow quanto-carousel-next" aria-label="<?php esc_attr_e('Next', 'quanto'); ?>">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                        </button>
+                    <?php endif; ?>
+
+                    <?php if ($show_dots): ?>
+                        <div class="swiper-pagination"></div>
+                    <?php endif; ?>
                 </div>
-
-                <?php if ($show_arrows): ?>
-                    <button class="quanto-carousel-arrow quanto-carousel-prev" aria-label="<?php esc_attr_e('Previous', 'quanto'); ?>">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-                    </button>
-                    <button class="quanto-carousel-arrow quanto-carousel-next" aria-label="<?php esc_attr_e('Next', 'quanto'); ?>">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-                    </button>
-                <?php endif; ?>
-
-                <?php if ($show_dots): ?>
-                    <div class="swiper-pagination"></div>
-                <?php endif; ?>
             </div>
-        </div>
 
-        <?php if ($is_slider): ?>
-        <script>
-        (function() {
-            function initSwiper_<?php echo $uid_safe; ?>() {
-                var container = document.getElementById("<?php echo esc_js($uid); ?>");
-                if (!container) return;
-                if (container.dataset.swiperInit === 'true' && container.swiper) return;
+            <?php if ($is_slider): ?>
+            <script>
+            (function() {
+                function initSwiper_<?php echo $uid_safe; ?>() {
+                    var container = document.getElementById("<?php echo esc_js($uid); ?>");
+                    if (!container) return;
+                    if (container.dataset.swiperInit === 'true' && container.swiper) return;
 
-                if (typeof Swiper !== 'undefined') {
-                    try {
-                        if (container.swiper) {
-                            container.swiper.destroy(true, true);
-                        }
-                        container.dataset.swiperInit = 'true';
+                    if (typeof Swiper !== 'undefined') {
+                        try {
+                            if (container.swiper) {
+                                container.swiper.destroy(true, true);
+                            }
+                            container.dataset.swiperInit = 'true';
 
-                        var swiperOptions = {
-                            slidesPerView: 1,
-                            spaceBetween: 0,
-                            effect: <?php echo json_encode($effect); ?>,
-                            speed: <?php echo intval($speed); ?>,
-                            loop: <?php echo $loop ? 'true' : 'false'; ?>,
-                            watchOverflow: true,
-                        };
+                            var swiperOptions = {
+                                slidesPerView: 1,
+                                spaceBetween: 0,
+                                effect: <?php echo json_encode($effect); ?>,
+                                speed: <?php echo intval($speed); ?>,
+                                loop: <?php echo $loop ? 'true' : 'false'; ?>,
+                                watchOverflow: true,
+                            };
 
-                        <?php if ($autoplay): ?>
-                        swiperOptions.autoplay = {
-                            delay: <?php echo intval($delay); ?>,
-                            disableOnInteraction: false,
-                            <?php if ($hover): ?>
-                            pauseOnMouseEnter: true,
+                            <?php if ($autoplay): ?>
+                            swiperOptions.autoplay = {
+                                delay: <?php echo intval($delay); ?>,
+                                disableOnInteraction: false,
+                                <?php if ($hover): ?>
+                                pauseOnMouseEnter: true,
+                                <?php endif; ?>
+                            };
                             <?php endif; ?>
-                        };
-                        <?php endif; ?>
 
-                        <?php if ($show_arrows): ?>
-                        var prevBtn = container.querySelector('.quanto-carousel-prev');
-                        var nextBtn = container.querySelector('.quanto-carousel-next');
-                        if (prevBtn && nextBtn) {
-                            swiperOptions.navigation = {
-                                prevEl: prevBtn,
-                                nextEl: nextBtn,
-                            };
+                            <?php if ($show_arrows): ?>
+                            var prevBtn = container.querySelector('.quanto-carousel-prev');
+                            var nextBtn = container.querySelector('.quanto-carousel-next');
+                            if (prevBtn && nextBtn) {
+                                swiperOptions.navigation = {
+                                    prevEl: prevBtn,
+                                    nextEl: nextBtn,
+                                };
+                            }
+                            <?php endif; ?>
+
+                            <?php if ($show_dots): ?>
+                            var paginationEl = container.querySelector('.swiper-pagination');
+                            if (paginationEl) {
+                                swiperOptions.pagination = {
+                                    el: paginationEl,
+                                    clickable: true,
+                                };
+                            }
+                            <?php endif; ?>
+
+                            new Swiper(container, swiperOptions);
+                        } catch(err) {
+                            console.error('Swiper Init Error:', err);
                         }
-                        <?php endif; ?>
-
-                        <?php if ($show_dots): ?>
-                        var paginationEl = container.querySelector('.swiper-pagination');
-                        if (paginationEl) {
-                            swiperOptions.pagination = {
-                                el: paginationEl,
-                                clickable: true,
-                            };
-                        }
-                        <?php endif; ?>
-
-                        new Swiper(container, swiperOptions);
-                    } catch(err) {
-                        console.error('Swiper Init Error:', err);
                     }
                 }
-            }
 
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initSwiper_<?php echo $uid_safe; ?>);
-            } else {
-                initSwiper_<?php echo $uid_safe; ?>();
-            }
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', initSwiper_<?php echo $uid_safe; ?>);
+                } else {
+                    initSwiper_<?php echo $uid_safe; ?>();
+                }
 
-            if (window.jQuery) {
-                jQuery(window).on('elementor/frontend/init', function() {
-                    if (window.elementorFrontend && elementorFrontend.hooks) {
-                        elementorFrontend.hooks.addAction('frontend/element_ready/quanto_custom_carousel.default', function() {
-                            initSwiper_<?php echo $uid_safe; ?>();
-                        });
-                    }
-                });
+                if (window.jQuery) {
+                    jQuery(window).on('elementor/frontend/init', function() {
+                        if (window.elementorFrontend && elementorFrontend.hooks) {
+                            elementorFrontend.hooks.addAction('frontend/element_ready/quanto_custom_carousel.default', function() {
+                                initSwiper_<?php echo $uid_safe; ?>();
+                            });
+                        }
+                    });
+                }
+            })();
+            </script>
+            <?php endif; ?>
+            <?php
+        } catch (\Throwable $e) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                echo '<div style="color:red;padding:10px;">Carousel Error: ' . esc_html($e->getMessage()) . '</div>';
             }
-        })();
-        </script>
-        <?php endif; ?>
-        <?php
+        }
     }
 }

@@ -1162,8 +1162,12 @@ add_action('elementor/widgets/register', function($widgets_manager) {
     $widgets_manager->register(new \Quanto_Featured_Video_Insight_Widget());
 
     // Register CMR Custom Image Carousel (with Width & Height controls)
-    require_once get_template_directory() . '/inc/widgets/custom-carousel.php';
-    $widgets_manager->register(new \Quanto_Custom_Carousel_Widget());
+    if ( file_exists( get_template_directory() . '/inc/widgets/custom-carousel.php' ) ) {
+        require_once get_template_directory() . '/inc/widgets/custom-carousel.php';
+        if ( class_exists( '\Quanto_Custom_Carousel_Widget' ) ) {
+            $widgets_manager->register(new \Quanto_Custom_Carousel_Widget());
+        }
+    }
 }, 20); // Priority 20 to run after the plugin registers its widgets
 require_once get_template_directory() . '/inc/cmr-footer-css-fix.php';
 
