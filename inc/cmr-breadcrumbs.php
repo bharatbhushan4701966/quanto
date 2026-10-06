@@ -7,6 +7,17 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+if ( ! function_exists( 'cmr_format_breadcrumb_title' ) ) {
+    function cmr_format_breadcrumb_title( $text ) {
+        if ( empty( $text ) ) {
+            return '';
+        }
+        $text = html_entity_decode( $text, ENT_QUOTES, 'UTF-8' );
+        $text = ucwords( mb_strtolower( wp_strip_all_tags( $text ), 'UTF-8' ) );
+        return esc_html( $text );
+    }
+}
+
 if ( ! function_exists( 'cmr_breadcrumbs_shortcode' ) ) {
     function cmr_breadcrumbs_shortcode() {
         // Return nothing if on the home page or front page
@@ -27,12 +38,14 @@ if ( ! function_exists( 'cmr_breadcrumbs_shortcode' ) ) {
                 flex-wrap: wrap;
                 margin-bottom: 30px;
                 line-height: 1.5;
+                text-transform: capitalize !important;
             }
             .cmr-breadcrumbs a {
                 font-size: 12px !important;
                 color: #555;
                 text-decoration: none;
                 transition: color 0.2s ease;
+                text-transform: capitalize !important;
             }
             .cmr-breadcrumbs a:hover {
                 color: #111;
@@ -41,6 +54,7 @@ if ( ! function_exists( 'cmr_breadcrumbs_shortcode' ) ) {
                 font-size: 12px !important;
                 color: #111;
                 font-weight: 500;
+                text-transform: capitalize !important;
             }
         </style>';
 
@@ -65,13 +79,13 @@ if ( ! function_exists( 'cmr_breadcrumbs_shortcode' ) ) {
                     foreach ( $cat_parents as $parent_id ) {
                         $parent = get_term( $parent_id, 'category' );
                         if ( $parent && ! is_wp_error( $parent ) ) {
-                            $breadcrumbs .= '<a href="' . get_category_link( $parent_id ) . '">' . $parent->name . '</a>';
+                            $breadcrumbs .= '<a href="' . get_category_link( $parent_id ) . '">' . cmr_format_breadcrumb_title( $parent->name ) . '</a>';
                             $breadcrumbs .= $separator;
                         }
                     }
                     
                     // Add the category itself
-                    $breadcrumbs .= '<a href="' . get_category_link( $cat->term_id ) . '">' . $cat->name . '</a>';
+                    $breadcrumbs .= '<a href="' . get_category_link( $cat->term_id ) . '">' . cmr_format_breadcrumb_title( $cat->name ) . '</a>';
                     $breadcrumbs .= $separator;
                 } else {
                     // Check if it's a CPT without categories
@@ -81,24 +95,24 @@ if ( ! function_exists( 'cmr_breadcrumbs_shortcode' ) ) {
                         if ( $post_type_obj ) {
                             $archive_link = get_post_type_archive_link( $post_type );
                             if ( $archive_link ) {
-                                $breadcrumbs .= '<a href="' . $archive_link . '">' . $post_type_obj->labels->name . '</a>';
+                                $breadcrumbs .= '<a href="' . $archive_link . '">' . cmr_format_breadcrumb_title( $post_type_obj->labels->name ) . '</a>';
                                 $breadcrumbs .= $separator;
                             }
                         }
                     }
                 }
-                $breadcrumbs .= '<span class="current-page">' . get_the_title() . '</span>';
+                $breadcrumbs .= '<span class="current-page">' . cmr_format_breadcrumb_title( get_the_title() ) . '</span>';
             } else {
                 // It's a category archive
-                $breadcrumbs .= '<span class="current-page">' . single_cat_title( '', false ) . '</span>';
+                $breadcrumbs .= '<span class="current-page">' . cmr_format_breadcrumb_title( single_cat_title( '', false ) ) . '</span>';
             }
         } elseif ( is_page() ) {
-            if ( $post->post_parent ) {
+            if ( ! empty( $post->post_parent ) ) {
                 $parent_id  = $post->post_parent;
                 $parent_links = array();
                 while ( $parent_id ) {
                     $page = get_page( $parent_id );
-                    $parent_links[] = '<a href="' . get_permalink( $page->ID ) . '">' . get_the_title( $page->ID ) . '</a>';
+                    $parent_links[] = '<a href="' . get_permalink( $page->ID ) . '">' . cmr_format_breadcrumb_title( get_the_title( $page->ID ) ) . '</a>';
                     $parent_id  = $page->post_parent;
                 }
                 $parent_links = array_reverse( $parent_links );
@@ -107,10 +121,10 @@ if ( ! function_exists( 'cmr_breadcrumbs_shortcode' ) ) {
                 }
             }
             $breadcrumbs .= $separator;
-            $breadcrumbs .= '<span class="current-page">' . get_the_title() . '</span>';
+            $breadcrumbs .= '<span class="current-page">' . cmr_format_breadcrumb_title( get_the_title() ) . '</span>';
         } elseif ( is_search() ) {
             $breadcrumbs .= $separator;
-            $breadcrumbs .= '<span class="current-page">Search Results for "' . get_search_query() . '"</span>';
+            $breadcrumbs .= '<span class="current-page">Search Results for "' . esc_html( get_search_query() ) . '"</span>';
         } else {
             // Fallback for other archives, 404, etc.
             if ( ! is_home() && ! is_front_page() ) {
@@ -121,7 +135,7 @@ if ( ! function_exists( 'cmr_breadcrumbs_shortcode' ) ) {
                 } elseif ( is_404() ) {
                     $title = 'Page Not Found';
                 }
-                $breadcrumbs .= '<span class="current-page">' . $title . '</span>';
+                $breadcrumbs .= '<span class="current-page">' . cmr_format_breadcrumb_title( $title ) . '</span>';
             }
         }
 
