@@ -114,7 +114,7 @@ if ( ! function_exists( 'cmr_custom_report_cta_shortcode' ) ) {
                     <p><?php echo esc_html( $atts['text'] ); ?></p>
                 </div>
                 <div class="cmr-crc-right">
-                    <a href="<?php echo esc_attr( $atts['button_link'] ); ?>" class="cmr-crc-btn open-popup" data-popup-id="<?php echo esc_attr( $atts['popup_id'] ); ?>" onclick="if(window.cmrOpenPopup){window.cmrOpenPopup('<?php echo esc_js( $atts['popup_id'] ); ?>');event.preventDefault();}">
+                    <a href="javascript:void(0)" class="cmr-crc-btn open-popup" data-popup-id="<?php echo esc_attr( $atts['popup_id'] ); ?>" onclick="if(window.cmrOpenPopup){window.cmrOpenPopup('<?php echo esc_js( $atts['popup_id'] ); ?>');event.preventDefault();event.stopPropagation();}">
                         <?php echo esc_html( $atts['button_text'] ); ?>
                         <i class="fa-solid fa-arrow-up-right"></i>
                     </a>

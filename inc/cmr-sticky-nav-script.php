@@ -54,7 +54,7 @@ add_action('wp_footer', function() {
         width: 100% !important;
         aspect-ratio: 16 / 9 !important;
         overflow: hidden !important;
-        border-radius: 8px !important;
+        border-radius: 0 !important;
         margin-bottom: 20px !important;
         text-align: left !important;
         display: block !important;
@@ -65,6 +65,7 @@ add_action('wp_footer', function() {
         display: block !important;
         width: 100% !important;
         height: 100% !important;
+        border-radius: 0 !important;
         text-align: left !important;
         margin: 0 !important;
         padding: 0 !important;
@@ -76,7 +77,7 @@ add_action('wp_footer', function() {
         object-fit: cover !important;
         object-position: center left !important;
         display: block !important;
-        border-radius: 8px !important;
+        border-radius: 0 !important;
         margin: 0 !important;
         margin-left: 0 !important;
         margin-right: auto !important;

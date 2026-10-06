@@ -437,6 +437,10 @@ add_action( 'wp_footer', function() {
                 setTimeout(checkActiveModals, 50);
             }
 
+            // Expose globally so onclick handlers can call it directly
+            window.cmrOpenPopup = openPopup;
+            window.cmrCloseAllModals = closeAllModals;
+
             // Helper: Setup Hero CTAs ("Explore Insights" scroll & "Connect with us" popup)
             function initHeroCTAButtons() {
                 var talkButtons = document.querySelectorAll(
@@ -474,13 +478,13 @@ add_action( 'wp_footer', function() {
 
             // Unified click handler for all popups & hero CTAs
             document.body.addEventListener('click', function(e) {
-                // 1. Check for "Connect with us" / Talk to Analyst CTA (open popup 7637)
-                var connectTrigger = e.target.closest('.talk-btn, .elementor-element-d2bb779, .elementor-element-ecd03c0, .custom-talk-analyst-btn');
+                // 1. Check for "Connect to Analyst" / "Connect with us" / Talk to Analyst CTA (open popup 7637)
+                var connectTrigger = e.target.closest('.talk-btn, .elementor-element-d2bb779, .elementor-element-ecd03c0, .custom-talk-analyst-btn, [data-popup-id="7637"], .open-popup');
                 if (!connectTrigger) {
                     var btnEl = e.target.closest('.elementor-button, button, a');
                     if (btnEl) {
                         var bTxt = (btnEl.textContent || '').trim().toLowerCase();
-                        if (bTxt.includes('connect with us') || bTxt.includes('talk to our analyst')) {
+                        if (bTxt.includes('connect to analyst') || bTxt.includes('talk to analyst') || bTxt.includes('connect with us') || bTxt.includes('talk to our analyst')) {
                             connectTrigger = btnEl;
                         }
                     }
@@ -497,18 +501,18 @@ add_action( 'wp_footer', function() {
                 }
 
                 // 2. Check for "Explore Insights" CTA (smooth scroll to Latest Insights)
-                var exploreTrigger = e.target.closest('.download-btn, .elementor-element-37736ef, .elementor-element-b44d429 .download-btn');
+                var exploreTrigger = e.target.closest('.elementor-element-37736ef, .elementor-element-b44d429 .download-btn, .elementor-element-758e182 .download-btn, .hero .download-btn');
                 if (!exploreTrigger) {
                     var btnEl2 = e.target.closest('.elementor-button, button, a');
-                    if (btnEl2) {
+                    if (btnEl2 && !btnEl2.classList.contains('open-popup') && !btnEl2.hasAttribute('data-popup-id') && !btnEl2.classList.contains('cmr-cta-btn')) {
                         var bTxt2 = (btnEl2.textContent || '').trim().toLowerCase();
-                        if (bTxt2.includes('explore insights')) {
+                        if (bTxt2.includes('explore insights') || bTxt2.includes('explore all insights')) {
                             exploreTrigger = btnEl2;
                         }
                     }
                 }
 
-                if (exploreTrigger) {
+                if (exploreTrigger && !exploreTrigger.classList.contains('open-popup') && !exploreTrigger.hasAttribute('data-popup-id')) {
                     var inHeader2 = exploreTrigger.closest('header, [data-elementor-type="header"], #quanto-header-desktop');
                     if (!inHeader2) {
                         e.preventDefault();

@@ -1125,7 +1125,7 @@ if ( ! function_exists( 'cmr_cta_banner_shortcode' ) ) {
                 
                 <p class="cmr-cta-text"><?php echo esc_html( $atts['text'] ); ?></p>
                 
-                <a href="<?php echo esc_attr( $atts['button_link'] ); ?>" class="cmr-cta-btn open-popup" data-popup-id="<?php echo esc_attr( $atts['popup_id'] ); ?>" onclick="if(window.cmrOpenPopup){window.cmrOpenPopup('<?php echo esc_js( $atts['popup_id'] ); ?>');event.preventDefault();}">
+                <a href="javascript:void(0)" class="cmr-cta-btn open-popup" data-popup-id="<?php echo esc_attr( $atts['popup_id'] ); ?>" onclick="if(window.cmrOpenPopup){window.cmrOpenPopup('<?php echo esc_js( $atts['popup_id'] ); ?>');event.preventDefault();event.stopPropagation();}">
                     <?php echo esc_html( $atts['button_text'] ); ?>
                     <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="7" y1="17" x2="17" y2="7"></line>

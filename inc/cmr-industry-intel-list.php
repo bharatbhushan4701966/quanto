@@ -204,6 +204,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 color: rgba(255, 255, 255, 0.9);
                 max-width: 320px;
             }
+            .cmr-intel-list-banner-right .cmr-cta-btn,
             .cmr-intel-list-banner-right .download-btn {
                 background: #ffffff !important;
                 color: #111111 !important;
@@ -216,11 +217,14 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 align-items: center;
                 gap: 8px;
                 transition: all 0.3s ease;
+                cursor: pointer;
             }
+            .cmr-intel-list-banner-right .cmr-cta-btn:hover,
             .cmr-intel-list-banner-right .download-btn:hover {
                 background: #f0f0f0;
                 transform: translateY(-2px);
             }
+            .cmr-intel-list-banner-right .cmr-cta-btn svg,
             .cmr-intel-list-banner-right .download-btn svg {
                 width: 14px;
                 height: 14px;
@@ -471,7 +475,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                                 <p>Talk to our analysts for tailored recommendations across your sector.</p>
                             </div>
                             <div class="cmr-intel-list-banner-right">
-                                <a href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6Ijc2MzciLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D" class="download-btn open-popup" data-popup-id="7637" onclick="if(window.cmrOpenPopup){window.cmrOpenPopup('7637');event.preventDefault();}">
+                                <a href="javascript:void(0)" class="cmr-cta-btn open-popup" data-popup-id="7637" onclick="if(window.cmrOpenPopup){window.cmrOpenPopup(7637);event.preventDefault();event.stopPropagation();}">
                                     Connect to Analyst 
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                         <line x1="7" y1="17" x2="17" y2="7"></line>
