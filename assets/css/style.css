@@ -10355,4 +10355,9 @@ body.single-quanto_team [data-id="953c2ba"] .elementor-social-icon svg {
   text-align: right !important;
 }
 
+/* CMR Custom Carousel - 85% height */
+.quanto-custom-carousel {
+  height: 85% !important;
+}
+
 

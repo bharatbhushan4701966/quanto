@@ -235,8 +235,8 @@ class Quanto_Custom_Carousel_Widget extends \Elementor\Widget_Base {
                     ],
                 ],
                 'default'    => [
-                    'unit' => 'px',
-                    'size' => 450,
+                    'unit' => '%',
+                    'size' => 85,
                 ],
                 'selectors'  => [
                     '{{WRAPPER}} .quanto-custom-carousel' => 'height: {{SIZE}}{{UNIT}} !important;',
@@ -481,6 +481,7 @@ class Quanto_Custom_Carousel_Widget extends \Elementor\Widget_Base {
                     position: relative;
                     overflow: hidden;
                     box-sizing: border-box;
+                    height: 85% !important;
                 }
                 #<?php echo esc_attr($uid); ?> .swiper {
                     width: 100% !important;
