@@ -539,7 +539,7 @@
     .cmr-insights-featured .insights-featured-card {
         min-height: 320px !important;
         height: 340px !important;
-        border-radius: 8px !important;
+        border-radius: 0 !important;
         overflow: hidden !important;
         width: 100% !important;
         box-sizing: border-box !important;
@@ -619,7 +619,7 @@
         flex: 0 0 110px !important;
         width: 110px !important;
         height: 85px !important;
-        border-radius: 6px !important;
+        border-radius: 0 !important;
         overflow: hidden !important;
     }
 
@@ -627,7 +627,7 @@
         width: 100% !important;
         height: 100% !important;
         object-fit: cover !important;
-        border-radius: 6px !important;
+        border-radius: 0 !important;
         display: block !important;
     }
 

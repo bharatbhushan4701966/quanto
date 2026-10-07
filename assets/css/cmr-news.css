@@ -388,6 +388,7 @@
         scroll-snap-align: start !important;
         scroll-margin-left: 20px !important;
         grid-column: auto;
+        border-radius: 0 !important;
     }
     
     .cmr-card-standard .cmr-card-link-wrapper,
