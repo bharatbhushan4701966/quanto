@@ -443,7 +443,7 @@ class Quanto_Featured_Video_Insight_Widget extends \Elementor\Widget_Base {
                     <div class="cmr-fvi-action">
                         <a href="<?php echo esc_url( $link_url ); ?>" class="cmr-fvi-btn" target="<?php echo esc_attr( $target ); ?>" <?php echo esc_attr( $nofollow ); ?>>
                             <span class="cmr-fvi-btn-text"><?php echo esc_html( $btn_text ); ?></span>
-                            <svg class="cmr-fvi-btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                            <svg class="cmr-fvi-btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="7" y1="17" x2="17" y2="7"></line>
                                 <polyline points="7 7 17 7 17 17"></polyline>
                             </svg>

@@ -476,7 +476,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                     <div class="cmr-fvi-action">
                         <a href="<?php echo esc_url( $link ); ?>" class="cmr-fvi-btn" <?php echo ( $target === '_blank' ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?>>
                             <span class="cmr-fvi-btn-text"><?php echo esc_html( ! empty( $btn_text ) ? $btn_text : 'Read Insight' ); ?></span>
-                            <svg class="cmr-fvi-btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                            <svg class="cmr-fvi-btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="7" y1="17" x2="17" y2="7"></line>
                                 <polyline points="7 7 17 7 17 17"></polyline>
                             </svg>
@@ -612,7 +612,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 border: none !important;
                 border-radius: 0 !important;
                 font-size: 18px !important;
-                font-weight: 700 !important;
+                font-weight: 600 !important;
                 text-decoration: none !important;
                 transition: color 0.25s ease, opacity 0.25s ease !important;
                 cursor: pointer !important;
@@ -623,7 +623,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
             .cmr-fvi-btn span {
                 color: inherit !important;
                 font-size: inherit !important;
-                font-weight: 700 !important;
+                font-weight: 600 !important;
                 border-bottom: 2px solid currentColor !important;
                 padding-bottom: 3px !important;
                 display: inline-block !important;
@@ -636,7 +636,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 height: 18px !important;
                 color: inherit !important;
                 stroke: currentColor !important;
-                stroke-width: 2.8 !important;
+                stroke-width: 2.5 !important;
                 transition: transform 0.25s ease !important;
                 display: inline-block !important;
                 flex-shrink: 0 !important;
