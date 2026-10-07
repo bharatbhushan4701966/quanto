@@ -3227,6 +3227,23 @@ function cmr_global_cta_banner_shortcode( $atts = array() ) {
     }
     
     if ( ! empty( $output ) ) {
+        echo '<style>
+        @media (max-width: 768px) {
+            #cmr-global-cta-banner-section h1,
+            #cmr-global-cta-banner-section h2,
+            #cmr-global-cta-banner-section h3,
+            #cmr-global-cta-banner-section .elementor-heading-title,
+            #cmr-global-cta-banner-section .e-heading-base,
+            .elementor-52927 h1,
+            .elementor-52927 h2,
+            .elementor-52927 h3,
+            .elementor-52927 .elementor-heading-title,
+            .elementor-52927 .e-heading-base {
+                font-size: 32px !important;
+                line-height: 1.25 !important;
+            }
+        }
+        </style>';
         echo '<div id="cmr-global-cta-banner-section">';
         echo $output;
         echo '</div>';

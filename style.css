@@ -10932,8 +10932,18 @@ header.sticky .cmr-nav-cart-container:hover,
     stroke: #4820B0 !important;
 }
 
-/* Responsive font-size for "Better intelligence. Stronger connections. Smarter decisions." on Mobile */
+/* Responsive font-size for [cmr_global_cta_banner] heading on Mobile */
 @media (max-width: 768px) {
+    #cmr-global-cta-banner-section h1,
+    #cmr-global-cta-banner-section h2,
+    #cmr-global-cta-banner-section h3,
+    #cmr-global-cta-banner-section .elementor-heading-title,
+    #cmr-global-cta-banner-section .e-heading-base,
+    .elementor-52927 h1,
+    .elementor-52927 h2,
+    .elementor-52927 h3,
+    .elementor-52927 .elementor-heading-title,
+    .elementor-52927 .e-heading-base,
     [data-id="d4032ae"],
     [data-interaction-id="d4032ae"],
     .elementor-element-d4032ae,
