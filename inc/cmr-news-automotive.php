@@ -173,21 +173,36 @@ function cmr_news_automotive_shortcode( $atts ) {
             scroll-margin-left: 20px !important;
             border-radius: 0 !important;
         }
-        .cmr-news-container .cmr-card-standard .cmr-card-image-wrap .cmr-card-logo,
-        .cmr-news-container .cmr-card-image-wrap .cmr-card-logo {
-            position: absolute !important;
-            top: 15px !important;
-            bottom: auto !important;
-            left: 15px !important;
-            right: auto !important;
-            height: 32px !important;
-            max-height: 32px !important;
+        .cmr-news-container .cmr-card-logo-mobile {
+            display: none !important;
         }
+        .cmr-news-container .cmr-card-standard .cmr-card-image-wrap .cmr-card-logo,
+        .cmr-news-container .cmr-card-image-wrap .cmr-card-logo,
+        .cmr-news-container .cmr-card-logo-desktop {
+            display: none !important;
+        }
+        .cmr-news-container .cmr-card-logo-mobile,
         .cmr-news-container .cmr-card-featured .cmr-card-content .cmr-card-logo,
-        .cmr-news-container .cmr-card-featured .cmr-card-logo {
+        .cmr-news-container .cmr-card-featured .cmr-card-logo,
+        .cmr-news-container .cmr-card-content .cmr-card-logo {
+            position: relative !important;
+            top: auto !important;
+            bottom: auto !important;
+            left: auto !important;
+            right: auto !important;
+            background: #ffffff !important;
+            padding: 4px 8px !important;
+            box-sizing: content-box !important;
             height: 32px !important;
             max-height: 32px !important;
-            margin-bottom: 12px !important;
+            width: auto !important;
+            max-width: none !important;
+            object-fit: contain !important;
+            object-position: center !important;
+            margin: 0 0 12px 0 !important;
+            border-radius: 0 !important;
+            display: inline-block !important;
+            z-index: 2 !important;
         }
     }
     </style>
@@ -263,10 +278,13 @@ function cmr_news_automotive_shortcode( $atts ) {
                                                 <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
                                             <?php endif; ?>
                                             <?php if ( $logo_url ) : ?>
-                                                <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo" alt="Source Logo">
+                                                <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo cmr-card-logo-desktop" alt="Source Logo">
                                             <?php endif; ?>
                                         </div>
                                         <div class="cmr-card-content">
+                                            <?php if ( $logo_url ) : ?>
+                                                <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo cmr-card-logo-mobile" alt="Source Logo">
+                                            <?php endif; ?>
                                             <div class="cmr-card-meta">
                                                 <div class="cmr-meta-left">
                                                     <?php if ( $publisher ) : ?>

@@ -267,11 +267,16 @@ function cmr_smb_tabs_shortcode( $atts ) {
                                                 <?php if ( $bg_image ) : ?>
                                                     <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
                                                 <?php endif; ?>
-                                                <?php if ( $logo_url ) : ?>
-                                                    <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo" alt="Source Logo">
+                                                <?php if ( $count > 0 && $logo_url ) : ?>
+                                                    <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo cmr-card-logo-desktop" alt="Source Logo">
                                                 <?php endif; ?>
                                             </div>
                                             <div class="cmr-card-content">
+                                                <?php if ( $count === 0 && $logo_url ) : ?>
+                                                    <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo" alt="Source Logo">
+                                                <?php elseif ( $count > 0 && $logo_url ) : ?>
+                                                    <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo cmr-card-logo-mobile" alt="Source Logo">
+                                                <?php endif; ?>
                                                 <div class="cmr-card-meta">
                                                     <div class="cmr-meta-left">
                                                         <?php if ( $publisher ) : ?>
