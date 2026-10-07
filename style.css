@@ -11123,6 +11123,93 @@ header.sticky .cmr-nav-cart-container:hover,
     }
 }
 
+/* ============================================================= */
+/* MOBILE SLIDER / CAROUSEL EDGE SPACING (MAX 16PX FROM SCREEN)  */
+/* ============================================================= */
+@media (max-width: 768px) {
+    .elementor-element:has(.elementor-widget-image-carousel),
+    .elementor-element:has(.elementor-image-carousel),
+    .elementor-element:has(.elementor-widget-slides),
+    .elementor-element:has(.elementor-main-swiper),
+    .elementor-widget-image-carousel,
+    .elementor-widget-image-carousel .elementor-widget-container,
+    .elementor-image-carousel-wrapper,
+    .elementor-image-carousel,
+    .elementor-widget-slides,
+    .elementor-slides-wrapper,
+    .elementor-slides,
+    .cmr-fi-slider-container {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .e-con:has(.elementor-widget-image-carousel),
+    .e-con:has(.elementor-image-carousel),
+    .e-con:has(.elementor-widget-slides),
+    .e-con-inner:has(.elementor-widget-image-carousel),
+    .e-con-inner:has(.elementor-image-carousel),
+    .e-con-inner:has(.elementor-widget-slides),
+    .elementor-column:has(.elementor-widget-image-carousel),
+    .elementor-column:has(.elementor-image-carousel),
+    .elementor-widget-wrap:has(.elementor-widget-image-carousel),
+    .elementor-widget-wrap:has(.elementor-image-carousel) {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .elementor-widget-image-carousel .swiper,
+    .elementor-widget-image-carousel .swiper-container,
+    .elementor-widget-image-carousel .swiper-wrapper,
+    .elementor-image-carousel .swiper-slide,
+    .elementor-widget-image-carousel .swiper-slide,
+    .elementor-slides .swiper-slide,
+    .elementor-widget-slides .swiper-slide {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .elementor-widget-image-carousel .swiper-slide-image,
+    .elementor-widget-image-carousel .elementor-carousel-image,
+    .elementor-widget-image-carousel .swiper-slide img,
+    .elementor-image-carousel img,
+    .elementor-slides .swiper-slide-bg,
+    .elementor-slides .swiper-slide-inner {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        object-fit: cover !important;
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .cmr-fi-wrapper {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        justify-content: center !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .cmr-fi-container {
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+}
+
+
 
 
 
