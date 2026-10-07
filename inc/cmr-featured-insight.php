@@ -58,7 +58,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
             'title'        => '',
             'date'         => '',
             'duration'     => '1 min read',
-            'btn_text'     => 'Insight',
+            'btn_text'     => 'Read Insight',
             'link'         => '#',
             'target'       => '_self',
             'max_width'    => '600px',
@@ -70,7 +70,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
         $title     = $atts['title'];
         $date      = $atts['date'];
         $duration  = ! empty( $atts['duration'] ) && $atts['duration'] !== '1 min' ? $atts['duration'] : '1 min read';
-        $btn_text  = ! empty( $atts['btn_text'] ) && $atts['btn_text'] !== 'Watch' ? $atts['btn_text'] : 'Insight';
+        $btn_text  = ! empty( $atts['btn_text'] ) && $atts['btn_text'] !== 'Watch' && $atts['btn_text'] !== 'Insight' ? $atts['btn_text'] : 'Read Insight';
         $link      = ! empty( $atts['link'] ) ? $atts['link'] : '#';
         $target    = $atts['target'];
         $max_width = $atts['max_width'];
@@ -472,11 +472,11 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                         </a>
                     </h3>
 
-                    <!-- Red Insight Button -->
+                    <!-- Read Insight Button -->
                     <div class="cmr-fvi-action">
                         <a href="<?php echo esc_url( $link ); ?>" class="cmr-fvi-btn" <?php echo ( $target === '_blank' ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?>>
-                            <span><?php echo esc_html( ! empty( $btn_text ) ? $btn_text : 'Insight' ); ?></span>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <span class="cmr-fvi-btn-text"><?php echo esc_html( ! empty( $btn_text ) ? $btn_text : 'Read Insight' ); ?></span>
+                            <svg class="cmr-fvi-btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="7" y1="17" x2="17" y2="7"></line>
                                 <polyline points="7 7 17 7 17 17"></polyline>
                             </svg>
@@ -604,40 +604,54 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
             .cmr-fvi-btn {
                 display: inline-flex !important;
                 align-items: center !important;
-                justify-content: center !important;
-                gap: 8px !important;
-                padding: 10px 24px !important;
-                background: #E31837 !important;
-                color: #FFFFFF !important;
-                border-radius: 4px !important;
-                font-size: 14.5px !important;
-                font-weight: 600 !important;
+                justify-content: flex-start !important;
+                gap: 10px !important;
+                padding: 0 !important;
+                background: transparent !important;
+                color: #0F172A !important;
+                border: none !important;
+                border-radius: 0 !important;
+                font-size: 18px !important;
+                font-weight: 700 !important;
                 text-decoration: none !important;
-                transition: all 0.25s ease !important;
+                transition: color 0.25s ease, opacity 0.25s ease !important;
                 cursor: pointer !important;
-                border: 1px solid #E31837 !important;
                 line-height: 1.2 !important;
-                box-shadow: 0 2px 6px rgba(227, 24, 55, 0.2) !important;
+                box-shadow: none !important;
             }
+            .cmr-fvi-btn .cmr-fvi-btn-text,
             .cmr-fvi-btn span {
-                color: #FFFFFF !important;
-                font-weight: 600 !important;
+                color: inherit !important;
+                font-size: inherit !important;
+                font-weight: 700 !important;
+                border-bottom: 2px solid currentColor !important;
+                padding-bottom: 3px !important;
+                display: inline-block !important;
+                text-decoration: none !important;
+                transition: border-color 0.25s ease, color 0.25s ease !important;
             }
-            .cmr-fvi-btn svg {
-                width: 14px !important;
-                height: 14px !important;
-                color: #FFFFFF !important;
+            .cmr-fvi-btn svg,
+            .cmr-fvi-btn .cmr-fvi-btn-arrow {
+                width: 18px !important;
+                height: 18px !important;
+                color: inherit !important;
+                stroke: currentColor !important;
+                stroke-width: 2.8 !important;
                 transition: transform 0.25s ease !important;
+                display: inline-block !important;
+                flex-shrink: 0 !important;
             }
             .cmr-fvi-btn:hover {
-                background: #C4122D !important;
-                border-color: #C4122D !important;
-                color: #FFFFFF !important;
-                box-shadow: 0 4px 14px rgba(227, 24, 55, 0.35) !important;
-                transform: translateY(-1px) !important;
+                background: transparent !important;
+                border: none !important;
+                color: #000000 !important;
+                box-shadow: none !important;
+                transform: none !important;
+                opacity: 0.85 !important;
             }
-            .cmr-fvi-btn:hover svg {
-                transform: translate(2px, -2px) !important;
+            .cmr-fvi-btn:hover svg,
+            .cmr-fvi-btn:hover .cmr-fvi-btn-arrow {
+                transform: translate(3px, -3px) !important;
             }
             @media (max-width: 767.98px) {
                 .cmr-fvi-body {
@@ -657,8 +671,14 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                     margin-top: 18px !important;
                 }
                 .cmr-fvi-btn {
-                    font-size: 14px !important;
-                    padding: 9px 20px !important;
+                    font-size: 16px !important;
+                    padding: 0 !important;
+                    gap: 8px !important;
+                }
+                .cmr-fvi-btn svg,
+                .cmr-fvi-btn .cmr-fvi-btn-arrow {
+                    width: 16px !important;
+                    height: 16px !important;
                 }
             }
         </style>

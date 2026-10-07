@@ -132,8 +132,8 @@ class Quanto_Featured_Video_Insight_Widget extends \Elementor\Widget_Base {
             [
                 'label'       => esc_html__( 'Button Text', 'quanto' ),
                 'type'        => \Elementor\Controls_Manager::TEXT,
-                'default'     => 'Insight',
-                'placeholder' => 'Insight',
+                'default'     => 'Read Insight',
+                'placeholder' => 'Read Insight',
             ]
         );
 
@@ -380,7 +380,7 @@ class Quanto_Featured_Video_Insight_Widget extends \Elementor\Widget_Base {
         $date      = isset( $settings['date_text'] ) ? $settings['date_text'] : '';
         $duration  = ! empty( $settings['duration_text'] ) && $settings['duration_text'] !== '22:44 min' && $settings['duration_text'] !== '1 min' ? $settings['duration_text'] : '1 min read';
         $title     = isset( $settings['title_text'] ) ? $settings['title_text'] : '';
-        $btn_text  = ! empty( $settings['btn_text'] ) && $settings['btn_text'] !== 'Watch' ? $settings['btn_text'] : 'Insight';
+        $btn_text  = ! empty( $settings['btn_text'] ) && $settings['btn_text'] !== 'Watch' && $settings['btn_text'] !== 'Insight' ? $settings['btn_text'] : 'Read Insight';
         
         $link_url  = '#';
         $target    = '_self';
@@ -439,11 +439,11 @@ class Quanto_Featured_Video_Insight_Widget extends \Elementor\Widget_Base {
                         </h3>
                     <?php endif; ?>
 
-                    <!-- Red Insight Button -->
+                    <!-- Read Insight Button -->
                     <div class="cmr-fvi-action">
                         <a href="<?php echo esc_url( $link_url ); ?>" class="cmr-fvi-btn" target="<?php echo esc_attr( $target ); ?>" <?php echo esc_attr( $nofollow ); ?>>
-                            <span><?php echo esc_html( $btn_text ); ?></span>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <span class="cmr-fvi-btn-text"><?php echo esc_html( $btn_text ); ?></span>
+                            <svg class="cmr-fvi-btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="7" y1="17" x2="17" y2="7"></line>
                                 <polyline points="7 7 17 7 17 17"></polyline>
                             </svg>
