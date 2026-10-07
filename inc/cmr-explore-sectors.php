@@ -158,18 +158,30 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
             <script>
             document.addEventListener("DOMContentLoaded", function() {
                 function initExploreScroll() {
-                    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-                    gsap.registerPlugin(ScrollTrigger);
-
                     let track   = document.getElementById("cmr-explore-track");
                     let section = document.getElementById("cmr-explore-section");
                     let wrapper = section ? section.querySelector('.explore-sectors-track-wrapper') : null;
                     if (!track || !section || !wrapper) return;
 
                     // Kill any pre-existing ScrollTrigger on this section to avoid duplicates
-                    ScrollTrigger.getAll().forEach(function(st) {
-                        if (st.trigger === section) st.kill();
-                    });
+                    if (typeof ScrollTrigger !== 'undefined') {
+                        ScrollTrigger.getAll().forEach(function(st) {
+                            if (st.trigger === section) st.kill(true);
+                        });
+                    }
+
+                    // Mobile view: disable GSAP pinning to prevent horizontal layout break & black space
+                    if (window.innerWidth <= 768) {
+                        if (typeof gsap !== 'undefined') {
+                            gsap.set(track, { clearProps: "all" });
+                        }
+                        track.style.transform = '';
+                        return;
+                    }
+
+                    // Desktop view: GSAP horizontal scroll with pinning
+                    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+                    gsap.registerPlugin(ScrollTrigger);
 
                     gsap.set(track, { clearProps: "transform,x" });
 
@@ -183,12 +195,9 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
                         invalidateOnRefresh: true
                     });
 
-                    const isMobile = window.innerWidth <= 768;
-                    const startPosition = isMobile ? "top 70px" : "center center";
-
                     ScrollTrigger.create({
                         trigger: section,
-                        start: startPosition,
+                        start: "center center",
                         end: () => `+=${Math.abs(getScrollAmount())}`,
                         pin: true,
                         pinSpacing: true,

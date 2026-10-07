@@ -117,12 +117,48 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
                 }
 
                 @media (max-width: 768px) {
+                    .elementor-element.elementor-element-4fc6cfd,
+                    .elementor-element[data-id="4fc6cfd"],
+                    .elementor-element.elementor-element-4fc6cfd > .e-con-inner,
+                    .elementor-element[data-id="4fc6cfd"] > .e-con-inner,
+                    #our-offerings,
+                    .our-offerings,
+                    .elementor-element:has(#<?php echo esc_attr( $unique_id ); ?>_section),
+                    .e-con:has(#<?php echo esc_attr( $unique_id ); ?>_section),
+                    .e-con-boxed:has(#<?php echo esc_attr( $unique_id ); ?>_section),
+                    .e-con-inner:has(#<?php echo esc_attr( $unique_id ); ?>_section),
+                    .elementor-widget:has(#<?php echo esc_attr( $unique_id ); ?>_section),
+                    .elementor-widget-container:has(#<?php echo esc_attr( $unique_id ); ?>_section),
+                    .elementor-shortcode:has(#<?php echo esc_attr( $unique_id ); ?>_section),
+                    .elementor-column:has(#<?php echo esc_attr( $unique_id ); ?>_section),
+                    .elementor-column-wrap:has(#<?php echo esc_attr( $unique_id ); ?>_section),
+                    .elementor-section:has(#<?php echo esc_attr( $unique_id ); ?>_section),
+                    .elementor-section-boxed:has(#<?php echo esc_attr( $unique_id ); ?>_section) {
+                        padding-left: 0 !important;
+                        padding-right: 0 !important;
+                        margin-left: 0 !important;
+                        margin-right: 0 !important;
+                        --padding-left: 0px !important;
+                        --padding-right: 0px !important;
+                        width: 100% !important;
+                        max-width: 100% !important;
+                        box-sizing: border-box !important;
+                    }
+
                     #<?php echo esc_attr( $unique_id ); ?>_section {
-                        padding: 30px 0 !important;
+                        padding: 40px 0 !important;
+                        width: 100% !important;
+                        max-width: 100vw !important;
+                        overflow: hidden !important;
+                        box-sizing: border-box !important;
+                        background-color: #F8F9FA !important;
                     }
                     #<?php echo esc_attr( $unique_id ); ?>_section .explore-sectors-container {
                         padding: 0 20px !important;
                         margin-bottom: 20px !important;
+                        width: 100% !important;
+                        max-width: 100% !important;
+                        box-sizing: border-box !important;
                     }
                     #<?php echo esc_attr( $unique_id ); ?>_section .explore-sectors-title {
                         font-size: 26px !important;
@@ -130,16 +166,46 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
                         letter-spacing: -0.5px !important;
                         margin-bottom: 20px !important;
                     }
+                    #<?php echo esc_attr( $unique_id ); ?>_section .explore-sectors-track-wrapper {
+                        width: 100% !important;
+                        max-width: 100% !important;
+                        overflow-x: auto !important;
+                        overflow-y: hidden !important;
+                        -webkit-overflow-scrolling: touch !important;
+                        scroll-snap-type: x mandatory !important;
+                        scrollbar-width: none !important;
+                        -ms-overflow-style: none !important;
+                        box-sizing: border-box !important;
+                    }
+                    #<?php echo esc_attr( $unique_id ); ?>_section .explore-sectors-track-wrapper::-webkit-scrollbar {
+                        display: none !important;
+                    }
                     #<?php echo esc_attr( $unique_id ); ?>_track {
+                        display: flex !important;
+                        flex-wrap: nowrap !important;
                         gap: 16px !important;
                         padding-left: 20px !important;
                         padding-right: 20px !important;
+                        padding-bottom: 15px !important;
+                        scroll-padding-left: 20px !important;
+                        scroll-padding-inline: 20px !important;
+                        width: max-content !important;
+                        min-width: max-content !important;
+                        box-sizing: border-box !important;
+                        transform: none !important;
+                    }
+                    #<?php echo esc_attr( $unique_id ); ?>_track::-webkit-scrollbar {
+                        display: none !important;
                     }
                     #<?php echo esc_attr( $unique_id ); ?>_track .explore-sector-card {
                         flex: 0 0 280px !important;
                         width: 280px !important;
                         max-width: 280px !important;
                         min-width: 280px !important;
+                        scroll-snap-align: start !important;
+                        scroll-margin-left: 20px !important;
+                        flex-shrink: 0 !important;
+                        box-sizing: border-box !important;
                         height: auto !important;
                         min-height: 280px !important;
                         padding: 28px 20px !important;
@@ -164,17 +230,30 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
             <script>
             document.addEventListener("DOMContentLoaded", function() {
                 function initExploreCustomScroll() {
-                    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-                    gsap.registerPlugin(ScrollTrigger);
-
                     let track   = document.getElementById("<?php echo esc_js( $unique_id ); ?>_track");
                     let section = document.getElementById("<?php echo esc_js( $unique_id ); ?>_section");
                     let wrapper = section ? section.querySelector('.explore-sectors-track-wrapper') : null;
                     if (!track || !section || !wrapper) return;
 
-                    ScrollTrigger.getAll().forEach(function(st) {
-                        if (st.trigger === section) st.kill();
-                    });
+                    // Kill any existing ScrollTrigger instance on this section
+                    if (typeof ScrollTrigger !== 'undefined') {
+                        ScrollTrigger.getAll().forEach(function(st) {
+                            if (st.trigger === section) st.kill(true);
+                        });
+                    }
+
+                    // Mobile view: disable GSAP pinning to prevent horizontal layout break & black space
+                    if (window.innerWidth <= 768) {
+                        if (typeof gsap !== 'undefined') {
+                            gsap.set(track, { clearProps: "all" });
+                        }
+                        track.style.transform = '';
+                        return;
+                    }
+
+                    // Desktop view: GSAP horizontal scroll with pinning
+                    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+                    gsap.registerPlugin(ScrollTrigger);
 
                     gsap.set(track, { clearProps: "transform,x" });
 
@@ -188,12 +267,9 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
                         invalidateOnRefresh: true
                     });
 
-                    const isMobile = window.innerWidth <= 768;
-                    const startPosition = isMobile ? "top 70px" : "center center";
-
                     ScrollTrigger.create({
                         trigger: section,
-                        start: startPosition,
+                        start: "center center",
                         end: () => `+=${Math.abs(getScrollAmount())}`,
                         pin: true,
                         pinSpacing: true,

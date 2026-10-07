@@ -8347,13 +8347,23 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     .elementor-element[data-id="ea4d4ac"],
     .elementor-element.elementor-element-ea4d4ac > .e-con-inner,
     .elementor-element[data-id="ea4d4ac"] > .e-con-inner,
+    .elementor-element.elementor-element-4fc6cfd,
+    .elementor-element[data-id="4fc6cfd"],
+    .elementor-element.elementor-element-4fc6cfd > .e-con-inner,
+    .elementor-element[data-id="4fc6cfd"] > .e-con-inner,
+    #our-offerings,
+    .our-offerings,
     .elementor-element:has(.cmr-explore-sectors-section),
     .e-con:has(.cmr-explore-sectors-section),
     .e-con-boxed:has(.cmr-explore-sectors-section),
     .e-con-inner:has(.cmr-explore-sectors-section),
     .elementor-widget:has(.cmr-explore-sectors-section),
     .elementor-widget-container:has(.cmr-explore-sectors-section),
-    .elementor-shortcode:has(.cmr-explore-sectors-section) {
+    .elementor-shortcode:has(.cmr-explore-sectors-section),
+    .elementor-column:has(.cmr-explore-sectors-section),
+    .elementor-column-wrap:has(.cmr-explore-sectors-section),
+    .elementor-section:has(.cmr-explore-sectors-section),
+    .elementor-section-boxed:has(.cmr-explore-sectors-section) {
         padding-left: 0 !important;
         padding-right: 0 !important;
         margin-left: 0 !important;
@@ -8368,9 +8378,10 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     .cmr-explore-sectors-section {
         padding: 40px 0 !important;
         width: 100% !important;
-        max-width: 100% !important;
+        max-width: 100vw !important;
         box-sizing: border-box !important;
         overflow: hidden !important;
+        background-color: #F8F9FA !important;
     }
     .explore-sectors-container {
         padding-left: 20px !important;
@@ -8387,21 +8398,47 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     }
     .explore-sectors-track-wrapper {
         width: 100% !important;
-        overflow: hidden !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        scroll-snap-type: x mandatory !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+        box-sizing: border-box !important;
+    }
+    .explore-sectors-track-wrapper::-webkit-scrollbar {
+        display: none !important;
     }
     .explore-sectors-track {
+        display: flex !important;
+        flex-wrap: nowrap !important;
         gap: 16px !important;
         padding-left: 20px !important;
         padding-right: 20px !important;
+        padding-bottom: 15px !important;
+        scroll-padding-left: 20px !important;
+        scroll-padding-inline: 20px !important;
+        width: max-content !important;
+        min-width: max-content !important;
+        box-sizing: border-box !important;
+        transform: none !important;
+    }
+    .explore-sectors-track::-webkit-scrollbar {
+        display: none !important;
     }
     .explore-sector-card {
         flex: 0 0 280px !important;
         width: 280px !important;
         max-width: 280px !important;
         min-width: 280px !important;
+        scroll-snap-align: start !important;
+        scroll-margin-left: 20px !important;
+        flex-shrink: 0 !important;
+        box-sizing: border-box !important;
         height: auto !important;
         min-height: 280px !important;
-        padding: 30px 22px !important;
+        padding: 28px 20px !important;
     }
 
     /* CMR News Carousel Mobile Styles */
