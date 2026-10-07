@@ -11127,6 +11127,101 @@ header.sticky .cmr-nav-cart-container:hover,
 /* MOBILE SLIDER / CAROUSEL EDGE SPACING (MAX 16PX FROM SCREEN)  */
 /* ============================================================= */
 @media (max-width: 768px) {
+    /* Reset all container paddings that might cause extra whitespace */
+    .elementor-element.elementor-element-b5163c3,
+    .elementor-element.elementor-element-00eabcc,
+    [data-id="b5163c3"],
+    [data-id="00eabcc"] {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Left text column: 16px padding on mobile */
+    .elementor-element.elementor-element-7096f9b,
+    [data-id="7096f9b"] {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        box-sizing: border-box !important;
+        width: 100% !important;
+    }
+
+    /* Slider column container: 16px padding on mobile */
+    .elementor-element.elementor-element-b8bc623,
+    [data-id="b8bc623"],
+    .elementor-element:has(.quanto-custom-carousel),
+    .e-con:has(.quanto-custom-carousel),
+    .e-con-inner:has(.quanto-custom-carousel) {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        background-color: transparent !important;
+        border-radius: 0 !important;
+    }
+
+    /* Custom Carousel Widget inside container */
+    .elementor-widget-quanto_custom_carousel,
+    .elementor-widget-quanto_custom_carousel .elementor-widget-container,
+    .elementor-element-c89a291,
+    [data-id="c89a291"],
+    .quanto-custom-carousel-wrapper {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        justify-content: center !important;
+    }
+
+    .quanto-custom-carousel,
+    .elementor-element.elementor-element-c89a291 .quanto-custom-carousel,
+    .elementor-52631 .elementor-element.elementor-element-c89a291 .quanto-custom-carousel {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        border-radius: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    .quanto-custom-carousel .swiper,
+    .quanto-custom-carousel .swiper-wrapper,
+    .quanto-custom-carousel .swiper-slide,
+    .quanto-custom-carousel .quanto-single-slide {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        box-sizing: border-box !important;
+    }
+
+    .quanto-custom-carousel .swiper-slide img,
+    .quanto-custom-carousel .quanto-single-slide img,
+    .quanto-custom-carousel img,
+    .quanto-carousel-img,
+    .elementor-52631 .elementor-element.elementor-element-c89a291 .quanto-custom-carousel .swiper-slide img,
+    .elementor-52631 .elementor-element.elementor-element-c89a291 .quanto-custom-carousel img {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        max-height: none !important;
+        aspect-ratio: 1 / 1 !important;
+        object-fit: cover !important;
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        border-radius: 0 !important;
+    }
+
+    /* General fallbacks for standard elementor carousels */
     .elementor-element:has(.elementor-widget-image-carousel),
     .elementor-element:has(.elementor-image-carousel),
     .elementor-element:has(.elementor-widget-slides),

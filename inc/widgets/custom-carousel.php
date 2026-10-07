@@ -518,6 +518,43 @@ class Quanto_Custom_Carousel_Widget extends \Elementor\Widget_Base {
                     display: block !important;
                     box-sizing: border-box !important;
                 }
+                @media (max-width: 768px) {
+                    #<?php echo esc_attr($uid); ?>-wrapper {
+                        width: 100% !important;
+                        max-width: 100% !important;
+                        padding: 0 !important;
+                        margin: 0 !important;
+                        display: flex !important;
+                        justify-content: center !important;
+                    }
+                    #<?php echo esc_attr($uid); ?> {
+                        width: 100% !important;
+                        max-width: 100% !important;
+                        height: auto !important;
+                        min-height: auto !important;
+                        border-radius: 0 !important;
+                    }
+                    #<?php echo esc_attr($uid); ?> .swiper,
+                    #<?php echo esc_attr($uid); ?> .swiper-wrapper,
+                    #<?php echo esc_attr($uid); ?> .swiper-slide,
+                    #<?php echo esc_attr($uid); ?> .quanto-single-slide {
+                        width: 100% !important;
+                        max-width: 100% !important;
+                        height: auto !important;
+                    }
+                    #<?php echo esc_attr($uid); ?> .swiper-slide img,
+                    #<?php echo esc_attr($uid); ?> .quanto-single-slide img,
+                    #<?php echo esc_attr($uid); ?> img,
+                    #<?php echo esc_attr($uid); ?> .quanto-carousel-img {
+                        width: 100% !important;
+                        max-width: 100% !important;
+                        height: auto !important;
+                        max-height: none !important;
+                        aspect-ratio: 1 / 1 !important;
+                        object-fit: cover !important;
+                        border-radius: 0 !important;
+                    }
+                }
                 #<?php echo esc_attr($uid); ?> .quanto-carousel-arrow {
                     position: absolute;
                     top: 50%;
