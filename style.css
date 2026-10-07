@@ -9056,7 +9056,7 @@ figure img,
     max-width: none !important;
     object-fit: contain !important;
     object-position: center !important;
-    border-radius: 0 !important;
+    border-radius: 5px !important;
     display: inline-block !important;
 }
 
@@ -9091,7 +9091,7 @@ figure img,
     object-fit: contain !important;
     object-position: center !important;
     margin: 0 !important;
-    border-radius: 0 !important;
+    border-radius: 5px !important;
     display: block !important;
 }
 
@@ -9120,7 +9120,7 @@ figure img,
         object-fit: contain !important;
         object-position: center !important;
         margin: 0 0 12px 0 !important;
-        border-radius: 0 !important;
+        border-radius: 5px !important;
         display: inline-block !important;
         z-index: 2 !important;
     }

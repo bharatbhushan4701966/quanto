@@ -580,7 +580,7 @@ function cmr_news_tabs_shortcode( $atts ) {
             object-fit: contain !important;
             object-position: center !important;
             margin: 0 0 12px 0 !important;
-            border-radius: 0 !important;
+            border-radius: 5px !important;
             display: inline-block !important;
             z-index: 2 !important;
         }
@@ -596,7 +596,7 @@ function cmr_news_tabs_shortcode( $atts ) {
         max-width: none !important;
         object-fit: contain !important;
         object-position: center !important;
-        border-radius: 0 !important;
+        border-radius: 5px !important;
         display: inline-block !important;
         margin-bottom: 16px !important;
     }
