@@ -282,17 +282,40 @@
     transform: scale(1.05);
 }
 
+.cmr-mc-wrapper .cmr-mc-standard .cmr-mc-image-wrap .cmr-mc-logo,
+.cmr-mc-wrapper .cmr-mc-card-image .cmr-mc-logo,
+.cmr-media-coverage-wrapper .cmr-mc-card-image .cmr-mc-logo,
+.cmr-mc-image-wrap .cmr-mc-logo,
+.cmr-mc-card-image .cmr-mc-logo {
+    position: absolute !important;
+    bottom: 15px !important;
+    left: 15px !important;
+    z-index: 3 !important;
+    background: #ffffff !important;
+    padding: 4px !important;
+    box-sizing: content-box !important;
+    height: 32px !important;
+    max-height: 32px !important;
+    width: auto !important;
+    max-width: none !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    margin: 0 !important;
+    border-radius: 5px !important;
+    display: block !important;
+}
+
 .cmr-mc-wrapper .cmr-mc-logo {
-    position: relative;
     width: auto !important;
     max-width: 150px;
     max-height: 44px;
     height: auto;
     object-fit: contain;
     object-position: left center !important;
-    border-radius: 0 !important;
+    border-radius: 5px !important;
     margin: 0 0 14px 0 !important;
-    padding: 0 !important;
+    padding: 4px !important;
+    background: #ffffff !important;
     display: block;
     align-self: flex-start !important;
 }

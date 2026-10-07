@@ -758,10 +758,13 @@ function cmr_ajax_filter_media_coverage() {
                             <?php if ( $bg_image ) : ?>
                                 <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-mc-bg" alt="<?php the_title_attribute(); ?>">
                             <?php endif; ?>
+                            <?php if ( $logo_url ) : ?>
+                                <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-mc-logo cmr-card-logo cmr-card-logo-desktop" alt="Source Logo">
+                            <?php endif; ?>
                         </div>
                         <div class="cmr-mc-content">
                             <?php if ( $logo_url ) : ?>
-                                <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-mc-logo" alt="Source Logo">
+                                <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-mc-logo cmr-card-logo cmr-card-logo-mobile" alt="Source Logo">
                             <?php endif; ?>
                             <div class="cmr-mc-meta">
                                 <div class="cmr-mc-meta-left">

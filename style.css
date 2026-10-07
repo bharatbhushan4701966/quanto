@@ -9059,7 +9059,11 @@ figure img,
 }
 
 /* Standard Bottom Cards Logo: overlaid on image thumbnail */
-.cmr-card-standard .cmr-card-image-wrap {
+.cmr-card-standard .cmr-card-image-wrap,
+.cmr-mc-standard .cmr-mc-image-wrap,
+.cmr-mc-card .cmr-mc-card-image,
+.cmr-mc-wrapper .cmr-mc-image-wrap,
+.cmr-media-coverage-wrapper .cmr-mc-card-image {
     position: relative !important;
     overflow: hidden !important;
 }
@@ -9074,6 +9078,12 @@ figure img,
 
 .cmr-card-standard .cmr-card-image-wrap .cmr-card-logo,
 .cmr-card-image-wrap .cmr-card-logo,
+.cmr-mc-standard .cmr-mc-image-wrap .cmr-mc-logo,
+.cmr-mc-card .cmr-mc-card-image .cmr-mc-logo,
+.cmr-mc-wrapper .cmr-mc-image-wrap .cmr-mc-logo,
+.cmr-media-coverage-wrapper .cmr-mc-card-image .cmr-mc-logo,
+.cmr-mc-image-wrap .cmr-mc-logo,
+.cmr-mc-card-image .cmr-mc-logo,
 .cmr-card-logo-desktop {
     position: absolute !important;
     bottom: 15px !important;
@@ -9082,8 +9092,8 @@ figure img,
     background: #ffffff !important;
     padding: 4px !important;
     box-sizing: content-box !important;
-    height: 40px !important;
-    max-height: 40px !important;
+    height: 32px !important;
+    max-height: 32px !important;
     width: auto !important;
     max-width: none !important;
     object-fit: contain !important;
@@ -9096,6 +9106,12 @@ figure img,
 @media (max-width: 768px) {
     .cmr-card-standard .cmr-card-image-wrap .cmr-card-logo,
     .cmr-card-image-wrap .cmr-card-logo,
+    .cmr-mc-standard .cmr-mc-image-wrap .cmr-mc-logo,
+    .cmr-mc-card .cmr-mc-card-image .cmr-mc-logo,
+    .cmr-mc-wrapper .cmr-mc-image-wrap .cmr-mc-logo,
+    .cmr-media-coverage-wrapper .cmr-mc-card-image .cmr-mc-logo,
+    .cmr-mc-image-wrap .cmr-mc-logo,
+    .cmr-mc-card-image .cmr-mc-logo,
     .cmr-card-logo-desktop {
         display: none !important;
     }

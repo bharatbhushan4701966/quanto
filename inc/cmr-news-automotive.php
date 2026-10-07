@@ -118,8 +118,8 @@ function cmr_news_automotive_shortcode( $atts ) {
         background: #ffffff !important;
         padding: 4px !important;
         box-sizing: content-box !important;
-        height: 40px !important;
-        max-height: 40px !important;
+        height: 32px !important;
+        max-height: 32px !important;
         width: auto !important;
         max-width: none !important;
         object-fit: contain !important;
