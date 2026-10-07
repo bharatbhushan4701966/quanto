@@ -9204,6 +9204,37 @@ figure img,
     align-self: flex-start !important;
 }
 
+/* Explore All CTA Button matching Header CTA */
+.cmr-explore-all {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #111111 !important;
+    color: #ffffff !important;
+    padding: 11px 24px !important;
+    border-radius: 50px !important;
+    text-decoration: none !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    font-family: 'Instrument Sans', sans-serif !important;
+    line-height: 1.2 !important;
+    transition: all 0.3s ease !important;
+    box-sizing: border-box !important;
+}
+
+.cmr-explore-all:hover {
+    background: #333333 !important;
+    color: #ffffff !important;
+}
+
+.cmr-explore-all .cmr-arrow-icon {
+    width: 14px !important;
+    height: 14px !important;
+    margin-left: 6px !important;
+    vertical-align: middle !important;
+    display: inline-block !important;
+}
+
 /* Universal Badge Height: 30px */
 .cmr-nc-badge,
 .cmr-mc-trending-tag,
