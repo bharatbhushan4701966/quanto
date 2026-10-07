@@ -10932,6 +10932,30 @@ header.sticky .cmr-nav-cart-container:hover,
     stroke: #4820B0 !important;
 }
 
+/* Responsive font-size for "Better intelligence. Stronger connections. Smarter decisions." on Mobile */
+@media (max-width: 768px) {
+    [data-id="d4032ae"],
+    [data-interaction-id="d4032ae"],
+    .elementor-element-d4032ae,
+    .elementor-element-d4032ae h2,
+    .elementor-element-d4032ae .elementor-heading-title,
+    .e-d4032ae-aabbd19,
+    h2[data-id="d4032ae"] {
+        font-size: 32px !important;
+        line-height: 1.25 !important;
+    }
+}
+
+/* Border 1px for widget d647871 */
+.elementor-52927 .elementor-element.elementor-element-d647871,
+.elementor-element-d647871,
+[data-id="d647871"] {
+    border: 1px solid #FFFFFF !important;
+    border-radius: 40px !important;
+}
+
+
+
 
 
 
