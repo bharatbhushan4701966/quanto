@@ -423,9 +423,9 @@ function cmr_render_media_coverage_shortcode( $atts ) {
             flex: none !important;
             width: 100% !important;
             max-width: 100% !important;
-            height: 220px !important;
+            height: 274px !important;
             min-height: 0 !important;
-            border-radius: 12px !important;
+            border-radius: 0 !important;
             position: relative !important;
             overflow: hidden !important;
         }
@@ -510,9 +510,9 @@ function cmr_render_media_coverage_shortcode( $atts ) {
         .cmr-mc-wrapper .cmr-mc-standard .cmr-mc-image-wrap,
         .cmr-media-coverage-wrapper .cmr-mc-card-image {
             width: 100% !important;
-            height: 200px !important;
+            height: 274px !important;
             aspect-ratio: auto !important;
-            border-radius: 12px !important;
+            border-radius: 0 !important;
             position: relative !important;
             overflow: hidden !important;
             margin-bottom: 0 !important;
@@ -723,11 +723,11 @@ function cmr_ajax_filter_media_coverage() {
                                 <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-mc-bg" alt="<?php the_title_attribute(); ?>">
                             <?php endif; ?>
                             <span class="cmr-mc-trending-tag">✦ TRENDING</span>
-                        </div>
-                        <div class="cmr-mc-content">
                             <?php if ( $logo_url ) : ?>
                                 <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-mc-logo" alt="Source Logo">
                             <?php endif; ?>
+                        </div>
+                        <div class="cmr-mc-content">
                             <div class="cmr-mc-meta">
                                 <div class="cmr-mc-meta-left">
                                     <?php if ( $publisher_name ) : ?>
@@ -759,13 +759,10 @@ function cmr_ajax_filter_media_coverage() {
                                 <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-mc-bg" alt="<?php the_title_attribute(); ?>">
                             <?php endif; ?>
                             <?php if ( $logo_url ) : ?>
-                                <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-mc-logo cmr-card-logo cmr-card-logo-desktop" alt="Source Logo">
+                                <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-mc-logo" alt="Source Logo">
                             <?php endif; ?>
                         </div>
                         <div class="cmr-mc-content">
-                            <?php if ( $logo_url ) : ?>
-                                <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-mc-logo cmr-card-logo cmr-card-logo-mobile" alt="Source Logo">
-                            <?php endif; ?>
                             <div class="cmr-mc-meta">
                                 <div class="cmr-mc-meta-left">
                                     <?php if ( $publisher_name ) : ?>

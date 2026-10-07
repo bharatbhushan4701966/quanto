@@ -241,13 +241,10 @@ function cmr_get_media_coverage_html( $page = 1, $publisher = 'all', $search = '
                             <img src="<?php echo esc_url($bg_image); ?>" class="cmr-mc-bg" alt="<?php the_title_attribute(); ?>">
                         <?php endif; ?>
                         <?php if ($logo_url): ?>
-                            <img src="<?php echo esc_url($logo_url); ?>" class="cmr-mc-logo cmr-card-logo cmr-card-logo-desktop" alt="Publisher Logo">
+                            <img src="<?php echo esc_url($logo_url); ?>" class="cmr-mc-logo" alt="Publisher Logo">
                         <?php endif; ?>
                     </div>
                     <div class="cmr-mc-card-content">
-                        <?php if ($logo_url): ?>
-                            <img src="<?php echo esc_url($logo_url); ?>" class="cmr-mc-logo cmr-card-logo cmr-card-logo-mobile" alt="Publisher Logo">
-                        <?php endif; ?>
                         <div class="cmr-mc-meta-row">
                             <div class="cmr-mc-meta-left">
                                 <span class="cmr-mc-publisher"><?php echo esc_html($pub_name); ?></span> <span class="cmr-mc-sep">|</span> <span class="cmr-mc-date">Published <?php echo esc_html($date); ?></span>

@@ -424,7 +424,7 @@
 }
 
 .cmr-mc-wrapper .cmr-mc-standard .cmr-mc-image-wrap {
-    height: 220px;
+    height: 350px !important;
     margin-bottom: 15px;
 }
 
@@ -636,7 +636,7 @@
         flex: none !important;
         width: 100% !important;
         max-width: 100% !important;
-        height: 220px !important;
+        height: 274px !important;
         min-height: 0 !important;
         border-radius: 0 !important;
         position: relative !important;
@@ -723,7 +723,7 @@
     .cmr-mc-wrapper .cmr-mc-standard .cmr-mc-image-wrap,
     .cmr-media-coverage-wrapper .cmr-mc-card-image {
         width: 100% !important;
-        height: 200px !important;
+        height: 274px !important;
         aspect-ratio: auto !important;
         border-radius: 0 !important;
         position: relative !important;
