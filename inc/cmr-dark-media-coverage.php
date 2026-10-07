@@ -186,17 +186,67 @@ if ( ! function_exists( 'cmr_dark_media_coverage_shortcode' ) ) {
         wp_enqueue_style( 'cmr-news-style', get_template_directory_uri() . '/assets/css/cmr-news.css', array(), time() );
 
         global $wpdb;
-        $publishers = $wpdb->get_col("
-            SELECT DISTINCT meta_value 
-            FROM {$wpdb->postmeta} 
-            WHERE meta_key = '_cmr_news_publisher_name' 
-            AND meta_value != ''
-            ORDER BY meta_value ASC
-            LIMIT 4
+        $raw_publishers = $wpdb->get_col("
+            SELECT pm.meta_value 
+            FROM {$wpdb->postmeta} pm
+            INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+            WHERE pm.meta_key = '_cmr_news_publisher_name' 
+            AND TRIM(pm.meta_value) != ''
+            AND p.post_type = 'cmr_news'
+            AND p.post_status = 'publish'
+            AND p.ID NOT IN (
+                SELECT tr.object_id FROM {$wpdb->term_relationships} tr
+                INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id
+                INNER JOIN {$wpdb->terms} t ON t.term_id = tt.term_id
+                WHERE tt.taxonomy IN ('cmr_news_category', 'category')
+                AND (
+                    t.slug IN ('media-releases', 'media-release', 'media_releases', 'media_release', 'press-releases', 'press-release', 'pressreleases', 'press-releases-2', 'press-release-2', 'quarterly-results')
+                    OR t.name LIKE '%Media Release%'
+                    OR t.name LIKE '%Press Release%'
+                    OR t.name LIKE '%Quarterly%'
+                )
+            )
+            GROUP BY pm.meta_value
+            ORDER BY COUNT(p.ID) DESC, pm.meta_value ASC
         ");
 
-        if ( empty($publishers) ) {
-            $publishers = array('CNN', 'Times of India', 'BBC News', 'Your Story');
+        $publishers = array();
+        if ( ! empty( $raw_publishers ) ) {
+            foreach ( $raw_publishers as $r_pub ) {
+                $r_pub = trim( $r_pub );
+                if ( empty( $r_pub ) || in_array( $r_pub, $publishers ) ) continue;
+
+                // Verify that this publisher actually has published posts matching the section
+                $chk = new WP_Query( array(
+                    'post_type'      => 'cmr_news',
+                    'post_status'    => 'publish',
+                    'posts_per_page' => 1,
+                    'fields'         => 'ids',
+                    'tax_query'      => array(
+                        array(
+                            'taxonomy' => 'cmr_news_category',
+                            'field'    => 'slug',
+                            'terms'    => array('media-releases', 'media-release', 'media_releases', 'media_release'),
+                            'operator' => 'NOT IN'
+                        ),
+                    ),
+                    'meta_query'     => array(
+                        array(
+                            'key'     => '_cmr_news_publisher_name',
+                            'value'   => $r_pub,
+                            'compare' => '='
+                        )
+                    )
+                ) );
+
+                if ( $chk->have_posts() ) {
+                    $publishers[] = $r_pub;
+                }
+
+                if ( count( $publishers ) >= 4 ) {
+                    break;
+                }
+            }
         }
 
         ob_start();
