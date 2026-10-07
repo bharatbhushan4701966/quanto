@@ -9024,7 +9024,6 @@ figure img,
 
 .cmr-mc-wrapper .cmr-mc-logo,
 .cmr-mc-logo,
-.cmr-nc-logo,
 .cmr-card-logo {
     max-width: none !important;
     width: auto !important;
@@ -9035,6 +9034,22 @@ figure img,
     margin-left: 0 !important;
     padding-left: 0 !important;
     align-self: flex-start !important;
+}
+
+.cmr-nc-logo,
+.cmr-nc-logo-wrap img {
+    background: #ffffff !important;
+    padding: 4px !important;
+    box-sizing: content-box !important;
+    height: 32px !important;
+    max-height: 32px !important;
+    width: auto !important;
+    max-width: none !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    border-radius: 5px !important;
+    display: inline-block !important;
+    margin: 0 0 14px 0 !important;
 }
 
 /* Featured Large Card Logo: inside content block above metadata */
