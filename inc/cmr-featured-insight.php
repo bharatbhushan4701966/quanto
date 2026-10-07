@@ -57,8 +57,8 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
             'poster'       => '',
             'title'        => '',
             'date'         => '',
-            'duration'     => '1 min',
-            'btn_text'     => 'Watch',
+            'duration'     => '1 min read',
+            'btn_text'     => 'Insight',
             'link'         => '#',
             'target'       => '_self',
             'max_width'    => '600px',
@@ -69,8 +69,8 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
         $poster    = $atts['poster'];
         $title     = $atts['title'];
         $date      = $atts['date'];
-        $duration  = ! empty( $atts['duration'] ) ? $atts['duration'] : '1 min';
-        $btn_text  = ! empty( $atts['btn_text'] ) ? $atts['btn_text'] : 'Watch';
+        $duration  = ! empty( $atts['duration'] ) && $atts['duration'] !== '1 min' ? $atts['duration'] : '1 min read';
+        $btn_text  = ! empty( $atts['btn_text'] ) && $atts['btn_text'] !== 'Watch' ? $atts['btn_text'] : 'Insight';
         $link      = ! empty( $atts['link'] ) ? $atts['link'] : '#';
         $target    = $atts['target'];
         $max_width = $atts['max_width'];
@@ -413,8 +413,8 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 }
 
                 // Approximate reading / video time
-                if ( empty( $duration ) || $duration === '22:44 min' ) {
-                    $duration = '1 min';
+                if ( empty( $duration ) || $duration === '22:44 min' || $duration === '1 min' ) {
+                    $duration = '1 min read';
                 }
             }
         }
@@ -427,8 +427,8 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
             $title = 'From ideas to innovation – Exclusive conversations with the trailblazers of India’s EV journey';
         }
 
-        if ( empty( $duration ) || $duration === '22:44 min' ) {
-            $duration = '1 min';
+        if ( empty( $duration ) || $duration === '22:44 min' || $duration === '1 min' ) {
+            $duration = '1 min read';
         }
 
         $video_embed = ! empty( $video_url ) ? cmr_get_video_embed_html( $video_url, $poster ) : '';
@@ -471,6 +471,17 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                             <?php echo esc_html( $title ); ?>
                         </a>
                     </h3>
+
+                    <!-- Red Insight Button -->
+                    <div class="cmr-fvi-action">
+                        <a href="<?php echo esc_url( $link ); ?>" class="cmr-fvi-btn" <?php echo ( $target === '_blank' ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?>>
+                            <span><?php echo esc_html( ! empty( $btn_text ) ? $btn_text : 'Insight' ); ?></span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
 
             </div>
@@ -586,29 +597,47 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 color: #4F46E5 !important;
             }
             .cmr-fvi-action {
-                display: none !important;
+                margin-top: 24px !important;
+                display: flex !important;
+                align-items: center !important;
             }
             .cmr-fvi-btn {
-                display: inline-flex;
-                align-items: center;
-                gap: 7px;
-                font-size: 16.5px;
-                font-weight: 600;
-                color: #0F172A !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 8px !important;
+                padding: 10px 24px !important;
+                background: #E31837 !important;
+                color: #FFFFFF !important;
+                border-radius: 4px !important;
+                font-size: 14.5px !important;
+                font-weight: 600 !important;
                 text-decoration: none !important;
-                transition: all 0.25s ease;
-                cursor: pointer;
+                transition: all 0.25s ease !important;
+                cursor: pointer !important;
+                border: 1px solid #E31837 !important;
+                line-height: 1.2 !important;
+                box-shadow: 0 2px 6px rgba(227, 24, 55, 0.2) !important;
+            }
+            .cmr-fvi-btn span {
+                color: #FFFFFF !important;
+                font-weight: 600 !important;
             }
             .cmr-fvi-btn svg {
-                width: 16px;
-                height: 16px;
-                transition: transform 0.25s ease;
+                width: 14px !important;
+                height: 14px !important;
+                color: #FFFFFF !important;
+                transition: transform 0.25s ease !important;
             }
             .cmr-fvi-btn:hover {
-                color: #4F46E5 !important;
+                background: #C4122D !important;
+                border-color: #C4122D !important;
+                color: #FFFFFF !important;
+                box-shadow: 0 4px 14px rgba(227, 24, 55, 0.35) !important;
+                transform: translateY(-1px) !important;
             }
             .cmr-fvi-btn:hover svg {
-                transform: translate(3px, -3px);
+                transform: translate(2px, -2px) !important;
             }
             @media (max-width: 767.98px) {
                 .cmr-fvi-body {
@@ -624,8 +653,12 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                     font-size: 13.5px;
                     margin-bottom: 14px;
                 }
+                .cmr-fvi-action {
+                    margin-top: 18px !important;
+                }
                 .cmr-fvi-btn {
-                    font-size: 15px;
+                    font-size: 14px !important;
+                    padding: 9px 20px !important;
                 }
             }
         </style>
