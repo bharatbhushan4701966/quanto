@@ -126,14 +126,7 @@ if ( ! function_exists( 'cmr_consulting_advisory_shortcode' ) ) {
                         }
                         
                         // Categories / Tags
-                        $category_name = 'Consulting & Advisory';
-                        $terms = get_the_terms( $insight_post->ID, 'category' );
-                        if ( ! $terms || is_wp_error( $terms ) ) {
-                            $terms = get_the_terms( $insight_post->ID, 'cmr_news_category' );
-                        }
-                        if ( $terms && ! is_wp_error( $terms ) ) {
-                            $category_name = $terms[0]->name;
-                        }
+                        $category_name = ! empty( $atts['nav_title'] ) ? $atts['nav_title'] : 'Consulting & Advisory';
 
                         // Calculate reading time
                         $content = get_post_field( 'post_content', $insight_post->ID );
