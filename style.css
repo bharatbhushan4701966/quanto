@@ -9132,17 +9132,15 @@ figure img,
 }
 
 @media (max-width: 768px) {
-    .cmr-card-standard .cmr-card-image-wrap .cmr-card-logo,
-    .cmr-card-image-wrap .cmr-card-logo,
+    /* Media Coverage page: logo stays on image thumbnail */
+    .cmr-mc-wrapper .cmr-mc-image-wrap .cmr-mc-logo,
+    .cmr-media-coverage-wrapper .cmr-mc-card-image .cmr-mc-logo,
     .cmr-mc-standard .cmr-mc-image-wrap .cmr-mc-logo,
     .cmr-mc-featured .cmr-mc-image-wrap .cmr-mc-logo,
     .cmr-mc-card .cmr-mc-card-image .cmr-mc-logo,
     .cmr-mc-featured .cmr-mc-featured-image .cmr-mc-logo,
-    .cmr-mc-wrapper .cmr-mc-image-wrap .cmr-mc-logo,
-    .cmr-media-coverage-wrapper .cmr-mc-card-image .cmr-mc-logo,
     .cmr-mc-image-wrap .cmr-mc-logo,
     .cmr-mc-card-image .cmr-mc-logo,
-    .cmr-card-logo-desktop,
     .cmr-mc-logo {
         position: absolute !important;
         bottom: 15px !important;
@@ -9161,6 +9159,18 @@ figure img,
         border-radius: 5px !important;
         display: block !important;
     }
+
+    /* News Grid / Carousel cards: logo displays above content text */
+    .cmr-news-container .cmr-card-image-wrap .cmr-card-logo,
+    .cmr-news-grid .cmr-card-image-wrap .cmr-card-logo,
+    .cmr-card-image-wrap .cmr-card-logo,
+    .cmr-card-image-wrap .cmr-card-logo-desktop {
+        display: none !important;
+    }
+
+    .cmr-card-content .cmr-card-logo,
+    .cmr-card-content .cmr-card-logo-mobile,
+    .cmr-card-logo-mobile,
     .cmr-card-featured .cmr-card-content .cmr-card-logo,
     .cmr-card-featured .cmr-card-logo {
         position: relative !important;
@@ -9182,8 +9192,7 @@ figure img,
         display: inline-block !important;
         z-index: 2 !important;
     }
-    .cmr-card-logo-mobile,
-    .cmr-card-standard .cmr-card-content .cmr-card-logo,
+
     .cmr-mc-content .cmr-mc-logo,
     .cmr-mc-card-content .cmr-mc-logo {
         display: none !important;
