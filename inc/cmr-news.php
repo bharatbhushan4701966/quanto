@@ -553,9 +553,6 @@ function cmr_news_tabs_shortcode( $atts ) {
             scroll-snap-align: start !important;
             scroll-margin-left: 20px !important;
         }
-        .cmr-card-logo-mobile {
-            display: none !important;
-        }
         .cmr-card-standard .cmr-card-image-wrap .cmr-card-logo,
         .cmr-card-image-wrap .cmr-card-logo,
         .cmr-card-logo-desktop {
@@ -584,6 +581,9 @@ function cmr_news_tabs_shortcode( $atts ) {
             display: inline-block !important;
             z-index: 2 !important;
         }
+    }
+    .cmr-card-logo-mobile {
+        display: none !important;
     }
     .cmr-card-featured .cmr-card-content .cmr-card-logo,
     .cmr-card-featured .cmr-card-logo {

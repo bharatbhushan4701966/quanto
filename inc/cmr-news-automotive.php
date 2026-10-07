@@ -173,9 +173,6 @@ function cmr_news_automotive_shortcode( $atts ) {
             scroll-margin-left: 20px !important;
             border-radius: 0 !important;
         }
-        .cmr-news-container .cmr-card-logo-mobile {
-            display: none !important;
-        }
         .cmr-news-container .cmr-card-standard .cmr-card-image-wrap .cmr-card-logo,
         .cmr-news-container .cmr-card-image-wrap .cmr-card-logo,
         .cmr-news-container .cmr-card-logo-desktop {
@@ -204,6 +201,9 @@ function cmr_news_automotive_shortcode( $atts ) {
             display: inline-block !important;
             z-index: 2 !important;
         }
+    }
+    .cmr-news-container .cmr-card-logo-mobile {
+        display: none !important;
     }
     </style>
     <div class="cmr-news-container cmr-news-black-bg" style="padding-bottom: 60px;">
