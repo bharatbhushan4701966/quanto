@@ -571,10 +571,10 @@ function cmr_news_tabs_shortcode( $atts ) {
             left: auto !important;
             right: auto !important;
             background: #ffffff !important;
-            padding: 4px 8px !important;
+            padding: 4px !important;
             box-sizing: content-box !important;
-            height: 32px !important;
-            max-height: 32px !important;
+            height: 40px !important;
+            max-height: 40px !important;
             width: auto !important;
             max-width: none !important;
             object-fit: contain !important;
@@ -588,7 +588,7 @@ function cmr_news_tabs_shortcode( $atts ) {
     .cmr-card-featured .cmr-card-content .cmr-card-logo,
     .cmr-card-featured .cmr-card-logo {
         background: #ffffff !important;
-        padding: 4px 8px !important;
+        padding: 4px !important;
         box-sizing: content-box !important;
         height: 40px !important;
         max-height: 40px !important;
