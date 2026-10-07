@@ -78,12 +78,17 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
             </div>
             
 
-            <!-- Inline style: highest specificity, cannot be overridden by Elementor -->
             <style>
-                #cmr-explore-section { overflow: hidden !important; position: relative !important; width: 100% !important; }
+                #cmr-explore-section {
+                    overflow: hidden !important;
+                    position: relative !important;
+                    width: 100% !important;
+                    box-sizing: border-box !important;
+                }
                 #cmr-explore-section .explore-sectors-track-wrapper {
                     width: 100% !important;
                     overflow: hidden !important;
+                    box-sizing: border-box !important;
                 }
                 #cmr-explore-track {
                     display: flex !important;
@@ -92,15 +97,27 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
                     min-width: max-content !important;
                     will-change: transform;
                     gap: 20px !important;
+                    box-sizing: border-box !important;
                 }
                 #cmr-explore-track .explore-sector-card {
                     flex: 0 0 323px !important;
                     min-width: 323px !important;
                     max-width: 323px !important;
+                    box-sizing: border-box !important;
                 }
                 @media (max-width: 768px) {
                     #cmr-explore-section {
-                        padding: 40px 0 !important;
+                        padding: 30px 0 !important;
+                    }
+                    #cmr-explore-section .explore-sectors-container {
+                        padding: 0 20px !important;
+                        margin-bottom: 20px !important;
+                    }
+                    #cmr-explore-section .explore-sectors-title {
+                        font-size: 26px !important;
+                        line-height: 1.25 !important;
+                        letter-spacing: -0.5px !important;
+                        margin-bottom: 20px !important;
                     }
                     #cmr-explore-track {
                         gap: 16px !important;
@@ -114,7 +131,7 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
                         min-width: 280px !important;
                         height: auto !important;
                         min-height: 280px !important;
-                        padding: 30px 22px !important;
+                        padding: 28px 20px !important;
                     }
                 }
             </style>
@@ -146,33 +163,39 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
 
                     let track   = document.getElementById("cmr-explore-track");
                     let section = document.getElementById("cmr-explore-section");
-                    if (!track || !section) return;
+                    let wrapper = section ? section.querySelector('.explore-sectors-track-wrapper') : null;
+                    if (!track || !section || !wrapper) return;
 
                     // Kill any pre-existing ScrollTrigger on this section to avoid duplicates
                     ScrollTrigger.getAll().forEach(function(st) {
                         if (st.trigger === section) st.kill();
                     });
 
-                    gsap.set(track, { clearProps: "all" });
+                    gsap.set(track, { clearProps: "transform,x" });
 
                     function getScrollAmount() {
-                        // Full horizontal distance: track content - one visible viewport
-                        return -(track.scrollWidth - section.offsetWidth);
+                        return -(track.scrollWidth - wrapper.clientWidth);
                     }
 
                     const tween = gsap.to(track, {
-                        x: getScrollAmount,
-                        ease: "none"
+                        x: () => getScrollAmount(),
+                        ease: "none",
+                        invalidateOnRefresh: true
                     });
+
+                    const isMobile = window.innerWidth <= 768;
+                    const startPosition = isMobile ? "top 70px" : "center center";
 
                     ScrollTrigger.create({
                         trigger: section,
-                        start: "center center",
+                        start: startPosition,
                         end: () => `+=${Math.abs(getScrollAmount())}`,
                         pin: true,
+                        pinSpacing: true,
                         animation: tween,
-                        scrub: 1,
-                        invalidateOnRefresh: true
+                        scrub: 0.5,
+                        invalidateOnRefresh: true,
+                        anticipatePin: 1
                     });
                 }
 
@@ -183,10 +206,14 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
                 });
                 window.addEventListener('resize', function() {
                     initExploreScroll();
+                    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
                 });
                 if (window.jQuery) {
                     jQuery(window).on('elementor/frontend/init', function() {
-                        setTimeout(initExploreScroll, 300);
+                        setTimeout(function() {
+                            initExploreScroll();
+                            if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+                        }, 300);
                     });
                 }
             });
