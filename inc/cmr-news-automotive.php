@@ -128,20 +128,24 @@ function cmr_news_automotive_shortcode( $atts ) {
         border-radius: 0 !important;
         display: block !important;
     }
-    .cmr-news-container .cmr-card-featured .cmr-card-content .cmr-card-logo {
+    .cmr-news-container .cmr-card-featured .cmr-card-content .cmr-card-logo,
+    .cmr-news-container .cmr-card-featured .cmr-card-logo {
         position: relative !important;
         top: auto !important;
         bottom: auto !important;
         left: auto !important;
         margin-bottom: 16px !important;
-        max-height: 48px !important;
-        max-width: 160px !important;
+        background: #ffffff !important;
+        padding: 4px 8px !important;
+        box-sizing: content-box !important;
+        height: 40px !important;
+        max-height: 40px !important;
         width: auto !important;
-        height: auto !important;
+        max-width: none !important;
         object-fit: contain !important;
-        object-position: left center !important;
+        object-position: center !important;
         border-radius: 0 !important;
-        display: block !important;
+        display: inline-block !important;
     }
     @media (max-width: 768px) {
         .cmr-news-container .cmr-news-grid {
@@ -168,6 +172,22 @@ function cmr_news_automotive_shortcode( $atts ) {
             scroll-snap-align: start !important;
             scroll-margin-left: 20px !important;
             border-radius: 0 !important;
+        }
+        .cmr-news-container .cmr-card-standard .cmr-card-image-wrap .cmr-card-logo,
+        .cmr-news-container .cmr-card-image-wrap .cmr-card-logo {
+            position: absolute !important;
+            top: 15px !important;
+            bottom: auto !important;
+            left: 15px !important;
+            right: auto !important;
+            height: 32px !important;
+            max-height: 32px !important;
+        }
+        .cmr-news-container .cmr-card-featured .cmr-card-content .cmr-card-logo,
+        .cmr-news-container .cmr-card-featured .cmr-card-logo {
+            height: 32px !important;
+            max-height: 32px !important;
+            margin-bottom: 12px !important;
         }
     }
     </style>

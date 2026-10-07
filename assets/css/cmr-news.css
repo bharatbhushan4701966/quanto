@@ -157,18 +157,24 @@
     justify-content: flex-end;
 }
 
-.cmr-card-featured .cmr-card-logo {
+.cmr-card-featured .cmr-card-logo,
+.cmr-card-featured .cmr-card-content .cmr-card-logo {
     position: relative;
     top: auto;
     bottom: auto;
     left: auto;
+    background: #ffffff !important;
+    padding: 4px 8px !important;
+    box-sizing: content-box !important;
     width: auto !important;
-    max-width: 160px;
-    max-height: 48px;
-    height: auto;
+    max-width: none !important;
+    height: 40px !important;
+    max-height: 40px !important;
     object-fit: contain;
+    object-position: center;
     margin-bottom: 16px;
-    display: block;
+    display: inline-block;
+    border-radius: 0 !important;
 }
 
 .cmr-card-featured .cmr-card-meta {
@@ -427,21 +433,48 @@
         border-color: #fff !important;
     }
 
-    .cmr-card-standard .cmr-card-logo,
-    .cmr-media-horizontal-card .cmr-card-logo,
+    .cmr-card-standard .cmr-card-image-wrap .cmr-card-logo,
+    .cmr-card-image-wrap .cmr-card-logo,
+    .cmr-media-horizontal-card .cmr-card-logo {
+        position: absolute !important;
+        top: 15px !important;
+        bottom: auto !important;
+        left: 15px !important;
+        right: auto !important;
+        background: #ffffff !important;
+        padding: 4px 8px !important;
+        box-sizing: content-box !important;
+        width: auto !important;
+        max-width: none !important;
+        height: 32px !important;
+        max-height: 32px !important;
+        object-fit: contain !important;
+        object-position: center !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        display: block !important;
+        z-index: 3 !important;
+    }
+
+    .cmr-card-featured .cmr-card-content .cmr-card-logo,
     .cmr-card-featured .cmr-card-logo {
         position: relative !important;
         top: auto !important;
         bottom: auto !important;
         left: auto !important;
+        background: #ffffff !important;
+        padding: 4px 8px !important;
+        box-sizing: content-box !important;
         width: auto !important;
-        max-width: 140px !important;
-        max-height: 40px !important;
-        height: auto !important;
+        max-width: none !important;
+        height: 32px !important;
+        max-height: 32px !important;
         object-fit: contain !important;
+        object-position: center !important;
         margin-bottom: 12px !important;
-        display: block !important;
-        z-index: 2;
+        border-radius: 0 !important;
+        display: inline-block !important;
+        z-index: 2 !important;
     }
 
     .cmr-card-featured .cmr-card-content {

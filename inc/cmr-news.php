@@ -553,6 +553,37 @@ function cmr_news_tabs_shortcode( $atts ) {
             scroll-snap-align: start !important;
             scroll-margin-left: 20px !important;
         }
+        .cmr-card-standard .cmr-card-image-wrap .cmr-card-logo,
+        .cmr-card-image-wrap .cmr-card-logo {
+            position: absolute !important;
+            top: 15px !important;
+            bottom: auto !important;
+            left: 15px !important;
+            right: auto !important;
+            height: 32px !important;
+            max-height: 32px !important;
+        }
+        .cmr-card-featured .cmr-card-content .cmr-card-logo,
+        .cmr-card-featured .cmr-card-logo {
+            height: 32px !important;
+            max-height: 32px !important;
+            margin-bottom: 12px !important;
+        }
+    }
+    .cmr-card-featured .cmr-card-content .cmr-card-logo,
+    .cmr-card-featured .cmr-card-logo {
+        background: #ffffff !important;
+        padding: 4px 8px !important;
+        box-sizing: content-box !important;
+        height: 40px !important;
+        max-height: 40px !important;
+        width: auto !important;
+        max-width: none !important;
+        object-fit: contain !important;
+        object-position: center !important;
+        border-radius: 0 !important;
+        display: inline-block !important;
+        margin-bottom: 16px !important;
     }
     </style>
     <div class="cmr-news-container<?php echo esc_attr( $bg_class ); ?>">
