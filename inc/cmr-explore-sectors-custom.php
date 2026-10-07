@@ -97,10 +97,50 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
                     max-width: 323px !important;
                 }
                 @media (max-width: 768px) {
+                    #<?php echo esc_attr( $unique_id ); ?>_section {
+                        padding: 40px 0 !important;
+                    }
+                    #<?php echo esc_attr( $unique_id ); ?>_section .explore-sectors-track-wrapper {
+                        overflow-x: auto !important;
+                        overflow-y: hidden !important;
+                        -webkit-overflow-scrolling: touch !important;
+                        scrollbar-width: none !important;
+                        -ms-overflow-style: none !important;
+                        width: 100% !important;
+                    }
+                    #<?php echo esc_attr( $unique_id ); ?>_section .explore-sectors-track-wrapper::-webkit-scrollbar {
+                        display: none !important;
+                    }
+                    #<?php echo esc_attr( $unique_id ); ?>_track {
+                        display: flex !important;
+                        flex-wrap: nowrap !important;
+                        overflow-x: auto !important;
+                        gap: 16px !important;
+                        padding: 0 20px 20px 20px !important;
+                        scroll-padding-left: 20px !important;
+                        scroll-padding-inline: 20px !important;
+                        scroll-snap-type: x mandatory !important;
+                        -webkit-overflow-scrolling: touch !important;
+                        scrollbar-width: none !important;
+                        -ms-overflow-style: none !important;
+                        width: max-content !important;
+                        transform: none !important;
+                    }
+                    #<?php echo esc_attr( $unique_id ); ?>_track::-webkit-scrollbar {
+                        display: none !important;
+                    }
                     #<?php echo esc_attr( $unique_id ); ?>_track .explore-sector-card {
-                        flex: 0 0 280px !important;
-                        min-width: 280px !important;
-                        max-width: 280px !important;
+                        flex: 0 0 85% !important;
+                        width: 85% !important;
+                        max-width: 85% !important;
+                        min-width: 85% !important;
+                        scroll-snap-align: start !important;
+                        scroll-margin-left: 20px !important;
+                        flex-shrink: 0 !important;
+                        box-sizing: border-box !important;
+                        padding: 32px 24px !important;
+                        height: auto !important;
+                        min-height: 280px !important;
                     }
                 }
                 #<?php echo esc_attr( $unique_id ); ?>_section .sector-explore-link {
@@ -140,30 +180,39 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
                         if (st.trigger === section) st.kill();
                     });
 
-                    function getScrollAmount() {
-                        return -(track.scrollWidth - section.offsetWidth);
+                    if (window.innerWidth > 768) {
+                        gsap.set(track, { clearProps: "all" });
+
+                        function getScrollAmount() {
+                            return -(track.scrollWidth - section.offsetWidth);
+                        }
+
+                        const tween = gsap.to(track, {
+                            x: getScrollAmount,
+                            ease: "none"
+                        });
+
+                        ScrollTrigger.create({
+                            trigger: section,
+                            start: "center center",
+                            end: () => `+=${Math.abs(getScrollAmount())}`,
+                            pin: true,
+                            animation: tween,
+                            scrub: 1,
+                            invalidateOnRefresh: true
+                        });
+                    } else {
+                        gsap.set(track, { clearProps: "transform,x" });
                     }
-
-                    const tween = gsap.to(track, {
-                        x: getScrollAmount,
-                        ease: "none"
-                    });
-
-                    ScrollTrigger.create({
-                        trigger: section,
-                        start: "center center",
-                        end: () => `+=${Math.abs(getScrollAmount())}`,
-                        pin: true,
-                        animation: tween,
-                        scrub: 1,
-                        invalidateOnRefresh: true
-                    });
                 }
 
                 initExploreCustomScroll();
                 window.addEventListener('load', function() {
                     initExploreCustomScroll();
                     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+                });
+                window.addEventListener('resize', function() {
+                    initExploreCustomScroll();
                 });
                 if (window.jQuery) {
                     jQuery(window).on('elementor/frontend/init', function() {
