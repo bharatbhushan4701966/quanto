@@ -9044,18 +9044,20 @@ figure img,
     top: auto !important;
     bottom: auto !important;
     left: auto !important;
-    margin-bottom: 16px !important;
+    right: auto !important;
+    margin: 0 0 14px 0 !important;
     background: #ffffff !important;
     padding: 4px !important;
     box-sizing: content-box !important;
-    height: 40px !important;
-    max-height: 40px !important;
+    height: 32px !important;
+    max-height: 32px !important;
     width: auto !important;
     max-width: none !important;
     object-fit: contain !important;
     object-position: center !important;
     border-radius: 5px !important;
     display: inline-block !important;
+    z-index: 2 !important;
 }
 
 /* Standard Bottom Cards Logo: overlaid on image thumbnail */
@@ -9094,7 +9096,8 @@ figure img,
 .cmr-media-coverage-wrapper .cmr-mc-card-image .cmr-mc-logo,
 .cmr-mc-image-wrap .cmr-mc-logo,
 .cmr-mc-card-image .cmr-mc-logo,
-.cmr-card-logo-desktop {
+.cmr-card-logo-desktop,
+.cmr-mc-logo {
     position: absolute !important;
     bottom: 15px !important;
     left: 15px !important;
@@ -9115,7 +9118,6 @@ figure img,
 
 @media (max-width: 768px) {
     .cmr-card-standard .cmr-card-image-wrap .cmr-card-logo,
-    .cmr-card-featured .cmr-card-image-wrap .cmr-card-logo,
     .cmr-card-image-wrap .cmr-card-logo,
     .cmr-mc-standard .cmr-mc-image-wrap .cmr-mc-logo,
     .cmr-mc-featured .cmr-mc-image-wrap .cmr-mc-logo,
@@ -9144,10 +9146,29 @@ figure img,
         border-radius: 5px !important;
         display: block !important;
     }
-    .cmr-card-logo-mobile,
     .cmr-card-featured .cmr-card-content .cmr-card-logo,
-    .cmr-card-featured .cmr-card-logo,
-    .cmr-card-content .cmr-card-logo,
+    .cmr-card-featured .cmr-card-logo {
+        position: relative !important;
+        top: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+        right: auto !important;
+        background: #ffffff !important;
+        padding: 4px !important;
+        box-sizing: content-box !important;
+        height: 32px !important;
+        max-height: 32px !important;
+        width: auto !important;
+        max-width: none !important;
+        object-fit: contain !important;
+        object-position: center !important;
+        margin: 0 0 12px 0 !important;
+        border-radius: 5px !important;
+        display: inline-block !important;
+        z-index: 2 !important;
+    }
+    .cmr-card-logo-mobile,
+    .cmr-card-standard .cmr-card-content .cmr-card-logo,
     .cmr-mc-content .cmr-mc-logo,
     .cmr-mc-card-content .cmr-mc-logo {
         display: none !important;

@@ -556,12 +556,25 @@ function cmr_news_tabs_shortcode( $atts ) {
         .cmr-card-standard .cmr-card-image-wrap .cmr-card-logo,
         .cmr-card-image-wrap .cmr-card-logo,
         .cmr-card-logo-desktop {
-            display: none !important;
+            position: absolute !important;
+            bottom: 15px !important;
+            left: 15px !important;
+            z-index: 3 !important;
+            background: #ffffff !important;
+            padding: 4px !important;
+            box-sizing: content-box !important;
+            height: 32px !important;
+            max-height: 32px !important;
+            width: auto !important;
+            max-width: none !important;
+            object-fit: contain !important;
+            object-position: center !important;
+            margin: 0 !important;
+            border-radius: 5px !important;
+            display: block !important;
         }
-        .cmr-card-logo-mobile,
         .cmr-card-featured .cmr-card-content .cmr-card-logo,
-        .cmr-card-featured .cmr-card-logo,
-        .cmr-card-content .cmr-card-logo {
+        .cmr-card-featured .cmr-card-logo {
             position: relative !important;
             top: auto !important;
             bottom: auto !important;
@@ -570,8 +583,8 @@ function cmr_news_tabs_shortcode( $atts ) {
             background: #ffffff !important;
             padding: 4px !important;
             box-sizing: content-box !important;
-            height: 40px !important;
-            max-height: 40px !important;
+            height: 32px !important;
+            max-height: 32px !important;
             width: auto !important;
             max-width: none !important;
             object-fit: contain !important;
@@ -580,6 +593,10 @@ function cmr_news_tabs_shortcode( $atts ) {
             border-radius: 5px !important;
             display: inline-block !important;
             z-index: 2 !important;
+        }
+        .cmr-card-logo-mobile,
+        .cmr-card-standard .cmr-card-content .cmr-card-logo {
+            display: none !important;
         }
     }
     .cmr-card-logo-mobile {
@@ -780,11 +797,14 @@ function cmr_news_tabs_shortcode( $atts ) {
                                                 <?php if ( $bg_image ) : ?>
                                                     <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
                                                 <?php endif; ?>
-                                                <?php if ( $logo_url ) : ?>
+                                                <?php if ( $count > 0 && $logo_url ) : ?>
                                                     <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo" alt="Source Logo">
                                                 <?php endif; ?>
                                             </div>
                                             <div class="cmr-card-content">
+                                                <?php if ( $count === 0 && $logo_url ) : ?>
+                                                    <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo" alt="Source Logo">
+                                                <?php endif; ?>
                                                 <div class="cmr-card-meta">
                                                     <div class="cmr-meta-left">
                                                         <?php if ( $publisher ) : ?>
