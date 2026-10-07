@@ -96,6 +96,13 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
                     min-width: 323px !important;
                     max-width: 323px !important;
                 }
+                @media (max-width: 768px) {
+                    #<?php echo esc_attr( $unique_id ); ?>_track .explore-sector-card {
+                        flex: 0 0 280px !important;
+                        min-width: 280px !important;
+                        max-width: 280px !important;
+                    }
+                }
                 #<?php echo esc_attr( $unique_id ); ?>_section .sector-explore-link {
                     display: none !important;
                 }
@@ -121,37 +128,48 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
             
             <script>
             document.addEventListener("DOMContentLoaded", function() {
-                if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-                gsap.registerPlugin(ScrollTrigger);
+                function initExploreCustomScroll() {
+                    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+                    gsap.registerPlugin(ScrollTrigger);
 
-                let track   = document.getElementById("<?php echo esc_js( $unique_id ); ?>_track");
-                let section = document.getElementById("<?php echo esc_js( $unique_id ); ?>_section");
-                if (!track || !section) return;
+                    let track   = document.getElementById("<?php echo esc_js( $unique_id ); ?>_track");
+                    let section = document.getElementById("<?php echo esc_js( $unique_id ); ?>_section");
+                    if (!track || !section) return;
 
-                ScrollTrigger.getAll().forEach(function(st) {
-                    if (st.trigger === section) st.kill();
-                });
+                    ScrollTrigger.getAll().forEach(function(st) {
+                        if (st.trigger === section) st.kill();
+                    });
 
-                function getScrollAmount() {
-                    return -(track.scrollWidth - section.offsetWidth);
+                    function getScrollAmount() {
+                        return -(track.scrollWidth - section.offsetWidth);
+                    }
+
+                    const tween = gsap.to(track, {
+                        x: getScrollAmount,
+                        ease: "none"
+                    });
+
+                    ScrollTrigger.create({
+                        trigger: section,
+                        start: "center center",
+                        end: () => `+=${Math.abs(getScrollAmount())}`,
+                        pin: true,
+                        animation: tween,
+                        scrub: 1,
+                        invalidateOnRefresh: true
+                    });
                 }
 
-                const tween = gsap.to(track, {
-                    x: getScrollAmount,
-                    ease: "none"
+                initExploreCustomScroll();
+                window.addEventListener('load', function() {
+                    initExploreCustomScroll();
+                    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
                 });
-
-                ScrollTrigger.create({
-                    trigger: section,
-                    start: "top top",
-                    end: () => `+=${Math.abs(getScrollAmount())}`,
-                    pin: true,
-                    pinSpacing: true,
-                    animation: tween,
-                    scrub: 1,
-                    invalidateOnRefresh: true,
-                    anticipatePin: 1
-                });
+                if (window.jQuery) {
+                    jQuery(window).on('elementor/frontend/init', function() {
+                        setTimeout(initExploreCustomScroll, 300);
+                    });
+                }
             });
             </script>
         </div>

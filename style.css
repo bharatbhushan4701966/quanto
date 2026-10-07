@@ -6662,6 +6662,8 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     .elementor-element-34aec32 .quanto-link-btn {
         text-decoration: underline !important;
         text-underline-offset: 4px !important;
+        border-bottom: none !important;
+        padding-bottom: 0 !important;
         font-weight: 600 !important;
         color: #000000 !important;
     }

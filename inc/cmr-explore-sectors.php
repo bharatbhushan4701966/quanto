@@ -93,6 +93,13 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
                     min-width: 323px !important;
                     max-width: 323px !important;
                 }
+                @media (max-width: 768px) {
+                    #cmr-explore-track .explore-sector-card {
+                        flex: 0 0 280px !important;
+                        min-width: 280px !important;
+                        max-width: 280px !important;
+                    }
+                }
             </style>
 
             <div class="explore-sectors-track-wrapper" style="overflow:hidden; width:100%;">
@@ -142,18 +149,20 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
 
                     ScrollTrigger.create({
                         trigger: section,
-                        start: "top top",         // Pin when section top hits viewport top
+                        start: "center center",
                         end: () => `+=${Math.abs(getScrollAmount())}`,
                         pin: true,
-                        pinSpacing: true,
                         animation: tween,
                         scrub: 1,
-                        invalidateOnRefresh: true,
-                        anticipatePin: 1
+                        invalidateOnRefresh: true
                     });
                 }
 
                 initExploreScroll();
+                window.addEventListener('load', function() {
+                    initExploreScroll();
+                    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+                });
                 if (window.jQuery) {
                     jQuery(window).on('elementor/frontend/init', function() {
                         setTimeout(initExploreScroll, 300);
