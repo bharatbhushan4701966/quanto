@@ -52,6 +52,7 @@ if ( ! function_exists( 'cmr_get_video_embed_html' ) ) {
 if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
     function cmr_featured_insight_shortcode( $atts ) {
         $atts = shortcode_atts( array(
+            'category'     => '',
             'video_url'    => '',
             'poster'       => '',
             'title'        => '',
@@ -74,16 +75,316 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
         $target    = $atts['target'];
         $max_width = $atts['max_width'];
 
-        // If manual video or title not supplied, query latest post as fallback
+        // Resolve target category:
+        // 1. Explicitly passed in shortcode attribute (e.g. [cmr_featured_insight category="industry-intelligence"])
+        // 2. Or automatically from the current page name / slug / archive (e.g. INDUSTRY INTELLIGENCE page)
+        $target_category = ! empty( $atts['category'] ) ? trim( $atts['category'] ) : '';
+        $page_slug       = '';
+        $page_title      = '';
+
+        if ( empty( $target_category ) ) {
+            // Check queried object (singular page/post or category/term archive)
+            $queried_obj = get_queried_object();
+            if ( $queried_obj instanceof WP_Post ) {
+                $page_slug  = $queried_obj->post_name;
+                $page_title = $queried_obj->post_title;
+            } elseif ( $queried_obj instanceof WP_Term ) {
+                $page_slug  = $queried_obj->slug;
+                $page_title = $queried_obj->name;
+            }
+
+            // Fallback to Elementor current document if applicable
+            if ( empty( $page_slug ) && class_exists( '\Elementor\Plugin' ) && isset( \Elementor\Plugin::$instance->documents ) ) {
+                $current_doc = \Elementor\Plugin::$instance->documents->get_current();
+                if ( $current_doc && method_exists( $current_doc, 'get_main_id' ) ) {
+                    $elem_post = get_post( $current_doc->get_main_id() );
+                    if ( $elem_post ) {
+                        $page_slug  = $elem_post->post_name;
+                        $page_title = $elem_post->post_title;
+                    }
+                }
+            }
+
+            // Fallback to global $post
+            if ( empty( $page_slug ) ) {
+                global $post;
+                if ( ! empty( $post ) && $post instanceof WP_Post ) {
+                    $page_slug  = $post->post_name;
+                    $page_title = $post->post_title;
+                }
+            }
+
+            // Fallback to get_the_ID()
+            if ( empty( $page_slug ) && function_exists( 'get_the_ID' ) && get_the_ID() ) {
+                $curr_p = get_post( get_the_ID() );
+                if ( $curr_p ) {
+                    $page_slug  = $curr_p->post_name;
+                    $page_title = $curr_p->post_title;
+                }
+            }
+
+            // Fallback to URL path inspection
+            if ( empty( $page_slug ) && ! empty( $_SERVER['REQUEST_URI'] ) ) {
+                $req_path = trim( wp_parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH ), '/' );
+                if ( ! empty( $req_path ) ) {
+                    $segments = explode( '/', $req_path );
+                    $page_slug = sanitize_title( end( $segments ) );
+                }
+            }
+
+            if ( ! empty( $page_slug ) ) {
+                $target_category = $page_slug;
+            } elseif ( ! empty( $page_title ) ) {
+                $target_category = $page_title;
+            }
+        }
+
+        // Build list of term slugs and names to match in taxonomy
+        $category_terms = array();
+        if ( ! empty( $target_category ) ) {
+            $cat_items = array_filter( array_map( 'trim', explode( ',', $target_category ) ) );
+            foreach ( $cat_items as $item ) {
+                $slug_candidate = sanitize_title( $item );
+                $name_candidate = $item;
+                $spaced_name    = str_replace( '-', ' ', $slug_candidate );
+
+                $category_terms[] = $slug_candidate;
+                $category_terms[] = $name_candidate;
+                $category_terms[] = $spaced_name;
+
+                // Handle known Quanto theme section / sector alias mappings
+                switch ( $slug_candidate ) {
+                    case 'industry-intelligence':
+                    case 'industry-connect':
+                    case 'industry-intel':
+                    case 'industry':
+                        $category_terms = array_merge( $category_terms, array(
+                            'industry-connect',
+                            'industry-intelligence',
+                            'industry-insights',
+                            'industry-insight',
+                            'industry',
+                            'insights',
+                            'Industry Connect',
+                            'Industry Intelligence',
+                            'Industry Insights',
+                        ) );
+                        break;
+
+                    case 'consulting-advisory':
+                    case 'consulting':
+                    case 'advisory':
+                        $category_terms = array_merge( $category_terms, array(
+                            'consulting-advisory',
+                            'consulting',
+                            'advisory',
+                            'industry-connect',
+                            'Consulting & Advisory',
+                            'Consulting',
+                            'Advisory',
+                        ) );
+                        break;
+
+                    case 'marketing-services':
+                    case 'marketing':
+                        $category_terms = array_merge( $category_terms, array(
+                            'marketing-services',
+                            'marketing',
+                            'industry-connect',
+                            'Marketing Services',
+                            'Marketing',
+                        ) );
+                        break;
+
+                    case 'automotive':
+                    case 'mobility':
+                        $category_terms = array_merge( $category_terms, array(
+                            'automotive',
+                            'mobility',
+                            'auto',
+                            'Automotive',
+                        ) );
+                        break;
+
+                    case 'consumer-tech':
+                    case 'consumer':
+                        $category_terms = array_merge( $category_terms, array(
+                            'consumer-tech',
+                            'consumer-technology',
+                            'consumer',
+                            'Consumer Tech',
+                            'Consumer Technology',
+                        ) );
+                        break;
+
+                    case 'digital-supply-chain':
+                    case 'supply-chain':
+                    case 'supply':
+                        $category_terms = array_merge( $category_terms, array(
+                            'digital-supply-chain',
+                            'supply-chain',
+                            'supply',
+                            'Digital Supply Chain',
+                            'Supply Chain',
+                        ) );
+                        break;
+
+                    case 'msme':
+                    case 'msme-2':
+                    case 'smb':
+                        $category_terms = array_merge( $category_terms, array(
+                            'msme',
+                            'msme-2',
+                            'smb',
+                            'smb-connect',
+                            'MSME',
+                            'SMB Connect',
+                        ) );
+                        break;
+
+                    case 'it-telecom':
+                    case 'telecom':
+                        $category_terms = array_merge( $category_terms, array(
+                            'it-telecom',
+                            'it-and-telecom',
+                            'telecom',
+                            'IT & Telecom',
+                            'IT and Telecom',
+                        ) );
+                        break;
+
+                    case 'semiconductors':
+                    case 'semiconductor':
+                        $category_terms = array_merge( $category_terms, array(
+                            'semiconductors',
+                            'semiconductor',
+                            'Semiconductors',
+                            'Semiconductor',
+                        ) );
+                        break;
+
+                    case 'ai':
+                        $category_terms = array_merge( $category_terms, array(
+                            'ai',
+                            'artificial-intelligence',
+                            'AI',
+                            'Artificial Intelligence',
+                        ) );
+                        break;
+
+                    case 'enterprise-tech':
+                    case 'enterprise':
+                        $category_terms = array_merge( $category_terms, array(
+                            'enterprise-tech',
+                            'enterprise-technology',
+                            'enterprise',
+                            'Enterprise Tech',
+                            'Enterprise Technology',
+                        ) );
+                        break;
+
+                    case 'market-updates':
+                    case 'market-update':
+                        $category_terms = array_merge( $category_terms, array(
+                            'market-updates',
+                            'market-update',
+                            'Market Updates',
+                            'Market Update',
+                        ) );
+                        break;
+
+                    case 'viewpoints':
+                    case 'viewpoint':
+                        $category_terms = array_merge( $category_terms, array(
+                            'viewpoints',
+                            'viewpoint',
+                            'Viewpoints',
+                            'View Points',
+                        ) );
+                        break;
+
+                    case 'research-reports':
+                    case 'reports':
+                        $category_terms = array_merge( $category_terms, array(
+                            'research-reports',
+                            'reports',
+                            'Research Reports',
+                            'Reports',
+                        ) );
+                        break;
+                }
+            }
+
+            // Also check if page title matches "intelligence"
+            if ( ! empty( $page_title ) && stripos( $page_title, 'intelligence' ) !== false ) {
+                $category_terms = array_merge( $category_terms, array(
+                    'industry-connect',
+                    'industry-intelligence',
+                    'industry-insights',
+                    'industry-insight',
+                    'industry',
+                    'insights',
+                    'Industry Connect',
+                    'Industry Intelligence',
+                ) );
+            }
+
+            $category_terms = array_values( array_unique( array_filter( $category_terms ) ) );
+        }
+
+        // If manual video or title not supplied, query latest post matching page category
         if ( empty( $video_url ) && empty( $title ) ) {
+            $post_types = array( 'post', 'cmr_news' );
+            if ( ! empty( $atts['post_type'] ) && $atts['post_type'] !== 'cmr_news' ) {
+                $post_types = $atts['post_type'];
+            }
+
             $query_args = array(
-                'post_type'      => array( 'post', 'cmr_news' ),
+                'post_type'      => $post_types,
                 'posts_per_page' => 1,
                 'post_status'    => 'publish',
                 'orderby'        => 'date',
                 'order'          => 'DESC',
             );
+
+            if ( ! empty( $category_terms ) ) {
+                $term_slugs = array_values( array_unique( array_map( 'sanitize_title', $category_terms ) ) );
+                $term_names = $category_terms;
+
+                $query_args['tax_query'] = array(
+                    'relation' => 'OR',
+                    array(
+                        'taxonomy' => 'category',
+                        'field'    => 'slug',
+                        'terms'    => $term_slugs,
+                    ),
+                    array(
+                        'taxonomy' => 'category',
+                        'field'    => 'name',
+                        'terms'    => $term_names,
+                    ),
+                    array(
+                        'taxonomy' => 'cmr_news_category',
+                        'field'    => 'slug',
+                        'terms'    => $term_slugs,
+                    ),
+                    array(
+                        'taxonomy' => 'cmr_news_category',
+                        'field'    => 'name',
+                        'terms'    => $term_names,
+                    ),
+                );
+            }
+
             $posts = get_posts( $query_args );
+
+            // Fallback: If no post found for the specific category, retry without tax_query
+            // so the section gracefully displays the latest post and never stays blank
+            if ( empty( $posts ) && ! empty( $category_terms ) ) {
+                unset( $query_args['tax_query'] );
+                $posts = get_posts( $query_args );
+            }
+
             if ( ! empty( $posts ) ) {
                 $p = $posts[0];
                 $title = get_the_title( $p );
@@ -92,6 +393,16 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
 
                 // Try to get video from custom field or content
                 $custom_video = get_post_meta( $p->ID, 'video_url', true );
+                if ( empty( $custom_video ) ) {
+                    $custom_video = get_post_meta( $p->ID, '_video_url', true );
+                }
+                if ( empty( $custom_video ) ) {
+                    $custom_video = get_post_meta( $p->ID, 'cmr_video_url', true );
+                }
+                if ( empty( $custom_video ) ) {
+                    $custom_video = get_post_meta( $p->ID, 'youtube_url', true );
+                }
+
                 if ( ! empty( $custom_video ) ) {
                     $video_url = $custom_video;
                 } else {
