@@ -11178,23 +11178,19 @@ header.sticky .cmr-nav-cart-container:hover,
         box-sizing: border-box !important;
     }
 
-    /* Left text column: 16px padding on mobile */
+    /* Left text column on mobile */
     .elementor-element.elementor-element-7096f9b,
     [data-id="7096f9b"] {
-        padding-left: 16px !important;
-        padding-right: 16px !important;
         box-sizing: border-box !important;
         width: 100% !important;
     }
 
-    /* Slider column container: 16px padding on mobile */
+    /* Slider column container on mobile */
     .elementor-element.elementor-element-b8bc623,
     [data-id="b8bc623"],
     .elementor-element:has(.quanto-custom-carousel),
     .e-con:has(.quanto-custom-carousel),
     .e-con-inner:has(.quanto-custom-carousel) {
-        padding-left: 16px !important;
-        padding-right: 16px !important;
         margin-left: 0 !important;
         margin-right: 0 !important;
         width: 100% !important;
