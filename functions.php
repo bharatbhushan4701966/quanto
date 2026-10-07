@@ -3241,6 +3241,7 @@ function cmr_global_cta_banner_shortcode( $atts = array() ) {
             .elementor-52927 .e-heading-base {
                 font-size: 32px !important;
                 line-height: 1.25 !important;
+                letter-spacing: 0 !important;
             }
         }
         </style>';
