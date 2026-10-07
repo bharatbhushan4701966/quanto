@@ -56,7 +56,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
             'poster'       => '',
             'title'        => '',
             'date'         => '',
-            'duration'     => '',
+            'duration'     => '1 min',
             'btn_text'     => 'Watch',
             'link'         => '#',
             'target'       => '_self',
@@ -68,7 +68,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
         $poster    = $atts['poster'];
         $title     = $atts['title'];
         $date      = $atts['date'];
-        $duration  = $atts['duration'];
+        $duration  = ! empty( $atts['duration'] ) ? $atts['duration'] : '1 min';
         $btn_text  = ! empty( $atts['btn_text'] ) ? $atts['btn_text'] : 'Watch';
         $link      = ! empty( $atts['link'] ) ? $atts['link'] : '#';
         $target    = $atts['target'];
@@ -102,11 +102,8 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 }
 
                 // Approximate reading / video time
-                if ( empty( $duration ) ) {
-                    $content = $p->post_content;
-                    $words = str_word_count( strip_tags( $content ) );
-                    $mins = max( 1, ceil( $words / 200 ) );
-                    $duration = $mins . ':00 min';
+                if ( empty( $duration ) || $duration === '22:44 min' ) {
+                    $duration = '1 min';
                 }
             }
         }
@@ -119,8 +116,8 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
             $title = 'From ideas to innovation – Exclusive conversations with the trailblazers of India’s EV journey';
         }
 
-        if ( empty( $duration ) ) {
-            $duration = '22:44 min';
+        if ( empty( $duration ) || $duration === '22:44 min' ) {
+            $duration = '1 min';
         }
 
         $video_embed = ! empty( $video_url ) ? cmr_get_video_embed_html( $video_url, $poster ) : '';

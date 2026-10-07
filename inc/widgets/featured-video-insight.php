@@ -111,8 +111,8 @@ class Quanto_Featured_Video_Insight_Widget extends \Elementor\Widget_Base {
             [
                 'label'       => esc_html__( 'Time Duration', 'quanto' ),
                 'type'        => \Elementor\Controls_Manager::TEXT,
-                'default'     => '22:44 min',
-                'placeholder' => '22:44 min',
+                'default'     => '1 min',
+                'placeholder' => '1 min',
             ]
         );
 
@@ -378,7 +378,7 @@ class Quanto_Featured_Video_Insight_Widget extends \Elementor\Widget_Base {
         }
 
         $date      = isset( $settings['date_text'] ) ? $settings['date_text'] : '';
-        $duration  = isset( $settings['duration_text'] ) ? $settings['duration_text'] : '';
+        $duration  = ! empty( $settings['duration_text'] ) && $settings['duration_text'] !== '22:44 min' ? $settings['duration_text'] : '1 min';
         $title     = isset( $settings['title_text'] ) ? $settings['title_text'] : '';
         $btn_text  = isset( $settings['btn_text'] ) ? $settings['btn_text'] : 'Watch';
         
