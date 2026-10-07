@@ -83,65 +83,23 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
             
 
             <style>
-                #<?php echo esc_attr( $unique_id ); ?>_section { overflow: hidden !important; position: relative !important; }
+                #<?php echo esc_attr( $unique_id ); ?>_section { overflow: hidden !important; position: relative !important; width: 100% !important; }
+                #<?php echo esc_attr( $unique_id ); ?>_section .explore-sectors-track-wrapper {
+                    width: 100% !important;
+                    overflow: hidden !important;
+                }
                 #<?php echo esc_attr( $unique_id ); ?>_track {
                     display: flex !important;
                     flex-wrap: nowrap !important;
                     width: max-content !important;
                     min-width: max-content !important;
                     will-change: transform;
+                    gap: 20px !important;
                 }
                 #<?php echo esc_attr( $unique_id ); ?>_track .explore-sector-card {
                     flex: 0 0 323px !important;
                     min-width: 323px !important;
                     max-width: 323px !important;
-                }
-                @media (max-width: 768px) {
-                    #<?php echo esc_attr( $unique_id ); ?>_section {
-                        padding: 40px 0 !important;
-                    }
-                    #<?php echo esc_attr( $unique_id ); ?>_section .explore-sectors-track-wrapper {
-                        overflow-x: auto !important;
-                        overflow-y: hidden !important;
-                        -webkit-overflow-scrolling: touch !important;
-                        scrollbar-width: none !important;
-                        -ms-overflow-style: none !important;
-                        width: 100% !important;
-                    }
-                    #<?php echo esc_attr( $unique_id ); ?>_section .explore-sectors-track-wrapper::-webkit-scrollbar {
-                        display: none !important;
-                    }
-                    #<?php echo esc_attr( $unique_id ); ?>_track {
-                        display: flex !important;
-                        flex-wrap: nowrap !important;
-                        overflow-x: auto !important;
-                        gap: 16px !important;
-                        padding: 0 20px 20px 20px !important;
-                        scroll-padding-left: 20px !important;
-                        scroll-padding-inline: 20px !important;
-                        scroll-snap-type: x mandatory !important;
-                        -webkit-overflow-scrolling: touch !important;
-                        scrollbar-width: none !important;
-                        -ms-overflow-style: none !important;
-                        width: max-content !important;
-                        transform: none !important;
-                    }
-                    #<?php echo esc_attr( $unique_id ); ?>_track::-webkit-scrollbar {
-                        display: none !important;
-                    }
-                    #<?php echo esc_attr( $unique_id ); ?>_track .explore-sector-card {
-                        flex: 0 0 85% !important;
-                        width: 85% !important;
-                        max-width: 85% !important;
-                        min-width: 85% !important;
-                        scroll-snap-align: start !important;
-                        scroll-margin-left: 20px !important;
-                        flex-shrink: 0 !important;
-                        box-sizing: border-box !important;
-                        padding: 32px 24px !important;
-                        height: auto !important;
-                        min-height: 280px !important;
-                    }
                 }
                 #<?php echo esc_attr( $unique_id ); ?>_section .sector-explore-link {
                     display: none !important;
@@ -149,11 +107,30 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
                 #<?php echo esc_attr( $unique_id ); ?>_section .sector-content {
                     margin-bottom: 0 !important;
                 }
+
+                @media (max-width: 768px) {
+                    #<?php echo esc_attr( $unique_id ); ?>_section {
+                        padding: 40px 0 !important;
+                    }
+                    #<?php echo esc_attr( $unique_id ); ?>_track {
+                        gap: 16px !important;
+                        padding-left: 20px !important;
+                        padding-right: 20px !important;
+                    }
+                    #<?php echo esc_attr( $unique_id ); ?>_track .explore-sector-card {
+                        flex: 0 0 280px !important;
+                        width: 280px !important;
+                        max-width: 280px !important;
+                        min-width: 280px !important;
+                        height: auto !important;
+                        min-height: 280px !important;
+                        padding: 30px 22px !important;
+                    }
+                }
             </style>
 
-            <div class="explore-sectors-track-wrapper" style="overflow:hidden; width:100%;">
-                <div class="explore-sectors-track" id="<?php echo esc_attr( $unique_id ); ?>_track"
-                     style="display:flex !important; flex-wrap:nowrap !important; width:max-content !important;">
+            <div class="explore-sectors-track-wrapper">
+                <div class="explore-sectors-track" id="<?php echo esc_attr( $unique_id ); ?>_track">
                     <?php foreach ( $sectors as $sector ) : ?>
                         <div class="explore-sector-card">
                             <span class="sector-number"><?php echo esc_html( $sector['number'] ); ?></span>
@@ -180,30 +157,26 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
                         if (st.trigger === section) st.kill();
                     });
 
-                    if (window.innerWidth > 768) {
-                        gsap.set(track, { clearProps: "all" });
+                    gsap.set(track, { clearProps: "all" });
 
-                        function getScrollAmount() {
-                            return -(track.scrollWidth - section.offsetWidth);
-                        }
-
-                        const tween = gsap.to(track, {
-                            x: getScrollAmount,
-                            ease: "none"
-                        });
-
-                        ScrollTrigger.create({
-                            trigger: section,
-                            start: "center center",
-                            end: () => `+=${Math.abs(getScrollAmount())}`,
-                            pin: true,
-                            animation: tween,
-                            scrub: 1,
-                            invalidateOnRefresh: true
-                        });
-                    } else {
-                        gsap.set(track, { clearProps: "transform,x" });
+                    function getScrollAmount() {
+                        return -(track.scrollWidth - section.offsetWidth);
                     }
+
+                    const tween = gsap.to(track, {
+                        x: getScrollAmount,
+                        ease: "none"
+                    });
+
+                    ScrollTrigger.create({
+                        trigger: section,
+                        start: "center center",
+                        end: () => `+=${Math.abs(getScrollAmount())}`,
+                        pin: true,
+                        animation: tween,
+                        scrub: 1,
+                        invalidateOnRefresh: true
+                    });
                 }
 
                 initExploreCustomScroll();

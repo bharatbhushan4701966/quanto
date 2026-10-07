@@ -8386,45 +8386,22 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
         margin-bottom: 25px !important;
     }
     .explore-sectors-track-wrapper {
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        -webkit-overflow-scrolling: touch !important;
-        scrollbar-width: none !important;
-        -ms-overflow-style: none !important;
         width: 100% !important;
-    }
-    .explore-sectors-track-wrapper::-webkit-scrollbar {
-        display: none !important;
+        overflow: hidden !important;
     }
     .explore-sectors-track {
-        display: flex !important;
-        flex-wrap: nowrap !important;
-        overflow-x: auto !important;
         gap: 16px !important;
-        padding: 0 20px 20px 20px !important;
-        scroll-padding-left: 20px !important;
-        scroll-padding-inline: 20px !important;
-        scroll-snap-type: x mandatory !important;
-        -webkit-overflow-scrolling: touch !important;
-        scrollbar-width: none !important;
-        -ms-overflow-style: none !important;
-        width: max-content !important;
-    }
-    .explore-sectors-track::-webkit-scrollbar {
-        display: none !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
     }
     .explore-sector-card {
-        flex: 0 0 85% !important;
-        width: 85% !important;
-        max-width: 85% !important;
-        min-width: 85% !important;
-        scroll-snap-align: start !important;
-        scroll-margin-left: 20px !important;
-        flex-shrink: 0 !important;
-        box-sizing: border-box !important;
-        padding: 32px 24px !important;
+        flex: 0 0 280px !important;
+        width: 280px !important;
+        max-width: 280px !important;
+        min-width: 280px !important;
         height: auto !important;
         min-height: 280px !important;
+        padding: 30px 22px !important;
     }
 
     /* CMR News Carousel Mobile Styles */
