@@ -105,30 +105,111 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
                     max-width: 323px !important;
                     box-sizing: border-box !important;
                 }
+
                 @media (max-width: 768px) {
-                    #cmr-explore-section {
-                        padding: 30px 0 !important;
+                    /* Ensure outer Elementor containers don't create horizontal scroll or white/black margin */
+                    .elementor-element:has(#cmr-explore-section),
+                    .e-con:has(#cmr-explore-section),
+                    .e-con-boxed:has(#cmr-explore-section),
+                    .e-con-inner:has(#cmr-explore-section),
+                    .elementor-widget:has(#cmr-explore-section),
+                    .elementor-widget-container:has(#cmr-explore-section),
+                    .elementor-shortcode:has(#cmr-explore-section),
+                    .elementor-column:has(#cmr-explore-section),
+                    .elementor-column-wrap:has(#cmr-explore-section),
+                    .elementor-section:has(#cmr-explore-section),
+                    .elementor-section-boxed:has(#cmr-explore-section),
+                    .elementor-element:has(.cmr-explore-sectors-section),
+                    .e-con:has(.cmr-explore-sectors-section),
+                    .e-con-boxed:has(.cmr-explore-sectors-section),
+                    .e-con-inner:has(.cmr-explore-sectors-section),
+                    .elementor-widget:has(.cmr-explore-sectors-section),
+                    .elementor-widget-container:has(.cmr-explore-sectors-section),
+                    .elementor-shortcode:has(.cmr-explore-sectors-section),
+                    .elementor-column:has(.cmr-explore-sectors-section),
+                    .elementor-column-wrap:has(.cmr-explore-sectors-section),
+                    .elementor-section:has(.cmr-explore-sectors-section),
+                    .elementor-section-boxed:has(.cmr-explore-sectors-section) {
+                        padding-left: 0 !important;
+                        padding-right: 0 !important;
+                        margin-left: 0 !important;
+                        margin-right: 0 !important;
+                        --padding-left: 0px !important;
+                        --padding-right: 0px !important;
+                        width: 100% !important;
+                        max-width: 100% !important;
+                        box-sizing: border-box !important;
                     }
-                    #cmr-explore-section .explore-sectors-container {
+
+                    #cmr-explore-section,
+                    .cmr-explore-sectors-section {
+                        padding: 40px 0 !important;
+                        width: 100% !important;
+                        max-width: 100vw !important;
+                        overflow: hidden !important;
+                        box-sizing: border-box !important;
+                        background-color: #F8F9FA !important;
+                    }
+                    #cmr-explore-section .explore-sectors-container,
+                    .cmr-explore-sectors-section .explore-sectors-container {
                         padding: 0 20px !important;
                         margin-bottom: 20px !important;
+                        width: 100% !important;
+                        max-width: 100% !important;
+                        box-sizing: border-box !important;
                     }
-                    #cmr-explore-section .explore-sectors-title {
+                    #cmr-explore-section .explore-sectors-title,
+                    .cmr-explore-sectors-section .explore-sectors-title {
                         font-size: 26px !important;
                         line-height: 1.25 !important;
                         letter-spacing: -0.5px !important;
                         margin-bottom: 20px !important;
                     }
-                    #cmr-explore-track {
+                    #cmr-explore-section .explore-sectors-track-wrapper,
+                    .cmr-explore-sectors-section .explore-sectors-track-wrapper {
+                        width: 100% !important;
+                        max-width: 100% !important;
+                        overflow-x: auto !important;
+                        overflow-y: hidden !important;
+                        -webkit-overflow-scrolling: touch !important;
+                        scroll-snap-type: x mandatory !important;
+                        scrollbar-width: none !important;
+                        -ms-overflow-style: none !important;
+                        box-sizing: border-box !important;
+                    }
+                    #cmr-explore-section .explore-sectors-track-wrapper::-webkit-scrollbar,
+                    .cmr-explore-sectors-section .explore-sectors-track-wrapper::-webkit-scrollbar {
+                        display: none !important;
+                    }
+                    #cmr-explore-track,
+                    .cmr-explore-sectors-section .explore-sectors-track {
+                        display: flex !important;
+                        flex-wrap: nowrap !important;
                         gap: 16px !important;
                         padding-left: 20px !important;
                         padding-right: 20px !important;
+                        padding-bottom: 15px !important;
+                        scroll-padding-left: 20px !important;
+                        scroll-padding-inline: 20px !important;
+                        width: max-content !important;
+                        min-width: max-content !important;
+                        box-sizing: border-box !important;
+                        transform: none !important;
                     }
-                    #cmr-explore-track .explore-sector-card {
+                    #cmr-explore-track::-webkit-scrollbar,
+                    .cmr-explore-sectors-section .explore-sectors-track::-webkit-scrollbar {
+                        display: none !important;
+                    }
+                    #cmr-explore-track .explore-sector-card,
+                    .cmr-explore-sectors-section .explore-sector-card {
                         flex: 0 0 280px !important;
                         width: 280px !important;
                         max-width: 280px !important;
                         min-width: 280px !important;
+                        scroll-snap-align: start !important;
+                        scroll-margin-left: 20px !important;
+                        flex-shrink: 0 !important;
+                        box-sizing: border-box !important;
                         height: auto !important;
                         min-height: 280px !important;
                         padding: 28px 20px !important;

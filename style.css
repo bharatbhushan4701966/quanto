@@ -8353,6 +8353,19 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     .elementor-element[data-id="4fc6cfd"] > .e-con-inner,
     #our-offerings,
     .our-offerings,
+    #cmr-explore-section,
+    .cmr-explore-sectors-section,
+    .elementor-element:has(#cmr-explore-section),
+    .e-con:has(#cmr-explore-section),
+    .e-con-boxed:has(#cmr-explore-section),
+    .e-con-inner:has(#cmr-explore-section),
+    .elementor-widget:has(#cmr-explore-section),
+    .elementor-widget-container:has(#cmr-explore-section),
+    .elementor-shortcode:has(#cmr-explore-section),
+    .elementor-column:has(#cmr-explore-section),
+    .elementor-column-wrap:has(#cmr-explore-section),
+    .elementor-section:has(#cmr-explore-section),
+    .elementor-section-boxed:has(#cmr-explore-section),
     .elementor-element:has(.cmr-explore-sectors-section),
     .e-con:has(.cmr-explore-sectors-section),
     .e-con-boxed:has(.cmr-explore-sectors-section),
@@ -8375,6 +8388,7 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
         box-sizing: border-box !important;
     }
 
+    #cmr-explore-section,
     .cmr-explore-sectors-section {
         padding: 40px 0 !important;
         width: 100% !important;
