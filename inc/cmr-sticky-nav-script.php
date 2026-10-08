@@ -1378,19 +1378,24 @@ add_action('wp_footer', function() {
             transition: color 0.3s ease, border-color 0.3s ease !important;
         }
 
-        .insights-featured-content .insights-title:hover {
-            color: #4625A9 !important;
+        .insights-featured-content .insights-title:hover,
+        .insights-featured-card:hover .insights-title,
+        .cmr-insights-featured:hover .insights-title {
+            color: #00D2B9 !important;
         }
 
-        .insights-featured-content .insights-more-link:hover {
-            color: #4625A9 !important;
-            border-bottom-color: #4625A9 !important;
+        .insights-featured-content .insights-more-link:hover,
+        .insights-featured-card:hover .insights-more-link {
+            color: #00D2B9 !important;
+            border-bottom-color: #00D2B9 !important;
         }
 
         .insights-featured-content .insights-more-link:hover i,
-        .insights-featured-content .insights-more-link:hover svg {
-            color: #4625A9 !important;
-            fill: #4625A9 !important;
+        .insights-featured-content .insights-more-link:hover svg,
+        .insights-featured-card:hover .insights-more-link i,
+        .insights-featured-card:hover .insights-more-link svg {
+            color: #00D2B9 !important;
+            fill: #00D2B9 !important;
         }
 
         /* Stacked Cards on Mobile - Keep Horizontal List View */

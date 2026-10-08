@@ -10901,13 +10901,22 @@ a.sector-explore-link:hover svg {
 .insights-title {
     transition: color 0.3s ease !important;
 }
-.insights-title:hover,
-.insights-title a:hover,
 .insights-stacked-content .insights-title:hover,
 .insights-stacked-content .insights-title a:hover,
-.insights-featured-content .insights-title:hover,
-.insights-featured-content .insights-title a:hover {
+.insights-stacked-card:hover .insights-title,
+.insights-stacked-card:hover .insights-title a {
     color: #4625A9 !important;
+}
+
+/* Featured Left Card Title & Link Hover - Cyan #00D2B9 */
+.insights-featured-content .insights-title:hover,
+.insights-featured-content .insights-title a:hover,
+.insights-featured-card:hover .insights-title,
+.insights-featured-card:hover .insights-title a,
+.cmr-insights-featured:hover .insights-title,
+.cmr-insights-featured:hover .insights-title a,
+.cmr-insights-featured .insights-featured-card:hover .insights-title {
+    color: #00D2B9 !important;
 }
 
 .insights-more-link {
@@ -10917,25 +10926,32 @@ a.sector-explore-link:hover svg {
 .insights-more-link svg {
     transition: color 0.3s ease, fill 0.3s ease !important;
 }
-.insights-more-link:hover,
-.insights-more-link:hover a,
 .insights-stacked-content .insights-more-link:hover,
 .insights-stacked-content .insights-more-link:hover a,
-.insights-featured-content .insights-more-link:hover,
-.insights-featured-content .insights-more-link:hover a {
+.insights-stacked-card:hover .insights-more-link {
     color: #4625A9 !important;
     border-bottom-color: #4625A9 !important;
 }
-.insights-more-link:hover i,
-.insights-more-link:hover svg,
-.insights-more-link:hover a i,
-.insights-more-link:hover a svg,
 .insights-stacked-content .insights-more-link:hover i,
 .insights-stacked-content .insights-more-link:hover svg,
-.insights-featured-content .insights-more-link:hover i,
-.insights-featured-content .insights-more-link:hover svg {
+.insights-stacked-card:hover .insights-more-link i,
+.insights-stacked-card:hover .insights-more-link svg {
     color: #4625A9 !important;
     fill: #4625A9 !important;
+}
+
+.insights-featured-content .insights-more-link:hover,
+.insights-featured-content .insights-more-link:hover a,
+.insights-featured-card:hover .insights-more-link {
+    color: #00D2B9 !important;
+    border-bottom-color: #00D2B9 !important;
+}
+.insights-featured-content .insights-more-link:hover i,
+.insights-featured-content .insights-more-link:hover svg,
+.insights-featured-card:hover .insights-more-link i,
+.insights-featured-card:hover .insights-more-link svg {
+    color: #00D2B9 !important;
+    fill: #00D2B9 !important;
 }
 
 /* Global Header Logo Uniform Size - Matches Homepage Exact 144px */
@@ -11635,11 +11651,29 @@ a.btn-outline * {
 
 /* CMR Featured Card (Dark Background) Hover Color (Cyan #00D2B9 / #00BFBC) */
 .cmr-card-featured:hover .cmr-card-title,
+.cmr-card-featured:hover .cmr-card-title a,
+.cmr-card-featured .cmr-card-title:hover,
+.cmr-card-featured .cmr-card-title a:hover,
 .cmr-card-featured .cmr-card-link-wrapper:hover .cmr-card-title,
 .cmr-card.cmr-card-featured:hover .cmr-card-title,
+.cmr-card.cmr-card-featured:hover .cmr-card-title a,
 .cmr-card.cmr-card-featured .cmr-card-link-wrapper:hover .cmr-card-title,
+.cmr-insights-featured:hover .insights-title,
+.cmr-insights-featured:hover .insights-title a,
+.cmr-insights-featured .insights-title:hover,
+.cmr-insights-featured .insights-title a:hover,
 .insights-featured-card:hover .insights-title,
+.insights-featured-card:hover .insights-title a,
+.insights-featured-content .insights-title:hover,
+.insights-featured-content .insights-title a:hover,
+.insights-featured-content:hover .insights-title,
+.insights-featured-card:hover .insights-more-link,
+.insights-featured-card .insights-more-link:hover,
+.insights-featured-content .insights-more-link:hover,
+.cmr-card-featured:hover .cmr-read-coverage,
+.cmr-card-featured .cmr-read-coverage:hover,
 .cmr-fi-slide:hover .cmr-fi-slide-title,
+.cmr-fi-slide:hover .cmr-fi-slide-title a,
 .cmr-fi-slide-title:hover {
     color: #00D2B9 !important;
 }

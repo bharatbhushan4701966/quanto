@@ -441,24 +441,6 @@ add_action( 'wp_footer', function() {
             window.cmrOpenPopup = openPopup;
             window.cmrCloseAllModals = closeAllModals;
 
-            var svgHTML = '<svg class="cmr-arrow-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14" fill="none" style="display:inline-block; vertical-align:middle; margin-left:6px; width:15px; height:13px;"><path d="M2.04895 4.52205V3.54978C2.07104 3.12993 2.4025 2.79848 2.80025 2.79848L11.396 2.77638C11.8159 2.79848 12.1473 3.12993 12.1473 3.52768V12.1455C12.1473 12.5433 11.8159 12.8747 11.396 12.8968H10.4237C10.0039 12.8747 9.67244 12.5433 9.65035 12.1234L9.78293 6.90853L3.44106 13.2504C3.1317 13.5598 2.68976 13.5598 2.3804 13.2504L1.6733 12.5433C1.38603 12.256 1.36394 11.792 1.6733 11.4826L8.01516 5.14077L2.82234 5.29545C2.4025 5.27335 2.04895 4.96399 2.04895 4.52205Z" fill="currentColor"></path></svg>';
-
-            // Helper: Attach standard Talk to Analyst / CTA SVG arrow icon
-            function attachCmrSvgArrow(btn) {
-                if (!btn || btn.querySelector('.cmr-arrow-icon') || btn.querySelector('img.hero-arrow-button') || btn.querySelector('img.hero-arrow-button-white')) return;
-                
-                var iconSpan = document.createElement('span');
-                iconSpan.className = 'elementor-button-icon cmr-button-icon-arrow';
-                iconSpan.style.display = 'inline-flex';
-                iconSpan.style.alignItems = 'center';
-                iconSpan.style.marginLeft = '6px';
-                iconSpan.innerHTML = svgHTML;
-
-                var contentWrap = btn.querySelector('.elementor-button-content-wrapper') || btn;
-                contentWrap.appendChild(iconSpan);
-                btn.classList.add('cmr-arrow-fixed');
-            }
-
             // Helper: Setup Hero CTAs ("Explore Insights" scroll & "Connect with us" popup)
             function initHeroCTAButtons() {
                 var talkButtons = document.querySelectorAll(
@@ -488,30 +470,13 @@ add_action( 'wp_footer', function() {
                         btnText.textContent = 'Connect with us';
                     }
                 });
-
-                // Attach standard arrow icon to all "Connect with us" / "Talk to Analyst" buttons outside header
-                document.querySelectorAll('.elementor-button, .btn-outline, .btn-primary, .talk-btn, a.elementor-button, button.elementor-button, .custom-subscribe-form button').forEach(function(btn) {
-                    var inHeader = btn.closest('header, [data-elementor-type="header"], #quanto-header-desktop');
-                    if (inHeader) return;
-                    var txt = (btn.textContent || '').trim().toLowerCase();
-                    if (txt.includes('connect with us') || txt.includes('talk to analyst') || txt.includes('talk to our analyst') || txt.includes('connect to analyst')) {
-                        attachCmrSvgArrow(btn);
-                        
-                        // If inside purple / dark banner or has outline wrapper, enforce transparent background
-                        var purpleParent = btn.closest('[style*="4820B0"], [style*="4820b0"], [style*="bid-decision"], [style*="background-color: rgb(72, 32, 176)"], .elementor-element-88332ab, [data-id="88332ab"], .elementor-element-e50df8e, [data-id="e50df8e"]');
-                        if (purpleParent || btn.closest('.elementor-element-e50df8e, [data-id="e50df8e"]') || btn.classList.contains('btn-outline')) {
-                            btn.style.setProperty('background-color', 'transparent', 'important');
-                            btn.style.setProperty('background', 'transparent', 'important');
-                            btn.style.setProperty('color', '#ffffff', 'important');
-                            btn.style.setProperty('box-shadow', 'none', 'important');
-                        }
-                    }
-                });
             }
 
             // Helper: Replace unicode arrow on Submit buttons with the exact Talk to Analyst SVG arrow icon
             function fixSubmitButtonArrows() {
-                // 1. Check all buttons with unicode arrow or CTA text
+                var svgHTML = '<svg class="cmr-arrow-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14" fill="none" style="display:inline-block; vertical-align:middle; margin-left:6px; width:15px; height:13px;"><path d="M2.04895 4.52205V3.54978C2.07104 3.12993 2.4025 2.79848 2.80025 2.79848L11.396 2.77638C11.8159 2.79848 12.1473 3.12993 12.1473 3.52768V12.1455C12.1473 12.5433 11.8159 12.8747 11.396 12.8968H10.4237C10.0039 12.8747 9.67244 12.5433 9.65035 12.1234L9.78293 6.90853L3.44106 13.2504C3.1317 13.5598 2.68976 13.5598 2.3804 13.2504L1.6733 12.5433C1.38603 12.256 1.36394 11.792 1.6733 11.4826L8.01516 5.14077L2.82234 5.29545C2.4025 5.27335 2.04895 4.96399 2.04895 4.52205Z" fill="currentColor"></path></svg>';
+
+                // 1. Check all buttons with unicode arrow
                 var buttons = document.querySelectorAll(
                     'button[type="submit"], ' +
                     '.elementor-field-type-submit button, ' +
@@ -523,8 +488,7 @@ add_action( 'wp_footer', function() {
                 );
 
                 buttons.forEach(function(btn) {
-                    var inHeader = btn.closest('header, [data-elementor-type="header"], #quanto-header-desktop');
-                    if (inHeader) return;
+                    if (btn.classList.contains('cmr-arrow-fixed')) return;
 
                     var textWrapper = btn.querySelector('.elementor-button-text') || btn.querySelector('span') || btn;
                     var fullText = (textWrapper.textContent || '').trim();
@@ -543,9 +507,19 @@ add_action( 'wp_footer', function() {
                             btn.textContent = cleanText;
                         }
 
-                        attachCmrSvgArrow(btn);
-                    } else if (fullText.toLowerCase().includes('connect with us')) {
-                        attachCmrSvgArrow(btn);
+                        if (!btn.querySelector('.cmr-arrow-icon')) {
+                            var iconSpan = document.createElement('span');
+                            iconSpan.className = 'elementor-button-icon cmr-button-icon-arrow';
+                            iconSpan.style.display = 'inline-flex';
+                            iconSpan.style.alignItems = 'center';
+                            iconSpan.style.marginLeft = '6px';
+                            iconSpan.innerHTML = svgHTML;
+
+                            var contentWrap = btn.querySelector('.elementor-button-content-wrapper') || btn;
+                            contentWrap.appendChild(iconSpan);
+                        }
+
+                        btn.classList.add('cmr-arrow-fixed');
                     }
                 });
 
@@ -553,7 +527,7 @@ add_action( 'wp_footer', function() {
                 document.querySelectorAll('input[type="submit"]').forEach(function(input) {
                     if (input.classList.contains('cmr-arrow-fixed')) return;
                     var val = input.value || '';
-                    if (val.includes('↗') || val.includes('\u2197') || val.toLowerCase().includes('connect with us')) {
+                    if (val.includes('↗') || val.includes('\u2197')) {
                         var btn = document.createElement('button');
                         btn.type = 'submit';
                         btn.className = input.className + ' cmr-arrow-fixed';

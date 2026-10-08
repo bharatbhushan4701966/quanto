@@ -4586,7 +4586,17 @@ add_action( 'wp_head', function() {
         /* CMR Dark / Featured Slide Title Hover - Cyan #00D2B9 */
         .cmr-fi-slide:hover .cmr-fi-slide-title,
         .cmr-fi-slide-title:hover,
-        .insights-featured-card:hover .insights-title {
+        .cmr-card-featured:hover .cmr-card-title,
+        .cmr-card-featured .cmr-card-title:hover,
+        .cmr-insights-featured:hover .insights-title,
+        .cmr-insights-featured .insights-title:hover,
+        .insights-featured-card:hover .insights-title,
+        .insights-featured-card:hover .insights-title a,
+        .insights-featured-content:hover .insights-title,
+        .insights-featured-content .insights-title:hover,
+        .insights-featured-content .insights-title a:hover,
+        .insights-featured-card:hover .insights-more-link,
+        .insights-featured-content .insights-more-link:hover {
             color: #00D2B9 !important;
         }
 
@@ -4614,36 +4624,6 @@ add_action( 'wp_head', function() {
             transition: color 0.3s ease !important;
         }
 
-        /* Standard CTA Button SVG Arrow */
-        .cmr-button-icon-arrow,
-        .cmr-arrow-icon,
-        button[type="submit"] .cmr-arrow-icon,
-        .elementor-field-type-submit .cmr-arrow-icon,
-        .elementor-button .cmr-arrow-icon,
-        .elementor-button .cmr-button-icon-arrow {
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            vertical-align: middle !important;
-            margin-left: 6px !important;
-            width: 15px !important;
-            height: 13px !important;
-            fill: currentColor !important;
-            color: inherit !important;
-            flex-shrink: 0 !important;
-        }
-
-        .cmr-button-icon-arrow svg,
-        .cmr-arrow-icon svg,
-        button[type="submit"] svg.cmr-arrow-icon,
-        .elementor-button svg.cmr-arrow-icon,
-        .elementor-button svg {
-            width: 15px !important;
-            height: 13px !important;
-            fill: currentColor !important;
-            display: inline-block !important;
-            vertical-align: middle !important;
-        }
 
         /* Purple / Dark Banner CTA Button - Transparent background with White Text & Border (NO Black) */
         .e-con[style*="4820B0"] .elementor-button,
