@@ -11227,13 +11227,50 @@ body[class*="single-quanto_team"] #smooth-content {
     line-height: 32px !important;
 }
 
-/* Header Search & Nav Icons (Cart, Search) Colors & Hover State (Matches Newsroom Nav Hover #d1d1d1) */
+/* ==========================================================================
+   Header Nav Icons (Search, Cart, User Profile) Colors & Hover States
+   ========================================================================== */
+/* 1. Transparent / Dark / Blue Header (Default State): White with #d1d1d1 hover */
 .cmr-nav-search-container,
 .cmr-nav-search-trigger,
-.cmr-nav-cart-container {
-    color: #fff !important;
+.cmr-nav-cart-container,
+header .elementor-widget-icon,
+header .elementor-widget-icon a,
+header .elementor-icon,
+header .elementor-icon a,
+header .cmr-header-user-icon,
+header a[href*="my-account"],
+header a.xoo-el-login-tgr,
+header a.lrm-login,
+[data-elementor-type="header"] .elementor-widget-icon,
+[data-elementor-type="header"] .elementor-widget-icon a,
+[data-elementor-type="header"] .cmr-header-user-icon,
+.elementor-location-header .elementor-widget-icon,
+.elementor-location-header .elementor-widget-icon a,
+.elementor-location-header .cmr-header-user-icon {
+    color: #ffffff !important;
+    transition: color 0.25s ease, stroke 0.25s ease, fill 0.25s ease !important;
 }
 
+.cmr-nav-search-trigger svg,
+.cmr-nav-search-container svg,
+.cmr-nav-cart-container svg,
+header .elementor-widget-icon svg,
+header .elementor-icon svg,
+[data-elementor-type="header"] .elementor-widget-icon svg,
+.elementor-location-header .elementor-widget-icon svg {
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+    fill: currentColor !important;
+    transition: color 0.25s ease, stroke 0.25s ease, fill 0.25s ease !important;
+}
+
+.cmr-nav-cart-container svg path {
+    stroke: #ffffff !important;
+    transition: stroke 0.25s ease !important;
+}
+
+/* Hover on Default / Transparent Header: #d1d1d1 */
 .cmr-nav-search-trigger:hover,
 .cmr-nav-search-trigger:hover svg,
 .cmr-nav-search-trigger:hover i,
@@ -11241,24 +11278,139 @@ body[class*="single-quanto_team"] #smooth-content {
 .cmr-nav-search-container:hover .cmr-nav-search-trigger svg,
 .cmr-nav-cart-container:hover,
 .cmr-nav-cart-container:hover svg,
-.cmr-nav-cart-container:hover path {
+.cmr-nav-cart-container:hover path,
+header .elementor-widget-icon:hover,
+header .elementor-widget-icon a:hover,
+header .elementor-widget-icon:hover a,
+header .elementor-icon:hover,
+header .elementor-icon a:hover,
+header .elementor-icon:hover a,
+header .cmr-header-user-icon:hover,
+header a[href*="my-account"]:hover,
+header a.xoo-el-login-tgr:hover,
+header a.lrm-login:hover,
+[data-elementor-type="header"] .elementor-widget-icon:hover a,
+[data-elementor-type="header"] .elementor-widget-icon a:hover,
+[data-elementor-type="header"] .cmr-header-user-icon:hover,
+.elementor-location-header .elementor-widget-icon:hover a,
+.elementor-location-header .elementor-widget-icon a:hover,
+.elementor-location-header .cmr-header-user-icon:hover {
     color: #d1d1d1 !important;
-    stroke: #d1d1d1 !important;
 }
 
-/* When sticky header is active, switch to dark with purple hover */
+.cmr-nav-search-container:hover svg,
+.cmr-nav-cart-container:hover svg,
+.cmr-nav-cart-container:hover svg path,
+header .elementor-widget-icon:hover svg,
+header .elementor-widget-icon a:hover svg,
+header .elementor-icon:hover svg,
+header .elementor-icon a:hover svg,
+[data-elementor-type="header"] .elementor-widget-icon:hover svg,
+[data-elementor-type="header"] .elementor-widget-icon a:hover svg,
+.elementor-location-header .elementor-widget-icon:hover svg,
+.elementor-location-header .elementor-widget-icon a:hover svg {
+    color: #d1d1d1 !important;
+    stroke: #d1d1d1 !important;
+    fill: currentColor !important;
+}
+
+/* 2. When Sticky Header is Active: Switch to Dark (#333) with Purple Hover (#4820B0) */
 .elementor-sticky--effects .cmr-nav-cart-container,
 .is-sticky .cmr-nav-cart-container,
 header.sticky .cmr-nav-cart-container,
-.intel-nav-fixed-js .cmr-nav-cart-container {
-    color: #333 !important;
+.intel-nav-fixed-js .cmr-nav-cart-container,
+.elementor-sticky--effects .cmr-nav-search-container,
+.is-sticky .cmr-nav-search-container,
+header.sticky .cmr-nav-search-container,
+.intel-nav-fixed-js .cmr-nav-search-container,
+.elementor-sticky--effects .cmr-nav-search-trigger,
+.is-sticky .cmr-nav-search-trigger,
+header.sticky .cmr-nav-search-trigger,
+.intel-nav-fixed-js .cmr-nav-search-trigger,
+.elementor-sticky--effects header .elementor-widget-icon a,
+.is-sticky header .elementor-widget-icon a,
+header.sticky .elementor-widget-icon a,
+.intel-nav-fixed-js header .elementor-widget-icon a,
+.elementor-sticky--effects header .cmr-header-user-icon,
+.is-sticky header .cmr-header-user-icon,
+header.sticky .cmr-header-user-icon,
+.intel-nav-fixed-js header .cmr-header-user-icon {
+    color: #333333 !important;
 }
 
+.elementor-sticky--effects .cmr-nav-cart-container svg,
+.is-sticky .cmr-nav-cart-container svg,
+header.sticky .cmr-nav-cart-container svg,
+.intel-nav-fixed-js .cmr-nav-cart-container svg,
+.elementor-sticky--effects .cmr-nav-search-container svg,
+.is-sticky .cmr-nav-search-container svg,
+header.sticky .cmr-nav-search-container svg,
+.intel-nav-fixed-js .cmr-nav-search-container svg,
+.elementor-sticky--effects header .elementor-widget-icon svg,
+.is-sticky header .elementor-widget-icon svg,
+header.sticky .elementor-widget-icon svg,
+.intel-nav-fixed-js header .elementor-widget-icon svg {
+    color: #333333 !important;
+    stroke: #333333 !important;
+    fill: currentColor !important;
+}
+
+.elementor-sticky--effects .cmr-nav-cart-container svg path,
+.is-sticky .cmr-nav-cart-container svg path,
+header.sticky .cmr-nav-cart-container svg path,
+.intel-nav-fixed-js .cmr-nav-cart-container svg path {
+    stroke: #333333 !important;
+}
+
+/* Sticky Header Hover: Purple #4820B0 for all 3 icons */
 .elementor-sticky--effects .cmr-nav-cart-container:hover,
 .is-sticky .cmr-nav-cart-container:hover,
 header.sticky .cmr-nav-cart-container:hover,
-.intel-nav-fixed-js .cmr-nav-cart-container:hover {
+.intel-nav-fixed-js .cmr-nav-cart-container:hover,
+.elementor-sticky--effects .cmr-nav-search-container:hover,
+.is-sticky .cmr-nav-search-container:hover,
+header.sticky .cmr-nav-search-container:hover,
+.intel-nav-fixed-js .cmr-nav-search-container:hover,
+.elementor-sticky--effects .cmr-nav-search-trigger:hover,
+.is-sticky .cmr-nav-search-trigger:hover,
+header.sticky .cmr-nav-search-trigger:hover,
+.intel-nav-fixed-js .cmr-nav-search-trigger:hover,
+.elementor-sticky--effects header .elementor-widget-icon a:hover,
+.is-sticky header .elementor-widget-icon a:hover,
+header.sticky .elementor-widget-icon a:hover,
+.intel-nav-fixed-js header .elementor-widget-icon a:hover,
+.elementor-sticky--effects header .elementor-widget-icon:hover a,
+.is-sticky header .elementor-widget-icon:hover a,
+header.sticky .elementor-widget-icon:hover a,
+.intel-nav-fixed-js header .elementor-widget-icon:hover a,
+.elementor-sticky--effects header .cmr-header-user-icon:hover,
+.is-sticky header .cmr-header-user-icon:hover,
+header.sticky .cmr-header-user-icon:hover,
+.intel-nav-fixed-js header .cmr-header-user-icon:hover {
     color: #4820B0 !important;
+}
+
+.elementor-sticky--effects .cmr-nav-cart-container:hover svg,
+.is-sticky .cmr-nav-cart-container:hover svg,
+header.sticky .cmr-nav-cart-container:hover svg,
+.intel-nav-fixed-js .cmr-nav-cart-container:hover svg,
+.elementor-sticky--effects .cmr-nav-search-container:hover svg,
+.is-sticky .cmr-nav-search-container:hover svg,
+header.sticky .cmr-nav-search-container:hover svg,
+.intel-nav-fixed-js .cmr-nav-search-container:hover svg,
+.elementor-sticky--effects header .elementor-widget-icon:hover svg,
+.is-sticky header .elementor-widget-icon:hover svg,
+header.sticky .elementor-widget-icon:hover svg,
+.intel-nav-fixed-js header .elementor-widget-icon:hover svg {
+    color: #4820B0 !important;
+    stroke: #4820B0 !important;
+    fill: currentColor !important;
+}
+
+.elementor-sticky--effects .cmr-nav-cart-container:hover svg path,
+.is-sticky .cmr-nav-cart-container:hover svg path,
+header.sticky .cmr-nav-cart-container:hover svg path,
+.intel-nav-fixed-js .cmr-nav-cart-container:hover svg path {
     stroke: #4820B0 !important;
 }
 
