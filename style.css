@@ -11500,6 +11500,192 @@ ul.key-parts-list li {
     display: inline-block !important;
 }
 
+/* ==========================================================================
+   Global WooCommerce Notices (Error, Message, Info) - Clean Sleek Design
+   ========================================================================== */
+.woocommerce-notices-wrapper,
+.woocommerce-NoticeGroup {
+    width: 100% !important;
+    max-width: 1280px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+
+ul.woocommerce-error,
+div.woocommerce-error,
+ul.woocommerce-message,
+div.woocommerce-message,
+ul.woocommerce-info,
+div.woocommerce-info,
+.woocommerce-error,
+.woocommerce-message,
+.woocommerce-info {
+    list-style: none !important;
+    list-style-type: none !important;
+    list-style-image: none !important;
+    margin: 0 auto 20px auto !important;
+    padding: 14px 20px 14px 46px !important;
+    border-radius: 8px !important;
+    font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 1.5 !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+    outline: none !important;
+}
+
+/* Remove ANY and ALL list bullets, dots, and markers */
+ul.woocommerce-error li,
+ul.woocommerce-message li,
+ul.woocommerce-info li,
+.woocommerce-error li,
+.woocommerce-message li,
+.woocommerce-info li,
+.woocommerce-notices-wrapper li {
+    list-style: none !important;
+    list-style-type: none !important;
+    list-style-image: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    flex: 1 1 auto !important;
+    display: block !important;
+}
+
+ul.woocommerce-error li::marker,
+ul.woocommerce-message li::marker,
+ul.woocommerce-info li::marker,
+.woocommerce-error li::marker,
+.woocommerce-message li::marker,
+.woocommerce-info li::marker,
+.woocommerce-notices-wrapper li::marker,
+.woocommerce-notices-wrapper ul::marker {
+    display: none !important;
+    content: '' !important;
+    font-size: 0 !important;
+}
+
+ul.woocommerce-error li::before,
+ul.woocommerce-error li:before,
+ul.woocommerce-error li::after,
+ul.woocommerce-error li:after,
+ul.woocommerce-message li::before,
+ul.woocommerce-message li:before,
+ul.woocommerce-message li::after,
+ul.woocommerce-message li:after,
+ul.woocommerce-info li::before,
+ul.woocommerce-info li:before,
+ul.woocommerce-info li::after,
+ul.woocommerce-info li:after,
+.woocommerce-error li::before,
+.woocommerce-error li:before,
+.woocommerce-error li::after,
+.woocommerce-error li:after {
+    display: none !important;
+    content: none !important;
+}
+
+/* Error Box Styling & Icon */
+ul.woocommerce-error,
+div.woocommerce-error,
+.woocommerce-error {
+    border: 1px solid #fecaca !important;
+    border-left: 4px solid #ef4444 !important;
+    background: #fef2f2 !important;
+    color: #991b1b !important;
+    box-shadow: 0 1px 3px rgba(239, 68, 68, 0.08) !important;
+}
+
+ul.woocommerce-error::before,
+div.woocommerce-error::before,
+.woocommerce-error::before {
+    content: '\f071' !important;
+    font-family: 'Font Awesome 5 Free', 'FontAwesome' !important;
+    font-weight: 900 !important;
+    position: absolute !important;
+    left: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #ef4444 !important;
+    width: 18px !important;
+    height: 18px !important;
+}
+
+/* Success Message Box Styling & Icon */
+ul.woocommerce-message,
+div.woocommerce-message,
+.woocommerce-message {
+    border: 1px solid #a7f3d0 !important;
+    border-left: 4px solid #10b981 !important;
+    background: #ecfdf5 !important;
+    color: #065f46 !important;
+    box-shadow: 0 1px 3px rgba(16, 185, 129, 0.08) !important;
+}
+
+ul.woocommerce-message::before,
+div.woocommerce-message::before,
+.woocommerce-message::before {
+    content: '\f00c' !important;
+    font-family: 'Font Awesome 5 Free', 'FontAwesome' !important;
+    font-weight: 900 !important;
+    position: absolute !important;
+    left: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #10b981 !important;
+    width: 18px !important;
+    height: 18px !important;
+}
+
+/* Info Box Styling & Icon */
+ul.woocommerce-info,
+div.woocommerce-info,
+.woocommerce-info {
+    border: 1px solid #bfdbfe !important;
+    border-left: 4px solid #3b82f6 !important;
+    background: #eff6ff !important;
+    color: #1e40af !important;
+    box-shadow: 0 1px 3px rgba(59, 130, 246, 0.08) !important;
+}
+
+ul.woocommerce-info::before,
+div.woocommerce-info::before,
+.woocommerce-info::before {
+    content: '\f05a' !important;
+    font-family: 'Font Awesome 5 Free', 'FontAwesome' !important;
+    font-weight: 900 !important;
+    position: absolute !important;
+    left: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #3b82f6 !important;
+    width: 18px !important;
+    height: 18px !important;
+}
+
 
 
 

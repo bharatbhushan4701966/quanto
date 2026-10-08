@@ -918,10 +918,26 @@ ul.woocommerce-error li,
 ul.woocommerce-message li,
 ul.woocommerce-info li {
     list-style: none !important;
+    list-style-type: none !important;
+    list-style-image: none !important;
     margin: 0 !important;
     padding: 0 !important;
     border: none !important;
     flex: 1 1 250px !important;
+}
+
+ul.woocommerce-error li::marker,
+ul.woocommerce-message li::marker,
+ul.woocommerce-info li::marker,
+.woocommerce-error li::marker,
+.woocommerce-message li::marker,
+.woocommerce-info li::marker,
+.cmr-checkout-wrap ul.woocommerce-error li::marker,
+.cmr-checkout-wrap ul.woocommerce-message li::marker,
+.cmr-checkout-wrap ul.woocommerce-info li::marker {
+    display: none !important;
+    content: '' !important;
+    font-size: 0 !important;
 }
 
 .cmr-checkout-wrap ul.woocommerce-error li::before,
