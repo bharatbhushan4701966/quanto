@@ -11547,6 +11547,14 @@ button[type="submit"] svg.cmr-arrow-icon,
 .cmr-browse-card:hover .cmr-browse-card-title,
 .cmr-ls-grid a:hover .cmr-ls-title,
 .cmr-ls-card:hover .cmr-ls-title,
+.cmr-team-card:hover .cmr-team-card-name,
+.cmr-team-card-name:hover,
+.cmr-team-member:hover .cmr-team-name,
+.cmr-team-name:hover,
+.quanto-team-box:hover .service-title,
+.quanto-team-box:hover .team-name,
+.elementor-widget-quanto_team:hover .service-title,
+.elementor-widget-quanto_team:hover .team-name,
 .elementor-widget-posts .elementor-post:hover .elementor-post__title,
 .elementor-widget-posts .elementor-post:hover .elementor-post__title a,
 .elementor-post__title a:hover {
@@ -11581,23 +11589,33 @@ h3.cmr-mc-title,
 .cmr-trending-card-title,
 .cmr-browse-card-title,
 .cmr-ls-title,
+.cmr-team-card-name,
+.cmr-team-name,
+.quanto-team-box .service-title,
+.quanto-team-box .team-name,
 .elementor-post__title,
 .elementor-post__title a {
     transition: color 0.3s ease !important;
 }
 
-/* What We Think Card Image Hover Scale */
-.cmr-wwt-card-img {
+/* What We Think & Team Card Image Hover Scale */
+.cmr-wwt-card-img,
+.cmr-team-card-image,
+.cmr-team-image-wrap {
     overflow: hidden !important;
 }
 
-.cmr-wwt-card-img img {
+.cmr-wwt-card-img img,
+.cmr-team-card-image img,
+.cmr-team-image-wrap img {
     transform: scale(1) !important;
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
 
 .cmr-wwt-card:hover .cmr-wwt-card-img img,
-.cmr-wwt-card-img:hover img {
+.cmr-wwt-card-img:hover img,
+.cmr-team-card:hover .cmr-team-card-image img,
+.cmr-team-member:hover .cmr-team-image-wrap img {
     transform: scale(1.06) !important;
 }
 

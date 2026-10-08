@@ -128,6 +128,11 @@ function cmr_team_scroll_shortcode($atts) {
                 height: 100% !important;
                 object-fit: cover !important;
                 display: block !important;
+                transform: scale(1) !important;
+                transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            }
+            .cmr-team-card:hover .cmr-team-card-image img {
+                transform: scale(1.06) !important;
             }
             .cmr-team-card-name {
                 font-family: "Instrument Sans", sans-serif !important;
@@ -138,6 +143,11 @@ function cmr_team_scroll_shortcode($atts) {
                 letter-spacing: -0.3px !important;
                 line-height: 1.25 !important;
                 text-align: left !important;
+                transition: color 0.3s ease !important;
+            }
+            .cmr-team-card:hover .cmr-team-card-name,
+            .cmr-team-card-name:hover {
+                color: #4820B0 !important;
             }
             .cmr-team-card-role {
                 font-family: "Instrument Sans", sans-serif !important;
@@ -262,6 +272,11 @@ function cmr_team_scroll_shortcode($atts) {
                 height: 100% !important;
                 object-fit: cover !important;
                 display: block !important;
+                transform: scale(1) !important;
+                transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            }
+            .cmr-team-card:hover .cmr-team-card-image img {
+                transform: scale(1.06) !important;
             }
             .cmr-team-card-name {
                 font-size: 20px !important;
@@ -269,6 +284,11 @@ function cmr_team_scroll_shortcode($atts) {
                 color: #111 !important;
                 margin: 0 0 6px 0 !important;
                 letter-spacing: -0.4px !important;
+                transition: color 0.3s ease !important;
+            }
+            .cmr-team-card:hover .cmr-team-card-name,
+            .cmr-team-card-name:hover {
+                color: #4820B0 !important;
             }
             .cmr-team-card-role {
                 font-size: 14px !important;

@@ -77,8 +77,9 @@ function cmr_team_grid_shortcode($atts) {
         .cmr-team-image-wrap:hover .cmr-team-overlay {
             opacity: 1;
         }
-        .cmr-team-image-wrap:hover img {
-            transform: scale(1.05);
+        .cmr-team-image-wrap:hover img,
+        .cmr-team-member:hover .cmr-team-image-wrap img {
+            transform: scale(1.06);
         }
         .cmr-team-overlay svg {
             width: 48px;
@@ -91,6 +92,11 @@ function cmr_team_grid_shortcode($atts) {
             margin: 0 0 5px 0;
             color: #111;
             letter-spacing: -0.5px;
+            transition: color 0.3s ease;
+        }
+        .cmr-team-member:hover .cmr-team-name,
+        .cmr-team-name:hover {
+            color: #4820B0 !important;
         }
         .cmr-team-role {
             font-size: 14px;
