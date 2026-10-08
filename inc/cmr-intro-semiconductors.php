@@ -43,38 +43,12 @@ function cmr_intro_semiconductors_shortcode() {
         }
 
         .cmr-intro-semi-hidden-content {
-            display: none;
+            display: block !important;
             margin-top: 35px;
         }
 
         .cmr-intro-semi-read-more {
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        .cmr-read-more-btn-semi {
-            font-size: 16px;
-            font-weight: 600;
-            color: #8B5CF6;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .cmr-read-more-btn-semi:hover {
-            color: #a78bfa;
-        }
-
-        .cmr-read-more-btn-semi svg {
-            margin-top: 2px;
-            transition: transform 0.3s ease;
-        }
-
-        .cmr-read-more-btn-semi.active svg {
-            transform: rotate(180deg);
+            display: none !important;
         }
         
         @media (max-width: 768px) {
@@ -89,9 +63,6 @@ function cmr_intro_semiconductors_shortcode() {
             .cmr-intro-semi-hidden-content {
                 margin-top: 20px;
             }
-            .cmr-intro-semi-read-more {
-                margin-top: 25px;
-            }
         }
     </style>
     <div class="cmr-intro-semi-section">
@@ -103,34 +74,6 @@ function cmr_intro_semiconductors_shortcode() {
             <p>Whether you're expanding into new markets, launching next-generation silicon, strengthening ecosystem partnerships, evaluating manufacturing investments, or navigating the impact of AI and geopolitical shifts, CMR delivers the intelligence to reduce uncertainty, sharpen strategy, and accelerate growth.</p>
             <p><strong>From silicon innovation to market adoption, CMR helps organizations transform semiconductor intelligence into strategic advantage.</strong></p>
         </div>
-
-        <div class="cmr-intro-semi-read-more">
-            <a href="#" class="cmr-read-more-btn-semi"><span>Read More</span> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
-        </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var readMoreBtnSemi = document.querySelector('.cmr-read-more-btn-semi');
-            var hiddenContentSemi = document.querySelector('.cmr-intro-semi-hidden-content');
-            var btnTextSemi = readMoreBtnSemi ? readMoreBtnSemi.querySelector('span') : null;
-            
-            if(readMoreBtnSemi && hiddenContentSemi && btnTextSemi) {
-                readMoreBtnSemi.addEventListener('click', function(e) {
-                    e.preventDefault(); 
-                    
-                    if (hiddenContentSemi.style.display === 'block') {
-                        hiddenContentSemi.style.display = 'none';
-                        btnTextSemi.textContent = 'Read More';
-                        readMoreBtnSemi.classList.remove('active');
-                    } else {
-                        hiddenContentSemi.style.display = 'block';
-                        btnTextSemi.textContent = 'Read Less';
-                        readMoreBtnSemi.classList.add('active');
-                    }
-                });
-            }
-        });
-    </script>
     <?php return ob_get_clean();
 }

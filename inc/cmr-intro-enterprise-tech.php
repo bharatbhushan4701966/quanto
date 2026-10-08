@@ -43,38 +43,12 @@ function cmr_intro_enterprise_tech_shortcode() {
         }
 
         .cmr-intro-enterprise-tech-hidden-content {
-            display: none;
+            display: block !important;
             margin-top: 35px;
         }
 
         .cmr-intro-enterprise-tech-read-more {
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        .cmr-read-more-btn-enterprise-tech {
-            font-size: 16px;
-            font-weight: 600;
-            color: #8B5CF6;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .cmr-read-more-btn-enterprise-tech:hover {
-            color: #a78bfa;
-        }
-
-        .cmr-read-more-btn-enterprise-tech svg {
-            margin-top: 2px;
-            transition: transform 0.3s ease;
-        }
-
-        .cmr-read-more-btn-enterprise-tech.active svg {
-            transform: rotate(180deg);
+            display: none !important;
         }
         
         @media (max-width: 768px) {
@@ -89,9 +63,6 @@ function cmr_intro_enterprise_tech_shortcode() {
             .cmr-intro-enterprise-tech-hidden-content {
                 margin-top: 20px;
             }
-            .cmr-intro-enterprise-tech-read-more {
-                margin-top: 25px;
-            }
         }
     </style>
     <div class="cmr-intro-enterprise-tech-section">
@@ -103,34 +74,6 @@ function cmr_intro_enterprise_tech_shortcode() {
             <p>Our expertise spans the enterprise technology landscape, including enterprise cloud and SaaS, data center and IT infrastructure, enterprise cybersecurity and governance, AI and automation, enterprise mobility and unified communications, IT services and managed services, and the broader digital transformation of enterprises across India and key regional markets.</p>
             <p><strong>From infrastructure to applications, CMR helps enterprises navigate technology change and turn insight into competitive advantage.</strong></p>
         </div>
-
-        <div class="cmr-intro-enterprise-tech-read-more">
-            <a href="#" class="cmr-read-more-btn-enterprise-tech"><span>Read More</span> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
-        </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var readMoreBtnEnterpriseTech = document.querySelector('.cmr-read-more-btn-enterprise-tech');
-            var hiddenContentEnterpriseTech = document.querySelector('.cmr-intro-enterprise-tech-hidden-content');
-            var btnTextEnterpriseTech = readMoreBtnEnterpriseTech ? readMoreBtnEnterpriseTech.querySelector('span') : null;
-            
-            if(readMoreBtnEnterpriseTech && hiddenContentEnterpriseTech && btnTextEnterpriseTech) {
-                readMoreBtnEnterpriseTech.addEventListener('click', function(e) {
-                    e.preventDefault(); 
-                    
-                    if (hiddenContentEnterpriseTech.style.display === 'block') {
-                        hiddenContentEnterpriseTech.style.display = 'none';
-                        btnTextEnterpriseTech.textContent = 'Read More';
-                        readMoreBtnEnterpriseTech.classList.remove('active');
-                    } else {
-                        hiddenContentEnterpriseTech.style.display = 'block';
-                        btnTextEnterpriseTech.textContent = 'Read Less';
-                        readMoreBtnEnterpriseTech.classList.add('active');
-                    }
-                });
-            }
-        });
-    </script>
     <?php return ob_get_clean();
 }

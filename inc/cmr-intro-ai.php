@@ -43,38 +43,12 @@ function cmr_intro_ai_shortcode() {
         }
 
         .cmr-intro-ai-hidden-content {
-            display: none;
+            display: block !important;
             margin-top: 35px;
         }
 
         .cmr-intro-ai-read-more {
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        .cmr-read-more-btn-ai {
-            font-size: 16px;
-            font-weight: 600;
-            color: #8B5CF6;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .cmr-read-more-btn-ai:hover {
-            color: #a78bfa;
-        }
-
-        .cmr-read-more-btn-ai svg {
-            margin-top: 2px;
-            transition: transform 0.3s ease;
-        }
-
-        .cmr-read-more-btn-ai.active svg {
-            transform: rotate(180deg);
+            display: none !important;
         }
         
         @media (max-width: 768px) {
@@ -89,9 +63,6 @@ function cmr_intro_ai_shortcode() {
             .cmr-intro-ai-hidden-content {
                 margin-top: 20px;
             }
-            .cmr-intro-ai-read-more {
-                margin-top: 25px;
-            }
         }
     </style>
     <div class="cmr-intro-ai-section">
@@ -103,34 +74,6 @@ function cmr_intro_ai_shortcode() {
             <p>Our research spans the full AI landscape, including generative AI, agentic AI, enterprise AI platforms, AI infrastructure, edge and on-device AI, industry-specific applications, AI governance, talent and skills, and the broader impact of AI across sectors.</p>
             <p><strong>From experimentation to enterprise-wide deployment, CMR helps you turn AI insight into competitive advantage.</strong></p>
         </div>
-
-        <div class="cmr-intro-ai-read-more">
-            <a href="#" class="cmr-read-more-btn-ai"><span>Read More</span> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
-        </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var readMoreBtnAi = document.querySelector('.cmr-read-more-btn-ai');
-            var hiddenContentAi = document.querySelector('.cmr-intro-ai-hidden-content');
-            var btnTextAi = readMoreBtnAi ? readMoreBtnAi.querySelector('span') : null;
-            
-            if(readMoreBtnAi && hiddenContentAi && btnTextAi) {
-                readMoreBtnAi.addEventListener('click', function(e) {
-                    e.preventDefault(); 
-                    
-                    if (hiddenContentAi.style.display === 'block') {
-                        hiddenContentAi.style.display = 'none';
-                        btnTextAi.textContent = 'Read More';
-                        readMoreBtnAi.classList.remove('active');
-                    } else {
-                        hiddenContentAi.style.display = 'block';
-                        btnTextAi.textContent = 'Read Less';
-                        readMoreBtnAi.classList.add('active');
-                    }
-                });
-            }
-        });
-    </script>
     <?php return ob_get_clean();
 }

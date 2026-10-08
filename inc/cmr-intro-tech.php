@@ -43,38 +43,12 @@ function cmr_intro_tech_shortcode() {
         }
 
         .cmr-intro-tech-hidden-content {
-            display: none;
+            display: block !important;
             margin-top: 35px;
         }
 
         .cmr-intro-tech-read-more {
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        .cmr-read-more-btn-tech {
-            font-size: 16px;
-            font-weight: 600;
-            color: #8B5CF6;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .cmr-read-more-btn-tech:hover {
-            color: #a78bfa;
-        }
-
-        .cmr-read-more-btn-tech svg {
-            margin-top: 2px;
-            transition: transform 0.3s ease;
-        }
-
-        .cmr-read-more-btn-tech.active svg {
-            transform: rotate(180deg);
+            display: none !important;
         }
         
         @media (max-width: 768px) {
@@ -89,9 +63,6 @@ function cmr_intro_tech_shortcode() {
             .cmr-intro-tech-hidden-content {
                 margin-top: 20px;
             }
-            .cmr-intro-tech-read-more {
-                margin-top: 25px;
-            }
         }
     </style>
     <div class="cmr-intro-tech-section">
@@ -105,34 +76,6 @@ function cmr_intro_tech_shortcode() {
             <p>Whether you are launching a new product, entering a new market, refining your go-to-market strategy, strengthening competitive positioning, or evaluating the impact of emerging technologies, CMR equips you with the insights to make confident, evidence-based decisions.</p>
             <p><strong>From identifying market opportunities to shaping long-term growth strategies, CMR helps organizations transform intelligence into innovation, strategy into execution, and insight into lasting competitive advantage.</strong></p>
         </div>
-
-        <div class="cmr-intro-tech-read-more">
-            <a href="#" class="cmr-read-more-btn-tech"><span>Read More</span> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
-        </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var readMoreBtnTech = document.querySelector('.cmr-read-more-btn-tech');
-            var hiddenContentTech = document.querySelector('.cmr-intro-tech-hidden-content');
-            var btnTextTech = readMoreBtnTech ? readMoreBtnTech.querySelector('span') : null;
-            
-            if(readMoreBtnTech && hiddenContentTech && btnTextTech) {
-                readMoreBtnTech.addEventListener('click', function(e) {
-                    e.preventDefault(); 
-                    
-                    if (hiddenContentTech.style.display === 'block') {
-                        hiddenContentTech.style.display = 'none';
-                        btnTextTech.textContent = 'Read More';
-                        readMoreBtnTech.classList.remove('active');
-                    } else {
-                        hiddenContentTech.style.display = 'block';
-                        btnTextTech.textContent = 'Read Less';
-                        readMoreBtnTech.classList.add('active');
-                    }
-                });
-            }
-        });
-    </script>
     <?php return ob_get_clean();
 }

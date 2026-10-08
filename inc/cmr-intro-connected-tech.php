@@ -43,38 +43,12 @@ function cmr_intro_connected_tech_shortcode() {
         }
 
         .cmr-intro-ct-hidden-content {
-            display: none;
+            display: block !important;
             margin-top: 35px;
         }
 
         .cmr-intro-ct-read-more {
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        .cmr-read-more-btn-ct {
-            font-size: 16px;
-            font-weight: 600;
-            color: #8B5CF6;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .cmr-read-more-btn-ct:hover {
-            color: #a78bfa;
-        }
-
-        .cmr-read-more-btn-ct svg {
-            margin-top: 2px;
-            transition: transform 0.3s ease;
-        }
-
-        .cmr-read-more-btn-ct.active svg {
-            transform: rotate(180deg);
+            display: none !important;
         }
         
         @media (max-width: 768px) {
@@ -89,9 +63,6 @@ function cmr_intro_connected_tech_shortcode() {
             .cmr-intro-ct-hidden-content {
                 margin-top: 20px;
             }
-            .cmr-intro-ct-read-more {
-                margin-top: 25px;
-            }
         }
     </style>
     <div class="cmr-intro-ct-section">
@@ -105,34 +76,6 @@ function cmr_intro_connected_tech_shortcode() {
             <p>Whether you are launching a new device, evaluating technology investments, developing connected solutions, entering new markets, or strengthening your competitive positioning, CMR delivers the intelligence you need to understand customers, anticipate market shifts, and make confident strategic decisions.</p>
             <p><strong>From devices to networks and infrastructure, CMR helps organizations understand the connected technology ecosystem and navigate what comes next.</strong></p>
         </div>
-
-        <div class="cmr-intro-ct-read-more">
-            <a href="#" class="cmr-read-more-btn-ct"><span>Read More</span> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
-        </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var readMoreBtnCt = document.querySelector('.cmr-read-more-btn-ct');
-            var hiddenContentCt = document.querySelector('.cmr-intro-ct-hidden-content');
-            var btnTextCt = readMoreBtnCt ? readMoreBtnCt.querySelector('span') : null;
-            
-            if(readMoreBtnCt && hiddenContentCt && btnTextCt) {
-                readMoreBtnCt.addEventListener('click', function(e) {
-                    e.preventDefault(); 
-                    
-                    if (hiddenContentCt.style.display === 'block') {
-                        hiddenContentCt.style.display = 'none';
-                        btnTextCt.textContent = 'Read More';
-                        readMoreBtnCt.classList.remove('active');
-                    } else {
-                        hiddenContentCt.style.display = 'block';
-                        btnTextCt.textContent = 'Read Less';
-                        readMoreBtnCt.classList.add('active');
-                    }
-                });
-            }
-        });
-    </script>
     <?php return ob_get_clean();
 }

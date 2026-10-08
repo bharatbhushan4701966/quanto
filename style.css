@@ -12079,13 +12079,35 @@ div.woocommerce-info::before,
     display: none !important;
 }
 
+/* CMR Who We Serve Intro Sections - Full Content Visible & Read More Hidden */
+.cmr-intro-hidden-content,
+.cmr-intro-sc-hidden-content,
+.cmr-intro-ct-hidden-content,
+.cmr-intro-semi-hidden-content,
+.cmr-intro-ai-hidden-content,
+.cmr-intro-msme-hidden-content,
+.cmr-intro-enterprise-tech-hidden-content,
+.cmr-intro-tech-hidden-content {
+    display: block !important;
+    margin-top: 35px !important;
+}
 
-
-
-
-
-
-
-
-
+.cmr-intro-read-more,
+.cmr-intro-sc-read-more,
+.cmr-intro-ct-read-more,
+.cmr-intro-semi-read-more,
+.cmr-intro-ai-read-more,
+.cmr-intro-msme-read-more,
+.cmr-intro-enterprise-tech-read-more,
+.cmr-intro-tech-read-more,
+.cmr-read-more-btn,
+.cmr-read-more-btn-sc,
+.cmr-read-more-btn-ct,
+.cmr-read-more-btn-semi,
+.cmr-read-more-btn-ai,
+.cmr-read-more-btn-msme,
+.cmr-read-more-btn-enterprise-tech,
+.cmr-read-more-btn-tech {
+    display: none !important;
+}
 

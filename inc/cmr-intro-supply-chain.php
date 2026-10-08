@@ -43,38 +43,12 @@ function cmr_intro_supply_chain_shortcode() {
         }
 
         .cmr-intro-sc-hidden-content {
-            display: none;
+            display: block !important;
             margin-top: 35px;
         }
 
         .cmr-intro-sc-read-more {
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        .cmr-read-more-btn-sc {
-            font-size: 16px;
-            font-weight: 600;
-            color: #8B5CF6;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .cmr-read-more-btn-sc:hover {
-            color: #a78bfa;
-        }
-
-        .cmr-read-more-btn-sc svg {
-            margin-top: 2px;
-            transition: transform 0.3s ease;
-        }
-
-        .cmr-read-more-btn-sc.active svg {
-            transform: rotate(180deg);
+            display: none !important;
         }
         
         @media (max-width: 768px) {
@@ -88,9 +62,6 @@ function cmr_intro_supply_chain_shortcode() {
             }
             .cmr-intro-sc-hidden-content {
                 margin-top: 20px;
-            }
-            .cmr-intro-sc-read-more {
-                margin-top: 25px;
             }
         }
     </style>
@@ -107,34 +78,6 @@ function cmr_intro_supply_chain_shortcode() {
             <p>Through quantitative and qualitative research, executive interviews, ecosystem analysis, customer and partner studies, competitive intelligence, and thought leadership, we help organizations identify growth opportunities, validate product strategies, strengthen go-to-market execution, and anticipate the trends shaping the future of global supply chains.</p>
             <p>From supply chain visibility to intelligent decision-making, CMR transforms market intelligence into strategic advantage, helping organizations build resilient, connected, and future-ready supply chains.</p>
         </div>
-
-        <div class="cmr-intro-sc-read-more">
-            <a href="#" class="cmr-read-more-btn-sc"><span>Read More</span> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
-        </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var readMoreBtnSc = document.querySelector('.cmr-read-more-btn-sc');
-            var hiddenContentSc = document.querySelector('.cmr-intro-sc-hidden-content');
-            var btnTextSc = readMoreBtnSc ? readMoreBtnSc.querySelector('span') : null;
-            
-            if(readMoreBtnSc && hiddenContentSc && btnTextSc) {
-                readMoreBtnSc.addEventListener('click', function(e) {
-                    e.preventDefault(); 
-                    
-                    if (hiddenContentSc.style.display === 'block') {
-                        hiddenContentSc.style.display = 'none';
-                        btnTextSc.textContent = 'Read More';
-                        readMoreBtnSc.classList.remove('active');
-                    } else {
-                        hiddenContentSc.style.display = 'block';
-                        btnTextSc.textContent = 'Read Less';
-                        readMoreBtnSc.classList.add('active');
-                    }
-                });
-            }
-        });
-    </script>
     <?php return ob_get_clean();
 }

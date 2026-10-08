@@ -43,38 +43,12 @@ function cmr_intro_msme_shortcode() {
         }
 
         .cmr-intro-msme-hidden-content {
-            display: none;
+            display: block !important;
             margin-top: 35px;
         }
 
         .cmr-intro-msme-read-more {
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        .cmr-read-more-btn-msme {
-            font-size: 16px;
-            font-weight: 600;
-            color: #8B5CF6;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .cmr-read-more-btn-msme:hover {
-            color: #a78bfa;
-        }
-
-        .cmr-read-more-btn-msme svg {
-            margin-top: 2px;
-            transition: transform 0.3s ease;
-        }
-
-        .cmr-read-more-btn-msme.active svg {
-            transform: rotate(180deg);
+            display: none !important;
         }
         
         @media (max-width: 768px) {
@@ -89,9 +63,6 @@ function cmr_intro_msme_shortcode() {
             .cmr-intro-msme-hidden-content {
                 margin-top: 20px;
             }
-            .cmr-intro-msme-read-more {
-                margin-top: 25px;
-            }
         }
     </style>
     <div class="cmr-intro-msme-section">
@@ -103,34 +74,6 @@ function cmr_intro_msme_shortcode() {
             <p>Our research spans the full MSME technology landscape &mdash; cloud and SaaS, productivity and collaboration tools, affordable and right-sized cybersecurity, digital payments, e-commerce enablement, AI adoption, channel dynamics, and the broader digitisation of micro, small, and medium enterprises across India and key regional markets.</p>
             <p><strong>From adoption to scale, CMR helps you decode the MSME opportunity and turn it into market advantage.</strong></p>
         </div>
-
-        <div class="cmr-intro-msme-read-more">
-            <a href="#" class="cmr-read-more-btn-msme"><span>Read More</span> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
-        </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var readMoreBtnMsme = document.querySelector('.cmr-read-more-btn-msme');
-            var hiddenContentMsme = document.querySelector('.cmr-intro-msme-hidden-content');
-            var btnTextMsme = readMoreBtnMsme ? readMoreBtnMsme.querySelector('span') : null;
-            
-            if(readMoreBtnMsme && hiddenContentMsme && btnTextMsme) {
-                readMoreBtnMsme.addEventListener('click', function(e) {
-                    e.preventDefault(); 
-                    
-                    if (hiddenContentMsme.style.display === 'block') {
-                        hiddenContentMsme.style.display = 'none';
-                        btnTextMsme.textContent = 'Read More';
-                        readMoreBtnMsme.classList.remove('active');
-                    } else {
-                        hiddenContentMsme.style.display = 'block';
-                        btnTextMsme.textContent = 'Read Less';
-                        readMoreBtnMsme.classList.add('active');
-                    }
-                });
-            }
-        });
-    </script>
     <?php return ob_get_clean();
 }
