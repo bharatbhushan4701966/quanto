@@ -316,26 +316,58 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
                     });
                 }
 
-                // Smooth scroll handling for buttons linking to #our-offerings or #<?php echo esc_js( $anchor_id ); ?>
-                function bindOfferingsAnchor() {
-                    var sel = 'a[href*="#our-offerings"], a[href*="#<?php echo esc_js( $anchor_id ); ?>"]';
-                    document.querySelectorAll(sel).forEach(function(link) {
-                        if (link.getAttribute('data-cmr-anchor-bound')) return;
-                        link.setAttribute('data-cmr-anchor-bound', 'true');
-                        link.addEventListener('click', function(e) {
-                            var target = document.getElementById('<?php echo esc_js( $anchor_id ); ?>') || document.getElementById('our-offerings') || document.getElementById('<?php echo esc_js( $unique_id ); ?>_section');
-                            if (target) {
-                                e.preventDefault();
-                                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                if (window.history && window.history.pushState) {
-                                    window.history.pushState(null, null, '#<?php echo esc_js( $anchor_id ); ?>');
-                                }
-                            }
+                // Robust smooth scroll handling for buttons linking to #our-offerings
+                function handleOfferingsScroll(e) {
+                    var link = e.target.closest('a[href*="our-offering"], a[href*="explore-marketing"], a.download-btn a');
+                    if (!link) {
+                        var btn = e.target.closest('.elementor-button');
+                        if (btn && btn.textContent.toLowerCase().includes('explore marketing')) {
+                            link = btn;
+                        }
+                    }
+                    if (!link) return;
+
+                    var target = document.querySelector('.explore-sectors-title') || 
+                                 document.querySelector('.cmr-explore-sectors-section') || 
+                                 document.getElementById('our-offerings');
+
+                    if (target) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+
+                        var rect = target.getBoundingClientRect();
+                        var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                        var finalY = rect.top + scrollTop - 90;
+
+                        window.scrollTo({
+                            top: Math.max(0, finalY),
+                            behavior: 'smooth'
                         });
-                    });
+
+                        if (window.jQuery) {
+                            window.jQuery('html, body').stop().animate({ scrollTop: Math.max(0, finalY) }, 600);
+                        }
+
+                        if (window.history && window.history.pushState) {
+                            window.history.pushState(null, null, '#our-offerings');
+                        }
+                        return false;
+                    }
                 }
-                bindOfferingsAnchor();
-                setTimeout(bindOfferingsAnchor, 600);
+
+                document.addEventListener('click', handleOfferingsScroll, true);
+                window.addEventListener('click', handleOfferingsScroll, true);
+
+                if (window.location.hash && window.location.hash.includes('our-offering')) {
+                    setTimeout(function() {
+                        var target = document.querySelector('.explore-sectors-title') || document.querySelector('.cmr-explore-sectors-section');
+                        if (target) {
+                            var finalY = target.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop) - 90;
+                            window.scrollTo({ top: Math.max(0, finalY), behavior: 'smooth' });
+                        }
+                    }, 400);
+                }
             });
             </script>
         </div>

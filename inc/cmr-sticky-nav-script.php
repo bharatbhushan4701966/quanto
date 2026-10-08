@@ -2146,6 +2146,49 @@ add_action('wp_footer', function() {
             });
         }
 
+        // Global capture-phase handler for "Explore Marketing Services" / #our-offerings button
+        function handleGlobalOfferingsAnchor(e) {
+            var link = e.target.closest('a[href*="our-offering"], a[href*="explore-marketing"], a.download-btn a');
+            if (!link) {
+                var btn = e.target.closest('.elementor-button');
+                if (btn && btn.textContent.toLowerCase().includes('explore marketing')) {
+                    link = btn;
+                }
+            }
+            if (!link) return;
+
+            var target = document.querySelector('.explore-sectors-title') || 
+                         document.querySelector('.cmr-explore-sectors-section') || 
+                         document.querySelector('.our-offerings') || 
+                         document.getElementById('our-offerings');
+
+            if (target) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+
+                var rect = target.getBoundingClientRect();
+                var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                var finalY = rect.top + scrollTop - 90;
+
+                window.scrollTo({
+                    top: Math.max(0, finalY),
+                    behavior: 'smooth'
+                });
+
+                if (window.jQuery) {
+                    window.jQuery('html, body').stop().animate({ scrollTop: Math.max(0, finalY) }, 600);
+                }
+
+                if (window.history && window.history.pushState) {
+                    window.history.pushState(null, null, '#our-offerings');
+                }
+                return false;
+            }
+        }
+        document.addEventListener('click', handleGlobalOfferingsAnchor, true);
+        window.addEventListener('click', handleGlobalOfferingsAnchor, true);
+
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', function() {
                 assignDynamicAnchors();
