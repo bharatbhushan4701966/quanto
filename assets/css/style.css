@@ -10486,13 +10486,31 @@ ul.key-parts-list li {
   }
 }
 
+.single-cmr_news .img-box,
+.single-cmr_news .img-box img,
+.single-cmr_news .blog-item .img-box,
+.single-cmr_news .blog-item .img-box img,
 .single-cmr_news .blog-detail-page .blog-item .img-box,
 .single-cmr_news .blog-detail-page .blog-item .img-box img,
+.single-cmr_news .blog-detail-page .img-box,
+.single-cmr_news .blog-detail-page .img-box img,
 .single-cmr_news .blog-detail-page .blog-item .wp-block-post-featured-image img,
 .single-cmr_news .cmr-fvi-video-wrap {
   border-radius: 16px !important;
   overflow: hidden !important;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
+  transform: translateZ(0);
+  isolation: isolate;
   width: 100% !important;
+}
+
+/* Hide overlapping sidebar floating social links on CMR News and Press Releases */
+.single-cmr_news .social-links,
+.single-cmr_news .blog-item .content-box .social-links,
+.category-press-releases .social-links,
+.category-media-releases .social-links {
+  display: none !important;
 }
 
 .cmr-fvi-video-wrap {
