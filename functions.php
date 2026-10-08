@@ -4614,6 +4614,37 @@ add_action( 'wp_head', function() {
             transition: color 0.3s ease !important;
         }
 
+        /* Standard CTA Button SVG Arrow */
+        .cmr-button-icon-arrow,
+        .cmr-arrow-icon,
+        button[type="submit"] .cmr-arrow-icon,
+        .elementor-field-type-submit .cmr-arrow-icon,
+        .elementor-button .cmr-arrow-icon,
+        .elementor-button .cmr-button-icon-arrow {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            vertical-align: middle !important;
+            margin-left: 6px !important;
+            width: 15px !important;
+            height: 13px !important;
+            fill: currentColor !important;
+            color: inherit !important;
+            flex-shrink: 0 !important;
+        }
+
+        .cmr-button-icon-arrow svg,
+        .cmr-arrow-icon svg,
+        button[type="submit"] svg.cmr-arrow-icon,
+        .elementor-button svg.cmr-arrow-icon,
+        .elementor-button svg {
+            width: 15px !important;
+            height: 13px !important;
+            fill: currentColor !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+        }
+
         /* CMR Video / Live Cards Image & Play Icon Hover Scale */
         .elementor-widget-video .elementor-custom-embed-image-overlay,
         .elementor-element-9b2ddd6 .elementor-custom-embed-image-overlay,
