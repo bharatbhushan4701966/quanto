@@ -5384,7 +5384,7 @@ ins {
 15. Blog Details css
 =================================================*/
 .blog-detail-page {
-  padding-top: 150px;
+  padding-top: 100px;
 }
 
 .local-blog-detail-page {
@@ -5393,7 +5393,7 @@ ins {
 
 @media only screen and (max-width: 1399.98px) {
   .blog-detail-page {
-    padding-top: 150px;
+    padding-top: 100px;
   }
 
   .local-blog-detail-page {

@@ -11894,6 +11894,10 @@ div.woocommerce-info::before,
     height: 18px !important;
 }
 
+.blog-detail-page {
+    padding-top: 100px !important;
+}
+
 
 
 
