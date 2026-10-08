@@ -224,6 +224,14 @@ add_action( 'wp_footer', function() {
                         ch.style.setProperty('display', 'none', 'important');
                     }
                 }
+
+                // Center success content vertically and horizontally inside right side
+                rightSide.style.setProperty('display', 'flex', 'important');
+                rightSide.style.setProperty('flex-direction', 'column', 'important');
+                rightSide.style.setProperty('justify-content', 'center', 'important');
+                rightSide.style.setProperty('align-items', 'center', 'important');
+                rightSide.style.setProperty('min-height', '100%', 'important');
+                rightSide.style.setProperty('height', '100%', 'important');
             }
 
             // Remove any previous success wrapper

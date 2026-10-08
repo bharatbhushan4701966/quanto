@@ -897,10 +897,26 @@ textarea.cmr-input-error {
     align-items: center !important;
     justify-content: center !important;
     text-align: center !important;
-    padding: 60px 24px !important;
+    padding: 40px 24px !important;
     width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    flex: 1 1 auto !important;
+    margin: auto 0 !important;
     box-sizing: border-box !important;
     animation: cmrFadeIn 0.35s ease-in-out !important;
+}
+
+.elementor-column:has(.cmr-form-success-wrapper),
+.e-con:has(.cmr-form-success-wrapper),
+.elementor-widget-wrap:has(.cmr-form-success-wrapper),
+.cmr-modal-form-wrapper:has(.cmr-form-success-wrapper) {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 100% !important;
+    min-height: 100% !important;
 }
 
 .cmr-form-success-icon {
