@@ -1392,6 +1392,81 @@ h3.cmr-mc-title {
     width: 100% !important;
 }
 
+/* Breadcrumb Non-Breaking & Inline-Flex Styling */
+.breadcumb-menu-wrap .breadcumb-menu,
+.breadcumb-menu {
+    display: block !important;
+    width: 100% !important;
+}
+
+.breadcumb-menu-wrap .breadcumb-menu ul,
+.breadcumb-menu-wrap .breadcumb-menu ul.nav,
+.breadcumb-menu-wrap ul,
+.breadcumb-menu ul {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    row-gap: 6px !important;
+    column-gap: 8px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+}
+
+.breadcumb-menu-wrap .breadcumb-menu ul li,
+.breadcumb-menu-wrap ul li,
+.breadcumb-menu ul li {
+    display: inline-flex !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    color: #4B5563 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+}
+
+.breadcumb-menu-wrap .breadcumb-menu ul li a,
+.breadcumb-menu-wrap ul li a,
+.breadcumb-menu ul li a {
+    color: #4B5563 !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    transition: color 0.2s ease !important;
+}
+
+.breadcumb-menu-wrap .breadcumb-menu ul li a:hover,
+.breadcumb-menu ul li a:hover {
+    color: #6241CA !important;
+}
+
+.breadcumb-menu-wrap .breadcumb-menu ul .arrow,
+.breadcumb-menu-wrap ul .arrow,
+.breadcumb-menu ul .arrow {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #9CA3AF !important;
+    font-size: 10px !important;
+    line-height: 1 !important;
+    margin: 0 2px !important;
+    flex-shrink: 0 !important;
+}
+
+.breadcumb-menu-wrap .breadcumb-menu ul li.active,
+.breadcumb-menu-wrap ul li.active,
+.breadcumb-menu ul li.active {
+    color: #1F2937 !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    flex-shrink: 1 !important;
+}
+
+
 
 
 

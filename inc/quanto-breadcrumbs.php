@@ -428,7 +428,7 @@ if ( ! function_exists( 'quanto_breadcrumbs' ) ) {
 
                 if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
 
-                    $selected_term = reset( $terms );
+                    $selected_term = false;
 
                     foreach ( $terms as $t ) {
 
@@ -442,13 +442,17 @@ if ( ! function_exists( 'quanto_breadcrumbs' ) ) {
 
                     }
 
-                    $term_link = get_term_link( $selected_term );
+                    if ( $selected_term ) {
 
-                    if ( ! is_wp_error( $term_link ) ) {
+                        $term_link = get_term_link( $selected_term );
 
-                        $html .= '<span class="arrow"><i class="fa-solid fa-angle-right"></i></span>';
+                        if ( ! is_wp_error( $term_link ) ) {
 
-                        $html .= '<li class="item-cat"><a class="bread-cat" href="' . esc_url( $term_link ) . '" title="' . esc_attr( $selected_term->name ) . '">' . esc_html( $selected_term->name ) . '</a></li>';
+                            $html .= '<span class="arrow"><i class="fa-solid fa-angle-right"></i></span>';
+
+                            $html .= '<li class="item-cat"><a class="bread-cat" href="' . esc_url( $term_link ) . '" title="' . esc_attr( $selected_term->name ) . '">' . esc_html( $selected_term->name ) . '</a></li>';
+
+                        }
 
                     }
 
