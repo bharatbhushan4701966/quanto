@@ -11351,6 +11351,15 @@ header.sticky .cmr-nav-cart-container:hover,
     }
 }
 
+/* Bottom spacing (80px) for single detail templates (Blog, CMR News, Press Release, Media) */
+.cmr-template-bottom-spacer {
+    display: block;
+    width: 100%;
+    height: 1px;
+    margin-bottom: 80px !important;
+    clear: both;
+}
+
 
 
 

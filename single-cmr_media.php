@@ -1246,5 +1246,8 @@ endwhile;
 echo do_shortcode('[cmr_testimonials]');
 echo do_shortcode('[cmr_global_brands]');
 
+// Bottom margin spacer before footer
+echo '<div class="cmr-template-bottom-spacer" style="margin-bottom: 80px; height: 1px; clear: both;" aria-hidden="true"></div>';
+
 get_footer();
 ?>

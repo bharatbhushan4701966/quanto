@@ -110,5 +110,8 @@ add_filter('body_class', function($classes) {
         quanto_render_homepage_client_testimonials_section();
     }
 
+    // Bottom margin spacer before footer
+    echo '<div class="cmr-template-bottom-spacer" style="margin-bottom: 80px; height: 1px; clear: both;" aria-hidden="true"></div>';
+
     //footer
     get_footer();
