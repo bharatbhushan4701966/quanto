@@ -472,9 +472,87 @@ add_action( 'wp_footer', function() {
                 });
             }
 
+            // Helper: Replace unicode arrow on Submit buttons with the exact Talk to Analyst SVG arrow icon
+            function fixSubmitButtonArrows() {
+                var svgHTML = '<svg class="cmr-arrow-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14" fill="none" style="display:inline-block; vertical-align:middle; margin-left:6px; width:15px; height:13px;"><path d="M2.04895 4.52205V3.54978C2.07104 3.12993 2.4025 2.79848 2.80025 2.79848L11.396 2.77638C11.8159 2.79848 12.1473 3.12993 12.1473 3.52768V12.1455C12.1473 12.5433 11.8159 12.8747 11.396 12.8968H10.4237C10.0039 12.8747 9.67244 12.5433 9.65035 12.1234L9.78293 6.90853L3.44106 13.2504C3.1317 13.5598 2.68976 13.5598 2.3804 13.2504L1.6733 12.5433C1.38603 12.256 1.36394 11.792 1.6733 11.4826L8.01516 5.14077L2.82234 5.29545C2.4025 5.27335 2.04895 4.96399 2.04895 4.52205Z" fill="currentColor"></path></svg>';
+
+                // 1. Check all buttons, submit buttons, elementor form submit buttons
+                var buttons = document.querySelectorAll(
+                    'button[type="submit"], ' +
+                    '.elementor-field-type-submit button, ' +
+                    '.elementor-button[type="submit"], ' +
+                    '.wpcf7-submit, ' +
+                    '.custom-consultation-form button, ' +
+                    '.elementor-button'
+                );
+
+                buttons.forEach(function(btn) {
+                    if (btn.classList.contains('cmr-arrow-fixed')) return;
+
+                    var textWrapper = btn.querySelector('.elementor-button-text') || btn.querySelector('span') || btn;
+                    var fullText = (textWrapper.textContent || '').trim();
+
+                    if (fullText.includes('↗') || fullText.includes('\u2197') || fullText.includes('&#8599;') || fullText.includes('&#x2197;')) {
+                        var cleanText = fullText.replace(/[↗\u2197]/g, '').trim();
+
+                        var existingIcon = btn.querySelector('.elementor-button-icon, i, svg:not(.cmr-arrow-icon)');
+                        if (existingIcon) {
+                            existingIcon.remove();
+                        }
+
+                        if (textWrapper !== btn) {
+                            textWrapper.textContent = cleanText;
+                        } else {
+                            btn.innerHTML = cleanText;
+                        }
+
+                        if (!btn.querySelector('.cmr-arrow-icon')) {
+                            var contentWrap = btn.querySelector('.elementor-button-content-wrapper') || btn.querySelector('span') || btn;
+                            var iconSpan = document.createElement('span');
+                            iconSpan.className = 'elementor-button-icon cmr-button-icon-arrow';
+                            iconSpan.style.display = 'inline-flex';
+                            iconSpan.style.alignItems = 'center';
+                            iconSpan.style.marginLeft = '6px';
+                            iconSpan.innerHTML = svgHTML;
+                            contentWrap.appendChild(iconSpan);
+                        }
+
+                        btn.classList.add('cmr-arrow-fixed');
+                    }
+                });
+
+                // 2. Check input[type="submit"]
+                document.querySelectorAll('input[type="submit"]').forEach(function(input) {
+                    if (input.classList.contains('cmr-arrow-fixed')) return;
+                    var val = input.value || '';
+                    if (val.includes('↗') || val.includes('\u2197')) {
+                        var btn = document.createElement('button');
+                        btn.type = 'submit';
+                        btn.className = input.className + ' cmr-arrow-fixed';
+                        if (input.id) btn.id = input.id;
+                        if (input.name) btn.name = input.name;
+                        var cleanVal = val.replace(/[↗\u2197]/g, '').trim();
+                        btn.innerHTML = '<span>' + cleanVal + '</span> <span class="cmr-button-icon-arrow" style="display:inline-flex; align-items:center; margin-left:6px;">' + svgHTML + '</span>';
+                        input.parentNode.replaceChild(btn, input);
+                    }
+                });
+            }
+
             initHeroCTAButtons();
+            fixSubmitButtonArrows();
             setTimeout(initHeroCTAButtons, 400);
+            setTimeout(fixSubmitButtonArrows, 400);
             setTimeout(initHeroCTAButtons, 1200);
+            setTimeout(fixSubmitButtonArrows, 1200);
+            setTimeout(fixSubmitButtonArrows, 2500);
+
+            // MutationObserver to catch dynamically rendered popups/forms
+            if (window.MutationObserver) {
+                var observer = new MutationObserver(function() {
+                    fixSubmitButtonArrows();
+                });
+                observer.observe(document.body, { childList: true, subtree: true });
+            }
 
             // Unified click handler for all popups & hero CTAs
             document.body.addEventListener('click', function(e) {

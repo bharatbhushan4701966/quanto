@@ -4031,22 +4031,36 @@ ins {
 }
 
 .quanto-service-box4 .service-info a,
-.quanto-service-box4 .quanto-link-btn {
+.quanto-service-box4 .quanto-link-btn,
+.quanto-service-box4 a {
   display: inline-flex !important;
   align-items: center !important;
   gap: 8px !important;
   font-size: 15px !important;
   font-weight: 600 !important;
   color: #0F0F0F !important;
-  text-decoration: underline !important;
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+  border-bottom: 1px solid #000000 !important;
+  padding-bottom: 2px !important;
   margin-top: 0 !important;
   opacity: 1 !important;
 }
 
+.quanto-service-box4 .service-info a *,
+.quanto-service-box4 .quanto-link-btn *,
+.quanto-service-box4 a * {
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+}
+
 .quanto-service-box4:hover .service-info a,
-.quanto-service-box4:hover .quanto-link-btn {
+.quanto-service-box4:hover .quanto-link-btn,
+.quanto-service-box4:hover a {
   opacity: 1 !important;
   color: #000 !important;
+  text-decoration: none !important;
+  text-decoration-line: none !important;
 }
 
 /* MOBILE VIEW (max-width: 991.98px) - Clean Card Layout */

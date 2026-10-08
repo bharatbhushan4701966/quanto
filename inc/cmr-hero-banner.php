@@ -22,6 +22,7 @@ function cmr_hero_banner_shortcode($atts) {
       flex-direction: column;
       justify-content: center;
       box-sizing: border-box;
+      margin-top: 20px !important;
     }
 
     /* =========================
