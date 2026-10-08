@@ -259,7 +259,7 @@ if ( ! function_exists( 'cmr_dark_media_coverage_shortcode' ) ) {
                 padding: 40px 20px;
                 border-radius: 12px;
                 max-width: 1280px;
-                margin: 50px auto;
+                margin: 0 auto;
             }
             .cmr-dmc-header {
                 display: flex;
@@ -316,7 +316,7 @@ if ( ! function_exists( 'cmr_dark_media_coverage_shortcode' ) ) {
             @media (max-width: 768px) {
                 .cmr-dmc-wrapper {
                     padding: 24px 16px;
-                    margin: 30px auto;
+                    margin: 0 auto;
                     border-radius: 8px;
                 }
                 .cmr-dmc-header {
