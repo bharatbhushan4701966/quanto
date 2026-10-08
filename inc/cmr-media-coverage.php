@@ -104,6 +104,35 @@ function cmr_render_media_coverage_shortcode( $atts ) {
     .cmr-nc-card img {
         border-radius: 0 !important;
     }
+
+    /* Media Coverage Card Title Hover - Purple #4820B0 */
+    .cmr-mc-card:hover .cmr-mc-title,
+    .cmr-mc-card:hover .cmr-mc-title a,
+    .cmr-mc-card .cmr-mc-link-wrapper:hover .cmr-mc-title,
+    .cmr-mc-link-wrapper:hover .cmr-mc-title,
+    .cmr-mc-card-inner:hover .cmr-mc-title,
+    .cmr-mc-featured:hover .cmr-mc-title,
+    .cmr-mc-featured-inner:hover .cmr-mc-title,
+    .cmr-mc-featured .cmr-mc-link-wrapper:hover .cmr-mc-title,
+    .cmr-mc-standard:hover .cmr-mc-title,
+    .cmr-mc-standard .cmr-mc-link-wrapper:hover .cmr-mc-title,
+    .cmr-mc-wrapper .cmr-mc-card:hover .cmr-mc-title,
+    .cmr-mc-wrapper .cmr-mc-featured:hover .cmr-mc-title,
+    .cmr-mc-wrapper .cmr-mc-standard:hover .cmr-mc-title,
+    .cmr-media-coverage-wrapper .cmr-mc-card:hover .cmr-mc-title,
+    .cmr-media-coverage-wrapper .cmr-mc-featured:hover .cmr-mc-title,
+    .cmr-media-coverage-wrapper .cmr-mc-standard:hover .cmr-mc-title,
+    .cmr-mc-title:hover,
+    .cmr-mc-title a:hover {
+        color: #4820B0 !important;
+    }
+
+    .cmr-mc-title,
+    .cmr-mc-title a,
+    h2.cmr-mc-title,
+    h3.cmr-mc-title {
+        transition: color 0.3s ease !important;
+    }
     /* Sticky Intel Nav Bar for Media Coverage - Desktop */
     @media (min-width: 769px) {
         .cmr-mc-wrapper .intel-nav-bar,
@@ -567,6 +596,14 @@ function cmr_render_media_coverage_shortcode( $atts ) {
             padding-bottom: 2px !important;
             align-self: flex-start !important;
             margin-top: auto !important;
+        }
+
+        .cmr-mc-card:hover .cmr-mc-title,
+        .cmr-mc-card:hover .cmr-mc-title a,
+        .cmr-mc-link-wrapper:hover .cmr-mc-title,
+        .cmr-mc-featured:hover .cmr-mc-title,
+        .cmr-mc-standard:hover .cmr-mc-title {
+            color: #4820B0 !important;
         }
     }
     </style>

@@ -4463,6 +4463,66 @@ add_action( 'wp_head', function() {
             white-space: nowrap !important;
         }
 
+        /* CMR Live / Video Insights Category Badges - Purple #4820B0 */
+        .elementor-element.elementor-element-bf85eb0 h6:first-child,
+        .elementor-element.elementor-element-1de6221 h6:first-child,
+        .elementor-element.elementor-element-275e662 .elementor-element-2c76331 h6:first-child,
+        .elementor-element.elementor-element-275e662 .e-div-block-base:not(.elementor-element-d155fe5):not([data-id="d155fe5"]) h6:first-child,
+        .elementor-element.elementor-element-c2c8f73 .e-div-block-base:not(.elementor-element-d155fe5):not([data-id="d155fe5"]) h6:first-child,
+        [data-id="bf85eb0"] h6:first-child,
+        [data-id="1de6221"] h6:first-child,
+        [data-id="bf85eb0"] .e-heading-base:first-child,
+        [data-id="1de6221"] .e-heading-base:first-child,
+        [data-id="c2c8f73"] .e-div-block-base:not(.elementor-element-d155fe5):not([data-id="d155fe5"]) h6:first-child,
+        [data-id="c2c8f73"] .e-div-block-base:not(.elementor-element-d155fe5):not([data-id="d155fe5"]) .e-heading-base:first-child,
+        [data-id="275e662"] .e-div-block-base:not(.elementor-element-d155fe5):not([data-id="d155fe5"]) h6:first-child,
+        [data-id="85160bc"] h6:first-child,
+        [data-id="e5a291e"] h6:first-child,
+        [data-id="ec16651"] h6:first-child,
+        [data-id="ed5537e"] h6:first-child,
+        .elementor-element-85160bc h6:first-child,
+        .elementor-element-e5a291e h6:first-child,
+        .elementor-element-ec16651 h6:first-child,
+        .elementor-element-ed5537e h6:first-child,
+        [data-id="1fd1573"],
+        [data-id="1fd1573"] .elementor-heading-title,
+        [data-id="1fd1573"] h6,
+        [data-id="ff3f001"],
+        [data-id="ff3f001"] .elementor-heading-title,
+        [data-id="ff3f001"] h6,
+        .e-1fd1573-0ea6203,
+        .e-ff3f001-b9ccb27 {
+            color: #4820B0 !important;
+        }
+
+        /* CMR Live / Video Insights Card Titles - font-weight: 600 */
+        .elementor-element.elementor-element-275e662 h3,
+        .elementor-element.elementor-element-c2c8f73 h3,
+        .elementor-element.elementor-element-b82bad4 h3,
+        .elementor-element.elementor-element-ed5537e h3,
+        .elementor-element.elementor-element-85160bc h3,
+        .elementor-element.elementor-element-e5a291e h3,
+        .elementor-element.elementor-element-ec16651 h3,
+        [data-id="c2c8f73"] h3,
+        [data-id="c2c8f73"] h3.e-heading-base,
+        [data-id="c2c8f73"] .elementor-heading-title,
+        [data-id="275e662"] h3,
+        [data-id="b82bad4"] h3,
+        [data-id="ed5537e"] h3,
+        [data-id="85160bc"] h3,
+        [data-id="e5a291e"] h3,
+        [data-id="ec16651"] h3,
+        [data-id="255acd5"],
+        [data-id="255acd5"] .elementor-heading-title,
+        [data-id="255acd5"] h3,
+        [data-id="bb5a035"],
+        [data-id="bb5a035"] .elementor-heading-title,
+        [data-id="bb5a035"] h3,
+        .e-255acd5-0533542,
+        .e-bb5a035-8148c2a {
+            font-weight: 600 !important;
+        }
+
         /* 0169cee text widget styling (desktop + mobile) */
         [data-id="0169cee"],
         [data-id="0169cee"] *,

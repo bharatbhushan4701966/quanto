@@ -893,8 +893,32 @@
     object-fit: cover !important;
     transition: transform 0.5s ease !important;
 }
-.cmr-media-coverage-wrapper .cmr-mc-card-inner:hover .cmr-mc-bg {
+.cmr-media-coverage-wrapper .cmr-mc-card-inner:hover .cmr-mc-bg,
+.cmr-media-coverage-wrapper .cmr-mc-featured-inner:hover .cmr-mc-bg {
     transform: scale(1.05) !important;
+}
+
+/* Media Coverage Card Title Hover - Purple #4820B0 */
+.cmr-media-coverage-wrapper .cmr-mc-card:hover .cmr-mc-title,
+.cmr-media-coverage-wrapper .cmr-mc-featured:hover .cmr-mc-title,
+.cmr-media-coverage-wrapper .cmr-mc-card-inner:hover .cmr-mc-title,
+.cmr-media-coverage-wrapper .cmr-mc-featured-inner:hover .cmr-mc-title,
+.cmr-mc-card:hover .cmr-mc-title,
+.cmr-mc-featured:hover .cmr-mc-title,
+.cmr-mc-standard:hover .cmr-mc-title,
+.cmr-mc-wrapper .cmr-mc-card:hover .cmr-mc-title,
+.cmr-mc-wrapper .cmr-mc-featured:hover .cmr-mc-title,
+.cmr-mc-wrapper .cmr-mc-standard:hover .cmr-mc-title,
+.cmr-mc-title:hover,
+.cmr-mc-title a:hover {
+    color: #4820B0 !important;
+}
+
+.cmr-mc-title,
+.cmr-mc-title a,
+h2.cmr-mc-title,
+h3.cmr-mc-title {
+    transition: color 0.3s ease !important;
 }
 
 .cmr-media-coverage-wrapper .cmr-mc-card-content {
