@@ -123,6 +123,9 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
                 background-size: cover;
                 background-position: center;
                 transition: opacity 0.5s ease;
+                display: block;
+                text-decoration: none;
+                cursor: pointer;
             }
             .cmr-fi-slide:last-child {
                 flex: 0 0 100%;
@@ -268,6 +271,7 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
                 text-decoration: none;
                 transition: color 0.3s ease;
             }
+            .cmr-fi-slide:hover .cmr-fi-more-link,
             .cmr-fi-more-link:hover {
                 color: #00D2B9;
             }
@@ -276,6 +280,7 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
                 height: 14px;
                 transition: transform 0.3s ease;
             }
+            .cmr-fi-slide:hover .cmr-fi-more-link svg,
             .cmr-fi-more-link:hover svg {
                 transform: translate(3px, -3px);
             }
@@ -332,7 +337,7 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
             <div class="cmr-fi-slider-container">
                 <div class="cmr-fi-track">
                     <?php foreach ( $posts_data as $index => $post ) : ?>
-                        <div class="cmr-fi-slide" style="background-image: url('<?php echo esc_url( $post['image'] ); ?>');">
+                        <a href="<?php echo esc_url( $post['link'] ); ?>" class="cmr-fi-slide" style="background-image: url('<?php echo esc_url( $post['image'] ); ?>'); display: block; text-decoration: none; cursor: pointer;">
                             <div class="cmr-fi-top-bar"></div>
                             <div class="cmr-fi-badge-pill"><?php echo esc_html( $post['badge'] ); ?></div>
                             
@@ -343,15 +348,15 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
                                 </div>
                                 <h3 class="cmr-fi-slide-title"><?php echo esc_html( $post['title'] ); ?></h3>
                                 <div class="cmr-fi-slide-excerpt"><?php echo wp_kses_post( $post['excerpt'] ); ?></div>
-                                <a href="<?php echo esc_url( $post['link'] ); ?>" class="cmr-fi-more-link">
+                                <span class="cmr-fi-more-link">
                                     More Details 
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                         <line x1="7" y1="17" x2="17" y2="7"></line>
                                         <polyline points="7 7 17 7 17 17"></polyline>
                                     </svg>
-                                </a>
+                                </span>
                             </div>
-                        </div>
+                        </a>
                     <?php endforeach; ?>
                 </div>
             </div>
