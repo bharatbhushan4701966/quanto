@@ -110,11 +110,5 @@ add_filter('body_class', function($classes) {
         quanto_render_homepage_client_testimonials_section();
     }
 
-    // Render the Challenge Section dynamically via shortcode
-    echo do_shortcode('[cmr_challenge]');
-    
-    // Render the Footer Card Section dynamically via shortcode
-    echo do_shortcode('[cmr_footer_card]');
-
     //footer
     get_footer();

@@ -1245,8 +1245,6 @@ endwhile;
 // Render globally requested shortcodes at the bottom of the page
 echo do_shortcode('[cmr_testimonials]');
 echo do_shortcode('[cmr_global_brands]');
-echo do_shortcode('[cmr_challenge]');
-echo do_shortcode('[cmr_footer_card]');
 
 get_footer();
 ?>
