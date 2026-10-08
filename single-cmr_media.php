@@ -150,46 +150,70 @@ while ( have_posts() ) :
     .cmr-media-key-parts h2 {
         margin-bottom: 30px;
     }
-    .key-parts-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        border-top: 1px solid #f0f0f0;
+    .key-parts-list,
+    .cmr-media-content ul.key-parts-list,
+    ul.key-parts-list {
+        list-style: none !important;
+        list-style-type: none !important;
+        padding-left: 0 !important;
+        padding: 0 !important;
+        margin-left: 0 !important;
+        margin: 0 !important;
+        border-top: 1px solid #f0f0f0 !important;
     }
-    .key-parts-list li {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        padding: 25px 0;
-        border-bottom: 1px solid #f0f0f0;
+    .key-parts-list li,
+    .cmr-media-content ul.key-parts-list li,
+    ul.key-parts-list li {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 20px !important;
+        padding: 25px 0 !important;
+        margin: 0 !important;
+        border-bottom: 1px solid #f0f0f0 !important;
+        list-style: none !important;
+        list-style-type: none !important;
+        line-height: normal !important;
+    }
+    .key-parts-list li::before,
+    .key-parts-list li::after,
+    .key-parts-list li::marker {
+        display: none !important;
+        content: none !important;
     }
     .play-part-btn {
-        width: 44px;
-        height: 44px;
-        border: 1px solid #e0e0e0;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #fff;
-        cursor: pointer;
-        transition: all 0.2s;
-        flex-shrink: 0;
+        width: 44px !important;
+        height: 44px !important;
+        min-width: 44px !important;
+        min-height: 44px !important;
+        border: 1px solid #e0e0e0 !important;
+        border-radius: 50% !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: #fff !important;
+        cursor: pointer !important;
+        transition: all 0.2s !important;
+        flex-shrink: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
     .play-part-btn:hover {
-        border-color: #000;
-        background: #fafafa;
+        border-color: #000 !important;
+        background: #fafafa !important;
     }
     .play-part-btn svg {
-        width: 14px;
-        height: 14px;
-        fill: #000;
-        margin-left: 2px;
+        width: 14px !important;
+        height: 14px !important;
+        fill: #000 !important;
+        margin-left: 2px !important;
     }
     .key-parts-list span {
-        font-size: 17px;
-        font-weight: 600;
-        color: #000;
+        font-size: 17px !important;
+        font-weight: 600 !important;
+        color: #000 !important;
+        line-height: 1.4 !important;
+        display: inline-block !important;
     }
     
     @media (max-width: 768px) {
@@ -530,7 +554,7 @@ $is_audio_post = (strtoupper($media_type) === 'PODCAST') || preg_match('/\.(mp3|
                 
                 <div class="cmr-media-key-parts">
                     <h2>Key parts of <?php echo esc_html(get_the_title()); ?></h2>
-                    <ul class="key-parts-list">
+                    <ul class="key-parts-list custom-ul">
                         <?php 
                         $key_parts_text = get_post_meta( get_the_ID(), '_cmr_media_key_parts', true );
                         

@@ -11360,6 +11360,73 @@ header.sticky .cmr-nav-cart-container:hover,
     clear: both;
 }
 
+/* CMR Live / Media - Key parts list formatting (no bullet, single-line alignment) */
+.key-parts-list,
+.cmr-media-content ul.key-parts-list,
+ul.key-parts-list {
+    list-style: none !important;
+    list-style-type: none !important;
+    padding-left: 0 !important;
+    padding: 0 !important;
+    margin-left: 0 !important;
+    margin: 0 !important;
+    border-top: 1px solid #f0f0f0 !important;
+}
+.key-parts-list li,
+.cmr-media-content ul.key-parts-list li,
+ul.key-parts-list li {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 20px !important;
+    padding: 25px 0 !important;
+    margin: 0 !important;
+    border-bottom: 1px solid #f0f0f0 !important;
+    list-style: none !important;
+    list-style-type: none !important;
+    line-height: normal !important;
+}
+.key-parts-list li::before,
+.key-parts-list li::after,
+.key-parts-list li::marker {
+    display: none !important;
+    content: none !important;
+}
+.key-parts-list .play-part-btn {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #fff !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.key-parts-list .play-part-btn:hover {
+    border-color: #000 !important;
+    background: #fafafa !important;
+}
+.key-parts-list .play-part-btn svg {
+    width: 14px !important;
+    height: 14px !important;
+    fill: #000 !important;
+    margin-left: 2px !important;
+}
+.key-parts-list span {
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    color: #000 !important;
+    line-height: 1.4 !important;
+    display: inline-block !important;
+}
+
 
 
 
