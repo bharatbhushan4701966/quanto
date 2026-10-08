@@ -12400,11 +12400,20 @@ div.woocommerce-info::before,
     background: #ffffff !important;
 }
 
-/* Breadcrumb Non-Breaking & Inline-Flex Styling */
+/* Breadcrumb Single Line with Ellipsis Styling */
+.breadcumb-menu-wrap {
+    margin-bottom: 18px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+}
+
 .breadcumb-menu-wrap .breadcumb-menu,
 .breadcumb-menu {
     display: block !important;
     width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
 }
 
 .breadcumb-menu-wrap .breadcumb-menu ul,
@@ -12412,14 +12421,16 @@ div.woocommerce-info::before,
 .breadcumb-menu-wrap ul,
 .breadcumb-menu ul {
     display: flex !important;
-    flex-wrap: wrap !important;
+    flex-wrap: nowrap !important;
     align-items: center !important;
     justify-content: flex-start !important;
-    row-gap: 6px !important;
-    column-gap: 8px !important;
     padding: 0 !important;
     margin: 0 !important;
     list-style: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
 }
 
 .breadcumb-menu-wrap .breadcumb-menu ul li,
@@ -12445,6 +12456,7 @@ div.woocommerce-info::before,
     font-size: 14px !important;
     line-height: 1.4 !important;
     transition: color 0.2s ease !important;
+    flex-shrink: 0 !important;
 }
 
 .breadcumb-menu-wrap .breadcumb-menu ul li a:hover,
@@ -12461,7 +12473,7 @@ div.woocommerce-info::before,
     color: #9CA3AF !important;
     font-size: 10px !important;
     line-height: 1 !important;
-    margin: 0 2px !important;
+    margin: 0 6px !important;
     flex-shrink: 0 !important;
 }
 
@@ -12469,9 +12481,113 @@ div.woocommerce-info::before,
 .breadcumb-menu-wrap ul li.active,
 .breadcumb-menu ul li.active {
     color: #1F2937 !important;
-    white-space: normal !important;
-    word-break: normal !important;
+    display: inline-block !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
     flex-shrink: 1 !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+}
+
+/* CMR News Custom Meta Box - Single Line Fix to Prevent Download Button from Breaking */
+.cmr-media-meta-box {
+    border-top: 1px solid #EAEAEA !important;
+    border-bottom: 1px solid #EAEAEA !important;
+    padding: 20px 0 !important;
+    margin: 24px 0 !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    width: 100% !important;
+}
+
+.cmr-meta-items {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 0 !important;
+    flex-shrink: 1 !important;
+    min-width: 0 !important;
+}
+
+.cmr-meta-item {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 16px !important;
+    border-right: 1px solid #EAEAEA !important;
+    flex-shrink: 0 !important;
+}
+
+.cmr-meta-item:first-child {
+    padding-left: 0 !important;
+}
+
+.cmr-meta-item:last-child {
+    border-right: none !important;
+    padding-right: 0 !important;
+}
+
+.cmr-meta-label {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    text-transform: uppercase !important;
+    color: #7E8B9B !important;
+    letter-spacing: 0.6px !important;
+    display: block !important;
+    white-space: nowrap !important;
+}
+
+.cmr-meta-value {
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #0F0F0F !important;
+    white-space: nowrap !important;
+}
+
+.cmr-meta-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    flex-shrink: 0 !important;
+}
+
+.cmr-btn-download {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background-color: #6241CA !important;
+    color: #FFFFFF !important;
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    padding: 8px 20px !important;
+    min-height: 42px !important;
+    border-radius: 40px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    text-decoration: none !important;
+}
+
+@media (max-width: 767.98px) {
+    .cmr-media-meta-box {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 16px !important;
+    }
+
+    .cmr-meta-items {
+        flex-wrap: wrap !important;
+        gap: 12px !important;
+    }
+
+    .cmr-meta-item {
+        padding: 0 12px 0 0 !important;
+    }
 }
 
 /* Hide Explore Press Release button from deeper insights CTA banner */

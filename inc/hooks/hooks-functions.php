@@ -1526,9 +1526,9 @@
 
                 echo '<!-- CMR News Custom Meta Box -->';
 
-                echo '<div class="cmr-media-meta-box d-flex align-items-center justify-content-between flex-wrap">';
+                echo '<div class="cmr-media-meta-box d-flex align-items-center justify-content-between">';
 
-                    echo '<div class="cmr-meta-items d-flex align-items-center flex-wrap">';
+                    echo '<div class="cmr-meta-items d-flex align-items-center">';
 
                         
 
