@@ -3799,8 +3799,11 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     overflow: hidden;
 }
 
-.quanto-service-box4:last-child {
-    border-bottom: 1px solid #E5E5E5 !important;
+.quanto-service-box4:last-child,
+.quanto-service-box4:last-of-type,
+.elementor-widget-service:last-child .quanto-service-box4,
+.elementor-widget-service:last-of-type .quanto-service-box4 {
+    border-bottom: none !important;
     margin-bottom: 0 !important;
 }
 
