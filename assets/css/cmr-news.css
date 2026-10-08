@@ -1357,30 +1357,41 @@ h3.cmr-mc-title {
     }
 }
 
-/* Detail Press Release / CMR News - Container size for small laptops (992px to 1199px) */
-@media (min-width: 992px) and (max-width: 1199.98px) {
+/* Detail Press Release / CMR News - Figma Standard 884px Centered Container on All Laptop & Desktop Screens */
+@media (min-width: 992px) {
     .single-cmr_news .blog-detail-page .container.custom-container,
-    .single-cmr_news .quanto-blog-section .container.custom-container,
-    .single-cmr_news .blog-detail-page ~ .quanto-blog-section .container.custom-container,
     .category-press-releases .blog-detail-page .container.custom-container,
     .category-media-releases .blog-detail-page .container.custom-container {
-        max-width: 95% !important;
-        width: 95% !important;
-        padding-left: 20px !important;
-        padding-right: 20px !important;
+        max-width: 884px !important;
+        width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .single-cmr_news .blog-detail-page .row.justify-content-center.row-padding-bottom > div,
+    .single-cmr_news .blog-detail-page .row.justify-content-center.row-padding-bottom > .col-xl-9,
+    .single-cmr_news .blog-detail-page .row.justify-content-center.row-padding-bottom > .col-xxl-9,
+    .single-cmr_news .blog-detail-page .row.justify-content-center.row-padding-bottom > .col-12,
+    .single-cmr_news .blog-detail-page .social-links-scroll > div,
+    .single-cmr_news .blog-detail-page .social-links-scroll .col-12,
+    .single-cmr_news .blog-detail-page .social-links-scroll .col-xl-10 {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        width: 100% !important;
     }
 }
 
-/* Detail Press Release / CMR News - Constrain top title and download meta row to 75% width (col-xl-9) */
-@media (min-width: 1200px) {
-    .single-cmr_news .blog-detail-page .row.justify-content-center.row-padding-bottom > div,
-    .single-cmr_news .blog-detail-page .row.justify-content-center.row-padding-bottom > .col-xl-9,
-    .single-cmr_news .blog-detail-page .row.justify-content-center.row-padding-bottom > .col-xxl-9 {
-        flex: 0 0 75% !important;
-        max-width: 75% !important;
-        width: 75% !important;
-    }
+.single-cmr_news .blog-detail-page .blog-item .img-box,
+.single-cmr_news .blog-detail-page .blog-item .img-box img,
+.single-cmr_news .blog-detail-page .blog-item .wp-block-post-featured-image img,
+.single-cmr_news .cmr-fvi-video-wrap {
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    width: 100% !important;
 }
+
 
 
 

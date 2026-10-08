@@ -154,7 +154,7 @@
 
                     if ( ( function_exists( 'quanto_is_press_release' ) && quanto_is_press_release() ) || get_post_type() === 'cmr_news' ) {
 
-                        $column_class = 'col-12 col-xl-9 col-xxl-9';
+                        $column_class = 'col-12';
 
                     } else if ( class_exists('ReduxFramework') ) {
 
@@ -394,7 +394,7 @@
 
                             if ( ( function_exists( 'quanto_is_press_release' ) && quanto_is_press_release() ) || get_post_type() === 'cmr_news' ) {
 
-                                echo '<div class="col-12 col-xl-10 col-xxl-10">';
+                                echo '<div class="col-12">';
 
                             } else {
 
