@@ -4600,6 +4600,14 @@ add_action( 'wp_head', function() {
             color: #00D2B9 !important;
         }
 
+        .cmr-card-featured .cmr-read-coverage,
+        .cmr-card-featured:hover .cmr-read-coverage,
+        .cmr-card-featured .cmr-read-coverage:hover,
+        .cmr-card-featured .cmr-card-link-wrapper:hover .cmr-read-coverage {
+            color: #ffffff !important;
+            border-bottom: 1px solid #ffffff !important;
+        }
+
         .cmr-intel-trends-title,
         .cmr-intel-trends-title a,
         .stay-updated-card-title,

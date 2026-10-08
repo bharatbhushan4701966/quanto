@@ -11670,12 +11670,19 @@ a.btn-outline * {
 .insights-featured-card:hover .insights-more-link,
 .insights-featured-card .insights-more-link:hover,
 .insights-featured-content .insights-more-link:hover,
-.cmr-card-featured:hover .cmr-read-coverage,
-.cmr-card-featured .cmr-read-coverage:hover,
 .cmr-fi-slide:hover .cmr-fi-slide-title,
 .cmr-fi-slide:hover .cmr-fi-slide-title a,
 .cmr-fi-slide-title:hover {
     color: #00D2B9 !important;
+}
+
+/* Featured Card Read Coverage - Keep White and do not change color on hover */
+.cmr-card-featured .cmr-read-coverage,
+.cmr-card-featured:hover .cmr-read-coverage,
+.cmr-card-featured .cmr-read-coverage:hover,
+.cmr-card-featured .cmr-card-link-wrapper:hover .cmr-read-coverage {
+    color: #ffffff !important;
+    border-bottom: 1px solid #ffffff !important;
 }
 
 .cmr-mrg-card .cmr-mrg-card-title,
