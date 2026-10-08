@@ -608,7 +608,7 @@ $is_audio_post = (strtoupper($media_type) === 'PODCAST') || preg_match('/\.(mp3|
 </div> <!-- Closes cmr-media-single-wrapper -->
 
 <!-- CTA Banner Section via Elementor Template -->
-<?php echo do_shortcode('[cmr_single_media_cta]'); ?>
+<?php echo do_shortcode('[cmr_global_cta_banner]'); ?>
 
 <!-- Related Media Section -->
 <div class="cmr-related-media-section">
