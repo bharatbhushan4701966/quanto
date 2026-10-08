@@ -51,7 +51,7 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
                 'number' => '.06',
                 'title'  => 'MSME',
                 'desc'   => 'Actionable intelligence on India’s small businesses.',
-                'link'   => home_url( '/msme-2/' ),
+                'link'   => home_url( '/msme/' ),
             ),
             array(
                 'number' => '.07',

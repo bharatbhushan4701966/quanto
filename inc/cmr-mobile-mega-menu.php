@@ -337,7 +337,7 @@ function cmr_inject_mobile_mega_menu() {
                         <div class="cmr-mobile-nav-link-title">Digital Supply Chain</div>
                         <div class="cmr-mobile-nav-link-desc">Intelligence for connected supply chains</div>
                     </a>
-                    <a href="<?php echo esc_url( home_url( '/msme-2/' ) ); ?>" class="cmr-mobile-nav-link">
+                    <a href="<?php echo esc_url( home_url( '/msme/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">MSME</div>
                         <div class="cmr-mobile-nav-link-desc">Empowering small & medium enterprise growth</div>
                     </a>

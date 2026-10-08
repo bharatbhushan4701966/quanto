@@ -133,6 +133,7 @@ require_once QUANTO_DIR_PATH_INC . 'cmr-latest-insights-it-telecom.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-industry-intelligence.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-marketing-services.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-consulting-advisory.php';
+require_once QUANTO_DIR_PATH_INC . 'cmr-fix-msme-slug.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-explore-sectors.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-explore-sectors-custom.php';
 require_once QUANTO_DIR_PATH_INC . 'cmr-stay-updated.php';
