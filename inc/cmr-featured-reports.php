@@ -69,18 +69,24 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                 color: #6b46c1;
                 font-size: 11px;
                 font-weight: 600;
-                padding: 4px 10px;
-                border-radius: 4px;
-                z-index: 10;
-                display: flex;
-                align-items: center;
-                gap: 5px;
+                letter-spacing: 0.8px;
                 text-transform: uppercase;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                height: 30px;
+                padding: 0 12px;
+                box-sizing: border-box;
+                border-radius: 0;
+                z-index: 10;
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                line-height: 1;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             }
 
-            .cmr-fr-badge i {
-                font-size: 10px;
+            .cmr-fr-badge i,
+            .cmr-fr-badge svg {
+                font-size: 11px;
+                line-height: 1;
             }
 
             /* Big Card (Left) */

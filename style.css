@@ -9386,23 +9386,44 @@ figure img,
     display: inline-block !important;
 }
 
-/* Universal Badge Height: 30px */
+/* Universal Badge Height & Styling: Matching CMR News */
 .cmr-nc-badge,
 .cmr-mc-trending-tag,
 .cmr-mc-trending-badge,
 .cmr-mu-slide-badge,
 .cmr-vp-slide-badge,
 .cmr-pr-card-badge,
+.cmr-fr-badge,
+.cmr-tn-badge,
 .cmr-lr-badge,
 .custom-new-badge,
 .slide-badge,
 .insights-tag {
     height: 30px !important;
+    padding: 0 12px !important;
     box-sizing: border-box !important;
     display: inline-flex !important;
     align-items: center !important;
     line-height: 1 !important;
     border-radius: 0 !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.8px !important;
+    text-transform: uppercase !important;
+    gap: 6px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.cmr-fr-badge i,
+.cmr-tn-badge i,
+.cmr-lr-badge i,
+.cmr-nc-badge i,
+.cmr-fr-badge svg,
+.cmr-tn-badge svg,
+.cmr-lr-badge svg,
+.cmr-nc-badge svg {
+    font-size: 11px !important;
+    line-height: 1 !important;
 }
 
 /* CMR Featured Reports & Trending Now Styling */
