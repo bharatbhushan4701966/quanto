@@ -189,7 +189,7 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                 font-size: 20px;
                 font-weight: 600; /* Bolder as requested */
                 color: #fff;
-                margin: 0 0 20px 0;
+                margin: 0;
                 line-height: 1.4;
                 letter-spacing: 0 !important; /* Fix squishing */
                 display: -webkit-box;
@@ -198,10 +198,7 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                 overflow: hidden;
             }
             .cmr-podcast-player {
-                display: flex;
-                align-items: center;
-                gap: 15px;
-                margin-top: auto;
+                display: none !important;
             }
             .cmr-podcast-player .play-icon {
                 width: 30px;
@@ -344,30 +341,6 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                                     </div>
                                     
                                     <h3 class="cmr-podcast-title"><?php echo esc_html(get_the_title($post_obj)); ?></h3>
-                                    
-                                    <div class="cmr-podcast-player">
-                                        <div class="play-icon">
-                                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                                        </div>
-                                        
-                                        <?php if ( $is_podcast ) : ?>
-                                            <div class="waveform"></div>
-                                        <?php else : ?>
-                                            <div class="progress-bar-wrap"><div class="progress-bar-inner"></div></div>
-                                        <?php endif; ?>
-                                        
-                                        <div class="time">01:55 / 10:00</div>
-                                        <?php if ( $is_podcast ) : ?>
-                                        <div class="controls">
-                                            <svg viewBox="0 0 24 24"><path d="M10 21A10 10 0 1 1 21 10M10 21V16M10 21H15" /><text x="12" y="14" font-size="6" stroke="none" fill="currentColor" text-anchor="middle">10</text></svg>
-                                            <svg viewBox="0 0 24 24"><path d="M14 21A10 10 0 1 0 3 10M14 21V16M14 21H9" /><text x="12" y="14" font-size="6" stroke="none" fill="currentColor" text-anchor="middle">10</text></svg>
-                                        </div>
-                                        <div class="volume">
-                                            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" stroke="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-                                            <div class="volume-bar"></div>
-                                        </div>
-                                        <?php endif; ?>
-                                    </div>
                                 </a>
                             </div>
                             <?php endforeach; ?>

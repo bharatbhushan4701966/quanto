@@ -11989,6 +11989,10 @@ div.woocommerce-info::before,
     padding-top: 100px !important;
 }
 
+.cmr-podcast-player {
+    display: none !important;
+}
+
 
 
 
