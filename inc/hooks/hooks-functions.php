@@ -2083,73 +2083,138 @@
 
                                 $relatedpost->the_post();
 
-                                echo '<div class="col-md-6 col-lg-4">';
+                                if ( $post_type === 'cmr_news' ) {
+                                    $related_id   = get_the_ID();
+                                    $bg_image     = get_the_post_thumbnail_url( $related_id, 'large' );
+                                    $logo_id      = get_post_meta( $related_id, '_cmr_news_source_logo_id', true );
+                                    $logo_url     = $logo_id ? wp_get_attachment_url( $logo_id ) : get_post_meta( $related_id, '_cmr_news_source_logo', true );
+                                    $reading_time = get_post_meta( $related_id, '_cmr_news_reading_time', true );
+                                    $publisher    = get_post_meta( $related_id, '_cmr_news_publisher_name', true );
+                                    if ( empty( $publisher ) ) {
+                                        $publisher = get_post_meta( $related_id, '_cmr_news_publisher', true );
+                                    }
+                                    $document_id  = get_post_meta( $related_id, '_cmr_news_document_id', true );
+                                    $ext_url      = get_post_meta( $related_id, '_cmr_news_external_link', true );
+                                    if ( $document_id ) {
+                                        $link   = wp_get_attachment_url( $document_id );
+                                        $target = '_blank';
+                                    } elseif ( $ext_url ) {
+                                        $link   = $ext_url;
+                                        $target = '_blank';
+                                    } else {
+                                        $link   = get_permalink( $related_id );
+                                        $target = '_self';
+                                    }
+                                    $custom_date = get_post_meta( $related_id, '_cmr_news_date', true );
+                                    $date        = ! empty( $custom_date ) ? $custom_date : get_the_date( 'M j, Y' );
+                                    $arrow_url   = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg';
+                                    $btn_text    = 'Read Coverage';
+                                    ?>
+                                    <div class="col-md-6 col-lg-4">
+                                        <!-- Single CMR News Card -->
+                                        <div class="cmr-card cmr-card-standard fade-anim" data-delay="0.45" data-direction="right">
+                                            <a href="<?php echo esc_url( $link ); ?>" <?php echo ( $target === '_blank' ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?> class="cmr-card-link-wrapper">
+                                                <div class="cmr-card-image-wrap">
+                                                    <?php if ( $bg_image ) : ?>
+                                                        <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
+                                                    <?php endif; ?>
+                                                    <?php if ( $logo_url ) : ?>
+                                                        <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo cmr-card-logo-desktop" alt="Source Logo">
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="cmr-card-content">
+                                                    <?php if ( $logo_url ) : ?>
+                                                        <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo cmr-card-logo-mobile" alt="Source Logo">
+                                                    <?php endif; ?>
+                                                    <div class="cmr-card-meta">
+                                                        <div class="cmr-meta-left">
+                                                            <?php if ( $publisher ) : ?>
+                                                                <span class="cmr-publisher"><?php echo esc_html( $publisher ); ?></span> <span class="cmr-separator">|</span> 
+                                                            <?php endif; ?>
+                                                            <span class="cmr-date">Published <?php echo esc_html( $date ); ?></span>
+                                                            <?php if ( $reading_time ) : ?>
+                                                                <span class="cmr-separator">|</span>
+                                                                <span class="cmr-read-time"><?php echo esc_html( $reading_time ); ?><?php echo is_numeric( $reading_time ) ? ' mins' : ''; ?></span>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    </div>
+                                                    <h3 class="cmr-card-title"><?php the_title(); ?></h3>
+                                                    <span class="cmr-read-coverage"><?php echo esc_html( $btn_text ); ?> <img src="<?php echo esc_url( $arrow_url ); ?>" class="cmr-arrow-icon" alt="Arrow"></span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <!-- End Single CMR News Card -->
+                                    </div>
+                                    <?php
+                                } else {
+                                    echo '<div class="col-md-6 col-lg-4">';
 
-                                    echo '<!-- Single Post -->';
+                                        echo '<!-- Single Post -->';
 
-                                    echo '<div class="quanto-blog-box fade-anim" data-delay="0.45" data-direction="right">';
+                                        echo '<div class="quanto-blog-box fade-anim" data-delay="0.45" data-direction="right">';
 
-                                        if( has_post_thumbnail(  ) ){
+                                            if( has_post_thumbnail(  ) ){
 
-                                            echo '<div class="quanto-blog-thumb">';
+                                                echo '<div class="quanto-blog-thumb">';
 
-                                                echo '<a href="'.esc_url( get_permalink() ).'" class="post-thumbnail">';
+                                                    echo '<a href="'.esc_url( get_permalink() ).'" class="post-thumbnail">';
 
-                                                    the_post_thumbnail( 'quanto-more-detail' );
+                                                        the_post_thumbnail( 'quanto-more-detail' );
 
-                                                echo '</a>';
+                                                    echo '</a>';
 
-                                            echo '</div>';
-
-                                        }
-
-
-
-                                        echo '<div class="quanto-blog-content">';
-
-
-
-                                            // Blog Post Meta
-
-                                            do_action( 'quanto_blog_post_meta' );
-
-
-
-                                            if( get_the_title() ){
-
-                                                echo '<!-- Post Title -->';
-
-                                                echo '<h5 class="line-clamp-2"><a href="'.esc_url( get_permalink() ).'">'.esc_html( wp_trim_words( get_the_title(), '12', '' ) ).'</a></h5>';
-
-                                                echo '<!-- End Post Title -->';
+                                                echo '</div>';
 
                                             }
 
 
 
-                                            // Custom More Details link for related articles
+                                            echo '<div class="quanto-blog-content">';
 
-                                            echo '<div class="related-article-more-details">';
 
-                                            echo '<a href="'.esc_url( get_permalink() ).'" class="custom-related-details-btn">';
 
-                                            echo 'More Details ';
+                                                // Blog Post Meta
 
-                                            echo '<svg class="arrow-up-right" viewBox="0 0 15 15" width="14" height="14" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline-block; vertical-align: middle; margin-left: 4px;"><path d="M2.04895 4.52205V3.54978C2.07104 3.12993 2.4025 2.79848 2.80025 2.79848L11.396 2.77638C11.8159 2.79848 12.1473 3.12993 12.1473 3.52768V12.1455C12.1473 12.5433 11.8159 12.8747 11.396 12.8968H10.4237C10.0039 12.8747 9.67244 12.5433 9.65035 12.1234L9.78293 6.90853L3.44106 13.2504C3.1317 13.5598 2.68976 13.5598 2.3804 13.2504L1.6733 12.5433C1.38603 12.256 1.36394 11.792 1.6733 11.4826L8.01516 5.14077L2.82234 5.29545C2.4025 5.27335 2.04895 4.96399 2.04895 4.52205Z" fill="currentColor"></path></svg>';
+                                                do_action( 'quanto_blog_post_meta' );
 
-                                            echo '</a>';
+
+
+                                                if( get_the_title() ){
+
+                                                    echo '<!-- Post Title -->';
+
+                                                    echo '<h5 class="line-clamp-2"><a href="'.esc_url( get_permalink() ).'">'.esc_html( wp_trim_words( get_the_title(), '12', '' ) ).'</a></h5>';
+
+                                                    echo '<!-- End Post Title -->';
+
+                                                }
+
+
+
+                                                // Custom More Details link for related articles
+
+                                                echo '<div class="related-article-more-details">';
+
+                                                echo '<a href="'.esc_url( get_permalink() ).'" class="custom-related-details-btn">';
+
+                                                echo 'More Details ';
+
+                                                echo '<svg class="arrow-up-right" viewBox="0 0 15 15" width="14" height="14" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline-block; vertical-align: middle; margin-left: 4px;"><path d="M2.04895 4.52205V3.54978C2.07104 3.12993 2.4025 2.79848 2.80025 2.79848L11.396 2.77638C11.8159 2.79848 12.1473 3.12993 12.1473 3.52768V12.1455C12.1473 12.5433 11.8159 12.8747 11.396 12.8968H10.4237C10.0039 12.8747 9.67244 12.5433 9.65035 12.1234L9.78293 6.90853L3.44106 13.2504C3.1317 13.5598 2.68976 13.5598 2.3804 13.2504L1.6733 12.5433C1.38603 12.256 1.36394 11.792 1.6733 11.4826L8.01516 5.14077L2.82234 5.29545C2.4025 5.27335 2.04895 4.96399 2.04895 4.52205Z" fill="currentColor"></path></svg>';
+
+                                                echo '</a>';
+
+                                                echo '</div>';
+
+                                                
 
                                             echo '</div>';
 
-                                            
-
                                         echo '</div>';
 
+                                        echo '<!-- End Single Post -->';
+
                                     echo '</div>';
-
-                                    echo '<!-- End Single Post -->';
-
-                                echo '</div>';
+                                }
 
                             }
 

@@ -5853,29 +5853,22 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     cursor: pointer !important;
 }
 
-/* 4. Image: Fills Square, focused on face & shoulders - NO ANIMATION */
+/* 4. Image: Fills Square, focused on face & shoulders - Smooth Scale on Hover */
 .quanto-team-box .team-thumb img,
 .quanto-team-box .team-thumb img:first-child,
 .quanto-team-box .team-thumb img:nth-child(2),
-.quanto-team-box:hover .team-thumb img,
-.quanto-team-box:hover .team-thumb img:first-child,
-.quanto-team-box:hover .team-thumb img:nth-child(2),
 #manager .quanto-team-box .team-thumb img,
-#manager .quanto-team-box:hover .team-thumb img,
 #practice .quanto-team-box .team-thumb img,
-#practice .quanto-team-box:hover .team-thumb img,
 #advisory .quanto-team-box .team-thumb img,
-#advisory .quanto-team-box:hover .team-thumb img,
-.advisory-board .quanto-team-box .team-thumb img,
-.advisory-board .quanto-team-box:hover .team-thumb img {
+.advisory-board .quanto-team-box .team-thumb img {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
     object-position: center 15% !important;
     display: block !important;
     border-radius: 0 !important;
-    transform: none !important;
-    transition: none !important;
+    transform: scale(1) !important;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
     animation: none !important;
     filter: none !important;
     opacity: 1 !important;
@@ -5886,13 +5879,21 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     bottom: auto !important;
 }
 
+.quanto-team-box:hover .team-thumb img,
+.quanto-team-box:hover .team-thumb img:first-child,
+.quanto-team-box:hover .team-thumb img:nth-child(2),
+#manager .quanto-team-box:hover .team-thumb img,
+#practice .quanto-team-box:hover .team-thumb img,
+#advisory .quanto-team-box:hover .team-thumb img,
+.advisory-board .quanto-team-box:hover .team-thumb img {
+    transform: scale(1.06) !important;
+}
+
 .quanto-team-box .team-thumb,
 .quanto-team-box:hover .team-thumb,
 .quanto-team-box a.team-thumb-link,
 .quanto-team-box:hover a.team-thumb-link {
-    transform: none !important;
-    transition: none !important;
-    animation: none !important;
+    overflow: hidden !important;
 }
 
 /* 5. Remove arrow icon and dark gradient overlay */
@@ -5936,6 +5937,18 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     line-height: 1.2 !important;
     letter-spacing: -0.4px !important;
     text-decoration: none !important;
+    transition: color 0.3s ease !important;
+}
+
+.quanto-team-box:hover .team-member-name,
+.quanto-team-box:hover .team-member-name a,
+#manager .quanto-team-box:hover .team-member-name,
+#manager .quanto-team-box:hover .team-member-name a,
+#practice .quanto-team-box:hover .team-member-name,
+#practice .quanto-team-box:hover .team-member-name a,
+#advisory .quanto-team-box:hover .team-member-name,
+#advisory .quanto-team-box:hover .team-member-name a {
+    color: #4820B0 !important;
 }
 
 .quanto-team-box .team-member-position,
@@ -6095,6 +6108,12 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     object-position: center top !important;
     display: block !important;
     border-radius: 0 !important;
+    transform: scale(1) !important;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+#practice .quanto-team-box:hover .team-thumb img {
+    transform: scale(1.06) !important;
 }
 
 #practice .quanto-team-box .team-thumb a.team-thumb-link {
@@ -6136,6 +6155,12 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     line-height: 1.2 !important;
     letter-spacing: -0.4px !important;
     text-decoration: none !important;
+    transition: color 0.3s ease !important;
+}
+
+#practice .quanto-team-box:hover .team-member-name,
+#practice .quanto-team-box:hover .team-member-name a {
+    color: #4820B0 !important;
 }
 
 #practice .quanto-team-box .team-member-position {
