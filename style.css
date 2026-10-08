@@ -11370,6 +11370,32 @@ button[type="submit"] svg.cmr-arrow-icon,
     vertical-align: middle !important;
 }
 
+/* CMR News & Media Card Title Hover Color (Purple #4820B0) */
+.cmr-card:hover .cmr-card-title,
+.cmr-card .cmr-card-link-wrapper:hover .cmr-card-title,
+.cmr-card-featured:hover .cmr-card-title,
+.cmr-card-standard:hover .cmr-card-title,
+.cmr-media-left:hover .cmr-card-title,
+.cmr-media-horizontal-card:hover .cmr-card-title,
+.cmr-media-coverage-wrapper .cmr-mc-card:hover .cmr-mc-title,
+.cmr-media-coverage-wrapper .cmr-mc-featured:hover .cmr-mc-title,
+.insights-featured-card:hover .insights-title,
+.insights-stacked-card:hover .insights-title,
+.cmr-news-grid .cmr-card:hover .cmr-card-title,
+.cmr-media-grid .cmr-card:hover .cmr-card-title {
+    color: #4820B0 !important;
+}
+
+.cmr-card .cmr-card-title,
+.cmr-card-featured .cmr-card-title,
+.cmr-card-standard .cmr-card-title,
+.cmr-media-left .cmr-card-title,
+.cmr-media-horizontal-card .cmr-card-title,
+.cmr-mc-title,
+.insights-title {
+    transition: color 0.3s ease !important;
+}
+
 /* ============================================================= */
 /* MOBILE SLIDER / CAROUSEL EDGE SPACING (MAX 16PX FROM SCREEN)  */
 /* ============================================================= */

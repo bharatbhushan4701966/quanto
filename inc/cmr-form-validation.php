@@ -197,23 +197,6 @@ add_action( 'wp_footer', function() {
             }
             form.setAttribute('data-cmr-success-shown', 'true');
 
-            // Find the entire right column / modal form container
-            var rightSide = null;
-            var parentGrid = form.closest('.e-grid, .elementor-row, .e-flexbox-base, .e-parent, .elementor-popup-modal .e-con-boxed, .elementor-popup-modal .dialog-widget-content');
-            if (parentGrid) {
-                var columnChild = form.closest('.e-child, .elementor-column, .elementor-element-49c9d22, .elementor-element-5609af6, .cmr-modal-form-wrapper');
-                if (columnChild && columnChild !== parentGrid) {
-                    rightSide = columnChild;
-                }
-            }
-
-            if (!rightSide) {
-                rightSide = form.closest(
-                    '.elementor-element-5609af6, .elementor-element-49c9d22, .elementor-element-a26a79a, .elementor-element-2123f86, ' +
-                    '.elementor-column:last-child, .e-con:last-child, .cmr-modal-form-wrapper, #cmr-review-modal-box, .custom-report-form, .dialog-widget-content'
-                ) || form.parentElement;
-            }
-
             var cf7Msg = customMsg;
             if (!cf7Msg) {
                 var responseOutput = form.querySelector('.wpcf7-response-output');
@@ -226,40 +209,25 @@ add_action( 'wp_footer', function() {
                 cf7Msg = 'Your request has been successfully submitted.<br>Our team will review your details and get back to you shortly.';
             }
 
-            // Hide the form itself completely
+            // Target the form container (e.g. .custom-subscribe-form or right side container)
+            var container = form.closest('.custom-subscribe-form, .custom-report-form, .custom-consultation-form, .cmr-modal-form-wrapper, .wpcf7') || form.parentElement;
+
+            // Hide the form itself
             form.style.setProperty('display', 'none', 'important');
 
-            // Hide all siblings/widgets on the right side except close button
-            if (rightSide) {
-                var allChildren = rightSide.querySelectorAll(
-                    '.elementor-widget, .elementor-element, form, .wpcf7, h1, h2, h3, h4, p, label, input, textarea, button, .sub-desc, .privacy-check, .wpcf7-response-output'
-                );
-                allChildren.forEach(function(el) {
-                    if (!el.classList.contains('dialog-close-button') && !el.closest('.cmr-form-success-wrapper') && !el.classList.contains('cmr-form-success-wrapper')) {
+            // Hide all siblings inside the form container
+            if (container && container !== form) {
+                var siblings = container.querySelectorAll('h1, h2, h3, h4, p, label, .subscription-heading, .subscription-options, .sub-desc, .privacy-check, .wpcf7-response-output');
+                siblings.forEach(function(el) {
+                    if (!el.closest('.cmr-form-success-wrapper')) {
                         el.style.setProperty('display', 'none', 'important');
                     }
                 });
-
-                // Hide direct children widgets
-                for (var i = 0; i < rightSide.children.length; i++) {
-                    var ch = rightSide.children[i];
-                    if (!ch.classList.contains('cmr-form-success-wrapper') && !ch.classList.contains('dialog-close-button')) {
-                        ch.style.setProperty('display', 'none', 'important');
-                    }
-                }
-
-                // Center success content vertically and horizontally inside right side
-                rightSide.style.setProperty('display', 'flex', 'important');
-                rightSide.style.setProperty('flex-direction', 'column', 'important');
-                rightSide.style.setProperty('justify-content', 'center', 'important');
-                rightSide.style.setProperty('align-items', 'center', 'important');
-                rightSide.style.setProperty('text-align', 'center', 'important');
-                rightSide.style.setProperty('min-height', '320px', 'important');
-                rightSide.style.setProperty('height', '100%', 'important');
             }
 
             // Remove any previous success wrapper
-            var prevSuccess = rightSide.querySelector('.cmr-form-success-wrapper');
+            var targetParent = container || form.parentElement;
+            var prevSuccess = targetParent.querySelector('.cmr-form-success-wrapper');
             if (prevSuccess) prevSuccess.remove();
 
             // Create clean centered Thank You screen
@@ -267,14 +235,14 @@ add_action( 'wp_footer', function() {
             successWrapper.className = 'cmr-form-success-wrapper';
             successWrapper.innerHTML = 
                 '<div class="cmr-form-success-icon">' +
-                    '<svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">' +
+                    '<svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">' +
                         '<polyline points="20 6 9 17 4 12"></polyline>' +
                     '</svg>' +
                 '</div>' +
                 '<h3>Thank You!</h3>' +
                 '<p>' + cf7Msg + '</p>';
 
-            rightSide.appendChild(successWrapper);
+            targetParent.appendChild(successWrapper);
 
             // Auto-close modal after 2.5 seconds (2500ms)
             setTimeout(function() {

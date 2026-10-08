@@ -192,6 +192,14 @@
     margin: 0 0 15px 0;
     font-weight: 600;
     letter-spacing: 0.2px;
+    transition: color 0.3s ease;
+}
+
+.cmr-card-featured:hover .cmr-card-title,
+.cmr-card-featured .cmr-card-link-wrapper:hover .cmr-card-title,
+.cmr-card:hover .cmr-card-title,
+.cmr-card .cmr-card-link-wrapper:hover .cmr-card-title {
+    color: #4820B0 !important;
 }
 
 .cmr-card-featured .cmr-read-coverage {
@@ -277,6 +285,12 @@
     line-height: 1.4;
     letter-spacing: 0.2px;
     width: 100%;
+    transition: color 0.3s ease;
+}
+
+.cmr-card-standard:hover .cmr-card-title,
+.cmr-card-standard .cmr-card-link-wrapper:hover .cmr-card-title {
+    color: #4820B0 !important;
 }
 
 .cmr-card-standard .cmr-read-coverage {
