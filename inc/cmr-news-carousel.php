@@ -547,12 +547,20 @@ function cmr_render_news_carousel_shortcode( $atts ) {
                 }
                 document.querySelectorAll('.cmr-nc-carousel:not(.swiper-initialized)').forEach(function(carouselEl) {
                     var slideCount = carouselEl.querySelectorAll('.swiper-slide').length;
-                    new Swiper(carouselEl, {
+                    var swiperInstance = new Swiper(carouselEl, {
                         slidesPerView: 1.18,
                         spaceBetween: 24,
                         centeredSlides: true,
                         loop: slideCount > 1,
                         speed: 400,
+                        mousewheel: {
+                            enabled: true,
+                            forceToAxis: true,
+                            releaseOnEdges: true,
+                            sensitivity: 1,
+                            thresholdDelta: 10,
+                            thresholdTime: 350,
+                        },
                         pagination: {
                             el: carouselEl.querySelector('.swiper-pagination') || '.swiper-pagination',
                             clickable: true,
@@ -580,6 +588,51 @@ function cmr_render_news_carousel_shortcode( $atts ) {
                             }
                         }
                     });
+
+                    // 2-finger touch gesture support on touchscreens
+                    (function(swiper, el) {
+                        var isTwoFinger = false;
+                        var startX = 0;
+                        var startY = 0;
+                        var triggered = false;
+
+                        el.addEventListener('touchstart', function(e) {
+                            if (e.touches && e.touches.length === 2) {
+                                isTwoFinger = true;
+                                startX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                                startY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+                                triggered = false;
+                            } else {
+                                isTwoFinger = false;
+                            }
+                        }, { passive: true });
+
+                        el.addEventListener('touchmove', function(e) {
+                            if (!isTwoFinger || !e.touches || e.touches.length !== 2 || triggered) return;
+
+                            var currentX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                            var currentY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+                            var diffX = currentX - startX;
+                            var diffY = currentY - startY;
+
+                            // Horizontal 2-finger swipe detection
+                            if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY)) {
+                                triggered = true;
+                                if (diffX < 0) {
+                                    swiper.slideNext();
+                                } else {
+                                    swiper.slidePrev();
+                                }
+                            }
+                        }, { passive: true });
+
+                        el.addEventListener('touchend', function(e) {
+                            if (!e.touches || e.touches.length < 2) {
+                                isTwoFinger = false;
+                                triggered = false;
+                            }
+                        }, { passive: true });
+                    })(swiperInstance, carouselEl);
                 });
             }
 
@@ -589,6 +642,12 @@ function cmr_render_news_carousel_shortcode( $atts ) {
                 initCmrNewsCarousel();
             }
             window.addEventListener('load', initCmrNewsCarousel);
+
+            if (window.jQuery) {
+                jQuery(window).on('elementor/frontend/init', function() {
+                    initCmrNewsCarousel();
+                });
+            }
         })();
         </script>
         <?php else : ?>
