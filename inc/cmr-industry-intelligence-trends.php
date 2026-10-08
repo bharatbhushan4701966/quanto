@@ -120,11 +120,13 @@ if ( ! function_exists( 'cmr_industry_intelligence_trends_shortcode' ) ) {
                 height: 100%;
                 object-fit: cover;
                 display: block;
-                transition: transform 0.3s ease;
+                transform: scale(1);
+                transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
             }
 
+            .cmr-intel-trends-card:hover .cmr-intel-trends-img img,
             .cmr-intel-trends-img:hover img {
-                transform: scale(1.05);
+                transform: scale(1.06) !important;
             }
 
             .cmr-intel-trends-meta {
@@ -165,11 +167,15 @@ if ( ! function_exists( 'cmr_industry_intelligence_trends_shortcode' ) ) {
             .cmr-intel-trends-title a {
                 color: #111;
                 text-decoration: none;
-                transition: color 0.3s ease;
+                transition: color 0.3s ease !important;
             }
 
+            .cmr-intel-trends-card:hover .cmr-intel-trends-title,
+            .cmr-intel-trends-card:hover .cmr-intel-trends-title a,
+            .cmr-intel-trends-title:hover,
+            .cmr-intel-trends-title:hover a,
             .cmr-intel-trends-title a:hover {
-                color: #555;
+                color: #4820B0 !important;
             }
 
             .cmr-intel-trends-more {

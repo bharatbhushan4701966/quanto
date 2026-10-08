@@ -109,10 +109,12 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 object-position: center left;
                 display: block;
                 border-radius: 0 !important;
-                transition: transform 0.3s ease;
+                transform: scale(1);
+                transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
             }
+            .cmr-intel-list-item:hover .cmr-intel-list-img img,
             .cmr-intel-list-img:hover img {
-                transform: scale(1.05);
+                transform: scale(1.06) !important;
             }
             .cmr-intel-list-content {
                 flex: 1;
@@ -150,10 +152,14 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
             .cmr-intel-list-title a {
                 color: #111;
                 text-decoration: none;
-                transition: color 0.3s ease;
+                transition: color 0.3s ease !important;
             }
+            .cmr-intel-list-item:hover .cmr-intel-list-title,
+            .cmr-intel-list-item:hover .cmr-intel-list-title a,
+            .cmr-intel-list-title:hover,
+            .cmr-intel-list-title:hover a,
             .cmr-intel-list-title a:hover {
-                color: #555;
+                color: #4820B0 !important;
             }
             .cmr-intel-list-excerpt {
                 font-size: 15px;

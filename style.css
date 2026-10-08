@@ -11542,7 +11542,19 @@ button[type="submit"] svg.cmr-arrow-icon,
 .cmr-wwt-card-title a:hover,
 .stay-updated-card:hover .stay-updated-card-title,
 .stay-updated-card:hover .stay-updated-card-title a,
+.stay-updated-card:hover h3,
+.stay-updated-card:hover h3 a,
+.stay-updated-card-title:hover,
 .stay-updated-card-title a:hover,
+.cmr-intel-trends-card:hover .cmr-intel-trends-title,
+.cmr-intel-trends-card:hover .cmr-intel-trends-title a,
+.cmr-intel-trends-card:hover h3,
+.cmr-intel-trends-card:hover h3 a,
+.cmr-intel-trends-title:hover,
+.cmr-intel-trends-title:hover a,
+.cmr-intel-trends-title a:hover,
+.cmr-fi-slide:hover .cmr-fi-slide-title,
+.cmr-fi-slide-title:hover,
 .cmr-trending-card:hover .cmr-trending-card-title,
 .cmr-browse-card:hover .cmr-browse-card-title,
 .cmr-ls-grid a:hover .cmr-ls-title,
@@ -11551,13 +11563,36 @@ button[type="submit"] svg.cmr-arrow-icon,
 .cmr-team-card-name:hover,
 .cmr-team-member:hover .cmr-team-name,
 .cmr-team-name:hover,
+.intel-card:hover .intel-title,
+.intel-card:hover .intel-title a,
+.intel-title:hover,
+.intel-title:hover a,
+.intel-title a:hover,
+.cmr-intel-list-item:hover .cmr-intel-list-title,
+.cmr-intel-list-item:hover .cmr-intel-list-title a,
+.cmr-intel-list-title:hover,
+.cmr-intel-list-title:hover a,
+.cmr-intel-list-title a:hover,
 .quanto-team-box:hover .service-title,
 .quanto-team-box:hover .team-name,
 .elementor-widget-quanto_team:hover .service-title,
 .elementor-widget-quanto_team:hover .team-name,
 .elementor-widget-posts .elementor-post:hover .elementor-post__title,
 .elementor-widget-posts .elementor-post:hover .elementor-post__title a,
-.elementor-post__title a:hover {
+.elementor-post__title a:hover,
+.elementor-element-275e662 .e-con:hover h3,
+.elementor-element-c2c8f73 .e-con:hover h3,
+.elementor-element-275e662 .elementor-element:hover h3,
+.elementor-element-c2c8f73 .elementor-element:hover h3,
+[data-id="275e662"] .e-con:hover h3,
+[data-id="c2c8f73"] .e-con:hover h3,
+[data-id="b82bad4"]:hover h3,
+[data-id="ec16651"]:hover h3,
+[data-id="ed5537e"]:hover h3,
+[data-id="85160bc"]:hover h3,
+[data-id="e5a291e"]:hover h3,
+[data-id="255acd5"]:hover h3,
+[data-id="bb5a035"]:hover h3 {
     color: #4820B0 !important;
 }
 
@@ -11591,6 +11626,13 @@ h3.cmr-mc-title,
 .cmr-ls-title,
 .cmr-team-card-name,
 .cmr-team-name,
+.intel-title,
+.intel-title a,
+.cmr-intel-list-title,
+.cmr-intel-list-title a,
+.cmr-intel-trends-title,
+.cmr-intel-trends-title a,
+.cmr-fi-slide-title,
 .quanto-team-box .service-title,
 .quanto-team-box .team-name,
 .elementor-post__title,
@@ -11598,16 +11640,24 @@ h3.cmr-mc-title,
     transition: color 0.3s ease !important;
 }
 
-/* What We Think & Team Card Image Hover Scale */
+/* What We Think, Team, Industry Intelligence & Trends Card Image Hover Scale */
 .cmr-wwt-card-img,
 .cmr-team-card-image,
-.cmr-team-image-wrap {
+.cmr-team-image-wrap,
+.intel-card-img,
+.cmr-intel-list-img,
+.cmr-intel-trends-img,
+.stay-updated-image {
     overflow: hidden !important;
 }
 
 .cmr-wwt-card-img img,
 .cmr-team-card-image img,
-.cmr-team-image-wrap img {
+.cmr-team-image-wrap img,
+.intel-card-img img,
+.cmr-intel-list-img img,
+.cmr-intel-trends-img img,
+.stay-updated-image img {
     transform: scale(1) !important;
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
@@ -11615,7 +11665,15 @@ h3.cmr-mc-title,
 .cmr-wwt-card:hover .cmr-wwt-card-img img,
 .cmr-wwt-card-img:hover img,
 .cmr-team-card:hover .cmr-team-card-image img,
-.cmr-team-member:hover .cmr-team-image-wrap img {
+.cmr-team-member:hover .cmr-team-image-wrap img,
+.intel-card:hover .intel-card-img img,
+.intel-card-img:hover img,
+.cmr-intel-list-item:hover .cmr-intel-list-img img,
+.cmr-intel-list-img:hover img,
+.cmr-intel-trends-card:hover .cmr-intel-trends-img img,
+.cmr-intel-trends-img:hover img,
+.stay-updated-card:hover .stay-updated-image img,
+.stay-updated-image:hover img {
     transform: scale(1.06) !important;
 }
 

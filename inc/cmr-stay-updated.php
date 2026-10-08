@@ -173,11 +173,24 @@ if ( ! function_exists( 'cmr_stay_updated_shortcode' ) ) {
                 margin: 0 0 10px 0 !important;
                 width: 100% !important;
                 box-sizing: border-box !important;
+                transition: color 0.3s ease !important;
             }
 
             .cmr-stay-updated-section .stay-updated-card-title a {
                 color: #0f172a !important;
                 text-decoration: none !important;
+                transition: color 0.3s ease !important;
+            }
+
+            .cmr-stay-updated-section .stay-updated-card:hover .stay-updated-card-title,
+            .cmr-stay-updated-section .stay-updated-card:hover .stay-updated-card-title a,
+            .cmr-stay-updated-section .stay-updated-card-title:hover,
+            .cmr-stay-updated-section .stay-updated-card-title a:hover {
+                color: #4820B0 !important;
+            }
+
+            .cmr-stay-updated-section .stay-updated-card:hover .stay-updated-image img {
+                transform: scale(1.06) !important;
             }
 
             .cmr-stay-updated-section .stay-updated-excerpt {
