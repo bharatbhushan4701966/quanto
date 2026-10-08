@@ -9424,8 +9424,7 @@ figure img,
 .cmr-tn-badge,
 .cmr-lr-badge,
 .custom-new-badge,
-.slide-badge,
-.insights-tag {
+.slide-badge {
     height: 30px !important;
     padding: 0 12px !important;
     box-sizing: border-box !important;
@@ -9439,6 +9438,18 @@ figure img,
     text-transform: uppercase !important;
     gap: 6px !important;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* CMR Latest Insights Category Tag - reset badge styling, remove box shadow and border */
+.insights-tag,
+.insights-featured-content .insights-tag,
+.insights-stacked-content .insights-tag {
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    height: auto !important;
+    padding: 0 !important;
 }
 
 .cmr-fr-badge i,

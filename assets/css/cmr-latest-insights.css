@@ -142,11 +142,25 @@
     padding: 40px;
     color: #fff;
 }
+.insights-tag {
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    height: auto !important;
+    padding: 0 !important;
+}
 .insights-featured-content .insights-tag {
     display: inline-block;
     font-size: 13px;
     color: #ccc;
     margin-bottom: 12px;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    height: auto !important;
+    padding: 0 !important;
 }
 .insights-featured-content .insights-title {
     font-size: 28px;
@@ -227,6 +241,12 @@
     font-size: 13px;
     color: #888;
     margin-bottom: 8px;
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    height: auto !important;
+    padding: 0 !important;
 }
 .insights-stacked-content .insights-title {
     font-size: 18px;
