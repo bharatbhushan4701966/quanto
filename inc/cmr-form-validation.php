@@ -240,8 +240,7 @@ add_action( 'wp_footer', function() {
                     '</svg>' +
                 '</div>' +
                 '<h3>Thank You!</h3>' +
-                '<p>' + cf7Msg + '</p>' +
-                '<button type="button" class="cmr-form-success-close-btn" onclick="cmrCloseModalAndReset()">Done</button>';
+                '<p>' + cf7Msg + '</p>';
 
             rightSide.appendChild(successWrapper);
 
