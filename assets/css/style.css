@@ -10460,31 +10460,6 @@ ul.key-parts-list li {
   display: inline-block !important;
 }
 
-/* Detail Press Release / CMR News - Figma Standard 884px Centered Container on All Laptop & Desktop Screens */
-@media (min-width: 992px) {
-  .single-cmr_news .blog-detail-page .container.custom-container,
-  .category-press-releases .blog-detail-page .container.custom-container,
-  .category-media-releases .blog-detail-page .container.custom-container {
-    max-width: 884px !important;
-    width: 100% !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  .single-cmr_news .blog-detail-page .row.justify-content-center.row-padding-bottom > div,
-  .single-cmr_news .blog-detail-page .row.justify-content-center.row-padding-bottom > .col-xl-9,
-  .single-cmr_news .blog-detail-page .row.justify-content-center.row-padding-bottom > .col-xxl-9,
-  .single-cmr_news .blog-detail-page .row.justify-content-center.row-padding-bottom > .col-12,
-  .single-cmr_news .blog-detail-page .social-links-scroll > div,
-  .single-cmr_news .blog-detail-page .social-links-scroll .col-12,
-  .single-cmr_news .blog-detail-page .social-links-scroll .col-xl-10 {
-    flex: 0 0 100% !important;
-    max-width: 100% !important;
-    width: 100% !important;
-  }
-}
 
 .single-cmr_news .blog-detail-page .blog-item .img-box,
 .single-cmr_news .blog-detail-page .blog-item .img-box img,

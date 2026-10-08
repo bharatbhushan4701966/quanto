@@ -151,35 +151,18 @@
 
 
                 echo '<div class="row justify-content-center row-padding-bottom">';
-
-                    if ( ( function_exists( 'quanto_is_press_release' ) && quanto_is_press_release() ) || get_post_type() === 'cmr_news' ) {
-
-                        $column_class = 'col-12';
-
-                    } else if ( class_exists('ReduxFramework') ) {
-
+                    if ( class_exists('ReduxFramework') ) {
                         $column_class = quanto_opt('quanto_blog_details_title_column');
-
                         if ( empty($column_class) ) {
-
                             $column_class = 'col-xl-9 col-xxl-9';
-
                         }
-
                     } else {
-
                         if ( is_active_sidebar('quanto-blog-sidebar') ) {
-
                             $column_class = 'col-xl-12 col-xxl-12';
-
                         } else {
-
                             $column_class = 'col-xl-9 col-xxl-9';
-
                         }
-
                     }
-
                     echo '<div class="' . esc_attr($column_class) . '">';
 
 
@@ -385,33 +368,10 @@
 
 
                     echo '<div class="row justify-content-center social-links-scroll position-relative">';
-
-
-
                         if( $quanto_post_details_share_options ) {
-
-
-
-                            if ( ( function_exists( 'quanto_is_press_release' ) && quanto_is_press_release() ) || get_post_type() === 'cmr_news' ) {
-
-                                echo '<div class="col-12">';
-
-                            } else {
-
-                                echo '<div class="col-xl-9 col-xxl-8">';
-
-                            }
-
-
-
+                            echo '<div class="col-xl-9 col-xxl-8">';
                         } else {
-
-
-
                             echo '<div class="col-xl-12 col-xxl-12">';
-
-
-
                         }
 
 
