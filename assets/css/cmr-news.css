@@ -1356,3 +1356,72 @@ h3.cmr-mc-title {
         height: 15px !important;
     }
 }
+
+/* Detail Press Release / CMR News - Container & Column Size for Laptops & Small Screens */
+.single-cmr_news .blog-detail-page .container.custom-container,
+.single-cmr_news .quanto-blog-section .container.custom-container,
+.single-cmr_news .blog-detail-page ~ .quanto-blog-section .container.custom-container,
+.category-press-releases .blog-detail-page .container.custom-container,
+.category-media-releases .blog-detail-page .container.custom-container {
+    max-width: 1440px !important;
+    width: 100% !important;
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .blog-detail-page .container.custom-container,
+    .single-cmr_news .blog-detail-page .container.custom-container,
+    .single-cmr_news .quanto-blog-section .container.custom-container,
+    .single-cmr_news .blog-detail-page ~ .quanto-blog-section .container.custom-container,
+    .category-press-releases .blog-detail-page .container.custom-container,
+    .category-media-releases .blog-detail-page .container.custom-container {
+        max-width: 95% !important;
+        width: 95% !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1440px) {
+    .blog-detail-page .container.custom-container,
+    .single-cmr_news .blog-detail-page .container.custom-container,
+    .single-cmr_news .quanto-blog-section .container.custom-container,
+    .single-cmr_news .blog-detail-page ~ .quanto-blog-section .container.custom-container,
+    .category-press-releases .blog-detail-page .container.custom-container,
+    .category-media-releases .blog-detail-page .container.custom-container {
+        max-width: 94% !important;
+        width: 94% !important;
+        padding-left: 25px !important;
+        padding-right: 25px !important;
+    }
+}
+
+@media (min-width: 1441px) and (max-width: 1600px) {
+    .single-cmr_news .blog-detail-page .container.custom-container,
+    .single-cmr_news .quanto-blog-section .container.custom-container,
+    .single-cmr_news .blog-detail-page ~ .quanto-blog-section .container.custom-container,
+    .category-press-releases .blog-detail-page .container.custom-container,
+    .category-media-releases .blog-detail-page .container.custom-container {
+        max-width: 92% !important;
+        width: 92% !important;
+    }
+}
+
+@media (min-width: 1601px) {
+    .single-cmr_news .blog-detail-page .container.custom-container,
+    .single-cmr_news .quanto-blog-section .container.custom-container,
+    .single-cmr_news .blog-detail-page ~ .quanto-blog-section .container.custom-container,
+    .category-press-releases .blog-detail-page .container.custom-container,
+    .category-media-releases .blog-detail-page .container.custom-container {
+        max-width: 1480px !important;
+    }
+}
+
+/* Ensure title and breadcrumbs row on press release detail spans full container */
+.single-cmr_news .blog-detail-page .row.justify-content-center.row-padding-bottom > div,
+.single-cmr_news .blog-detail-page .row.justify-content-center.row-padding-bottom > .col-xl-9,
+.single-cmr_news .blog-detail-page .row.justify-content-center.row-padding-bottom > .col-xxl-9 {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+}
+

@@ -76,7 +76,15 @@
 
                 echo '<div class="row justify-content-center row-padding-bottom">';
 
-                    if ( class_exists('ReduxFramework') ) {
+                    $is_press_release_item = ( function_exists( 'quanto_is_press_release' ) && quanto_is_press_release() ) || get_post_type() === 'cmr_news';
+
+                    if ( $is_press_release_item ) {
+
+                        $column_class = 'col-12 col-xl-12 col-xxl-12';
+
+                        echo '<div class="' . esc_attr($column_class) . '">';
+
+                    } elseif ( class_exists('ReduxFramework') ) {
 
                         $column_class = quanto_opt('quanto_blog_details_title_column');
 
@@ -126,7 +134,7 @@
 
                         }
 
-                        if ( function_exists( 'quanto_is_press_release' ) && quanto_is_press_release() ) {
+                        if ( ( function_exists( 'quanto_is_press_release' ) && quanto_is_press_release() ) || get_post_type() === 'cmr_news' ) {
 
                             if ( has_excerpt() ) {
 
@@ -206,7 +214,7 @@
 
                         if( $quanto_post_details_share_options ) {
 
-                            if ( function_exists( 'quanto_is_press_release' ) && quanto_is_press_release() ) {
+                            if ( ( function_exists( 'quanto_is_press_release' ) && quanto_is_press_release() ) || get_post_type() === 'cmr_news' ) {
                                 echo '<div class="col-12 col-xl-10 col-xxl-10">';
                             } else {
                                 echo '<div class="col-xl-9 col-xxl-8">';
@@ -376,7 +384,7 @@
 
     echo '</div>';
 
-    if ( function_exists( 'quanto_is_press_release' ) && quanto_is_press_release() ) {
+    if ( ( function_exists( 'quanto_is_press_release' ) && quanto_is_press_release() ) || get_post_type() === 'cmr_news' ) {
 
         ?>
 
