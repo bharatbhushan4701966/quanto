@@ -496,6 +496,15 @@ add_action( 'wp_footer', function() {
                     var txt = (btn.textContent || '').trim().toLowerCase();
                     if (txt.includes('connect with us') || txt.includes('talk to analyst') || txt.includes('talk to our analyst') || txt.includes('connect to analyst')) {
                         attachCmrSvgArrow(btn);
+                        
+                        // If inside purple / dark banner or has outline wrapper, enforce transparent background
+                        var purpleParent = btn.closest('[style*="4820B0"], [style*="4820b0"], [style*="bid-decision"], [style*="background-color: rgb(72, 32, 176)"], .elementor-element-88332ab, [data-id="88332ab"], .elementor-element-e50df8e, [data-id="e50df8e"]');
+                        if (purpleParent || btn.closest('.elementor-element-e50df8e, [data-id="e50df8e"]') || btn.classList.contains('btn-outline')) {
+                            btn.style.setProperty('background-color', 'transparent', 'important');
+                            btn.style.setProperty('background', 'transparent', 'important');
+                            btn.style.setProperty('color', '#ffffff', 'important');
+                            btn.style.setProperty('box-shadow', 'none', 'important');
+                        }
                     }
                 });
             }

@@ -4645,6 +4645,56 @@ add_action( 'wp_head', function() {
             vertical-align: middle !important;
         }
 
+        /* Purple / Dark Banner CTA Button - Transparent background with White Text & Border (NO Black) */
+        .e-con[style*="4820B0"] .elementor-button,
+        .e-con[style*="4820b0"] .elementor-button,
+        .e-con[style*="bid-decision"] .elementor-button,
+        .e-con[style*="background-color: rgb(72, 32, 176)"] .elementor-button,
+        .elementor-element[style*="4820B0"] .elementor-button,
+        .elementor-element[style*="4820b0"] .elementor-button,
+        .elementor-element[style*="bid-decision"] .elementor-button,
+        .elementor-element[style*="background-color: rgb(72, 32, 176)"] .elementor-button,
+        .elementor-element-88332ab .elementor-button,
+        [data-id="88332ab"] .elementor-button,
+        .elementor-element-e50df8e .elementor-button,
+        [data-id="e50df8e"] .elementor-button,
+        .elementor-element-e50df8e,
+        [data-id="e50df8e"],
+        .btn-outline,
+        a.btn-outline,
+        .elementor-widget-button[style*="border:solid"] .elementor-button,
+        .elementor-widget-button[style*="border-color:#FFFFFF"] .elementor-button,
+        .elementor-widget-button[style*="border-color: #FFFFFF"] .elementor-button,
+        .elementor-widget-button[style*="border-color:#fff"] .elementor-button,
+        .elementor-widget-button[style*="border-color: #fff"] .elementor-button,
+        .elementor-element-e50df8e a.elementor-button,
+        .elementor-element-e50df8e button.elementor-button {
+            background-color: transparent !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            color: #FFFFFF !important;
+            border-color: #FFFFFF !important;
+        }
+
+        .e-con[style*="4820B0"] .elementor-button *,
+        .e-con[style*="4820b0"] .elementor-button *,
+        .e-con[style*="bid-decision"] .elementor-button *,
+        .e-con[style*="background-color: rgb(72, 32, 176)"] .elementor-button *,
+        .elementor-element[style*="4820B0"] .elementor-button *,
+        .elementor-element[style*="4820b0"] .elementor-button *,
+        .elementor-element[style*="bid-decision"] .elementor-button *,
+        .elementor-element-88332ab .elementor-button *,
+        [data-id="88332ab"] .elementor-button *,
+        .elementor-element-e50df8e .elementor-button *,
+        [data-id="e50df8e"] .elementor-button *,
+        .elementor-element-e50df8e *,
+        [data-id="e50df8e"] *,
+        .btn-outline *,
+        a.btn-outline * {
+            color: #FFFFFF !important;
+            fill: #FFFFFF !important;
+        }
+
         /* CMR Video / Live Cards Image & Play Icon Hover Scale */
         .elementor-widget-video .elementor-custom-embed-image-overlay,
         .elementor-element-9b2ddd6 .elementor-custom-embed-image-overlay,
