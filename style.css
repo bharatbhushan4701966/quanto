@@ -12114,3 +12114,21 @@ div.woocommerce-info::before,
     display: none !important;
 }
 
+.cmr-intro-text-section,
+.cmr-intro-sc-section,
+.cmr-intro-ct-section,
+.cmr-intro-semi-section,
+.cmr-intro-ai-section,
+.cmr-intro-msme-section,
+.cmr-intro-enterprise-tech-section,
+.cmr-intro-tech-section,
+.cmr-intro-text-section p,
+.cmr-intro-sc-section p,
+.cmr-intro-ct-section p,
+.cmr-intro-semi-section p,
+.cmr-intro-ai-section p,
+.cmr-intro-msme-section p,
+.cmr-intro-enterprise-tech-section p,
+.cmr-intro-tech-section p {
+    text-align: center !important;
+}

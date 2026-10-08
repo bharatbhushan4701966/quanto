@@ -20,6 +20,7 @@ function cmr_intro_text_shortcode() {
             font-size: 16px !important;
             line-height: 1.6 !important;
             letter-spacing: 0 !important;
+            text-align: center !important;
             vertical-align: middle !important;
             background: #ffffff !important;
             color: #000000 !important;
@@ -34,6 +35,7 @@ function cmr_intro_text_shortcode() {
             color: inherit !important;
             line-height: inherit !important;
             font-weight: inherit !important;
+            text-align: center !important;
             margin-bottom: 35px;
             margin-top: 0;
         }
