@@ -15,20 +15,41 @@ function cmr_render_press_releases_shortcode( $atts ) {
     ?>
     <style>
         .cmr-pr-section {
-            background-color: #000;
-            color: #fff;
-            padding: 80px 0;
+            background-color: #000 !important;
+            color: #fff !important;
+            padding: 60px 0 !important;
+            min-height: 100vh !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
             font-family: 'Inter', -apple-system, sans-serif;
-            overflow: hidden;
-            position: relative;
-            /* To ensure gsap pinning looks correct */
-            width: 100%;
+            overflow: hidden !important;
+            position: relative !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        /* Ensure parent Elementor container does not restrict full width or add outer margin */
+        .elementor-element:has(#cmr-pr-section),
+        .e-con:has(#cmr-pr-section),
+        .e-con-boxed:has(#cmr-pr-section),
+        .e-con-inner:has(#cmr-pr-section),
+        .elementor-widget:has(#cmr-pr-section),
+        .elementor-widget-shortcode:has(#cmr-pr-section) {
+            width: 100% !important;
+            max-width: 100% !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            box-sizing: border-box !important;
         }
 
         .cmr-pr-container {
             max-width: 1300px;
+            width: 100%;
             margin: 0 auto;
             padding: 0 20px;
+            box-sizing: border-box;
+            flex-shrink: 0;
         }
 
         .cmr-pr-header {
@@ -37,7 +58,7 @@ function cmr_render_press_releases_shortcode( $atts ) {
             align-items: center;
             justify-content: center;
             text-align: center;
-            margin-bottom: 45px;
+            margin-bottom: 40px;
             gap: 16px;
         }
 
@@ -91,36 +112,24 @@ function cmr_render_press_releases_shortcode( $atts ) {
             color: #fff;
         }
 
-        @media (max-width: 768px) {
-            .cmr-pr-section {
-                padding: 50px 0;
-            }
-            .cmr-pr-header {
-                margin-bottom: 30px;
-                gap: 14px;
-            }
-            .cmr-pr-title-area h2 {
-                font-size: 28px !important;
-            }
-            .cmr-pr-title-area p {
-                font-size: 14px !important;
-                padding: 0 15px;
-            }
+        .cmr-pr-track-wrapper {
+            width: 100% !important;
+            overflow: hidden !important;
+            position: relative !important;
+            box-sizing: border-box !important;
+            flex-shrink: 0;
         }
 
         .cmr-pr-cards-track {
-            display: flex;
-            gap: 40px;
-            padding-left: calc((100vw - 1260px) / 2); /* Start aligning with container */
-            padding-right: 40px;
-            width: max-content;
-        }
-
-        /* Fallback for small screens */
-        @media (max-width: 1300px) {
-            .cmr-pr-cards-track {
-                padding-left: 20px;
-            }
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            gap: 40px !important;
+            padding-left: max(20px, calc((100% - 1260px) / 2)) !important;
+            padding-right: max(20px, calc((100% - 1260px) / 2)) !important;
+            width: max-content !important;
+            min-width: max-content !important;
+            box-sizing: border-box !important;
+            will-change: transform;
         }
 
         .cmr-pr-card {
@@ -131,15 +140,7 @@ function cmr_render_press_releases_shortcode( $atts ) {
             width: 800px; /* Fixed width for the scroll effect */
             height: 400px;
             flex-shrink: 0;
-        }
-
-        @media (max-width: 900px) {
-            .cmr-pr-card {
-                width: 85vw;
-                flex-direction: column;
-                height: auto;
-                border-radius: 0 !important;
-            }
+            box-sizing: border-box;
         }
 
         .cmr-pr-card-img {
@@ -149,26 +150,13 @@ function cmr_render_press_releases_shortcode( $atts ) {
             border-radius: 0 !important;
         }
 
-        @media (max-width: 900px) {
-            .cmr-pr-card-img {
-                width: 100%;
-                height: 250px;
-            }
-        }
-
         .cmr-pr-card-content {
             width: 50%;
             padding: 40px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-        }
-
-        @media (max-width: 900px) {
-            .cmr-pr-card-content {
-                width: 100%;
-                padding: 30px;
-            }
+            box-sizing: border-box;
         }
 
         .cmr-pr-meta {
@@ -214,6 +202,54 @@ function cmr_render_press_releases_shortcode( $atts ) {
             opacity: 0.8;
             color: #fff;
         }
+
+        @media (max-width: 900px) {
+            .cmr-pr-card {
+                width: 85vw;
+                flex-direction: column;
+                height: auto;
+            }
+            .cmr-pr-card-img {
+                width: 100%;
+                height: 220px;
+            }
+            .cmr-pr-card-content {
+                width: 100%;
+                padding: 24px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cmr-pr-section {
+                min-height: auto !important;
+                padding: 50px 0 !important;
+            }
+            .cmr-pr-header {
+                margin-bottom: 25px;
+                gap: 14px;
+            }
+            .cmr-pr-title-area h2 {
+                font-size: 28px !important;
+            }
+            .cmr-pr-title-area p {
+                font-size: 14px !important;
+                padding: 0 15px;
+            }
+            .cmr-pr-track-wrapper {
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+                scroll-snap-type: x mandatory !important;
+                padding-bottom: 20px !important;
+            }
+            .cmr-pr-cards-track {
+                padding-left: 20px !important;
+                padding-right: 20px !important;
+                gap: 20px !important;
+            }
+            .cmr-pr-card {
+                scroll-snap-align: start !important;
+            }
+        }
     </style>
 
     <?php
@@ -240,6 +276,7 @@ function cmr_render_press_releases_shortcode( $atts ) {
     }
     ?>
 
+    <div id="press-release"></div>
     <div class="cmr-pr-section" id="cmr-pr-section">
         <div class="cmr-pr-container">
             <div class="cmr-pr-header">
@@ -256,88 +293,141 @@ function cmr_render_press_releases_shortcode( $atts ) {
             </div>
         </div>
 
-        <div class="cmr-pr-cards-track" id="cmr-pr-track">
-            <?php if ( $query->have_posts() ) : ?>
-                <?php while ( $query->have_posts() ) : $query->the_post(); 
-                    $post_id = get_the_ID();
-                    $bg_image = get_the_post_thumbnail_url( $post_id, 'large' );
-                    if ( ! $bg_image ) {
-                        $bg_image = 'https://via.placeholder.com/800x500';
-                    }
-                    $document_id = get_post_meta( $post_id, '_cmr_news_document_id', true );
-                    $ext_url = get_post_meta( $post_id, '_cmr_news_external_link', true );
-                    if ( $document_id ) {
-                        $link = wp_get_attachment_url( $document_id );
-                        $target = '_blank';
-                    } elseif ( $ext_url ) {
-                        $link = $ext_url;
-                        $target = '_blank';
-                    } else {
-                        $link = get_permalink( $post_id );
-                        $target = '_self';
-                    }
-                ?>
-                <div class="cmr-pr-card panel">
-                    <div class="cmr-pr-card-img" style="background-image: url('<?php echo esc_url( $bg_image ); ?>');"></div>
-                    <div class="cmr-pr-card-content">
-                        <div class="cmr-pr-meta">
-                            Press Release | <?php echo get_the_date('d M Y'); ?>
+        <div class="cmr-pr-track-wrapper">
+            <div class="cmr-pr-cards-track" id="cmr-pr-track">
+                <?php if ( $query->have_posts() ) : ?>
+                    <?php while ( $query->have_posts() ) : $query->the_post(); 
+                        $post_id = get_the_ID();
+                        $bg_image = get_the_post_thumbnail_url( $post_id, 'large' );
+                        if ( ! $bg_image ) {
+                            $bg_image = 'https://via.placeholder.com/800x500';
+                        }
+                        $document_id = get_post_meta( $post_id, '_cmr_news_document_id', true );
+                        $ext_url = get_post_meta( $post_id, '_cmr_news_external_link', true );
+                        if ( $document_id ) {
+                            $link = wp_get_attachment_url( $document_id );
+                            $target = '_blank';
+                        } elseif ( $ext_url ) {
+                            $link = $ext_url;
+                            $target = '_blank';
+                        } else {
+                            $link = get_permalink( $post_id );
+                            $target = '_self';
+                        }
+                    ?>
+                    <div class="cmr-pr-card panel">
+                        <div class="cmr-pr-card-img" style="background-image: url('<?php echo esc_url( $bg_image ); ?>');"></div>
+                        <div class="cmr-pr-card-content">
+                            <div class="cmr-pr-meta">
+                                Press Release | <?php echo get_the_date('d M Y'); ?>
+                            </div>
+                            <h3 class="cmr-pr-card-title"><?php the_title(); ?></h3>
+                            <div class="cmr-pr-card-excerpt"><?php echo wp_trim_words( get_the_excerpt(), 20 ); ?></div>
+                            <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-pr-read-btn">
+                                Read Coverage 
+                                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4 12L12 4M12 4H5.5M12 4V10.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
                         </div>
-                        <h3 class="cmr-pr-card-title"><?php the_title(); ?></h3>
-                        <div class="cmr-pr-card-excerpt"><?php echo wp_trim_words( get_the_excerpt(), 20 ); ?></div>
-                        <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-pr-read-btn">
-                            Read Coverage 
-                            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M4 12L12 4M12 4H5.5M12 4V10.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </a>
                     </div>
-                </div>
-                <?php endwhile; ?>
-            <?php else : ?>
-                <div class="cmr-pr-card">
-                    <div class="cmr-pr-card-content">
-                        <p>No press releases found.</p>
+                    <?php endwhile; ?>
+                <?php else : ?>
+                    <div class="cmr-pr-card">
+                        <div class="cmr-pr-card-content">
+                            <p>No press releases found.</p>
+                        </div>
                     </div>
-                </div>
-            <?php endif; ?>
-            <?php wp_reset_postdata(); ?>
+                <?php endif; ?>
+                <?php wp_reset_postdata(); ?>
+            </div>
         </div>
     </div>
 
     <!-- Init GSAP ScrollTrigger for horizontal scroll -->
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-            gsap.registerPlugin(ScrollTrigger);
-            
-            let track = document.getElementById("cmr-pr-track");
+    (function() {
+        function initPressReleasesScroll() {
+            let track   = document.getElementById("cmr-pr-track");
             let section = document.getElementById("cmr-pr-section");
-            
-            if (track && section) {
-                // Calculate how far to move left
-                function getScrollAmount() {
-                    let trackWidth = track.scrollWidth;
-                    return -(trackWidth - window.innerWidth + 40); // 40px for padding
-                }
-                
-                const tween = gsap.to(track, {
-                    x: getScrollAmount,
-                    ease: "none"
-                });
+            let wrapper = section ? section.querySelector('.cmr-pr-track-wrapper') : null;
+            if (!track || !section || !wrapper) return;
 
-                ScrollTrigger.create({
-                    trigger: section,
-                    start: "center center",
-                    end: () => `+=${getScrollAmount() * -1}`,
-                    pin: true,
-                    animation: tween,
-                    scrub: 1,
-                    invalidateOnRefresh: true
+            // Kill any pre-existing ScrollTrigger on this section to avoid duplicates
+            if (typeof ScrollTrigger !== 'undefined') {
+                ScrollTrigger.getAll().forEach(function(st) {
+                    if (st.trigger === section) st.kill(true);
                 });
             }
+
+            // Mobile view: disable GSAP pinning to prevent layout break and let native swipe work
+            if (window.innerWidth <= 768) {
+                if (typeof gsap !== 'undefined') {
+                    gsap.set(track, { clearProps: "all" });
+                }
+                track.style.transform = '';
+                return;
+            }
+
+            // Desktop view: GSAP horizontal scroll with pinning
+            if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+                setTimeout(initPressReleasesScroll, 100);
+                return;
+            }
+            gsap.registerPlugin(ScrollTrigger);
+
+            gsap.set(track, { clearProps: "transform,x" });
+
+            function getScrollAmount() {
+                let containerWidth = wrapper.clientWidth || window.innerWidth;
+                let diff = track.scrollWidth - containerWidth;
+                return diff > 0 ? -diff : 0;
+            }
+
+            const tween = gsap.to(track, {
+                x: () => getScrollAmount(),
+                ease: "none",
+                invalidateOnRefresh: true
+            });
+
+            ScrollTrigger.create({
+                trigger: section,
+                start: "top top",
+                end: () => "+=" + Math.abs(getScrollAmount()),
+                pin: true,
+                pinSpacing: true,
+                animation: tween,
+                scrub: 0.6,
+                invalidateOnRefresh: true,
+                anticipatePin: 1
+            });
         }
-    });
+
+        if (document.readyState === 'loading') {
+            document.addEventListener("DOMContentLoaded", initPressReleasesScroll);
+        } else {
+            initPressReleasesScroll();
+        }
+
+        window.addEventListener('load', function() {
+            initPressReleasesScroll();
+            if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+        });
+
+        window.addEventListener('resize', function() {
+            initPressReleasesScroll();
+            if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+        });
+
+        if (window.jQuery) {
+            jQuery(window).on('elementor/frontend/init', function() {
+                setTimeout(function() {
+                    initPressReleasesScroll();
+                    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+                }, 300);
+            });
+        }
+    })();
     </script>
     <?php
     return ob_get_clean();
