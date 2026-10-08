@@ -196,9 +196,12 @@
 }
 
 .cmr-card-featured:hover .cmr-card-title,
-.cmr-card-featured .cmr-card-link-wrapper:hover .cmr-card-title,
-.cmr-card:hover .cmr-card-title,
-.cmr-card .cmr-card-link-wrapper:hover .cmr-card-title {
+.cmr-card-featured .cmr-card-link-wrapper:hover .cmr-card-title {
+    color: #00BFBC !important;
+}
+
+.cmr-card:not(.cmr-card-featured):hover .cmr-card-title,
+.cmr-card:not(.cmr-card-featured) .cmr-card-link-wrapper:hover .cmr-card-title {
     color: #4820B0 !important;
 }
 

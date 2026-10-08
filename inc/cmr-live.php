@@ -180,10 +180,10 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                 text-transform: uppercase;
             }
             .cmr-podcast-meta .type-podcast {
-                color: #00d2ff;
+                color: #4820B0;
             }
             .cmr-podcast-meta .type-topview {
-                color: #2979ff;
+                color: #4820B0;
             }
             .cmr-podcast-title {
                 font-size: 20px;
@@ -500,10 +500,10 @@ if ( ! function_exists( 'cmr_trending_podcast_shortcode' ) ) {
                 text-transform: uppercase;
             }
             .cmr-trending-meta .type-podcast {
-                color: #00d2ff;
+                color: #4820B0;
             }
             .cmr-trending-meta .type-topview {
-                color: #2979ff;
+                color: #4820B0;
             }
             .cmr-trending-card-title {
                 font-size: 22px;
@@ -741,7 +741,7 @@ if ( ! function_exists( 'cmr_trending_topview_shortcode' ) ) {
                 text-transform: uppercase;
             }
             .cmr-topview-feat-meta .type-topview {
-                color: #2979ff;
+                color: #4820B0;
             }
             .cmr-topview-feat-title {
                 font-size: 26px;
@@ -1369,10 +1369,10 @@ if ( ! function_exists( 'cmr_browse_recently_updated_shortcode' ) ) {
                 text-transform: uppercase;
             }
             .cmr-browse-meta .type-podcast {
-                color: #00d2ff;
+                color: #4820B0;
             }
             .cmr-browse-meta .type-topview {
-                color: #2979ff;
+                color: #4820B0;
             }
             .cmr-browse-card-title {
                 font-size: 22px;

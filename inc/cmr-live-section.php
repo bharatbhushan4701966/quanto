@@ -167,14 +167,14 @@ if ( ! function_exists( 'cmr_live_section_shortcode' ) ) {
                 gap: 5px;
             }
             .cmr-ls-meta .type-topview {
-                color: #2979ff;
+                color: #4820B0;
             }
             .cmr-ls-meta .type-podcast {
-                color: #00bfbc;
+                color: #4820B0;
             }
             .cmr-ls-title {
                 font-size: 18px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111;
                 margin: 0;
                 line-height: 1.4;

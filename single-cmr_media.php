@@ -1232,10 +1232,10 @@ endwhile;
     text-transform: uppercase;
 }
 .cmr-browse-meta .type-podcast {
-    color: #00d2ff;
+    color: #4820B0;
 }
 .cmr-browse-meta .type-topview {
-    color: #2979ff;
+    color: #4820B0;
 }
 .cmr-browse-card-title {
     font-size: 22px;
