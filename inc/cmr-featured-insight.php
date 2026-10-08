@@ -511,7 +511,7 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 position: relative;
                 width: 100%;
                 padding-top: 56.25%; /* 16:9 Aspect Ratio */
-                background: #000000;
+                background: #ffffff;
                 overflow: hidden;
             }
             .cmr-fvi-video-wrap iframe,
