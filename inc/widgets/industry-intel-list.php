@@ -53,12 +53,25 @@ class Quanto_Industry_Intel_List_Widget extends \Elementor\Widget_Base {
             ]
         );
 
+        $this->add_control(
+            'offset',
+            [
+                'label' => esc_html__('Offset (Skip Posts)', 'quanto'),
+                'type' => \Elementor\Controls_Manager::NUMBER,
+                'default' => 4,
+                'min' => 0,
+                'max' => 50,
+                'step' => 1,
+            ]
+        );
+
         $this->end_controls_section();
     }
 
     protected function render() {
         $settings = $this->get_settings_for_display();
         $category = isset($settings['category']) ? $settings['category'] : '';
-        echo do_shortcode('[cmr_industry_intel_list category="' . esc_attr($category) . '"]');
+        $offset = isset($settings['offset']) && $settings['offset'] !== '' ? intval($settings['offset']) : 4;
+        echo do_shortcode('[cmr_industry_intel_list category="' . esc_attr($category) . '" offset="' . esc_attr($offset) . '"]');
     }
 }

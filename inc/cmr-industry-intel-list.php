@@ -12,13 +12,17 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
         $atts = shortcode_atts( array(
             'posts_per_page' => 3,
             'category'       => '',
+            'offset'         => 4,
+            'nav_title'      => '',
         ), $atts );
 
+        $offset = isset( $atts['offset'] ) ? max( 0, intval( $atts['offset'] ) ) : 4;
+        $max_posts = intval( $atts['posts_per_page'] );
         $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : ( isset($_GET['paged']) ? intval($_GET['paged']) : 1 );
 
         $query_args = array(
             'post_type'      => array( 'post', 'cmr_news' ),
-            'posts_per_page' => max( 20, intval( $atts['posts_per_page'] ) * 4 ),
+            'posts_per_page' => max( 40, ( $max_posts + $offset ) * 4 ),
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
@@ -46,7 +50,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
         $unique_posts = array();
         $seen_ids = array();
         $seen_titles = array();
-        $max_posts = intval( $atts['posts_per_page'] );
+        $skipped = 0;
 
         if ( $insights_query->have_posts() ) {
             foreach ( $insights_query->posts as $p ) {
@@ -56,6 +60,12 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 }
                 $seen_ids[] = $p->ID;
                 $seen_titles[] = $norm_title;
+
+                if ( $skipped < $offset ) {
+                    $skipped++;
+                    continue;
+                }
+
                 $unique_posts[] = $p;
                 if ( count( $unique_posts ) >= $max_posts ) {
                     break;
@@ -528,12 +538,14 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
             var container = document.querySelector('.cmr-intel-list-items');
             var pag = document.querySelector('.cmr-pagination-wrapper');
             var cat = '<?php echo esc_js($atts['category']); ?>';
+            var offset = <?php echo intval($offset); ?>;
             var maxPage = <?php echo intval($insights_query->max_num_pages); ?>;
             
             function loadPage(page, append) {
                 var data = new FormData();
                 data.append('action', 'cmr_industry_intel_list_load_more');
                 data.append('page', page);
+                data.append('offset', offset);
                 data.append('base_url', window.location.pathname);
                 if (cat) {
                     data.append('category', cat);
@@ -636,13 +648,15 @@ add_action( 'wp_ajax_cmr_industry_intel_list_load_more', 'cmr_industry_intel_lis
 add_action( 'wp_ajax_nopriv_cmr_industry_intel_list_load_more', 'cmr_industry_intel_list_load_more_ajax' );
 function cmr_industry_intel_list_load_more_ajax() {
     $paged = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
+    $offset = isset( $_POST['offset'] ) ? max( 0, intval( $_POST['offset'] ) ) : 4;
+    $target_skip = $offset + max( 0, ( $paged - 1 ) * 3 );
+
     $query_args = array(
         'post_type'      => array( 'post', 'cmr_news' ),
-        'posts_per_page' => 15,
+        'posts_per_page' => max( 50, ( $target_skip + 3 ) * 3 ),
         'post_status'    => 'publish',
         'orderby'        => 'date',
         'order'          => 'DESC',
-        'paged'          => $paged,
     );
     
     if ( isset( $_POST['category'] ) && ! empty( $_POST['category'] ) ) {
@@ -665,6 +679,7 @@ function cmr_industry_intel_list_load_more_ajax() {
     $unique_posts = array();
     $seen_ids = array();
     $seen_titles = array();
+    $skipped = 0;
 
     if ( $insights_query->have_posts() ) {
         foreach ( $insights_query->posts as $p ) {
@@ -674,6 +689,12 @@ function cmr_industry_intel_list_load_more_ajax() {
             }
             $seen_ids[] = $p->ID;
             $seen_titles[] = $norm_title;
+
+            if ( $skipped < $target_skip ) {
+                $skipped++;
+                continue;
+            }
+
             $unique_posts[] = $p;
             if ( count( $unique_posts ) >= 3 ) {
                 break;
