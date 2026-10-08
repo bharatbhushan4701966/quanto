@@ -6006,19 +6006,50 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
 }
 
 /* ==========================================================================
-   Practice Heads & Principals (#practice) Base Styles
+   Practice Heads & Principals (#practice) Base Styles - Exact 376px Card Width
    ========================================================================== */
+#practice,
+#practice .elementor-widget-container,
+.elementor-widget:has(#practice),
+.e-con:has(#practice) {
+    max-width: 820px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100% !important;
+}
+
+#practice .row {
+    max-width: 820px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    gap: 32px !important;
+}
+
+#practice .col-xl-6,
+#practice .col-md-6,
+#practice .col-sm-12 {
+    max-width: 376px !important;
+    width: 376px !important;
+    flex: 0 0 376px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 #practice .quanto-team-box {
     display: flex !important;
     flex-direction: column !important;
-    width: 100% !important;
-    margin: 0 !important;
+    width: 376px !important;
+    max-width: 376px !important;
+    margin: 0 auto !important;
 }
 
 #practice .quanto-team-box .team-thumb {
     position: relative !important;
-    width: 100% !important;
-    max-width: 100% !important;
+    width: 376px !important;
+    max-width: 376px !important;
     height: auto !important;
     aspect-ratio: 3 / 4 !important;
     overflow: hidden !important;
@@ -6062,6 +6093,8 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
     flex-direction: column !important;
     flex: 1 !important;
     text-align: left !important;
+    width: 100% !important;
+    max-width: 376px !important;
 }
 
 #practice .quanto-team-box .team-member-name,
