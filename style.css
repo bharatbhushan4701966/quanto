@@ -3973,11 +3973,17 @@ div[data-id="b4d41ec"] a.quanto-link-btn:hover span .arry1,
     }
 }
 
-/* CMR Hero Banner Space after Header */
+/* CMR Hero Banner */
 .hero,
 section.hero,
 .elementor-widget-shortcode:has(.hero) {
+    margin-top: 0 !important;
+}
+
+.hero p,
+.hero-content p {
     margin-top: 20px !important;
+    margin-bottom: 30px !important;
 }
 
 /* ==========================================================================
@@ -11289,7 +11295,53 @@ header.sticky .cmr-nav-cart-container:hover,
     }
 }
 
-/* Submit Button Arrow Icon (Matching Talk to Analyst) */
+/* Submit Button & Arrow Icon (Matching Talk to Analyst) */
+.elementor-field-type-submit button,
+.elementor-field-type-submit .elementor-button,
+.elementor-button[type="submit"],
+button.wpcf7-submit,
+input[type="submit"].wpcf7-submit,
+.wpcf7-form input[type="submit"],
+.wpcf7-form button[type="submit"],
+button.cmr-arrow-fixed,
+.cmr-arrow-fixed {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 50px !important;
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    padding: 16px 32px !important;
+    min-height: 48px !important;
+    width: 100% !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    box-sizing: border-box !important;
+    transition: background-color 0.2s ease, transform 0.1s ease !important;
+    box-shadow: none !important;
+    outline: none !important;
+    text-align: center !important;
+}
+
+.elementor-field-type-submit button:hover,
+.elementor-field-type-submit .elementor-button:hover,
+.elementor-button[type="submit"]:hover,
+button.wpcf7-submit:hover,
+input[type="submit"].wpcf7-submit:hover,
+.wpcf7-form input[type="submit"]:hover,
+.wpcf7-form button[type="submit"]:hover,
+button.cmr-arrow-fixed:hover,
+.cmr-arrow-fixed:hover {
+    background: #1a1a1a !important;
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+}
+
 .cmr-button-icon-arrow,
 .cmr-arrow-icon,
 button[type="submit"] .cmr-arrow-icon,

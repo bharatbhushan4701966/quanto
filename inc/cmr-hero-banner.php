@@ -22,7 +22,7 @@ function cmr_hero_banner_shortcode($atts) {
       flex-direction: column;
       justify-content: center;
       box-sizing: border-box;
-      margin-top: 20px !important;
+      margin-top: 0 !important;
     }
 
     /* =========================
@@ -100,6 +100,7 @@ function cmr_hero_banner_shortcode($atts) {
     }
 
     .hero p {
+      margin-top: 20px !important;
       margin-bottom: 30px;
       font-size:14px;
       line-height: 24px;
