@@ -328,7 +328,7 @@
 
 
 
-                    if( $quanto_post_details_share_options && get_post_type() !== 'cmr_news' && ! ( function_exists( 'quanto_is_press_release' ) && quanto_is_press_release() ) ){
+                    if( $quanto_post_details_share_options ){
 
 
 

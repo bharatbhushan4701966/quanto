@@ -2568,13 +2568,11 @@
 
                 } else {
 
-                    echo '<div class="img-box overflow-hidden" style="border-radius: 16px; overflow: hidden; isolation: isolate; transform: translateZ(0);">';
+                    echo '<div class="img-box overflow-hidden">';
 
                         the_post_thumbnail( 'full', array(
 
                             'class' => 'w-100 d-block',
-
-                            'style' => 'border-radius: 16px;',
 
                             'alt'   => get_the_title(),
 
@@ -2630,13 +2628,11 @@
 
                     } else {
 
-                        echo '<div class="img-box overflow-hidden" style="border-radius: 16px; overflow: hidden; isolation: isolate; transform: translateZ(0);">';
+                        echo '<div class="img-box overflow-hidden">';
 
                             the_post_thumbnail( 'full', array(
 
                                 'class' => 'w-100 d-block',
-
-                                'style' => 'border-radius: 16px;',
 
                                 'alt'   => get_the_title(),
 
