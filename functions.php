@@ -4577,11 +4577,17 @@ add_action( 'wp_head', function() {
         .cmr-trending-card:hover .cmr-trending-card-title,
         .cmr-ls-card:hover .cmr-ls-title,
         .cmr-podcast-card:hover .cmr-podcast-title,
-        .cmr-fi-slide:hover .cmr-fi-slide-title,
         .elementor-widget-posts .elementor-post:hover .elementor-post__title,
         .elementor-widget-posts .elementor-post:hover .elementor-post__title a,
         .elementor-post__title a:hover {
             color: #4820B0 !important;
+        }
+
+        /* CMR Dark / Featured Slide Title Hover - Cyan #00D2B9 */
+        .cmr-fi-slide:hover .cmr-fi-slide-title,
+        .cmr-fi-slide-title:hover,
+        .insights-featured-card:hover .insights-title {
+            color: #00D2B9 !important;
         }
 
         .cmr-intel-trends-title,

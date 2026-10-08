@@ -11553,8 +11553,6 @@ button[type="submit"] svg.cmr-arrow-icon,
 .cmr-intel-trends-title:hover,
 .cmr-intel-trends-title:hover a,
 .cmr-intel-trends-title a:hover,
-.cmr-fi-slide:hover .cmr-fi-slide-title,
-.cmr-fi-slide-title:hover,
 .cmr-trending-card:hover .cmr-trending-card-title,
 .cmr-browse-card:hover .cmr-browse-card-title,
 .cmr-ls-grid a:hover .cmr-ls-title,
@@ -11596,13 +11594,15 @@ button[type="submit"] svg.cmr-arrow-icon,
     color: #4820B0 !important;
 }
 
-/* CMR Featured Card (Dark Background) Hover Color (Cyan #00BFBC) */
+/* CMR Featured Card (Dark Background) Hover Color (Cyan #00D2B9 / #00BFBC) */
 .cmr-card-featured:hover .cmr-card-title,
 .cmr-card-featured .cmr-card-link-wrapper:hover .cmr-card-title,
 .cmr-card.cmr-card-featured:hover .cmr-card-title,
 .cmr-card.cmr-card-featured .cmr-card-link-wrapper:hover .cmr-card-title,
-.insights-featured-card:hover .insights-title {
-    color: #00BFBC !important;
+.insights-featured-card:hover .insights-title,
+.cmr-fi-slide:hover .cmr-fi-slide-title,
+.cmr-fi-slide-title:hover {
+    color: #00D2B9 !important;
 }
 
 .cmr-mrg-card .cmr-mrg-card-title,

@@ -248,6 +248,12 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
+                transition: color 0.3s ease !important;
+            }
+
+            .cmr-fi-slide:hover .cmr-fi-slide-title,
+            .cmr-fi-slide-title:hover {
+                color: #00D2B9 !important;
             }
 
             .cmr-fi-slide-excerpt {
