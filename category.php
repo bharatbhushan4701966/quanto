@@ -427,8 +427,15 @@ get_header();
     <!-- Article Grid -->
     <?php if ( have_posts() ) : ?>
         <div class="cmr-cat-grid">
-            <?php while ( have_posts() ) : the_post();
+            <?php 
+            $seen_titles = array();
+            while ( have_posts() ) : the_post();
                 $post_id       = get_the_ID();
+                $norm_title    = sanitize_title( get_the_title() );
+                if ( ! empty( $norm_title ) && in_array( $norm_title, $seen_titles, true ) ) {
+                    continue;
+                }
+                $seen_titles[] = $norm_title;
                 $thumbnail_url = get_the_post_thumbnail_url( $post_id, 'large' );
                 $placeholder   = 'https://via.placeholder.com/800x450?text=' . rawurlencode( get_the_title() );
                 $img           = $thumbnail_url ?: $placeholder;

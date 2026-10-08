@@ -3871,6 +3871,9 @@ add_action( 'pre_get_posts', 'cmr_modify_search_query' );
 // Set 9 posts per page & handle year filter on Category Archives
 function cmr_category_posts_per_page($query) {
     if ( ! is_admin() && $query->is_main_query() && ( $query->is_category() || $query->is_archive() ) ) {
+        if ( $query->is_category() ) {
+            $query->set( 'post_type', 'post' );
+        }
         $query->set( 'posts_per_page', 9 );
 
         $selected_year = 0;
@@ -3892,9 +3895,9 @@ function cmr_category_posts_per_page($query) {
 }
 add_action( 'pre_get_posts', 'cmr_category_posts_per_page' );
 
-// Include cmr_news in Category and Tag archive queries
+// Include cmr_news in Tag archive queries only (not category archives to avoid duplicate post/clone entries)
 function cmr_include_news_in_taxonomies( $query ) {
-    if ( ! is_admin() && $query->is_main_query() && ( $query->is_category() || $query->is_tag() ) ) {
+    if ( ! is_admin() && $query->is_main_query() && $query->is_tag() ) {
         $post_types = $query->get( 'post_type' );
         if ( empty( $post_types ) || $post_types === 'post' ) {
             $query->set( 'post_type', array( 'post', 'cmr_news' ) );
