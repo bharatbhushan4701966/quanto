@@ -359,7 +359,12 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             object-position: center center;
             display: block; 
             border-radius: 0 !important;
-            transition: transform 0.3s ease;
+            transform: scale(1);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        }
+        .cmr-wwt-card:hover .cmr-wwt-card-img img,
+        .cmr-wwt-card-img:hover img {
+            transform: scale(1.06) !important;
         }
         /* For Research Reports: Use 1:1 aspect-ratio / width: 100% with object-fit: cover and center alignment so the image fills the card cleanly with no side whitespace/bars and no text cut */
         .cmr-wwt-card-research-reports .cmr-wwt-card-img,
@@ -391,6 +396,12 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             max-height: 100% !important;
             border-radius: 0 !important;
             display: block;
+            transform: scale(1);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        }
+        .cmr-wwt-card-research-reports:hover .cmr-wwt-card-img img,
+        .cmr-wwt-slide[data-s="2"] .cmr-wwt-card:hover .cmr-wwt-card-img img {
+            transform: scale(1.06) !important;
         }
 
         .cmr-wwt-card-cat { display:flex; align-items:center; gap:8px; margin-bottom:8px; cursor:pointer; }
@@ -401,16 +412,18 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             font-size: 17px; font-weight: 600; line-height: 1.35;
             color: #1a1a2e; margin-bottom: 10px; min-height: 38px;
             font-family: 'Instrument Sans', sans-serif;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease !important;
         }
         .cmr-wwt-card-title a {
             text-decoration: none;
             color: inherit;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease !important;
         }
+        .cmr-wwt-card:hover .cmr-wwt-card-title,
+        .cmr-wwt-card:hover .cmr-wwt-card-title a,
         .cmr-wwt-card-title:hover,
         .cmr-wwt-card-title a:hover {
-            color: #4625A9 !important;
+            color: #4820B0 !important;
         }
 
         .cmr-wwt-card-link {

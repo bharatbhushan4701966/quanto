@@ -11235,10 +11235,29 @@ body[class*="single-quanto_team"] #smooth-content {
 .cmr-nav-cart-container,
 .cmr-cart-icon-link,
 header .elementor-widget-icon a,
+header .elementor-widget-icon .elementor-icon,
 header .cmr-header-user-icon,
-[data-elementor-type="header"] .elementor-widget-icon a {
+header a[href*="my-account"],
+header a.xoo-el-login-tgr,
+header a.lrm-login,
+[data-elementor-type="header"] .elementor-widget-icon a,
+[data-elementor-type="header"] .elementor-widget-icon .elementor-icon,
+[data-elementor-type="header"] a[href*="my-account"],
+[data-elementor-type="header"] a.xoo-el-login-tgr,
+[data-elementor-type="header"] a.lrm-login {
     color: #ffffff !important;
-    transition: color 0.3s ease !important;
+    transition: color 0.3s ease, stroke 0.3s ease !important;
+}
+
+header .elementor-widget-icon a svg,
+header .elementor-widget-icon .elementor-icon svg,
+header .cmr-header-user-icon svg,
+header a[href*="my-account"] svg,
+header a.xoo-el-login-tgr svg,
+header a.lrm-login svg,
+[data-elementor-type="header"] .elementor-widget-icon a svg,
+[data-elementor-type="header"] a[href*="my-account"] svg {
+    transition: color 0.3s ease, stroke 0.3s ease !important;
 }
 
 /* Hover: Same light grey (#d1d1d1) as search icon */
@@ -11246,12 +11265,45 @@ header .cmr-header-user-icon,
 .cmr-nav-search-container:hover .cmr-nav-search-trigger,
 .cmr-nav-cart-container:hover,
 .cmr-cart-icon-link:hover,
-header .elementor-widget-icon a:hover,
+header .elementor-widget-icon:hover,
 header .elementor-widget-icon:hover a,
+header .elementor-widget-icon a:hover,
+header .elementor-widget-icon:hover .elementor-icon,
+header .elementor-widget-icon:hover svg,
+header .elementor-widget-icon a:hover svg,
+header .elementor-widget-icon:hover svg path,
+header .elementor-widget-icon a:hover svg path,
+header .elementor-widget-icon:hover svg circle,
+header .elementor-widget-icon a:hover svg circle,
 header .cmr-header-user-icon:hover,
+header .cmr-header-user-icon:hover svg,
+header .cmr-header-user-icon:hover svg path,
+header .cmr-header-user-icon:hover svg circle,
+header a[href*="my-account"]:hover,
+header a[href*="my-account"]:hover svg,
+header a[href*="my-account"]:hover svg path,
+header a[href*="my-account"]:hover svg circle,
+header a.xoo-el-login-tgr:hover,
+header a.xoo-el-login-tgr:hover svg,
+header a.xoo-el-login-tgr:hover svg path,
+header a.xoo-el-login-tgr:hover svg circle,
+header a.lrm-login:hover,
+header a.lrm-login:hover svg,
+header a.lrm-login:hover svg path,
+header a.lrm-login:hover svg circle,
+[data-elementor-type="header"] .elementor-widget-icon:hover,
+[data-elementor-type="header"] .elementor-widget-icon:hover a,
 [data-elementor-type="header"] .elementor-widget-icon a:hover,
-[data-elementor-type="header"] .elementor-widget-icon:hover a {
+[data-elementor-type="header"] .elementor-widget-icon:hover svg,
+[data-elementor-type="header"] .elementor-widget-icon a:hover svg,
+[data-elementor-type="header"] .elementor-widget-icon:hover svg path,
+[data-elementor-type="header"] .elementor-widget-icon a:hover svg path,
+[data-elementor-type="header"] a[href*="my-account"]:hover,
+[data-elementor-type="header"] a[href*="my-account"]:hover svg,
+[data-elementor-type="header"] a[href*="my-account"]:hover svg path,
+[data-elementor-type="header"] a[href*="my-account"]:hover svg circle {
     color: #d1d1d1 !important;
+    stroke: #d1d1d1 !important;
 }
 
 /* When Sticky Header is active (white background) */
@@ -11266,8 +11318,13 @@ header.sticky .cmr-nav-cart-container,
 .elementor-sticky--effects header .elementor-widget-icon a,
 .is-sticky header .elementor-widget-icon a,
 header.sticky .elementor-widget-icon a,
-.intel-nav-fixed-js header .elementor-widget-icon a {
+.intel-nav-fixed-js header .elementor-widget-icon a,
+.elementor-sticky--effects header a[href*="my-account"],
+.is-sticky header a[href*="my-account"],
+header.sticky a[href*="my-account"],
+.intel-nav-fixed-js header a[href*="my-account"] {
     color: #333333 !important;
+    stroke: #333333 !important;
 }
 
 .elementor-sticky--effects .cmr-nav-search-container:hover,
@@ -11281,8 +11338,21 @@ header.sticky .cmr-nav-cart-container:hover,
 .elementor-sticky--effects header .elementor-widget-icon a:hover,
 .is-sticky header .elementor-widget-icon a:hover,
 header.sticky .elementor-widget-icon a:hover,
-.intel-nav-fixed-js header .elementor-widget-icon a:hover {
+.intel-nav-fixed-js header .elementor-widget-icon a:hover,
+.elementor-sticky--effects header .elementor-widget-icon:hover svg,
+.is-sticky header .elementor-widget-icon:hover svg,
+header.sticky .elementor-widget-icon:hover svg,
+.intel-nav-fixed-js header .elementor-widget-icon:hover svg,
+.elementor-sticky--effects header a[href*="my-account"]:hover,
+.is-sticky header a[href*="my-account"]:hover,
+header.sticky a[href*="my-account"]:hover,
+.intel-nav-fixed-js header a[href*="my-account"]:hover,
+.elementor-sticky--effects header a[href*="my-account"]:hover svg,
+.is-sticky header a[href*="my-account"]:hover svg,
+header.sticky a[href*="my-account"]:hover svg,
+.intel-nav-fixed-js header a[href*="my-account"]:hover svg {
     color: #4820B0 !important;
+    stroke: #4820B0 !important;
 }
 
 /* Responsive font-size for [cmr_global_cta_banner] heading on Mobile */
@@ -11429,7 +11499,7 @@ button[type="submit"] svg.cmr-arrow-icon,
     vertical-align: middle !important;
 }
 
-/* CMR News & Media Card Title Hover Color (Purple #4820B0) */
+/* CMR News, Media & What We Think Card Title Hover Color (Purple #4820B0) */
 .cmr-card:hover .cmr-card-title,
 .cmr-card .cmr-card-link-wrapper:hover .cmr-card-title,
 .cmr-card-featured:hover .cmr-card-title,
@@ -11441,7 +11511,11 @@ button[type="submit"] svg.cmr-arrow-icon,
 .insights-featured-card:hover .insights-title,
 .insights-stacked-card:hover .insights-title,
 .cmr-news-grid .cmr-card:hover .cmr-card-title,
-.cmr-media-grid .cmr-card:hover .cmr-card-title {
+.cmr-media-grid .cmr-card:hover .cmr-card-title,
+.cmr-wwt-card:hover .cmr-wwt-card-title,
+.cmr-wwt-card:hover .cmr-wwt-card-title a,
+.cmr-wwt-card-title:hover,
+.cmr-wwt-card-title a:hover {
     color: #4820B0 !important;
 }
 
@@ -11451,8 +11525,25 @@ button[type="submit"] svg.cmr-arrow-icon,
 .cmr-media-left .cmr-card-title,
 .cmr-media-horizontal-card .cmr-card-title,
 .cmr-mc-title,
-.insights-title {
+.insights-title,
+.cmr-wwt-card-title,
+.cmr-wwt-card-title a {
     transition: color 0.3s ease !important;
+}
+
+/* What We Think Card Image Hover Scale */
+.cmr-wwt-card-img {
+    overflow: hidden !important;
+}
+
+.cmr-wwt-card-img img {
+    transform: scale(1) !important;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+.cmr-wwt-card:hover .cmr-wwt-card-img img,
+.cmr-wwt-card-img:hover img {
+    transform: scale(1.06) !important;
 }
 
 /* ============================================================= */
