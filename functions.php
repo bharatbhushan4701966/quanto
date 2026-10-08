@@ -2493,8 +2493,8 @@ function cmr_testimonials_global_mobile_css() {
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
-        background: #5028E4 !important;
-        background-color: #5028E4 !important;
+        background: #4820B0 !important;
+        background-color: #4820B0 !important;
         color: #FFFFFF !important;
         fill: #FFFFFF !important;
         border-radius: 9999px !important;
@@ -2509,7 +2509,7 @@ function cmr_testimonials_global_mobile_css() {
         border: none !important;
         outline: none !important;
         margin: 0 !important;
-        box-shadow: 0 4px 14px rgba(80, 40, 228, 0.25) !important;
+        box-shadow: 0 4px 14px rgba(72, 32, 176, 0.25) !important;
         text-decoration: none !important;
         font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif !important;
         font-size: 13.5px !important;
@@ -2529,11 +2529,11 @@ function cmr_testimonials_global_mobile_css() {
     .elementor-element-788846b .elementor-button:hover,
     .elementor-element-64a79c2 .elementor-button:hover,
     a.cmr-network-pill-btn:hover {
-        background: #411ec5 !important;
-        background-color: #411ec5 !important;
+        background: #381691 !important;
+        background-color: #381691 !important;
         color: #FFFFFF !important;
         transform: translateY(-2px) !important;
-        box-shadow: 0 6px 20px rgba(80, 40, 228, 0.35) !important;
+        box-shadow: 0 6px 20px rgba(72, 32, 176, 0.35) !important;
     }
 
     .cmr-network-pill-btn *,
