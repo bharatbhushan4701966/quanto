@@ -176,33 +176,29 @@
 .insights-featured-card:hover .insights-title {
     color: #00D2B9 !important;
 }
-.insights-featured-content .insights-more-link {
+.insights-featured-content .insights-more-link,
+.insights-featured-content .insights-more-link:hover,
+.insights-featured-card .insights-more-link,
+.insights-featured-card:hover .insights-more-link {
     font-size: 14px;
     font-weight: 600;
-    color: #fff;
+    color: #fff !important;
     display: flex;
     align-items: center;
     gap: 8px;
     padding-bottom: 2px;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid #fff !important;
     display: inline-flex;
-    transition: color 0.3s ease, border-color 0.3s ease;
-}
-.insights-featured-content .insights-more-link:hover,
-.insights-featured-card:hover .insights-more-link {
-    color: #00D2B9 !important;
-    border-bottom-color: #00D2B9 !important;
+    text-decoration: none;
 }
 .insights-featured-content .insights-more-link i,
-.insights-featured-content .insights-more-link svg {
-    transition: color 0.3s ease, fill 0.3s ease;
-}
+.insights-featured-content .insights-more-link svg,
 .insights-featured-content .insights-more-link:hover i,
 .insights-featured-content .insights-more-link:hover svg,
 .insights-featured-card:hover .insights-more-link i,
 .insights-featured-card:hover .insights-more-link svg {
-    color: #00D2B9 !important;
-    fill: #00D2B9 !important;
+    color: #fff !important;
+    fill: #fff !important;
 }
 
 /* Stacked Cards (Right) */
@@ -265,29 +261,28 @@
 .insights-stacked-content .insights-title:hover {
     color: #4625A9 !important;
 }
-.insights-stacked-content .insights-more-link {
+.insights-stacked-content .insights-more-link,
+.insights-stacked-content .insights-more-link:hover,
+.insights-stacked-card .insights-more-link,
+.insights-stacked-card:hover .insights-more-link {
     font-size: 14px;
     font-weight: 600;
-    color: #111;
+    color: #111 !important;
     display: inline-flex;
     align-items: center;
     gap: 8px;
     padding-bottom: 2px;
-    border-bottom: 1px solid #111;
-    transition: color 0.3s ease, border-color 0.3s ease;
-}
-.insights-stacked-content .insights-more-link:hover {
-    color: #4625A9 !important;
-    border-bottom-color: #4625A9 !important;
+    border-bottom: 1px solid #111 !important;
+    text-decoration: none;
 }
 .insights-stacked-content .insights-more-link i,
-.insights-stacked-content .insights-more-link svg {
-    transition: color 0.3s ease, fill 0.3s ease;
-}
+.insights-stacked-content .insights-more-link svg,
 .insights-stacked-content .insights-more-link:hover i,
-.insights-stacked-content .insights-more-link:hover svg {
-    color: #4625A9 !important;
-    fill: #4625A9 !important;
+.insights-stacked-content .insights-more-link:hover svg,
+.insights-stacked-card:hover .insights-more-link i,
+.insights-stacked-card:hover .insights-more-link svg {
+    color: #111 !important;
+    fill: #111 !important;
 }
 
 /* General fallback hover rules for insights title and more link */

@@ -1384,18 +1384,22 @@ add_action('wp_footer', function() {
             color: #00D2B9 !important;
         }
 
+        .insights-featured-content .insights-more-link,
         .insights-featured-content .insights-more-link:hover,
+        .insights-featured-card .insights-more-link,
         .insights-featured-card:hover .insights-more-link {
-            color: #00D2B9 !important;
-            border-bottom-color: #00D2B9 !important;
+            color: #ffffff !important;
+            border-bottom: 1px solid #ffffff !important;
         }
 
+        .insights-featured-content .insights-more-link i,
+        .insights-featured-content .insights-more-link svg,
         .insights-featured-content .insights-more-link:hover i,
         .insights-featured-content .insights-more-link:hover svg,
         .insights-featured-card:hover .insights-more-link i,
         .insights-featured-card:hover .insights-more-link svg {
-            color: #00D2B9 !important;
-            fill: #00D2B9 !important;
+            color: #ffffff !important;
+            fill: #ffffff !important;
         }
 
         /* Stacked Cards on Mobile - Keep Horizontal List View */
@@ -1473,7 +1477,10 @@ add_action('wp_footer', function() {
             color: #4625A9 !important;
         }
 
-        .insights-stacked-content .insights-more-link {
+        .insights-stacked-content .insights-more-link,
+        .insights-stacked-content .insights-more-link:hover,
+        .insights-stacked-card .insights-more-link,
+        .insights-stacked-card:hover .insights-more-link {
             font-size: 12px !important;
             font-weight: 600 !important;
             color: #0f172a !important;
@@ -1482,18 +1489,17 @@ add_action('wp_footer', function() {
             gap: 5px !important;
             border-bottom: 1px solid #0f172a !important;
             padding-bottom: 1px !important;
-            transition: color 0.3s ease, border-color 0.3s ease !important;
+            text-decoration: none !important;
         }
 
-        .insights-stacked-content .insights-more-link:hover {
-            color: #4625A9 !important;
-            border-bottom-color: #4625A9 !important;
-        }
-
+        .insights-stacked-content .insights-more-link i,
+        .insights-stacked-content .insights-more-link svg,
         .insights-stacked-content .insights-more-link:hover i,
-        .insights-stacked-content .insights-more-link:hover svg {
-            color: #4625A9 !important;
-            fill: #4625A9 !important;
+        .insights-stacked-content .insights-more-link:hover svg,
+        .insights-stacked-card:hover .insights-more-link i,
+        .insights-stacked-card:hover .insights-more-link svg {
+            color: #0f172a !important;
+            fill: #0f172a !important;
         }
 
         /* Stay Updated Section Mobile Edge-to-Edge 16px */

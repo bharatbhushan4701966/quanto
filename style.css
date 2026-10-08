@@ -10919,39 +10919,43 @@ a.sector-explore-link:hover svg {
     color: #00D2B9 !important;
 }
 
+/* More Details Links (Static Colors - No Color Change on Hover) */
 .insights-more-link {
-    transition: color 0.3s ease, border-color 0.3s ease !important;
-}
-.insights-more-link i,
-.insights-more-link svg {
-    transition: color 0.3s ease, fill 0.3s ease !important;
-}
-.insights-stacked-content .insights-more-link:hover,
-.insights-stacked-content .insights-more-link:hover a,
-.insights-stacked-card:hover .insights-more-link {
-    color: #4625A9 !important;
-    border-bottom-color: #4625A9 !important;
-}
-.insights-stacked-content .insights-more-link:hover i,
-.insights-stacked-content .insights-more-link:hover svg,
-.insights-stacked-card:hover .insights-more-link i,
-.insights-stacked-card:hover .insights-more-link svg {
-    color: #4625A9 !important;
-    fill: #4625A9 !important;
+    text-decoration: none !important;
 }
 
+.insights-featured-content .insights-more-link,
 .insights-featured-content .insights-more-link:hover,
-.insights-featured-content .insights-more-link:hover a,
+.insights-featured-card .insights-more-link,
 .insights-featured-card:hover .insights-more-link {
-    color: #00D2B9 !important;
-    border-bottom-color: #00D2B9 !important;
+    color: #ffffff !important;
+    border-bottom: 1px solid #ffffff !important;
 }
+.insights-featured-content .insights-more-link i,
+.insights-featured-content .insights-more-link svg,
 .insights-featured-content .insights-more-link:hover i,
 .insights-featured-content .insights-more-link:hover svg,
 .insights-featured-card:hover .insights-more-link i,
 .insights-featured-card:hover .insights-more-link svg {
-    color: #00D2B9 !important;
-    fill: #00D2B9 !important;
+    color: #ffffff !important;
+    fill: #ffffff !important;
+}
+
+.insights-stacked-content .insights-more-link,
+.insights-stacked-content .insights-more-link:hover,
+.insights-stacked-card .insights-more-link,
+.insights-stacked-card:hover .insights-more-link {
+    color: #111111 !important;
+    border-bottom: 1px solid #111111 !important;
+}
+.insights-stacked-content .insights-more-link i,
+.insights-stacked-content .insights-more-link svg,
+.insights-stacked-content .insights-more-link:hover i,
+.insights-stacked-content .insights-more-link:hover svg,
+.insights-stacked-card:hover .insights-more-link i,
+.insights-stacked-card:hover .insights-more-link svg {
+    color: #111111 !important;
+    fill: #111111 !important;
 }
 
 /* Global Header Logo Uniform Size - Matches Homepage Exact 144px */
@@ -11443,80 +11447,7 @@ header.sticky a[href*="my-account"]:hover svg,
     }
 }
 
-/* Submit Button & Arrow Icon (Matching Talk to Analyst) */
-.elementor-field-type-submit button,
-.elementor-field-type-submit .elementor-button,
-.elementor-button[type="submit"],
-button.wpcf7-submit,
-input[type="submit"].wpcf7-submit,
-.wpcf7-form input[type="submit"],
-.wpcf7-form button[type="submit"],
-button.cmr-arrow-fixed,
-.cmr-arrow-fixed {
-    background: #000000 !important;
-    background-color: #000000 !important;
-    color: #ffffff !important;
-    border: none !important;
-    border-radius: 50px !important;
-    font-family: 'Instrument Sans', sans-serif !important;
-    font-size: 16px !important;
-    font-weight: 500 !important;
-    padding: 16px 32px !important;
-    min-height: 48px !important;
-    width: 100% !important;
-    cursor: pointer !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    line-height: 1 !important;
-    box-sizing: border-box !important;
-    transition: background-color 0.2s ease, transform 0.1s ease !important;
-    box-shadow: none !important;
-    outline: none !important;
-    text-align: center !important;
-}
 
-.elementor-field-type-submit button:hover,
-.elementor-field-type-submit .elementor-button:hover,
-.elementor-button[type="submit"]:hover,
-button.wpcf7-submit:hover,
-input[type="submit"].wpcf7-submit:hover,
-.wpcf7-form input[type="submit"]:hover,
-.wpcf7-form button[type="submit"]:hover,
-button.cmr-arrow-fixed:hover,
-.cmr-arrow-fixed:hover {
-    background: #1a1a1a !important;
-    background-color: #1a1a1a !important;
-    color: #ffffff !important;
-}
-
-.cmr-button-icon-arrow,
-.cmr-arrow-icon,
-button[type="submit"] .cmr-arrow-icon,
-.elementor-field-type-submit .cmr-arrow-icon,
-.elementor-button .cmr-arrow-icon {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    vertical-align: middle !important;
-    margin-left: 6px !important;
-    width: 15px !important;
-    height: 13px !important;
-    fill: currentColor !important;
-    color: inherit !important;
-    flex-shrink: 0 !important;
-}
-
-.cmr-button-icon-arrow svg,
-.cmr-arrow-icon svg,
-button[type="submit"] svg.cmr-arrow-icon,
-.elementor-button svg.cmr-arrow-icon {
-    width: 15px !important;
-    height: 13px !important;
-    fill: currentColor !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-}
 
 /* Purple Banner CTA Outline Button (Transparent background, No Black) */
 [style*="background-color: #4820B0"] .elementor-button,
@@ -11667,9 +11598,6 @@ a.btn-outline * {
 .insights-featured-content .insights-title:hover,
 .insights-featured-content .insights-title a:hover,
 .insights-featured-content:hover .insights-title,
-.insights-featured-card:hover .insights-more-link,
-.insights-featured-card .insights-more-link:hover,
-.insights-featured-content .insights-more-link:hover,
 .cmr-fi-slide:hover .cmr-fi-slide-title,
 .cmr-fi-slide:hover .cmr-fi-slide-title a,
 .cmr-fi-slide-title:hover {

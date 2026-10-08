@@ -4594,9 +4594,7 @@ add_action( 'wp_head', function() {
         .insights-featured-card:hover .insights-title a,
         .insights-featured-content:hover .insights-title,
         .insights-featured-content .insights-title:hover,
-        .insights-featured-content .insights-title a:hover,
-        .insights-featured-card:hover .insights-more-link,
-        .insights-featured-content .insights-more-link:hover {
+        .insights-featured-content .insights-title a:hover {
             color: #00D2B9 !important;
         }
 
