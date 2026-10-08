@@ -538,20 +538,6 @@ $is_audio_post = (strtoupper($media_type) === 'PODCAST') || preg_match('/\.(mp3|
             
             <!-- Right Side: Content -->
             <div class="cmr-media-content">
-                <h2>About this <?php echo esc_html($media_type); ?></h2>
-                <div class="cmr-media-description">
-                    <?php 
-                        $content = get_the_content();
-                        if(empty($content)) {
-                            // Dummy content from image if post is empty
-                            echo '<p>In today\'s competitive landscape, generating leads is only half the battle—closing them effectively is where real value lies. This episode explores how organizations can refine their sales strategies using market intelligence, behavioral insights, and data-driven decision-making.</p>';
-                            echo '<p>From understanding customer intent to optimizing engagement touchpoints, this discussion highlights the key factors influencing successful conversions across industries.</p>';
-                        } else {
-                            the_content();
-                        }
-                    ?>
-                </div>
-                
                 <div class="cmr-media-key-parts">
                     <h2>Key parts of <?php echo esc_html(get_the_title()); ?></h2>
                     <ul class="key-parts-list custom-ul">
