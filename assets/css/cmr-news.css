@@ -1371,4 +1371,16 @@ h3.cmr-mc-title {
     }
 }
 
+/* Detail Press Release / CMR News - Constrain top title and download meta row to 75% width (col-xl-9) */
+@media (min-width: 1200px) {
+    .single-cmr_news .blog-detail-page .row.justify-content-center.row-padding-bottom > div,
+    .single-cmr_news .blog-detail-page .row.justify-content-center.row-padding-bottom > .col-xl-9,
+    .single-cmr_news .blog-detail-page .row.justify-content-center.row-padding-bottom > .col-xxl-9 {
+        flex: 0 0 75% !important;
+        max-width: 75% !important;
+        width: 75% !important;
+    }
+}
+
+
 

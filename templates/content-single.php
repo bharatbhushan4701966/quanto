@@ -152,57 +152,35 @@
 
                 echo '<div class="row justify-content-center row-padding-bottom">';
 
+                    if ( ( function_exists( 'quanto_is_press_release' ) && quanto_is_press_release() ) || get_post_type() === 'cmr_news' ) {
 
+                        $column_class = 'col-12 col-xl-9 col-xxl-9';
 
-                    if ( class_exists('ReduxFramework') ) {
-
-
+                    } else if ( class_exists('ReduxFramework') ) {
 
                         $column_class = quanto_opt('quanto_blog_details_title_column');
 
-
-
                         if ( empty($column_class) ) {
-
-
 
                             $column_class = 'col-xl-9 col-xxl-9';
 
-
-
                         }
-
-
-
-                        echo '<div class="' . esc_attr($column_class) . '">';
-
-
 
                     } else {
 
-
-
                         if ( is_active_sidebar('quanto-blog-sidebar') ) {
 
-
-
-                            echo '<div class="col-xl-12 col-xxl-12">';
-
-
+                            $column_class = 'col-xl-12 col-xxl-12';
 
                         } else {
 
-
-
-                            echo '<div class="col-xl-9 col-xxl-9">';
-
-
+                            $column_class = 'col-xl-9 col-xxl-9';
 
                         }
 
-
-
                     }
+
+                    echo '<div class="' . esc_attr($column_class) . '">';
 
 
 
