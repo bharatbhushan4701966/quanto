@@ -67,6 +67,23 @@ add_action( 'wp_footer', function() {
                 );
 
                 inputs.forEach(function(input) {
+                    var inputName = (input.name || '').toLowerCase();
+                    var inputId = (input.id || '').toLowerCase();
+                    if (inputName === 'coupon_code' || 
+                        inputId === 'coupon_code' || 
+                        input.classList.contains('cmr-coupon-input') || 
+                        inputName === 'billing_address_2' || 
+                        inputName === 'order_comments' || 
+                        input.hasAttribute('data-optional') ||
+                        input.closest('.cmr-promo-box') ||
+                        input.closest('.cmr-coupon-form')) {
+                        input.removeAttribute('required');
+                        input.required = false;
+                        input.removeAttribute('aria-required');
+                        input.classList.remove('cmr-input-error');
+                        return;
+                    }
+
                     if (!input.hasAttribute('required')) {
                         input.setAttribute('required', 'required');
                         input.required = true;
@@ -292,8 +309,16 @@ add_action( 'wp_footer', function() {
             var form = e.target;
             if (!form || form.tagName !== 'FORM') return;
 
-            // Exclude search forms
-            if (form.classList.contains('search-form') || form.getAttribute('role') === 'search') return;
+            // Exclude search forms and WooCommerce forms (Checkout, Cart, Account, Login)
+            if (form.classList.contains('search-form') || 
+                form.getAttribute('role') === 'search' ||
+                form.classList.contains('woocommerce-checkout') ||
+                form.classList.contains('woocommerce-cart-form') ||
+                form.classList.contains('woocommerce-form-login') ||
+                form.classList.contains('woocommerce-form-register') ||
+                form.classList.contains('checkout') ||
+                form.closest('.woocommerce-checkout') ||
+                form.closest('.cmr-checkout-wrap')) return;
 
             var invalidFields = [];
             var inputs = form.querySelectorAll(
@@ -302,6 +327,21 @@ add_action( 'wp_footer', function() {
 
             inputs.forEach(function(input) {
                 if (input.offsetParent === null && !input.closest('.elementor-popup-modal') && !input.closest('#cmr-review-modal-overlay')) {
+                    return;
+                }
+
+                // Skip optional fields and coupon codes
+                var inputName = (input.name || '').toLowerCase();
+                var inputId = (input.id || '').toLowerCase();
+                if (inputName === 'coupon_code' || 
+                    inputId === 'coupon_code' || 
+                    input.classList.contains('cmr-coupon-input') || 
+                    inputName === 'billing_address_2' || 
+                    inputName === 'order_comments' || 
+                    input.hasAttribute('data-optional') ||
+                    input.closest('.cmr-promo-box') ||
+                    input.closest('.cmr-coupon-form')) {
+                    input.classList.remove('cmr-input-error');
                     return;
                 }
 

@@ -1140,3 +1140,23 @@ form.woocommerce-form-login .button {
 form.woocommerce-form-login .button:hover {
     background: #3e1b99 !important;
 }
+
+/* Ensure coupon input is strictly optional and has clean styling */
+.cmr-coupon-input,
+#coupon_code,
+input[name="coupon_code"],
+input#coupon_code.cmr-input-error,
+.cmr-coupon-input.cmr-input-error {
+    border: 1px solid #d1d5db !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    color: #111827 !important;
+}
+
+.cmr-coupon-input:focus,
+#coupon_code:focus,
+input[name="coupon_code"]:focus {
+    border-color: #111827 !important;
+    box-shadow: 0 0 0 2px rgba(17, 24, 39, 0.08) !important;
+}
