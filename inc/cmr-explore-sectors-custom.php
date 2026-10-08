@@ -13,6 +13,11 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
         // Enqueue explore sectors CSS
         wp_enqueue_style( 'cmr-explore-sectors' );
 
+        $atts = shortcode_atts( array(
+            'id' => 'our-offerings',
+        ), $atts );
+        $anchor_id = ! empty( $atts['id'] ) ? sanitize_html_class( $atts['id'] ) : 'our-offerings';
+
         // Unique ID to avoid GSAP conflict if multiple instances exist
         $unique_id = uniqid('cmr_explore_');
 
@@ -75,7 +80,11 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
 
         ob_start();
         ?>
-        <div class="cmr-explore-sectors-section" id="<?php echo esc_attr( $unique_id ); ?>_section">
+        <div id="<?php echo esc_attr( $anchor_id ); ?>" class="cmr-explore-sectors-anchor" style="position: relative; top: -30px; scroll-margin-top: 100px;"></div>
+        <?php if ( $anchor_id !== 'our-offerings' ) : ?>
+            <div id="our-offerings" class="cmr-explore-sectors-anchor" style="position: relative; top: -30px; scroll-margin-top: 100px;"></div>
+        <?php endif; ?>
+        <div class="cmr-explore-sectors-section" id="<?php echo esc_attr( $unique_id ); ?>_section" style="scroll-margin-top: 100px;">
             <div class="explore-sectors-container">
                 <!-- Section Title: Aap title ko yahan se edit kar sakte hain -->
                 <h2 class="explore-sectors-title">Our Offerings </h2>
@@ -83,6 +92,15 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
             
 
             <style>
+                html {
+                    scroll-behavior: smooth;
+                }
+                .cmr-explore-sectors-anchor,
+                #our-offerings,
+                #<?php echo esc_attr( $anchor_id ); ?>,
+                #<?php echo esc_attr( $unique_id ); ?>_section {
+                    scroll-margin-top: 100px !important;
+                }
                 #<?php echo esc_attr( $unique_id ); ?>_section {
                     overflow: hidden !important;
                     position: relative !important;
@@ -297,6 +315,27 @@ if ( ! function_exists( 'cmr_explore_sectors_custom_shortcode' ) ) {
                         }, 300);
                     });
                 }
+
+                // Smooth scroll handling for buttons linking to #our-offerings or #<?php echo esc_js( $anchor_id ); ?>
+                function bindOfferingsAnchor() {
+                    var sel = 'a[href*="#our-offerings"], a[href*="#<?php echo esc_js( $anchor_id ); ?>"]';
+                    document.querySelectorAll(sel).forEach(function(link) {
+                        if (link.getAttribute('data-cmr-anchor-bound')) return;
+                        link.setAttribute('data-cmr-anchor-bound', 'true');
+                        link.addEventListener('click', function(e) {
+                            var target = document.getElementById('<?php echo esc_js( $anchor_id ); ?>') || document.getElementById('our-offerings') || document.getElementById('<?php echo esc_js( $unique_id ); ?>_section');
+                            if (target) {
+                                e.preventDefault();
+                                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                if (window.history && window.history.pushState) {
+                                    window.history.pushState(null, null, '#<?php echo esc_js( $anchor_id ); ?>');
+                                }
+                            }
+                        });
+                    });
+                }
+                bindOfferingsAnchor();
+                setTimeout(bindOfferingsAnchor, 600);
             });
             </script>
         </div>
