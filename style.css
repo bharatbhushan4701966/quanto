@@ -11601,6 +11601,83 @@ h3.cmr-mc-title,
     transform: scale(1.06) !important;
 }
 
+/* CMR Video / Live Cards Image & Play Icon Hover Scale */
+.elementor-widget-video .elementor-custom-embed-image-overlay,
+.elementor-element-9b2ddd6 .elementor-custom-embed-image-overlay,
+.elementor-element-d713748 .elementor-custom-embed-image-overlay,
+[data-id="9b2ddd6"] .elementor-custom-embed-image-overlay,
+[data-id="d713748"] .elementor-custom-embed-image-overlay,
+.cmr-trending-img-wrap img,
+.cmr-ls-img-wrap img,
+.cmr-podcast-img-wrap img,
+.cmr-topview-feat-img img {
+    transform: scale(1) !important;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+.elementor-widget-video:hover .elementor-custom-embed-image-overlay,
+.elementor-element-ec16651:hover .elementor-custom-embed-image-overlay,
+.elementor-element-ed5537e:hover .elementor-custom-embed-image-overlay,
+[data-id="ec16651"]:hover .elementor-custom-embed-image-overlay,
+[data-id="ed5537e"]:hover .elementor-custom-embed-image-overlay,
+[data-id="c2c8f73"] .elementor-element:hover .elementor-custom-embed-image-overlay,
+.cmr-trending-card:hover .cmr-trending-img-wrap img,
+.cmr-ls-card:hover .cmr-ls-img-wrap img,
+.cmr-podcast-card:hover .cmr-podcast-img-wrap img {
+    transform: scale(1.06) !important;
+}
+
+.elementor-custom-embed-play,
+.cmr-trending-play-btn,
+.cmr-ls-play-btn,
+.cmr-podcast-play-btn {
+    transition: transform 0.3s ease, background 0.3s ease !important;
+}
+
+.elementor-widget-video:hover .elementor-custom-embed-play,
+.elementor-custom-embed-play:hover,
+.cmr-trending-card:hover .cmr-trending-play-btn,
+.cmr-ls-card:hover .cmr-ls-play-btn,
+.cmr-podcast-card:hover .cmr-podcast-play-btn {
+    transform: scale(1.1) !important;
+}
+
+/* CTA Buttons & Action Elements Hover Scale */
+.elementor-button,
+.elementor-widget-button .elementor-button,
+.cmr-crc-btn,
+.cmr-trending-btn,
+.cmr-stay-updated-btn,
+.cmr-spotlight-btn,
+.cmr-mc-load-more,
+.cmr-mc-pill,
+.cmr-mc-filter-btn {
+    transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+}
+
+.elementor-button:hover,
+.elementor-widget-button .elementor-button:hover,
+.cmr-crc-btn:hover,
+.cmr-trending-btn:hover,
+.cmr-stay-updated-btn:hover,
+.cmr-spotlight-btn:hover,
+.cmr-mc-load-more:hover {
+    transform: scale(1.05) !important;
+}
+
+/* Link CTA Arrow Hover Translate / Scale */
+.quanto-link-btn,
+.cmr-ls-explore,
+.cmr-mc-read-coverage {
+    transition: all 0.25s ease !important;
+}
+
+.quanto-link-btn:hover,
+.cmr-ls-explore:hover,
+.cmr-mc-read-coverage:hover {
+    transform: scale(1.03) !important;
+}
+
 /* ==========================================================================
    CMR Live / Podcast / Webinar / Video Insights Section Styling
    - Type/Category Badges: Purple (#4820B0)
