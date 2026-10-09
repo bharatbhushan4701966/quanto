@@ -13282,25 +13282,42 @@ button.cmr-arrow-fixed .cmr-arrow-icon {
     color: #6A42E5 !important;
 }
 
+.cmr-vpi-read-more,
+.cmr-mui-read-more {
+    color: #111 !important;
+    border-bottom: 1px solid #111 !important;
+}
+
+.cmr-vpi-read-more svg,
+.cmr-mui-read-more svg {
+    stroke: #111 !important;
+    color: #111 !important;
+}
+
 .cmr-vpi-card:hover .cmr-vpi-read-more,
+.cmr-mui-card:hover .cmr-mui-read-more {
+    color: #111 !important;
+    border-bottom-color: #111 !important;
+}
+
+.cmr-vpi-card:hover .cmr-vpi-read-more svg,
+.cmr-mui-card:hover .cmr-mui-read-more svg {
+    color: #111 !important;
+    stroke: #111 !important;
+    transform: none !important;
+}
+
 .cmr-vpi-read-more:hover,
-.cmr-mui-card:hover .cmr-mui-read-more,
 .cmr-mui-read-more:hover,
-.cmr-vp-slide:hover .cmr-vp-slide-link,
 .cmr-vp-slide-link:hover,
-.cmr-mu-slide:hover .cmr-mu-slide-link,
 .cmr-mu-slide-link:hover {
     color: #6A42E5 !important;
     border-color: #6A42E5 !important;
 }
 
-.cmr-vpi-card:hover .cmr-vpi-read-more svg,
 .cmr-vpi-read-more:hover svg,
-.cmr-mui-card:hover .cmr-mui-read-more svg,
 .cmr-mui-read-more:hover svg,
-.cmr-vp-slide:hover .cmr-vp-slide-link svg,
 .cmr-vp-slide-link:hover svg,
-.cmr-mu-slide:hover .cmr-mu-slide-link svg,
 .cmr-mu-slide-link:hover svg {
     color: #6A42E5 !important;
     stroke: #6A42E5 !important;
@@ -13311,5 +13328,6 @@ button.cmr-arrow-fixed .cmr-arrow-icon {
 .cmr-mui-card:hover .cmr-mui-card-img {
     transform: scale(1.05) !important;
 }
+
 
 

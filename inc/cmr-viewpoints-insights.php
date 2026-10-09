@@ -216,9 +216,9 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
                 align-items: center;
                 font-size: 15px;
                 font-weight: 600;
-                color: #111;
+                color: #111 !important;
                 text-decoration: none;
-                border-bottom: 1px solid #111;
+                border-bottom: 1px solid #111 !important;
                 padding-bottom: 2px;
                 align-self: flex-start;
                 margin-top: auto;
@@ -228,22 +228,31 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
                 width: 16px;
                 height: 16px;
                 margin-left: 5px;
+                stroke: #111 !important;
                 transition: color 0.3s ease, stroke 0.3s ease, transform 0.3s ease;
             }
-            .cmr-vpi-card:hover .cmr-vpi-read-more,
+            .cmr-vpi-card:hover .cmr-vpi-read-more {
+                color: #111 !important;
+                border-bottom-color: #111 !important;
+            }
+            .cmr-vpi-card:hover .cmr-vpi-read-more svg {
+                color: #111 !important;
+                stroke: #111 !important;
+                transform: none !important;
+            }
             .cmr-vpi-read-more:hover {
                 color: #6A42E5 !important;
                 border-bottom-color: #6A42E5 !important;
             }
-            .cmr-vpi-card:hover .cmr-vpi-read-more svg,
             .cmr-vpi-read-more:hover svg {
                 color: #6A42E5 !important;
                 stroke: #6A42E5 !important;
-                transform: translate(2px, -2px);
+                transform: translate(2px, -2px) !important;
             }
             .cmr-vpi-card-hidden {
                 display: none !important;
             }
+
 
             .cmr-vpi-btn {
                 background: #fff;
