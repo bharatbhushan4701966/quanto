@@ -232,29 +232,43 @@ if ( ! function_exists( 'cmr_industry_intelligence_trends_shortcode' ) ) {
                 gap: 6px;
                 font-size: 14px;
                 font-weight: 600;
-                color: #111;
+                color: #111 !important;
                 text-decoration: none;
-                border-bottom: 1.5px solid #111;
+                border-bottom: 1.5px solid #111 !important;
                 padding-bottom: 2px;
                 align-self: flex-start;
                 margin-top: auto;
                 transition: color 0.3s ease, border-color 0.3s ease;
             }
 
-            .cmr-intel-trends-more:hover {
-                color: #555;
-                border-color: #555;
-            }
-
             .cmr-intel-trends-more svg {
                 width: 12px;
                 height: 12px;
-                transition: transform 0.3s ease;
+                stroke: #111 !important;
+                transition: transform 0.3s ease, stroke 0.3s ease;
+            }
+
+            .cmr-intel-trends-card:hover .cmr-intel-trends-more {
+                color: #111 !important;
+                border-bottom-color: #111 !important;
+            }
+
+            .cmr-intel-trends-card:hover .cmr-intel-trends-more svg {
+                color: #111 !important;
+                stroke: #111 !important;
+                transform: none !important;
+            }
+
+            .cmr-intel-trends-more:hover {
+                color: #6A42E5 !important;
+                border-color: #6A42E5 !important;
             }
 
             .cmr-intel-trends-more:hover svg {
-                transform: translate(2px, -2px);
+                stroke: #6A42E5 !important;
+                transform: translate(2px, -2px) !important;
             }
+
         </style>
 
         <div class="cmr-intel-trends-wrapper" id="cmr-intel-trends-section">

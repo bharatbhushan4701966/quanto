@@ -273,23 +273,32 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
                 gap: 8px;
                 font-size: 15px;
                 font-weight: 600;
-                color: #fff;
+                color: #fff !important;
                 text-decoration: none;
                 transition: color 0.3s ease;
-            }
-            .cmr-fi-slide:hover .cmr-fi-more-link,
-            .cmr-fi-more-link:hover {
-                color: #00D2B9;
             }
             .cmr-fi-more-link svg {
                 width: 14px;
                 height: 14px;
-                transition: transform 0.3s ease;
+                stroke: #fff !important;
+                transition: transform 0.3s ease, stroke 0.3s ease;
             }
-            .cmr-fi-slide:hover .cmr-fi-more-link svg,
+            .cmr-fi-slide:hover .cmr-fi-more-link {
+                color: #fff !important;
+            }
+            .cmr-fi-slide:hover .cmr-fi-more-link svg {
+                color: #fff !important;
+                stroke: #fff !important;
+                transform: none !important;
+            }
+            .cmr-fi-more-link:hover {
+                color: #00D2B9 !important;
+            }
             .cmr-fi-more-link:hover svg {
-                transform: translate(3px, -3px);
+                stroke: #00D2B9 !important;
+                transform: translate(3px, -3px) !important;
             }
+
 
             /* Thumbnails */
             .cmr-fi-thumbs {
