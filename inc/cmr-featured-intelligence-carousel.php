@@ -10,19 +10,75 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
     function cmr_featured_intelligence_carousel_shortcode( $atts ) {
         $atts = shortcode_atts( array(
-            'post_type'      => 'cmr_news',
+            'post_type'      => '',
+            'category'       => '',
             'posts_per_page' => 5,
         ), $atts );
 
+        global $post;
+        $page_slug = ( is_page() && isset( $post->post_name ) ) ? $post->post_name : '';
+
+        // Determine category slugs based on attribute or current page
+        $cat_slugs = array();
+        if ( ! empty( $atts['category'] ) ) {
+            $cat_slugs = array_map( 'trim', explode( ',', $atts['category'] ) );
+        } elseif ( ! empty( $page_slug ) ) {
+            if ( in_array( $page_slug, array( 'industry-intelligence', 'industry-connect' ), true ) ) {
+                $cat_slugs = array( 'industry-intelligence', 'industry-connect', 'industry-insights', 'industry' );
+            } elseif ( in_array( $page_slug, array( 'viewpoints', 'viewpoint' ), true ) ) {
+                $cat_slugs = array( 'viewpoints', 'viewpoint' );
+            } elseif ( in_array( $page_slug, array( 'market-updates', 'market-update' ), true ) ) {
+                $cat_slugs = array( 'market-updates', 'market-update' );
+            } elseif ( $page_slug === 'consulting-advisory' ) {
+                $cat_slugs = array( 'consulting-advisory', 'consulting' );
+            } elseif ( $page_slug === 'marketing-services' ) {
+                $cat_slugs = array( 'marketing-services', 'marketing' );
+            } elseif ( $page_slug === 'enterprise-connect' ) {
+                $cat_slugs = array( 'enterprise-connect' );
+            } elseif ( $page_slug === 'channel-connect' ) {
+                $cat_slugs = array( 'channel-connect' );
+            } elseif ( $page_slug === 'smb-connect' ) {
+                $cat_slugs = array( 'smb-connect' );
+            } else {
+                $cat_slugs = array( $page_slug );
+            }
+        } else {
+            $cat_slugs = array( 'industry-intelligence', 'industry-connect', 'industry-insights', 'industry' );
+        }
+
+        $post_type = ! empty( $atts['post_type'] ) ? $atts['post_type'] : array( 'post', 'cmr_news' );
+
         $query_args = array(
-            'post_type'      => $atts['post_type'],
-            'posts_per_page' => $atts['posts_per_page'],
+            'post_type'      => $post_type,
+            'posts_per_page' => intval( $atts['posts_per_page'] ),
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
         );
 
+        if ( ! empty( $cat_slugs ) ) {
+            $query_args['tax_query'] = array(
+                'relation' => 'OR',
+                array(
+                    'taxonomy' => 'category',
+                    'field'    => 'slug',
+                    'terms'    => $cat_slugs,
+                ),
+                array(
+                    'taxonomy' => 'cmr_news_category',
+                    'field'    => 'slug',
+                    'terms'    => $cat_slugs,
+                ),
+            );
+        }
+
         $featured_query = new WP_Query( $query_args );
+
+        // Fallback to general posts if no posts found with specific tax query
+        if ( ! $featured_query->have_posts() && ! empty( $query_args['tax_query'] ) ) {
+            unset( $query_args['tax_query'] );
+            $featured_query = new WP_Query( $query_args );
+        }
 
         if ( ! $featured_query->have_posts() ) {
             return '<p>No featured insights found.</p>';
@@ -37,13 +93,33 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
                 $thumbnail_url = 'https://via.placeholder.com/1200x800?text=Featured+Image';
             }
             
-            // Categories
+            // Categories & Badges
             $category_name = 'Industry Intelligence';
-            $badge_name = 'Trends';
+            $badge_name = 'Industry Intelligence';
             $terms = get_the_terms( get_the_ID(), 'category' );
+            if ( ! $terms || is_wp_error( $terms ) ) {
+                $terms = get_the_terms( get_the_ID(), 'cmr_news_category' );
+            }
             if ( $terms && ! is_wp_error( $terms ) ) {
-                $category_name = $terms[0]->name;
-                $badge_name = $terms[0]->name;
+                $found_term = null;
+                foreach ( $terms as $t ) {
+                    $t_slug = strtolower( $t->slug );
+                    $t_name = strtolower( $t->name );
+                    if ( $t_slug !== 'uncategorized' && $t_name !== 'cmr in news' && $t_slug !== 'cmr-in-news' && $t_name !== 'news' && $t_slug !== 'news' ) {
+                        $found_term = $t;
+                        break;
+                    }
+                }
+                if ( ! $found_term ) {
+                    $found_term = $terms[0];
+                }
+                $category_name = $found_term->name;
+                $badge_name = $found_term->name;
+            }
+
+            if ( in_array( strtolower( $badge_name ), array( 'cmr in news', 'news', 'uncategorized' ), true ) ) {
+                $badge_name = 'Industry Intelligence';
+                $category_name = 'Industry Intelligence';
             }
 
             // Read time calculation
