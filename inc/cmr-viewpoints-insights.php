@@ -240,12 +240,20 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
                 font-size: 16px;
                 font-weight: 500;
                 cursor: pointer;
-                transition: all 0.2s;
+                transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, color 0.3s ease, background 0.3s ease !important;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                transform: scale(1);
             }
             .cmr-vpi-btn:hover {
                 background: #f8f8f8;
-                border-color: #aaa;
+                border-color: #6A42E5 !important;
+                color: #6A42E5 !important;
+                transform: scale(1.05) !important;
             }
+
             .cmr-vpi-pagination {
                 width: 100%;
                 text-align: center;

@@ -13187,3 +13187,61 @@ button.cmr-arrow-fixed .cmr-arrow-icon {
     word-break: break-word !important;
     white-space: normal !important;
 }
+
+/* Category Post Cards Hover Title Color */
+.cmr-cat-card-title,
+.cmr-cat-card-title a {
+    transition: color 0.3s ease !important;
+}
+
+.cmr-cat-card:hover .cmr-cat-card-title,
+.cmr-cat-card:hover .cmr-cat-card-title a,
+.cmr-cat-card:hover h3,
+.cmr-cat-card:hover h3 a,
+.cmr-cat-card-title:hover,
+.cmr-cat-card-title:hover a,
+.cmr-cat-card-title a:hover {
+    color: #6A42E5 !important;
+}
+
+.cmr-cat-card:hover .cmr-cat-read-more,
+.cmr-cat-read-more:hover {
+    color: #6A42E5 !important;
+    border-color: #6A42E5 !important;
+    gap: 10px !important;
+}
+
+/* CMR View All & Load More Buttons Hover Scale */
+.intel-load-more-btn,
+.cmr-vpi-btn,
+.cmr-mui-btn,
+.cmr-intel-list-load-more a,
+.cmr-intel-list-load-more button,
+#cmr-intel-load-more-btn,
+.cmr-smbcgd-load-more,
+.cmr-enterprisecgd-load-more,
+.cmr-channelcgd-load-more,
+.cmr-mrg-load-more,
+.cmr-load-more-btn,
+.cmr-view-all-btn {
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, color 0.3s ease, background 0.3s ease !important;
+    transform: scale(1);
+}
+
+.intel-load-more-btn:hover,
+.cmr-vpi-btn:hover,
+.cmr-mui-btn:hover,
+.cmr-intel-list-load-more a:hover,
+.cmr-intel-list-load-more button:hover,
+#cmr-intel-load-more-btn:hover,
+.cmr-smbcgd-load-more:hover,
+.cmr-enterprisecgd-load-more:hover,
+.cmr-channelcgd-load-more:hover,
+.cmr-mrg-load-more:hover,
+.cmr-load-more-btn:hover,
+.cmr-view-all-btn:hover {
+    transform: scale(1.05) !important;
+    border-color: #6A42E5 !important;
+    color: #6A42E5 !important;
+}
+

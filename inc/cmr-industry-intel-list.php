@@ -260,7 +260,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 padding: 0;
                 border-radius: 40px;
                 cursor: pointer;
-                transition: all 0.3s ease;
+                transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, color 0.3s ease, background 0.3s ease !important;
                 font-family: inherit;
                 width: 260px;
                 height: 44px;
@@ -269,13 +269,16 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                 align-items: center;
                 text-decoration: none;
                 box-sizing: border-box;
+                transform: scale(1);
             }
             .cmr-intel-list-load-more a:hover,
             .cmr-intel-list-load-more button:hover {
                 background: #fafafa;
-                border-color: #6B3FA0;
-                color: #6B3FA0;
+                border-color: #6B3FA0 !important;
+                color: #6B3FA0 !important;
+                transform: scale(1.05) !important;
             }
+
             .cmr-pagination-style {
                 display: flex;
                 justify-content: center;
