@@ -12691,23 +12691,17 @@ header .main-menu > ul > li > a::before,
 }
 
 /* ==========================================================================
-   Global Form Submit Button Styling (Full-Width Black Pill Button)
+   Global Form Submit Button Styling (Full-Width Black Pill Button for General Pages)
    ========================================================================== */
-.wpcf7 input[type="submit"],
-.wpcf7 button[type="submit"],
-.wpcf7 button,
-.wpcf7-submit,
-input.wpcf7-submit,
-button.wpcf7-submit,
+.wpcf7 input[type="submit"]:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+.wpcf7 button[type="submit"]:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+.wpcf7 button:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+.wpcf7-submit:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+input.wpcf7-submit:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+button.wpcf7-submit:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
 button.cmr-arrow-fixed,
-.cmr-form input[type="submit"],
-.cmr-form button[type="submit"],
-.custom-consultation-form input[type="submit"],
-.custom-consultation-form button[type="submit"],
-.custom-report-form input[type="submit"],
-.custom-report-form button[type="submit"],
-.elementor-form button[type="submit"],
-.wpcf7-form .wpcf7-submit {
+.elementor-form button[type="submit"]:not(.elementor-popup-modal *),
+.wpcf7-form .wpcf7-submit:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *) {
     width: 100% !important;
     display: flex !important;
     align-items: center !important;
@@ -12733,26 +12727,93 @@ button.cmr-arrow-fixed,
     outline: none !important;
 }
 
-.wpcf7 input[type="submit"]:hover,
-.wpcf7 button[type="submit"]:hover,
-.wpcf7 button:hover,
-.wpcf7-submit:hover,
-input.wpcf7-submit:hover,
-button.wpcf7-submit:hover,
+.wpcf7 input[type="submit"]:hover:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+.wpcf7 button[type="submit"]:hover:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+.wpcf7 button:hover:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+.wpcf7-submit:hover:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+input.wpcf7-submit:hover:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+button.wpcf7-submit:hover:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
 button.cmr-arrow-fixed:hover,
+.elementor-form button[type="submit"]:hover:not(.elementor-popup-modal *),
+.wpcf7-form .wpcf7-submit:hover:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *) {
+    background: #1f1f1f !important;
+    background-color: #1f1f1f !important;
+    color: #ffffff !important;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* ==========================================================================
+   CMR Modal Form Submit Buttons - Purple Gradient Styling
+   ========================================================================== */
+.elementor-popup-modal input[type="submit"],
+.elementor-popup-modal button[type="submit"],
+.elementor-popup-modal .wpcf7-submit,
+.elementor-popup-modal input.wpcf7-submit,
+.dialog-widget-content input[type="submit"],
+.dialog-widget-content .wpcf7-submit,
+.cmr-form input[type="submit"],
+.cmr-form button[type="submit"],
+.custom-consultation-form input[type="submit"],
+.custom-consultation-form button[type="submit"],
+.custom-report-form input[type="submit"],
+.custom-report-form button[type="submit"],
+.custom-subscribe-form input[type="submit"],
+.custom-subscribe-form button[type="submit"],
+.elementor-7637 input[type="submit"],
+.elementor-7637 button[type="submit"],
+.elementor-7849 input[type="submit"],
+.elementor-7849 button[type="submit"],
+.elementor-7832 input[type="submit"],
+.elementor-7832 button[type="submit"],
+.elementor-7758 input[type="submit"],
+.elementor-7758 button[type="submit"],
+.elementor-element-42f4ebe input[type="submit"] {
+    background: #6A42E5 !important;
+    background: linear-gradient(135deg, #6A42E5 0%, #4B2DBF 100%) !important;
+    background-color: #6A42E5 !important;
+    color: #ffffff !important;
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    border: none !important;
+    border-radius: 60px !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 14px rgba(106, 66, 229, 0.3) !important;
+    transition: all 0.25s ease-in-out !important;
+}
+
+.elementor-popup-modal input[type="submit"]:hover,
+.elementor-popup-modal button[type="submit"]:hover,
+.elementor-popup-modal .wpcf7-submit:hover,
+.elementor-popup-modal input.wpcf7-submit:hover,
+.dialog-widget-content input[type="submit"]:hover,
+.dialog-widget-content .wpcf7-submit:hover,
 .cmr-form input[type="submit"]:hover,
 .cmr-form button[type="submit"]:hover,
 .custom-consultation-form input[type="submit"]:hover,
 .custom-consultation-form button[type="submit"]:hover,
 .custom-report-form input[type="submit"]:hover,
 .custom-report-form button[type="submit"]:hover,
-.elementor-form button[type="submit"]:hover,
-.wpcf7-form .wpcf7-submit:hover {
-    background: #1f1f1f !important;
-    background-color: #1f1f1f !important;
+.custom-subscribe-form input[type="submit"]:hover,
+.custom-subscribe-form button[type="submit"]:hover,
+.elementor-7637 input[type="submit"]:hover,
+.elementor-7637 button[type="submit"]:hover,
+.elementor-7849 input[type="submit"]:hover,
+.elementor-7849 button[type="submit"]:hover,
+.elementor-7832 input[type="submit"]:hover,
+.elementor-7832 button[type="submit"]:hover,
+.elementor-7758 input[type="submit"]:hover,
+.elementor-7758 button[type="submit"]:hover,
+.elementor-element-42f4ebe input[type="submit"]:hover {
+    background: #582cd7 !important;
+    background: linear-gradient(135deg, #582cd7 0%, #3e1fa8 100%) !important;
+    background-color: #582cd7 !important;
     color: #ffffff !important;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25) !important;
+    box-shadow: 0 6px 20px rgba(106, 66, 229, 0.45) !important;
     transform: translateY(-1px) !important;
+    opacity: 0.95 !important;
 }
 
 .wpcf7 button .elementor-button-content-wrapper,
