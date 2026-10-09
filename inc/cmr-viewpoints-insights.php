@@ -153,7 +153,11 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
                 display: block;
                 border-radius: 4px;
                 margin-bottom: 20px;
-                transition: transform 0.3s ease;
+                transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            }
+            .cmr-vpi-card:hover .cmr-vpi-card-img,
+            .cmr-vpi-card-img:hover {
+                transform: scale(1.05) !important;
             }
             .cmr-vpi-card-meta {
                 display: flex;
@@ -186,10 +190,16 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
-                transition: color 0.3s ease;
+                transition: color 0.3s ease !important;
             }
-            .cmr-vpi-card-title:hover {
-                color: #4625A9 !important;
+            .cmr-vpi-card:hover .cmr-vpi-card-title,
+            .cmr-vpi-card:hover .cmr-vpi-card-title a,
+            .cmr-vpi-card:hover h3,
+            .cmr-vpi-card:hover h3 a,
+            .cmr-vpi-card-title:hover,
+            .cmr-vpi-card-title:hover a,
+            .cmr-vpi-card-title a:hover {
+                color: #6A42E5 !important;
             }
             .cmr-vpi-card-excerpt {
                 font-size: 15px;
@@ -220,17 +230,21 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
                 margin-left: 5px;
                 transition: color 0.3s ease, stroke 0.3s ease, transform 0.3s ease;
             }
+            .cmr-vpi-card:hover .cmr-vpi-read-more,
             .cmr-vpi-read-more:hover {
-                color: #4625A9 !important;
-                border-bottom-color: #4625A9 !important;
+                color: #6A42E5 !important;
+                border-bottom-color: #6A42E5 !important;
             }
+            .cmr-vpi-card:hover .cmr-vpi-read-more svg,
             .cmr-vpi-read-more:hover svg {
-                color: #4625A9 !important;
-                stroke: #4625A9 !important;
+                color: #6A42E5 !important;
+                stroke: #6A42E5 !important;
+                transform: translate(2px, -2px);
             }
             .cmr-vpi-card-hidden {
                 display: none !important;
             }
+
             .cmr-vpi-btn {
                 background: #fff;
                 color: #111;
@@ -514,56 +528,8 @@ if ( ! function_exists( 'cmr_viewpoints_insights_shortcode' ) ) {
             <div class="cmr-vpi-actions" style="text-align: center; margin-top: 40px;">
                 <a href="<?php echo esc_url( $vpi_cat_url ); ?>" class="cmr-vpi-btn" style="background: transparent; border: 1px solid #ccc; color: #111; font-size: 14px; font-weight: 600; border-radius: 40px; text-decoration: none; transition: all 0.3s ease; width: 260px; height: 44px; display: inline-flex; justify-content: center; align-items: center; box-sizing: border-box;">View All</a>
             </div>
-            
-            <?php if ( $max_pages > 1 ) : ?>
-                <div id="cmr-vpi-pagination-wrap" class="cmr-vpi-pagination" style="display: <?php echo (!empty($posts) && count($posts) > 9) ? 'none' : 'block'; ?>; margin-top: 40px;">
-                    <?php
-                    $real_paged = max( 1, get_query_var( 'paged' ) );
-                    $fake_current = $real_paged * 3;
-                    $fake_total = $max_pages * 3;
-
-                    echo '<div class="nav-links">';
-
-                    // Prev button
-                    if ($fake_current > 1) {
-                        $prev_real = ceil(($fake_current - 1) / 3);
-                        echo '<a class="prev page-numbers" href="?paged=' . $prev_real . '"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 15L1.5 8L8.5 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>';
-                    }
-
-                    // Just show a few surrounding pages
-                    $start = max(1, $fake_current - 2);
-                    $end = min($fake_total, $fake_current + 2);
-
-                    if ($start > 1) {
-                        echo '<a class="page-numbers" href="?paged=1">1</a>';
-                        if ($start > 2) echo '<span class="page-numbers dots">...</span>';
-                    }
-
-                    for ($i = $start; $i <= $end; $i++) {
-                        $real_target = ceil($i / 3);
-                        if ($i == $fake_current) {
-                            echo '<span aria-current="page" class="page-numbers current">' . $i . '</span>';
-                        } else {
-                            echo '<a class="page-numbers" href="?paged=' . $real_target . '">' . $i . '</a>';
-                        }
-                    }
-
-                    if ($end < $fake_total) {
-                        if ($end < $fake_total - 1) echo '<span class="page-numbers dots">...</span>';
-                        $real_target = ceil($fake_total / 3);
-                        echo '<a class="page-numbers" href="?paged=' . $real_target . '">' . $fake_total . '</a>';
-                    }
-
-                    // Next button
-                    if ($fake_current < $fake_total) {
-                        $next_real = ceil(($fake_current + 1) / 3);
-                        echo '<a class="next page-numbers" href="?paged=' . $next_real . '"><svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 15L8.5 8L1.5 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>';
-                    }
-                    echo '</div>';
-                    ?>
-                </div>
-            <?php endif; ?>
         </div>
+
 
         <script>
             // Filter functionality (Pills and AJAX Search)
