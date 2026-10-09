@@ -8969,6 +8969,10 @@ button.button.alt.single_add_to_cart_button:hover::after {
         grid-template-columns: 1fr;
         gap: 40px;
     }
+    .custom-product-image-col {
+        position: static !important;
+        top: auto !important;
+    }
 }
 
 /* Left Column: Cover Image */

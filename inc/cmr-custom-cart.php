@@ -320,31 +320,141 @@ if ( ! function_exists( 'cmr_custom_cart_shortcode' ) ) {
             @media (max-width: 992px) {
                 .cmr-cart-grid {
                     grid-template-columns: 1fr;
-                }
-                .cmr-ci-price {
-                    position: static;
-                    margin-top: 15px;
-                }
-                .cmr-ci-title {
-                    padding-right: 0;
-                }
-                .cmr-ci-remove {
-                    bottom: auto;
-                    top: 30px;
+                    gap: 30px;
                 }
             }
-            @media (max-width: 576px) {
+
+            @media (max-width: 768px) {
+                .cmr-cart-wrapper {
+                    margin: 20px auto;
+                    padding: 0 15px;
+                }
+                .cmr-back-link {
+                    margin-bottom: 20px;
+                    font-size: 14px;
+                }
+                .cmr-cart-box {
+                    margin-bottom: 20px;
+                }
+                .cmr-cart-box-header {
+                    padding: 16px 18px;
+                }
+                .cmr-cart-box-title {
+                    font-size: 16px;
+                }
+                .cmr-cart-items {
+                    padding: 0 18px;
+                }
                 .cmr-cart-item {
-                    flex-direction: column;
-                    gap: 15px;
+                    display: flex !important;
+                    flex-direction: row !important;
+                    gap: 14px !important;
+                    padding: 18px 0 !important;
+                    align-items: flex-start !important;
+                    position: relative !important;
                 }
                 .cmr-ci-image {
-                    width: 100%;
-                    max-width: 200px;
+                    width: 85px !important;
+                    max-width: 85px !important;
+                    flex: 0 0 85px !important;
+                    border-radius: 4px;
+                    overflow: hidden;
+                }
+                .cmr-ci-image img {
+                    width: 100% !important;
+                    height: auto !important;
+                    aspect-ratio: 1 / 1 !important;
+                    object-fit: cover !important;
+                    display: block !important;
+                    border-radius: 4px;
+                }
+                .cmr-ci-details {
+                    flex: 1 !important;
+                    min-width: 0 !important;
+                    padding-right: 0 !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                }
+                .cmr-ci-title {
+                    font-size: 14px !important;
+                    font-weight: 600 !important;
+                    line-height: 1.35 !important;
+                    margin-bottom: 4px !important;
+                    padding-right: 0 !important;
+                    word-break: break-word !important;
+                }
+                .cmr-ci-brand {
+                    font-size: 12px !important;
+                    margin-bottom: 4px !important;
+                    color: #6b7280 !important;
+                }
+                .cmr-ci-sku {
+                    font-size: 12px !important;
+                    margin-bottom: 6px !important;
+                    color: #374151 !important;
+                }
+                .cmr-ci-price {
+                    position: static !important;
+                    top: auto !important;
+                    right: auto !important;
+                    font-size: 16px !important;
+                    font-weight: 700 !important;
+                    color: #111827 !important;
+                    margin-top: 4px !important;
+                    margin-bottom: 8px !important;
                 }
                 .cmr-ci-remove {
-                    top: 10px;
-                    right: 0;
+                    position: static !important;
+                    bottom: auto !important;
+                    right: auto !important;
+                    top: auto !important;
+                    font-size: 13px !important;
+                    font-weight: 500 !important;
+                    color: #ef4444 !important;
+                    align-self: flex-start !important;
+                    display: inline-flex !important;
+                    align-items: center !important;
+                    gap: 5px !important;
+                    background: none !important;
+                    border: none !important;
+                    padding: 0 !important;
+                    cursor: pointer !important;
+                }
+                .cart-login-prompt {
+                    padding: 20px 18px !important;
+                    margin-bottom: 20px !important;
+                }
+                .cmr-promo-box {
+                    padding: 18px !important;
+                }
+                .cmr-summary-box {
+                    padding: 20px 18px !important;
+                }
+                .cmr-summary-total {
+                    font-size: 18px !important;
+                    margin-top: 20px !important;
+                    margin-bottom: 20px !important;
+                }
+                .cmr-checkout-btn {
+                    padding: 14px 20px !important;
+                    font-size: 15px !important;
+                }
+                .woocommerce-message,
+                .woocommerce-info,
+                .woocommerce-error {
+                    padding: 12px 16px !important;
+                    font-size: 13px !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                    align-items: flex-start !important;
+                    gap: 10px !important;
+                    border-radius: 6px !important;
+                }
+                .woocommerce-message .button,
+                .woocommerce-info .button {
+                    float: none !important;
+                    margin: 0 !important;
+                    align-self: flex-start !important;
                 }
             }
         </style>

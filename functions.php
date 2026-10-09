@@ -5452,6 +5452,14 @@ add_action( 'wp_head', function() {
                 text-align: left !important;
             }
         }
+
+        /* Disable Sticky Product Image on Mobile & Tablet */
+        @media (max-width: 991px) {
+            .custom-product-image-col {
+                position: static !important;
+                top: auto !important;
+            }
+        }
     </style>
     <?php
 }, 999 );

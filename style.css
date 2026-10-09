@@ -13364,6 +13364,14 @@ button.cmr-arrow-fixed .cmr-arrow-icon {
     transform: translate(2px, -2px) !important;
 }
 
+@media (max-width: 991px) {
+    .custom-product-image-col {
+        position: static !important;
+        top: auto !important;
+    }
+}
+
+
 
 
 
