@@ -775,7 +775,13 @@ body.modal-open {
 
 /* --- Form Fields & Labels Gaping --- */
 .custom-report-form,
+.custom-consultation-form,
+.custom-subscribe-form,
 .elementor-element-42f4ebe form,
+.elementor-7849 form,
+.elementor-7832 form,
+.elementor-7637 form,
+.elementor-7758 form,
 .elementor-popup-modal form {
     display: flex !important;
     flex-direction: column !important;
@@ -785,14 +791,26 @@ body.modal-open {
 }
 
 .custom-report-form p,
+.custom-consultation-form p,
+.custom-subscribe-form p,
 .elementor-element-42f4ebe form p,
+.elementor-7849 form p,
+.elementor-7832 form p,
+.elementor-7637 form p,
+.elementor-7758 form p,
 .elementor-popup-modal form p {
     margin: 0 0 10px 0 !important;
     padding: 0 !important;
 }
 
 .custom-report-form label,
+.custom-consultation-form label,
+.custom-subscribe-form label,
 .elementor-element-42f4ebe label,
+.elementor-7849 label,
+.elementor-7832 label,
+.elementor-7637 label,
+.elementor-7758 label,
 .elementor-popup-modal label {
     font-family: 'Instrument Sans', sans-serif !important;
     font-size: 13.5px !important;
@@ -806,14 +824,29 @@ body.modal-open {
 .custom-report-form input[type="text"],
 .custom-report-form input[type="email"],
 .custom-report-form input[type="tel"],
+.custom-consultation-form input[type="text"],
+.custom-consultation-form input[type="email"],
+.custom-consultation-form input[type="tel"],
+.custom-subscribe-form input[type="text"],
+.custom-subscribe-form input[type="email"],
+.custom-subscribe-form input[type="tel"],
 .elementor-element-42f4ebe input[type="text"],
 .elementor-element-42f4ebe input[type="email"],
 .elementor-element-42f4ebe input[type="tel"],
+.elementor-7849 input[type="text"],
+.elementor-7849 input[type="email"],
+.elementor-7832 input[type="text"],
+.elementor-7832 input[type="email"],
+.elementor-7637 input[type="text"],
+.elementor-7637 input[type="email"],
+.elementor-7758 input[type="text"],
+.elementor-7758 input[type="email"],
 .elementor-popup-modal input[type="text"],
 .elementor-popup-modal input[type="email"],
 .elementor-popup-modal input[type="tel"] {
     width: 100% !important;
     height: 40px !important;
+    min-height: 40px !important;
     border: 1.5px solid #d1d5db !important;
     border-radius: 8px !important;
     padding: 0 14px !important;
@@ -824,10 +857,13 @@ body.modal-open {
     outline: none !important;
     box-sizing: border-box !important;
     margin: 0 0 2px 0 !important;
+    margin-top: 0 !important;
     transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
 .custom-report-form textarea,
+.custom-consultation-form textarea,
+.custom-subscribe-form textarea,
 .elementor-element-42f4ebe textarea,
 .elementor-element-052bc23 textarea,
 .elementor-popup-modal textarea {
@@ -968,14 +1004,27 @@ textarea.cmr-input-error {
     font-weight: 400 !important;
 }
 
-/* Download Report Button with Gaping */
+/* Modal Form Submit Buttons */
 .custom-report-form input[type="submit"],
 .custom-consultation-form input[type="submit"],
+.custom-subscribe-form input[type="submit"],
+.custom-subscribe-form button[type="submit"],
+.custom-subscribe-form button,
 .elementor-element-42f4ebe input[type="submit"],
+.elementor-7849 input[type="submit"],
+.elementor-7849 button,
+.elementor-7832 input[type="submit"],
+.elementor-7832 button,
+.elementor-7637 input[type="submit"],
+.elementor-7637 button,
+.elementor-7758 input[type="submit"],
+.elementor-7758 button,
 .elementor-popup-modal input[type="submit"],
-.elementor-popup-modal button[type="submit"] {
+.elementor-popup-modal button[type="submit"],
+.elementor-popup-modal .wpcf7-submit {
     width: 100% !important;
     height: 44px !important;
+    min-height: 44px !important;
     background-color: #582cd7 !important;
     background: #582cd7 !important;
     color: #ffffff !important;
@@ -998,9 +1047,18 @@ textarea.cmr-input-error {
 
 .custom-report-form input[type="submit"]:hover,
 .custom-consultation-form input[type="submit"]:hover,
+.custom-subscribe-form input[type="submit"]:hover,
+.custom-subscribe-form button[type="submit"]:hover,
+.custom-subscribe-form button:hover,
 .elementor-element-42f4ebe input[type="submit"]:hover,
-.elementor-popup-modal input[type="submit"]:hover {
+.elementor-7849 input[type="submit"]:hover,
+.elementor-7832 input[type="submit"]:hover,
+.elementor-7637 input[type="submit"]:hover,
+.elementor-7758 input[type="submit"]:hover,
+.elementor-popup-modal input[type="submit"]:hover,
+.elementor-popup-modal button[type="submit"]:hover {
     background-color: #4921be !important;
+    background: #4921be !important;
     box-shadow: 0 6px 20px rgba(88, 44, 215, 0.35) !important;
 }
 
