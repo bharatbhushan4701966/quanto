@@ -11,17 +11,42 @@ if ( ! function_exists( 'cmr_industry_intelligence_trends_shortcode' ) ) {
     function cmr_industry_intelligence_trends_shortcode( $atts ) {
         $atts = shortcode_atts( array(
             'posts_per_page' => 6,
+            'category'       => 'industry-intelligence,industry-connect',
         ), $atts );
 
+        $cat_slugs = array('industry-intelligence', 'industry-connect');
+        if ( ! empty( $atts['category'] ) ) {
+            $cat_slugs = array_map( 'trim', explode( ',', $atts['category'] ) );
+        }
+
         $query_args = array(
-            'post_type'      => 'cmr_news',
-            'posts_per_page' => $atts['posts_per_page'],
+            'post_type'      => 'post',
+            'posts_per_page' => intval( $atts['posts_per_page'] ),
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
+            'tax_query'      => array(
+                array(
+                    'taxonomy' => 'category',
+                    'field'    => 'slug',
+                    'terms'    => $cat_slugs,
+                ),
+            ),
         );
 
         $trends_query = new WP_Query( $query_args );
+
+        // Fallback if no posts in specific category, fetch latest standard posts
+        if ( ! $trends_query->have_posts() ) {
+            $query_args_fallback = array(
+                'post_type'      => 'post',
+                'posts_per_page' => intval( $atts['posts_per_page'] ),
+                'post_status'    => 'publish',
+                'orderby'        => 'date',
+                'order'          => 'DESC',
+            );
+            $trends_query = new WP_Query( $query_args_fallback );
+        }
 
         ob_start();
         ?>
@@ -231,7 +256,13 @@ if ( ! function_exists( 'cmr_industry_intelligence_trends_shortcode' ) ) {
                             $category_name = 'Industry Intelligence';
                             $terms = get_the_terms( get_the_ID(), 'category' );
                             if ( $terms && ! is_wp_error( $terms ) ) {
-                                $category_name = $terms[0]->name;
+                                $valid_terms = array_filter( $terms, function( $t ) {
+                                    return $t->slug !== 'uncategorized';
+                                });
+                                if ( ! empty( $valid_terms ) ) {
+                                    $first_term = reset( $valid_terms );
+                                    $category_name = $first_term->name;
+                                }
                             }
 
                             // Reading time
