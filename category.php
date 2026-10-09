@@ -4,14 +4,26 @@
  * Quanto Theme
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-    exit;
-}
-
 get_header();
 ?>
 
+<script>
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+    if (document.documentElement) document.documentElement.scrollTop = 0;
+    if (document.body) document.body.scrollTop = 0;
+    window.addEventListener('pageshow', function() {
+        window.scrollTo(0, 0);
+    });
+</script>
+
 <style>
+    html, body {
+        scroll-behavior: auto !important;
+    }
+
     /* Force full width - hide sidebar, remove constraints */
     .cmr-category-page-wrap {
         max-width: 1280px;

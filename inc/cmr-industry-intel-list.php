@@ -609,16 +609,6 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                     }
                 });
             }
-
-            if (loadMoreBtn) {
-                loadMoreBtn.addEventListener('click', function() {
-                    var currentPage = parseInt(this.getAttribute('data-page'));
-                    var nextPage = currentPage + 1;
-                    this.textContent = 'Loading...';
-                    this.disabled = true;
-                    loadPage(nextPage, true);
-                });
-            }
             
             if (pag) {
                 pag.addEventListener('click', function(e) {
