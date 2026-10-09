@@ -12573,14 +12573,53 @@ div.woocommerce-info::before,
 }
 
 /* ==========================================================================
-   Header Navbar Menu Items - Bullet Dot Indicator (Matching Design)
+   Header Navbar Menu Items - Bullet Dot Indicator & Single-Line Layout
    ========================================================================== */
+.main-menu,
+nav.main-menu,
+.elementor-widget-quanto_menu .main-menu {
+    white-space: nowrap !important;
+    width: auto !important;
+}
+
+.main-menu > ul,
+.elementor-widget-quanto_menu .main-menu > ul,
+header .main-menu > ul,
+.header .main-menu > ul {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    gap: 14px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+
+.main-menu > ul > li,
+.elementor-widget-quanto_menu .main-menu > ul > li,
+header .main-menu > ul > li,
+.header .main-menu > ul > li {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    list-style: none !important;
+}
+
 .main-menu > ul > li > a,
 .elementor-widget-quanto_menu .main-menu > ul > li > a,
 header .main-menu > ul > li > a,
 .header .main-menu > ul > li > a {
     display: inline-flex !important;
     align-items: center !important;
+    white-space: nowrap !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
 }
 
 .main-menu > ul > li > a::before,
@@ -12589,15 +12628,27 @@ header .main-menu > ul > li > a::before,
 .header .main-menu > ul > li > a::before {
     content: "" !important;
     display: inline-block !important;
-    width: 5px !important;
-    height: 5px !important;
-    min-width: 5px !important;
+    width: 4.5px !important;
+    height: 4.5px !important;
+    min-width: 4.5px !important;
     border-radius: 50% !important;
     background-color: currentColor !important;
-    margin-right: 8px !important;
+    margin-right: 6px !important;
     flex-shrink: 0 !important;
     vertical-align: middle !important;
 }
+
+@media (max-width: 1399.98px) {
+    .main-menu > ul,
+    .elementor-widget-quanto_menu .main-menu > ul {
+        gap: 10px !important;
+    }
+    .main-menu > ul > li > a,
+    .elementor-widget-quanto_menu .main-menu > ul > li > a {
+        font-size: 14px !important;
+    }
+}
+
 
 
 

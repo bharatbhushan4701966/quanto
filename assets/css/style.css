@@ -1172,37 +1172,56 @@ body::-webkit-scrollbar-thumb {
   color: var(--color-primary);
   font-weight: 600;
   position: relative;
-  font-size: 18px;
+  font-size: 15px;
   display: block;
   letter-spacing: -0.18px;
   line-height: 144.444%;
 }
 
+.main-menu > ul {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  gap: 14px;
+}
+
+.main-menu > ul > li {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
 .main-menu > ul > li > a {
   display: inline-flex;
   align-items: center;
+  white-space: nowrap;
+  font-size: 15px;
+  font-weight: 500;
 }
 
 .main-menu > ul > li > a::before {
   content: "";
   display: inline-block;
-  width: 5px;
-  height: 5px;
-  min-width: 5px;
+  width: 4.5px;
+  height: 4.5px;
+  min-width: 4.5px;
   border-radius: 50%;
   background-color: currentColor;
-  margin-right: 8px;
+  margin-right: 6px;
   flex-shrink: 0;
   vertical-align: middle;
 }
 
-.main-menu>ul>li {
-  margin: 0 10px;
-}
-
-@media only screen and (max-width: 1199.98px) {
-  .main-menu>ul>li {
-    margin: 0 10px;
+@media only screen and (max-width: 1399.98px) {
+  .main-menu > ul {
+    gap: 10px;
+  }
+  .main-menu > ul > li > a {
+    font-size: 14px;
   }
 }
 
