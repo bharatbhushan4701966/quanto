@@ -5460,6 +5460,84 @@ add_action( 'wp_head', function() {
                 top: auto !important;
             }
         }
+
+        /* Numbered Feature List Alignment Fix (f2865ab) */
+        [data-id="f2865ab"] {
+            align-items: center !important;
+        }
+
+        [data-id="f2865ab"] > .e-con,
+        [data-id="f2865ab"] .elementor-element.e-con,
+        [data-id="62255ad"],
+        [data-id="35bf586"],
+        [data-id="2b6a9d0"],
+        [data-id="1f92c9c"] {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            gap: 12px !important;
+        }
+
+        [data-id="f2865ab"] .elementor-widget-icon,
+        [data-id="69c1bd9"],
+        [data-id="51b5d64"],
+        [data-id="84efbab"],
+        [data-id="c1c0524"] {
+            margin: 0 !important;
+            padding: 0 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex-shrink: 0 !important;
+            align-self: center !important;
+            width: auto !important;
+            line-height: 1 !important;
+        }
+
+        [data-id="f2865ab"] .elementor-icon-wrapper {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            line-height: 1 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        [data-id="f2865ab"] .elementor-icon {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            line-height: 1 !important;
+            margin: 0 !important;
+            width: 32px !important;
+            height: 32px !important;
+        }
+
+        [data-id="f2865ab"] .elementor-icon i,
+        [data-id="f2865ab"] .elementor-icon svg {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            line-height: 1 !important;
+            vertical-align: middle !important;
+            margin: 0 !important;
+        }
+
+        [data-id="f2865ab"] p,
+        [data-id="f2865ab"] .e-paragraph-base,
+        [data-id="45dca67"],
+        [data-id="03e24db"],
+        [data-id="77aff1c"],
+        [data-id="e8e7777"] {
+            margin: 0 !important;
+            padding: 0 !important;
+            line-height: 1.35 !important;
+            display: flex !important;
+            align-items: center !important;
+            align-self: center !important;
+        }
     </style>
     <?php
 }, 999 );
