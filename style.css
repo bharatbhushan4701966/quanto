@@ -12649,6 +12649,169 @@ header .main-menu > ul > li > a::before,
     }
 }
 
+/* ==========================================================================
+   Global Form Submit Button Styling (CMR Pill Button)
+   ========================================================================== */
+.wpcf7 input[type="submit"],
+.wpcf7 button[type="submit"],
+.wpcf7 button,
+.wpcf7-submit,
+input.wpcf7-submit,
+button.wpcf7-submit,
+button.cmr-arrow-fixed,
+.cmr-form input[type="submit"],
+.cmr-form button[type="submit"],
+.custom-consultation-form input[type="submit"],
+.custom-consultation-form button[type="submit"],
+.custom-report-form input[type="submit"],
+.custom-report-form button[type="submit"],
+.elementor-form button[type="submit"],
+.wpcf7-form .wpcf7-submit {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #6A42E5 !important;
+    background: linear-gradient(135deg, #6A42E5 0%, #4B2DBF 100%) !important;
+    color: #ffffff !important;
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    padding: 13px 32px !important;
+    min-height: 48px !important;
+    border: none !important;
+    border-radius: 50px !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 14px rgba(106, 66, 229, 0.28) !important;
+    transition: all 0.25s ease-in-out !important;
+    text-decoration: none !important;
+    box-sizing: border-box !important;
+    outline: none !important;
+}
+
+.wpcf7 input[type="submit"]:hover,
+.wpcf7 button[type="submit"]:hover,
+.wpcf7 button:hover,
+.wpcf7-submit:hover,
+input.wpcf7-submit:hover,
+button.wpcf7-submit:hover,
+button.cmr-arrow-fixed:hover,
+.cmr-form input[type="submit"]:hover,
+.cmr-form button[type="submit"]:hover,
+.custom-consultation-form input[type="submit"]:hover,
+.custom-consultation-form button[type="submit"]:hover,
+.custom-report-form input[type="submit"]:hover,
+.custom-report-form button[type="submit"]:hover,
+.elementor-form button[type="submit"]:hover,
+.wpcf7-form .wpcf7-submit:hover {
+    background: linear-gradient(135deg, #5b34d6 0%, #3d21a8 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 6px 20px rgba(106, 66, 229, 0.4) !important;
+    transform: translateY(-2px) !important;
+}
+
+.wpcf7 button .elementor-button-content-wrapper,
+button.cmr-arrow-fixed .elementor-button-content-wrapper {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #ffffff !important;
+}
+
+.wpcf7 button .elementor-button-text,
+button.cmr-arrow-fixed .elementor-button-text {
+    color: #ffffff !important;
+    font-family: 'Instrument Sans', sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+}
+
+.wpcf7 button .cmr-button-icon-arrow,
+button.cmr-arrow-fixed .cmr-button-icon-arrow,
+.wpcf7 button .cmr-arrow-icon,
+button.cmr-arrow-fixed .cmr-arrow-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    margin-left: 6px !important;
+    color: #ffffff !important;
+    fill: currentColor !important;
+}
+
+/* ==========================================================================
+   CMR Team Cards Hover - Image Zoom/Scale & Title Color Change
+   ========================================================================== */
+.cmr-team-card,
+.cmr-team-member,
+.quanto-team-box {
+    cursor: pointer !important;
+}
+
+.cmr-team-card .cmr-team-card-image,
+.cmr-team-card-image,
+.cmr-team-member .cmr-team-image-wrap,
+.cmr-team-image-wrap,
+.quanto-team-box .team-thumb {
+    overflow: hidden !important;
+    position: relative !important;
+}
+
+.cmr-team-card .cmr-team-card-image img,
+.cmr-team-card-image img,
+.cmr-team-card img,
+.cmr-team-member .cmr-team-image-wrap img,
+.cmr-team-image-wrap img,
+.cmr-team-member img,
+.quanto-team-box .team-thumb img,
+.quanto-team-box img {
+    transform: scale(1) !important;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    will-change: transform !important;
+}
+
+.cmr-team-card:hover .cmr-team-card-image img,
+.cmr-team-card:hover img,
+.cmr-team-card-image:hover img,
+.cmr-team-card-image img:hover,
+.cmr-team-member:hover .cmr-team-image-wrap img,
+.cmr-team-member:hover img,
+.cmr-team-image-wrap:hover img,
+.cmr-team-image-wrap img:hover,
+.quanto-team-box:hover .team-thumb img,
+.quanto-team-box:hover img {
+    transform: scale(1.08) !important;
+}
+
+.cmr-team-card .cmr-team-card-name,
+.cmr-team-card-name,
+.cmr-team-card-name a,
+.cmr-team-card h3,
+.cmr-team-member .cmr-team-name,
+.cmr-team-name,
+.cmr-team-name a,
+.cmr-team-member h3,
+.quanto-team-box .service-title,
+.quanto-team-box .team-name {
+    transition: color 0.3s ease !important;
+}
+
+.cmr-team-card:hover .cmr-team-card-name,
+.cmr-team-card:hover .cmr-team-card-name a,
+.cmr-team-card:hover h3,
+.cmr-team-card-name:hover,
+.cmr-team-card-name:hover a,
+.cmr-team-card h3:hover,
+.cmr-team-member:hover .cmr-team-name,
+.cmr-team-member:hover .cmr-team-name a,
+.cmr-team-member:hover h3,
+.cmr-team-name:hover,
+.cmr-team-name:hover a,
+.quanto-team-box:hover .service-title,
+.quanto-team-box:hover .team-name {
+    color: #6A42E5 !important;
+}
+
+
+
 
 
 

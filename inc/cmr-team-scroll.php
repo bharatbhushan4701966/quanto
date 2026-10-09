@@ -115,6 +115,7 @@ function cmr_team_scroll_shortcode($atts) {
                 flex-direction: column !important;
                 align-items: flex-start !important;
                 text-align: left !important;
+                cursor: pointer !important;
             }
             .cmr-team-card-image {
                 width: 100% !important;
@@ -122,6 +123,7 @@ function cmr_team_scroll_shortcode($atts) {
                 background: #f5f5f5 !important;
                 margin-bottom: 16px !important;
                 overflow: hidden !important;
+                position: relative !important;
             }
             .cmr-team-card-image img {
                 width: 100% !important;
@@ -130,9 +132,11 @@ function cmr_team_scroll_shortcode($atts) {
                 display: block !important;
                 transform: scale(1) !important;
                 transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+                will-change: transform !important;
             }
-            .cmr-team-card:hover .cmr-team-card-image img {
-                transform: scale(1.06) !important;
+            .cmr-team-card:hover .cmr-team-card-image img,
+            .cmr-team-card-image:hover img {
+                transform: scale(1.08) !important;
             }
             .cmr-team-card-name {
                 font-family: "Instrument Sans", sans-serif !important;
@@ -146,8 +150,10 @@ function cmr_team_scroll_shortcode($atts) {
                 transition: color 0.3s ease !important;
             }
             .cmr-team-card:hover .cmr-team-card-name,
-            .cmr-team-card-name:hover {
-                color: #4820B0 !important;
+            .cmr-team-card-name:hover,
+            .cmr-team-card:hover h3,
+            .cmr-team-card h3:hover {
+                color: #6A42E5 !important;
             }
             .cmr-team-card-role {
                 font-family: "Instrument Sans", sans-serif !important;
@@ -259,6 +265,7 @@ function cmr_team_scroll_shortcode($atts) {
                 flex-direction: column !important;
                 align-items: flex-start !important;
                 text-align: left !important;
+                cursor: pointer !important;
             }
             .cmr-team-card-image {
                 width: 100% !important;
@@ -266,6 +273,7 @@ function cmr_team_scroll_shortcode($atts) {
                 background: #f5f5f5 !important;
                 margin-bottom: 18px !important;
                 overflow: hidden !important;
+                position: relative !important;
             }
             .cmr-team-card-image img {
                 width: 100% !important;
@@ -274,9 +282,11 @@ function cmr_team_scroll_shortcode($atts) {
                 display: block !important;
                 transform: scale(1) !important;
                 transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+                will-change: transform !important;
             }
-            .cmr-team-card:hover .cmr-team-card-image img {
-                transform: scale(1.06) !important;
+            .cmr-team-card:hover .cmr-team-card-image img,
+            .cmr-team-card-image:hover img {
+                transform: scale(1.08) !important;
             }
             .cmr-team-card-name {
                 font-size: 20px !important;
@@ -287,8 +297,10 @@ function cmr_team_scroll_shortcode($atts) {
                 transition: color 0.3s ease !important;
             }
             .cmr-team-card:hover .cmr-team-card-name,
-            .cmr-team-card-name:hover {
-                color: #4820B0 !important;
+            .cmr-team-card-name:hover,
+            .cmr-team-card:hover h3,
+            .cmr-team-card h3:hover {
+                color: #6A42E5 !important;
             }
             .cmr-team-card-role {
                 font-size: 14px !important;
