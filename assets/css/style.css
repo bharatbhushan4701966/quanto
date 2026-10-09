@@ -1178,6 +1178,24 @@ body::-webkit-scrollbar-thumb {
   line-height: 144.444%;
 }
 
+.main-menu > ul > li > a {
+  display: inline-flex;
+  align-items: center;
+}
+
+.main-menu > ul > li > a::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  min-width: 5px;
+  border-radius: 50%;
+  background-color: currentColor;
+  margin-right: 8px;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
 .main-menu>ul>li {
   margin: 0 10px;
 }
