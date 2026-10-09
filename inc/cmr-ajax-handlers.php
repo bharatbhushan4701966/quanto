@@ -23,12 +23,19 @@ function cmr_load_more_intel_ajax() {
         'order'          => 'DESC',
         'paged'          => $paged,
         'tax_query'      => array(
+            'relation' => 'OR',
             array(
                 'taxonomy' => 'category',
                 'field'    => 'slug',
-                'terms'    => 'industry-connect', // Ensure this uses industry-connect to match the shortcode
+                'terms'    => array( 'industry-intelligence' ),
+            ),
+            array(
+                'taxonomy' => 'cmr_news_category',
+                'field'    => 'slug',
+                'terms'    => array( 'industry-intelligence' ),
             ),
         ),
+
     );
 
     if ( !empty($search) ) {

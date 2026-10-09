@@ -11,23 +11,57 @@ if ( ! function_exists( 'cmr_industry_intelligence_trends_shortcode' ) ) {
     function cmr_industry_intelligence_trends_shortcode( $atts ) {
         $atts = shortcode_atts( array(
             'posts_per_page' => 6,
-            'category'       => 'industry-intelligence,industry-connect',
+            'category'       => '',
+            'title'          => '',
+            'subtitle'       => '',
         ), $atts );
 
-        $cat_slugs = array('industry-intelligence', 'industry-connect');
+        global $post;
+        $page_slug = ( is_page() && isset( $post->post_name ) ) ? $post->post_name : '';
+
+        // Determine specific category slugs based on attribute or current page
+        $cat_slugs = array();
         if ( ! empty( $atts['category'] ) ) {
             $cat_slugs = array_map( 'trim', explode( ',', $atts['category'] ) );
+        } elseif ( ! empty( $page_slug ) ) {
+            if ( in_array( $page_slug, array( 'industry-intelligence', 'industry-connect' ), true ) ) {
+                $cat_slugs = array( 'industry-intelligence' );
+            } elseif ( in_array( $page_slug, array( 'viewpoints', 'viewpoint' ), true ) ) {
+                $cat_slugs = array( 'viewpoints', 'viewpoint' );
+            } elseif ( in_array( $page_slug, array( 'market-updates', 'market-update' ), true ) ) {
+                $cat_slugs = array( 'market-updates', 'market-update' );
+            } elseif ( $page_slug === 'consulting-advisory' ) {
+                $cat_slugs = array( 'consulting-advisory' );
+            } elseif ( $page_slug === 'marketing-services' ) {
+                $cat_slugs = array( 'marketing-services' );
+            } elseif ( $page_slug === 'enterprise-connect' ) {
+                $cat_slugs = array( 'enterprise-connect' );
+            } elseif ( $page_slug === 'channel-connect' ) {
+                $cat_slugs = array( 'channel-connect' );
+            } elseif ( $page_slug === 'smb-connect' ) {
+                $cat_slugs = array( 'smb-connect' );
+            } else {
+                $cat_slugs = array( $page_slug );
+            }
+        } else {
+            $cat_slugs = array( 'industry-intelligence' );
         }
 
         $query_args = array(
-            'post_type'      => 'post',
+            'post_type'      => array( 'post', 'cmr_news' ),
             'posts_per_page' => intval( $atts['posts_per_page'] ),
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
             'tax_query'      => array(
+                'relation' => 'OR',
                 array(
                     'taxonomy' => 'category',
+                    'field'    => 'slug',
+                    'terms'    => $cat_slugs,
+                ),
+                array(
+                    'taxonomy' => 'cmr_news_category',
                     'field'    => 'slug',
                     'terms'    => $cat_slugs,
                 ),
@@ -36,17 +70,6 @@ if ( ! function_exists( 'cmr_industry_intelligence_trends_shortcode' ) ) {
 
         $trends_query = new WP_Query( $query_args );
 
-        // Fallback if no posts in specific category, fetch latest standard posts
-        if ( ! $trends_query->have_posts() ) {
-            $query_args_fallback = array(
-                'post_type'      => 'post',
-                'posts_per_page' => intval( $atts['posts_per_page'] ),
-                'post_status'    => 'publish',
-                'orderby'        => 'date',
-                'order'          => 'DESC',
-            );
-            $trends_query = new WP_Query( $query_args_fallback );
-        }
 
         ob_start();
         ?>
@@ -236,8 +259,8 @@ if ( ! function_exists( 'cmr_industry_intelligence_trends_shortcode' ) ) {
 
         <div class="cmr-intel-trends-wrapper" id="cmr-intel-trends-section">
             <div class="cmr-intel-trends-header">
-                <h2>Industry Intelligence Trends</h2>
-                <p>Track emerging shifts, growth signals, and market movements in real time.</p>
+                <h2><?php echo esc_html( ! empty( $atts['title'] ) ? $atts['title'] : 'Industry Intelligence Trends' ); ?></h2>
+                <p><?php echo esc_html( ! empty( $atts['subtitle'] ) ? $atts['subtitle'] : 'Track emerging shifts, growth signals, and market movements in real time.' ); ?></p>
             </div>
             
             <?php if ( $trends_query->have_posts() ) : ?>
@@ -255,15 +278,27 @@ if ( ! function_exists( 'cmr_industry_intelligence_trends_shortcode' ) ) {
                             // Category
                             $category_name = 'Industry Intelligence';
                             $terms = get_the_terms( get_the_ID(), 'category' );
+                            if ( ! $terms || is_wp_error( $terms ) ) {
+                                $terms = get_the_terms( get_the_ID(), 'cmr_news_category' );
+                            }
                             if ( $terms && ! is_wp_error( $terms ) ) {
-                                $valid_terms = array_filter( $terms, function( $t ) {
-                                    return $t->slug !== 'uncategorized';
-                                });
-                                if ( ! empty( $valid_terms ) ) {
-                                    $first_term = reset( $valid_terms );
-                                    $category_name = $first_term->name;
+                                foreach ( $terms as $t ) {
+                                    if ( in_array( $t->slug, $cat_slugs, true ) ) {
+                                        $category_name = $t->name;
+                                        break;
+                                    }
+                                }
+                                if ( empty( $category_name ) ) {
+                                    $valid_terms = array_filter( $terms, function( $t ) {
+                                        return $t->slug !== 'uncategorized';
+                                    });
+                                    if ( ! empty( $valid_terms ) ) {
+                                        $first_term = reset( $valid_terms );
+                                        $category_name = $first_term->name;
+                                    }
                                 }
                             }
+
 
                             // Reading time
                             $content = get_post_field( 'post_content', get_the_ID() );

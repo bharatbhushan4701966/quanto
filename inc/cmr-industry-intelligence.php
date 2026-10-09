@@ -17,7 +17,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
             'show_nav'         => 'true',
             'section_title'    => 'Latest Industry Intelligence',
             'section_subtitle' => 'Explore real-time insights and strategic analysis shaping industries and business decisions.',
-            'category'         => 'industry-connect',
+            'category'         => 'industry-intelligence',
             'link_overview'    => '#top',
             'link_insights'    => '#overview',
             'link_trends'      => '#cmr-intel-trends-section',
@@ -29,6 +29,8 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
 
         $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 
+        $cat_terms = array_map( 'trim', explode( ',', $atts['category'] ) );
+
         $query_args = array(
             'post_type'      => array( 'post', 'cmr_news' ),
             'posts_per_page' => 20, // Fetch more to allow for deduplication skipping
@@ -37,15 +39,22 @@ if ( ! function_exists( 'cmr_industry_intelligence_shortcode' ) ) {
             'order'          => 'DESC',
             'paged'          => $paged,
             'tax_query'      => array(
+                'relation' => 'OR',
                 array(
                     'taxonomy' => 'category',
                     'field'    => 'slug',
-                    'terms'    => $atts['category'],
+                    'terms'    => $cat_terms,
+                ),
+                array(
+                    'taxonomy' => 'cmr_news_category',
+                    'field'    => 'slug',
+                    'terms'    => $cat_terms,
                 ),
             ),
         );
 
         $insights_query = new WP_Query( $query_args );
+
         
         $unique_posts = array();
         $seen_ids = array();
