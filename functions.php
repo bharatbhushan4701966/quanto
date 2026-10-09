@@ -4755,7 +4755,7 @@ add_action( 'wp_head', function() {
         .cmr-trending-card:hover .cmr-trending-play-btn,
         .cmr-ls-card:hover .cmr-ls-play-btn,
         .cmr-podcast-card:hover .cmr-podcast-play-btn {
-            transform: scale(1.1) !important;
+            transform: translate(-50%, -50%) scale(1.1) !important;
         }
 
         /* CTA Buttons & Action Elements Hover Scale */
