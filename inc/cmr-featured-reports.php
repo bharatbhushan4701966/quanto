@@ -53,12 +53,17 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                 overflow: hidden;
                 border: 1px solid #e5e7eb;
                 position: relative;
-                transition: transform 0.3s ease;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
                 display: flex;
+                cursor: pointer;
             }
 
             .cmr-fr-card:hover {
                 transform: translateY(-5px);
+            }
+
+            .cmr-fr-card:hover .cmr-fr-small-title {
+                color: #6b46c1;
             }
 
             .cmr-fr-badge {
@@ -395,7 +400,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                     $image_url = $image_url ? $image_url[0] : 'https://via.placeholder.com/600x800';
                 ?>
                 <!-- Large Card -->
-                <div class="cmr-fr-card cmr-fr-large">
+                <div class="cmr-fr-card cmr-fr-large" onclick="if(!event.target.closest('a.button, .add_to_cart_button, button, input')) { window.location.href='<?php echo esc_url( $product->get_permalink() ); ?>'; }">
                     <div class="cmr-fr-image-wrap">
                         <?php if ( function_exists( 'cmr_render_product_badge' ) ) { cmr_render_product_badge( $product, 'cmr-fr-badge' ); } ?>
                         <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $product->get_name() ); ?>">
@@ -426,6 +431,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                                    data-product_id="<?php echo esc_attr( $product->get_id() ); ?>" 
                                    data-product_sku="<?php echo esc_attr( $product->get_sku() ); ?>" 
                                    aria-label="<?php echo esc_attr( $product->add_to_cart_description() ); ?>" 
+                                   onclick="event.stopPropagation();"
                                    rel="nofollow">
                                     Download Report
                                 </a>
@@ -453,7 +459,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                                 }
                             }
                             ?>
-                            <div class="cmr-fr-card cmr-fr-small">
+                            <div class="cmr-fr-card cmr-fr-small" onclick="if(!event.target.closest('a.button, .add_to_cart_button, button, input')) { window.location.href='<?php echo esc_url( $product->get_permalink() ); ?>'; }">
                                 <div class="cmr-fr-image-wrap">
                                     <?php if ( function_exists( 'cmr_render_product_badge' ) ) { cmr_render_product_badge( $product, 'cmr-fr-badge' ); } ?>
                                     <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $product->get_name() ); ?>">

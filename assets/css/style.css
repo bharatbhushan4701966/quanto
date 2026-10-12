@@ -1172,21 +1172,398 @@ body::-webkit-scrollbar-thumb {
   color: var(--color-primary);
   font-weight: 600;
   position: relative;
-  font-size: 18px;
+  font-size: 15px;
   display: block;
   letter-spacing: -0.18px;
   line-height: 144.444%;
 }
 
-.main-menu>ul>li {
-  margin: 0 10px;
+.main-menu > ul {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  gap: 14px;
 }
 
-@media only screen and (max-width: 1199.98px) {
-  .main-menu>ul>li {
-    margin: 0 10px;
+.main-menu > ul > li {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.main-menu > ul > li > a {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.main-menu > ul > li > a::before {
+  content: "";
+  display: inline-block;
+  width: 4.5px;
+  height: 4.5px;
+  min-width: 4.5px;
+  border-radius: 50%;
+  background-color: currentColor;
+  margin-right: 6px;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+@media only screen and (max-width: 1399.98px) {
+  .main-menu > ul {
+    gap: 10px;
+  }
+  .main-menu > ul > li > a {
+    font-size: 14px;
   }
 }
+
+/* ==========================================================================
+   Global Form Submit Button Styling (Full-Width Black Pill Button for General Pages)
+   ========================================================================== */
+.wpcf7 input[type="submit"]:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+.wpcf7 button[type="submit"]:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+.wpcf7 button:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+.wpcf7-submit:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+input.wpcf7-submit:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+button.wpcf7-submit:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+button.cmr-arrow-fixed,
+.elementor-form button[type="submit"]:not(.elementor-popup-modal *),
+.wpcf7-form .wpcf7-submit:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *) {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #000000 !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  font-family: 'Instrument Sans', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  padding: 16px 24px !important;
+  height: 52px !important;
+  min-height: 52px !important;
+  border: none !important;
+  border-radius: 60px !important;
+  cursor: pointer !important;
+  margin-top: 18px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  transition: all 0.25s ease-in-out !important;
+  text-decoration: none !important;
+  box-sizing: border-box !important;
+  outline: none !important;
+}
+
+.wpcf7 input[type="submit"]:hover:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+.wpcf7 button[type="submit"]:hover:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+.wpcf7 button:hover:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+.wpcf7-submit:hover:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+input.wpcf7-submit:hover:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+button.wpcf7-submit:hover:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *),
+button.cmr-arrow-fixed:hover,
+.elementor-form button[type="submit"]:hover:not(.elementor-popup-modal *),
+.wpcf7-form .wpcf7-submit:hover:not(.elementor-popup-modal *):not(.cmr-form *):not(.custom-consultation-form *):not(.custom-report-form *):not(.custom-subscribe-form *):not(.elementor-7637 *):not(.elementor-7849 *):not(.elementor-7832 *):not(.elementor-7758 *) {
+  background: #1f1f1f !important;
+  background-color: #1f1f1f !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ==========================================================================
+   CMR Modal Form Submit Buttons - Purple Gradient Styling
+   ========================================================================== */
+.elementor-popup-modal input[type="submit"],
+.elementor-popup-modal button[type="submit"],
+.elementor-popup-modal .wpcf7-submit,
+.elementor-popup-modal input.wpcf7-submit,
+.dialog-widget-content input[type="submit"],
+.dialog-widget-content .wpcf7-submit,
+.cmr-form input[type="submit"],
+.cmr-form button[type="submit"],
+.custom-consultation-form input[type="submit"],
+.custom-consultation-form button[type="submit"],
+.custom-report-form input[type="submit"],
+.custom-report-form button[type="submit"],
+.custom-subscribe-form input[type="submit"],
+.custom-subscribe-form button[type="submit"],
+.elementor-7637 input[type="submit"],
+.elementor-7637 button[type="submit"],
+.elementor-7849 input[type="submit"],
+.elementor-7849 button[type="submit"],
+.elementor-7832 input[type="submit"],
+.elementor-7832 button[type="submit"],
+.elementor-7758 input[type="submit"],
+.elementor-7758 button[type="submit"],
+.elementor-element-42f4ebe input[type="submit"] {
+  background: #6A42E5 !important;
+  background: linear-gradient(135deg, #6A42E5 0%, #4B2DBF 100%) !important;
+  background-color: #6A42E5 !important;
+  color: #ffffff !important;
+  font-family: 'Instrument Sans', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  border: none !important;
+  border-radius: 60px !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 14px rgba(106, 66, 229, 0.3) !important;
+  transition: all 0.25s ease-in-out !important;
+}
+
+.elementor-popup-modal input[type="submit"]:hover,
+.elementor-popup-modal button[type="submit"]:hover,
+.elementor-popup-modal .wpcf7-submit:hover,
+.elementor-popup-modal input.wpcf7-submit:hover,
+.dialog-widget-content input[type="submit"]:hover,
+.dialog-widget-content .wpcf7-submit:hover,
+.cmr-form input[type="submit"]:hover,
+.cmr-form button[type="submit"]:hover,
+.custom-consultation-form input[type="submit"]:hover,
+.custom-consultation-form button[type="submit"]:hover,
+.custom-report-form input[type="submit"]:hover,
+.custom-report-form button[type="submit"]:hover,
+.custom-subscribe-form input[type="submit"]:hover,
+.custom-subscribe-form button[type="submit"]:hover,
+.elementor-7637 input[type="submit"]:hover,
+.elementor-7637 button[type="submit"]:hover,
+.elementor-7849 input[type="submit"]:hover,
+.elementor-7849 button[type="submit"]:hover,
+.elementor-7832 input[type="submit"]:hover,
+.elementor-7832 button[type="submit"]:hover,
+.elementor-7758 input[type="submit"]:hover,
+.elementor-7758 button[type="submit"]:hover,
+.elementor-element-42f4ebe input[type="submit"]:hover {
+  background: #582cd7 !important;
+  background: linear-gradient(135deg, #582cd7 0%, #3e1fa8 100%) !important;
+  background-color: #582cd7 !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 20px rgba(106, 66, 229, 0.45) !important;
+  transform: translateY(-1px) !important;
+  opacity: 0.95 !important;
+}
+
+.wpcf7 button .elementor-button-content-wrapper,
+button.cmr-arrow-fixed .elementor-button-content-wrapper {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #ffffff !important;
+}
+
+.wpcf7 button .elementor-button-text,
+button.cmr-arrow-fixed .elementor-button-text {
+  color: #ffffff !important;
+  font-family: 'Instrument Sans', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+}
+
+.wpcf7 button .cmr-button-icon-arrow,
+button.cmr-arrow-fixed .cmr-button-icon-arrow,
+.wpcf7 button .cmr-arrow-icon,
+button.cmr-arrow-fixed .cmr-arrow-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  margin-left: 6px !important;
+  color: #ffffff !important;
+  fill: currentColor !important;
+}
+
+/* ==========================================================================
+   CMR Team Cards Hover - Image Zoom/Scale & Title Color Change
+   ========================================================================== */
+.cmr-team-card,
+.cmr-team-member,
+.quanto-team-box,
+[data-id="c946a02"] > div,
+[data-id="c946a02"] > .e-con,
+[data-id="f64cd23"],
+[data-id="a6469e6"],
+[data-id="5600e8d"],
+.elementor-element-f64cd23,
+.elementor-element-a6469e6,
+.elementor-element-5600e8d,
+[data-id="ac19c93"] > div,
+[data-id="ac19c93"] > .e-con,
+[data-id="d714990"],
+[data-id="3696606"],
+[data-id="2f75013"],
+.elementor-element-d714990,
+.elementor-element-3696606,
+.elementor-element-2f75013 {
+  cursor: pointer !important;
+}
+
+.cmr-team-card .cmr-team-card-image,
+.cmr-team-card-image,
+.cmr-team-member .cmr-team-image-wrap,
+.cmr-team-image-wrap,
+.quanto-team-box .team-thumb,
+[data-id="c946a02"] .e-image-link-base,
+[data-id="f64cd23"] .e-image-link-base,
+[data-id="a6469e6"] .e-image-link-base,
+[data-id="5600e8d"] .e-image-link-base {
+  overflow: hidden !important;
+  position: relative !important;
+  display: block !important;
+}
+
+.cmr-team-card .cmr-team-card-image img,
+.cmr-team-card-image img,
+.cmr-team-card img,
+.cmr-team-member .cmr-team-image-wrap img,
+.cmr-team-image-wrap img,
+.cmr-team-member img,
+.quanto-team-box .team-thumb img,
+.quanto-team-box img,
+[data-id="c946a02"] img,
+[data-id="f64cd23"] img,
+[data-id="a6469e6"] img,
+[data-id="5600e8d"] img,
+[data-id="c0912f0"],
+[data-id="5f68b48"],
+[data-id="b9c894f"],
+[data-id="ac19c93"] img,
+[data-id="d714990"] img,
+[data-id="3696606"] img,
+[data-id="2f75013"] img,
+.elementor-element-d714990 img,
+.elementor-element-3696606 img,
+.elementor-element-2f75013 img {
+  transform: scale(1) !important;
+  transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  will-change: transform !important;
+}
+
+.cmr-team-card:hover .cmr-team-card-image img,
+.cmr-team-card:hover img,
+.cmr-team-card-image:hover img,
+.cmr-team-card-image img:hover,
+.cmr-team-member:hover .cmr-team-image-wrap img,
+.cmr-team-member:hover img,
+.cmr-team-image-wrap:hover img,
+.cmr-team-image-wrap img:hover,
+.quanto-team-box:hover .team-thumb img,
+.quanto-team-box:hover img,
+[data-id="c946a02"] > div:hover img,
+[data-id="c946a02"] > .e-con:hover img,
+[data-id="f64cd23"]:hover img,
+[data-id="a6469e6"]:hover img,
+[data-id="5600e8d"]:hover img,
+.elementor-element-f64cd23:hover img,
+.elementor-element-a6469e6:hover img,
+.elementor-element-5600e8d:hover img,
+[data-id="c946a02"] .e-image-link-base:hover img,
+[data-id="ac19c93"] > div:hover img,
+[data-id="ac19c93"] > .e-con:hover img,
+[data-id="d714990"]:hover img,
+[data-id="3696606"]:hover img,
+[data-id="2f75013"]:hover img,
+.elementor-element-d714990:hover img,
+.elementor-element-3696606:hover img,
+.elementor-element-2f75013:hover img,
+[data-id="7e1960d"]:hover,
+[data-id="8d53d95"]:hover,
+[data-id="7268c02"]:hover {
+  transform: scale(1.06) !important;
+}
+
+.cmr-team-card .cmr-team-card-name,
+.cmr-team-card-name,
+.cmr-team-card-name a,
+.cmr-team-card h3,
+.cmr-team-card h3 a,
+.cmr-team-member .cmr-team-name,
+.cmr-team-name,
+.cmr-team-name a,
+.cmr-team-member h3,
+.cmr-team-member h3 a,
+.quanto-team-box .service-title,
+.quanto-team-box .team-name,
+[data-id="c946a02"] h3,
+[data-id="c946a02"] h3 a,
+[data-id="c946a02"] .e-heading-link-base,
+[data-id="dd9791d"],
+[data-id="dd9791d"] a,
+[data-id="fc8c017"],
+[data-id="fc8c017"] a,
+[data-id="7333940"],
+[data-id="7333940"] a,
+[data-id="ac19c93"] h3,
+[data-id="d714990"] h3,
+[data-id="3696606"] h3,
+[data-id="2f75013"] h3,
+.elementor-element-d714990 h3,
+.elementor-element-3696606 h3,
+.elementor-element-2f75013 h3,
+[data-id="4dd42eb"],
+[data-id="b6c55d3"],
+[data-id="cd98f71"] {
+  transition: color 0.3s ease !important;
+}
+
+.cmr-team-card:hover .cmr-team-card-name,
+.cmr-team-card:hover .cmr-team-card-name a,
+.cmr-team-card:hover h3,
+.cmr-team-card:hover h3 a,
+.cmr-team-card-name:hover,
+.cmr-team-card-name:hover a,
+.cmr-team-card h3:hover,
+.cmr-team-card h3 a:hover,
+.cmr-team-member:hover .cmr-team-name,
+.cmr-team-member:hover .cmr-team-name a,
+.cmr-team-member:hover h3,
+.cmr-team-member:hover h3 a,
+.cmr-team-name:hover,
+.cmr-team-name:hover a,
+.quanto-team-box:hover .service-title,
+.quanto-team-box:hover .team-name,
+[data-id="c946a02"] > div:hover h3,
+[data-id="c946a02"] > div:hover h3 a,
+[data-id="c946a02"] > div:hover .e-heading-link-base,
+[data-id="c946a02"] > .e-con:hover h3,
+[data-id="c946a02"] > .e-con:hover h3 a,
+[data-id="f64cd23"]:hover [data-id="dd9791d"],
+[data-id="f64cd23"]:hover [data-id="dd9791d"] a,
+[data-id="a6469e6"]:hover [data-id="fc8c017"],
+[data-id="a6469e6"]:hover [data-id="fc8c017"] a,
+[data-id="5600e8d"]:hover [data-id="7333940"],
+[data-id="5600e8d"]:hover [data-id="7333940"] a,
+.elementor-element-f64cd23:hover h3,
+.elementor-element-f64cd23:hover h3 a,
+.elementor-element-a6469e6:hover h3,
+.elementor-element-a6469e6:hover h3 a,
+.elementor-element-5600e8d:hover h3,
+.elementor-element-5600e8d:hover h3 a,
+[data-id="dd9791d"]:hover,
+[data-id="dd9791d"] a:hover,
+[data-id="fc8c017"]:hover,
+[data-id="fc8c017"] a:hover,
+[data-id="7333940"]:hover,
+[data-id="7333940"] a:hover,
+[data-id="ac19c93"] > div:hover h3,
+[data-id="ac19c93"] > .e-con:hover h3,
+[data-id="d714990"]:hover h3,
+[data-id="3696606"]:hover h3,
+[data-id="2f75013"]:hover h3,
+.elementor-element-d714990:hover h3,
+.elementor-element-3696606:hover h3,
+.elementor-element-2f75013:hover h3,
+[data-id="4dd42eb"]:hover,
+[data-id="b6c55d3"]:hover,
+[data-id="cd98f71"]:hover {
+  color: #6A42E5 !important;
+}
+
 
 .main-menu ul {
   margin: 0;
@@ -8592,6 +8969,10 @@ button.button.alt.single_add_to_cart_button:hover::after {
         grid-template-columns: 1fr;
         gap: 40px;
     }
+    .custom-product-image-col {
+        position: static !important;
+        top: auto !important;
+    }
 }
 
 /* Left Column: Cover Image */
@@ -10460,57 +10841,14 @@ ul.key-parts-list li {
   display: inline-block !important;
 }
 
-/* Detail Press Release / CMR News - Figma Standard 884px Centered Container on All Laptop & Desktop Screens */
-@media (min-width: 992px) {
-  .single-cmr_news .blog-detail-page .container.custom-container,
-  .category-press-releases .blog-detail-page .container.custom-container,
-  .category-media-releases .blog-detail-page .container.custom-container {
-    max-width: 884px !important;
-    width: 100% !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
 
-  .single-cmr_news .blog-detail-page .row.justify-content-center.row-padding-bottom > div,
-  .single-cmr_news .blog-detail-page .row.justify-content-center.row-padding-bottom > .col-xl-9,
-  .single-cmr_news .blog-detail-page .row.justify-content-center.row-padding-bottom > .col-xxl-9,
-  .single-cmr_news .blog-detail-page .row.justify-content-center.row-padding-bottom > .col-12,
-  .single-cmr_news .blog-detail-page .social-links-scroll > div,
-  .single-cmr_news .blog-detail-page .social-links-scroll .col-12,
-  .single-cmr_news .blog-detail-page .social-links-scroll .col-xl-10 {
-    flex: 0 0 100% !important;
-    max-width: 100% !important;
-    width: 100% !important;
-  }
-}
-
-.single-cmr_news .img-box,
-.single-cmr_news .img-box img,
-.single-cmr_news .blog-item .img-box,
-.single-cmr_news .blog-item .img-box img,
 .single-cmr_news .blog-detail-page .blog-item .img-box,
 .single-cmr_news .blog-detail-page .blog-item .img-box img,
-.single-cmr_news .blog-detail-page .img-box,
-.single-cmr_news .blog-detail-page .img-box img,
 .single-cmr_news .blog-detail-page .blog-item .wp-block-post-featured-image img,
 .single-cmr_news .cmr-fvi-video-wrap {
-  border-radius: 16px !important;
+  border-radius: 0 !important;
   overflow: hidden !important;
-  -webkit-mask-image: -webkit-radial-gradient(white, black);
-  mask-image: radial-gradient(white, black);
-  transform: translateZ(0);
-  isolation: isolate;
   width: 100% !important;
-}
-
-/* Hide overlapping sidebar floating social links on CMR News and Press Releases */
-.single-cmr_news .social-links,
-.single-cmr_news .blog-item .content-box .social-links,
-.category-press-releases .social-links,
-.category-media-releases .social-links {
-  display: none !important;
 }
 
 .cmr-fvi-video-wrap {
@@ -10721,6 +11059,302 @@ ul.key-parts-list li {
   display: none !important;
 }
 
+/* ==========================================================================
+   CMR Mega Menus - Reset Text Wrapping & Ellipsis Truncation
+   ========================================================================== */
+.cmr-mmn-wrapper,
+.cmr-mmt-wrapper,
+.cmr-mmw-wrapper,
+.cmr-mms-wrapper,
+.cmr-mmc-wrapper,
+.cmr-mm-wrapper,
+[class*="cmr-mm"] {
+  white-space: normal !important;
+}
+
+.cmr-mmn-wrapper *,
+.cmr-mmt-wrapper *,
+.cmr-mmw-wrapper *,
+.cmr-mms-wrapper *,
+.cmr-mmc-wrapper *,
+.cmr-mm-wrapper * {
+  white-space: normal;
+}
+
+.cmr-mmn-announcement-title,
+.cmr-mmt-report-title,
+.cmr-mm-announcement-title {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  word-break: break-word !important;
+  white-space: normal !important;
+}
+
+.cmr-mmn-announcement-desc,
+.cmr-mmt-report-desc,
+.cmr-mm-announcement-desc {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  word-break: break-word !important;
+  white-space: normal !important;
+}
+
+/* ==========================================================================
+   CMR Global CTA Banner - Mobile Centering
+   ========================================================================== */
+@media (max-width: 768px) {
+  #cmr-global-cta-banner-section h1,
+  #cmr-global-cta-banner-section h2,
+  #cmr-global-cta-banner-section h3,
+  #cmr-global-cta-banner-section .elementor-heading-title,
+  #cmr-global-cta-banner-section .e-heading-base,
+  .elementor-52927 h1,
+  .elementor-52927 h2,
+  .elementor-52927 h3,
+  .elementor-52927 .elementor-heading-title,
+  .elementor-52927 .e-heading-base,
+  [data-id="d4032ae"],
+  [data-interaction-id="d4032ae"],
+  .elementor-element-d4032ae,
+  .elementor-element-d4032ae h2,
+  .elementor-element-d4032ae .elementor-heading-title,
+  .e-d4032ae-aabbd19,
+  h2[data-id="d4032ae"] {
+    font-size: 32px !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0 !important;
+    text-align: center !important;
+  }
+
+  #cmr-global-cta-banner-section p,
+  .elementor-52927 p {
+    text-align: center !important;
+  }
+
+  #cmr-global-cta-banner-section .elementor-element-644b09c,
+  .elementor-52927 [data-id="644b09c"],
+  .elementor-52927 .elementor-element-644b09c {
+    align-items: center !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  #cmr-global-cta-banner-section .elementor-element-e8ce45f,
+  .elementor-52927 [data-id="e8ce45f"],
+  .elementor-52927 .elementor-element-e8ce45f {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+  }
+
+  #cmr-global-cta-banner-section .elementor-element-d647871,
+  #cmr-global-cta-banner-section [data-id="d647871"],
+  .elementor-52927 [data-id="d647871"],
+  .elementor-52927 .elementor-element-d647871 {
+    margin: 0 auto !important;
+    align-self: center !important;
+    --align-self: center !important;
+    text-align: center !important;
+    display: inline-flex !important;
+  }
+
+  #cmr-global-cta-banner-section .elementor-button,
+  .elementor-52927 .elementor-button {
+    margin: 0 auto !important;
+  }
+}
+
+.elementor-52927 .elementor-element.elementor-element-d647871,
+.elementor-element-d647871,
+[data-id="d647871"] {
+  border: 1px solid #FFFFFF !important;
+  border-radius: 40px !important;
+}
+
+/* Category Post Cards Hover Title Color */
+.cmr-cat-card-title,
+.cmr-cat-card-title a {
+  transition: color 0.3s ease !important;
+}
+
+.cmr-cat-card:hover .cmr-cat-card-title,
+.cmr-cat-card:hover .cmr-cat-card-title a,
+.cmr-cat-card:hover h3,
+.cmr-cat-card:hover h3 a,
+.cmr-cat-card-title:hover,
+.cmr-cat-card-title:hover a,
+.cmr-cat-card-title a:hover {
+  color: #6A42E5 !important;
+}
+
+.cmr-cat-card:hover .cmr-cat-read-more,
+.cmr-cat-read-more:hover {
+  color: #6A42E5 !important;
+  border-color: #6A42E5 !important;
+  gap: 10px !important;
+}
+
+/* CMR View All & Load More Buttons Hover Scale */
+.intel-load-more-btn,
+.cmr-vpi-btn,
+.cmr-mui-btn,
+.cmr-intel-list-load-more a,
+.cmr-intel-list-load-more button,
+#cmr-intel-load-more-btn,
+.cmr-smbcgd-load-more,
+.cmr-enterprisecgd-load-more,
+.cmr-channelcgd-load-more,
+.cmr-mrg-load-more,
+.cmr-load-more-btn,
+.cmr-view-all-btn {
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, color 0.3s ease, background 0.3s ease !important;
+  transform: scale(1);
+}
+
+.intel-load-more-btn:hover,
+.cmr-vpi-btn:hover,
+.cmr-mui-btn:hover,
+.cmr-intel-list-load-more a:hover,
+.cmr-intel-list-load-more button:hover,
+#cmr-intel-load-more-btn:hover,
+.cmr-smbcgd-load-more:hover,
+.cmr-enterprisecgd-load-more:hover,
+.cmr-channelcgd-load-more:hover,
+.cmr-mrg-load-more:hover,
+.cmr-load-more-btn:hover,
+.cmr-view-all-btn:hover {
+  transform: scale(1.05) !important;
+  border-color: #6A42E5 !important;
+  color: #6A42E5 !important;
+}
+
+/* CMR Viewpoints & Market Updates Cards Hover */
+.cmr-vpi-card-title,
+.cmr-vpi-card-title a,
+.cmr-mui-card-title,
+.cmr-mui-card-title a,
+.cmr-vp-slide-title,
+.cmr-vp-slide-title a,
+.cmr-mu-slide-title,
+.cmr-mu-slide-title a {
+  transition: color 0.3s ease !important;
+}
+
+.cmr-vpi-card:hover .cmr-vpi-card-title,
+.cmr-vpi-card:hover .cmr-vpi-card-title a,
+.cmr-vpi-card:hover h3,
+.cmr-vpi-card:hover h3 a,
+.cmr-vpi-card-title:hover,
+.cmr-vpi-card-title:hover a,
+.cmr-mui-card:hover .cmr-mui-card-title,
+.cmr-mui-card:hover .cmr-mui-card-title a,
+.cmr-mui-card:hover h3,
+.cmr-mui-card:hover h3 a,
+.cmr-mui-card-title:hover,
+.cmr-mui-card-title:hover a,
+.cmr-vp-slide:hover .cmr-vp-slide-title,
+.cmr-vp-slide:hover .cmr-vp-slide-title a,
+.cmr-vp-slide:hover h3,
+.cmr-vp-slide-title:hover,
+.cmr-vp-slide-title:hover a,
+.cmr-mu-slide:hover .cmr-mu-slide-title,
+.cmr-mu-slide:hover .cmr-mu-slide-title a,
+.cmr-mu-slide:hover h3,
+.cmr-mu-slide-title:hover,
+.cmr-mu-slide-title:hover a {
+  color: #6A42E5 !important;
+}
+
+.cmr-vpi-read-more,
+.cmr-mui-read-more {
+  color: #111 !important;
+  border-bottom: 1px solid #111 !important;
+}
+
+.cmr-vpi-read-more svg,
+.cmr-mui-read-more svg {
+  stroke: #111 !important;
+  color: #111 !important;
+}
+
+.cmr-vpi-card:hover .cmr-vpi-read-more,
+.cmr-mui-card:hover .cmr-mui-read-more {
+  color: #111 !important;
+  border-bottom-color: #111 !important;
+}
+
+.cmr-vpi-card:hover .cmr-vpi-read-more svg,
+.cmr-mui-card:hover .cmr-mui-read-more svg {
+  color: #111 !important;
+  stroke: #111 !important;
+  transform: none !important;
+}
+
+.cmr-vpi-read-more:hover,
+.cmr-mui-read-more:hover,
+.cmr-vp-slide-link:hover,
+.cmr-mu-slide-link:hover {
+  color: #6A42E5 !important;
+  border-color: #6A42E5 !important;
+}
+
+.cmr-vpi-read-more:hover svg,
+.cmr-mui-read-more:hover svg,
+.cmr-vp-slide-link:hover svg,
+.cmr-mu-slide-link:hover svg {
+  color: #6A42E5 !important;
+  stroke: #6A42E5 !important;
+  transform: translate(2px, -2px) !important;
+}
+
+.cmr-vpi-card:hover .cmr-vpi-card-img,
+.cmr-mui-card:hover .cmr-mui-card-img {
+  transform: scale(1.05) !important;
+}
+
+/* Featured Carousel & Trends More Details Hover Isolation */
+.cmr-fi-slide:hover .cmr-fi-more-link {
+  color: #fff !important;
+}
+.cmr-fi-slide:hover .cmr-fi-more-link svg {
+  color: #fff !important;
+  stroke: #fff !important;
+  transform: none !important;
+}
+.cmr-fi-more-link:hover {
+  color: #00D2B9 !important;
+}
+.cmr-fi-more-link:hover svg {
+  stroke: #00D2B9 !important;
+  transform: translate(3px, -3px) !important;
+}
+
+.cmr-intel-trends-card:hover .cmr-intel-trends-more {
+  color: #111 !important;
+  border-bottom-color: #111 !important;
+}
+.cmr-intel-trends-card:hover .cmr-intel-trends-more svg {
+  color: #111 !important;
+  stroke: #111 !important;
+  transform: none !important;
+}
+.cmr-intel-trends-more:hover {
+  color: #6A42E5 !important;
+  border-color: #6A42E5 !important;
+}
+.cmr-intel-trends-more:hover svg {
+  stroke: #6A42E5 !important;
+  transform: translate(2px, -2px) !important;
+}
 
 
 

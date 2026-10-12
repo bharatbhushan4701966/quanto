@@ -148,6 +148,7 @@ if ( ! function_exists( 'cmr_live_section_shortcode' ) ) {
             }
             .cmr-ls-card:hover .cmr-ls-play-btn {
                 background: rgba(255,255,255,0.2);
+                transform: translate(-50%, -50%) scale(1.08);
             }
             .cmr-ls-play-btn svg {
                 width: 16px;
@@ -214,8 +215,16 @@ if ( ! function_exists( 'cmr_live_section_shortcode' ) ) {
                             $date_str = get_the_time( 'j M', $post->ID );
                             $date_str = strtoupper($date_str); // e.g. 10 MAY
                             
-                            $duration = get_post_meta( $post->ID, 'cmr_media_duration', true );
-                            if ( ! $duration ) $duration = '5:00 MINS';
+                            $duration = get_post_meta( $post->ID, '_cmr_media_duration', true );
+                            if ( empty( $duration ) ) {
+                                $duration = get_post_meta( $post->ID, 'cmr_media_duration', true );
+                            }
+                            if ( empty( $duration ) ) {
+                                $duration = get_post_meta( $post->ID, 'duration', true );
+                            }
+                            if ( empty( $duration ) ) {
+                                $duration = '5:00 MINS';
+                            }
                             
                             $link = get_permalink( $post->ID );
                             $img_url = get_the_post_thumbnail_url( $post->ID, 'large' );

@@ -98,16 +98,21 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
                 overflow: hidden;
                 border: 1px solid #e5e7eb;
                 position: relative;
-                transition: transform 0.3s ease;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
                 display: flex;
                 flex-direction: row;
                 height: 346px;
                 flex: 0 0 calc(50% - 10px);
                 scroll-snap-align: start;
+                cursor: pointer;
             }
 
             .cmr-tn-card:hover {
                 transform: translateY(-5px);
+            }
+
+            .cmr-tn-card:hover .cmr-tn-title {
+                color: #6b46c1;
             }
 
             .cmr-tn-image-wrap {
@@ -299,7 +304,7 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
                             }
                         }
                         ?>
-                        <div class="cmr-tn-card">
+                        <div class="cmr-tn-card" onclick="if(!event.target.closest('a.button, .add_to_cart_button, button, input')) { window.location.href='<?php echo esc_url( $product->get_permalink() ); ?>'; }">
                             <div class="cmr-tn-image-wrap">
                                 <?php if ( function_exists( 'cmr_render_product_badge' ) ) { cmr_render_product_badge( $product, 'cmr-tn-badge' ); } ?>
                                 <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $product->get_name() ); ?>">

@@ -353,14 +353,17 @@ function cmr_smb_connect_grid_shortcode( $atts = array() ) {
             font-weight: 600;
             color: #111;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, color 0.3s ease, background 0.3s ease !important;
             font-family: inherit;
             box-sizing: border-box;
+            transform: scale(1);
         }
         .cmr-smbcgd-load-more:hover {
-            border-color: #6B3FA0;
-            color: #6B3FA0;
+            border-color: #6B3FA0 !important;
+            color: #6B3FA0 !important;
+            transform: scale(1.05) !important;
         }
+
         
         .cmr-smbcgd-loading {
             opacity: 0.5;

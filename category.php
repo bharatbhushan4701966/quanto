@@ -4,14 +4,26 @@
  * Quanto Theme
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-    exit;
-}
-
 get_header();
 ?>
 
+<script>
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+    if (document.documentElement) document.documentElement.scrollTop = 0;
+    if (document.body) document.body.scrollTop = 0;
+    window.addEventListener('pageshow', function() {
+        window.scrollTo(0, 0);
+    });
+</script>
+
 <style>
+    html, body {
+        scroll-behavior: auto !important;
+    }
+
     /* Force full width - hide sidebar, remove constraints */
     .cmr-category-page-wrap {
         max-width: 1280px;
@@ -257,16 +269,23 @@ get_header();
         -webkit-box-orient: vertical;
         margin: 0px 0px 15px;
         overflow: hidden;
+        transition: color 0.3s ease !important;
     }
 
     .cmr-cat-card-title a {
         text-decoration: none;
         color: inherit;
-        transition: color 0.2s;
+        transition: color 0.3s ease !important;
     }
 
+    .cmr-cat-card:hover .cmr-cat-card-title,
+    .cmr-cat-card:hover .cmr-cat-card-title a,
+    .cmr-cat-card:hover h3,
+    .cmr-cat-card:hover h3 a,
+    .cmr-cat-card-title:hover,
+    .cmr-cat-card-title:hover a,
     .cmr-cat-card-title a:hover {
-        color: #6241CA;
+        color: #6A42E5 !important;
     }
 
     .cmr-cat-card-excerpt {
@@ -296,10 +315,11 @@ get_header();
         margin-top: auto;
     }
 
+    .cmr-cat-card:hover .cmr-cat-read-more,
     .cmr-cat-read-more:hover {
-        color: #6241CA;
-        border-color: #6241CA;
-        gap: 10px;
+        color: #6A42E5 !important;
+        border-color: #6A42E5 !important;
+        gap: 10px !important;
     }
 
     .cmr-cat-read-more svg {
