@@ -53,10 +53,6 @@ do_action( 'quanto_page_end_wrap' );
 
 
 
-// Render the Challenge and Footer Card sections dynamically via shortcode
-echo do_shortcode('[cmr_challenge]');
-echo do_shortcode('[cmr_footer_card]');
-
 
 
 get_footer();
