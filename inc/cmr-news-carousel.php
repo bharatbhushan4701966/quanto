@@ -295,7 +295,7 @@ function cmr_render_news_carousel_shortcode( $atts ) {
         opacity: 0.85 !important;
     }
 
-    /* Pagination: Horizontal Rounded Dashes */
+    /* Pagination: Horizontal Rounded Dashes with 4s Progress Loader */
     .cmr-nc-carousel .swiper-pagination {
         position: static !important;
         margin-top: 24px !important;
@@ -315,12 +315,41 @@ function cmr_render_news_carousel_shortcode( $atts ) {
         margin: 0 !important;
         border: none !important;
         cursor: pointer !important;
-        transition: all 0.3s ease !important;
+        position: relative !important;
+        overflow: hidden !important;
+        display: inline-block !important;
+        padding: 0 !important;
+        transition: transform 0.2s ease !important;
+    }
+
+    .cmr-nc-carousel .swiper-pagination-bullet .cmr-bullet-loader {
+        display: block !important;
+        height: 100% !important;
+        width: 0% !important;
+        background: #5842c3 !important;
+        border-radius: 4px !important;
     }
 
     .cmr-nc-carousel .swiper-pagination-bullet-active {
-        background: #5842c3 !important;
+        background: #ded8fa !important;
         opacity: 1 !important;
+    }
+
+    .cmr-nc-carousel .swiper-pagination-bullet-active .cmr-bullet-loader {
+        animation: cmrBulletLoader 4s linear forwards !important;
+    }
+
+    .cmr-nc-carousel:hover .swiper-pagination-bullet-active .cmr-bullet-loader {
+        animation-play-state: paused !important;
+    }
+
+    @keyframes cmrBulletLoader {
+        0% {
+            width: 0%;
+        }
+        100% {
+            width: 100%;
+        }
     }
 
     @media (max-width: 1024px) {
@@ -553,6 +582,11 @@ function cmr_render_news_carousel_shortcode( $atts ) {
                         centeredSlides: true,
                         loop: slideCount > 1,
                         speed: 400,
+                        autoplay: slideCount > 1 ? {
+                            delay: 4000,
+                            disableOnInteraction: false,
+                            pauseOnMouseEnter: true,
+                        } : false,
                         mousewheel: {
                             enabled: true,
                             forceToAxis: true,
@@ -564,6 +598,9 @@ function cmr_render_news_carousel_shortcode( $atts ) {
                         pagination: {
                             el: carouselEl.querySelector('.swiper-pagination') || '.swiper-pagination',
                             clickable: true,
+                            renderBullet: function (index, className) {
+                                return '<span class="' + className + '"><span class="cmr-bullet-loader"></span></span>';
+                            }
                         },
                         breakpoints: {
                             640: {
@@ -588,6 +625,34 @@ function cmr_render_news_carousel_shortcode( $atts ) {
                             }
                         }
                     });
+
+                    function restartBulletAnimation() {
+                        carouselEl.querySelectorAll('.cmr-bullet-loader').forEach(function(loader) {
+                            loader.style.animation = 'none';
+                        });
+                        var activeBulletLoader = carouselEl.querySelector('.swiper-pagination-bullet-active .cmr-bullet-loader');
+                        if (activeBulletLoader) {
+                            void activeBulletLoader.offsetWidth; // Force reflow
+                            activeBulletLoader.style.animation = 'cmrBulletLoader 4s linear forwards';
+                        }
+                    }
+
+                    swiperInstance.on('slideChangeTransitionStart', restartBulletAnimation);
+                    swiperInstance.on('touchStart', function() {
+                        var activeBulletLoader = carouselEl.querySelector('.swiper-pagination-bullet-active .cmr-bullet-loader');
+                        if (activeBulletLoader) {
+                            activeBulletLoader.style.animationPlayState = 'paused';
+                        }
+                    });
+                    swiperInstance.on('touchEnd', function() {
+                        var activeBulletLoader = carouselEl.querySelector('.swiper-pagination-bullet-active .cmr-bullet-loader');
+                        if (activeBulletLoader) {
+                            activeBulletLoader.style.animationPlayState = 'running';
+                        }
+                    });
+
+                    // Start animation for the initial active slide
+                    setTimeout(restartBulletAnimation, 60);
 
                     // 2-finger touch gesture support on touchscreens
                     (function(swiper, el) {
