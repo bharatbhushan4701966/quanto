@@ -418,12 +418,16 @@ if ( ! function_exists( 'cmr_trending_podcast_shortcode' ) ) {
         ob_start();
         ?>
         <style>
+            html {
+                scroll-behavior: smooth;
+            }
             .cmr-trending-section {
                 padding: 60px 20px;
                 background-color: #fff;
                 font-family: inherit;
                 max-width: 1280px;
                 margin: 0 auto;
+                scroll-margin-top: 110px;
             }
             .cmr-trending-title {
                 font-size: 42px;
@@ -656,6 +660,7 @@ if ( ! function_exists( 'cmr_trending_topview_shortcode' ) ) {
                 padding: 60px 20px;
                 background-color: #f8f9fa;
                 font-family: inherit;
+                scroll-margin-top: 110px;
             }
             .cmr-topview-container {
                 max-width: 1280px;
@@ -1563,4 +1568,40 @@ if ( ! function_exists( 'cmr_browse_recently_updated_shortcode' ) ) {
     }
 }
 add_shortcode( 'cmr_browse_recently_updated', 'cmr_browse_recently_updated_shortcode' );
+
+add_action('wp_footer', 'cmr_live_hash_scroll_handler', 99);
+function cmr_live_hash_scroll_handler() {
+    $uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+    if (strpos($uri, 'cmr-live') === false && !is_page('cmr-live')) {
+        return;
+    }
+    ?>
+    <script>
+    (function() {
+        function scrollToTargetHash() {
+            if (!window.location.hash) return;
+            var targetId = window.location.hash.substring(1);
+            if (targetId !== 'podcasts' && targetId !== 'top-view') return;
+            var targetEl = document.getElementById(targetId);
+            if (targetEl) {
+                var headerOffset = 110;
+                var elPos = targetEl.getBoundingClientRect().top + window.pageYOffset;
+                window.scrollTo({
+                    top: Math.max(0, elPos - headerOffset),
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        window.addEventListener('load', function() {
+            setTimeout(scrollToTargetHash, 200);
+            setTimeout(scrollToTargetHash, 600);
+        });
+        window.addEventListener('hashchange', function() {
+            setTimeout(scrollToTargetHash, 50);
+        });
+    })();
+    </script>
+    <?php
+}
 

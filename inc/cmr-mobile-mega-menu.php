@@ -591,6 +591,44 @@ function cmr_inject_mobile_mega_menu() {
                 el.classList.remove('cmr-active-link', 'active');
             });
             navLink.classList.add('cmr-active-link', 'active');
+
+            var href = navLink.getAttribute('href') || '';
+            var hashIdx = href.indexOf('#');
+            if (hashIdx !== -1) {
+                var targetId = href.substring(hashIdx + 1);
+                var targetEl = document.getElementById(targetId);
+
+                var linkUrl;
+                try {
+                    linkUrl = new URL(href, window.location.href);
+                } catch(err) {
+                    linkUrl = null;
+                }
+
+                var isCurrentPage = (!linkUrl || linkUrl.pathname === window.location.pathname || href.startsWith('#'));
+
+                // Close mobile drawer and release scroll lock
+                var liveOverlay = document.querySelector('.cmr-mobile-nav-overlay');
+                if (liveOverlay) {
+                    liveOverlay.classList.remove('cmr-nav-open');
+                    document.body.style.overflow = '';
+                }
+
+                if (isCurrentPage && targetEl) {
+                    e.preventDefault();
+                    if (window.history && window.history.pushState) {
+                        window.history.pushState(null, null, '#' + targetId);
+                    }
+                    setTimeout(function() {
+                        var headerOffset = 90;
+                        var elPos = targetEl.getBoundingClientRect().top + window.pageYOffset;
+                        window.scrollTo({
+                            top: Math.max(0, elPos - headerOffset),
+                            behavior: 'smooth'
+                        });
+                    }, 250);
+                }
+            }
         }
 
         // 4. Back Button (Backward Navigation)
