@@ -624,11 +624,49 @@ if ( ! function_exists( 'cmr_viewpoints_hero_shortcode' ) ) {
                     });
                 }
 
+                let autoplayTimer = null;
+                const autoplayDelay = 5000;
+
+                function startAutoplay() {
+                    stopAutoplay();
+                    if (slides.length > 1) {
+                        autoplayTimer = setInterval(function() {
+                            const nextIndex = (currentIndex + 1) % slides.length;
+                            updateSlider(nextIndex);
+                        }, autoplayDelay);
+                    }
+                }
+
+                function stopAutoplay() {
+                    if (autoplayTimer) {
+                        clearInterval(autoplayTimer);
+                        autoplayTimer = null;
+                    }
+                }
+
                 dots.forEach(function(dot) {
                     dot.addEventListener('click', function() {
                         const index = parseInt(this.getAttribute('data-slide'));
                         updateSlider(index);
+                        startAutoplay();
                     });
+                });
+
+                // Pause on hover
+                slider.addEventListener('mouseenter', stopAutoplay);
+                slider.addEventListener('mouseleave', startAutoplay);
+                if (dotsContainer) {
+                    dotsContainer.addEventListener('mouseenter', stopAutoplay);
+                    dotsContainer.addEventListener('mouseleave', startAutoplay);
+                }
+
+                // Pause autoplay when tab is not active
+                document.addEventListener('visibilitychange', function() {
+                    if (document.hidden) {
+                        stopAutoplay();
+                    } else {
+                        startAutoplay();
+                    }
                 });
                 
                 // Touch Swipe Support for Mobile & Tablet
@@ -637,6 +675,7 @@ if ( ! function_exists( 'cmr_viewpoints_hero_shortcode' ) ) {
                 let isSwiping = false;
 
                 slider.addEventListener('touchstart', function(e) {
+                    stopAutoplay();
                     touchStartX = e.touches[0].clientX;
                     isSwiping = true;
                 }, { passive: true });
@@ -647,22 +686,31 @@ if ( ! function_exists( 'cmr_viewpoints_hero_shortcode' ) ) {
                 }, { passive: true });
 
                 slider.addEventListener('touchend', function() {
-                    if (!isSwiping || touchCurrentX === 0) return;
+                    if (!isSwiping || touchCurrentX === 0) {
+                        startAutoplay();
+                        return;
+                    }
                     const diffX = touchStartX - touchCurrentX;
                     const threshold = 35;
-                    if (diffX > threshold && currentIndex < slides.length - 1) {
-                        updateSlider(currentIndex + 1);
-                    } else if (diffX < -threshold && currentIndex > 0) {
-                        updateSlider(currentIndex - 1);
+                    if (diffX > threshold) {
+                        const nextIndex = (currentIndex + 1) % slides.length;
+                        updateSlider(nextIndex);
+                    } else if (diffX < -threshold) {
+                        const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+                        updateSlider(prevIndex);
                     }
                     isSwiping = false;
                     touchStartX = 0;
                     touchCurrentX = 0;
+                    startAutoplay();
                 });
 
                 window.addEventListener('resize', function() {
                     updateSlider(currentIndex);
                 });
+
+                // Start autoplay on initialization
+                startAutoplay();
             });
         </script>
 
