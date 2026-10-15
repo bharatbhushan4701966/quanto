@@ -2979,7 +2979,7 @@ function cmr_testimonials_global_mobile_js() {
                 }
             });
 
-            // 1. Pre-patch data-settings on the wrappers so Swiper reads slidesPerView: 1 and spaceBetween: 0 on ALL screens (Desktop & Mobile)
+            // 1. Pre-patch data-settings on the wrappers so Swiper reads slidesPerView: 1, spaceBetween: 0, slower delay, and pause on hover
             var wrappers = document.querySelectorAll('.wcf__t_slider-wrapper, .aae--a-testimonial');
             wrappers.forEach(function(w) {
                 var ds = w.getAttribute('data-settings');
@@ -2998,6 +2998,24 @@ function cmr_testimonials_global_mobile_js() {
                         }
                         if (conf.allowTouchMove !== true) {
                             conf.allowTouchMove = true;
+                            mod = true;
+                        }
+                        if (conf.speed !== 800) {
+                            conf.speed = 800;
+                            mod = true;
+                        }
+                        if (conf.autoplay) {
+                            if (typeof conf.autoplay === 'object') {
+                                conf.autoplay.delay = 6000;
+                                conf.autoplay.pauseOnMouseEnter = true;
+                                conf.autoplay.disableOnInteraction = false;
+                            } else {
+                                conf.autoplay = {
+                                    delay: 6000,
+                                    pauseOnMouseEnter: true,
+                                    disableOnInteraction: false
+                                };
+                            }
                             mod = true;
                         }
                         if (conf.breakpoints) {
@@ -3039,6 +3057,47 @@ function cmr_testimonials_global_mobile_js() {
                         sw.allowTouchMove = true;
                         changed = true;
                     }
+                    if (sw.params.speed !== 800) {
+                        sw.params.speed = 800;
+                        changed = true;
+                    }
+                    if (sw.params.autoplay) {
+                        if (typeof sw.params.autoplay === 'object') {
+                            if (sw.params.autoplay.delay !== 6000) {
+                                sw.params.autoplay.delay = 6000;
+                                changed = true;
+                            }
+                            if (!sw.params.autoplay.pauseOnMouseEnter) {
+                                sw.params.autoplay.pauseOnMouseEnter = true;
+                                changed = true;
+                            }
+                            if (sw.params.autoplay.disableOnInteraction) {
+                                sw.params.autoplay.disableOnInteraction = false;
+                                changed = true;
+                            }
+                        } else {
+                            sw.params.autoplay = {
+                                delay: 6000,
+                                pauseOnMouseEnter: true,
+                                disableOnInteraction: false
+                            };
+                            changed = true;
+                        }
+                    }
+                    // Explicit Pause on Hover fallback listeners
+                    if (!s.dataset.cmrHoverBound) {
+                        s.dataset.cmrHoverBound = 'true';
+                        s.addEventListener('mouseenter', function() {
+                            if (s.swiper && s.swiper.autoplay && s.swiper.autoplay.stop) {
+                                s.swiper.autoplay.stop();
+                            }
+                        });
+                        s.addEventListener('mouseleave', function() {
+                            if (s.swiper && s.swiper.autoplay && s.swiper.autoplay.start) {
+                                s.swiper.autoplay.start();
+                            }
+                        });
+                    }
                     if (sw.params.breakpoints) {
                         for (var bp in sw.params.breakpoints) {
                             if (parseInt(bp, 10) <= 1024) {
@@ -3055,6 +3114,10 @@ function cmr_testimonials_global_mobile_js() {
                         if (sw.updateSlides) sw.updateSlides();
                         if (sw.updateProgress) sw.updateProgress();
                         if (sw.update) sw.update();
+                        if (sw.autoplay && sw.autoplay.running) {
+                            sw.autoplay.stop();
+                            sw.autoplay.start();
+                        }
                         if (sw.slideToLoop) {
                             sw.slideToLoop(sw.realIndex || 0, 0);
                         } else if (sw.slideTo) {
