@@ -5105,6 +5105,36 @@ div[data-id="71dfb04"] p,
     display: block !important;
 }
 
+/* Proportional scaling for wide and oversized logos to match VMware and Veeam presentation */
+.quanto-logo-slide img[src*="qoo" i],
+.quanto-logo-slide img[src*="iqoo" i],
+.quanto-logo-slide.logo-item-iqoo img {
+    max-width: 68% !important;
+    max-height: 48px !important;
+    transform: scale(0.9) !important;
+}
+
+.quanto-logo-slide img[src*="scaler" i],
+.quanto-logo-slide.logo-item-scaler img {
+    max-width: 72% !important;
+    max-height: 38px !important;
+    transform: scale(0.85) !important;
+}
+
+.quanto-logo-slide img[src*="epam" i],
+.quanto-logo-slide.logo-item-epam img {
+    max-width: 74% !important;
+    max-height: 42px !important;
+    transform: scale(0.88) !important;
+}
+
+.quanto-logo-slide img[src*="vi" i],
+.quanto-logo-slide.logo-item-vi img {
+    max-width: 55% !important;
+    max-height: 52px !important;
+    transform: scale(0.9) !important;
+}
+
 .elementor-14 .elementor-element.elementor-element-df14a6f .elementor-widget-image,
 div[data-id="df14a6f"] .elementor-widget-image {
     display: flex !important;

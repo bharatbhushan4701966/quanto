@@ -145,6 +145,24 @@ class Quanto_Logo_Carousel_Widget extends \Elementor\Widget_Base {
         $is_grayscale = isset($settings['grayscale']) && $settings['grayscale'] === 'yes';
         $slides_count = !empty($settings['slides_to_show']) ? intval($settings['slides_to_show']) : 5;
 
+        $get_logo_item_classes = function($img_url) {
+            $classes = [];
+            $lower = strtolower($img_url);
+            if (strpos($lower, 'iqoo') !== false || strpos($lower, 'qoo') !== false) {
+                $classes[] = 'logo-item-iqoo';
+            }
+            if (strpos($lower, 'scaler') !== false) {
+                $classes[] = 'logo-item-scaler';
+            }
+            if (strpos($lower, 'epam') !== false) {
+                $classes[] = 'logo-item-epam';
+            }
+            if (strpos($lower, 'vi') !== false && (strpos($lower, 'business') !== false || preg_match('/[\/\-_]vi[\/\-_.]/i', $img_url) || strpos($lower, 'vi-') !== false || strpos($lower, 'vi.') !== false || strpos($lower, 'vi_') !== false)) {
+                $classes[] = 'logo-item-vi';
+            }
+            return !empty($classes) ? ' ' . implode(' ', $classes) : '';
+        };
+
         // Ensure enough slides for a completely seamless loop in continuous mode
         $group_items = $gallery_items;
         if ($is_continuous) {
@@ -188,6 +206,32 @@ class Quanto_Logo_Carousel_Widget extends \Elementor\Widget_Base {
                 transition: filter 0.3s ease;
                 <?php endif; ?>
             }
+            .quanto-logo-slide img[src*="qoo" i],
+            .quanto-logo-slide img[src*="iqoo" i],
+            .quanto-logo-slide.logo-item-iqoo img {
+                max-width: 68% !important;
+                max-height: 48px !important;
+                transform: scale(0.9) !important;
+            }
+            .quanto-logo-slide img[src*="scaler" i],
+            .quanto-logo-slide.logo-item-scaler img {
+                max-width: 72% !important;
+                max-height: 38px !important;
+                transform: scale(0.85) !important;
+            }
+            .quanto-logo-slide img[src*="epam" i],
+            .quanto-logo-slide.logo-item-epam img {
+                max-width: 74% !important;
+                max-height: 42px !important;
+                transform: scale(0.88) !important;
+            }
+            .quanto-logo-slide img[src*="vi" i],
+            .quanto-logo-slide.logo-item-vi img {
+                max-width: 55% !important;
+                max-height: 52px !important;
+                transform: scale(0.9) !important;
+            }
+
             <?php if ($is_grayscale): ?>
             .quanto-logo-slide img:hover {
                 filter: grayscale(0%) opacity(1);
@@ -275,14 +319,14 @@ class Quanto_Logo_Carousel_Widget extends \Elementor\Widget_Base {
             <div class="quanto-logo-marquee-track">
                 <div class="quanto-logo-marquee-group">
                     <?php foreach ($group_items as $img_url): ?>
-                        <div class="quanto-logo-slide">
+                        <div class="quanto-logo-slide<?php echo $get_logo_item_classes($img_url); ?>">
                             <img src="<?php echo esc_url($img_url); ?>" alt="Logo">
                         </div>
                     <?php endforeach; ?>
                 </div>
                 <div class="quanto-logo-marquee-group" aria-hidden="true">
                     <?php foreach ($group_items as $img_url): ?>
-                        <div class="quanto-logo-slide">
+                        <div class="quanto-logo-slide<?php echo $get_logo_item_classes($img_url); ?>">
                             <img src="<?php echo esc_url($img_url); ?>" alt="Logo">
                         </div>
                     <?php endforeach; ?>
@@ -328,7 +372,7 @@ class Quanto_Logo_Carousel_Widget extends \Elementor\Widget_Base {
         <div class="quanto-logo-carousel-container swiper-container" id="<?php echo esc_attr($uid); ?>">
             <div class="quanto-logo-carousel-wrapper swiper-wrapper">
                 <?php foreach ($gallery_items as $img_url): ?>
-                    <div class="quanto-logo-slide swiper-slide">
+                    <div class="quanto-logo-slide swiper-slide<?php echo $get_logo_item_classes($img_url); ?>">
                         <img src="<?php echo esc_url($img_url); ?>" alt="Logo">
                     </div>
                 <?php endforeach; ?>
