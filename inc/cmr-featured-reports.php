@@ -66,6 +66,19 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                 color: #6b46c1;
             }
 
+            .cmr-fr-card .cmr-fr-image-wrap {
+                overflow: hidden;
+            }
+
+            .cmr-fr-card .cmr-fr-image-wrap img {
+                transform: scale(1);
+                transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            }
+
+            .cmr-fr-card:hover .cmr-fr-image-wrap img {
+                transform: scale(1.06) !important;
+            }
+
             .cmr-fr-badge {
                 position: absolute;
                 top: 15px;
@@ -109,6 +122,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                 top: 0;
                 left: 0;
                 background: #0a0e1a;
+                overflow: hidden;
             }
 
             .cmr-fr-large .cmr-fr-image-wrap img {
