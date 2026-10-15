@@ -1432,9 +1432,10 @@
 
                 
 
-                // Get taxonomy terms from both taxonomies (category and cmr_news_category)
+                // Get taxonomy terms from category, cmr_news_category, and post tags
                 $terms_news = get_the_terms( $post_id, 'cmr_news_category' );
                 $terms_cat  = get_the_terms( $post_id, 'category' );
+                $terms_tags = get_the_tags( $post_id );
                 $all_terms  = array();
 
                 if ( ! empty( $terms_news ) && ! is_wp_error( $terms_news ) ) {
@@ -1447,21 +1448,29 @@
                         $all_terms[ $t->slug ] = $t;
                     }
                 }
+                if ( ! empty( $terms_tags ) && ! is_wp_error( $terms_tags ) ) {
+                    foreach ( $terms_tags as $t ) {
+                        $all_terms[ $t->slug ] = $t;
+                    }
+                }
 
                 $term_names = array();
                 if ( ! empty( $all_terms ) ) {
                     foreach ( $all_terms as $term ) {
-                        if ( count( $all_terms ) > 1 && in_array( strtolower( $term->slug ), array('media-releases', 'media-release', 'press-releases', 'press-release', 'uncategorized'), true ) ) {
+                        if ( count( $all_terms ) > 1 && in_array( strtolower( $term->slug ), array( 'uncategorized' ), true ) ) {
                             continue;
                         }
-                        $term_names[] = $term->name;
+                        $clean_name = wp_specialchars_decode( $term->name );
+                        if ( ! in_array( $clean_name, $term_names, true ) ) {
+                            $term_names[] = $clean_name;
+                        }
                     }
                     if ( empty( $term_names ) ) {
                         $term_names = wp_list_pluck( $all_terms, 'name' );
                     }
                 }
 
-                $tags_list = ! empty( $term_names ) ? implode( ', ', array_unique( $term_names ) ) : esc_html__( 'General', 'quanto' );
+                $tags_list = ! empty( $term_names ) ? implode( ', ', $term_names ) : esc_html__( 'General', 'quanto' );
 
                 
 
@@ -2159,12 +2168,12 @@
                 }
                 .cmr-rel-card-title a {
                     text-decoration: none;
-                    color: #5A28D7 !important;
+                    color: #111 !important;
                     transition: color 0.3s ease !important;
                 }
                 .cmr-rel-card:hover .cmr-rel-card-title a,
                 .cmr-rel-card-title a:hover {
-                    color: #4625A9 !important;
+                    color: #5A28D7 !important;
                 }
                 .cmr-rel-card-excerpt {
                     font-size: 14.5px;
