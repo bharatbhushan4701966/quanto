@@ -72,13 +72,21 @@ function cmr_nav_search_shortcode($atts = array()) {
         <style>
         .cmr-nav-search-container {
             position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            vertical-align: middle !important;
             background: transparent;
             border: none;
             cursor: pointer;
-            padding: 5px;
+            padding: 0 !important;
+            margin: 0 !important;
+            width: 40px !important;
+            height: 40px !important;
+            min-width: 40px !important;
+            min-height: 40px !important;
+            box-sizing: border-box !important;
+            line-height: 1 !important;
             color: #fff; /* White on load */
         }
         
@@ -91,10 +99,22 @@ function cmr_nav_search_shortcode($atts = array()) {
             border: none;
             color: inherit;
             cursor: pointer;
-            padding: 0;
-            display: flex;
-            align-items: center;
+            padding: 0 !important;
+            margin: 0 !important;
+            width: 40px !important;
+            height: 40px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            line-height: 1 !important;
             transition: color 0.3s ease;
+        }
+
+        .cmr-nav-search-trigger svg {
+            width: 22px !important;
+            height: 22px !important;
+            display: block !important;
+            margin: 0 auto !important;
         }
         
         .cmr-nav-search-trigger:hover {
@@ -376,7 +396,7 @@ function cmr_nav_search_shortcode($atts = array()) {
     <div class="cmr-nav-search-container <?php echo esc_attr($container_class); ?> cmr-has-tooltip">
         <!-- The trigger icon -->
         <button type="button" class="cmr-nav-search-trigger" onclick="cmrOpenNavSearch()" aria-label="Search">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
                 <path d="M20 20L17 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             </svg>

@@ -13508,9 +13508,138 @@ button.cmr-arrow-fixed .cmr-arrow-icon {
     }
 }
 
+/* ==========================================================================
+   Header Action Icons Perfect Vertical & Horizontal Alignment (Search, Cart, Profile)
+   ========================================================================== */
+.cmr-nav-search-container,
+.cmr-nav-cart-container,
+.cmr-nav-cart-container-black,
+.cmr-account-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    vertical-align: middle !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    line-height: 1 !important;
+}
 
+.cmr-nav-search-trigger {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 40px !important;
+    height: 40px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    cursor: pointer !important;
+    line-height: 1 !important;
+}
 
+.cmr-nav-search-trigger svg,
+.cmr-nav-cart-container svg,
+.cmr-nav-cart-container-black svg {
+    width: 22px !important;
+    height: 22px !important;
+    display: block !important;
+    margin: 0 auto !important;
+}
 
+.cmr-nav-cart-badge {
+    position: absolute !important;
+    bottom: 2px !important;
+    right: 2px !important;
+    width: 16px !important;
+    height: 16px !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    line-height: 1 !important;
+}
 
+.cmr-account-initial {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    border-radius: 50% !important;
+    background: #00bfbc !important;
+    color: #ffffff !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    line-height: 1 !important;
+    margin: 0 auto !important;
+}
 
+.cmr-account-link i {
+    font-size: 22px !important;
+    line-height: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Ensure Elementor flex container and widgets align items on center line */
+.elementor-element-25bf1c9 {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 12px !important;
+}
+
+.elementor-element-25bf1c9 > .elementor-widget,
+.elementor-element-25bf1c9 .elementor-widget-container,
+.elementor-element-25bf1c9 .elementor-shortcode,
+.elementor-element-0ece73f,
+.elementor-element-1c02011,
+.elementor-element-9c54d6a,
+.elementor-element-5f03721 {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    vertical-align: middle !important;
+}
+
+.elementor-widget:has(.cmr-nav-search-container),
+.elementor-widget:has(.cmr-nav-cart-container),
+.elementor-widget:has(.cmr-nav-cart-container-black),
+.elementor-widget:has(.cmr-account-link) {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    vertical-align: middle !important;
+}
+
+.elementor-widget:has(.cmr-nav-search-container) > .elementor-widget-container,
+.elementor-widget:has(.cmr-nav-cart-container) > .elementor-widget-container,
+.elementor-widget:has(.cmr-nav-cart-container-black) > .elementor-widget-container,
+.elementor-widget:has(.cmr-account-link) > .elementor-widget-container {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    vertical-align: middle !important;
+}
 

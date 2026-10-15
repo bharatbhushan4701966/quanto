@@ -9,12 +9,19 @@ function cmr_nav_cart_shortcode() {
     <style>
     .cmr-nav-cart-container {
         position: relative;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        vertical-align: middle !important;
         text-decoration: none;
-        width: 40px;
-        height: 40px;
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        min-height: 40px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+        line-height: 1 !important;
         color: #fff; /* White by default matching search icon */
         transition: color 0.3s ease;
     }
@@ -39,27 +46,29 @@ function cmr_nav_cart_shortcode() {
     }
 
     .cmr-nav-cart-container svg {
-        width: 22px;
-        height: 22px;
+        width: 22px !important;
+        height: 22px !important;
+        display: block !important;
+        margin: 0 auto !important;
     }
 
     .cmr-nav-cart-badge {
-        position: absolute;
-        bottom: 5px;
-        right: 4px;
+        position: absolute !important;
+        bottom: 2px !important;
+        right: 2px !important;
         background: #00BFBC; /* Cyan/teal */
         color: #fff; /* white */
-        font-size: 11px;
+        font-size: 10px !important;
         font-family: Arial, sans-serif;
-        font-weight: 800;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        font-weight: 800 !important;
+        width: 16px !important;
+        height: 16px !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
         border: 2px solid transparent;
-        line-height: 1;
+        line-height: 1 !important;
     }
     </style>
     
@@ -94,12 +103,19 @@ function cmr_nav_cart_black_shortcode() {
     <style>
     .cmr-nav-cart-container-black {
         position: relative;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        vertical-align: middle !important;
         text-decoration: none;
-        width: 40px;
-        height: 40px;
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        min-height: 40px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+        line-height: 1 !important;
         color: #333 !important;
         transition: color 0.3s ease;
     }
@@ -107,26 +123,28 @@ function cmr_nav_cart_black_shortcode() {
         color: #4820B0 !important;
     }
     .cmr-nav-cart-container-black svg {
-        width: 22px;
-        height: 22px;
+        width: 22px !important;
+        height: 22px !important;
+        display: block !important;
+        margin: 0 auto !important;
     }
     .cmr-nav-cart-badge {
-        position: absolute;
-        bottom: 5px;
-        right: 4px;
+        position: absolute !important;
+        bottom: 2px !important;
+        right: 2px !important;
         background: #00BFBC; /* Cyan/teal */
         color: #fff; /* white */
-        font-size: 11px;
+        font-size: 10px !important;
         font-family: Arial, sans-serif;
-        font-weight: 800;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        font-weight: 800 !important;
+        width: 16px !important;
+        height: 16px !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
         border: 2px solid transparent;
-        line-height: 1;
+        line-height: 1 !important;
     }
     </style>
     

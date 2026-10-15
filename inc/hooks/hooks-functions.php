@@ -2078,6 +2078,7 @@
                     flex-direction: column;
                     height: 100%;
                     font-family: 'Instrument Sans', sans-serif;
+                    border-radius: 0 !important;
                 }
                 .cmr-rel-card-img {
                     width: 100%;
@@ -2085,12 +2086,19 @@
                     overflow: hidden;
                     background: #f4f4f4;
                     margin-bottom: 18px;
-                    border-radius: 8px;
+                    border-radius: 0 !important;
+                }
+                .cmr-rel-card-img a {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 0 !important;
                 }
                 .cmr-rel-card-img img {
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
+                    border-radius: 0 !important;
                     transition: transform 0.4s ease;
                     display: block;
                 }
@@ -2105,73 +2113,97 @@
                 .cmr-rel-card-meta {
                     display: flex;
                     align-items: center;
-                    gap: 8px;
+                    justify-content: space-between;
+                    gap: 12px;
                     margin-bottom: 12px;
-                    font-size: 13px;
-                    color: #888;
+                    font-size: 14px;
+                    color: #475569;
                     font-weight: 500;
+                }
+                .cmr-rel-card-meta-left {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    min-width: 0;
                 }
                 .cmr-rel-card-meta-dash {
-                    width: 20px;
-                    height: 1px;
-                    background: #ccc;
+                    color: #475569;
+                    font-weight: 600;
                     flex-shrink: 0;
-                    display: inline-block;
                 }
                 .cmr-rel-card-tag {
-                    font-size: 13px;
-                    font-weight: 500;
-                    color: #555;
-                }
-                .cmr-rel-card-date {
-                    color: #888;
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: #475569;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
                 .cmr-rel-card-read-time {
-                    font-size: 13px;
-                    color: #888;
+                    font-size: 14px;
+                    color: #64748b;
                     margin-left: auto;
+                    white-space: nowrap;
+                    flex-shrink: 0;
                 }
                 .cmr-rel-card-title {
-                    font-size: 18px;
-                    font-weight: 600;
-                    color: #111;
-                    line-height: 1.4;
+                    font-size: 20px;
+                    font-weight: 700;
+                    line-height: 1.35;
                     letter-spacing: -0.3px;
                     display: -webkit-box;
                     -webkit-line-clamp: 2;
                     -webkit-box-orient: vertical;
-                    margin: 0 0 16px;
+                    margin: 0 0 14px;
                     overflow: hidden;
-                    transition: color 0.3s ease !important;
                 }
                 .cmr-rel-card-title a {
                     text-decoration: none;
-                    color: inherit;
+                    color: #5A28D7 !important;
                     transition: color 0.3s ease !important;
                 }
-                .cmr-rel-card:hover .cmr-rel-card-title,
-                .cmr-rel-card:hover .cmr-rel-card-title a {
-                    color: #6A42E5 !important;
+                .cmr-rel-card:hover .cmr-rel-card-title a,
+                .cmr-rel-card-title a:hover {
+                    color: #4625A9 !important;
+                }
+                .cmr-rel-card-excerpt {
+                    font-size: 14.5px;
+                    line-height: 1.55;
+                    color: #4B5563;
+                    margin: 0 0 22px;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
                 }
                 .cmr-rel-read-more {
                     display: inline-flex;
                     align-items: center;
                     gap: 6px;
-                    font-size: 14px;
-                    font-weight: 600;
-                    color: #111;
-                    text-decoration: none;
-                    border-bottom: 1.5px solid #111;
+                    font-size: 15px;
+                    font-weight: 700;
+                    color: #111 !important;
+                    text-decoration: none !important;
+                    border-bottom: 1.5px solid #111 !important;
                     padding-bottom: 2px;
                     width: fit-content;
                     margin-top: auto;
                     transition: all 0.2s ease;
                 }
+                .cmr-rel-read-more svg {
+                    width: 14px;
+                    height: 14px;
+                    transition: transform 0.2s ease;
+                }
                 .cmr-rel-card:hover .cmr-rel-read-more,
                 .cmr-rel-read-more:hover {
-                    color: #6A42E5 !important;
-                    border-color: #6A42E5 !important;
-                    gap: 10px !important;
+                    color: #5A28D7 !important;
+                    border-color: #5A28D7 !important;
+                    gap: 9px !important;
+                }
+                .cmr-rel-card:hover .cmr-rel-read-more svg,
+                .cmr-rel-read-more:hover svg {
+                    transform: translate(2px, -2px);
                 }
                 </style>
                 <?php
@@ -2204,76 +2236,47 @@
 
                                 if ( $post_type === 'cmr_news' ) {
                                     $related_id   = get_the_ID();
-                                    $bg_image     = get_the_post_thumbnail_url( $related_id, 'large' );
-                                    $logo_id      = get_post_meta( $related_id, '_cmr_news_source_logo_id', true );
-                                    $logo_url     = $logo_id ? wp_get_attachment_url( $logo_id ) : get_post_meta( $related_id, '_cmr_news_source_logo', true );
-                                    $reading_time = get_post_meta( $related_id, '_cmr_news_reading_time', true );
-                                    $publisher    = get_post_meta( $related_id, '_cmr_news_publisher_name', true );
-                                    if ( empty( $publisher ) ) {
-                                        $publisher = get_post_meta( $related_id, '_cmr_news_publisher', true );
-                                    }
+                                    $rel_thumb    = get_the_post_thumbnail_url( $related_id, 'large' );
+                                    $rel_title    = get_the_title();
                                     $document_id  = get_post_meta( $related_id, '_cmr_news_document_id', true );
                                     $ext_url      = get_post_meta( $related_id, '_cmr_news_external_link', true );
                                     if ( $document_id ) {
-                                        $link   = wp_get_attachment_url( $document_id );
-                                        $target = '_blank';
+                                        $rel_link   = wp_get_attachment_url( $document_id );
+                                        $rel_target = '_blank';
                                     } elseif ( $ext_url ) {
-                                        $link   = $ext_url;
-                                        $target = '_blank';
+                                        $rel_link   = $ext_url;
+                                        $rel_target = '_blank';
                                     } else {
-                                        $link   = get_permalink( $related_id );
-                                        $target = '_self';
+                                        $rel_link   = get_permalink( $related_id );
+                                        $rel_target = '_self';
                                     }
-                                    $custom_date = get_post_meta( $related_id, '_cmr_news_date', true );
-                                    $date        = ! empty( $custom_date ) ? $custom_date : get_the_date( 'M j, Y' );
-                                    $arrow_url   = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg';
-                                    $btn_text    = 'Read Coverage';
-                                    ?>
-                                    <div class="col-md-6 col-lg-4">
-                                        <!-- Single CMR News Card -->
-                                        <div class="cmr-card cmr-card-standard fade-anim" data-delay="0.45" data-direction="right">
-                                            <a href="<?php echo esc_url( $link ); ?>" <?php echo ( $target === '_blank' ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?> class="cmr-card-link-wrapper">
-                                                <div class="cmr-card-image-wrap">
-                                                    <?php if ( $bg_image ) : ?>
-                                                        <img src="<?php echo esc_url( $bg_image ); ?>" class="cmr-card-bg" alt="<?php the_title_attribute(); ?>">
-                                                    <?php endif; ?>
-                                                    <?php if ( $logo_url ) : ?>
-                                                        <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo cmr-card-logo-desktop" alt="Source Logo">
-                                                    <?php endif; ?>
-                                                </div>
-                                                <div class="cmr-card-content">
-                                                    <?php if ( $logo_url ) : ?>
-                                                        <img src="<?php echo esc_url( $logo_url ); ?>" class="cmr-card-logo cmr-card-logo-mobile" alt="Source Logo">
-                                                    <?php endif; ?>
-                                                    <div class="cmr-card-meta">
-                                                        <div class="cmr-meta-left">
-                                                            <?php if ( $publisher ) : ?>
-                                                                <span class="cmr-publisher"><?php echo esc_html( $publisher ); ?></span> <span class="cmr-separator">|</span> 
-                                                            <?php endif; ?>
-                                                            <span class="cmr-date">Published <?php echo esc_html( $date ); ?></span>
-                                                            <?php if ( $reading_time ) : ?>
-                                                                <span class="cmr-separator">|</span>
-                                                                <span class="cmr-read-time"><?php echo esc_html( $reading_time ); ?><?php echo is_numeric( $reading_time ) ? ' mins' : ''; ?></span>
-                                                            <?php endif; ?>
-                                                        </div>
-                                                    </div>
-                                                    <h3 class="cmr-card-title"><?php the_title(); ?></h3>
-                                                    <span class="cmr-read-coverage"><?php echo esc_html( $btn_text ); ?> <img src="<?php echo esc_url( $arrow_url ); ?>" class="cmr-arrow-icon" alt="Arrow"></span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <!-- End Single CMR News Card -->
-                                    </div>
-                                    <?php
+                                    $news_terms = wp_get_post_terms( $related_id, 'cmr_news_category' );
+                                    $single_cat_name = 'CMR In News';
+                                    if ( ! empty( $news_terms ) && ! is_wp_error( $news_terms ) ) {
+                                        $single_cat_name = $news_terms[0]->name;
+                                    }
+                                    $reading_time = get_post_meta( $related_id, '_cmr_news_reading_time', true );
+                                    if ( ! empty( $reading_time ) ) {
+                                        $rel_read_time = is_numeric( $reading_time ) ? $reading_time . ' min read' : $reading_time;
+                                    } else {
+                                        $rel_content   = get_post_field( 'post_content', $related_id );
+                                        $rel_words     = str_word_count( strip_tags( $rel_content ) );
+                                        $rel_read_time = max( 1, ceil( $rel_words / 200 ) ) . ' min read';
+                                    }
+                                    $rel_excerpt = get_the_excerpt( $related_id );
+                                    if ( empty( $rel_excerpt ) ) {
+                                        $rel_excerpt = get_post_field( 'post_content', $related_id );
+                                    }
+                                    $rel_excerpt = wp_trim_words( wp_strip_all_tags( $rel_excerpt ), 18, '...' );
                                 } else {
                                     $rel_id        = get_the_ID();
                                     $rel_thumb     = get_the_post_thumbnail_url( $rel_id, 'large' );
                                     $rel_title     = get_the_title();
                                     $rel_link      = get_permalink( $rel_id );
-                                    $rel_date      = get_the_date( 'd M Y' );
+                                    $rel_target    = '_self';
                                     $rel_content   = get_post_field( 'post_content', $rel_id );
                                     $rel_words     = str_word_count( strip_tags( $rel_content ) );
-                                    $rel_read_time = max( 1, ceil( $rel_words / 200 ) );
+                                    $rel_read_time = max( 1, ceil( $rel_words / 200 ) ) . ' min read';
 
                                     // Pick single relevant industry category
                                     $rel_cats        = get_the_category( $rel_id );
@@ -2302,37 +2305,49 @@
                                             $single_cat_name = $rel_cats[0]->name;
                                         }
                                     }
-                                    ?>
-                                    <div class="col-md-6 col-lg-4">
-                                        <article class="cmr-rel-card">
-                                            <div class="cmr-rel-card-img">
-                                                <a href="<?php echo esc_url( $rel_link ); ?>">
-                                                    <img src="<?php echo esc_url( $rel_thumb ?: 'https://via.placeholder.com/800x450?text=No+Image' ); ?>" alt="<?php echo esc_attr( $rel_title ); ?>" loading="lazy" />
-                                                </a>
-                                            </div>
-                                            <div class="cmr-rel-card-body">
-                                                <div class="cmr-rel-card-meta">
-                                                    <span class="cmr-rel-card-meta-dash"></span>
-                                                    <span class="cmr-rel-card-tag"><?php echo esc_html( $single_cat_name ); ?></span>
-                                                    <span class="cmr-rel-card-date"> | <?php echo esc_html( $rel_date ); ?></span>
-                                                    <span class="cmr-rel-card-read-time"><?php echo esc_html( $rel_read_time ); ?> min read</span>
-                                                </div>
-                                                <h3 class="cmr-rel-card-title">
-                                                    <a href="<?php echo esc_url( $rel_link ); ?>"><?php echo esc_html( $rel_title ); ?></a>
-                                                </h3>
-                                                <a href="<?php echo esc_url( $rel_link ); ?>" class="cmr-rel-read-more">
-                                                    More Details
-                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                                        <line x1="7" y1="17" x2="17" y2="7"></line>
-                                                        <polyline points="7 7 17 7 17 17"></polyline>
-                                                    </svg>
-                                                </a>
-                                            </div>
-                                        </article>
-                                    </div>
-                                    <?php
-                                }
+                                    if ( empty( $single_cat_name ) ) {
+                                        $single_cat_name = 'Industry Intelligence';
+                                    }
 
+                                    $rel_excerpt = get_the_excerpt( $rel_id );
+                                    if ( empty( $rel_excerpt ) ) {
+                                        $rel_excerpt = $rel_content;
+                                    }
+                                    $rel_excerpt = wp_trim_words( wp_strip_all_tags( $rel_excerpt ), 18, '...' );
+                                }
+                                ?>
+                                <div class="col-md-6 col-lg-4">
+                                    <article class="cmr-rel-card">
+                                        <div class="cmr-rel-card-img">
+                                            <a href="<?php echo esc_url( $rel_link ); ?>" <?php echo ( $rel_target === '_blank' ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?>>
+                                                <img src="<?php echo esc_url( $rel_thumb ?: 'https://via.placeholder.com/800x450?text=No+Image' ); ?>" alt="<?php echo esc_attr( $rel_title ); ?>" loading="lazy" />
+                                            </a>
+                                        </div>
+                                        <div class="cmr-rel-card-body">
+                                            <div class="cmr-rel-card-meta">
+                                                <div class="cmr-rel-card-meta-left">
+                                                    <span class="cmr-rel-card-meta-dash">—</span>
+                                                    <span class="cmr-rel-card-tag"><?php echo esc_html( $single_cat_name ); ?></span>
+                                                </div>
+                                                <span class="cmr-rel-card-read-time"><?php echo esc_html( $rel_read_time ); ?></span>
+                                            </div>
+                                            <h3 class="cmr-rel-card-title">
+                                                <a href="<?php echo esc_url( $rel_link ); ?>" <?php echo ( $rel_target === '_blank' ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?>><?php echo esc_html( $rel_title ); ?></a>
+                                            </h3>
+                                            <?php if ( ! empty( $rel_excerpt ) ) : ?>
+                                                <p class="cmr-rel-card-excerpt"><?php echo esc_html( $rel_excerpt ); ?></p>
+                                            <?php endif; ?>
+                                            <a href="<?php echo esc_url( $rel_link ); ?>" <?php echo ( $rel_target === '_blank' ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?> class="cmr-rel-read-more">
+                                                More Details
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                                                    <polyline points="7 7 17 7 17 17"></polyline>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </article>
+                                </div>
+                                <?php
                             }
 
                             wp_reset_postdata();

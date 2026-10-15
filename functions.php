@@ -4025,9 +4025,9 @@ function cmr_account_icon_shortcode() {
         }
         $initial = mb_substr( trim( $name ), 0, 1 );
         
-        $icon_html = '<div class="cmr-account-initial" style="width:35px; height:35px; border-radius:50%; background:#00bfbc; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:18px; line-height:1;">' . esc_html( strtoupper( $initial ) ) . '</div>';
+        $icon_html = '<div class="cmr-account-initial" style="width:30px; height:30px; min-width:30px; min-height:30px; border-radius:50%; background:#00bfbc; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; line-height:1; margin:0 auto;">' . esc_html( strtoupper( $initial ) ) . '</div>';
     } else {
-        $icon_html = '<i class="ri-user-line" style="font-size:24px;"></i>';
+        $icon_html = '<i class="ri-user-line" style="font-size:22px;"></i>';
     }
     
     ob_start();
@@ -4036,14 +4036,21 @@ function cmr_account_icon_shortcode() {
         ?>
         <style>
         .cmr-account-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
             text-decoration: none;
             color: #333; /* Default black for inner/blog headers */
             transition: color 0.3s ease;
-            width: 40px;
-            height: 40px;
+            width: 40px !important;
+            height: 40px !important;
+            min-width: 40px !important;
+            min-height: 40px !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            vertical-align: middle !important;
+            box-sizing: border-box !important;
+            line-height: 1 !important;
         }
 
         /* Make login face white ONLY on main header / home page */
@@ -4079,7 +4086,7 @@ function cmr_account_icon_shortcode() {
 }
 add_shortcode( 'cmr_account_icon', 'cmr_account_icon_shortcode' );
 
-// Auto-inject header tooltips (Search, Cart, Profile) to guarantee visibility even with Elementor caching
+// Auto-inject header tooltips (Search, Cart, Profile) and align items perfectly
 function cmr_header_action_tooltips_script() {
     ?>
     <script>
@@ -4100,6 +4107,28 @@ function cmr_header_action_tooltips_script() {
                         span.className = 'cmr-header-tooltip';
                         span.textContent = item.text;
                         container.appendChild(span);
+                    }
+                });
+            });
+
+            // Ensure parent Elementor widgets and containers are vertically centered
+            var actionSelectors = ['.cmr-nav-search-container', '.cmr-nav-cart-container', '.cmr-nav-cart-container-black', '.cmr-account-link'];
+            actionSelectors.forEach(function(sel) {
+                document.querySelectorAll(sel).forEach(function(node) {
+                    var widget = node.closest('.elementor-widget');
+                    if (widget) {
+                        widget.style.setProperty('display', 'inline-flex', 'important');
+                        widget.style.setProperty('align-items', 'center', 'important');
+                        widget.style.setProperty('justify-content', 'center', 'important');
+                        widget.style.setProperty('vertical-align', 'middle', 'important');
+                        widget.style.setProperty('margin-bottom', '0px', 'important');
+                    }
+                    var container = node.closest('.elementor-widget-container');
+                    if (container) {
+                        container.style.setProperty('display', 'inline-flex', 'important');
+                        container.style.setProperty('align-items', 'center', 'important');
+                        container.style.setProperty('justify-content', 'center', 'important');
+                        container.style.setProperty('vertical-align', 'middle', 'important');
                     }
                 });
             });
