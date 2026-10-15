@@ -12,6 +12,12 @@ add_shortcode( 'cmr_media_releases_general', 'cmr_media_releases_general_shortco
 function cmr_media_releases_general_shortcode( $atts ) {
     ob_start();
 
+    $atts = shortcode_atts( array(
+        'count'          => 3,
+        'posts_per_page' => 3,
+    ), $atts, 'cmr_media_releases_general' );
+    $limit = !empty($atts['count']) ? intval($atts['count']) : 3;
+
     $terms = array('media-release', 'media-releases', 'press-release', 'press-releases', 'pressreleases', 'press-release-2', 'press-releases-2');
 
     // Query latest cmr_news and standard posts (press releases)
@@ -40,7 +46,7 @@ function cmr_media_releases_general_shortcode( $atts ) {
     $posts_data = [];
     $seen_titles = [];
     if ( $query->have_posts() ) {
-        while ( $query->have_posts() && count($posts_data) < 4 ) {
+        while ( $query->have_posts() && count($posts_data) < $limit ) {
             $query->the_post();
             
             $post_id = get_the_ID();
@@ -117,8 +123,8 @@ function cmr_media_releases_general_shortcode( $atts ) {
         ];
     }
 
-    $top_post = $posts_data[0];
-    $bottom_posts = $posts_data; // Use all 4 posts for the bottom tabs so the latest post isn't lost during rotation
+    $top_post = !empty($posts_data) ? $posts_data[0] : null;
+    $bottom_posts = array_slice( $posts_data, 0, $limit );
     ?>
     <style>
         .cmr-mrg-section {
