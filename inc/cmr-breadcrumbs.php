@@ -14,6 +14,26 @@ if ( ! function_exists( 'cmr_format_breadcrumb_title' ) ) {
         }
         $text = html_entity_decode( $text, ENT_QUOTES, 'UTF-8' );
         $text = ucwords( mb_strtolower( wp_strip_all_tags( $text ), 'UTF-8' ) );
+
+        // Custom replacements for acronyms and specific titles
+        $replacements = array(
+            '/\bIt & Telecom\b/i' => 'IT & Telecom',
+            '/\bIt Telecom\b/i'   => 'IT & Telecom',
+            '/\bIt\b/'            => 'IT',
+            '/\bAi\b/'            => 'AI',
+            '/\bIot\b/'           => 'IoT',
+            '/\b5g\b/i'           => '5G',
+            '/\b4g\b/i'           => '4G',
+            '/\bPc\b/'            => 'PC',
+            '/\bPcs\b/'           => 'PCs',
+            '/\bMsme\b/i'         => 'MSME',
+            '/\bCmr\b/i'          => 'CMR',
+        );
+
+        foreach ( $replacements as $pattern => $replacement ) {
+            $text = preg_replace( $pattern, $replacement, $text );
+        }
+
         return esc_html( $text );
     }
 }
@@ -38,14 +58,12 @@ if ( ! function_exists( 'cmr_breadcrumbs_shortcode' ) ) {
                 flex-wrap: wrap;
                 margin-bottom: 30px;
                 line-height: 1.5;
-                text-transform: capitalize !important;
             }
             .cmr-breadcrumbs a {
                 font-size: 12px !important;
                 color: #555;
                 text-decoration: none;
                 transition: color 0.2s ease;
-                text-transform: capitalize !important;
             }
             .cmr-breadcrumbs a:hover {
                 color: #111;
@@ -54,7 +72,6 @@ if ( ! function_exists( 'cmr_breadcrumbs_shortcode' ) ) {
                 font-size: 12px !important;
                 color: #111;
                 font-weight: 500;
-                text-transform: capitalize !important;
             }
         </style>';
 
