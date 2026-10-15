@@ -21,10 +21,7 @@ function cmr_smb_connect_grid_shortcode( $atts = array() ) {
     ), $atts, 'cmr_smb_connect_grid' );
 
     $unique_ids = cmr_get_unique_smb_post_ids();
-    $sliced_ids = array_slice( $unique_ids, 4, 6 );
-    if ( empty( $sliced_ids ) && ! empty( $unique_ids ) ) {
-        $sliced_ids = array_slice( $unique_ids, 0, 6 );
-    }
+    $sliced_ids = array_slice( $unique_ids, 0, 6 );
 
     $query = new WP_Query(); // Empty default
     if ( ! empty( $sliced_ids ) ) {
@@ -38,8 +35,8 @@ function cmr_smb_connect_grid_shortcode( $atts = array() ) {
     }
     
     // Override max_num_pages so pagination knows exactly how many pages remain
-    $query->max_num_pages = ceil( max( 0, count( $unique_ids ) - 4 ) / 6 );
-    $query->found_posts = count( $unique_ids ) - 4;
+    $query->max_num_pages = ceil( max( 0, count( $unique_ids ) ) / 6 );
+    $query->found_posts = count( $unique_ids );
 
     ?>
     <style>
