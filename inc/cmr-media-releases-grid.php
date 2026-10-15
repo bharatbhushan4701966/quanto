@@ -22,18 +22,25 @@ function cmr_media_releases_grid_shortcode( $atts = array() ) {
 
     $paged = max(1, get_query_var('paged'), get_query_var('page'), isset($_GET['paged']) ? intval($_GET['paged']) : 1);
 
+    $terms = array('media-release', 'media-releases', 'press-release', 'press-releases', 'pressreleases', 'press-release-2', 'press-releases-2');
     $args = array(
-        'post_type'      => 'cmr_news',
+        'post_type'      => array('cmr_news', 'post'),
         'posts_per_page' => 6,
         'post_status'    => 'publish',
         'orderby'        => 'date',
         'order'          => 'DESC',
         'offset'         => ($paged - 1) * 6,
         'tax_query'      => array(
+            'relation' => 'OR',
             array(
                 'taxonomy' => 'cmr_news_category',
                 'field'    => 'slug',
-                'terms'    => array('media-release', 'media-releases', 'press-release', 'press-releases', 'press-release-2', 'press-releases-2'),
+                'terms'    => $terms,
+            ),
+            array(
+                'taxonomy' => 'category',
+                'field'    => 'slug',
+                'terms'    => $terms,
             ),
         ),
     );

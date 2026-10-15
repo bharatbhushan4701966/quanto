@@ -263,7 +263,7 @@ function cmr_render_press_releases_shortcode( $atts ) {
             array(
                 'taxonomy' => 'cmr_news_category',
                 'field'    => 'slug',
-                'terms'    => 'cmr-in-news',
+                'terms'    => array('media-release', 'media-releases', 'press-release', 'press-releases', 'pressreleases', 'press-release-2', 'press-releases-2', 'cmr-in-news'),
             ),
         ),
     );

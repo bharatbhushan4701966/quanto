@@ -133,19 +133,25 @@ function cmr_load_more_media_releases_ajax() {
     $offset_base = 0;
     $offset = $offset_base + ( ($paged - 1) * 6 );
     
+    $terms = array('media-release', 'media-releases', 'press-release', 'press-releases', 'pressreleases', 'press-release-2', 'press-releases-2');
     $args = array(
-        'post_type'      => 'cmr_news',
+        'post_type'      => array('cmr_news', 'post'),
         'posts_per_page' => 6,
         'post_status'    => 'publish',
         'orderby'        => 'date',
         'order'          => 'DESC',
         'offset'         => $offset,
         'tax_query'      => array(
-            'relation' => 'AND',
+            'relation' => 'OR',
             array(
                 'taxonomy' => 'cmr_news_category',
                 'field'    => 'slug',
-                'terms'    => array('media-release', 'media-releases', 'press-release', 'press-releases', 'press-release-2', 'press-releases-2'),
+                'terms'    => $terms,
+            ),
+            array(
+                'taxonomy' => 'category',
+                'field'    => 'slug',
+                'terms'    => $terms,
             ),
         ),
     );
