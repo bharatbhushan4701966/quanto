@@ -299,11 +299,20 @@ function cmr_channel_connect_grid_shortcode( $atts = array() ) {
             line-height: 1.4;
             margin: 0 0 12px 0;
             color: #111;
+            transition: color 0.3s ease;
         }
         .cmr-channelcgd-card-title a {
             color: inherit;
             text-decoration: none;
             letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+        .cmr-channelcgd-card:hover .cmr-channelcgd-card-title,
+        .cmr-channelcgd-card:hover .cmr-channelcgd-card-title a,
+        .cmr-channelcgd-card-img-wrap:hover ~ .cmr-channelcgd-card-title,
+        .cmr-channelcgd-card-img-wrap:hover ~ .cmr-channelcgd-card-title a,
+        .cmr-channelcgd-card-title a:hover {
+            color: #4820B0 !important;
         }
 
         .cmr-channelcgd-card-excerpt {

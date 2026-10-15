@@ -300,11 +300,20 @@ function cmr_enterprise_connect_grid_shortcode( $atts ) {
             line-height: 1.4;
             margin: 0 0 12px 0;
             color: #111;
+            transition: color 0.3s ease;
         }
         .cmr-enterprisecgd-card-title a {
             color: inherit;
             text-decoration: none;
             letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+        .cmr-enterprisecgd-card:hover .cmr-enterprisecgd-card-title,
+        .cmr-enterprisecgd-card:hover .cmr-enterprisecgd-card-title a,
+        .cmr-enterprisecgd-card-img-wrap:hover ~ .cmr-enterprisecgd-card-title,
+        .cmr-enterprisecgd-card-img-wrap:hover ~ .cmr-enterprisecgd-card-title a,
+        .cmr-enterprisecgd-card-title a:hover {
+            color: #4820B0 !important;
         }
 
         .cmr-enterprisecgd-card-excerpt {

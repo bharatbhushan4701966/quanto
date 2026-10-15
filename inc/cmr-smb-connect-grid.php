@@ -302,11 +302,20 @@ function cmr_smb_connect_grid_shortcode( $atts = array() ) {
             line-height: 1.4;
             margin: 0 0 12px 0;
             color: #111;
+            transition: color 0.3s ease;
         }
         .cmr-smbcgd-card-title a {
             color: inherit;
             text-decoration: none;
             letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+        .cmr-smbcgd-card:hover .cmr-smbcgd-card-title,
+        .cmr-smbcgd-card:hover .cmr-smbcgd-card-title a,
+        .cmr-smbcgd-card-img-wrap:hover ~ .cmr-smbcgd-card-title,
+        .cmr-smbcgd-card-img-wrap:hover ~ .cmr-smbcgd-card-title a,
+        .cmr-smbcgd-card-title a:hover {
+            color: #4820B0 !important;
         }
 
         .cmr-smbcgd-card-excerpt {
