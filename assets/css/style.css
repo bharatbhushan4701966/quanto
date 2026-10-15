@@ -372,7 +372,7 @@ input:-webkit-autofill:focus {
 }
 
 .section-padding-bottom {
-  padding-bottom: 130px;
+  padding-bottom: 0px;
 }
 
 .section-padding-top-bottom {
