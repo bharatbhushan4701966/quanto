@@ -463,7 +463,7 @@ get_header();
                 $word_count    = str_word_count( strip_tags( get_the_content() ) );
                 $read_time     = max( 1, ceil( $word_count / 200 ) );
                 $terms         = get_the_terms( $post_id, 'category' );
-                $tag_name      = ( $terms && ! is_wp_error( $terms ) ) ? $terms[0]->name : $cat_name;
+                $tag_name      = ! empty( $cat_name ) ? $cat_name : ( ( $terms && ! is_wp_error( $terms ) ) ? $terms[0]->name : '' );
             ?>
             <article class="cmr-cat-card">
                 <div class="cmr-cat-card-img">

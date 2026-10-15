@@ -698,7 +698,15 @@ function cmr_load_more_consulting_ajax() {
     $base_url = isset( $_POST['base_url'] ) ? sanitize_text_field( $_POST['base_url'] ) : '/';
     $search = isset( $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : '';
     
-    $category = isset( $_POST['category'] ) ? sanitize_text_field( $_POST['category'] ) : 'industry-connect';
+    $category = isset( $_POST['category'] ) ? sanitize_text_field( $_POST['category'] ) : 'consulting-advisory';
+    if ( empty( $category ) || $category === 'industry-connect' ) {
+        $category = 'consulting-advisory';
+    }
+    
+    $cat_terms = array_map( 'trim', explode( ',', $category ) );
+    if ( in_array( 'consulting-advisory', $cat_terms, true ) && ! in_array( 'consulting', $cat_terms, true ) ) {
+        $cat_terms[] = 'consulting';
+    }
     
     $query_args = array(
         'post_type'      => array( 'post', 'cmr_news' ),
@@ -708,10 +716,16 @@ function cmr_load_more_consulting_ajax() {
         'order'          => 'DESC',
         'paged'          => $paged,
         'tax_query'      => array(
+            'relation' => 'OR',
             array(
                 'taxonomy' => 'category',
                 'field'    => 'slug',
-                'terms'    => $category,
+                'terms'    => $cat_terms,
+            ),
+            array(
+                'taxonomy' => 'cmr_news_category',
+                'field'    => 'slug',
+                'terms'    => $cat_terms,
             ),
         ),
     );

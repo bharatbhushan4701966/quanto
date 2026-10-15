@@ -17,7 +17,7 @@ if ( ! function_exists( 'cmr_consulting_advisory_shortcode' ) ) {
             'show_nav'         => 'true',
             'section_title'    => 'Latest Consulting & Advisory',
             'section_subtitle' => 'Explore real-time insights and strategic analysis shaping industries and business decisions.',
-            'category'         => 'industry-connect',
+            'category'         => 'consulting-advisory',
             'link_overview'    => '#top',
             'link_insights'    => '#overview',
             'link_trends'      => '#cmr-intel-trends-section',
@@ -27,7 +27,16 @@ if ( ! function_exists( 'cmr_consulting_advisory_shortcode' ) ) {
             'link_cmr_news'    => '#cmr-in-news'
         ), $atts );
 
+        if ( empty( $atts['category'] ) || $atts['category'] === 'industry-connect' ) {
+            $atts['category'] = 'consulting-advisory';
+        }
+
         $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+
+        $cat_terms = array_map( 'trim', explode( ',', $atts['category'] ) );
+        if ( in_array( 'consulting-advisory', $cat_terms, true ) && ! in_array( 'consulting', $cat_terms, true ) ) {
+            $cat_terms[] = 'consulting';
+        }
 
         $query_args = array(
             'post_type'      => array( 'post', 'cmr_news' ),
@@ -37,10 +46,16 @@ if ( ! function_exists( 'cmr_consulting_advisory_shortcode' ) ) {
             'order'          => 'DESC',
             'paged'          => $paged,
             'tax_query'      => array(
+                'relation' => 'OR',
                 array(
                     'taxonomy' => 'category',
                     'field'    => 'slug',
-                    'terms'    => $atts['category'],
+                    'terms'    => $cat_terms,
+                ),
+                array(
+                    'taxonomy' => 'cmr_news_category',
+                    'field'    => 'slug',
+                    'terms'    => $cat_terms,
                 ),
             ),
         );

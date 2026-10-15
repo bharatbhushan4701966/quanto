@@ -178,7 +178,6 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                             'consulting-advisory',
                             'consulting',
                             'advisory',
-                            'industry-connect',
                             'Consulting & Advisory',
                             'Consulting',
                             'Advisory',
