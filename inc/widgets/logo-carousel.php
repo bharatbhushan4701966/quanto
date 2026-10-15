@@ -167,7 +167,7 @@ class Quanto_Logo_Carousel_Widget extends \Elementor\Widget_Base {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                padding: 12px 24px;
+                padding: 8px 15px;
                 border-right: 1px solid #e5e7eb;
                 box-sizing: border-box;
                 height: 120px;
@@ -175,14 +175,14 @@ class Quanto_Logo_Carousel_Widget extends \Elementor\Widget_Base {
                 overflow: hidden;
             }
             .quanto-logo-slide img {
-                max-width: 82%;
-                max-height: 60px;
+                max-width: 90%;
+                max-height: 96px;
                 width: auto;
                 height: auto;
                 object-fit: contain;
                 display: block;
-                margin: auto;
-                transform: none;
+                transform: scale(1.35);
+                transform-origin: center center;
                 <?php if ($is_grayscale): ?>
                 filter: grayscale(100%) opacity(0.8);
                 transition: filter 0.3s ease;
@@ -197,26 +197,28 @@ class Quanto_Logo_Carousel_Widget extends \Elementor\Widget_Base {
             @media (max-width: 768px) {
                 .quanto-logo-slide {
                     height: 105px;
-                    padding: 8px 16px;
+                    padding: 6px 12px;
                     overflow: hidden;
                 }
                 .quanto-logo-slide img {
-                    max-height: 50px;
-                    max-width: 80%;
-                    transform: none;
+                    max-height: 85px;
+                    max-width: 88%;
+                    transform: scale(1.3);
+                    transform-origin: center center;
                 }
             }
 
             @media (max-width: 480px) {
                 .quanto-logo-slide {
                     height: 95px;
-                    padding: 6px 12px;
+                    padding: 5px 10px;
                     overflow: hidden;
                 }
                 .quanto-logo-slide img {
-                    max-height: 44px;
-                    max-width: 78%;
-                    transform: none;
+                    max-height: 75px;
+                    max-width: 88%;
+                    transform: scale(1.25);
+                    transform-origin: center center;
                 }
             }
 
