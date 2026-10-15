@@ -21,6 +21,8 @@ add_action('wp_footer', function() {
         margin-bottom: 0 !important;
         font-family: 'Instrument Sans', sans-serif !important;
         box-sizing: border-box !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
     }
     .intel-nav-bar .intel-nav-title {
         font-size: 14px;
@@ -1798,7 +1800,9 @@ add_action('wp_footer', function() {
                         'header .elementor-element',
                         '.header .elementor-element',
                         '.main-header-wrapper',
-                        '.blog-header-wrapper'
+                        '.blog-header-wrapper',
+                        '.mas-sticky-header',
+                        '.mas-sticky-yes'
                     ];
                     
                     const candidates = document.querySelectorAll(headerSelectors.join(', '));
@@ -1808,7 +1812,8 @@ add_action('wp_footer', function() {
                         const isSticky = hStyle.position === 'fixed' || 
                                          hStyle.position === 'sticky' || 
                                          h.classList.contains('elementor-sticky--active') || 
-                                         h.classList.contains('elementor-sticky--effects');
+                                         h.classList.contains('elementor-sticky--effects') ||
+                                         h.classList.contains('mas-sticky-header');
                         if (isSticky) {
                             const hRect = h.getBoundingClientRect();
                             if (hRect.top <= offset + 25 && hRect.bottom > offset && hRect.bottom < (window.innerHeight * 0.45)) {

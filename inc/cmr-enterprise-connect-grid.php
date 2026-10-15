@@ -86,23 +86,6 @@ function cmr_enterprise_connect_grid_shortcode( $atts ) {
             color: #fff !important;
         }
 
-        .intel-nav-fixed-js {
-            position: fixed !important;
-            left: 0;
-            right: 0;
-            width: 100% !important;
-            z-index: 999999 !important;
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            padding: 15px max(20px, calc(50vw - 640px)) !important;
-            margin: 0 !important;
-            transition: top 0.2s ease-out !important;
-            border-radius: 0;
-            border-left: none;
-            border-right: none;
-            border-top: none;
-        }
-
         /* Header Area */
         .cmr-enterprisecgd-header {
             margin-bottom: 40px;
@@ -517,7 +500,7 @@ function cmr_enterprise_connect_grid_shortcode( $atts ) {
         <!-- Top Nav -->
         <div class="cmr-enterprisecgd-top-nav-wrap" style="margin-bottom: 40px;">
             <div class="cmr-enterprisecgd-top-nav intel-nav-bar">
-                <div class="cmr-enterprisecgd-nav-title">Enterprise Connect</div>
+                <div class="cmr-enterprisecgd-nav-title intel-nav-title">Enterprise Connect</div>
                 <div class="intel-nav-links">
                     <a href="<?php echo esc_attr($atts['link_featured']); ?>">Featured</a>
                     <a href="<?php echo esc_attr($atts['link_latest']); ?>">Latest</a>
