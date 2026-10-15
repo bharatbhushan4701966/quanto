@@ -125,50 +125,102 @@ function cmr_load_more_intel_ajax() {
 add_action( 'wp_ajax_cmr_load_more_media_releases', 'cmr_load_more_media_releases_ajax' );
 add_action( 'wp_ajax_nopriv_cmr_load_more_media_releases', 'cmr_load_more_media_releases_ajax' );
 
-function cmr_load_more_media_releases_ajax() {
-    $paged = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
-    $year  = isset( $_POST['year'] ) ? sanitize_text_field( $_POST['year'] ) : '';
-    $search = isset( $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : '';
-    
-    $offset_base = 0;
-    $offset = $offset_base + ( ($paged - 1) * 6 );
-    
-    $terms = array('media-release', 'media-releases', 'press-release', 'press-releases', 'pressreleases', 'press-release-2', 'press-releases-2');
-    $args = array(
-        'post_type'      => array('cmr_news', 'post'),
-        'posts_per_page' => 6,
-        'post_status'    => 'publish',
-        'orderby'        => 'date',
-        'order'          => 'DESC',
-        'offset'         => $offset,
-        'tax_query'      => array(
-            'relation' => 'OR',
-            array(
-                'taxonomy' => 'cmr_news_category',
-                'field'    => 'slug',
-                'terms'    => $terms,
-            ),
-            array(
-                'taxonomy' => 'category',
-                'field'    => 'slug',
-                'terms'    => $terms,
-            ),
-        ),
-    );
+if ( ! function_exists( 'cmr_get_unique_media_releases' ) ) {
+    /**
+     * Fetch media releases ensuring NO duplicate articles (across post and cmr_news clones)
+     */
+    function cmr_get_unique_media_releases( $paged = 1, $year = '', $search = '', $per_page = 6 ) {
+        $paged    = max( 1, intval( $paged ) );
+        $per_page = max( 1, intval( $per_page ) );
+        $terms    = array( 'media-release', 'media-releases', 'press-release', 'press-releases', 'pressreleases', 'press-release-2', 'press-releases-2' );
 
-    if ( ! empty( $year ) ) {
-        $args['date_query'] = array(
-            array(
-                'year'  => $year,
+        $raw_args = array(
+            'post_type'              => array( 'cmr_news', 'post' ),
+            'posts_per_page'         => -1,
+            'post_status'            => 'publish',
+            'orderby'                => 'date',
+            'order'                  => 'DESC',
+            'no_found_rows'          => true,
+            'update_post_meta_cache' => false,
+            'update_post_term_cache' => false,
+            'tax_query'              => array(
+                'relation' => 'OR',
+                array(
+                    'taxonomy' => 'cmr_news_category',
+                    'field'    => 'slug',
+                    'terms'    => $terms,
+                ),
+                array(
+                    'taxonomy' => 'category',
+                    'field'    => 'slug',
+                    'terms'    => $terms,
+                ),
             ),
         );
-    }
 
-    if ( ! empty( $search ) ) {
-        $args['s'] = $search;
-    }
+        if ( ! empty( $year ) ) {
+            $raw_args['date_query'] = array(
+                array(
+                    'year' => $year,
+                ),
+            );
+        }
 
-    $query = new WP_Query( $args );
+        if ( ! empty( $search ) ) {
+            $raw_args['s'] = $search;
+        }
+
+        $all_query = new WP_Query( $raw_args );
+
+        $unique_ids = array();
+        $seen_keys  = array();
+
+        if ( ! empty( $all_query->posts ) ) {
+            foreach ( $all_query->posts as $p ) {
+                $title_key = sanitize_title( $p->post_title );
+                if ( empty( $title_key ) ) {
+                    $title_key = sanitize_title( $p->post_name );
+                }
+                if ( ! isset( $seen_keys[ $title_key ] ) ) {
+                    $seen_keys[ $title_key ] = true;
+                    $unique_ids[] = $p->ID;
+                }
+            }
+        }
+
+        $total_posts = count( $unique_ids );
+        $max_pages   = max( 1, (int) ceil( $total_posts / $per_page ) );
+
+        $offset   = ( $paged - 1 ) * $per_page;
+        $page_ids = array_slice( $unique_ids, $offset, $per_page );
+
+        if ( ! empty( $page_ids ) ) {
+            $final_query = new WP_Query( array(
+                'post_type'      => array( 'cmr_news', 'post' ),
+                'post__in'       => $page_ids,
+                'orderby'        => 'post__in',
+                'posts_per_page' => $per_page,
+            ) );
+        } else {
+            $final_query = new WP_Query( array(
+                'post_type' => 'post',
+                'post__in'  => array( 0 ),
+            ) );
+        }
+
+        $final_query->found_posts   = $total_posts;
+        $final_query->max_num_pages = $max_pages;
+
+        return $final_query;
+    }
+}
+
+function cmr_load_more_media_releases_ajax() {
+    $paged  = isset( $_POST['page'] ) ? max( 1, intval( $_POST['page'] ) ) : 1;
+    $year   = isset( $_POST['year'] ) ? sanitize_text_field( $_POST['year'] ) : '';
+    $search = isset( $_POST['search'] ) ? sanitize_text_field( $_POST['search'] ) : '';
+    
+    $query = cmr_get_unique_media_releases( $paged, $year, $search, 6 );
 
     ob_start();
     if ( $query->have_posts() ) {
@@ -216,7 +268,7 @@ function cmr_load_more_media_releases_ajax() {
     }
     $html = ob_get_clean();
 
-    $total_pages = ceil( max( 0, $query->found_posts - $offset_base ) / 6 );
+    $total_pages = $query->max_num_pages;
     $has_more = $paged < $total_pages;
 
     $base_url = isset( $_POST['base_url'] ) ? sanitize_text_field( $_POST['base_url'] ) : '/';

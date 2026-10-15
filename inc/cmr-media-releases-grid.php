@@ -7,6 +7,96 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+if ( ! function_exists( 'cmr_get_unique_media_releases' ) ) {
+    /**
+     * Fetch media releases ensuring NO duplicate articles (across post and cmr_news clones)
+     */
+    function cmr_get_unique_media_releases( $paged = 1, $year = '', $search = '', $per_page = 6 ) {
+        $paged    = max( 1, intval( $paged ) );
+        $per_page = max( 1, intval( $per_page ) );
+        $terms    = array( 'media-release', 'media-releases', 'press-release', 'press-releases', 'pressreleases', 'press-release-2', 'press-releases-2' );
+
+        $raw_args = array(
+            'post_type'              => array( 'cmr_news', 'post' ),
+            'posts_per_page'         => -1,
+            'post_status'            => 'publish',
+            'orderby'                => 'date',
+            'order'                  => 'DESC',
+            'no_found_rows'          => true,
+            'update_post_meta_cache' => false,
+            'update_post_term_cache' => false,
+            'tax_query'              => array(
+                'relation' => 'OR',
+                array(
+                    'taxonomy' => 'cmr_news_category',
+                    'field'    => 'slug',
+                    'terms'    => $terms,
+                ),
+                array(
+                    'taxonomy' => 'category',
+                    'field'    => 'slug',
+                    'terms'    => $terms,
+                ),
+            ),
+        );
+
+        if ( ! empty( $year ) ) {
+            $raw_args['date_query'] = array(
+                array(
+                    'year' => $year,
+                ),
+            );
+        }
+
+        if ( ! empty( $search ) ) {
+            $raw_args['s'] = $search;
+        }
+
+        $all_query = new WP_Query( $raw_args );
+
+        $unique_ids = array();
+        $seen_keys  = array();
+
+        if ( ! empty( $all_query->posts ) ) {
+            foreach ( $all_query->posts as $p ) {
+                $title_key = sanitize_title( $p->post_title );
+                if ( empty( $title_key ) ) {
+                    $title_key = sanitize_title( $p->post_name );
+                }
+                if ( ! isset( $seen_keys[ $title_key ] ) ) {
+                    $seen_keys[ $title_key ] = true;
+                    $unique_ids[] = $p->ID;
+                }
+            }
+        }
+
+        $total_posts = count( $unique_ids );
+        $max_pages   = max( 1, (int) ceil( $total_posts / $per_page ) );
+
+        $offset   = ( $paged - 1 ) * $per_page;
+        $page_ids = array_slice( $unique_ids, $offset, $per_page );
+
+        if ( ! empty( $page_ids ) ) {
+            $final_query = new WP_Query( array(
+                'post_type'      => array( 'cmr_news', 'post' ),
+                'post__in'       => $page_ids,
+                'orderby'        => 'post__in',
+                'posts_per_page' => $per_page,
+            ) );
+        } else {
+            $final_query = new WP_Query( array(
+                'post_type' => 'post',
+                'post__in'  => array( 0 ),
+            ) );
+        }
+
+        $final_query->found_posts   = $total_posts;
+        $final_query->max_num_pages = $max_pages;
+
+        return $final_query;
+    }
+}
+
 add_shortcode( 'cmr_media_releases_grid', 'cmr_media_releases_grid_shortcode' );
 
 function cmr_media_releases_grid_shortcode( $atts = array() ) {
@@ -21,31 +111,9 @@ function cmr_media_releases_grid_shortcode( $atts = array() ) {
     ), $atts, 'cmr_media_releases_grid' );
 
     $paged = max(1, get_query_var('paged'), get_query_var('page'), isset($_GET['paged']) ? intval($_GET['paged']) : 1);
+    $selected_year = isset($_GET['y']) ? sanitize_text_field($_GET['y']) : '';
 
-    $terms = array('media-release', 'media-releases', 'press-release', 'press-releases', 'pressreleases', 'press-release-2', 'press-releases-2');
-    $args = array(
-        'post_type'      => array('cmr_news', 'post'),
-        'posts_per_page' => 6,
-        'post_status'    => 'publish',
-        'orderby'        => 'date',
-        'order'          => 'DESC',
-        'offset'         => ($paged - 1) * 6,
-        'tax_query'      => array(
-            'relation' => 'OR',
-            array(
-                'taxonomy' => 'cmr_news_category',
-                'field'    => 'slug',
-                'terms'    => $terms,
-            ),
-            array(
-                'taxonomy' => 'category',
-                'field'    => 'slug',
-                'terms'    => $terms,
-            ),
-        ),
-    );
-    $query = new WP_Query( $args );
-    $query->max_num_pages = ceil( max( 0, $query->found_posts ) / 6 );
+    $query = cmr_get_unique_media_releases( $paged, $selected_year, '', 6 );
 
     ?>
     <style>
@@ -179,6 +247,35 @@ function cmr_media_releases_grid_shortcode( $atts = array() ) {
             align-items: center;
             gap: 6px;
             font-family: inherit;
+            transition: all 0.3s;
+        }
+        .cmr-mrg-more-btn:hover,
+        .cmr-mrg-more-btn.active {
+            border-color: #6B3FA0;
+            color: #6B3FA0;
+        }
+        .cmr-mrg-more-content .cmr-mrg-dropdown-item {
+            display: block;
+            width: 100%;
+            text-align: left;
+            border: none !important;
+            border-radius: 6px !important;
+            padding: 8px 14px !important;
+            margin-bottom: 2px !important;
+            background: transparent !important;
+            font-size: 14px;
+            color: #222;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        .cmr-mrg-more-content .cmr-mrg-dropdown-item:hover {
+            background: #f4efff !important;
+            color: #6B3FA0 !important;
+        }
+        .cmr-mrg-more-content .cmr-mrg-dropdown-item.active {
+            background: #6B3FA0 !important;
+            color: #fff !important;
+            font-weight: 600;
         }
         .cmr-mrg-search {
             position: relative;
@@ -554,13 +651,13 @@ function cmr_media_releases_grid_shortcode( $atts = array() ) {
                 <button class="cmr-mrg-year-btn" data-year="2022">2022</button>
                 <button class="cmr-mrg-year-btn" data-year="2021">2021</button>
                 <div class="cmr-mrg-more-dropdown" style="position: relative;">
-                    <button class="cmr-mrg-more-btn" id="cmr-mrg-more-btn">More <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-                    <div class="cmr-mrg-more-content" id="cmr-mrg-more-content" style="display: none; position: absolute; top: 100%; left: 0; background: #fff; border: 1px solid #eaeaea; border-radius: 8px; padding: 10px; z-index: 100; min-width: 120px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-top: 5px;">
-                        <button class="cmr-mrg-year-btn" data-year="2020" style="display:block; width:100%; text-align:left; border:none; border-radius:4px; padding:8px 12px; margin-bottom:4px; background:transparent;">2020</button>
-                        <button class="cmr-mrg-year-btn" data-year="2019" style="display:block; width:100%; text-align:left; border:none; border-radius:4px; padding:8px 12px; margin-bottom:4px; background:transparent;">2019</button>
-                        <button class="cmr-mrg-year-btn" data-year="2018" style="display:block; width:100%; text-align:left; border:none; border-radius:4px; padding:8px 12px; margin-bottom:4px; background:transparent;">2018</button>
-                        <button class="cmr-mrg-year-btn" data-year="2017" style="display:block; width:100%; text-align:left; border:none; border-radius:4px; padding:8px 12px; margin-bottom:4px; background:transparent;">2017</button>
-                        <button class="cmr-mrg-year-btn" data-year="2016" style="display:block; width:100%; text-align:left; border:none; border-radius:4px; padding:8px 12px; background:transparent;">2016</button>
+                    <button type="button" class="cmr-mrg-more-btn" id="cmr-mrg-more-btn"><span id="cmr-mrg-more-label">More</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+                    <div class="cmr-mrg-more-content" id="cmr-mrg-more-content" style="display: none; position: absolute; top: 100%; left: 0; background: #fff; border: 1px solid #eaeaea; border-radius: 8px; padding: 6px; z-index: 100; min-width: 110px; box-shadow: 0 4px 14px rgba(0,0,0,0.12); margin-top: 5px;">
+                        <button type="button" class="cmr-mrg-year-btn cmr-mrg-dropdown-item" data-year="2020">2020</button>
+                        <button type="button" class="cmr-mrg-year-btn cmr-mrg-dropdown-item" data-year="2019">2019</button>
+                        <button type="button" class="cmr-mrg-year-btn cmr-mrg-dropdown-item" data-year="2018">2018</button>
+                        <button type="button" class="cmr-mrg-year-btn cmr-mrg-dropdown-item" data-year="2017">2017</button>
+                        <button type="button" class="cmr-mrg-year-btn cmr-mrg-dropdown-item" data-year="2016">2016</button>
                     </div>
                 </div>
             </div>
@@ -625,7 +722,7 @@ function cmr_media_releases_grid_shortcode( $atts = array() ) {
             } else {
                 echo '<p>No media releases found.</p>';
             }
-            $total_pages = ceil( max( 0, $query->found_posts ) / 6 );
+            $total_pages = $query->max_num_pages;
             $has_more = $paged < $total_pages && $paged < 3;
             $show_pagination = $paged >= 3 || $paged >= $total_pages;
 
@@ -731,12 +828,34 @@ function cmr_media_releases_grid_shortcode( $atts = array() ) {
         }
 
         // Year Filter
+        const moreBtn = document.getElementById('cmr-mrg-more-btn');
+        const moreLabel = document.getElementById('cmr-mrg-more-label');
+        const moreContent = document.getElementById('cmr-mrg-more-content');
+
         yearBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 yearBtns.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
-                currentYear = this.getAttribute('data-year');
+                currentYear = this.getAttribute('data-year') || '';
                 
+                // If clicked item is from dropdown, update More button label
+                if (this.classList.contains('cmr-mrg-dropdown-item')) {
+                    if (moreLabel) {
+                        moreLabel.textContent = this.textContent.trim();
+                    }
+                    if (moreBtn) {
+                        moreBtn.classList.add('active');
+                    }
+                } else {
+                    // Reset More button label if clicked outside dropdown
+                    if (moreLabel) {
+                        moreLabel.textContent = 'More';
+                    }
+                    if (moreBtn) {
+                        moreBtn.classList.remove('active');
+                    }
+                }
+
                 const viewAllLink = document.querySelector('.cmr-mrg-load-more');
                 if (viewAllLink) {
                     let baseUrl = viewAllLink.getAttribute('href').split('?')[0];
@@ -755,19 +874,17 @@ function cmr_media_releases_grid_shortcode( $atts = array() ) {
         });
 
         // More Dropdown
-        const moreBtn = document.getElementById('cmr-mrg-more-btn');
-        const moreContent = document.getElementById('cmr-mrg-more-content');
         if (moreBtn && moreContent) {
             moreBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
-                if (moreContent.style.display === 'none') {
+                if (moreContent.style.display === 'none' || moreContent.style.display === '') {
                     moreContent.style.display = 'block';
                 } else {
                     moreContent.style.display = 'none';
                 }
             });
             document.addEventListener('click', function(e) {
-                if (!moreContent.contains(e.target) && e.target !== moreBtn) {
+                if (!moreContent.contains(e.target) && e.target !== moreBtn && !moreBtn.contains(e.target)) {
                     moreContent.style.display = 'none';
                 }
             });
