@@ -105,7 +105,18 @@ function cmr_hero_banner_shortcode($atts) {
       margin-bottom: 30px;
       font-size:14px;
       line-height: 24px;
+      max-width: 720px;
       transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .hero-subtitle br.desktop-br {
+      display: inline;
+    }
+
+    @media (max-width: 768px) {
+      .hero-subtitle br.desktop-br {
+        display: none;
+      }
     }
 
     .hero p.fade,
@@ -459,7 +470,7 @@ function cmr_hero_banner_shortcode($atts) {
       </h1>
 
       <p class="hero-subtitle">
-        Industry intelligence, custom research and bespoke consulting that help enterprises remove ambiguity from their biggest strategic bets.
+        Industry intelligence, custom research and bespoke consulting<br class="desktop-br"> that help enterprises remove ambiguity from their biggest strategic bets.
       </p>
 
       <div class="buttons">
@@ -521,8 +532,8 @@ function cmr_hero_banner_shortcode($atts) {
       ];
 
       const subtitles = [
-        `Industry intelligence, custom research and bespoke consulting that help enterprises remove ambiguity from their biggest strategic bets.`,
-        `Go-to-market strategies and analyst credibility that connect enterprises with the ecosystem leaders and buyers who matter most.`
+        `Industry intelligence, custom research and bespoke consulting<br class="desktop-br"> that help enterprises remove ambiguity from their biggest strategic bets.`,
+        `Go-to-market strategies and analyst credibility<br class="desktop-br"> that connect enterprises with the ecosystem leaders and buyers who matter most.`
       ];
 
       const DURATION = 6000; // 6 seconds per slide
