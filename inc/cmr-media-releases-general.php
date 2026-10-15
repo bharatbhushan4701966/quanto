@@ -12,30 +12,45 @@ add_shortcode( 'cmr_media_releases_general', 'cmr_media_releases_general_shortco
 function cmr_media_releases_general_shortcode( $atts ) {
     ob_start();
 
-    // Query 4 latest cmr_news posts (or press releases)
+    $terms = array('media-release', 'media-releases', 'press-release', 'press-releases', 'pressreleases', 'press-release-2', 'press-releases-2');
+
+    // Query latest cmr_news and standard posts (press releases)
     $args = array(
-        'post_type'      => 'cmr_news',
-        'posts_per_page' => 3,
+        'post_type'      => array('cmr_news', 'post'),
+        'posts_per_page' => 12,
         'orderby'        => 'date',
         'order'          => 'DESC',
         'post_status'    => 'publish',
         'tax_query'      => array(
+            'relation' => 'OR',
             array(
                 'taxonomy' => 'cmr_news_category',
                 'field'    => 'slug',
-                'terms'    => array('media-release', 'media-releases', 'press-release', 'press-releases'),
+                'terms'    => $terms,
+            ),
+            array(
+                'taxonomy' => 'category',
+                'field'    => 'slug',
+                'terms'    => $terms,
             ),
         ),
     );
     $query = new WP_Query( $args );
 
     $posts_data = [];
+    $seen_titles = [];
     if ( $query->have_posts() ) {
-        while ( $query->have_posts() ) {
+        while ( $query->have_posts() && count($posts_data) < 4 ) {
             $query->the_post();
             
             $post_id = get_the_ID();
             $title = get_the_title();
+            $title_key = trim(mb_strtolower($title));
+            if ( in_array($title_key, $seen_titles) ) {
+                continue;
+            }
+            $seen_titles[] = $title_key;
+
             $link = get_permalink();
             $excerpt = wp_trim_words( get_the_excerpt(), 20 );
             $bg_image = get_the_post_thumbnail_url( $post_id, 'full' );
