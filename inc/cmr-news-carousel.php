@@ -295,7 +295,7 @@ function cmr_render_news_carousel_shortcode( $atts ) {
         opacity: 0.85 !important;
     }
 
-    /* Pagination: Horizontal Rounded Dashes with 4s Progress Loader */
+    /* Pagination: Horizontal Long Dashes with 4s Progress Loader */
     .cmr-nc-carousel .swiper-pagination {
         position: static !important;
         margin-top: 24px !important;
@@ -306,9 +306,11 @@ function cmr_render_news_carousel_shortcode( $atts ) {
         width: 100% !important;
     }
 
-    .cmr-nc-carousel .swiper-pagination-bullet {
+    .cmr-nc-carousel .swiper-pagination-bullet,
+    .cmr-nc-carousel .swiper-pagination-bullet-active,
+    .cmr-nc-carousel .swiper-pagination-bullet.swiper-pagination-bullet-active {
         width: 80px !important;
-        height: 4px !important;
+        height: 5px !important;
         border-radius: 4px !important;
         background: #ded8fa !important;
         opacity: 1 !important;
@@ -319,36 +321,35 @@ function cmr_render_news_carousel_shortcode( $atts ) {
         overflow: hidden !important;
         display: inline-block !important;
         padding: 0 !important;
-        transition: all 0.2s ease !important;
+        vertical-align: middle !important;
     }
 
-    .cmr-nc-carousel .swiper-pagination-bullet .cmr-bullet-loader {
-        display: block !important;
+    .cmr-nc-carousel .swiper-pagination-bullet::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
         height: 100% !important;
         width: 0% !important;
         background: #5842c3 !important;
         border-radius: 4px !important;
     }
 
-    .cmr-nc-carousel .swiper-pagination-bullet-active {
-        background: #ded8fa !important;
-        opacity: 1 !important;
+    .cmr-nc-carousel .swiper-pagination-bullet.cmr-bullet-loading::before,
+    .cmr-nc-carousel .swiper-pagination-bullet.swiper-pagination-bullet-active::before {
+        animation: cmrProgressLoader 4s linear forwards !important;
     }
 
-    .cmr-nc-carousel .swiper-pagination-bullet-active .cmr-bullet-loader {
-        animation: cmrBulletLoader 4s linear forwards !important;
-    }
-
-    .cmr-nc-carousel:hover .swiper-pagination-bullet-active .cmr-bullet-loader {
+    .cmr-nc-carousel:hover .swiper-pagination-bullet::before {
         animation-play-state: paused !important;
     }
 
-    @keyframes cmrBulletLoader {
-        0% {
-            width: 0%;
+    @keyframes cmrProgressLoader {
+        from {
+            width: 0% !important;
         }
-        100% {
-            width: 100%;
+        to {
+            width: 100% !important;
         }
     }
 
@@ -602,9 +603,6 @@ function cmr_render_news_carousel_shortcode( $atts ) {
                         pagination: {
                             el: carouselEl.querySelector('.swiper-pagination') || '.swiper-pagination',
                             clickable: true,
-                            renderBullet: function (index, className) {
-                                return '<span class="' + className + '"><span class="cmr-bullet-loader"></span></span>';
-                            }
                         },
                         breakpoints: {
                             640: {
@@ -631,32 +629,22 @@ function cmr_render_news_carousel_shortcode( $atts ) {
                     });
 
                     function restartBulletAnimation() {
-                        carouselEl.querySelectorAll('.cmr-bullet-loader').forEach(function(loader) {
-                            loader.style.animation = 'none';
+                        var bullets = carouselEl.querySelectorAll('.swiper-pagination-bullet');
+                        bullets.forEach(function(b) {
+                            b.classList.remove('cmr-bullet-loading');
                         });
-                        var activeBulletLoader = carouselEl.querySelector('.swiper-pagination-bullet-active .cmr-bullet-loader');
-                        if (activeBulletLoader) {
-                            void activeBulletLoader.offsetWidth; // Force reflow
-                            activeBulletLoader.style.animation = 'cmrBulletLoader 4s linear forwards';
+                        var activeBullet = carouselEl.querySelector('.swiper-pagination-bullet-active');
+                        if (activeBullet) {
+                            void activeBullet.offsetWidth; // Force CSS reflow to restart animation
+                            activeBullet.classList.add('cmr-bullet-loading');
                         }
                     }
 
                     swiperInstance.on('slideChangeTransitionStart', restartBulletAnimation);
-                    swiperInstance.on('touchStart', function() {
-                        var activeBulletLoader = carouselEl.querySelector('.swiper-pagination-bullet-active .cmr-bullet-loader');
-                        if (activeBulletLoader) {
-                            activeBulletLoader.style.animationPlayState = 'paused';
-                        }
-                    });
-                    swiperInstance.on('touchEnd', function() {
-                        var activeBulletLoader = carouselEl.querySelector('.swiper-pagination-bullet-active .cmr-bullet-loader');
-                        if (activeBulletLoader) {
-                            activeBulletLoader.style.animationPlayState = 'running';
-                        }
-                    });
+                    swiperInstance.on('init', restartBulletAnimation);
 
                     // Start animation for the initial active slide
-                    setTimeout(restartBulletAnimation, 60);
+                    setTimeout(restartBulletAnimation, 80);
 
                     // 2-finger touch gesture support on touchscreens
                     (function(swiper, el) {
