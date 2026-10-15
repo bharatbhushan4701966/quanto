@@ -2029,17 +2029,34 @@
                 $quanto_post_details_related_post = true; // Always show for news items
 
             } else {
+                $current_post_id  = get_the_ID();
+                $all_current_cats = get_the_category( $current_post_id );
+                $filtered_cat_ids = array();
+                $excluded_slugs   = array( 'press-releases', 'press-release', 'media-releases', 'media-release', 'uncategorized', 'featured' );
+
+                if ( ! empty( $all_current_cats ) && ! is_wp_error( $all_current_cats ) ) {
+                    foreach ( $all_current_cats as $c ) {
+                        if ( ! in_array( strtolower( $c->slug ), $excluded_slugs, true ) ) {
+                            $filtered_cat_ids[] = $c->term_id;
+                        }
+                    }
+                }
+
+                if ( empty( $filtered_cat_ids ) ) {
+                    $filtered_cat_ids = wp_get_post_categories( $current_post_id );
+                }
 
                 $relatedpost = new WP_Query( array(
-
                     "post_type"         => "post",
-
                     "posts_per_page"    => $posts_per_page,
-
-                    "category__in"      => wp_get_post_categories(get_the_ID()),
-
-                    "post__not_in"      => $post_not_in
-
+                    "post__not_in"      => $post_not_in,
+                    "tax_query"         => array(
+                        array(
+                            'taxonomy' => 'category',
+                            'field'    => 'term_id',
+                            'terms'    => $filtered_cat_ids,
+                        ),
+                    ),
                 ) );
 
                 $section_title = esc_html__( 'Related Articles', 'quanto' );
@@ -2051,6 +2068,113 @@
             if( $relatedpost->have_posts() && $quanto_post_details_related_post ) {
 
                 echo '<!-- Related Post -->';
+                ?>
+                <style>
+                .cmr-rel-card {
+                    background: #fff;
+                    border: none;
+                    overflow: hidden;
+                    display: flex;
+                    flex-direction: column;
+                    height: 100%;
+                    font-family: 'Instrument Sans', sans-serif;
+                }
+                .cmr-rel-card-img {
+                    width: 100%;
+                    aspect-ratio: 16/9;
+                    overflow: hidden;
+                    background: #f4f4f4;
+                    margin-bottom: 18px;
+                    border-radius: 8px;
+                }
+                .cmr-rel-card-img img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    transition: transform 0.4s ease;
+                    display: block;
+                }
+                .cmr-rel-card:hover .cmr-rel-card-img img {
+                    transform: scale(1.04);
+                }
+                .cmr-rel-card-body {
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1;
+                }
+                .cmr-rel-card-meta {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    margin-bottom: 12px;
+                    font-size: 13px;
+                    color: #888;
+                    font-weight: 500;
+                }
+                .cmr-rel-card-meta-dash {
+                    width: 20px;
+                    height: 1px;
+                    background: #ccc;
+                    flex-shrink: 0;
+                    display: inline-block;
+                }
+                .cmr-rel-card-tag {
+                    font-size: 13px;
+                    font-weight: 500;
+                    color: #555;
+                }
+                .cmr-rel-card-date {
+                    color: #888;
+                }
+                .cmr-rel-card-read-time {
+                    font-size: 13px;
+                    color: #888;
+                    margin-left: auto;
+                }
+                .cmr-rel-card-title {
+                    font-size: 18px;
+                    font-weight: 600;
+                    color: #111;
+                    line-height: 1.4;
+                    letter-spacing: -0.3px;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    margin: 0 0 16px;
+                    overflow: hidden;
+                    transition: color 0.3s ease !important;
+                }
+                .cmr-rel-card-title a {
+                    text-decoration: none;
+                    color: inherit;
+                    transition: color 0.3s ease !important;
+                }
+                .cmr-rel-card:hover .cmr-rel-card-title,
+                .cmr-rel-card:hover .cmr-rel-card-title a {
+                    color: #6A42E5 !important;
+                }
+                .cmr-rel-read-more {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: #111;
+                    text-decoration: none;
+                    border-bottom: 1.5px solid #111;
+                    padding-bottom: 2px;
+                    width: fit-content;
+                    margin-top: auto;
+                    transition: all 0.2s ease;
+                }
+                .cmr-rel-card:hover .cmr-rel-read-more,
+                .cmr-rel-read-more:hover {
+                    color: #6A42E5 !important;
+                    border-color: #6A42E5 !important;
+                    gap: 10px !important;
+                }
+                </style>
+                <?php
 
                 echo '<div class="quanto-blog-section section-padding-bottom overflow-hidden">';
 
@@ -2142,73 +2266,71 @@
                                     </div>
                                     <?php
                                 } else {
-                                    echo '<div class="col-md-6 col-lg-4">';
+                                    $rel_id        = get_the_ID();
+                                    $rel_thumb     = get_the_post_thumbnail_url( $rel_id, 'large' );
+                                    $rel_title     = get_the_title();
+                                    $rel_link      = get_permalink( $rel_id );
+                                    $rel_date      = get_the_date( 'd M Y' );
+                                    $rel_content   = get_post_field( 'post_content', $rel_id );
+                                    $rel_words     = str_word_count( strip_tags( $rel_content ) );
+                                    $rel_read_time = max( 1, ceil( $rel_words / 200 ) );
 
-                                        echo '<!-- Single Post -->';
-
-                                        echo '<div class="quanto-blog-box fade-anim" data-delay="0.45" data-direction="right">';
-
-                                            if( has_post_thumbnail(  ) ){
-
-                                                echo '<div class="quanto-blog-thumb">';
-
-                                                    echo '<a href="'.esc_url( get_permalink() ).'" class="post-thumbnail">';
-
-                                                        the_post_thumbnail( 'quanto-more-detail' );
-
-                                                    echo '</a>';
-
-                                                echo '</div>';
-
-                                            }
-
-
-
-                                            echo '<div class="quanto-blog-content">';
-
-
-
-                                                // Blog Post Meta
-
-                                                do_action( 'quanto_blog_post_meta' );
-
-
-
-                                                if( get_the_title() ){
-
-                                                    echo '<!-- Post Title -->';
-
-                                                    echo '<h5 class="line-clamp-2"><a href="'.esc_url( get_permalink() ).'">'.esc_html( wp_trim_words( get_the_title(), '12', '' ) ).'</a></h5>';
-
-                                                    echo '<!-- End Post Title -->';
-
+                                    // Pick single relevant industry category
+                                    $rel_cats        = get_the_category( $rel_id );
+                                    $single_cat_name = '';
+                                    if ( ! empty( $rel_cats ) && ! is_wp_error( $rel_cats ) ) {
+                                        // 1. Try to match the current post's filtered categories
+                                        if ( ! empty( $filtered_cat_ids ) ) {
+                                            foreach ( $rel_cats as $rc ) {
+                                                if ( in_array( $rc->term_id, $filtered_cat_ids, true ) ) {
+                                                    $single_cat_name = $rc->name;
+                                                    break;
                                                 }
-
-
-
-                                                // Custom More Details link for related articles
-
-                                                echo '<div class="related-article-more-details">';
-
-                                                echo '<a href="'.esc_url( get_permalink() ).'" class="custom-related-details-btn">';
-
-                                                echo 'More Details ';
-
-                                                echo '<svg class="arrow-up-right" viewBox="0 0 15 15" width="14" height="14" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline-block; vertical-align: middle; margin-left: 4px;"><path d="M2.04895 4.52205V3.54978C2.07104 3.12993 2.4025 2.79848 2.80025 2.79848L11.396 2.77638C11.8159 2.79848 12.1473 3.12993 12.1473 3.52768V12.1455C12.1473 12.5433 11.8159 12.8747 11.396 12.8968H10.4237C10.0039 12.8747 9.67244 12.5433 9.65035 12.1234L9.78293 6.90853L3.44106 13.2504C3.1317 13.5598 2.68976 13.5598 2.3804 13.2504L1.6733 12.5433C1.38603 12.256 1.36394 11.792 1.6733 11.4826L8.01516 5.14077L2.82234 5.29545C2.4025 5.27335 2.04895 4.96399 2.04895 4.52205Z" fill="currentColor"></path></svg>';
-
-                                                echo '</a>';
-
-                                                echo '</div>';
-
-                                                
-
-                                            echo '</div>';
-
-                                        echo '</div>';
-
-                                        echo '<!-- End Single Post -->';
-
-                                    echo '</div>';
+                                            }
+                                        }
+                                        // 2. Otherwise pick the first non-generic category
+                                        if ( empty( $single_cat_name ) ) {
+                                            foreach ( $rel_cats as $rc ) {
+                                                if ( ! in_array( strtolower( $rc->slug ), array( 'press-releases', 'press-release', 'media-releases', 'media-release', 'uncategorized', 'featured' ), true ) ) {
+                                                    $single_cat_name = $rc->name;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        // 3. Fallback to first category
+                                        if ( empty( $single_cat_name ) ) {
+                                            $single_cat_name = $rel_cats[0]->name;
+                                        }
+                                    }
+                                    ?>
+                                    <div class="col-md-6 col-lg-4">
+                                        <article class="cmr-rel-card">
+                                            <div class="cmr-rel-card-img">
+                                                <a href="<?php echo esc_url( $rel_link ); ?>">
+                                                    <img src="<?php echo esc_url( $rel_thumb ?: 'https://via.placeholder.com/800x450?text=No+Image' ); ?>" alt="<?php echo esc_attr( $rel_title ); ?>" loading="lazy" />
+                                                </a>
+                                            </div>
+                                            <div class="cmr-rel-card-body">
+                                                <div class="cmr-rel-card-meta">
+                                                    <span class="cmr-rel-card-meta-dash"></span>
+                                                    <span class="cmr-rel-card-tag"><?php echo esc_html( $single_cat_name ); ?></span>
+                                                    <span class="cmr-rel-card-date"> | <?php echo esc_html( $rel_date ); ?></span>
+                                                    <span class="cmr-rel-card-read-time"><?php echo esc_html( $rel_read_time ); ?> min read</span>
+                                                </div>
+                                                <h3 class="cmr-rel-card-title">
+                                                    <a href="<?php echo esc_url( $rel_link ); ?>"><?php echo esc_html( $rel_title ); ?></a>
+                                                </h3>
+                                                <a href="<?php echo esc_url( $rel_link ); ?>" class="cmr-rel-read-more">
+                                                    More Details
+                                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                                                        <polyline points="7 7 17 7 17 17"></polyline>
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        </article>
+                                    </div>
+                                    <?php
                                 }
 
                             }
