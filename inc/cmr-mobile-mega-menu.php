@@ -460,39 +460,105 @@ function cmr_inject_mobile_mega_menu() {
             document.body.appendChild(overlay);
         }
 
-        // Highlight active menu items for BOTH desktop and mobile mega menus
-        var currentUrl = window.location.href.split('#')[0].split('?')[0]; 
-        var normalizedCurrent = currentUrl.replace(/\/$/, "");
+        // Highlight active menu items for BOTH desktop and mobile mega menus (only 1 item active at a time)
+        window.cmrUpdateActiveMegaLinks = function() {
+            var currentPath = window.location.pathname.replace(/\/$/, "");
+            var currentHash = window.location.hash; // e.g. '#podcasts'
 
-        var allMegaLinks = document.querySelectorAll('.cmr-mm-item, .cmr-mms-item, .cmr-mmt-item, .cmr-mmw-item, .cmr-mmc-item, .cmr-mmn-item, .cmr-mobile-nav-link');
-        
-        allMegaLinks.forEach(function(link) {
-            if (link.href) {
-                var linkUrl = link.href.split('#')[0].split('?')[0];
-                var normalizedLink = linkUrl.replace(/\/$/, "");
-                
-                if (normalizedLink === normalizedCurrent) {
-                    link.classList.add('cmr-active-link');
-                    // For mega menu tabs, also set the active tab
-                    if (link.hasAttribute('data-target')) {
-                        var targetId = link.getAttribute('data-target');
-                        var wrapper = link.closest('.cmr-mm-wrapper, .cmr-mms-wrapper, .cmr-mmt-wrapper, .cmr-mmw-wrapper, .cmr-mmc-wrapper, .cmr-mmn-wrapper');
-                        if (wrapper) {
-                            // Remove active from all tabs
-                            wrapper.querySelectorAll('a[data-target]').forEach(function(t) { t.classList.remove('active'); });
-                            // Hide all panels
-                            wrapper.querySelectorAll('.cmr-mmw-content-panel, .cmr-mmt-content-panel, .cmr-mmc-content-panel, .cmr-mms-content-panel, .cmr-mmn-content-panel, .cmr-mmw-posts-list, .cmr-mmc-posts-list, .cmr-mmt-posts-list').forEach(function(p) { p.style.display = 'none'; });
-                            // Activate this one
-                            link.classList.add('active');
-                            // Because mega menus are cloned, there are multiple elements with the same ID.
-                            // We must find the target panel INSIDE the current wrapper.
-                            var targetPanel = wrapper.querySelector('[id="' + targetId + '"]');
-                            if (targetPanel) { targetPanel.style.display = 'flex'; }
-                        }
-                    }
+            var allMegaLinks = document.querySelectorAll('.cmr-mm-item, .cmr-mms-item, .cmr-mmt-item, .cmr-mmw-item, .cmr-mmc-item, .cmr-mmn-item, .cmr-mobile-nav-link');
+            
+            allMegaLinks.forEach(function(l) {
+                l.classList.remove('cmr-active-link');
+            });
+
+            var pathMatches = [];
+            allMegaLinks.forEach(function(link) {
+                if (!link.href) return;
+                var linkUrl;
+                try {
+                    linkUrl = new URL(link.href, window.location.href);
+                } catch(e) {
+                    return;
+                }
+                var linkPath = linkUrl.pathname.replace(/\/$/, "");
+                if (linkPath === currentPath) {
+                    pathMatches.push({ link: link, hash: linkUrl.hash });
+                }
+            });
+
+            if (pathMatches.length === 0) return;
+
+            var activeItems = [];
+            if (currentHash) {
+                activeItems = pathMatches.filter(function(item) {
+                    return item.hash === currentHash;
+                });
+            }
+
+            if (activeItems.length === 0) {
+                var noHashItems = pathMatches.filter(function(item) {
+                    return !item.hash;
+                });
+                if (noHashItems.length > 0) {
+                    activeItems = noHashItems;
+                } else {
+                    var firstHash = pathMatches[0].hash;
+                    activeItems = pathMatches.filter(function(item) {
+                        return item.hash === firstHash;
+                    });
                 }
             }
-        });
+
+            activeItems.forEach(function(item) {
+                item.link.classList.add('cmr-active-link');
+
+                if (item.link.hasAttribute('data-target')) {
+                    var targetId = item.link.getAttribute('data-target');
+                    var wrapper = item.link.closest('.cmr-mm-wrapper, .cmr-mms-wrapper, .cmr-mmt-wrapper, .cmr-mmw-wrapper, .cmr-mmc-wrapper, .cmr-mmn-wrapper');
+                    if (wrapper) {
+                        wrapper.querySelectorAll('a[data-target]').forEach(function(t) { t.classList.remove('active'); });
+                        wrapper.querySelectorAll('.cmr-mmw-content-panel, .cmr-mmt-content-panel, .cmr-mmc-content-panel, .cmr-mms-content-panel, .cmr-mmn-content-panel, .cmr-mmw-posts-list, .cmr-mmc-posts-list, .cmr-mmt-posts-list').forEach(function(p) { p.style.display = 'none'; });
+                        item.link.classList.add('active');
+                        var targetPanel = wrapper.querySelector('[id="' + targetId + '"]');
+                        if (targetPanel) { targetPanel.style.display = 'flex'; }
+                    }
+                }
+            });
+        };
+
+        window.cmrUpdateActiveMegaLinks();
+        window.addEventListener('hashchange', window.cmrUpdateActiveMegaLinks);
+
+        // Update active menu link on scroll between sections on /cmr-live/
+        if (window.location.pathname.includes('cmr-live')) {
+            var scrollSpyTimer;
+            window.addEventListener('scroll', function() {
+                clearTimeout(scrollSpyTimer);
+                scrollSpyTimer = setTimeout(function() {
+                    var topViewEl = document.getElementById('top-view');
+                    var podcastsEl = document.getElementById('podcasts');
+                    if (!topViewEl || !podcastsEl) return;
+
+                    var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+                    var podcastsTop = podcastsEl.getBoundingClientRect().top + scrollY - 200;
+                    var topViewTop = topViewEl.getBoundingClientRect().top + scrollY - 200;
+
+                    var activeHash = '#top-view';
+                    if (scrollY >= topViewTop) {
+                        activeHash = '#top-view';
+                    } else if (scrollY >= podcastsTop) {
+                        activeHash = '#podcasts';
+                    }
+
+                    if (window.location.hash !== activeHash) {
+                        if (window.history && window.history.replaceState) {
+                            window.history.replaceState(null, null, activeHash);
+                        }
+                        window.cmrUpdateActiveMegaLinks();
+                    }
+                }, 100);
+            }, { passive: true });
+        }
     });
     
     // STEP 1.5: Hover handlers using event delegation for cloned mega menu tabs

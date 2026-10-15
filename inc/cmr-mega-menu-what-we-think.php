@@ -437,6 +437,9 @@ function cmr_inject_what_we_think_mega_menu() {
                                 if (window.history && window.history.pushState) {
                                     window.history.pushState(null, null, '#' + targetId);
                                 }
+                                if (window.cmrUpdateActiveMegaLinks) {
+                                    window.cmrUpdateActiveMegaLinks();
+                                }
 
                                 var headerOffset = 110;
                                 var elPos = targetEl.getBoundingClientRect().top + window.pageYOffset;
