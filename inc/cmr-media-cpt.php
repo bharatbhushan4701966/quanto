@@ -85,6 +85,19 @@ function cmr_media_meta_box_html( $post ) {
     $media_duration = get_post_meta( $post->ID, '_cmr_media_duration', true );
     $audio_only = get_post_meta( $post->ID, '_cmr_media_audio_only', true );
 
+    // Checkboxes for Section Placement
+    $show_in_podcast_meta = get_post_meta( $post->ID, '_cmr_show_in_podcast', true );
+    $show_in_topview_meta = get_post_meta( $post->ID, '_cmr_show_in_topview', true );
+
+    // Default logic if not yet explicitly saved: base on existing media_type
+    if ( $show_in_podcast_meta === '' && $show_in_topview_meta === '' ) {
+        $show_in_podcast = ( empty($media_type) || strtoupper($media_type) === 'PODCAST' ) ? '1' : '0';
+        $show_in_topview = ( strtoupper($media_type) === 'TOP VIEW' ) ? '1' : '0';
+    } else {
+        $show_in_podcast = $show_in_podcast_meta;
+        $show_in_topview = $show_in_topview_meta;
+    }
+
     if(empty($media_type)) $media_type = 'PODCAST';
     if(empty($media_source)) $media_source = 'link';
 
@@ -95,8 +108,49 @@ function cmr_media_meta_box_html( $post ) {
         .cmr-meta-row select, .cmr-meta-row input[type="text"] { width: 100%; max-width: 400px; }
         .cmr-meta-checkbox { display: flex; align-items: center; gap: 8px; }
         .cmr-meta-checkbox label { font-weight: normal; margin: 0; display: inline-block; }
+        .cmr-placement-box {
+            background: #f8f9fa;
+            border: 1px solid #ccd0d4;
+            border-left: 4px solid #6f42c1;
+            padding: 14px 18px;
+            border-radius: 4px;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+        .cmr-placement-options {
+            display: flex;
+            gap: 25px;
+            margin-top: 10px;
+        }
+        .cmr-placement-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        .cmr-placement-item input[type="checkbox"] {
+            margin: 0;
+            width: 18px;
+            height: 18px;
+        }
     </style>
     
+    <!-- Placement Checkboxes -->
+    <div class="cmr-placement-box">
+        <label style="font-weight: 700; font-size: 14px; color: #1d2327;">Display Sections (Where should this item appear?)</label>
+        <p class="description" style="margin: 4px 0 10px 0;">Select which sections this item belongs to. You can select Podcast, Top View, or both.</p>
+        <div class="cmr-placement-options">
+            <label class="cmr-placement-item">
+                <input type="checkbox" name="cmr_show_in_podcast" value="1" <?php checked( $show_in_podcast, '1' ); ?>>
+                <strong>Show in Podcast</strong>
+            </label>
+            <label class="cmr-placement-item">
+                <input type="checkbox" name="cmr_show_in_topview" value="1" <?php checked( $show_in_topview, '1' ); ?>>
+                <strong>Show in Top View</strong>
+            </label>
+        </div>
+    </div>
+
     <div class="cmr-meta-row">
         <label for="cmr_media_type">Media Format Type</label>
         <select name="cmr_media_type" id="cmr_media_type">
@@ -185,6 +239,23 @@ function cmr_media_save_meta_box( $post_id ) {
     if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
     if ( ! current_user_can( 'edit_post', $post_id ) ) return;
 
+    // Save Section Placement Checkboxes
+    $show_podcast = isset( $_POST['cmr_show_in_podcast'] ) ? '1' : '0';
+    $show_topview = isset( $_POST['cmr_show_in_topview'] ) ? '1' : '0';
+    update_post_meta( $post_id, '_cmr_show_in_podcast', $show_podcast );
+    update_post_meta( $post_id, '_cmr_show_in_topview', $show_topview );
+
+    // Logging action for debug / audit trail
+    $log_msg = sprintf(
+        '[CMR Media Log] Post #%d ("%s") saved | Show in Podcast: %s | Show in Top View: %s | Format: %s',
+        $post_id,
+        get_the_title( $post_id ),
+        $show_podcast ? 'YES' : 'NO',
+        $show_topview ? 'YES' : 'NO',
+        isset( $_POST['cmr_media_type'] ) ? sanitize_text_field( $_POST['cmr_media_type'] ) : 'N/A'
+    );
+    error_log( $log_msg );
+
     if ( isset( $_POST['cmr_media_type'] ) ) {
         update_post_meta( $post_id, '_cmr_media_type', sanitize_text_field( $_POST['cmr_media_type'] ) );
     }
@@ -240,6 +311,45 @@ function cmr_media_save_meta_box( $post_id ) {
     }
 }
 add_action( 'save_post_cmr_media', 'cmr_media_save_meta_box' );
+
+// Add Columns to Admin List View for easy overview
+add_filter( 'manage_cmr_media_posts_columns', function( $columns ) {
+    $new_cols = array();
+    foreach ( $columns as $key => $title ) {
+        $new_cols[$key] = $title;
+        if ( $key === 'title' ) {
+            $new_cols['cmr_placements'] = __( 'Sections', 'quanto' );
+            $new_cols['cmr_format'] = __( 'Format', 'quanto' );
+        }
+    }
+    return $new_cols;
+});
+
+add_action( 'manage_cmr_media_posts_custom_column', function( $column, $post_id ) {
+    if ( $column === 'cmr_placements' ) {
+        $show_podcast = get_post_meta( $post_id, '_cmr_show_in_podcast', true );
+        $show_topview = get_post_meta( $post_id, '_cmr_show_in_topview', true );
+        $type = get_post_meta( $post_id, '_cmr_media_type', true );
+
+        // Fallback for posts saved prior to checkboxes
+        if ( $show_podcast === '' && $show_topview === '' ) {
+            $show_podcast = ( empty($type) || strtoupper($type) === 'PODCAST' ) ? '1' : '0';
+            $show_topview = ( strtoupper($type) === 'TOP VIEW' ) ? '1' : '0';
+        }
+
+        $badges = array();
+        if ( $show_podcast === '1' ) {
+            $badges[] = '<span style="background:#6f42c1; color:#fff; padding:3px 8px; border-radius:3px; font-size:11px; font-weight:600; display:inline-block; margin-right:4px;">Podcast</span>';
+        }
+        if ( $show_topview === '1' ) {
+            $badges[] = '<span style="background:#0d6efd; color:#fff; padding:3px 8px; border-radius:3px; font-size:11px; font-weight:600; display:inline-block;">Top View</span>';
+        }
+        echo !empty($badges) ? implode(' ', $badges) : '<span style="color:#999;">—</span>';
+    } elseif ( $column === 'cmr_format' ) {
+        $type = get_post_meta( $post_id, '_cmr_media_type', true ) ?: 'PODCAST';
+        echo esc_html( $type );
+    }
+}, 10, 2 );
 
 // 4. Enqueue Admin Scripts for Media Uploader
 function cmr_media_admin_scripts($hook) {

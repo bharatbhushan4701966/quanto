@@ -28,10 +28,23 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
             'orderby'        => 'date',
             'order'          => 'DESC',
             'meta_query'     => array(
+                'relation' => 'OR',
                 array(
-                    'key'     => '_cmr_media_type',
-                    'value'   => 'PODCAST',
-                    'compare' => 'LIKE',
+                    'key'     => '_cmr_show_in_podcast',
+                    'value'   => '1',
+                    'compare' => '=',
+                ),
+                array(
+                    'relation' => 'AND',
+                    array(
+                        'key'     => '_cmr_media_type',
+                        'value'   => 'PODCAST',
+                        'compare' => 'LIKE',
+                    ),
+                    array(
+                        'key'     => '_cmr_show_in_podcast',
+                        'compare' => 'NOT EXISTS',
+                    ),
                 ),
             ),
         );
@@ -415,10 +428,23 @@ if ( ! function_exists( 'cmr_trending_podcast_shortcode' ) ) {
             'orderby'        => 'date',
             'order'          => 'DESC',
             'meta_query'     => array(
+                'relation' => 'OR',
                 array(
-                    'key'     => '_cmr_media_type',
-                    'value'   => 'PODCAST',
-                    'compare' => 'LIKE',
+                    'key'     => '_cmr_show_in_podcast',
+                    'value'   => '1',
+                    'compare' => '=',
+                ),
+                array(
+                    'relation' => 'AND',
+                    array(
+                        'key'     => '_cmr_media_type',
+                        'value'   => 'PODCAST',
+                        'compare' => 'LIKE',
+                    ),
+                    array(
+                        'key'     => '_cmr_show_in_podcast',
+                        'compare' => 'NOT EXISTS',
+                    ),
                 ),
             ),
         );
@@ -672,10 +698,23 @@ if ( ! function_exists( 'cmr_trending_topview_shortcode' ) ) {
             'orderby'        => 'date',
             'order'          => 'DESC',
             'meta_query'     => array(
+                'relation' => 'OR',
                 array(
-                    'key'     => '_cmr_media_type',
-                    'value'   => 'TOP VIEW',
-                    'compare' => 'LIKE',
+                    'key'     => '_cmr_show_in_topview',
+                    'value'   => '1',
+                    'compare' => '=',
+                ),
+                array(
+                    'relation' => 'AND',
+                    array(
+                        'key'     => '_cmr_media_type',
+                        'value'   => 'TOP VIEW',
+                        'compare' => 'LIKE',
+                    ),
+                    array(
+                        'key'     => '_cmr_show_in_topview',
+                        'compare' => 'NOT EXISTS',
+                    ),
                 ),
             ),
         );
@@ -1181,12 +1220,29 @@ if ( ! function_exists( 'cmr_filter_recently_updated_ajax' ) ) {
         }
 
         if ( $type !== 'all' ) {
+            $is_podcast = ( strtolower($type) === 'podcast' );
+            $checkbox_key = $is_podcast ? '_cmr_show_in_podcast' : '_cmr_show_in_topview';
+            $format_val = $is_podcast ? 'PODCAST' : 'TOP VIEW';
+
             $query_args['meta_query'] = array(
+                'relation' => 'OR',
                 array(
-                    'key'     => '_cmr_media_type',
-                    'value'   => strtoupper($type), // e.g., 'PODCAST' or 'TOP VIEW'
-                    'compare' => 'LIKE'
-                )
+                    'key'     => $checkbox_key,
+                    'value'   => '1',
+                    'compare' => '=',
+                ),
+                array(
+                    'relation' => 'AND',
+                    array(
+                        'key'     => '_cmr_media_type',
+                        'value'   => $format_val,
+                        'compare' => 'LIKE',
+                    ),
+                    array(
+                        'key'     => $checkbox_key,
+                        'compare' => 'NOT EXISTS',
+                    ),
+                ),
             );
         }
 
