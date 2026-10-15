@@ -41,8 +41,10 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
         if ( ! empty( $atts['category'] ) ) {
             $cat_slugs = array_map( 'trim', explode( ',', $atts['category'] ) );
         } elseif ( ! empty( $page_slug ) ) {
-            if ( in_array( $page_slug, array( 'industry-intelligence', 'industry-connect' ), true ) ) {
-                $cat_slugs = array( 'industry-intelligence', 'industry-connect', 'industry-insights', 'industry' );
+            if ( $page_slug === 'industry-intelligence' ) {
+                $cat_slugs = array( 'industry-intelligence', 'industry-insights' );
+            } elseif ( $page_slug === 'industry-connect' ) {
+                $cat_slugs = array( 'industry-connect' );
             } elseif ( in_array( $page_slug, array( 'viewpoints', 'viewpoint' ), true ) ) {
                 $cat_slugs = array( 'viewpoints', 'viewpoint' );
             } elseif ( in_array( $page_slug, array( 'market-updates', 'market-update' ), true ) ) {
@@ -61,7 +63,7 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
                 $cat_slugs = array( $page_slug );
             }
         } else {
-            $cat_slugs = array( 'industry-intelligence', 'industry-connect', 'industry-insights', 'industry' );
+            $cat_slugs = array( 'industry-intelligence' );
         }
 
         $post_type = ! empty( $atts['post_type'] ) ? $atts['post_type'] : array( 'post', 'cmr_news' );

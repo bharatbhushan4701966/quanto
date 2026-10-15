@@ -155,19 +155,21 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                 // Handle known Quanto theme section / sector alias mappings
                 switch ( $slug_candidate ) {
                     case 'industry-intelligence':
-                    case 'industry-connect':
                     case 'industry-intel':
-                    case 'industry':
                         $category_terms = array_merge( $category_terms, array(
-                            'industry-connect',
                             'industry-intelligence',
                             'industry-insights',
                             'industry-insight',
-                            'industry',
-                            'insights',
-                            'Industry Connect',
                             'Industry Intelligence',
                             'Industry Insights',
+                        ) );
+                        break;
+
+                    case 'industry-connect':
+                    case 'industry':
+                        $category_terms = array_merge( $category_terms, array(
+                            'industry-connect',
+                            'Industry Connect',
                         ) );
                         break;
 
@@ -189,7 +191,6 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
                         $category_terms = array_merge( $category_terms, array(
                             'marketing-services',
                             'marketing',
-                            'industry-connect',
                             'Marketing Services',
                             'Marketing',
                         ) );
@@ -317,14 +318,11 @@ if ( ! function_exists( 'cmr_featured_insight_shortcode' ) ) {
             // Also check if page title matches "intelligence"
             if ( ! empty( $page_title ) && stripos( $page_title, 'intelligence' ) !== false ) {
                 $category_terms = array_merge( $category_terms, array(
-                    'industry-connect',
                     'industry-intelligence',
                     'industry-insights',
                     'industry-insight',
-                    'industry',
-                    'insights',
-                    'Industry Connect',
                     'Industry Intelligence',
+                    'Industry Insights',
                 ) );
             }
 

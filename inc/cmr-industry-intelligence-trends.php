@@ -45,10 +45,14 @@ if ( ! function_exists( 'cmr_industry_intelligence_trends_shortcode' ) ) {
         if ( ! empty( $atts['category'] ) ) {
             $cat_slugs = array_map( 'trim', explode( ',', $atts['category'] ) );
         } elseif ( ! empty( $page_slug ) ) {
-            if ( in_array( $page_slug, array( 'industry-intelligence', 'industry-connect' ), true ) ) {
+            if ( $page_slug === 'industry-intelligence' ) {
                 $cat_slugs = array( 'industry-intelligence' );
                 $section_default_title = 'Industry Intelligence Trends';
                 $section_default_label = 'Industry Intelligence';
+            } elseif ( $page_slug === 'industry-connect' ) {
+                $cat_slugs = array( 'industry-connect' );
+                $section_default_title = 'Industry Connect Trends';
+                $section_default_label = 'Industry Connect';
             } elseif ( in_array( $page_slug, array( 'viewpoints', 'viewpoint' ), true ) ) {
                 $cat_slugs = array( 'viewpoints', 'viewpoint' );
                 $section_default_title = 'Viewpoints Trends';
