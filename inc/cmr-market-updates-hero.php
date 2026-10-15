@@ -10,23 +10,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
     function cmr_market_updates_hero_shortcode( $atts ) {
         $atts = shortcode_atts( array(
-            'post_type'      => 'cmr_news',
+            'post_type'      => 'post',
+            'category'       => 'market-updates',
             'posts_per_page' => 5,
         ), $atts );
 
         $query_args = array(
-            'post_type'      => array('post', 'cmr_news'),
+            'post_type'      => !empty($atts['post_type']) ? $atts['post_type'] : 'post',
             'posts_per_page' => 15, // Query more to account for duplicates
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
-            'meta_query'     => array(
-                array(
-                    'key'     => '_thumbnail_id',
-                    'compare' => 'EXISTS'
-                ),
-            ),
         );
+
+        if ( ! empty( $atts['category'] ) ) {
+            $query_args['category_name'] = $atts['category'];
+        }
 
         $hero_posts = get_posts( $query_args );
 
@@ -48,15 +47,16 @@ if ( ! function_exists( 'cmr_market_updates_hero_shortcode' ) ) {
                 $category_name = 'Market Updates';
                 $terms = get_the_terms( $post_obj->ID, 'category' );
                 if ( $terms && ! is_wp_error( $terms ) ) {
-                    $has_mu = false;
+                    $specific_term = null;
                     foreach ( $terms as $term ) {
-                        if ( in_array( strtolower( $term->slug ), array( 'market-updates', 'market-update', 'market updates' ) ) || in_array( strtolower( $term->name ), array( 'market-updates', 'market-update', 'market updates' ) ) ) {
-                            $category_name = $term->name;
-                            $has_mu = true;
+                        if ( ! in_array( strtolower( $term->slug ), array( 'market-updates', 'market-update', 'uncategorized' ) ) && ! in_array( strtolower( $term->name ), array( 'market updates', 'market update', 'uncategorized' ) ) ) {
+                            $specific_term = $term->name;
                             break;
                         }
                     }
-                    if ( ! $has_mu ) {
+                    if ( $specific_term ) {
+                        $category_name = $specific_term;
+                    } else {
                         $category_name = $terms[0]->name;
                     }
                 }
