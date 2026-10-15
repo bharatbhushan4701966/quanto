@@ -4074,10 +4074,48 @@ function cmr_account_icon_shortcode() {
         </style>
         <?php
     }
-    echo '<a href="' . esc_url( $url ) . '" class="cmr-account-link">' . $icon_html . '</a>';
+    echo '<a href="' . esc_url( $url ) . '" class="cmr-account-link cmr-has-tooltip" aria-label="Profile">' . $icon_html . '<span class="cmr-header-tooltip">Profile</span></a>';
     return ob_get_clean();
 }
 add_shortcode( 'cmr_account_icon', 'cmr_account_icon_shortcode' );
+
+// Auto-inject header tooltips (Search, Cart, Profile) to guarantee visibility even with Elementor caching
+function cmr_header_action_tooltips_script() {
+    ?>
+    <script>
+    (function() {
+        function setupCmrHeaderTooltips() {
+            var items = [
+                { selector: '.cmr-nav-search-container, .cmr-nav-search-trigger', text: 'Search' },
+                { selector: '.cmr-nav-cart-container, .cmr-nav-cart-container-black', text: 'Cart' },
+                { selector: '.cmr-account-link', text: 'Profile' }
+            ];
+            items.forEach(function(item) {
+                var els = document.querySelectorAll(item.selector);
+                els.forEach(function(el) {
+                    var container = el.classList.contains('cmr-nav-search-trigger') ? (el.closest('.cmr-nav-search-container') || el) : el;
+                    container.classList.add('cmr-has-tooltip');
+                    if (!container.querySelector('.cmr-header-tooltip')) {
+                        var span = document.createElement('span');
+                        span.className = 'cmr-header-tooltip';
+                        span.textContent = item.text;
+                        container.appendChild(span);
+                    }
+                });
+            });
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', setupCmrHeaderTooltips);
+        } else {
+            setupCmrHeaderTooltips();
+        }
+        setTimeout(setupCmrHeaderTooltips, 500);
+        setTimeout(setupCmrHeaderTooltips, 1500);
+    })();
+    </script>
+    <?php
+}
+add_action( 'wp_footer', 'cmr_header_action_tooltips_script', 999 );
 
 require_once get_template_directory() . '/inc/cmr-product-card.php';
 

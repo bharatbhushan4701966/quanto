@@ -15,8 +15,26 @@ if ( ! function_exists( 'cmr_featured_intelligence_carousel_shortcode' ) ) {
             'posts_per_page' => 5,
         ), $atts );
 
-        global $post;
-        $page_slug = ( is_page() && isset( $post->post_name ) ) ? $post->post_name : '';
+        $page_slug = '';
+        $queried_obj = get_queried_object();
+        if ( $queried_obj instanceof WP_Post ) {
+            $page_slug = $queried_obj->post_name;
+        } elseif ( $queried_obj instanceof WP_Term ) {
+            $page_slug = $queried_obj->slug;
+        }
+        if ( empty( $page_slug ) && ! empty( $_SERVER['REQUEST_URI'] ) ) {
+            $req_path = trim( wp_parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH ), '/' );
+            if ( ! empty( $req_path ) ) {
+                $segments = explode( '/', $req_path );
+                $page_slug = sanitize_title( end( $segments ) );
+            }
+        }
+        if ( empty( $page_slug ) ) {
+            global $post;
+            if ( ! empty( $post ) && isset( $post->post_name ) ) {
+                $page_slug = $post->post_name;
+            }
+        }
 
         // Determine category slugs based on attribute or current page
         $cat_slugs = array();

@@ -16,32 +16,71 @@ if ( ! function_exists( 'cmr_industry_intelligence_trends_shortcode' ) ) {
             'subtitle'       => '',
         ), $atts );
 
-        global $post;
-        $page_slug = ( is_page() && isset( $post->post_name ) ) ? $post->post_name : '';
+        $page_slug = '';
+        $queried_obj = get_queried_object();
+        if ( $queried_obj instanceof WP_Post ) {
+            $page_slug = $queried_obj->post_name;
+        } elseif ( $queried_obj instanceof WP_Term ) {
+            $page_slug = $queried_obj->slug;
+        }
+        if ( empty( $page_slug ) && ! empty( $_SERVER['REQUEST_URI'] ) ) {
+            $req_path = trim( wp_parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH ), '/' );
+            if ( ! empty( $req_path ) ) {
+                $segments = explode( '/', $req_path );
+                $page_slug = sanitize_title( end( $segments ) );
+            }
+        }
+        if ( empty( $page_slug ) ) {
+            global $post;
+            if ( ! empty( $post ) && isset( $post->post_name ) ) {
+                $page_slug = $post->post_name;
+            }
+        }
 
         // Determine specific category slugs based on attribute or current page
         $cat_slugs = array();
+        $section_default_title = 'Industry Intelligence Trends';
+        $section_default_label = 'Industry Intelligence';
+
         if ( ! empty( $atts['category'] ) ) {
             $cat_slugs = array_map( 'trim', explode( ',', $atts['category'] ) );
         } elseif ( ! empty( $page_slug ) ) {
             if ( in_array( $page_slug, array( 'industry-intelligence', 'industry-connect' ), true ) ) {
                 $cat_slugs = array( 'industry-intelligence' );
+                $section_default_title = 'Industry Intelligence Trends';
+                $section_default_label = 'Industry Intelligence';
             } elseif ( in_array( $page_slug, array( 'viewpoints', 'viewpoint' ), true ) ) {
                 $cat_slugs = array( 'viewpoints', 'viewpoint' );
+                $section_default_title = 'Viewpoints Trends';
+                $section_default_label = 'Viewpoints';
             } elseif ( in_array( $page_slug, array( 'market-updates', 'market-update' ), true ) ) {
                 $cat_slugs = array( 'market-updates', 'market-update' );
+                $section_default_title = 'Market Updates Trends';
+                $section_default_label = 'Market Updates';
             } elseif ( $page_slug === 'consulting-advisory' ) {
-                $cat_slugs = array( 'consulting-advisory' );
+                $cat_slugs = array( 'consulting-advisory', 'consulting' );
+                $section_default_title = 'Consulting & Advisory Trends';
+                $section_default_label = 'Consulting & Advisory';
             } elseif ( $page_slug === 'marketing-services' ) {
-                $cat_slugs = array( 'marketing-services' );
+                $cat_slugs = array( 'marketing-services', 'marketing' );
+                $section_default_title = 'Marketing Services Trends';
+                $section_default_label = 'Marketing Services';
             } elseif ( $page_slug === 'enterprise-connect' ) {
                 $cat_slugs = array( 'enterprise-connect' );
+                $section_default_title = 'Enterprise Connect Trends';
+                $section_default_label = 'Enterprise Connect';
             } elseif ( $page_slug === 'channel-connect' ) {
                 $cat_slugs = array( 'channel-connect' );
+                $section_default_title = 'Channel Connect Trends';
+                $section_default_label = 'Channel Connect';
             } elseif ( $page_slug === 'smb-connect' ) {
                 $cat_slugs = array( 'smb-connect' );
+                $section_default_title = 'SMB Connect Trends';
+                $section_default_label = 'SMB Connect';
             } else {
                 $cat_slugs = array( $page_slug );
+                $section_default_title = ucwords( str_replace( '-', ' ', $page_slug ) ) . ' Trends';
+                $section_default_label = ucwords( str_replace( '-', ' ', $page_slug ) );
             }
         } else {
             $cat_slugs = array( 'industry-intelligence' );
@@ -273,7 +312,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_trends_shortcode' ) ) {
 
         <div class="cmr-intel-trends-wrapper" id="cmr-intel-trends-section">
             <div class="cmr-intel-trends-header">
-                <h2><?php echo esc_html( ! empty( $atts['title'] ) ? $atts['title'] : 'Industry Intelligence Trends' ); ?></h2>
+                <h2><?php echo esc_html( ! empty( $atts['title'] ) ? $atts['title'] : $section_default_title ); ?></h2>
                 <p><?php echo esc_html( ! empty( $atts['subtitle'] ) ? $atts['subtitle'] : 'Track emerging shifts, growth signals, and market movements in real time.' ); ?></p>
             </div>
             
@@ -290,7 +329,7 @@ if ( ! function_exists( 'cmr_industry_intelligence_trends_shortcode' ) ) {
                             }
                             
                             // Category
-                            $category_name = 'Industry Intelligence';
+                            $category_name = ! empty( $section_default_label ) ? $section_default_label : 'Industry Intelligence';
                             $terms = get_the_terms( get_the_ID(), 'category' );
                             if ( ! $terms || is_wp_error( $terms ) ) {
                                 $terms = get_the_terms( get_the_ID(), 'cmr_news_category' );

@@ -1432,41 +1432,36 @@
 
                 
 
-                // Get taxonomy terms (cmr_news_category first, fallback to category)
+                // Get taxonomy terms from both taxonomies (category and cmr_news_category)
+                $terms_news = get_the_terms( $post_id, 'cmr_news_category' );
+                $terms_cat  = get_the_terms( $post_id, 'category' );
+                $all_terms  = array();
 
-                $terms = get_the_terms( $post_id, 'cmr_news_category' );
-
-                if ( empty( $terms ) || is_wp_error( $terms ) ) {
-
-                    $terms = get_the_terms( $post_id, 'category' );
-
+                if ( ! empty( $terms_news ) && ! is_wp_error( $terms_news ) ) {
+                    foreach ( $terms_news as $t ) {
+                        $all_terms[ $t->slug ] = $t;
+                    }
+                }
+                if ( ! empty( $terms_cat ) && ! is_wp_error( $terms_cat ) ) {
+                    foreach ( $terms_cat as $t ) {
+                        $all_terms[ $t->slug ] = $t;
+                    }
                 }
 
                 $term_names = array();
-
-                if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
-
-                    foreach ( $terms as $term ) {
-
-                        if ( count( $terms ) > 1 && in_array( strtolower( $term->slug ), array('media-releases', 'media-release', 'press-releases', 'press-release') ) ) {
-
+                if ( ! empty( $all_terms ) ) {
+                    foreach ( $all_terms as $term ) {
+                        if ( count( $all_terms ) > 1 && in_array( strtolower( $term->slug ), array('media-releases', 'media-release', 'press-releases', 'press-release', 'uncategorized'), true ) ) {
                             continue;
-
                         }
-
                         $term_names[] = $term->name;
-
                     }
-
                     if ( empty( $term_names ) ) {
-
-                        $term_names = wp_list_pluck( $terms, 'name' );
-
+                        $term_names = wp_list_pluck( $all_terms, 'name' );
                     }
-
                 }
 
-                $tags_list = ! empty( $term_names ) ? implode( ', ', $term_names ) : esc_html__( 'General', 'quanto' );
+                $tags_list = ! empty( $term_names ) ? implode( ', ', array_unique( $term_names ) ) : esc_html__( 'General', 'quanto' );
 
                 
 
