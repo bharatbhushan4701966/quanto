@@ -1,181 +1,144 @@
 <?php
 /**
- * CMR Browser Tab Title Capitalization Fix
- * Converts ALL CAPS browser tab titles (e.g. 'MARKETING SERVICES') to Title Case ('Marketing Services') globally.
+ * CMR Browser Tab Title Fix
+ * Synchronizes the browser tab title with the page's title, formatted in clean Title Case.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-function cmr_format_browser_tab_title( $title ) {
-    if ( empty( $title ) || ! is_string( $title ) ) {
-        return $title;
+if ( ! function_exists( 'cmr_clean_page_title' ) ) {
+    function cmr_clean_page_title( $text ) {
+        if ( empty( $text ) ) {
+            return '';
+        }
+        if ( function_exists( 'cmr_format_breadcrumb_title' ) ) {
+            return html_entity_decode( cmr_format_breadcrumb_title( $text ), ENT_QUOTES, 'UTF-8' );
+        }
+        $text = html_entity_decode( $text, ENT_QUOTES, 'UTF-8' );
+        $text = ucwords( mb_strtolower( wp_strip_all_tags( $text ), 'UTF-8' ) );
+
+        $replacements = array(
+            '/\bIt & Telecom\b/i' => 'IT & Telecom',
+            '/\bIt Telecom\b/i'   => 'IT & Telecom',
+            '/\bIt\b/'            => 'IT',
+            '/\bAi\b/'            => 'AI',
+            '/\bIot\b/'           => 'IoT',
+            '/\b5g\b/i'           => '5G',
+            '/\b4g\b/i'           => '4G',
+            '/\bPc\b/'            => 'PC',
+            '/\bPcs\b/'           => 'PCs',
+            '/\bMsme\b/i'         => 'MSME',
+            '/\bCmr\b/i'          => 'CMR',
+            '/\bSme\b/i'          => 'SME',
+            '/\bSmes\b/i'         => 'SMEs',
+            '/\bEv\b/i'           => 'EV',
+            '/\bEvs\b/i'          => 'EVs',
+            '/\bAdas\b/i'         => 'ADAS',
+            '/\bSsd\b/i'          => 'SSD',
+            '/\bHdd\b/i'          => 'HDD',
+            '/\bB2b\b/i'          => 'B2B',
+            '/\bD2c\b/i'          => 'D2C',
+            '/\bGtm\b/i'          => 'GTM',
+        );
+
+        foreach ( $replacements as $pattern => $replacement ) {
+            $text = preg_replace( $pattern, $replacement, $text );
+        }
+
+        return $text;
     }
-
-    $acronyms = array(
-        'CMR', 'AI', 'IT', 'SME', 'SMES', 'EV', 'EVS', 'ADAS', 'SSD', 'HDD',
-        'B2B', 'D2C', 'B2C', 'OEM', 'OEMS', 'GTM', 'MSME', 'MSMES', 'BFSI',
-        'IOT', '5G', '4G', '3G', 'USA', 'UK', 'UAE', 'ROI', 'KPI', 'API', 'SaaS'
-    );
-
-    // Split by common separators: " - ", " | ", " — ", " – "
-    $delimiters = array( ' - ', ' | ', ' — ', ' – ' );
-    $primary_delimiter = ' - ';
-    foreach ( $delimiters as $delim ) {
-        if ( strpos( $title, $delim ) !== false ) {
-            $primary_delimiter = $delim;
-            break;
-        }
-    }
-
-    $parts = explode( $primary_delimiter, $title );
-    foreach ( $parts as $idx => &$part ) {
-        // Skip site domain/staging identifier
-        if ( $idx > 0 && ( stripos( $part, 'cmrindia' ) !== false || stripos( $part, 'staging' ) !== false ) ) {
-            continue;
-        }
-
-        $words = preg_split( '/(\s+)/', $part, -1, PREG_SPLIT_DELIM_CAPTURE );
-        $word_count = 0;
-        $upper_count = 0;
-
-        foreach ( $words as $w ) {
-            $clean = preg_replace( '/[^A-Za-z]/', '', $w );
-            if ( strlen( $clean ) > 1 ) {
-                $word_count++;
-                if ( ctype_upper( $clean ) ) {
-                    $upper_count++;
-                }
-            }
-        }
-
-        // If part is predominantly ALL CAPS (e.g. "MARKETING SERVICES")
-        if ( $word_count > 0 && ( $upper_count / $word_count ) >= 0.5 ) {
-            $non_space_index = 0;
-            foreach ( $words as &$word ) {
-                if ( trim( $word ) === '' ) continue;
-                
-                $clean = strtoupper( preg_replace( '/[^A-Za-z0-9]/', '', $word ) );
-                if ( in_array( $clean, $acronyms ) ) {
-                    if ( $clean === 'IOT' ) {
-                        $word = 'IoT';
-                    } elseif ( $clean === 'SAAS' ) {
-                        $word = 'SaaS';
-                    } else {
-                        $word = $clean;
-                    }
-                } else {
-                    $lower = strtolower( $word );
-                    $minor_words = array( 'and', 'or', 'in', 'on', 'at', 'to', 'for', 'with', 'by', 'of', '&' );
-                    if ( in_array( $lower, $minor_words ) && $non_space_index > 0 ) {
-                        $word = $lower;
-                    } else {
-                        $word = mb_convert_case( mb_strtolower( $word ), MB_CASE_TITLE, 'UTF-8' );
-                    }
-                }
-                $non_space_index++;
-            }
-            $part = implode( '', $words );
-        }
-    }
-
-    return implode( $primary_delimiter, $parts );
 }
 
-// 1. Filter document title parts (standard WordPress wp_get_document_title)
-add_filter( 'document_title_parts', 'cmr_filter_document_title_parts', 999 );
-function cmr_filter_document_title_parts( $title_parts ) {
+// 1. Filter document_title_parts: set title part to match the cleaned page title
+add_filter( 'document_title_parts', 'cmr_sync_document_title_parts', 9999 );
+function cmr_sync_document_title_parts( $title_parts ) {
     if ( is_array( $title_parts ) ) {
-        if ( ! empty( $title_parts['title'] ) ) {
-            $title_parts['title'] = cmr_format_browser_tab_title( $title_parts['title'] );
+        if ( is_singular() ) {
+            $title_parts['title'] = cmr_clean_page_title( get_the_title() );
+        } elseif ( is_category() || is_tax() ) {
+            $title_parts['title'] = cmr_clean_page_title( single_term_title( '', false ) );
+        } elseif ( ! empty( $title_parts['title'] ) ) {
+            $title_parts['title'] = cmr_clean_page_title( $title_parts['title'] );
         }
     }
     return $title_parts;
 }
 
-// 2. Filter pre_get_document_title (SEO plugins, Yoast, RankMath, etc.)
-add_filter( 'pre_get_document_title', 'cmr_format_browser_tab_title', 999 );
+// 2. Filter pre_get_document_title
+add_filter( 'pre_get_document_title', 'cmr_sync_pre_get_document_title', 9999 );
+function cmr_sync_pre_get_document_title( $title ) {
+    if ( ! empty( $title ) && is_string( $title ) ) {
+        $delimiters = array( ' - ', ' | ', ' — ', ' – ' );
+        foreach ( $delimiters as $delim ) {
+            if ( strpos( $title, $delim ) !== false ) {
+                $segments = explode( $delim, $title );
+                $segments[0] = cmr_clean_page_title( $segments[0] );
+                return implode( $delim, $segments );
+            }
+        }
+        return cmr_clean_page_title( $title );
+    }
+    return $title;
+}
 
 // 3. Filter wp_title
-add_filter( 'wp_title', 'cmr_format_browser_tab_title', 999 );
+add_filter( 'wp_title', 'cmr_clean_page_title', 9999 );
 
-// 4. Client-side script in <head> to immediately fix document.title and watch for client modifications
-add_action( 'wp_head', 'cmr_browser_title_script', 1 );
-function cmr_browser_title_script() {
+// 4. Client-side: Sync browser tab title directly with page title from breadcrumb / h1
+add_action( 'wp_head', 'cmr_sync_browser_tab_title_script', 1 );
+function cmr_sync_browser_tab_title_script() {
     ?>
     <script>
     (function() {
-        var acronyms = ['CMR', 'AI', 'IT', 'SME', 'SMES', 'EV', 'EVS', 'ADAS', 'SSD', 'HDD', 'B2B', 'D2C', 'OEM', 'GTM', 'MSME', 'IOT', 'SAAS', '5G', '4G'];
-        var minorWords = ['and', 'or', 'in', 'on', 'at', 'to', 'for', 'with', 'by', 'of', '&'];
+        var acronyms = {'It': 'IT', 'Ai': 'AI', 'Iot': 'IoT', 'Cmr': 'CMR', 'Msme': 'MSME', 'Sme': 'SME', 'Smes': 'SMEs', 'Ev': 'EV', 'Evs': 'EVs', 'Adas': 'ADAS', 'Ssd': 'SSD', 'Hdd': 'HDD', 'B2b': 'B2B', 'D2c': 'D2C', 'Gtm': 'GTM', '5g': '5G', '4g': '4G'};
 
-        function titleCase(text) {
-            if (!text) return text;
-            var parts = text.split(/(\s*[-|–—]\s*)/);
-            var changed = false;
-
-            for (var i = 0; i < parts.length; i += 2) {
-                var segment = parts[i];
-                if (i > 0 && /cmrindia|staging/i.test(segment)) continue;
-
-                var words = segment.split(/(\s+)/);
-                var wordCount = 0;
-                var upperCount = 0;
-
-                words.forEach(function(w) {
-                    var clean = w.replace(/[^A-Za-z]/g, '');
-                    if (clean.length > 1) {
-                        wordCount++;
-                        if (clean === clean.toUpperCase()) upperCount++;
-                    }
-                });
-
-                if (wordCount > 0 && (upperCount / wordCount) >= 0.5) {
-                    changed = true;
-                    var nonSpaceIndex = 0;
-                    parts[i] = words.map(function(w) {
-                        if (!w.trim()) return w;
-                        var clean = w.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
-                        if (acronyms.indexOf(clean) !== -1) {
-                            nonSpaceIndex++;
-                            return clean === 'IOT' ? 'IoT' : (clean === 'SAAS' ? 'SaaS' : clean);
-                        }
-                        var lower = w.toLowerCase();
-                        if (nonSpaceIndex > 0 && minorWords.indexOf(lower) !== -1) {
-                            nonSpaceIndex++;
-                            return lower;
-                        }
-                        nonSpaceIndex++;
-                        return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
-                    }).join('');
-                }
+        function formatTitleText(str) {
+            if (!str) return str;
+            var formatted = str.toLowerCase().replace(/(?:^|\s|\/|-)\w/g, function(m) {
+                return m.toUpperCase();
+            });
+            for (var k in acronyms) {
+                var reg = new RegExp('\\b' + k + '\\b', 'g');
+                formatted = formatted.replace(reg, acronyms[k]);
             }
-
-            return changed ? parts.join('') : text;
+            return formatted;
         }
 
-        function runTitleFix() {
-            if (document.title) {
-                var fixed = titleCase(document.title);
-                if (fixed !== document.title) {
-                    document.title = fixed;
+        function syncTabTitle() {
+            if (!document.title) return;
+
+            // Find visible page title on page (breadcrumb current page, page title h1, etc.)
+            var pageTitleEl = document.querySelector('.cmr-breadcrumbs .current-page, h1.page-title, h1');
+            var pageTitleText = pageTitleEl ? pageTitleEl.innerText.trim() : '';
+
+            var parts = document.title.split(' - ');
+
+            if (pageTitleText && pageTitleText.length > 1 && pageTitleText.length < 80) {
+                var cleanTitle = formatTitleText(pageTitleText);
+                if (parts[0] !== cleanTitle) {
+                    parts[0] = cleanTitle;
+                    document.title = parts.join(' - ');
                 }
+            } else if (parts[0] && parts[0] === parts[0].toUpperCase() && parts[0].length > 2) {
+                parts[0] = formatTitleText(parts[0]);
+                document.title = parts.join(' - ');
             }
         }
 
-        runTitleFix();
+        syncTabTitle();
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', runTitleFix);
+            document.addEventListener('DOMContentLoaded', syncTabTitle);
         }
-        window.addEventListener('load', runTitleFix);
+        window.addEventListener('load', syncTabTitle);
 
-        // Observe title changes by plugins/Elementor
         if (window.MutationObserver) {
             var titleEl = document.querySelector('title');
             if (titleEl) {
                 var observer = new MutationObserver(function() {
                     observer.disconnect();
-                    runTitleFix();
+                    syncTabTitle();
                     observer.observe(titleEl, { childList: true });
                 });
                 observer.observe(titleEl, { childList: true });
