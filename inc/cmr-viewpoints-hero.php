@@ -350,16 +350,37 @@ if ( ! function_exists( 'cmr_viewpoints_hero_shortcode' ) ) {
                 margin-top: 30px;
             }
             .cmr-vp-dot {
-                width: 20px;
+                position: relative;
+                width: 24px;
                 height: 4px;
                 background: #e0e0e0;
                 border-radius: 4px;
                 cursor: pointer;
-                transition: all 0.3s ease;
+                overflow: hidden;
+                transition: width 0.3s ease;
+            }
+            .cmr-vp-dot-progress {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 0%;
+                background: #6B3FA0;
+                border-radius: 4px;
             }
             .cmr-vp-dot.active {
-                background: #6B3FA0;
-                width: 30px;
+                width: 36px;
+                background: #e0e0e0;
+            }
+            .cmr-vp-dot.active .cmr-vp-dot-progress {
+                animation: cmrVpDotLoader 5s linear forwards;
+            }
+            .cmr-vp-slider-paused .cmr-vp-dot.active .cmr-vp-dot-progress {
+                animation-play-state: paused !important;
+            }
+            @keyframes cmrVpDotLoader {
+                0% { width: 0%; }
+                100% { width: 100%; }
             }
 
             @media (max-width: 992px) {
@@ -585,7 +606,9 @@ if ( ! function_exists( 'cmr_viewpoints_hero_shortcode' ) ) {
             
             <div class="cmr-vp-pagination" id="<?php echo esc_attr($slider_id); ?>-dots">
                 <?php foreach ( $posts_data as $index => $post ) : ?>
-                    <div class="cmr-vp-dot <?php echo $index === 0 ? 'active' : ''; ?>" data-slide="<?php echo esc_attr($index); ?>"></div>
+                    <div class="cmr-vp-dot <?php echo $index === 0 ? 'active' : ''; ?>" data-slide="<?php echo esc_attr($index); ?>">
+                        <span class="cmr-vp-dot-progress"></span>
+                    </div>
                 <?php endforeach; ?>
             </div>
             <?php endif; ?>
@@ -616,10 +639,20 @@ if ( ! function_exists( 'cmr_viewpoints_hero_shortcode' ) ) {
                     track.style.transform = 'translateX(-' + moveAmount + 'px)';
 
                     dots.forEach(function(dot, i) {
+                        const progress = dot.querySelector('.cmr-vp-dot-progress');
                         if (i === index) {
                             dot.classList.add('active');
+                            if (progress) {
+                                // Trigger reflow to restart CSS animation cleanly
+                                progress.style.animation = 'none';
+                                void progress.offsetWidth;
+                                progress.style.animation = '';
+                            }
                         } else {
                             dot.classList.remove('active');
+                            if (progress) {
+                                progress.style.animation = 'none';
+                            }
                         }
                     });
                 }
@@ -629,6 +662,8 @@ if ( ! function_exists( 'cmr_viewpoints_hero_shortcode' ) ) {
 
                 function startAutoplay() {
                     stopAutoplay();
+                    slider.classList.remove('cmr-vp-slider-paused');
+                    if (dotsContainer) dotsContainer.classList.remove('cmr-vp-slider-paused');
                     if (slides.length > 1) {
                         autoplayTimer = setInterval(function() {
                             const nextIndex = (currentIndex + 1) % slides.length;
@@ -638,6 +673,8 @@ if ( ! function_exists( 'cmr_viewpoints_hero_shortcode' ) ) {
                 }
 
                 function stopAutoplay() {
+                    slider.classList.add('cmr-vp-slider-paused');
+                    if (dotsContainer) dotsContainer.classList.add('cmr-vp-slider-paused');
                     if (autoplayTimer) {
                         clearInterval(autoplayTimer);
                         autoplayTimer = null;
