@@ -604,16 +604,8 @@ function cmr_channel_connect_grid_shortcode( $atts = array() ) {
         </div>
 
         <!-- Load More -->
-        <?php
-        $cc_cat_obj = get_category_by_slug('channel-connect');
-        if ( !$cc_cat_obj ) $cc_cat_obj = get_category_by_slug('channel');
-        if ( !$cc_cat_obj ) $cc_cat_obj = get_category_by_slug('channel_connect');
-        if ( !$cc_cat_obj ) $cc_cat_obj = get_term_by('name', 'Channel Connect', 'category');
-        if ( !$cc_cat_obj ) $cc_cat_obj = get_term_by('name', 'Channel', 'category');
-        $cc_cat_url = $cc_cat_obj ? get_category_link($cc_cat_obj->term_id) : home_url('/category/channel-connect/');
-        ?>
-        <div class="cmr-channelcgd-load-more-wrap">
-            <a href="<?php echo esc_url($cc_cat_url); ?>" class="cmr-channelcgd-load-more" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">View All</a>
+        <div class="cmr-channelcgd-load-more-wrap" style="<?php echo $has_more ? '' : 'display: none;'; ?>">
+            <button type="button" class="cmr-channelcgd-load-more" id="cmr-channelcgd-load-more-btn">View All</button>
         </div>
         <!-- Pagination -->
         <div class="cmr-channelcgd-pagination-wrap" style="display: none;"></div>
@@ -639,13 +631,19 @@ function cmr_channel_connect_grid_shortcode( $atts = array() ) {
                 grid.innerHTML = '<p>Loading...</p>';
             }
             
-            if (loadMoreBtn) loadMoreBtn.classList.add('cmr-channelcgd-loading');
+            if (loadMoreBtn) {
+                loadMoreBtn.classList.add('cmr-channelcgd-loading');
+                if (isLoadMore) {
+                    loadMoreBtn.innerText = 'Loading...';
+                }
+            }
             
             const data = new FormData();
             data.append('action', 'cmr_load_more_channel_connect');
             data.append('page', currentPage);
             data.append('year', currentYear);
             data.append('search', currentSearch);
+            data.append('base_url', window.location.pathname);
 
             fetch('<?php echo admin_url("admin-ajax.php"); ?>', {
                 method: 'POST',
@@ -662,24 +660,37 @@ function cmr_channel_connect_grid_shortcode( $atts = array() ) {
                     
                     const paginationWrap = document.querySelector('.cmr-channelcgd-pagination-wrap');
                     if (response.data.pagination) {
-                        loadMoreBtn.parentElement.style.display = 'none';
+                        if (loadMoreBtn && loadMoreBtn.parentElement) {
+                            loadMoreBtn.parentElement.style.display = 'none';
+                        }
                         if (paginationWrap) {
                             paginationWrap.innerHTML = '<div class="intel-numeric-pagination" style="text-align: center; margin-top: 30px; display: flex; justify-content: center; gap: 10px;">' + response.data.pagination + '</div>';
                             paginationWrap.style.display = 'block';
                         }
                     } else if (response.data.has_more) {
-                        loadMoreBtn.parentElement.style.display = 'block';
+                        if (loadMoreBtn && loadMoreBtn.parentElement) {
+                            loadMoreBtn.parentElement.style.display = 'block';
+                            loadMoreBtn.innerText = 'View All';
+                        }
                         if (paginationWrap) paginationWrap.style.display = 'none';
                     } else {
-                        loadMoreBtn.parentElement.style.display = 'none';
+                        if (loadMoreBtn && loadMoreBtn.parentElement) {
+                            loadMoreBtn.parentElement.style.display = 'none';
+                        }
                         if (paginationWrap) paginationWrap.style.display = 'none';
                     }
                 }
-                if (loadMoreBtn) loadMoreBtn.classList.remove('cmr-channelcgd-loading');
+                if (loadMoreBtn) {
+                    loadMoreBtn.classList.remove('cmr-channelcgd-loading');
+                    loadMoreBtn.innerText = 'View All';
+                }
             })
             .catch(err => {
                 console.error(err);
-                if (loadMoreBtn) loadMoreBtn.classList.remove('cmr-channelcgd-loading');
+                if (loadMoreBtn) {
+                    loadMoreBtn.classList.remove('cmr-channelcgd-loading');
+                    loadMoreBtn.innerText = 'View All';
+                }
             });
         }
 
@@ -689,16 +700,6 @@ function cmr_channel_connect_grid_shortcode( $atts = array() ) {
                 yearBtns.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 currentYear = this.getAttribute('data-year');
-                
-                const viewAllLink = document.querySelector('.cmr-channelcgd-load-more');
-                if (viewAllLink) {
-                    let baseUrl = viewAllLink.getAttribute('href').split('?')[0];
-                    if (currentYear) {
-                        viewAllLink.setAttribute('href', baseUrl + '?y=' + currentYear);
-                    } else {
-                        viewAllLink.setAttribute('href', baseUrl);
-                    }
-                }
                 
                 const moreContent = document.getElementById('cmr-channelcgd-more-content');
                 if (moreContent) {
@@ -739,44 +740,37 @@ function cmr_channel_connect_grid_shortcode( $atts = array() ) {
 
         // Load More
         if (loadMoreBtn) {
-            loadMoreBtn.addEventListener('click', function() {
+            loadMoreBtn.addEventListener('click', function(e) {
+                e.preventDefault();
                 currentPage++;
                 fetchPosts(true);
             });
         }
 
-        // Fetch posts on click
-        const navLinks = document.querySelectorAll('.intel-nav-links a:not(.cmr-nav-btn-subscribe)');
-        if (navLinks.length > 0) {
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    // Check if it's an anchor link
-                    const href = link.getAttribute('href');
-                    if (href && href.startsWith('#') && href !== '#') {
-                        // Let cmr-sticky-nav-script handle the smooth scroll
-                        return;
+        // AJAX Pagination click
+        document.addEventListener('click', function(e) {
+            const pageLink = e.target.closest('.cmr-channelcgd-pagination-wrap a.page-numbers');
+            if (pageLink) {
+                e.preventDefault();
+                const href = pageLink.getAttribute('href');
+                let targetPage = 1;
+                const match = href.match(/[?&]paged=(\d+)/);
+                if (match) {
+                    targetPage = parseInt(match[1], 10);
+                } else {
+                    const pathMatch = href.match(/\/page\/(\d+)/);
+                    if (pathMatch) {
+                        targetPage = parseInt(pathMatch[1], 10);
                     }
-                    
-                    if (href === '#' || !href) {
-                        e.preventDefault();
-                    } else {
-                        e.preventDefault();
-                        const match = href.match(/paged=(\d+)/);
-                        if (match) {
-                            currentPage = parseInt(match[1], 10);
-                        } else {
-                            const pathMatch = href.match(/\/page\/(\d+)/);
-                            if (pathMatch) {
-                                currentPage = parseInt(pathMatch[1], 10);
-                            } else if (href.indexOf('?') === -1 && href.indexOf('page') === -1) {
-                                currentPage = 1;
-                            }
-                        }
-                        fetchPosts(true);
-                    }
-                });
-            });
-        }
+                }
+                currentPage = targetPage;
+                fetchPosts(false);
+                const wrapper = document.querySelector('.cmr-channelcgd-wrapper');
+                if (wrapper) {
+                    wrapper.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
     });
     </script>
     <?php
