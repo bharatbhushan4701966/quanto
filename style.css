@@ -3986,6 +3986,14 @@ section.hero,
     line-height: 30px !important;
 }
 
+@media (min-width: 769px) {
+    .hero-title {
+        font-size: 72px !important;
+        line-height: 70px !important;
+        letter-spacing: -2px !important;
+    }
+}
+
 /* ==========================================================================
    Team Section (Desktop Visibility)
    ========================================================================== */

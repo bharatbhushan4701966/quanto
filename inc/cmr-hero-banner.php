@@ -82,8 +82,8 @@ function cmr_hero_banner_shortcode($atts) {
        TEXT
     ========================= */
     .hero-title {
-      font-size: 60px;
-      line-height:70px;
+      font-size: 72px;
+      line-height: 70px;
       letter-spacing: -2px;
       color:white;
       font-weight: 500;
