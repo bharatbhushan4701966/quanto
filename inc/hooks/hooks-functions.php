@@ -2157,7 +2157,7 @@
                 }
                 .cmr-rel-card-title {
                     font-size: 20px;
-                    font-weight: 700;
+                    font-weight: 600;
                     line-height: 1.35;
                     letter-spacing: -0.3px;
                     display: -webkit-box;
@@ -2204,13 +2204,11 @@
                     height: 14px;
                     transition: transform 0.2s ease;
                 }
-                .cmr-rel-card:hover .cmr-rel-read-more,
                 .cmr-rel-read-more:hover {
                     color: #5A28D7 !important;
                     border-color: #5A28D7 !important;
                     gap: 9px !important;
                 }
-                .cmr-rel-card:hover .cmr-rel-read-more svg,
                 .cmr-rel-read-more:hover svg {
                     transform: translate(2px, -2px);
                 }
