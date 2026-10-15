@@ -627,11 +627,19 @@ $is_audio_post = (strtoupper($media_type) === 'PODCAST') || preg_match('/\.(mp3|
         <div class="cmr-media-grid-wrap">
             <?php 
             $category_ids = wp_get_post_categories(get_the_ID());
+            $current_media_type = $media_type ? strtoupper($media_type) : 'PODCAST';
             
             $related_args = array(
-                'post_type' => 'cmr_media',
+                'post_type'      => 'cmr_media',
                 'posts_per_page' => 3,
-                'post__not_in' => array(get_the_ID()),
+                'post__not_in'   => array(get_the_ID()),
+                'meta_query'     => array(
+                    array(
+                        'key'     => '_cmr_media_type',
+                        'value'   => $current_media_type,
+                        'compare' => 'LIKE',
+                    ),
+                ),
             );
             
             if (!empty($category_ids)) {
@@ -640,15 +648,33 @@ $is_audio_post = (strtoupper($media_type) === 'PODCAST') || preg_match('/\.(mp3|
             
             $related_query = new WP_Query($related_args);
             
-            // Fallback to recent posts if no related category posts found
+            // Fallback to recent posts of the same media type if no category posts found
             if (!$related_query->have_posts()) {
                 $related_args = array(
-                    'post_type' => 'cmr_media',
+                    'post_type'      => 'cmr_media',
                     'posts_per_page' => 3,
-                    'post__not_in' => array(get_the_ID()),
+                    'post__not_in'   => array(get_the_ID()),
+                    'meta_query'     => array(
+                        array(
+                            'key'     => '_cmr_media_type',
+                            'value'   => $current_media_type,
+                            'compare' => 'LIKE',
+                        ),
+                    ),
                 );
                 $related_query = new WP_Query($related_args);
             }
+
+            // Ultimate fallback to any cmr_media if no posts of that type exist yet
+            if (!$related_query->have_posts()) {
+                $related_args = array(
+                    'post_type'      => 'cmr_media',
+                    'posts_per_page' => 3,
+                    'post__not_in'   => array(get_the_ID()),
+                );
+                $related_query = new WP_Query($related_args);
+            }
+
             if ($related_query->have_posts()) :
                 while ($related_query->have_posts()) : $related_query->the_post();
                     // Get thumbnail using our new smart fallback function
@@ -661,10 +687,10 @@ $is_audio_post = (strtoupper($media_type) === 'PODCAST') || preg_match('/\.(mp3|
                     }
                     
                     $post_date = get_the_date('d M Y');
-                    $media_type = get_post_meta( get_the_ID(), '_cmr_media_type', true );
+                    $item_media_type = get_post_meta( get_the_ID(), '_cmr_media_type', true );
                     $media_duration = get_post_meta( get_the_ID(), '_cmr_media_duration', true );
                     
-                    $mtype = $media_type ? $media_type : 'TOP VIEW';
+                    $mtype = $item_media_type ? $item_media_type : $current_media_type;
                     $is_podcast = (strtoupper($mtype) === 'PODCAST');
                     $type_class = $is_podcast ? 'type-podcast' : 'type-topview';
                     $duration = $media_duration ? $media_duration : '05:00 MINS';

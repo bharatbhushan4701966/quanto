@@ -27,10 +27,30 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
+            'meta_query'     => array(
+                array(
+                    'key'     => '_cmr_media_type',
+                    'value'   => 'PODCAST',
+                    'compare' => 'LIKE',
+                ),
+            ),
         );
 
         $live_query = new WP_Query( $query_args );
         $posts = $live_query->posts;
+
+        // Fallback to all media if no posts found with specific meta
+        if ( empty( $posts ) ) {
+            $fallback_args = array(
+                'post_type'      => 'cmr_media',
+                'posts_per_page' => intval( $atts['posts_per_page'] ),
+                'post_status'    => 'publish',
+                'orderby'        => 'date',
+                'order'          => 'DESC',
+            );
+            $live_query = new WP_Query( $fallback_args );
+            $posts = $live_query->posts;
+        }
 
         ob_start();
         ?>
@@ -398,22 +418,25 @@ if ( ! function_exists( 'cmr_trending_podcast_shortcode' ) ) {
                 array(
                     'key'     => '_cmr_media_type',
                     'value'   => 'PODCAST',
-                    'compare' => 'LIKE' // Or '=' depending on how it's saved
-                )
-            )
-        );
-        // If meta_query fails (no meta saved for older posts), fallback to just getting all media.
-        // Actually, let's just get the latest 3 cmr_media and assume they are podcasts or filter.
-        $query_args = array(
-            'post_type'      => 'cmr_media',
-            'posts_per_page' => intval( $atts['posts_per_page'] ),
-            'post_status'    => 'publish',
-            'orderby'        => 'date',
-            'order'          => 'DESC',
+                    'compare' => 'LIKE',
+                ),
+            ),
         );
 
         $trending_query = new WP_Query( $query_args );
         $posts = $trending_query->posts;
+
+        if ( empty( $posts ) ) {
+            $fallback_args = array(
+                'post_type'      => 'cmr_media',
+                'posts_per_page' => intval( $atts['posts_per_page'] ),
+                'post_status'    => 'publish',
+                'orderby'        => 'date',
+                'order'          => 'DESC',
+            );
+            $trending_query = new WP_Query( $fallback_args );
+            $posts = $trending_query->posts;
+        }
 
         ob_start();
         ?>
@@ -648,10 +671,29 @@ if ( ! function_exists( 'cmr_trending_topview_shortcode' ) ) {
             'post_status'    => 'publish',
             'orderby'        => 'date',
             'order'          => 'DESC',
+            'meta_query'     => array(
+                array(
+                    'key'     => '_cmr_media_type',
+                    'value'   => 'TOP VIEW',
+                    'compare' => 'LIKE',
+                ),
+            ),
         );
 
         $topview_query = new WP_Query( $query_args );
         $posts = $topview_query->posts;
+
+        if ( empty( $posts ) ) {
+            $fallback_args = array(
+                'post_type'      => 'cmr_media',
+                'posts_per_page' => intval( $atts['posts_per_page'] ),
+                'post_status'    => 'publish',
+                'orderby'        => 'date',
+                'order'          => 'DESC',
+            );
+            $topview_query = new WP_Query( $fallback_args );
+            $posts = $topview_query->posts;
+        }
 
         ob_start();
         ?>
