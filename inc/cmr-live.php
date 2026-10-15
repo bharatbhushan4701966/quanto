@@ -657,7 +657,7 @@ if ( ! function_exists( 'cmr_trending_topview_shortcode' ) ) {
         ?>
         <style>
             .cmr-topview-section {
-                padding: 60px 20px;
+                padding: 60px 20px 120px 20px;
                 font-family: inherit;
                 scroll-margin-top: 110px;
             }
