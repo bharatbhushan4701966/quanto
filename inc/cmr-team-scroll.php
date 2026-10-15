@@ -116,6 +116,7 @@ function cmr_team_scroll_shortcode($atts) {
                 align-items: flex-start !important;
                 text-align: left !important;
                 cursor: pointer !important;
+                height: 100% !important;
             }
             .cmr-team-card-image {
                 width: 100% !important;
@@ -166,6 +167,7 @@ function cmr_team_scroll_shortcode($atts) {
             .cmr-team-card-social {
                 display: flex !important;
                 gap: 8px !important;
+                margin-top: auto !important;
             }
             .cmr-social-icon-btn {
                 display: inline-flex !important;
@@ -266,6 +268,7 @@ function cmr_team_scroll_shortcode($atts) {
                 align-items: flex-start !important;
                 text-align: left !important;
                 cursor: pointer !important;
+                height: auto !important;
             }
             .cmr-team-card-image {
                 width: 100% !important;
@@ -311,6 +314,7 @@ function cmr_team_scroll_shortcode($atts) {
             .cmr-team-card-social {
                 display: flex !important;
                 gap: 10px !important;
+                margin-top: auto !important;
             }
             .cmr-social-icon-btn {
                 display: inline-flex !important;
