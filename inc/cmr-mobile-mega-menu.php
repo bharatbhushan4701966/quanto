@@ -382,13 +382,13 @@ function cmr_inject_mobile_mega_menu() {
                     </a>
 
                     <div class="cmr-mobile-nav-label" style="margin-top: 24px;">CMR LIVE</div>
-                    <a href="<?php echo esc_url( home_url( '/cmr-live/#top-view' ) ); ?>" class="cmr-mobile-nav-link">
-                        <div class="cmr-mobile-nav-link-title">Top View</div>
-                        <div class="cmr-mobile-nav-link-desc">Watch expert perspectives and industry conversations</div>
-                    </a>
                     <a href="<?php echo esc_url( home_url( '/cmr-live/#podcasts' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">Podcasts</div>
                         <div class="cmr-mobile-nav-link-desc">Expert conversations on trends and innovation</div>
+                    </a>
+                    <a href="<?php echo esc_url( home_url( '/cmr-live/#top-view' ) ); ?>" class="cmr-mobile-nav-link">
+                        <div class="cmr-mobile-nav-link-title">Top View</div>
+                        <div class="cmr-mobile-nav-link-desc">Watch expert perspectives and industry conversations</div>
                     </a>
                 </div>
             </div>
@@ -543,12 +543,7 @@ function cmr_inject_mobile_mega_menu() {
                     var podcastsTop = podcastsEl.getBoundingClientRect().top + scrollY - 200;
                     var topViewTop = topViewEl.getBoundingClientRect().top + scrollY - 200;
 
-                    var activeHash = '#top-view';
-                    if (scrollY >= topViewTop) {
-                        activeHash = '#top-view';
-                    } else if (scrollY >= podcastsTop) {
-                        activeHash = '#podcasts';
-                    }
+                    var activeHash = (scrollY >= topViewTop) ? '#top-view' : '#podcasts';
 
                     if (window.location.hash !== activeHash) {
                         if (window.history && window.history.replaceState) {
