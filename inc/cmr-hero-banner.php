@@ -229,9 +229,10 @@ function cmr_hero_banner_shortcode($atts) {
     }
 
     .hero-arrow-inline {
-      width: 28px;
-      vertical-align: middle;
-      margin-left: 10px;
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+      visibility: hidden !important;
     }
 
     /* =========================
@@ -463,10 +464,7 @@ function cmr_hero_banner_shortcode($atts) {
 
       <h1 class="hero-title">
         Foresight that clears <br>
-        complexity into <span class="inline-wrap"><span>clarity</span>
-          <img class="hero-arrow-inline"
-          src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/hero5-arrow.svg.svg">
-        </span>
+        complexity into <span>clarity</span>
       </h1>
 
       <p class="hero-subtitle">
@@ -519,16 +517,10 @@ function cmr_hero_banner_shortcode($atts) {
 
       const texts = [
         `Foresight that clears <br>
-        complexity into <span class="inline-wrap"><span>clarity</span>
-          <img class="hero-arrow-inline"
-          src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/hero5-arrow.svg.svg">
-        </span>`,
+        complexity into <span>clarity</span>`,
 
         `Influence that moves <br>
-        markets and <span class="inline-wrap"><span>minds</span>
-          <img class="hero-arrow-inline"
-          src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/hero5-arrow.svg.svg">
-        </span>`
+        markets and <span>minds</span>`
       ];
 
       const subtitles = [

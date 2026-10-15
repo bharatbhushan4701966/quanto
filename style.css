@@ -1612,14 +1612,9 @@ button.button.alt.single_add_to_cart_button:hover::after {
 
 
 .hero-title .hero-arrow-inline {
-
-
-
-    display: inline-block !important;
-
-
-
+    display: none !important;
     margin-bottom: 0 !important;
+}
 
 
 
