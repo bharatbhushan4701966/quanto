@@ -288,7 +288,7 @@ if ( ! function_exists( 'cmr_live_podcast_carousel_shortcode' ) ) {
                 
                 <div class="cmr-podcast-header">
                     <div class="cmr-podcast-title-area">
-                        <h2>CMR Live Podcast and Top View</h2>
+                        <h2>CMR Live - Podcast </h2>
                         <p>Browse premium research reports across industries, designed to deliver actionable insights and strategic clarity.</p>
                     </div>
                     <div class="cmr-podcast-nav-area" style="display: flex; align-items: center; gap: 15px;">

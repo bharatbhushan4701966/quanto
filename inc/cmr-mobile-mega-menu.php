@@ -382,7 +382,7 @@ function cmr_inject_mobile_mega_menu() {
                     </a>
 
                     <div class="cmr-mobile-nav-label" style="margin-top: 24px;">CMR LIVE</div>
-                    <a href="<?php echo esc_url( home_url( '/cmr-live/#podcasts' ) ); ?>" class="cmr-mobile-nav-link">
+                    <a href="<?php echo esc_url( home_url( '/cmr-live/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">Podcasts</div>
                         <div class="cmr-mobile-nav-link-desc">Expert conversations on trends and innovation</div>
                     </a>
@@ -543,11 +543,11 @@ function cmr_inject_mobile_mega_menu() {
                     var podcastsTop = podcastsEl.getBoundingClientRect().top + scrollY - 200;
                     var topViewTop = topViewEl.getBoundingClientRect().top + scrollY - 200;
 
-                    var activeHash = (scrollY >= topViewTop) ? '#top-view' : '#podcasts';
+                    var activeHash = (scrollY >= topViewTop) ? '#top-view' : '';
 
                     if (window.location.hash !== activeHash) {
                         if (window.history && window.history.replaceState) {
-                            window.history.replaceState(null, null, activeHash);
+                            window.history.replaceState(null, null, activeHash || window.location.pathname);
                         }
                         window.cmrUpdateActiveMegaLinks();
                     }
