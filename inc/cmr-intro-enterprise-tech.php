@@ -68,7 +68,7 @@ function cmr_intro_enterprise_tech_shortcode() {
         }
     </style>
     <div class="cmr-intro-enterprise-tech-section">
-        <p>Enterprises today are being reshaped by an accelerating wave of digital transformation. Cloud platforms, enterprise software, AI and automation, cybersecurity, data infrastructure, and modern workplace technologies are redefining how organizations operate, collaborate, and compete. IT leaders are under growing pressure to modernize legacy systems, secure complex environments, and deliver measurable business value from every technology investment.</p>
+        <p>Enterprises today are being reshaped by an accelerating wave of digital transformation. Cloud platforms, enterprise software, AI and automation, cybersecurity, Data Center, and modern workplace technologies are redefining how organizations operate, collaborate, and compete. IT leaders are under growing pressure to modernize legacy systems, secure complex environments, and deliver measurable business value from every technology investment.</p>
         <p>AI is accelerating this shift further, moving from experimentation to enterprise-wide deployment across operations, customer engagement, decision-making, and IT management. At the same time, hybrid work models, evolving compliance requirements, cost optimization pressures, and the need for resilient, scalable infrastructure are creating both opportunities and complexity for enterprise technology leaders.</p>
         
         <div class="cmr-intro-enterprise-tech-hidden-content">
