@@ -99,11 +99,19 @@ function cmr_hero_banner_shortcode($atts) {
       transform: translateY(20px);
     }
 
-    .hero p {
+    .hero p,
+    .hero-subtitle {
       margin-top: 20px !important;
       margin-bottom: 30px;
       font-size:14px;
       line-height: 24px;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .hero p.fade,
+    .hero-subtitle.fade {
+      opacity: 0;
+      transform: translateY(15px);
     }
 
     /* =========================
@@ -443,159 +451,167 @@ function cmr_hero_banner_shortcode($atts) {
       <div class="hero-content">
 
       <h1 class="hero-title">
-      Shaping the future <br>
-      through insights powered <br>
-      by <span class="inline-wrap">intelligence
-        <img class="hero-arrow-inline"
-        src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/hero5-arrow.svg.svg">
-      </span>
-    </h1>
+        Foresight that clears <br>
+        complexity into <span class="inline-wrap"><span>clarity</span>
+          <img class="hero-arrow-inline"
+          src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/hero5-arrow.svg.svg">
+        </span>
+      </h1>
 
-        <p>
-         From emerging trends to strategic opportunity, we translate market intelligence into the<br> clarity organisations need to act decisively.
-        </p>
+      <p class="hero-subtitle">
+        Industry intelligence, custom research and bespoke consulting that help enterprises remove ambiguity from their biggest strategic bets.
+      </p>
 
-        <div class="buttons">
-          <a href="<?php echo esc_url( home_url( '/research-reports/' ) ); ?>" class="btn-primary">
-            Get Report
-            <img class="hero-arrow-button-white"
-                 src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg">
-          </a>
+      <div class="buttons">
+        <a href="<?php echo esc_url( home_url( '/research-reports/' ) ); ?>" class="btn-primary">
+          Get Report
+          <img class="hero-arrow-button-white"
+               src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg">
+        </a>
 
-          <a href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6Ijc2MzciLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D" class="btn-outline open-popup" data-popup-id="7637">
-            Connect with us
-            <img class="hero-arrow-button"
-                 src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg">
-          </a>
-        </div>
-
+        <a href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6Ijc2MzciLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D" class="btn-outline open-popup" data-popup-id="7637">
+          Connect with us
+          <img class="hero-arrow-button"
+               src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg">
+        </a>
       </div>
 
-    </section>
+    </div>
 
-    <script>
-    (function() {
-      function initHeroBannerSlider() {
-        const hero = document.querySelector('.hero');
-        if (!hero) return;
-        if (hero.dataset.cmrHeroInit === 'true') return;
-        hero.dataset.cmrHeroInit = 'true';
+  </section>
 
-        // 1. Replace title & indicators with fresh nodes to detach any legacy external scripts holding references
-        const rawTitle = hero.querySelector('.hero-title');
-        const rawIndicators = hero.querySelector('.hero-indicators');
-        if (!rawTitle || !rawIndicators) return;
+  <script>
+  (function() {
+    function initHeroBannerSlider() {
+      const hero = document.querySelector('.hero');
+      if (!hero) return;
+      if (hero.dataset.cmrHeroInit === 'true') return;
+      hero.dataset.cmrHeroInit = 'true';
 
-        const title = rawTitle.cloneNode(true);
-        rawTitle.parentNode.replaceChild(title, rawTitle);
+      // 1. Replace title & indicators with fresh nodes to detach any legacy external scripts holding references
+      const rawTitle = hero.querySelector('.hero-title');
+      const rawIndicators = hero.querySelector('.hero-indicators');
+      if (!rawTitle || !rawIndicators) return;
 
-        const indicators = rawIndicators.cloneNode(true);
-        rawIndicators.parentNode.replaceChild(indicators, rawIndicators);
+      const title = rawTitle.cloneNode(true);
+      rawTitle.parentNode.replaceChild(title, rawTitle);
 
-        const dots = indicators.querySelectorAll('.dot');
-        if (!dots.length) return;
+      const subtitle = hero.querySelector('.hero-subtitle') || hero.querySelector('p');
 
-        const bgSlides = hero.querySelectorAll('.hero-bg-slide');
+      const indicators = rawIndicators.cloneNode(true);
+      rawIndicators.parentNode.replaceChild(indicators, rawIndicators);
 
-        const texts = [
-          `Shaping the future <br>
-          through insights powered <br>
-          by <span class="inline-wrap"><span>intelligence</span>
-            <img class="hero-arrow-inline"
-            src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/hero5-arrow.svg.svg">
-          </span>`,
+      const dots = indicators.querySelectorAll('.dot');
+      if (!dots.length) return;
 
-          `Driving the future <br>
-          with intelligence-led<br>
-          <span class="inline-wrap"><span>insights</span>
-            <img class="hero-arrow-inline"
-            src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/hero5-arrow.svg.svg">
-          </span>`
-        ];
+      const bgSlides = hero.querySelectorAll('.hero-bg-slide');
 
-        const DURATION = 6000; // 6 seconds per slide
-        let activeIdx = 0;
-        let slideTimer = null;
+      const texts = [
+        `Foresight that clears <br>
+        complexity into <span class="inline-wrap"><span>clarity</span>
+          <img class="hero-arrow-inline"
+          src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/hero5-arrow.svg.svg">
+        </span>`,
 
-        function setSlide(index, isFirstRun) {
-          if (slideTimer) {
-            clearTimeout(slideTimer);
-            slideTimer = null;
-          }
+        `Influence that moves <br>
+        markets and <span class="inline-wrap"><span>minds</span>
+          <img class="hero-arrow-inline"
+          src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/hero5-arrow.svg.svg">
+        </span>`
+      ];
 
-          activeIdx = index;
+      const subtitles = [
+        `Industry intelligence, custom research and bespoke consulting that help enterprises remove ambiguity from their biggest strategic bets.`,
+        `Go-to-market strategies and analyst credibility that connect enterprises with the ecosystem leaders and buyers who matter most.`
+      ];
 
-          // Background transition
-          bgSlides.forEach(function(slide, i) {
-            if (i === activeIdx) {
-              slide.classList.add('active');
-            } else {
-              slide.classList.remove('active');
-            }
-          });
+      const DURATION = 6000; // 6 seconds per slide
+      let activeIdx = 0;
+      let slideTimer = null;
 
-          // 1. Reset all indicators
-          dots.forEach(function(dot) {
-            dot.classList.remove('active');
-            let fill = dot.querySelector('.dot-fill');
-            if (!fill) {
-              fill = document.createElement('span');
-              fill.className = 'dot-fill';
-              dot.appendChild(fill);
-            }
-            fill.style.transition = 'none';
-            fill.style.webkitTransition = 'none';
-            fill.style.width = '0%';
-          });
-
-          // 2. Activate target indicator & animate progress fill from 0 to 100%
-          if (dots[activeIdx]) {
-            const activeDot = dots[activeIdx];
-            activeDot.classList.add('active');
-            let fill = activeDot.querySelector('.dot-fill');
-            if (!fill) {
-              fill = document.createElement('span');
-              fill.className = 'dot-fill';
-              activeDot.appendChild(fill);
-            }
-            fill.style.transition = 'none';
-            fill.style.webkitTransition = 'none';
-            fill.style.width = '0%';
-            void fill.offsetWidth; // Force layout reflow
-
-            requestAnimationFrame(function() {
-              fill.style.transition = 'width ' + DURATION + 'ms linear';
-              fill.style.webkitTransition = 'width ' + DURATION + 'ms linear';
-              fill.style.width = '100%';
-            });
-          }
-
-          // 3. Smooth Text Transition
-          if (!isFirstRun) {
-            title.classList.add('fade');
-            setTimeout(function() {
-              title.innerHTML = texts[activeIdx];
-              title.classList.remove('fade');
-            }, 250);
-          } else {
-            title.innerHTML = texts[activeIdx];
-          }
-
-          // 4. Automatically switch to next slide the instant the fill completes
-          slideTimer = setTimeout(function() {
-            const nextIdx = (activeIdx + 1) % texts.length;
-            setSlide(nextIdx, false);
-          }, DURATION);
+      function setSlide(index, isFirstRun) {
+        if (slideTimer) {
+          clearTimeout(slideTimer);
+          slideTimer = null;
         }
 
-        // Click handlers on indicators
-        dots.forEach(function(dot, i) {
-          dot.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (activeIdx === i) return;
-            setSlide(i, false);
-          });
+        activeIdx = index;
+
+        // Background transition
+        bgSlides.forEach(function(slide, i) {
+          if (i === activeIdx) {
+            slide.classList.add('active');
+          } else {
+            slide.classList.remove('active');
+          }
         });
+
+        // 1. Reset all indicators
+        dots.forEach(function(dot) {
+          dot.classList.remove('active');
+          let fill = dot.querySelector('.dot-fill');
+          if (!fill) {
+            fill = document.createElement('span');
+            fill.className = 'dot-fill';
+            dot.appendChild(fill);
+          }
+          fill.style.transition = 'none';
+          fill.style.webkitTransition = 'none';
+          fill.style.width = '0%';
+        });
+
+        // 2. Activate target indicator & animate progress fill from 0 to 100%
+        if (dots[activeIdx]) {
+          const activeDot = dots[activeIdx];
+          activeDot.classList.add('active');
+          let fill = activeDot.querySelector('.dot-fill');
+          if (!fill) {
+            fill = document.createElement('span');
+            fill.className = 'dot-fill';
+            activeDot.appendChild(fill);
+          }
+          fill.style.transition = 'none';
+          fill.style.webkitTransition = 'none';
+          fill.style.width = '0%';
+          void fill.offsetWidth; // Force layout reflow
+
+          requestAnimationFrame(function() {
+            fill.style.transition = 'width ' + DURATION + 'ms linear';
+            fill.style.webkitTransition = 'width ' + DURATION + 'ms linear';
+            fill.style.width = '100%';
+          });
+        }
+
+        // 3. Smooth Text Transition
+        if (!isFirstRun) {
+          title.classList.add('fade');
+          if (subtitle) subtitle.classList.add('fade');
+          setTimeout(function() {
+            title.innerHTML = texts[activeIdx];
+            if (subtitle) subtitle.innerHTML = subtitles[activeIdx];
+            title.classList.remove('fade');
+            if (subtitle) subtitle.classList.remove('fade');
+          }, 250);
+        } else {
+          title.innerHTML = texts[activeIdx];
+          if (subtitle) subtitle.innerHTML = subtitles[activeIdx];
+        }
+
+        // 4. Automatically switch to next slide the instant the fill completes
+        slideTimer = setTimeout(function() {
+          const nextIdx = (activeIdx + 1) % texts.length;
+          setSlide(nextIdx, false);
+        }, DURATION);
+      }
+
+      // Click handlers on indicators
+      dots.forEach(function(dot, i) {
+        dot.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (activeIdx === i) return;
+          setSlide(i, false);
+        });
+      });
 
         // Initialize first slide
         setSlide(0, true);
