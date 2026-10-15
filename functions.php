@@ -5894,4 +5894,71 @@ add_filter( 'wpcf7_posted_data', function( $posted_data ) {
     return $posted_data;
 }, 999 );
 
+/**
+ * Enable <br> tags in Quanto Team member designations
+ */
+add_filter( 'elementor/widget/render_content', function( $widget_content, $widget ) {
+    if ( $widget->get_name() === 'quanto_team' || strpos( $widget_content, 'team-member-position' ) !== false ) {
+        // Decode escaped <br> tags in team-member-position
+        $widget_content = preg_replace_callback( '/class="([^"]*team-member-position[^"]*)"([^>]*)>(.*?)<\/(span|p|div)>/is', function( $matches ) {
+            $decoded = str_ireplace( array( '&lt;br&gt;', '&lt;br/&gt;', '&lt;br /&gt;' ), '<br>', $matches[3] );
+            return 'class="' . $matches[1] . '"' . $matches[2] . '>' . $decoded . '</' . $matches[4] . '>';
+        }, $widget_content );
+    }
+    return $widget_content;
+}, 99, 2 );
+
+// General the_content filter fallback
+add_filter( 'the_content', function( $content ) {
+    if ( strpos( $content, 'team-member-position' ) !== false ) {
+        $content = preg_replace_callback( '/class="([^"]*team-member-position[^"]*)"([^>]*)>(.*?)<\/(span|p|div)>/is', function( $matches ) {
+            $decoded = str_ireplace( array( '&lt;br&gt;', '&lt;br/&gt;', '&lt;br /&gt;' ), '<br>', $matches[3] );
+            return 'class="' . $matches[1] . '"' . $matches[2] . '>' . $decoded . '</' . $matches[4] . '>';
+        }, $content );
+    }
+    return $content;
+}, 999 );
+
+// Client-side execution in footer and Elementor frontend hooks to support both live site and Elementor editor iframe
+add_action( 'wp_footer', 'cmr_enable_team_br_tags_js', 99999 );
+function cmr_enable_team_br_tags_js() {
+    ?>
+    <script id="cmr-team-br-fix">
+    (function() {
+        function decodeTeamBrTags() {
+            var positions = document.querySelectorAll('.team-member-position, .quanto-team-box .team-member-position, .cmr-team-card-role');
+            positions.forEach(function(el) {
+                if (el && el.innerHTML && (el.innerHTML.indexOf('&lt;br&gt;') !== -1 || el.innerHTML.indexOf('&lt;br/&gt;') !== -1 || el.innerHTML.indexOf('&lt;br /&gt;') !== -1 || el.textContent.indexOf('<br>') !== -1 || el.textContent.indexOf('<br/>') !== -1 || el.textContent.indexOf('<br />') !== -1)) {
+                    el.innerHTML = el.innerHTML
+                        .replace(/&lt;br\s*\/?&gt;/gi, '<br>')
+                        .replace(/&amp;lt;br\s*\/?&amp;gt;/gi, '<br>');
+                }
+            });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', decodeTeamBrTags);
+        } else {
+            decodeTeamBrTags();
+        }
+        window.addEventListener('load', decodeTeamBrTags);
+        setTimeout(decodeTeamBrTags, 100);
+        setTimeout(decodeTeamBrTags, 500);
+        setTimeout(decodeTeamBrTags, 1500);
+
+        if (window.jQuery) {
+            jQuery(window).on('elementor/frontend/init', function() {
+                if (window.elementorFrontend && elementorFrontend.hooks) {
+                    elementorFrontend.hooks.addAction('frontend/element_ready/quanto_team.default', function() {
+                        setTimeout(decodeTeamBrTags, 50);
+                        setTimeout(decodeTeamBrTags, 300);
+                    });
+                }
+            });
+        }
+    })();
+    </script>
+    <?php
+}
+
 
