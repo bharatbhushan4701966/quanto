@@ -382,7 +382,7 @@ function cmr_inject_mobile_mega_menu() {
                     </a>
 
                     <div class="cmr-mobile-nav-label" style="margin-top: 24px;">CMR LIVE</div>
-                    <a href="<?php echo esc_url( home_url( '/cmr-live/' ) ); ?>" class="cmr-mobile-nav-link">
+                    <a href="<?php echo esc_url( home_url( '/cmr-live/#top-view' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">Top View</div>
                         <div class="cmr-mobile-nav-link-desc">Watch expert perspectives and industry conversations</div>
                     </a>

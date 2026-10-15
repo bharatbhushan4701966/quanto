@@ -1593,6 +1593,13 @@ function cmr_live_hash_scroll_handler() {
             }
         }
 
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            setTimeout(scrollToTargetHash, 100);
+        } else {
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(scrollToTargetHash, 100);
+            });
+        }
         window.addEventListener('load', function() {
             setTimeout(scrollToTargetHash, 200);
             setTimeout(scrollToTargetHash, 600);
