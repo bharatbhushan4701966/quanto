@@ -838,7 +838,7 @@ function cmr_media_releases_grid_shortcode( $atts = array() ) {
                 this.classList.add('active');
                 currentYear = this.getAttribute('data-year') || '';
                 
-                // If clicked item is from dropdown, update More button label
+                // If clicked item is from dropdown, update More button label with selected year
                 if (this.classList.contains('cmr-mrg-dropdown-item')) {
                     if (moreLabel) {
                         moreLabel.textContent = this.textContent.trim();
