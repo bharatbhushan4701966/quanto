@@ -3982,6 +3982,8 @@ section.hero,
 .hero-content p {
     margin-top: 20px !important;
     margin-bottom: 30px !important;
+    font-size: 20px !important;
+    line-height: 30px !important;
 }
 
 /* ==========================================================================

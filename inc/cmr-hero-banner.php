@@ -103,8 +103,8 @@ function cmr_hero_banner_shortcode($atts) {
     .hero-subtitle {
       margin-top: 20px !important;
       margin-bottom: 30px;
-      font-size:14px;
-      line-height: 24px;
+      font-size: 20px;
+      line-height: 30px;
       max-width: 720px;
       transition: opacity 0.5s ease, transform 0.5s ease;
     }
