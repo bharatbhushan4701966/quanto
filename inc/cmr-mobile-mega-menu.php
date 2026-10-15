@@ -382,7 +382,7 @@ function cmr_inject_mobile_mega_menu() {
                     </a>
 
                     <div class="cmr-mobile-nav-label" style="margin-top: 24px;">CMR LIVE</div>
-                    <a href="<?php echo esc_url( home_url( '/cmr-live/#top-view' ) ); ?>" class="cmr-mobile-nav-link">
+                    <a href="<?php echo esc_url( home_url( '/cmr-live/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">Top View</div>
                         <div class="cmr-mobile-nav-link-desc">Watch expert perspectives and industry conversations</div>
                     </a>
@@ -624,6 +624,30 @@ function cmr_inject_mobile_mega_menu() {
                         var elPos = targetEl.getBoundingClientRect().top + window.pageYOffset;
                         window.scrollTo({
                             top: Math.max(0, elPos - headerOffset),
+                            behavior: 'smooth'
+                        });
+                    }, 250);
+                }
+            } else {
+                var linkUrl;
+                try {
+                    linkUrl = new URL(href, window.location.href);
+                } catch(err) {
+                    linkUrl = null;
+                }
+                if (linkUrl && linkUrl.pathname === window.location.pathname) {
+                    var liveOverlay = document.querySelector('.cmr-mobile-nav-overlay');
+                    if (liveOverlay) {
+                        liveOverlay.classList.remove('cmr-nav-open');
+                        document.body.style.overflow = '';
+                    }
+                    e.preventDefault();
+                    if (window.history && window.history.pushState) {
+                        window.history.pushState(null, null, window.location.pathname);
+                    }
+                    setTimeout(function() {
+                        window.scrollTo({
+                            top: 0,
                             behavior: 'smooth'
                         });
                     }, 250);

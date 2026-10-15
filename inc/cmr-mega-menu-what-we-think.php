@@ -280,7 +280,7 @@ function cmr_mega_menu_what_we_think_shortcode($atts) {
             </div>
             <div class="cmr-mmt-col">
                 <div class="cmr-mmt-label">CMR LIVE</div>
-                <a href="<?php echo esc_url( home_url( '/cmr-live/#top-view' ) ); ?>" class="cmr-mmt-item">
+                <a href="<?php echo esc_url( home_url( '/cmr-live/' ) ); ?>" class="cmr-mmt-item">
                     <h4>Top View</h4>
                     <p>Watch expert perspectives and industry conversations.</p>
                 </a>
@@ -442,6 +442,23 @@ function cmr_inject_what_we_think_mega_menu() {
                                 var elPos = targetEl.getBoundingClientRect().top + window.pageYOffset;
                                 window.scrollTo({
                                     top: Math.max(0, elPos - headerOffset),
+                                    behavior: 'smooth'
+                                });
+                            }
+                        } else {
+                            var linkUrl;
+                            try {
+                                linkUrl = new URL(href, window.location.href);
+                            } catch(err) {
+                                linkUrl = null;
+                            }
+                            if (linkUrl && linkUrl.pathname === window.location.pathname) {
+                                e.preventDefault();
+                                if (window.history && window.history.pushState) {
+                                    window.history.pushState(null, null, window.location.pathname);
+                                }
+                                window.scrollTo({
+                                    top: 0,
                                     behavior: 'smooth'
                                 });
                             }
