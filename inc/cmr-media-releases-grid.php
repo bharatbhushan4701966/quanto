@@ -726,8 +726,17 @@ function cmr_media_releases_grid_shortcode( $atts = array() ) {
         </div>
 
         <!-- Load More -->
-        <div class="cmr-mrg-load-more-wrap" style="<?php echo $has_more ? '' : 'display: none;'; ?>">
-            <button type="button" class="cmr-mrg-load-more" id="cmr-mrg-load-more-btn">View All</button>
+        <?php
+        $mr_cat_obj = get_category_by_slug('media-releases');
+        if ( !$mr_cat_obj ) $mr_cat_obj = get_category_by_slug('media-release');
+        if ( !$mr_cat_obj ) $mr_cat_obj = get_category_by_slug('press-releases');
+        if ( !$mr_cat_obj ) $mr_cat_obj = get_category_by_slug('press-release');
+        if ( !$mr_cat_obj ) $mr_cat_obj = get_term_by('name', 'Media Releases', 'category');
+        if ( !$mr_cat_obj ) $mr_cat_obj = get_term_by('name', 'Press Releases', 'category');
+        $mr_cat_url = $mr_cat_obj ? get_category_link($mr_cat_obj->term_id) : home_url('/media-releases/');
+        ?>
+        <div class="cmr-mrg-load-more-wrap">
+            <a href="<?php echo esc_url($mr_cat_url); ?>" class="cmr-mrg-load-more" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">View All</a>
         </div>
         
         <!-- Pagination -->
@@ -756,19 +765,13 @@ function cmr_media_releases_grid_shortcode( $atts = array() ) {
                 grid.innerHTML = '<p>Loading...</p>';
             }
             
-            if (loadMoreBtn) {
-                loadMoreBtn.classList.add('cmr-mrg-loading');
-                if (isLoadMore) {
-                    loadMoreBtn.innerText = 'Loading...';
-                }
-            }
+            if (loadMoreBtn) loadMoreBtn.classList.add('cmr-mrg-loading');
             
             const data = new FormData();
             data.append('action', 'cmr_load_more_media_releases');
             data.append('page', currentPage);
             data.append('year', currentYear);
             data.append('search', currentSearch);
-            data.append('base_url', window.location.pathname);
 
             fetch('<?php echo admin_url("admin-ajax.php"); ?>', {
                 method: 'POST',
@@ -789,34 +792,21 @@ function cmr_media_releases_grid_shortcode( $atts = array() ) {
                             paginationWrap.innerHTML = response.data.pagination;
                             paginationWrap.style.display = 'block';
                         }
-                        if (loadMoreBtn && loadMoreBtn.parentElement) {
-                            loadMoreBtn.parentElement.style.display = 'none';
-                        }
+                        if (loadMoreBtn) loadMoreBtn.parentElement.style.display = 'none';
                     } else {
                         if (paginationWrap) paginationWrap.style.display = 'none';
                         if (response.data.has_more) {
-                            if (loadMoreBtn && loadMoreBtn.parentElement) {
-                                loadMoreBtn.parentElement.style.display = 'block';
-                                loadMoreBtn.innerText = 'View All';
-                            }
+                            if (loadMoreBtn) loadMoreBtn.parentElement.style.display = 'block';
                         } else {
-                            if (loadMoreBtn && loadMoreBtn.parentElement) {
-                                loadMoreBtn.parentElement.style.display = 'none';
-                            }
+                            if (loadMoreBtn) loadMoreBtn.parentElement.style.display = 'none';
                         }
                     }
                 }
-                if (loadMoreBtn) {
-                    loadMoreBtn.classList.remove('cmr-mrg-loading');
-                    loadMoreBtn.innerText = 'View All';
-                }
+                if (loadMoreBtn) loadMoreBtn.classList.remove('cmr-mrg-loading');
             })
             .catch(err => {
                 console.error(err);
-                if (loadMoreBtn) {
-                    loadMoreBtn.classList.remove('cmr-mrg-loading');
-                    loadMoreBtn.innerText = 'View All';
-                }
+                if (loadMoreBtn) loadMoreBtn.classList.remove('cmr-mrg-loading');
             });
         }
 
@@ -846,6 +836,16 @@ function cmr_media_releases_grid_shortcode( $atts = array() ) {
                     }
                     if (moreBtn) {
                         moreBtn.classList.remove('active');
+                    }
+                }
+
+                const viewAllLink = document.querySelector('.cmr-mrg-load-more');
+                if (viewAllLink) {
+                    let baseUrl = viewAllLink.getAttribute('href').split('?')[0];
+                    if (currentYear) {
+                        viewAllLink.setAttribute('href', baseUrl + '?y=' + currentYear);
+                    } else {
+                        viewAllLink.setAttribute('href', baseUrl);
                     }
                 }
                 
@@ -892,37 +892,44 @@ function cmr_media_releases_grid_shortcode( $atts = array() ) {
 
         // Load More
         if (loadMoreBtn) {
-            loadMoreBtn.addEventListener('click', function(e) {
-                e.preventDefault();
+            loadMoreBtn.addEventListener('click', function() {
                 currentPage++;
                 fetchPosts(true);
             });
         }
 
-        // AJAX Pagination click
-        document.addEventListener('click', function(e) {
-            const pageLink = e.target.closest('#cmr-mrg-pagination a.page-numbers');
-            if (pageLink) {
-                e.preventDefault();
-                const href = pageLink.getAttribute('href');
-                let targetPage = 1;
-                const match = href.match(/[?&]paged=(\d+)/);
-                if (match) {
-                    targetPage = parseInt(match[1], 10);
-                } else {
-                    const pathMatch = href.match(/\/page\/(\d+)/);
-                    if (pathMatch) {
-                        targetPage = parseInt(pathMatch[1], 10);
+        // Fetch posts on click
+        const navLinks = document.querySelectorAll('.intel-nav-links a:not(.cmr-nav-btn-subscribe)');
+        if (navLinks.length > 0) {
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Check if it's an anchor link
+                    const href = link.getAttribute('href');
+                    if (href && href.startsWith('#') && href !== '#') {
+                        // Let cmr-sticky-nav-script handle the smooth scroll
+                        return;
                     }
-                }
-                currentPage = targetPage;
-                fetchPosts(false);
-                const wrapper = document.querySelector('.cmr-mrg-wrapper');
-                if (wrapper) {
-                    wrapper.scrollIntoView({ behavior: 'smooth' });
-                }
-            }
-        });
+                    
+                    if (href === '#' || !href) {
+                        e.preventDefault();
+                    } else {
+                        e.preventDefault();
+                        const match = href.match(/paged=(\d+)/);
+                        if (match) {
+                            currentPage = parseInt(match[1], 10);
+                        } else {
+                            const pathMatch = href.match(/\/page\/(\d+)/);
+                            if (pathMatch) {
+                                currentPage = parseInt(pathMatch[1], 10);
+                            } else if (href.indexOf('?') === -1 && href.indexOf('page') === -1) {
+                                currentPage = 1;
+                            }
+                        }
+                        fetchPosts(true);
+                    }
+                });
+            });
+        }
     });
     </script>
     <?php
