@@ -525,7 +525,7 @@ function cmr_hero_banner_shortcode($atts) {
 
       const subtitles = [
         `Industry intelligence, custom research and bespoke consulting<br class="desktop-br"> that help enterprises remove ambiguity from their biggest strategic bets.`,
-        `Go-to-market strategies and analyst credibility<br class="desktop-br"> that connect enterprises with the ecosystem leaders and buyers who matter most.`
+        `Go-to-market strategies and analyst credibility that connect<br class="desktop-br"> enterprises with the ecosystem leaders and buyers who matter most.`
       ];
 
       const DURATION = 6000; // 6 seconds per slide
