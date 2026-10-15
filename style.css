@@ -6302,8 +6302,8 @@ li.woocommerce-MyAccount-navigation-link.is-active a {
 .elementor-element-004973c,
 .elementor-22337 .elementor-element.elementor-element-004973c,
 .elementor-element-8be9dd6 > .elementor-element-004973c {
-    --margin-top: 70px !important;
-    margin-top: 70px !important;
+    --margin-top: 0px !important;
+    margin-top: 0px !important;
     padding-top: 20px !important;
 }
 
