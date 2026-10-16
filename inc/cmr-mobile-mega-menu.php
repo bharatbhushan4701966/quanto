@@ -327,35 +327,35 @@ function cmr_inject_mobile_mega_menu() {
                     <div class="cmr-mobile-nav-label">WHO WE SERVE</div>
                     <a href="<?php echo esc_url( home_url( '/ai/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">AI</div>
-                        <div class="cmr-mobile-nav-link-desc">Artificial Intelligence & transformation insights</div>
+                        <div class="cmr-mobile-nav-link-desc">Adoption trends and enterprise returns</div>
                     </a>
                     <a href="<?php echo esc_url( home_url( '/automotive/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">Automotive</div>
-                        <div class="cmr-mobile-nav-link-desc">Insights for the mobility ecosystem</div>
+                        <div class="cmr-mobile-nav-link-desc">Software-defined vehicles and mobility shifts</div>
                     </a>
                     <a href="<?php echo esc_url( home_url( '/consumer-tech/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">Consumer Tech</div>
-                        <div class="cmr-mobile-nav-link-desc">Understanding digital consumer behavior</div>
+                        <div class="cmr-mobile-nav-link-desc">Device demand and buyer behaviour</div>
                     </a>
                     <a href="<?php echo esc_url( home_url( '/digital-supply-chain/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">Digital Supply Chain</div>
-                        <div class="cmr-mobile-nav-link-desc">Intelligence for connected supply chains</div>
+                        <div class="cmr-mobile-nav-link-desc">Automation, visibility and resilience</div>
                     </a>
                     <a href="<?php echo esc_url( home_url( '/enterprise-tech/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">Enterprise Tech</div>
-                        <div class="cmr-mobile-nav-link-desc">Cloud, infrastructure & enterprise IT solutions</div>
+                        <div class="cmr-mobile-nav-link-desc">Cloud, data centre and IT budget trends</div>
                     </a>
                     <a href="<?php echo esc_url( home_url( '/it-telecom/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">IT & Telecom</div>
-                        <div class="cmr-mobile-nav-link-desc">Research across technology markets</div>
+                        <div class="cmr-mobile-nav-link-desc">From devices to networks to cloud</div>
                     </a>
                     <a href="<?php echo esc_url( home_url( '/msme/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">MSME</div>
-                        <div class="cmr-mobile-nav-link-desc">Empowering small & medium enterprise growth</div>
+                        <div class="cmr-mobile-nav-link-desc">Digital adoption and tech spend in small business</div>
                     </a>
                     <a href="<?php echo esc_url( home_url( '/semiconductors/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">Semiconductors</div>
-                        <div class="cmr-mobile-nav-link-desc">Tracking innovation and demand shifts</div>
+                        <div class="cmr-mobile-nav-link-desc">Foundry, memory and AI silicon trends</div>
                     </a>
                 </div>
             </div>

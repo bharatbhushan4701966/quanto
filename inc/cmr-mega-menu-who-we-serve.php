@@ -144,7 +144,7 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
                         <h4>AI</h4>
                         <span class="cmr-mms-badge">New</span>
                     </div>
-                    <p>Artificial Intelligence & transformation insights</p>
+                    <p>Adoption trends and enterprise returns</p>
                 </a>
 
                 <a href="<?php echo esc_url( home_url( '/automotive/' ) ); ?>" class="cmr-mms-item">
@@ -152,21 +152,21 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
                         <h4>Automotive</h4>
                         <span class="cmr-mms-badge">New</span>
                     </div>
-                    <p>Insights for the mobility ecosystem</p>
+                    <p>Software-defined vehicles and mobility shifts</p>
                 </a>
                 
                 <a href="<?php echo esc_url( home_url( '/consumer-tech/' ) ); ?>" class="cmr-mms-item">
                     <div class="cmr-mms-item-header">
                         <h4>Consumer Tech</h4>
                     </div>
-                    <p>Understanding digital consumer behavior</p>
+                    <p>Device demand and buyer behaviour</p>
                 </a>
                 
                 <a href="<?php echo esc_url( home_url( '/digital-supply-chain/' ) ); ?>" class="cmr-mms-item">
                     <div class="cmr-mms-item-header">
                         <h4>Digital Supply Chain</h4>
                     </div>
-                    <p>Intelligence for connected supply chains</p>
+                    <p>Automation, visibility and resilience</p>
                 </a>
             </div>
             
@@ -178,14 +178,14 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
                         <h4>Enterprise Tech</h4>
                         <span class="cmr-mms-badge">New</span>
                     </div>
-                    <p>Cloud, infrastructure & enterprise IT solutions</p>
+                    <p>Cloud, data centre and IT budget trends</p>
                 </a>
 
                 <a href="<?php echo esc_url( home_url( '/it-telecom/' ) ); ?>" class="cmr-mms-item">
                     <div class="cmr-mms-item-header">
                         <h4>IT & Telecom</h4>
                     </div>
-                    <p>Research across technology markets</p>
+                    <p>From devices to networks to cloud</p>
                 </a>
 
                 <a href="<?php echo esc_url( home_url( '/msme/' ) ); ?>" class="cmr-mms-item">
@@ -193,7 +193,7 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
                         <h4>MSME</h4>
                         <span class="cmr-mms-badge">New</span>
                     </div>
-                    <p>Empowering small & medium enterprise growth</p>
+                    <p>Digital adoption and tech spend in small business</p>
                 </a>
                 
                 <a href="<?php echo esc_url( home_url( '/semiconductors/' ) ); ?>" class="cmr-mms-item">
@@ -201,7 +201,7 @@ function cmr_mega_menu_who_we_serve_shortcode($atts) {
                         <h4>Semiconductors</h4>
                         <span class="cmr-mms-badge">New</span>
                     </div>
-                    <p>Tracking innovation and demand shifts</p>
+                    <p>Foundry, memory and AI silicon trends</p>
                 </a>
             </div>
         </div>
