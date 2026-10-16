@@ -325,6 +325,10 @@ function cmr_inject_mobile_mega_menu() {
                 </button>
                 <div class="cmr-mobile-nav-content">
                     <div class="cmr-mobile-nav-label">WHO WE SERVE</div>
+                    <a href="<?php echo esc_url( home_url( '/ai/' ) ); ?>" class="cmr-mobile-nav-link">
+                        <div class="cmr-mobile-nav-link-title">AI</div>
+                        <div class="cmr-mobile-nav-link-desc">Artificial Intelligence & transformation insights</div>
+                    </a>
                     <a href="<?php echo esc_url( home_url( '/automotive/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">Automotive</div>
                         <div class="cmr-mobile-nav-link-desc">Insights for the mobility ecosystem</div>
@@ -337,25 +341,21 @@ function cmr_inject_mobile_mega_menu() {
                         <div class="cmr-mobile-nav-link-title">Digital Supply Chain</div>
                         <div class="cmr-mobile-nav-link-desc">Intelligence for connected supply chains</div>
                     </a>
-                    <a href="<?php echo esc_url( home_url( '/msme/' ) ); ?>" class="cmr-mobile-nav-link">
-                        <div class="cmr-mobile-nav-link-title">MSME</div>
-                        <div class="cmr-mobile-nav-link-desc">Empowering small & medium enterprise growth</div>
+                    <a href="<?php echo esc_url( home_url( '/enterprise-tech/' ) ); ?>" class="cmr-mobile-nav-link">
+                        <div class="cmr-mobile-nav-link-title">Enterprise Tech</div>
+                        <div class="cmr-mobile-nav-link-desc">Cloud, infrastructure & enterprise IT solutions</div>
                     </a>
                     <a href="<?php echo esc_url( home_url( '/it-telecom/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">IT & Telecom</div>
                         <div class="cmr-mobile-nav-link-desc">Research across technology markets</div>
                     </a>
+                    <a href="<?php echo esc_url( home_url( '/msme/' ) ); ?>" class="cmr-mobile-nav-link">
+                        <div class="cmr-mobile-nav-link-title">MSME</div>
+                        <div class="cmr-mobile-nav-link-desc">Empowering small & medium enterprise growth</div>
+                    </a>
                     <a href="<?php echo esc_url( home_url( '/semiconductors/' ) ); ?>" class="cmr-mobile-nav-link">
                         <div class="cmr-mobile-nav-link-title">Semiconductors</div>
                         <div class="cmr-mobile-nav-link-desc">Tracking innovation and demand shifts</div>
-                    </a>
-                    <a href="<?php echo esc_url( home_url( '/ai/' ) ); ?>" class="cmr-mobile-nav-link">
-                        <div class="cmr-mobile-nav-link-title">AI</div>
-                        <div class="cmr-mobile-nav-link-desc">Artificial Intelligence & transformation insights</div>
-                    </a>
-                    <a href="<?php echo esc_url( home_url( '/enterprise-tech/' ) ); ?>" class="cmr-mobile-nav-link">
-                        <div class="cmr-mobile-nav-link-title">Enterprise Tech</div>
-                        <div class="cmr-mobile-nav-link-desc">Cloud, infrastructure & enterprise IT solutions</div>
                     </a>
                 </div>
             </div>
