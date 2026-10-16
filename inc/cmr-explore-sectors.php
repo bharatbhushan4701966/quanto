@@ -37,15 +37,15 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
             ),
             array(
                 'number' => '.04',
-                'title'  => 'IT & Telecom',
-                'desc'   => 'Strategic research across technology, connectivity, and markets.',
-                'link'   => home_url( '/it-telecom/' ),
+                'title'  => 'Enterprise Tech',
+                'desc'   => 'Strategic insights across cloud, infrastructure, and IT.',
+                'link'   => home_url( '/enterprise-tech/' ),
             ),
             array(
                 'number' => '.05',
-                'title'  => 'Semiconductors',
-                'desc'   => 'Tracking markets, innovation, and demand shifts.',
-                'link'   => home_url( '/semiconductors/' ),
+                'title'  => 'IT & Telecom',
+                'desc'   => 'Strategic research across technology, connectivity, and markets.',
+                'link'   => home_url( '/it-telecom/' ),
             ),
             array(
                 'number' => '.06',
@@ -55,15 +55,9 @@ if ( ! function_exists( 'cmr_explore_sectors_shortcode' ) ) {
             ),
             array(
                 'number' => '.07',
-                'title'  => 'AI',
-                'desc'   => 'Navigating enterprise AI transformation and ROI.',
-                'link'   => home_url( '/ai/' ),
-            ),
-            array(
-                'number' => '.08',
-                'title'  => 'Enterprise Tech',
-                'desc'   => 'Strategic insights across cloud, infrastructure, and IT.',
-                'link'   => home_url( '/enterprise-tech/' ),
+                'title'  => 'Semiconductors',
+                'desc'   => 'Tracking markets, innovation, and demand shifts.',
+                'link'   => home_url( '/semiconductors/' ),
             ),
         );
 
