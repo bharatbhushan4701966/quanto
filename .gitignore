@@ -1,3 +1,5 @@
 __pycache__/
 *.pyc
 run_bulk_sync.py
+elementor-animejs-patched.php
+suppress-quanto-warnings.php
