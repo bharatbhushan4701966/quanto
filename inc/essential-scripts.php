@@ -69,7 +69,7 @@ function quanto_essential_scripts() {
 
     // Enqueue homepage Elementor CSS anywhere we inject homepage Elementor sections,
     // including WooCommerce product pages rendered via custom template helpers.
-    if ( ( is_home() || is_archive() || is_singular( array( 'post', 'cmr_news', 'cmr_media_release', 'cmr_quarterly', 'product' ) ) ) && class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+    if ( ( is_home() || is_archive() || is_page() || is_singular( array( 'post', 'cmr_news', 'cmr_media_release', 'cmr_quarterly', 'product' ) ) ) && class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
         $homepage_id = get_option( 'page_on_front' );
         if ( ! $homepage_id ) {
             $homepage_id = 14; // Fallback

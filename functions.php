@@ -1164,16 +1164,16 @@ add_shortcode('cmr_footer', function() {
     // Check if user is logged in (to force refresh) or if cache is empty
     if ( false === $cached_footer || ( is_user_logged_in() && isset($_GET['refresh_footer']) ) ) {
         $url = home_url( '/?quanto_footer=main' );
-        $response = wp_remote_get( $url, array('timeout' => 5) );
+        $response = wp_remote_get( $url, array(
+            'timeout'   => 10,
+            'sslverify' => false,
+            'headers'   => array( 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) CMR-Internal' ),
+        ) );
         
-        if ( is_wp_error( $response ) ) {
-            return $cached_footer ? $cached_footer : '<!-- Error fetching footer -->';
-        }
-        
-        $body = wp_remote_retrieve_body( $response );
+        $body = ! is_wp_error( $response ) ? wp_remote_retrieve_body( $response ) : '';
         
         // Extract everything from <footer class="footer"> to </footer>
-        if ( preg_match( '/<footer class="footer".*?<\/footer>/is', $body, $matches ) ) {
+        if ( ! empty( $body ) && preg_match( '/<footer class="footer".*?<\/footer>/is', $body, $matches ) ) {
             $cached_footer = $matches[0];
             
             // Instead of caching <link> tags (which can 404 when Elementor cache
@@ -1206,7 +1206,21 @@ add_shortcode('cmr_footer', function() {
             // Cache for 7 days
             set_transient( $transient_key, $cached_footer, WEEK_IN_SECONDS );
         } else {
-            return '<!-- Footer tag not found in remote URL -->';
+            // Direct in-process fallback if remote loopback fails (e.g. during heavy crawler runs at night)
+            $footer_id = function_exists( 'quanto_get_resolved_footer_id' ) ? quanto_get_resolved_footer_id() : 13499;
+            if ( $footer_id && class_exists( '\\Elementor\\Plugin' ) && isset( \Elementor\Plugin::$instance->frontend ) ) {
+                $direct_content = \Elementor\Plugin::$instance->frontend->get_builder_content_for_display( $footer_id, true );
+                if ( ! empty( $direct_content ) ) {
+                    $cached_footer = '<footer class="footer">' . $direct_content . '</footer>';
+                    if ( function_exists( 'cmr_get_elementor_css_inline' ) ) {
+                        $inline_css = cmr_get_elementor_css_inline( $footer_id );
+                        if ( ! empty( $inline_css ) ) {
+                            $cached_footer = '<style id="cmr-cached-footer-post-' . $footer_id . '-css">' . $inline_css . '</style>' . "\n" . $cached_footer;
+                        }
+                    }
+                    set_transient( $transient_key, $cached_footer, WEEK_IN_SECONDS );
+                }
+            }
         }
     }
     
@@ -3283,7 +3297,7 @@ function cmr_global_cta_banner_shortcode( $atts = array() ) {
         
         if ( false === $cached_html || ( is_user_logged_in() && isset($_GET['refresh_cta']) ) ) {
             $url      = home_url( '/?quanto_tab_build=global-cta-banner' );
-            $response = wp_remote_get( $url, array( 'timeout' => 5 ) );
+            $response = wp_remote_get( $url, array( 'timeout' => 10, 'sslverify' => false ) );
             if ( ! is_wp_error( $response ) ) {
                 $body = wp_remote_retrieve_body( $response );
                 if ( preg_match( '/<div[^>]*class="[^"]*elementor-(?:52927|\d+)[^"]*"[^>]*>.*?<\/body>/is', $body, $matches ) ) {
@@ -3724,15 +3738,10 @@ add_action( 'save_post_quanto_tab_build', function() {
 });
 
 /**
- * Pre-warm Elementor CSS & HTML caches by hitting all template & builder URLs in the background.
- * Uses non-blocking HTTP requests so it doesn't slow down the user experience.
+ * Pre-warm Elementor CSS & HTML caches by generating disk CSS files and hitting template URLs.
+ * Uses both direct in-process compilation and non-blocking HTTP requests so CSS never breaks.
  */
 function cmr_prewarm_elementor_caches() {
-    $urls = array(
-        home_url( '/' ),
-        home_url( '/?quanto_footer=main' ),
-    );
-
     // List of all Quanto Builder post types
     $builder_types = array(
         'quanto_tab_build',
@@ -3745,12 +3754,33 @@ function cmr_prewarm_elementor_caches() {
         'quanto_single',
     );
 
-    // Fetch all published builder templates dynamically (leaves zero blind spots)
+    // Fetch all published builder templates dynamically
     $builder_posts = get_posts( array(
         'post_type'      => $builder_types,
         'post_status'    => 'publish',
         'posts_per_page' => -1,
     ) );
+
+    // 1. Direct in-memory CSS file generation on disk (guarantees CSS exists even without loopback HTTP)
+    if ( ! empty( $builder_posts ) && class_exists( '\\Elementor\\Plugin' ) && isset( \Elementor\Plugin::$instance->frontend ) ) {
+        foreach ( $builder_posts as $bp ) {
+            try {
+                \Elementor\Plugin::$instance->frontend->get_builder_content_for_display( $bp->ID, true );
+                if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+                    $css_file = new \Elementor\Core\Files\CSS\Post( $bp->ID );
+                    if ( ! file_exists( $css_file->get_path() ) ) {
+                        $css_file->update();
+                    }
+                }
+            } catch ( Exception $e ) {}
+        }
+    }
+
+    // 2. Pre-warm frontend URLs in the background
+    $urls = array(
+        home_url( '/' ),
+        home_url( '/?quanto_footer=main' ),
+    );
 
     if ( ! empty( $builder_posts ) ) {
         foreach ( $builder_posts as $bp ) {
@@ -3764,12 +3794,13 @@ function cmr_prewarm_elementor_caches() {
 
     $urls = array_unique( array_filter( $urls ) );
 
-    // Fire non-blocking HTTP requests with timeout = 3 so cURL completes connection handshake
+    // Fire non-blocking HTTP requests with timeout = 5 so cURL completes connection handshake
     foreach ( $urls as $url ) {
         wp_remote_get( $url, array(
-            'timeout'   => 3,
+            'timeout'   => 5,
             'blocking'  => false,
             'sslverify' => false,
+            'headers'   => array( 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) CMR-Cache-Prewarmer' ),
         ) );
     }
 }
@@ -3793,6 +3824,46 @@ foreach ( $all_builder_types as $btype ) {
 
 // Trigger pre-warming when any WordPress cache is flushed
 add_action( 'wp_cache_flush', 'cmr_prewarm_elementor_caches' );
+
+// Scheduled Nightly / Twice-Daily Cache Pre-warming (prevents morning CSS breaks)
+if ( ! wp_next_scheduled( 'cmr_scheduled_cache_prewarm' ) ) {
+    wp_schedule_event( time(), 'twicedaily', 'cmr_scheduled_cache_prewarm' );
+}
+add_action( 'cmr_scheduled_cache_prewarm', 'cmr_prewarm_elementor_caches' );
+
+// Detect Crawlers & Bots at night/day: ensures CSS is pre-warmed before rendering
+add_action( 'init', function() {
+    if ( is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
+        return;
+    }
+
+    $ua = isset( $_SERVER['HTTP_USER_AGENT'] ) ? strtolower( $_SERVER['HTTP_USER_AGENT'] ) : '';
+    if ( empty( $ua ) ) {
+        return;
+    }
+
+    $crawler_patterns = array(
+        'bot', 'crawl', 'spider', 'slurp', 'google', 'bing', 'yandex',
+        'duckduck', 'baidu', 'facebookexternalhit', 'twitterbot',
+        'semrush', 'ahrefs', 'petalbot', 'rogerbot', 'dotbot'
+    );
+
+    $is_crawler = false;
+    foreach ( $crawler_patterns as $pattern ) {
+        if ( strpos( $ua, $pattern ) !== false ) {
+            $is_crawler = true;
+            break;
+        }
+    }
+
+    if ( $is_crawler ) {
+        // Throttled: Run at most once every 30 minutes to avoid overhead under heavy spidering
+        if ( false === get_transient( 'cmr_crawler_prewarm_throttle' ) ) {
+            set_transient( 'cmr_crawler_prewarm_throttle', 1, 30 * MINUTE_IN_SECONDS );
+            cmr_prewarm_elementor_caches();
+        }
+    }
+} );
 
 /**
  * Remove <br> tags from WooCommerce My Account navigation link labels via filter.

@@ -44,7 +44,7 @@ function cmr_gtm_shortcode( $atts = array() ) {
         
         if ( false === $cached_html || ( is_user_logged_in() && isset($_GET['refresh_gtm']) ) ) {
             $url      = home_url( '/?quanto_tab_build=cmr-gtm' );
-            $response = wp_remote_get( $url, array( 'timeout' => 5 ) );
+            $response = wp_remote_get( $url, array( 'timeout' => 10, 'sslverify' => false ) );
             if ( ! is_wp_error( $response ) ) {
                 $body = wp_remote_retrieve_body( $response );
                 // Extract inner elementor content based on post ID
