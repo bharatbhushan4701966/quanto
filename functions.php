@@ -3742,16 +3742,10 @@ add_action( 'save_post_quanto_tab_build', function() {
  * Uses both direct in-process compilation and non-blocking HTTP requests so CSS never breaks.
  */
 function cmr_prewarm_elementor_caches() {
-    // List of all Quanto Builder post types
+    // List of Quanto Builder post types that contain custom styled components
     $builder_types = array(
         'quanto_tab_build',
         'quanto_footer',
-        'quanto_header',
-        'quanto_off_canvas',
-        'quanto_offcanvas',
-        'quanto_archive',
-        'quanto_builder',
-        'quanto_single',
     );
 
     // Fetch all published builder templates dynamically
