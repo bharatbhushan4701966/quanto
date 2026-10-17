@@ -13,6 +13,9 @@ if ( have_posts() ) {
     while ( have_posts() ) {
         the_post();
         $post_id = get_the_ID();
+        if ( function_exists( 'cmr_print_elementor_css' ) ) {
+            cmr_print_elementor_css( $post_id );
+        }
         if ( class_exists( '\Elementor\Plugin' ) ) {
             echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $post_id, true );
         } else {

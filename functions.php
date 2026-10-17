@@ -1167,7 +1167,7 @@ add_shortcode('cmr_footer', function() {
         $response = wp_remote_get( $url, array(
             'timeout'   => 10,
             'sslverify' => false,
-            'headers'   => array( 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) CMR-Internal' ),
+            'headers'   => array( 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36' ),
         ) );
         
         $body = ! is_wp_error( $response ) ? wp_remote_retrieve_body( $response ) : '';
@@ -1176,14 +1176,12 @@ add_shortcode('cmr_footer', function() {
         if ( ! empty( $body ) && preg_match( '/<footer class="footer".*?<\/footer>/is', $body, $matches ) ) {
             $cached_footer = $matches[0];
             
-            // Instead of caching <link> tags (which can 404 when Elementor cache
-            // is cleared), read the CSS directly from disk and embed it inline.
-            // This makes the cached footer completely self-contained.
+            // Extract and inline all post CSS from disk or response
             $inline_css = '';
+            $upload_dir = wp_upload_dir();
+            $elementor_css_dir = trailingslashit( $upload_dir['basedir'] ) . 'elementor/css/';
+
             if ( preg_match_all( '/<link[^>]+href=[\'"]([^\'"]+post-(\d+)\.css[^\'"]*)[\'"][^>]*>/i', $body, $link_matches, PREG_SET_ORDER ) ) {
-                $upload_dir = wp_upload_dir();
-                $elementor_css_dir = trailingslashit( $upload_dir['basedir'] ) . 'elementor/css/';
-                
                 foreach ( $link_matches as $lm ) {
                     $full_tag = $lm[0];
                     $css_id   = $lm[2];
@@ -1193,9 +1191,30 @@ add_shortcode('cmr_footer', function() {
                         $css_content = file_get_contents( $disk_file );
                         if ( ! empty( $css_content ) ) {
                             $inline_css .= '<style id="cmr-cached-footer-post-' . $css_id . '-css">' . $css_content . '</style>' . "\n";
-                            // Remove the original <link> tag to avoid redundant / failing HTTP requests
                             $cached_footer = str_replace( $full_tag, '', $cached_footer );
                         }
+                    }
+                }
+            }
+
+            // Also capture any inline styles in the fetched body
+            if ( preg_match_all( '/<style[^>]*id=[\'"]elementor-post-(\d+)-inline-css[\'"][^>]*>(.*?)<\/style>/is', $body, $style_matches, PREG_SET_ORDER ) ) {
+                foreach ( $style_matches as $sm ) {
+                    $css_id = $sm[1];
+                    if ( strpos( $inline_css, 'cmr-cached-footer-post-' . $css_id ) === false ) {
+                        $inline_css .= '<style id="cmr-cached-footer-post-' . $css_id . '-css">' . $sm[2] . '</style>' . "\n";
+                    }
+                }
+            }
+
+            // Guarantee footer's own post CSS is inlined
+            $footer_id = function_exists( 'quanto_get_resolved_footer_id' ) ? quanto_get_resolved_footer_id() : 13499;
+            if ( $footer_id && strpos( $inline_css, 'post-' . $footer_id ) === false ) {
+                $footer_css_file = $elementor_css_dir . 'post-' . $footer_id . '.css';
+                if ( file_exists( $footer_css_file ) ) {
+                    $f_content = file_get_contents( $footer_css_file );
+                    if ( ! empty( $f_content ) ) {
+                        $inline_css .= '<style id="cmr-cached-footer-post-' . $footer_id . '-css">' . $f_content . '</style>' . "\n";
                     }
                 }
             }
@@ -1211,13 +1230,21 @@ add_shortcode('cmr_footer', function() {
             if ( $footer_id && class_exists( '\\Elementor\\Plugin' ) && isset( \Elementor\Plugin::$instance->frontend ) ) {
                 $direct_content = \Elementor\Plugin::$instance->frontend->get_builder_content_for_display( $footer_id, true );
                 if ( ! empty( $direct_content ) ) {
-                    $cached_footer = '<footer class="footer">' . $direct_content . '</footer>';
-                    if ( function_exists( 'cmr_get_elementor_css_inline' ) ) {
-                        $inline_css = cmr_get_elementor_css_inline( $footer_id );
-                        if ( ! empty( $inline_css ) ) {
-                            $cached_footer = '<style id="cmr-cached-footer-post-' . $footer_id . '-css">' . $inline_css . '</style>' . "\n" . $cached_footer;
+                    $inline_css = '';
+                    $upload_dir = wp_upload_dir();
+                    $footer_css_file = trailingslashit( $upload_dir['basedir'] ) . 'elementor/css/post-' . $footer_id . '.css';
+                    if ( file_exists( $footer_css_file ) ) {
+                        $f_content = file_get_contents( $footer_css_file );
+                        if ( ! empty( $f_content ) ) {
+                            $inline_css = '<style id="cmr-cached-footer-post-' . $footer_id . '-css">' . $f_content . '</style>' . "\n";
+                        }
+                    } elseif ( function_exists( 'cmr_get_elementor_css_inline' ) ) {
+                        $f_content = cmr_get_elementor_css_inline( $footer_id );
+                        if ( ! empty( $f_content ) ) {
+                            $inline_css = '<style id="cmr-cached-footer-post-' . $footer_id . '-css">' . $f_content . '</style>' . "\n";
                         }
                     }
+                    $cached_footer = $inline_css . '<footer class="footer">' . $direct_content . '</footer>';
                     set_transient( $transient_key, $cached_footer, WEEK_IN_SECONDS );
                 }
             }
@@ -1255,34 +1282,48 @@ if ( ! function_exists('cmr_is_elementor_active') ) {
 // Helper to force print Elementor CSS inline inside a shortcode
 if ( ! function_exists('cmr_print_elementor_css') ) {
     function cmr_print_elementor_css($post_id) {
-        if ( cmr_is_elementor_active() ) {
+        if ( ! $post_id || cmr_is_elementor_active() ) {
             return;
         }
         if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
             $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
+            $css_path = $css_file->get_path();
             
-            // Ensure the CSS file exists on disk
-            if ( ! file_exists( $css_file->get_path() ) ) {
-                if ( class_exists( '\\Elementor\\Plugin' ) && isset(\Elementor\Plugin::$instance) && isset(\Elementor\Plugin::$instance->frontend) ) {
+            // 1. Ensure the CSS file exists on disk; if missing, force compilation
+            if ( ! file_exists( $css_path ) ) {
+                if ( class_exists( '\\Elementor\\Plugin' ) && isset(\Elementor\Plugin::$instance->documents) ) {
+                    $doc = \Elementor\Plugin::$instance->documents->get( $post_id );
+                    if ( $doc ) {
+                        $css_file->update();
+                    }
+                }
+                if ( ! file_exists( $css_path ) && class_exists( '\\Elementor\\Plugin' ) && isset(\Elementor\Plugin::$instance->frontend) ) {
                     \Elementor\Plugin::$instance->frontend->get_builder_content_for_display( $post_id, true );
+                    $css_file->update();
                 }
             }
             
-            // Read the CSS file content from disk and output inline.
-            $css_path = $css_file->get_path();
+            // 2. Read the CSS file content from disk and output inline so it is 100% self-contained
             if ( file_exists( $css_path ) ) {
                 $css_content = @file_get_contents( $css_path );
                 if ( ! empty( $css_content ) ) {
-                    echo '<style id="elementor-post-' . intval($post_id) . '-inline-css">' . $css_content . '</style>';
+                    echo '<style id="elementor-post-' . intval($post_id) . '-inline-css">' . $css_content . '</style>' . "\n";
                     return;
                 }
             }
             
-            // Fallback: output link tag to external file
+            // 3. Fallback: try raw content from object
+            $raw_content = method_exists( $css_file, 'get_content' ) ? $css_file->get_content() : '';
+            if ( ! empty( $raw_content ) ) {
+                echo '<style id="elementor-post-' . intval($post_id) . '-inline-css">' . $raw_content . '</style>' . "\n";
+                return;
+            }
+            
+            // 4. Fallback: output link tag to external file
             $css_file->enqueue();
             $url = $css_file->get_url();
             if ($url) {
-                echo '<link rel="stylesheet" id="elementor-post-'.intval($post_id).'-css" href="'.esc_url($url).'" type="text/css" media="all">';
+                echo '<link rel="stylesheet" id="elementor-post-'.intval($post_id).'-css" href="'.esc_url($url).'" type="text/css" media="all">' . "\n";
             }
             $css_file->print_css();
         }
@@ -3297,7 +3338,11 @@ function cmr_global_cta_banner_shortcode( $atts = array() ) {
         
         if ( false === $cached_html || ( is_user_logged_in() && isset($_GET['refresh_cta']) ) ) {
             $url      = home_url( '/?quanto_tab_build=global-cta-banner' );
-            $response = wp_remote_get( $url, array( 'timeout' => 10, 'sslverify' => false ) );
+            $response = wp_remote_get( $url, array(
+                'timeout'   => 10,
+                'sslverify' => false,
+                'headers'   => array( 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36' ),
+            ) );
             if ( ! is_wp_error( $response ) ) {
                 $body = wp_remote_retrieve_body( $response );
                 if ( preg_match( '/<div[^>]*class="[^"]*elementor-(?:52927|\d+)[^"]*"[^>]*>.*?<\/body>/is', $body, $matches ) ) {
@@ -3315,6 +3360,9 @@ function cmr_global_cta_banner_shortcode( $atts = array() ) {
     }
     
     if ( ! empty( $output ) ) {
+        if ( $post_id && function_exists('cmr_print_elementor_css') ) {
+            cmr_print_elementor_css($post_id);
+        }
         echo '<style>
         @media (max-width: 768px) {
             #cmr-global-cta-banner-section h1,
@@ -3690,15 +3738,21 @@ function quanto_redirect_shop_to_research_reports() {
 // Elementor to regenerate the CSS files as a side effect.
 add_action( 'elementor/core/files/clear_cache', 'cmr_regenerate_tab_css_on_cache_clear' );
 function cmr_regenerate_tab_css_on_cache_clear() {
-    // Delete the cached footer HTML so it gets re-fetched with fresh CSS links
+    // Delete all component HTML caches so they get re-fetched with fresh CSS
     delete_transient( 'cmr_footer_html_cache' );
+    delete_transient( 'cmr_connect_cache' );
+    delete_transient( 'cmr_gtm_cache' );
+    delete_transient( 'cmr_global_cta_banner_cache' );
     
     $tab_slugs = array(
         'your-challenge-our-research-your-advantage',
         'fotter-card',
         'testimonials',
         'we-worked-with-largest-global-brands',
-        'your-next-big-decision-deserves-better-intelligence'
+        'your-next-big-decision-deserves-better-intelligence',
+        'cmr-connect',
+        'cmr-gtm',
+        'global-cta-banner',
     );
     foreach ( $tab_slugs as $slug ) {
         $tab_posts = get_posts(array(
@@ -3720,20 +3774,24 @@ function cmr_regenerate_tab_css_on_cache_clear() {
     }
 }
 
-// Also delete the footer transient whenever post cache or object cache is flushed
+// Delete all component transients whenever post cache or object cache is flushed
 add_action( 'wp_cache_flush', function() {
     delete_transient( 'cmr_footer_html_cache' );
+    delete_transient( 'cmr_connect_cache' );
+    delete_transient( 'cmr_gtm_cache' );
     delete_transient( 'cmr_global_cta_banner_cache' );
 });
 
-// Also delete the footer transient when any quanto_footer post is saved
+// Delete component transients when any quanto_footer post is saved
 add_action( 'save_post_quanto_footer', function() {
     delete_transient( 'cmr_footer_html_cache' );
 });
 
-// Also delete the footer and CTA banner transients when any quanto_tab_build post is saved
+// Delete component transients when any quanto_tab_build post is saved
 add_action( 'save_post_quanto_tab_build', function() {
     delete_transient( 'cmr_footer_html_cache' );
+    delete_transient( 'cmr_connect_cache' );
+    delete_transient( 'cmr_gtm_cache' );
     delete_transient( 'cmr_global_cta_banner_cache' );
 });
 
@@ -3748,7 +3806,7 @@ function cmr_prewarm_elementor_caches() {
         'quanto_footer',
     );
 
-    // Fetch all published builder templates dynamically
+    // Fetch published builder templates dynamically
     $builder_posts = get_posts( array(
         'post_type'      => $builder_types,
         'post_status'    => 'publish',
@@ -3770,31 +3828,29 @@ function cmr_prewarm_elementor_caches() {
         }
     }
 
-    // 2. Pre-warm frontend URLs in the background
+    // 2. Pre-warm key global frontend URLs in the background with browser User-Agent
     $urls = array(
         home_url( '/' ),
         home_url( '/?quanto_footer=main' ),
+        home_url( '/?quanto_tab_build=global-cta-banner' ),
+        home_url( '/?quanto_tab_build=cmr-connect' ),
+        home_url( '/?quanto_tab_build=cmr-gtm' ),
+        home_url( '/?quanto_tab_build=similar-reports-by-industry' ),
+        home_url( '/?quanto_tab_build=your-challenge-our-research-your-advantage' ),
+        home_url( '/?quanto_tab_build=we-worked-with-largest-global-brands' ),
+        home_url( '/?quanto_tab_build=testimonials' ),
+        home_url( '/?quanto_tab_build=fotter-card' ),
     );
-
-    if ( ! empty( $builder_posts ) ) {
-        foreach ( $builder_posts as $bp ) {
-            $urls[] = home_url( '/?' . $bp->post_type . '=' . $bp->post_name );
-            $permalink = get_permalink( $bp->ID );
-            if ( $permalink ) {
-                $urls[] = $permalink;
-            }
-        }
-    }
 
     $urls = array_unique( array_filter( $urls ) );
 
-    // Fire non-blocking HTTP requests with timeout = 5 so cURL completes connection handshake
+    // Fire non-blocking HTTP requests with standard browser headers so Cloudflare/WAF allows them
     foreach ( $urls as $url ) {
         wp_remote_get( $url, array(
             'timeout'   => 5,
             'blocking'  => false,
             'sslverify' => false,
-            'headers'   => array( 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) CMR-Cache-Prewarmer' ),
+            'headers'   => array( 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36' ),
         ) );
     }
 }
