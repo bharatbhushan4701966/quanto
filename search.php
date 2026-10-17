@@ -409,6 +409,9 @@ $search_bottom_templates = array(
 foreach ($search_bottom_templates as $slug) {
     $template_post = get_page_by_path($slug, OBJECT, 'quanto_tab_build');
     if ($template_post) {
+        if (function_exists('cmr_print_elementor_css')) {
+            cmr_print_elementor_css($template_post->ID);
+        }
         if (class_exists('\Elementor\Plugin')) {
             echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display($template_post->ID);
         } else {

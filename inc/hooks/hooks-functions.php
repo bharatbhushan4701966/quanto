@@ -983,35 +983,34 @@
     // Helper: read an Elementor post CSS file and return its content for inline output
 
     if ( ! function_exists( 'cmr_get_elementor_css_inline' ) ) {
-
         function cmr_get_elementor_css_inline( $post_id ) {
-
-            if ( ! class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
-
-                return '';
-
-            }
-
-            $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
-
-            $path = $css_file->get_path();
-
-            if ( file_exists( $path ) ) {
-
-                $content = file_get_contents( $path );
-
-                if ( ! empty( $content ) ) {
-
-                    return $content;
-
+            $content = '';
+            if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+                $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
+                $path = $css_file->get_path();
+                if ( file_exists( $path ) ) {
+                    $post_content = file_get_contents( $path );
+                    if ( ! empty( $post_content ) ) {
+                        $content .= $post_content . "\n";
+                    }
                 }
-
             }
-
-            return '';
-
+            $upload_dir = wp_upload_dir();
+            if ( ! empty( $upload_dir['basedir'] ) ) {
+                $elementor_css_dir = trailingslashit( $upload_dir['basedir'] ) . 'elementor/css/';
+                $devices = array( 'desktop', 'mobile', 'tablet', 'laptop' );
+                foreach ( $devices as $device ) {
+                    $local_file = $elementor_css_dir . 'local-' . intval( $post_id ) . '-frontend-' . $device . '.css';
+                    if ( file_exists( $local_file ) ) {
+                        $loc_content = file_get_contents( $local_file );
+                        if ( ! empty( $loc_content ) ) {
+                            $content .= $loc_content . "\n";
+                        }
+                    }
+                }
+            }
+            return $content;
         }
-
     }
 
 

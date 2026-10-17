@@ -1209,12 +1209,25 @@ add_shortcode('cmr_footer', function() {
 
             // Guarantee footer's own post CSS is inlined
             $footer_id = function_exists( 'quanto_get_resolved_footer_id' ) ? quanto_get_resolved_footer_id() : 13499;
-            if ( $footer_id && strpos( $inline_css, 'post-' . $footer_id ) === false ) {
-                $footer_css_file = $elementor_css_dir . 'post-' . $footer_id . '.css';
-                if ( file_exists( $footer_css_file ) ) {
-                    $f_content = file_get_contents( $footer_css_file );
-                    if ( ! empty( $f_content ) ) {
-                        $inline_css .= '<style id="cmr-cached-footer-post-' . $footer_id . '-css">' . $f_content . '</style>' . "\n";
+            if ( $footer_id ) {
+                if ( strpos( $inline_css, 'post-' . $footer_id ) === false ) {
+                    $footer_css_file = $elementor_css_dir . 'post-' . $footer_id . '.css';
+                    if ( file_exists( $footer_css_file ) ) {
+                        $f_content = file_get_contents( $footer_css_file );
+                        if ( ! empty( $f_content ) ) {
+                            $inline_css .= '<style id="cmr-cached-footer-post-' . $footer_id . '-css">' . $f_content . '</style>' . "\n";
+                        }
+                    }
+                }
+                // Also inline local atomic desktop and mobile CSS for footer
+                $devices = array( 'desktop', 'mobile', 'tablet', 'laptop' );
+                foreach ( $devices as $device ) {
+                    $local_footer = $elementor_css_dir . 'local-' . $footer_id . '-frontend-' . $device . '.css';
+                    if ( file_exists( $local_footer ) ) {
+                        $lf_content = file_get_contents( $local_footer );
+                        if ( ! empty( $lf_content ) ) {
+                            $inline_css .= '<style id="cmr-cached-footer-local-' . $footer_id . '-' . $device . '-css">' . $lf_content . '</style>' . "\n";
+                        }
                     }
                 }
             }
@@ -1232,16 +1245,27 @@ add_shortcode('cmr_footer', function() {
                 if ( ! empty( $direct_content ) ) {
                     $inline_css = '';
                     $upload_dir = wp_upload_dir();
-                    $footer_css_file = trailingslashit( $upload_dir['basedir'] ) . 'elementor/css/post-' . $footer_id . '.css';
+                    $elementor_css_dir = trailingslashit( $upload_dir['basedir'] ) . 'elementor/css/';
+                    $footer_css_file = $elementor_css_dir . 'post-' . $footer_id . '.css';
                     if ( file_exists( $footer_css_file ) ) {
                         $f_content = file_get_contents( $footer_css_file );
                         if ( ! empty( $f_content ) ) {
-                            $inline_css = '<style id="cmr-cached-footer-post-' . $footer_id . '-css">' . $f_content . '</style>' . "\n";
+                            $inline_css .= '<style id="cmr-cached-footer-post-' . $footer_id . '-css">' . $f_content . '</style>' . "\n";
                         }
                     } elseif ( function_exists( 'cmr_get_elementor_css_inline' ) ) {
                         $f_content = cmr_get_elementor_css_inline( $footer_id );
                         if ( ! empty( $f_content ) ) {
-                            $inline_css = '<style id="cmr-cached-footer-post-' . $footer_id . '-css">' . $f_content . '</style>' . "\n";
+                            $inline_css .= '<style id="cmr-cached-footer-post-' . $footer_id . '-css">' . $f_content . '</style>' . "\n";
+                        }
+                    }
+                    $devices = array( 'desktop', 'mobile', 'tablet', 'laptop' );
+                    foreach ( $devices as $device ) {
+                        $local_footer = $elementor_css_dir . 'local-' . $footer_id . '-frontend-' . $device . '.css';
+                        if ( file_exists( $local_footer ) ) {
+                            $lf_content = file_get_contents( $local_footer );
+                            if ( ! empty( $lf_content ) ) {
+                                $inline_css .= '<style id="cmr-cached-footer-local-' . $footer_id . '-' . $device . '-css">' . $lf_content . '</style>' . "\n";
+                            }
                         }
                     }
                     $cached_footer = $inline_css . '<footer class="footer">' . $direct_content . '</footer>';
@@ -1285,11 +1309,16 @@ if ( ! function_exists('cmr_print_elementor_css') ) {
         if ( ! $post_id || cmr_is_elementor_active() ) {
             return;
         }
+
+        $upload_dir = wp_upload_dir();
+        $elementor_css_dir = ! empty( $upload_dir['basedir'] ) ? trailingslashit( $upload_dir['basedir'] ) . 'elementor/css/' : '';
+
+        // 1. Post CSS
         if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
             $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
             $css_path = $css_file->get_path();
             
-            // 1. Ensure the CSS file exists on disk; if missing, force compilation
+            // Ensure the CSS file exists on disk; if missing, force compilation
             if ( ! file_exists( $css_path ) ) {
                 if ( class_exists( '\\Elementor\\Plugin' ) && isset(\Elementor\Plugin::$instance->documents) ) {
                     $doc = \Elementor\Plugin::$instance->documents->get( $post_id );
@@ -1303,29 +1332,44 @@ if ( ! function_exists('cmr_print_elementor_css') ) {
                 }
             }
             
-            // 2. Read the CSS file content from disk and output inline so it is 100% self-contained
+            // Output post CSS inline
             if ( file_exists( $css_path ) ) {
                 $css_content = @file_get_contents( $css_path );
                 if ( ! empty( $css_content ) ) {
                     echo '<style id="elementor-post-' . intval($post_id) . '-inline-css">' . $css_content . '</style>' . "\n";
-                    return;
+                }
+            } else {
+                $raw_content = method_exists( $css_file, 'get_content' ) ? $css_file->get_content() : '';
+                if ( ! empty( $raw_content ) ) {
+                    echo '<style id="elementor-post-' . intval($post_id) . '-inline-css">' . $raw_content . '</style>' . "\n";
+                } else {
+                    $css_file->enqueue();
+                    $url = $css_file->get_url();
+                    if ($url) {
+                        echo '<link rel="stylesheet" id="elementor-post-'.intval($post_id).'-css" href="'.esc_url($url).'" type="text/css" media="all">' . "\n";
+                    }
+                    $css_file->print_css();
                 }
             }
-            
-            // 3. Fallback: try raw content from object
-            $raw_content = method_exists( $css_file, 'get_content' ) ? $css_file->get_content() : '';
-            if ( ! empty( $raw_content ) ) {
-                echo '<style id="elementor-post-' . intval($post_id) . '-inline-css">' . $raw_content . '</style>' . "\n";
-                return;
+        }
+
+        // 2. Output local atomic desktop & mobile CSS (contains all .e-* atomic styles: font sizes, colors, margins, flex layouts)
+        if ( ! empty( $elementor_css_dir ) ) {
+            $devices = array( 'desktop', 'mobile', 'tablet', 'laptop' );
+            foreach ( $devices as $device ) {
+                $local_file = $elementor_css_dir . 'local-' . intval($post_id) . '-frontend-' . $device . '.css';
+                if ( file_exists( $local_file ) ) {
+                    $d_content = @file_get_contents( $local_file );
+                    if ( ! empty( $d_content ) ) {
+                        echo '<style id="elementor-local-' . intval($post_id) . '-' . $device . '-inline-css">' . $d_content . '</style>' . "\n";
+                        continue;
+                    }
+                }
+                if ( in_array( $device, array( 'desktop', 'mobile' ), true ) && ! empty( $upload_dir['baseurl'] ) ) {
+                    $local_url = trailingslashit( $upload_dir['baseurl'] ) . 'elementor/css/local-' . intval($post_id) . '-frontend-' . $device . '.css';
+                    echo '<link rel="stylesheet" id="local-' . intval($post_id) . '-frontend-' . $device . '-css" href="' . esc_url($local_url) . '" type="text/css" media="all">' . "\n";
+                }
             }
-            
-            // 4. Fallback: output link tag to external file
-            $css_file->enqueue();
-            $url = $css_file->get_url();
-            if ($url) {
-                echo '<link rel="stylesheet" id="elementor-post-'.intval($post_id).'-css" href="'.esc_url($url).'" type="text/css" media="all">' . "\n";
-            }
-            $css_file->print_css();
         }
     }
 }
