@@ -985,24 +985,35 @@
     if ( ! function_exists( 'cmr_get_elementor_css_inline' ) ) {
         function cmr_get_elementor_css_inline( $post_id ) {
             $content = '';
-            if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
-                $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
-                $path = $css_file->get_path();
-                if ( file_exists( $path ) ) {
-                    $post_content = file_get_contents( $path );
-                    if ( ! empty( $post_content ) ) {
-                        $content .= $post_content . "\n";
-                    }
+            $upload_dir = wp_upload_dir();
+            $elementor_css_dir = ! empty( $upload_dir['basedir'] ) ? trailingslashit( $upload_dir['basedir'] ) . 'elementor/css/' : '';
+
+            // 1. Post CSS
+            $post_css_path = ! empty( $elementor_css_dir ) ? $elementor_css_dir . 'post-' . intval( $post_id ) . '.css' : '';
+            if ( function_exists( 'cmr_get_or_restore_css' ) ) {
+                $post_content = cmr_get_or_restore_css( $post_css_path, 'cmr_css_backup_' . intval($post_id) . '_post', $post_id );
+                if ( ! empty( $post_content ) ) {
+                    $content .= $post_content . "\n";
+                }
+            } elseif ( ! empty( $post_css_path ) && file_exists( $post_css_path ) ) {
+                $post_content = @file_get_contents( $post_css_path );
+                if ( ! empty( $post_content ) ) {
+                    $content .= $post_content . "\n";
                 }
             }
-            $upload_dir = wp_upload_dir();
-            if ( ! empty( $upload_dir['basedir'] ) ) {
-                $elementor_css_dir = trailingslashit( $upload_dir['basedir'] ) . 'elementor/css/';
+
+            // 2. Local Responsive Device CSS
+            if ( ! empty( $elementor_css_dir ) ) {
                 $devices = array( 'desktop', 'mobile', 'tablet', 'laptop' );
                 foreach ( $devices as $device ) {
                     $local_file = $elementor_css_dir . 'local-' . intval( $post_id ) . '-frontend-' . $device . '.css';
-                    if ( file_exists( $local_file ) ) {
-                        $loc_content = file_get_contents( $local_file );
+                    if ( function_exists( 'cmr_get_or_restore_css' ) ) {
+                        $loc_content = cmr_get_or_restore_css( $local_file, 'cmr_css_backup_' . intval($post_id) . '_' . $device, $post_id, $device );
+                        if ( ! empty( $loc_content ) ) {
+                            $content .= $loc_content . "\n";
+                        }
+                    } elseif ( file_exists( $local_file ) ) {
+                        $loc_content = @file_get_contents( $local_file );
                         if ( ! empty( $loc_content ) ) {
                             $content .= $loc_content . "\n";
                         }

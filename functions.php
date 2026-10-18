@@ -1247,29 +1247,38 @@ add_shortcode('cmr_footer', function() {
                     $upload_dir = wp_upload_dir();
                     $elementor_css_dir = trailingslashit( $upload_dir['basedir'] ) . 'elementor/css/';
                     $footer_css_file = $elementor_css_dir . 'post-' . $footer_id . '.css';
-                    if ( file_exists( $footer_css_file ) ) {
-                        $f_content = file_get_contents( $footer_css_file );
-                        if ( ! empty( $f_content ) ) {
-                            $inline_css .= '<style id="cmr-cached-footer-post-' . $footer_id . '-css">' . $f_content . '</style>' . "\n";
-                        }
+
+                    // 1. Post CSS with DB backup and self-heal
+                    $f_content = function_exists('cmr_get_or_restore_css')
+                        ? cmr_get_or_restore_css( $footer_css_file, 'cmr_css_backup_' . $footer_id . '_post', $footer_id )
+                        : ( file_exists( $footer_css_file ) ? @file_get_contents( $footer_css_file ) : '' );
+
+                    if ( ! empty( $f_content ) ) {
+                        $inline_css .= '<style id="cmr-cached-footer-post-' . $footer_id . '-css">' . $f_content . '</style>' . "\n";
                     } elseif ( function_exists( 'cmr_get_elementor_css_inline' ) ) {
                         $f_content = cmr_get_elementor_css_inline( $footer_id );
                         if ( ! empty( $f_content ) ) {
                             $inline_css .= '<style id="cmr-cached-footer-post-' . $footer_id . '-css">' . $f_content . '</style>' . "\n";
                         }
                     }
+
+                    // 2. Responsive local device CSS with DB backup and self-heal
                     $devices = array( 'desktop', 'mobile', 'tablet', 'laptop' );
                     foreach ( $devices as $device ) {
                         $local_footer = $elementor_css_dir . 'local-' . $footer_id . '-frontend-' . $device . '.css';
-                        if ( file_exists( $local_footer ) ) {
-                            $lf_content = file_get_contents( $local_footer );
-                            if ( ! empty( $lf_content ) ) {
-                                $inline_css .= '<style id="cmr-cached-footer-local-' . $footer_id . '-' . $device . '-css">' . $lf_content . '</style>' . "\n";
-                            }
+                        $lf_content   = function_exists('cmr_get_or_restore_css')
+                            ? cmr_get_or_restore_css( $local_footer, 'cmr_css_backup_' . $footer_id . '_' . $device, $footer_id, $device )
+                            : ( file_exists( $local_footer ) ? @file_get_contents( $local_footer ) : '' );
+
+                        if ( ! empty( $lf_content ) ) {
+                            $inline_css .= '<style id="cmr-cached-footer-local-' . $footer_id . '-' . $device . '-css">' . $lf_content . '</style>' . "\n";
                         }
                     }
+
                     $cached_footer = $inline_css . '<footer class="footer">' . $direct_content . '</footer>';
-                    set_transient( $transient_key, $cached_footer, WEEK_IN_SECONDS );
+                    // Never poison cache with empty CSS: if CSS is present, cache for 7 days; otherwise only 60s
+                    $ttl = ( ! empty( $inline_css ) ) ? WEEK_IN_SECONDS : 60;
+                    set_transient( $transient_key, $cached_footer, $ttl );
                 }
             }
         }
@@ -1303,7 +1312,57 @@ if ( ! function_exists('cmr_is_elementor_active') ) {
     }
 }
 
-// Helper to force print Elementor CSS inline inside a shortcode
+// Persistent DB Backup & Self-Healing Helper for Elementor CSS
+if ( ! function_exists( 'cmr_get_or_restore_css' ) ) {
+    /**
+     * Reads CSS from disk and keeps a persistent DB backup in wp_options.
+     * If the disk file is ever deleted (e.g. nightly server maintenance),
+     * it instantly self-heals by restoring from the DB backup and rewriting back to disk!
+     */
+    function cmr_get_or_restore_css( $file_path, $backup_key, $post_id = 0, $device = '' ) {
+        $content = '';
+        
+        // 1. Try reading from disk
+        if ( ! empty( $file_path ) && file_exists( $file_path ) ) {
+            $content = @file_get_contents( $file_path );
+            if ( ! empty( $content ) ) {
+                // Keep persistent DB backup updated
+                update_option( $backup_key, $content, false );
+                return $content;
+            }
+        }
+        
+        // 2. If missing from disk or empty, restore from persistent DB backup!
+        $backup = get_option( $backup_key, '' );
+        if ( ! empty( $backup ) ) {
+            $content = $backup;
+            // Self-heal: Write file back to disk so any other process or browser finds it
+            if ( ! empty( $file_path ) && is_writable( dirname( $file_path ) ) ) {
+                @file_put_contents( $file_path, $backup );
+            }
+            return $content;
+        }
+
+        // 3. Fallback: If neither disk nor DB has it, try compiling via Elementor
+        if ( $post_id && class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+            try {
+                $css_file = \Elementor\Core\Files\CSS\Post::create( $post_id );
+                $css_file->update();
+                if ( ! empty( $file_path ) && file_exists( $file_path ) ) {
+                    $content = @file_get_contents( $file_path );
+                    if ( ! empty( $content ) ) {
+                        update_option( $backup_key, $content, false );
+                        return $content;
+                    }
+                }
+            } catch ( Exception $e ) {}
+        }
+        
+        return $content;
+    }
+}
+
+// Helper to force print Elementor CSS inline inside a shortcode with persistent self-healing
 if ( ! function_exists('cmr_print_elementor_css') ) {
     function cmr_print_elementor_css($post_id) {
         if ( ! $post_id || cmr_is_elementor_active() ) {
@@ -1313,57 +1372,35 @@ if ( ! function_exists('cmr_print_elementor_css') ) {
         $upload_dir = wp_upload_dir();
         $elementor_css_dir = ! empty( $upload_dir['basedir'] ) ? trailingslashit( $upload_dir['basedir'] ) . 'elementor/css/' : '';
 
-        // 1. Post CSS
-        if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+        // 1. Post CSS with persistent DB backup and disk self-healing
+        $css_path = $elementor_css_dir ? $elementor_css_dir . 'post-' . intval($post_id) . '.css' : '';
+        if ( empty( $css_path ) && class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
             $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
             $css_path = $css_file->get_path();
-            
-            // Ensure the CSS file exists on disk; if missing, force compilation
-            if ( ! file_exists( $css_path ) ) {
-                if ( class_exists( '\\Elementor\\Plugin' ) && isset(\Elementor\Plugin::$instance->documents) ) {
-                    $doc = \Elementor\Plugin::$instance->documents->get( $post_id );
-                    if ( $doc ) {
-                        $css_file->update();
-                    }
-                }
-                if ( ! file_exists( $css_path ) && class_exists( '\\Elementor\\Plugin' ) && isset(\Elementor\Plugin::$instance->frontend) ) {
-                    \Elementor\Plugin::$instance->frontend->get_builder_content_for_display( $post_id, true );
-                    $css_file->update();
-                }
-            }
-            
-            // Output post CSS inline
-            if ( file_exists( $css_path ) ) {
-                $css_content = @file_get_contents( $css_path );
-                if ( ! empty( $css_content ) ) {
-                    echo '<style id="elementor-post-' . intval($post_id) . '-inline-css">' . $css_content . '</style>' . "\n";
-                }
-            } else {
-                $raw_content = method_exists( $css_file, 'get_content' ) ? $css_file->get_content() : '';
-                if ( ! empty( $raw_content ) ) {
-                    echo '<style id="elementor-post-' . intval($post_id) . '-inline-css">' . $raw_content . '</style>' . "\n";
-                } else {
-                    $css_file->enqueue();
-                    $url = $css_file->get_url();
-                    if ($url) {
-                        echo '<link rel="stylesheet" id="elementor-post-'.intval($post_id).'-css" href="'.esc_url($url).'" type="text/css" media="all">' . "\n";
-                    }
-                    $css_file->print_css();
-                }
+        }
+
+        $post_css = cmr_get_or_restore_css( $css_path, 'cmr_css_backup_' . intval($post_id) . '_post', $post_id );
+        if ( ! empty( $post_css ) ) {
+            echo '<style id="elementor-post-' . intval($post_id) . '-inline-css">' . $post_css . '</style>' . "\n";
+        } elseif ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+            $css_file = new \Elementor\Core\Files\CSS\Post( $post_id );
+            $raw_content = method_exists( $css_file, 'get_content' ) ? $css_file->get_content() : '';
+            if ( ! empty( $raw_content ) ) {
+                echo '<style id="elementor-post-' . intval($post_id) . '-inline-css">' . $raw_content . '</style>' . "\n";
             }
         }
 
-        // 2. Output local atomic desktop & mobile CSS (contains all .e-* atomic styles: font sizes, colors, margins, flex layouts)
+        // 2. Local atomic desktop & mobile CSS (contains all .e-* atomic styles: font sizes, colors, margins, flex layouts)
         if ( ! empty( $elementor_css_dir ) ) {
             $devices = array( 'desktop', 'mobile', 'tablet', 'laptop' );
             foreach ( $devices as $device ) {
                 $local_file = $elementor_css_dir . 'local-' . intval($post_id) . '-frontend-' . $device . '.css';
-                if ( file_exists( $local_file ) ) {
-                    $d_content = @file_get_contents( $local_file );
-                    if ( ! empty( $d_content ) ) {
-                        echo '<style id="elementor-local-' . intval($post_id) . '-' . $device . '-inline-css">' . $d_content . '</style>' . "\n";
-                        continue;
-                    }
+                $backup_key = 'cmr_css_backup_' . intval($post_id) . '_' . $device;
+                $d_content  = cmr_get_or_restore_css( $local_file, $backup_key, $post_id, $device );
+
+                if ( ! empty( $d_content ) ) {
+                    echo '<style id="elementor-local-' . intval($post_id) . '-' . $device . '-inline-css">' . $d_content . '</style>' . "\n";
+                    continue;
                 }
                 if ( in_array( $device, array( 'desktop', 'mobile' ), true ) && ! empty( $upload_dir['baseurl'] ) ) {
                     $local_url = trailingslashit( $upload_dir['baseurl'] ) . 'elementor/css/local-' . intval($post_id) . '-frontend-' . $device . '.css';
@@ -3840,56 +3877,108 @@ add_action( 'save_post_quanto_tab_build', function() {
 });
 
 /**
- * Pre-warm Elementor CSS & HTML caches by generating disk CSS files and hitting template URLs.
- * Uses both direct in-process compilation and non-blocking HTTP requests so CSS never breaks.
+ * Pre-warm Elementor CSS & HTML caches by generating disk CSS files, backing them up in DB,
+ * and hitting template URLs so that CSS never breaks at night or in the morning.
  */
 function cmr_prewarm_elementor_caches() {
-    // List of Quanto Builder post types that contain custom styled components
-    $builder_types = array(
-        'quanto_tab_build',
-        'quanto_footer',
+    $target_slugs = array(
+        'cmr-gtm',
+        'cmr-connect',
+        'global-cta-banner',
+        'similar-reports-by-industry',
+        'your-next-big-decision-deserves-better-intelligence',
+        'we-worked-with-largest-global-brands',
+        'testimonials',
+        'fotter-card',
+        'your-challenge-our-research-your-advantage',
+        'who-we-serve',
     );
 
-    // Fetch published builder templates dynamically
-    $builder_posts = get_posts( array(
-        'post_type'      => $builder_types,
-        'post_status'    => 'publish',
-        'posts_per_page' => -1,
-    ) );
+    $upload_dir = wp_upload_dir();
+    $elementor_css_dir = ! empty( $upload_dir['basedir'] ) ? trailingslashit( $upload_dir['basedir'] ) . 'elementor/css/' : '';
 
-    // 1. Direct in-memory CSS file generation on disk (guarantees CSS exists even without loopback HTTP)
-    if ( ! empty( $builder_posts ) && class_exists( '\\Elementor\\Plugin' ) && isset( \Elementor\Plugin::$instance->frontend ) ) {
-        foreach ( $builder_posts as $bp ) {
+    // 1. Process Footer Template (post 13499)
+    $footer_id = function_exists( 'quanto_get_resolved_footer_id' ) ? quanto_get_resolved_footer_id() : 13499;
+    if ( $footer_id && class_exists( '\\Elementor\\Plugin' ) && isset( \Elementor\Plugin::$instance->frontend ) ) {
+        try {
+            \Elementor\Plugin::$instance->frontend->get_builder_content_for_display( $footer_id, true );
+            if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+                $css_file = \Elementor\Core\Files\CSS\Post::create( $footer_id );
+                $css_file->update();
+            }
+            if ( ! empty( $elementor_css_dir ) ) {
+                $f_post_css = $elementor_css_dir . 'post-' . $footer_id . '.css';
+                if ( file_exists( $f_post_css ) ) {
+                    update_option( 'cmr_css_backup_' . $footer_id . '_post', @file_get_contents( $f_post_css ), false );
+                }
+                foreach ( array( 'desktop', 'mobile', 'tablet', 'laptop' ) as $dev ) {
+                    $f_local = $elementor_css_dir . 'local-' . $footer_id . '-frontend-' . $dev . '.css';
+                    if ( file_exists( $f_local ) ) {
+                        update_option( 'cmr_css_backup_' . $footer_id . '_' . $dev, @file_get_contents( $f_local ), false );
+                    }
+                }
+            }
+        } catch ( Exception $e ) {}
+    }
+
+    // 2. Process All 10 Tab Builder Templates in-process
+    foreach ( $target_slugs as $slug ) {
+        $tab_posts = get_posts( array(
+            'name'           => $slug,
+            'post_type'      => 'quanto_tab_build',
+            'posts_per_page' => 1,
+            'post_status'    => 'publish',
+        ) );
+
+        if ( ! empty( $tab_posts[0] ) ) {
+            $pid = $tab_posts[0]->ID;
             try {
-                \Elementor\Plugin::$instance->frontend->get_builder_content_for_display( $bp->ID, true );
-                if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
-                    $css_file = new \Elementor\Core\Files\CSS\Post( $bp->ID );
-                    if ( ! file_exists( $css_file->get_path() ) ) {
+                if ( class_exists( '\\Elementor\\Plugin' ) && isset( \Elementor\Plugin::$instance->frontend ) ) {
+                    \Elementor\Plugin::$instance->frontend->get_builder_content_for_display( $pid, true );
+                    if ( class_exists( '\\Elementor\\Core\\Files\\CSS\\Post' ) ) {
+                        $css_file = \Elementor\Core\Files\CSS\Post::create( $pid );
                         $css_file->update();
+                    }
+                }
+                if ( ! empty( $elementor_css_dir ) ) {
+                    $post_css_file = $elementor_css_dir . 'post-' . $pid . '.css';
+                    if ( file_exists( $post_css_file ) ) {
+                        update_option( 'cmr_css_backup_' . $pid . '_post', @file_get_contents( $post_css_file ), false );
+                    }
+                    foreach ( array( 'desktop', 'mobile', 'tablet', 'laptop' ) as $dev ) {
+                        $loc_file = $elementor_css_dir . 'local-' . $pid . '-frontend-' . $dev . '.css';
+                        if ( file_exists( $loc_file ) ) {
+                            update_option( 'cmr_css_backup_' . $pid . '_' . $dev, @file_get_contents( $loc_file ), false );
+                        }
                     }
                 }
             } catch ( Exception $e ) {}
         }
     }
 
-    // 2. Pre-warm key global frontend URLs in the background with browser User-Agent
+    // 3. Clear component HTML caches so they immediately regenerate with fresh CSS
+    delete_transient( 'cmr_footer_html_cache' );
+    delete_transient( 'cmr_connect_cache' );
+    delete_transient( 'cmr_gtm_cache' );
+    delete_transient( 'cmr_global_cta_banner_cache' );
+
+    // 4. Background HTTP requests to warm edge caches
     $urls = array(
         home_url( '/' ),
         home_url( '/?quanto_footer=main' ),
-        home_url( '/?quanto_tab_build=global-cta-banner' ),
-        home_url( '/?quanto_tab_build=cmr-connect' ),
         home_url( '/?quanto_tab_build=cmr-gtm' ),
+        home_url( '/?quanto_tab_build=cmr-connect' ),
+        home_url( '/?quanto_tab_build=global-cta-banner' ),
         home_url( '/?quanto_tab_build=similar-reports-by-industry' ),
-        home_url( '/?quanto_tab_build=your-challenge-our-research-your-advantage' ),
+        home_url( '/?quanto_tab_build=your-next-big-decision-deserves-better-intelligence' ),
         home_url( '/?quanto_tab_build=we-worked-with-largest-global-brands' ),
         home_url( '/?quanto_tab_build=testimonials' ),
         home_url( '/?quanto_tab_build=fotter-card' ),
+        home_url( '/?quanto_tab_build=your-challenge-our-research-your-advantage' ),
+        home_url( '/?quanto_tab_build=who-we-serve' ),
     );
 
-    $urls = array_unique( array_filter( $urls ) );
-
-    // Fire non-blocking HTTP requests with standard browser headers so Cloudflare/WAF allows them
-    foreach ( $urls as $url ) {
+    foreach ( array_unique( $urls ) as $url ) {
         wp_remote_get( $url, array(
             'timeout'   => 5,
             'blocking'  => false,
@@ -3919,11 +4008,26 @@ foreach ( $all_builder_types as $btype ) {
 // Trigger pre-warming when any WordPress cache is flushed
 add_action( 'wp_cache_flush', 'cmr_prewarm_elementor_caches' );
 
-// Scheduled Nightly / Twice-Daily Cache Pre-warming (prevents morning CSS breaks)
+// Scheduled Hourly Cache Pre-warming (prevents morning CSS breaks)
 if ( ! wp_next_scheduled( 'cmr_scheduled_cache_prewarm' ) ) {
-    wp_schedule_event( time(), 'twicedaily', 'cmr_scheduled_cache_prewarm' );
+    wp_schedule_event( time(), 'hourly', 'cmr_scheduled_cache_prewarm' );
 }
 add_action( 'cmr_scheduled_cache_prewarm', 'cmr_prewarm_elementor_caches' );
+
+// Direct webhook / URL trigger to pre-warm on demand: https://cmrindia.com/?cmr_prewarm_now=1&key=cmr_secure_2026
+add_action( 'init', function() {
+    if ( isset( $_GET['cmr_prewarm_now'] ) ) {
+        $key = isset( $_GET['key'] ) ? sanitize_text_field( $_GET['key'] ) : '';
+        if ( current_user_can( 'manage_options' ) || $key === 'cmr_secure_2026' ) {
+            cmr_prewarm_elementor_caches();
+            wp_send_json_success( array(
+                'message'   => 'CMR Elementor Caches Successfully Prewarmed & Backed Up!',
+                'timestamp' => current_time( 'mysql' ),
+                'slugs'     => 11,
+            ) );
+        }
+    }
+} );
 
 // Detect Crawlers & Bots at night/day: ensures CSS is pre-warmed before rendering
 add_action( 'init', function() {
