@@ -269,10 +269,111 @@ add_action( 'wp_footer', function() {
             });
         }
 
+        // Rate Limiter Helpers: Check if form reached 3 submissions limit and disable button
+        function cmrGetFormId(form) {
+            if (!form) return '';
+            var inputWpcf7 = form.querySelector('input[name="_wpcf7"]');
+            if (inputWpcf7 && inputWpcf7.value) return inputWpcf7.value.trim();
+
+            var wrap = form.closest('[data-wpcf7-id]');
+            if (wrap && wrap.getAttribute('data-wpcf7-id')) return wrap.getAttribute('data-wpcf7-id').trim();
+
+            if (form.id && form.id.includes('wpcf7-f')) {
+                var match = form.id.match(/wpcf7-f(\d+)/);
+                if (match && match[1]) return match[1];
+            }
+
+            if (form.id === 'cmr-job-form' || form.closest('#cmr-job-form')) return 'job_application';
+
+            return form.getAttribute('data-form-id') || form.id || '';
+        }
+
+        function cmrIsFormRateLimited(form) {
+            if (!form) return false;
+            var formId = cmrGetFormId(form);
+            if (!formId) return false;
+
+            // 1. Check server-provided rate limits (live DB status for this IP)
+            if (window.CMR_RATE_LIMITS && window.CMR_RATE_LIMITS[formId]) {
+                if (window.CMR_RATE_LIMITS[formId].blocked || window.CMR_RATE_LIMITS[formId].count >= 3) {
+                    return true;
+                }
+            }
+
+            // 2. Check localStorage (persists in browser across cached pages for 24h)
+            try {
+                var item = localStorage.getItem('cmr_limit_' + formId);
+                if (item) {
+                    var parsed = JSON.parse(item);
+                    var now = Date.now();
+                    if (now - parsed.timestamp < 24 * 3600 * 1000) {
+                        if (parsed.count >= 3) {
+                            return true;
+                        }
+                    } else {
+                        localStorage.removeItem('cmr_limit_' + formId);
+                    }
+                }
+            } catch(e) {}
+
+            return false;
+        }
+
+        function cmrDisableSubmitButton(form, msg) {
+            if (!form) return;
+            var submitBtn = form.querySelector('input[type="submit"], button[type="submit"]');
+            if (!submitBtn) return;
+
+            submitBtn.disabled = true;
+            submitBtn.setAttribute('disabled', 'disabled');
+            submitBtn.classList.add('cmr-limit-disabled');
+            submitBtn.style.setProperty('opacity', '0.55', 'important');
+            submitBtn.style.setProperty('cursor', 'not-allowed', 'important');
+            submitBtn.style.setProperty('pointer-events', 'none', 'important');
+            submitBtn.style.setProperty('background', '#9ca3af', 'important');
+            submitBtn.style.setProperty('border-color', '#9ca3af', 'important');
+            submitBtn.style.setProperty('color', '#ffffff', 'important');
+            submitBtn.style.setProperty('filter', 'grayscale(1)', 'important');
+
+            if (submitBtn.tagName === 'INPUT') {
+                submitBtn.value = 'Daily Limit Reached (3/3)';
+            } else {
+                submitBtn.innerHTML = 'Daily Limit Reached (3/3)';
+            }
+
+            // Add alert notice below button if not already added
+            var existingNotice = form.querySelector('.cmr-limit-notice');
+            if (!existingNotice) {
+                var notice = document.createElement('div');
+                notice.className = 'cmr-limit-notice';
+                notice.style.cssText = 'background:#fee2e2; border:1px solid #fca5a5; color:#991b1b; padding:10px 14px; border-radius:8px; font-size:13px; font-weight:600; text-align:center; margin-top:12px; line-height:1.4;';
+                notice.innerHTML = '⚠️ ' + (msg || 'You have reached the maximum daily limit of 3 submissions for this form. Please try again after 24 hours.');
+                submitBtn.parentElement.appendChild(notice);
+            }
+        }
+
+        function cmrCheckAndApplyRateLimits() {
+            var forms = document.querySelectorAll(
+                'form.wpcf7-form, ' +
+                '.elementor-popup-modal form, ' +
+                '.custom-report-form, ' +
+                '.custom-consultation-form, ' +
+                '.custom-subscribe-form, ' +
+                '#cmr-job-form, ' +
+                '.cmr-modal-form-wrapper form'
+            );
+            forms.forEach(function(form) {
+                if (cmrIsFormRateLimited(form)) {
+                    cmrDisableSubmitButton(form);
+                }
+            });
+        }
+
         // Initialize validators
         function initFormValidation() {
             enforceRequiredAttributes();
             addRequiredStarsToLabels();
+            cmrCheckAndApplyRateLimits();
         }
 
         document.addEventListener('DOMContentLoaded', initFormValidation);
@@ -294,6 +395,17 @@ add_action( 'wp_footer', function() {
                 form.classList.contains('checkout') ||
                 form.closest('.woocommerce-checkout') ||
                 form.closest('.cmr-checkout-wrap')) return;
+
+            // Block submission if 24h limit reached (4th submission attempt)
+            if (cmrIsFormRateLimited(form)) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.stopImmediatePropagation) {
+                    e.stopImmediatePropagation();
+                }
+                cmrDisableSubmitButton(form, 'You have reached the maximum daily limit of 3 submissions for this form. Please try again after 24 hours.');
+                return false;
+            }
 
             var invalidFields = [];
             var inputs = form.querySelectorAll(
@@ -411,6 +523,67 @@ add_action( 'wp_footer', function() {
                         return res.text();
                     })
                     .then(function(responseBody) {
+                        var isBlocked = false;
+                        var errMsg = '';
+
+                        try {
+                            var json = JSON.parse(responseBody);
+                            if (json.status !== 'mail_sent') {
+                                errMsg = json.message || '';
+                                if (errMsg.toLowerCase().includes('3 submissions') || 
+                                    errMsg.toLowerCase().includes('maximum limit') || 
+                                    errMsg.toLowerCase().includes('24 hours') ||
+                                    (json.cmr_rate_limit && json.cmr_rate_limit.blocked)) {
+                                    isBlocked = true;
+                                }
+                            }
+                        } catch(err) {
+                            if (responseBody.toLowerCase().includes('3 submissions') || 
+                                responseBody.toLowerCase().includes('maximum limit')) {
+                                isBlocked = true;
+                            }
+                        }
+
+                        // If blocked on 4th attempt: disable submit button immediately & show warning notice
+                        if (isBlocked) {
+                            var fid = cmrGetFormId(form);
+                            if (fid) {
+                                try {
+                                    localStorage.setItem('cmr_limit_' + fid, JSON.stringify({ count: 3, timestamp: Date.now() }));
+                                } catch(e) {}
+                                if (!window.CMR_RATE_LIMITS) window.CMR_RATE_LIMITS = {};
+                                window.CMR_RATE_LIMITS[fid] = { count: 3, max: 3, blocked: true };
+                            }
+                            cmrDisableSubmitButton(form, errMsg);
+                            return;
+                        }
+
+                        // On successful submission: increment local count (1 -> 2 -> 3)
+                        var formId = cmrGetFormId(form);
+                        if (formId) {
+                            var curCount = 0;
+                            try {
+                                var item = localStorage.getItem('cmr_limit_' + formId);
+                                if (item) {
+                                    var parsed = JSON.parse(item);
+                                    if (Date.now() - parsed.timestamp < 24 * 3600 * 1000) {
+                                        curCount = parsed.count || 0;
+                                    }
+                                }
+                            } catch(e) {}
+                            curCount++;
+                            try {
+                                localStorage.setItem('cmr_limit_' + formId, JSON.stringify({ count: curCount, timestamp: Date.now() }));
+                            } catch(e) {}
+                            if (!window.CMR_RATE_LIMITS) window.CMR_RATE_LIMITS = {};
+                            window.CMR_RATE_LIMITS[formId] = { count: curCount, max: 3, blocked: (curCount >= 3) };
+
+                            // If this was the 3rd submission, pre-disable the form so 4th attempt is locked
+                            if (curCount >= 3) {
+                                cmrDisableSubmitButton(form);
+                            }
+                        }
+
                         showFormSuccessState(form);
                     })
                     .catch(function(err) {

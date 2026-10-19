@@ -370,6 +370,89 @@ function cmr_cf7_record_submission_action( $contact_form, &$abort, $submission )
     cmr_record_successful_submission( $form_id, $form_title, $ip, $name, $email, $phone );
 }
 
+// Disable CF7 Submit Button directly if 24h limit reached for current IP
+add_filter( 'wpcf7_form_elements', 'cmr_cf7_disable_submit_if_limit_reached' );
+function cmr_cf7_disable_submit_if_limit_reached( $content ) {
+    $contact_form = class_exists( 'WPCF7_ContactForm' ) ? WPCF7_ContactForm::get_current() : null;
+    if ( ! $contact_form ) {
+        return $content;
+    }
+
+    $form_id = (string) $contact_form->id();
+    $ip = cmr_get_client_ip_address();
+    $check = cmr_check_form_rate_limit( $form_id, $ip );
+
+    if ( ! $check['allowed'] ) {
+        $notice = '<div class="cmr-limit-notice" style="background:#fee2e2; border:1px solid #fca5a5; color:#991b1b; padding:10px 14px; border-radius:8px; font-size:13px; font-weight:600; text-align:center; margin-top:12px; line-height:1.4;">⚠️ You have reached the maximum daily limit of 3 submissions for this form. Please try again after 24 hours.</div>';
+        
+        // Disable input[type="submit"]
+        $content = preg_replace(
+            '/<input([^>]*?)type=["\']submit["\']([^>]*?)value=["\']([^"\']*)["\']([^>]*?)>/i',
+            '<input$1type="submit"$2value="Daily Limit Reached (3/3)"$4 disabled="disabled" class="cmr-limit-disabled wpcf7-submit" style="opacity:0.55!important; cursor:not-allowed!important; pointer-events:none!important; background:#9ca3af!important; border-color:#9ca3af!important; filter:grayscale(1)!important;" title="Maximum daily limit reached">' . $notice,
+            $content
+        );
+        // Disable button[type="submit"]
+        $content = preg_replace(
+            '/<button([^>]*?)type=["\']submit["\']([^>]*?)>(.*?)<\/button>/i',
+            '<button$1type="submit"$2 disabled="disabled" class="cmr-limit-disabled" style="opacity:0.55!important; cursor:not-allowed!important; pointer-events:none!important; background:#9ca3af!important; border-color:#9ca3af!important; filter:grayscale(1)!important;" title="Maximum daily limit reached">Daily Limit Reached (3/3)</button>' . $notice,
+            $content
+        );
+    }
+
+    return $content;
+}
+
+// Append Rate Limit Details to Contact Form 7 JSON Response
+add_filter( 'wpcf7_feedback_response', 'cmr_cf7_append_rate_limit_info', 10, 2 );
+function cmr_cf7_append_rate_limit_info( $response, $result ) {
+    $contact_form = class_exists( 'WPCF7_ContactForm' ) ? WPCF7_ContactForm::get_current() : null;
+    if ( $contact_form ) {
+        $form_id = (string) $contact_form->id();
+        $ip = cmr_get_client_ip_address();
+        $check = cmr_check_form_rate_limit( $form_id, $ip );
+        $response['cmr_rate_limit'] = array(
+            'form_id' => $form_id,
+            'count'   => $check['current_count'],
+            'max'     => CMR_FORM_RATE_LIMIT_MAX,
+            'blocked' => ( $check['current_count'] >= CMR_FORM_RATE_LIMIT_MAX ),
+        );
+    }
+    return $response;
+}
+
+// Inject Current IP's Form Limits into Frontend Footer
+add_action( 'wp_footer', 'cmr_inject_rate_limits_to_footer', 5 );
+function cmr_inject_rate_limits_to_footer() {
+    global $wpdb;
+    $table = $wpdb->prefix . 'cmr_form_rate_limits';
+    $ip = cmr_get_client_ip_address();
+    $cutoff = date( 'Y-m-d H:i:s', current_time( 'timestamp' ) - ( CMR_FORM_RATE_LIMIT_WINDOW_HOURS * 3600 ) );
+
+    $rows = $wpdb->get_results( $wpdb->prepare(
+        "SELECT form_id, submission_count, blocked_count, first_submission_at 
+         FROM {$table} 
+         WHERE ip_address = %s AND first_submission_at >= %s",
+        $ip,
+        $cutoff
+    ) );
+
+    $limits_data = array();
+    foreach ( (array)$rows as $r ) {
+        $count = intval( $r->submission_count );
+        $limits_data[ (string)$r->form_id ] = array(
+            'count'   => $count,
+            'max'     => CMR_FORM_RATE_LIMIT_MAX,
+            'blocked' => ( $count >= CMR_FORM_RATE_LIMIT_MAX || intval( $r->blocked_count ) > 0 ),
+        );
+    }
+    ?>
+    <script id="cmr-rate-limits-config">
+        window.CMR_RATE_LIMITS = <?php echo wp_json_encode( $limits_data ); ?>;
+        window.CMR_RATE_LIMIT_MAX = <?php echo CMR_FORM_RATE_LIMIT_MAX; ?>;
+    </script>
+    <?php
+}
+
 // 8. Elementor Pro Form Integration
 add_action( 'elementor_pro/forms/validation', 'cmr_elementor_rate_limit_validator', 5, 2 );
 function cmr_elementor_rate_limit_validator( $record, $ajax_handler ) {

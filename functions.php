@@ -3177,6 +3177,51 @@ function cmr_testimonials_global_mobile_css() {
         margin-top: 0 !important;
         padding-top: 0 !important;
     }
+
+    /* CMR Homepage Form #8573 "Get Expert Insights" Submit Button Solid Brand Color on Page Load */
+    .cmr-form input[type="submit"],
+    .cmr-form button[type="submit"],
+    .cmr-form .wpcf7-submit,
+    .elementor-23165 input[type="submit"],
+    #wpcf7-f8573-p14-o1 input[type="submit"],
+    input[value="Get Expert Insights"],
+    input[type="submit"][value="Get Expert Insights"] {
+        width: 100% !important;
+        height: 56px !important;
+        min-height: 56px !important;
+        background: #6A42E5 !important;
+        background-color: #6A42E5 !important;
+        background-image: linear-gradient(135deg, #6A42E5 0%, #4B2DBF 100%) !important;
+        color: #ffffff !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        filter: none !important;
+        border: none !important;
+        border-radius: 60px !important;
+        font-family: 'Instrument Sans', sans-serif !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        cursor: pointer !important;
+        margin-top: 18px !important;
+        box-shadow: 0 4px 14px rgba(106, 66, 229, 0.3) !important;
+        display: block !important;
+        text-align: center !important;
+        transition: all 0.25s ease !important;
+    }
+
+    .cmr-form input[type="submit"]:hover,
+    .cmr-form button[type="submit"]:hover,
+    .cmr-form .wpcf7-submit:hover,
+    .elementor-23165 input[type="submit"]:hover,
+    #wpcf7-f8573-p14-o1 input[type="submit"]:hover,
+    input[value="Get Expert Insights"]:hover {
+        background: #582cd7 !important;
+        background-color: #582cd7 !important;
+        background-image: linear-gradient(135deg, #582cd7 0%, #3e1fa8 100%) !important;
+        box-shadow: 0 6px 20px rgba(106, 66, 229, 0.45) !important;
+        transform: translateY(-1px) !important;
+        opacity: 0.95 !important;
+    }
     </style>
     <?php
 }

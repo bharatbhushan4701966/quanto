@@ -1289,6 +1289,11 @@ button.cmr-arrow-fixed:hover,
 .dialog-widget-content .wpcf7-submit,
 .cmr-form input[type="submit"],
 .cmr-form button[type="submit"],
+.cmr-form .wpcf7-submit,
+.elementor-23165 input[type="submit"],
+#wpcf7-f8573-p14-o1 input[type="submit"],
+input[value="Get Expert Insights"],
+input[type="submit"][value="Get Expert Insights"],
 .custom-consultation-form input[type="submit"],
 .custom-consultation-form button[type="submit"],
 .custom-report-form input[type="submit"],
@@ -1304,10 +1309,16 @@ button.cmr-arrow-fixed:hover,
 .elementor-7758 input[type="submit"],
 .elementor-7758 button[type="submit"],
 .elementor-element-42f4ebe input[type="submit"] {
+  width: 100% !important;
+  height: 56px !important;
+  min-height: 56px !important;
   background: #6A42E5 !important;
-  background: linear-gradient(135deg, #6A42E5 0%, #4B2DBF 100%) !important;
   background-color: #6A42E5 !important;
+  background-image: linear-gradient(135deg, #6A42E5 0%, #4B2DBF 100%) !important;
   color: #ffffff !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
   font-family: 'Instrument Sans', sans-serif !important;
   font-size: 16px !important;
   font-weight: 600 !important;
@@ -1327,6 +1338,10 @@ button.cmr-arrow-fixed:hover,
 .dialog-widget-content .wpcf7-submit:hover,
 .cmr-form input[type="submit"]:hover,
 .cmr-form button[type="submit"]:hover,
+.cmr-form .wpcf7-submit:hover,
+.elementor-23165 input[type="submit"]:hover,
+#wpcf7-f8573-p14-o1 input[type="submit"]:hover,
+input[value="Get Expert Insights"]:hover,
 .custom-consultation-form input[type="submit"]:hover,
 .custom-consultation-form button[type="submit"]:hover,
 .custom-report-form input[type="submit"]:hover,
