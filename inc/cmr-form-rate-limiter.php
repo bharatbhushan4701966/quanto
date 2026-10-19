@@ -621,10 +621,10 @@ function cmr_render_form_rate_limit_admin_page() {
         <!-- Navigation Tabs -->
         <h2 class="nav-tab-wrapper" style="margin-bottom:15px;">
             <a href="<?php echo esc_url( admin_url( 'tools.php?page=cmr-form-rate-limits&tab=submissions' ) ); ?>" class="nav-tab <?php echo $active_tab === 'submissions' ? 'nav-tab-active' : ''; ?>">
-                📋 Form Submissions Log (Database Entries)
+                <span class="dashicons dashicons-list-view" style="vertical-align:text-bottom; margin-right:5px;"></span>Form Submissions Log (Database Entries)
             </a>
             <a href="<?php echo esc_url( admin_url( 'tools.php?page=cmr-form-rate-limits&tab=limits' ) ); ?>" class="nav-tab <?php echo $active_tab === 'limits' ? 'nav-tab-active' : ''; ?>">
-                🛡️ IP Rate Limits &amp; Blocked IPs (Max 3 / 24h)
+                <span class="dashicons dashicons-shield" style="vertical-align:text-bottom; margin-right:5px;"></span>IP Rate Limits &amp; Blocked IPs (Max 3 / 24h)
             </a>
         </h2>
 
@@ -684,11 +684,11 @@ function cmr_render_form_rate_limit_admin_page() {
                 <div style="display:flex; flex-wrap:wrap; gap:15px; align-items:flex-end;">
                     <!-- Form Filter Dropdown -->
                     <div style="flex:1 1 250px; min-width:220px;">
-                        <label for="cmr_filter_form" style="display:block; font-size:12px; font-weight:600; color:#333; margin-bottom:5px;">
-                            🎯 Select Form:
+                        <label for="cmr_filter_form" style="display:flex; align-items:center; gap:5px; font-size:12px; font-weight:600; color:#333; margin-bottom:5px;">
+                            <span class="dashicons dashicons-feedback" style="font-size:16px; width:16px; height:16px; line-height:16px; color:#555;"></span> Select Form:
                         </label>
                         <select id="cmr_filter_form" name="filter_form" style="width:100%; height:34px;">
-                            <option value="">— All Forms (Show Everything) —</option>
+                            <option value="">-- All Forms (Show Everything) --</option>
                             <?php foreach ( $available_forms as $fid => $fname ) : ?>
                                 <option value="<?php echo esc_attr( $fid ); ?>" <?php selected( $filter_form, strval( $fid ) ); ?>>
                                     <?php echo esc_html( $fname ); ?>
@@ -699,24 +699,24 @@ function cmr_render_form_rate_limit_admin_page() {
 
                     <!-- Single Date or Start Date -->
                     <div style="flex:1 1 160px; min-width:150px;">
-                        <label for="cmr_start_date" style="display:block; font-size:12px; font-weight:600; color:#333; margin-bottom:5px;">
-                            📅 Date (Single or From):
+                        <label for="cmr_start_date" style="display:flex; align-items:center; gap:5px; font-size:12px; font-weight:600; color:#333; margin-bottom:5px;">
+                            <span class="dashicons dashicons-calendar-alt" style="font-size:16px; width:16px; height:16px; line-height:16px; color:#555;"></span> Date (Single or From):
                         </label>
                         <input type="date" id="cmr_start_date" name="start_date" value="<?php echo esc_attr( $start_date ); ?>" style="width:100%; height:34px;" />
                     </div>
 
                     <!-- End Date (Optional range) -->
                     <div style="flex:1 1 160px; min-width:150px;">
-                        <label for="cmr_end_date" style="display:block; font-size:12px; font-weight:600; color:#333; margin-bottom:5px;">
-                            📅 To Date (Optional Range):
+                        <label for="cmr_end_date" style="display:flex; align-items:center; gap:5px; font-size:12px; font-weight:600; color:#333; margin-bottom:5px;">
+                            <span class="dashicons dashicons-calendar" style="font-size:16px; width:16px; height:16px; line-height:16px; color:#555;"></span> To Date (Optional Range):
                         </label>
                         <input type="date" id="cmr_end_date" name="end_date" value="<?php echo esc_attr( $end_date ); ?>" style="width:100%; height:34px;" />
                     </div>
 
                     <!-- Search Input -->
                     <div style="flex:2 1 220px; min-width:200px;">
-                        <label for="cmr_search" style="display:block; font-size:12px; font-weight:600; color:#333; margin-bottom:5px;">
-                            🔍 Keyword Search:
+                        <label for="cmr_search" style="display:flex; align-items:center; gap:5px; font-size:12px; font-weight:600; color:#333; margin-bottom:5px;">
+                            <span class="dashicons dashicons-search" style="font-size:16px; width:16px; height:16px; line-height:16px; color:#555;"></span> Keyword Search:
                         </label>
                         <input type="text" id="cmr_search" name="s" value="<?php echo esc_attr( $search ); ?>" placeholder="Name, Email, Phone, Company, IP..." style="width:100%; height:34px;" />
                     </div>
