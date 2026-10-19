@@ -5,7 +5,7 @@
  * Rules:
  * 1. Har form ki limit alag hogi (Separately tracked by Form ID + IP Address).
  * 2. Ek IP se har form par 24 ghante mein maximum 3 submissions allowed.
- * 3. Count database mein automatically save hoga ({$wpdb->prefix}cmr_form_rate_limits).
+ * 3. Count aur Submitter Details (Name, Email, Phone) database mein automatically save honge.
  * 4. 4th submission reject hogi, aur rejected attempts bhi database mein record hongi.
  */
 
@@ -22,8 +22,7 @@ function cmr_init_form_rate_limit_table() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'cmr_form_rate_limits';
 
-    // Check if table needs to be created or updated
-    if ( get_option( 'cmr_form_rate_limit_db_ver' ) !== '1.1' ) {
+    if ( get_option( 'cmr_form_rate_limit_db_ver' ) !== '1.2' ) {
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';
         $charset_collate = $wpdb->get_charset_collate();
 
@@ -32,6 +31,9 @@ function cmr_init_form_rate_limit_table() {
             form_id VARCHAR(100) NOT NULL,
             form_title VARCHAR(255) DEFAULT '',
             ip_address VARCHAR(64) NOT NULL,
+            user_name VARCHAR(150) DEFAULT '',
+            user_email VARCHAR(150) DEFAULT '',
+            user_phone VARCHAR(50) DEFAULT '',
             submission_count INT(11) UNSIGNED NOT NULL DEFAULT 0,
             blocked_count INT(11) UNSIGNED NOT NULL DEFAULT 0,
             first_submission_at DATETIME NOT NULL,
@@ -45,7 +47,22 @@ function cmr_init_form_rate_limit_table() {
         ) {$charset_collate};";
 
         dbDelta( $sql );
-        update_option( 'cmr_form_rate_limit_db_ver', '1.1' );
+
+        // Ensure columns exist if table was already created
+        $columns = $wpdb->get_col( "DESC {$table_name}", 0 );
+        if ( is_array( $columns ) ) {
+            if ( ! in_array( 'user_name', $columns ) ) {
+                $wpdb->query( "ALTER TABLE {$table_name} ADD COLUMN user_name VARCHAR(150) DEFAULT '' AFTER ip_address" );
+            }
+            if ( ! in_array( 'user_email', $columns ) ) {
+                $wpdb->query( "ALTER TABLE {$table_name} ADD COLUMN user_email VARCHAR(150) DEFAULT '' AFTER user_name" );
+            }
+            if ( ! in_array( 'user_phone', $columns ) ) {
+                $wpdb->query( "ALTER TABLE {$table_name} ADD COLUMN user_phone VARCHAR(50) DEFAULT '' AFTER user_email" );
+            }
+        }
+
+        update_option( 'cmr_form_rate_limit_db_ver', '1.2' );
     }
 }
 
@@ -129,33 +146,45 @@ function cmr_check_form_rate_limit( $form_id, $ip ) {
 }
 
 // 4. Record Blocked Attempt in Database
-function cmr_record_blocked_submission( $form_id, $form_title, $ip ) {
+function cmr_record_blocked_submission( $form_id, $form_title, $ip, $user_name = '', $user_email = '', $user_phone = '' ) {
     global $wpdb;
     $table_name = $wpdb->prefix . 'cmr_form_rate_limits';
     $now = current_time( 'mysql' );
 
     $wpdb->query( $wpdb->prepare(
-        "INSERT INTO {$table_name} (form_id, form_title, ip_address, submission_count, blocked_count, first_submission_at, last_submission_at, status)
-         VALUES (%s, %s, %s, %d, 1, %s, %s, 'blocked')
+        "INSERT INTO {$table_name} (form_id, form_title, ip_address, user_name, user_email, user_phone, submission_count, blocked_count, first_submission_at, last_submission_at, status)
+         VALUES (%s, %s, %s, %s, %s, %s, %d, 1, %s, %s, 'blocked')
          ON DUPLICATE KEY UPDATE 
             blocked_count = blocked_count + 1,
             last_submission_at = %s,
             status = 'blocked',
-            form_title = IF(%s != '', %s, form_title)",
+            form_title = IF(%s != '', %s, form_title),
+            user_name = IF(%s != '', %s, user_name),
+            user_email = IF(%s != '', %s, user_email),
+            user_phone = IF(%s != '', %s, user_phone)",
         $form_id,
         $form_title,
         $ip,
+        $user_name,
+        $user_email,
+        $user_phone,
         CMR_FORM_RATE_LIMIT_MAX,
         $now,
         $now,
         $now,
         $form_title,
-        $form_title
+        $form_title,
+        $user_name,
+        $user_name,
+        $user_email,
+        $user_email,
+        $user_phone,
+        $user_phone
     ) );
 }
 
 // 5. Increment Successful Submission in Database
-function cmr_record_successful_submission( $form_id, $form_title, $ip ) {
+function cmr_record_successful_submission( $form_id, $form_title, $ip, $user_name = '', $user_email = '', $user_phone = '' ) {
     global $wpdb;
     $table_name = $wpdb->prefix . 'cmr_form_rate_limits';
     $now = current_time( 'mysql' );
@@ -164,24 +193,36 @@ function cmr_record_successful_submission( $form_id, $form_title, $ip ) {
     if ( $check['is_first_in_window'] ) {
         // First submission in new 24h window (or reset)
         $wpdb->query( $wpdb->prepare(
-            "INSERT INTO {$table_name} (form_id, form_title, ip_address, submission_count, blocked_count, first_submission_at, last_submission_at, status)
-             VALUES (%s, %s, %s, 1, 0, %s, %s, 'allowed')
+            "INSERT INTO {$table_name} (form_id, form_title, ip_address, user_name, user_email, user_phone, submission_count, blocked_count, first_submission_at, last_submission_at, status)
+             VALUES (%s, %s, %s, %s, %s, %s, 1, 0, %s, %s, 'allowed')
              ON DUPLICATE KEY UPDATE 
                 submission_count = 1,
                 blocked_count = 0,
                 first_submission_at = %s,
                 last_submission_at = %s,
                 status = 'allowed',
-                form_title = IF(%s != '', %s, form_title)",
+                form_title = IF(%s != '', %s, form_title),
+                user_name = IF(%s != '', %s, user_name),
+                user_email = IF(%s != '', %s, user_email),
+                user_phone = IF(%s != '', %s, user_phone)",
             $form_id,
             $form_title,
             $ip,
+            $user_name,
+            $user_email,
+            $user_phone,
             $now,
             $now,
             $now,
             $now,
             $form_title,
-            $form_title
+            $form_title,
+            $user_name,
+            $user_name,
+            $user_email,
+            $user_email,
+            $user_phone,
+            $user_phone
         ) );
     } else {
         // Subsequent submission (2nd or 3rd) within 24 hours
@@ -190,12 +231,21 @@ function cmr_record_successful_submission( $form_id, $form_title, $ip ) {
              SET submission_count = submission_count + 1,
                  last_submission_at = %s,
                  status = IF(submission_count + 1 >= %d, 'limit_reached', 'allowed'),
-                 form_title = IF(%s != '', %s, form_title)
+                 form_title = IF(%s != '', %s, form_title),
+                 user_name = IF(%s != '', %s, user_name),
+                 user_email = IF(%s != '', %s, user_email),
+                 user_phone = IF(%s != '', %s, user_phone)
              WHERE form_id = %s AND ip_address = %s",
             $now,
             CMR_FORM_RATE_LIMIT_MAX,
             $form_title,
             $form_title,
+            $user_name,
+            $user_name,
+            $user_email,
+            $user_email,
+            $user_phone,
+            $user_phone,
             $form_id,
             $ip
         ) );
@@ -217,8 +267,19 @@ function cmr_cf7_rate_limit_validator( $result, $tags ) {
     $check = cmr_check_form_rate_limit( $form_id, $ip );
 
     if ( ! $check['allowed'] ) {
+        $submission = class_exists( 'WPCF7_Submission' ) ? WPCF7_Submission::get_instance() : null;
+        $user_name = '';
+        $user_email = '';
+        $user_phone = '';
+        if ( $submission ) {
+            $posted = $submission->get_posted_data();
+            $user_name = $posted['your-name'] ?? $posted['name'] ?? $posted['full_name'] ?? '';
+            $user_email = $posted['your-email'] ?? $posted['email'] ?? '';
+            $user_phone = $posted['your-phone'] ?? $posted['phone'] ?? $posted['tel'] ?? '';
+        }
+
         // 4th submission rejected! Record in database
-        cmr_record_blocked_submission( $form_id, $form_title, $ip );
+        cmr_record_blocked_submission( $form_id, $form_title, $ip, $user_name, $user_email, $user_phone );
 
         $error_msg = 'You have reached the maximum limit of 3 submissions for this form in 24 hours. Please try again tomorrow.';
 
@@ -233,16 +294,36 @@ function cmr_cf7_rate_limit_validator( $result, $tags ) {
     return $result;
 }
 
-add_action( 'wpcf7_mail_sent', 'cmr_cf7_rate_limit_on_success' );
-function cmr_cf7_rate_limit_on_success( $contact_form ) {
-    if ( ! $contact_form ) {
+// Hook into wpcf7_before_send_mail so it ALWAYS records on valid submission (even if staging SMTP fails)
+add_action( 'wpcf7_before_send_mail', 'cmr_cf7_rate_limit_on_submission', 10, 3 );
+function cmr_cf7_rate_limit_on_submission( $contact_form, &$abort, $submission ) {
+    if ( $abort || ! $contact_form ) {
         return;
     }
+
     $form_id = (string) $contact_form->id();
     $form_title = $contact_form->title();
     $ip = cmr_get_client_ip_address();
 
-    cmr_record_successful_submission( $form_id, $form_title, $ip );
+    // Prevent double counting within the same request
+    static $recorded_requests = array();
+    $req_key = $form_id . '_' . $ip;
+    if ( isset( $recorded_requests[ $req_key ] ) ) {
+        return;
+    }
+    $recorded_requests[ $req_key ] = true;
+
+    $user_name = '';
+    $user_email = '';
+    $user_phone = '';
+    if ( $submission ) {
+        $posted = $submission->get_posted_data();
+        $user_name = $posted['your-name'] ?? $posted['name'] ?? $posted['full_name'] ?? '';
+        $user_email = $posted['your-email'] ?? $posted['email'] ?? '';
+        $user_phone = $posted['your-phone'] ?? $posted['phone'] ?? $posted['tel'] ?? '';
+    }
+
+    cmr_record_successful_submission( $form_id, $form_title, $ip, $user_name, $user_email, $user_phone );
 }
 
 // 7. Elementor Pro Form Integration
@@ -255,7 +336,15 @@ function cmr_elementor_rate_limit_validator( $record, $ajax_handler ) {
     $check = cmr_check_form_rate_limit( $form_id, $ip );
 
     if ( ! $check['allowed'] ) {
-        cmr_record_blocked_submission( $form_id, $form_title, $ip );
+        $fields = $record->get( 'fields' );
+        $user_name = ''; $user_email = ''; $user_phone = '';
+        foreach ( (array)$fields as $fid => $f ) {
+            if ( stripos( $fid, 'name' ) !== false && ! $user_name ) $user_name = $f['value'] ?? '';
+            if ( stripos( $fid, 'email' ) !== false && ! $user_email ) $user_email = $f['value'] ?? '';
+            if ( ( stripos( $fid, 'phone' ) !== false || stripos( $fid, 'tel' ) !== false ) && ! $user_phone ) $user_phone = $f['value'] ?? '';
+        }
+
+        cmr_record_blocked_submission( $form_id, $form_title, $ip, $user_name, $user_email, $user_phone );
 
         $ajax_handler->add_error_message( 'You have reached the maximum limit of 3 submissions for this form in 24 hours. Please try again tomorrow.' );
         $ajax_handler->is_success = false;
@@ -271,7 +360,15 @@ function cmr_elementor_rate_limit_on_success( $record, $ajax_handler ) {
     $form_title = $record->get_form_settings( 'form_name' ) ?: 'Elementor Form';
     $ip = cmr_get_client_ip_address();
 
-    cmr_record_successful_submission( $form_id, $form_title, $ip );
+    $fields = $record->get( 'fields' );
+    $user_name = ''; $user_email = ''; $user_phone = '';
+    foreach ( (array)$fields as $fid => $f ) {
+        if ( stripos( $fid, 'name' ) !== false && ! $user_name ) $user_name = $f['value'] ?? '';
+        if ( stripos( $fid, 'email' ) !== false && ! $user_email ) $user_email = $f['value'] ?? '';
+        if ( ( stripos( $fid, 'phone' ) !== false || stripos( $fid, 'tel' ) !== false ) && ! $user_phone ) $user_phone = $f['value'] ?? '';
+    }
+
+    cmr_record_successful_submission( $form_id, $form_title, $ip, $user_name, $user_email, $user_phone );
 }
 
 // 8. Job Application Form Integration Hook
@@ -282,7 +379,10 @@ function cmr_job_form_check_rate_limit() {
 
     $check = cmr_check_form_rate_limit( $form_id, $ip );
     if ( ! $check['allowed'] ) {
-        cmr_record_blocked_submission( $form_id, $form_title, $ip );
+        $user_name = sanitize_text_field( $_POST['full_name'] ?? '' );
+        $user_email = sanitize_email( $_POST['email'] ?? '' );
+        $user_phone = sanitize_text_field( $_POST['phone'] ?? '' );
+        cmr_record_blocked_submission( $form_id, $form_title, $ip, $user_name, $user_email, $user_phone );
         return false;
     }
     return true;
@@ -292,7 +392,10 @@ function cmr_job_form_record_success() {
     $form_id = 'job_application';
     $form_title = 'Job Application Form';
     $ip = cmr_get_client_ip_address();
-    cmr_record_successful_submission( $form_id, $form_title, $ip );
+    $user_name = sanitize_text_field( $_POST['full_name'] ?? '' );
+    $user_email = sanitize_email( $_POST['email'] ?? '' );
+    $user_phone = sanitize_text_field( $_POST['phone'] ?? '' );
+    cmr_record_successful_submission( $form_id, $form_title, $ip, $user_name, $user_email, $user_phone );
 }
 
 // 9. Admin Dashboard UI (Tools -> Form Rate Limits)
@@ -339,7 +442,7 @@ function cmr_render_form_rate_limit_admin_page() {
     $search = isset( $_GET['s'] ) ? sanitize_text_field( $_GET['s'] ) : '';
     $where_clause = '';
     if ( $search ) {
-        $where_clause = $wpdb->prepare( "WHERE ip_address LIKE %s OR form_id LIKE %s OR form_title LIKE %s", '%' . $search . '%', '%' . $search . '%', '%' . $search . '%' );
+        $where_clause = $wpdb->prepare( "WHERE ip_address LIKE %s OR form_id LIKE %s OR form_title LIKE %s OR user_name LIKE %s OR user_email LIKE %s", '%' . $search . '%', '%' . $search . '%', '%' . $search . '%', '%' . $search . '%', '%' . $search . '%' );
     }
 
     $logs = $wpdb->get_results( "SELECT * FROM {$table_name} {$where_clause} ORDER BY last_submission_at DESC LIMIT 100" );
@@ -375,7 +478,7 @@ function cmr_render_form_rate_limit_admin_page() {
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
             <form method="get" action="">
                 <input type="hidden" name="page" value="cmr-form-rate-limits" />
-                <input type="text" name="s" value="<?php echo esc_attr( $search ); ?>" placeholder="Search IP or Form..." style="min-width:240px;" />
+                <input type="text" name="s" value="<?php echo esc_attr( $search ); ?>" placeholder="Search Name, Email, IP, Form..." style="min-width:260px;" />
                 <input type="submit" class="button" value="Search" />
                 <?php if ( $search ) : ?>
                     <a href="<?php echo esc_url( admin_url( 'tools.php?page=cmr-form-rate-limits' ) ); ?>" class="button">Reset Search</a>
@@ -392,21 +495,22 @@ function cmr_render_form_rate_limit_admin_page() {
         <table class="wp-list-table widefat fixed striped">
             <thead>
                 <tr>
-                    <th style="width:120px;">Form ID</th>
+                    <th style="width:110px;">Form ID</th>
                     <th>Form Name</th>
-                    <th style="width:140px;">IP Address</th>
-                    <th style="width:110px; text-align:center;">Submissions</th>
-                    <th style="width:120px; text-align:center;">Blocked</th>
-                    <th>First Submitted (IST)</th>
+                    <th>User Details</th>
+                    <th style="width:130px;">IP Address</th>
+                    <th style="width:100px; text-align:center;">Count</th>
+                    <th style="width:90px; text-align:center;">Blocked</th>
+                    <th>First Submit (IST)</th>
                     <th>Last Attempt (IST)</th>
                     <th style="width:140px;">Status</th>
-                    <th style="width:90px; text-align:center;">Action</th>
+                    <th style="width:80px; text-align:center;">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <?php if ( empty( $logs ) ) : ?>
                     <tr>
-                        <td colspan="9" style="text-align:center; padding:20px; color:#888;">No form submissions recorded yet in the database.</td>
+                        <td colspan="10" style="text-align:center; padding:20px; color:#888;">No form submissions recorded yet in the database.</td>
                     </tr>
                 <?php else : ?>
                     <?php foreach ( $logs as $row ) : 
@@ -417,11 +521,22 @@ function cmr_render_form_rate_limit_admin_page() {
                         $reset_url = wp_nonce_url( admin_url( 'tools.php?page=cmr-form-rate-limits&action=reset_ip&id=' . $row->id ), 'cmr_reset_rate_limit_' . $row->id );
                     ?>
                         <tr>
-                            <td><strong><?php echo esc_html( $row->form_id ); ?></strong></td>
+                            <td><strong>#<?php echo esc_html( $row->form_id ); ?></strong></td>
                             <td><?php echo esc_html( $row->form_title ?: 'Form #' . $row->form_id ); ?></td>
+                            <td>
+                                <?php if ( $row->user_name || $row->user_email ) : ?>
+                                    <strong><?php echo esc_html( $row->user_name ?: 'N/A' ); ?></strong><br>
+                                    <small style="color:#555;"><?php echo esc_html( $row->user_email ); ?></small>
+                                    <?php if ( $row->user_phone ) : ?>
+                                        <br><small style="color:#777;"><?php echo esc_html( $row->user_phone ); ?></small>
+                                    <?php endif; ?>
+                                <?php else : ?>
+                                    <span style="color:#999;">&mdash;</span>
+                                <?php endif; ?>
+                            </td>
                             <td><code><?php echo esc_html( $row->ip_address ); ?></code></td>
-                            <td style="text-align:center; font-weight:600;"><?php echo esc_html( $row->submission_count ); ?> / <?php echo CMR_FORM_RATE_LIMIT_MAX; ?></td>
-                            <td style="text-align:center; font-weight:600; color:<?php echo $row->blocked_count > 0 ? '#d63638' : '#888'; ?>;">
+                            <td style="text-align:center; font-weight:700;"><?php echo esc_html( $row->submission_count ); ?> / <?php echo CMR_FORM_RATE_LIMIT_MAX; ?></td>
+                            <td style="text-align:center; font-weight:700; color:<?php echo $row->blocked_count > 0 ? '#d63638' : '#888'; ?>;">
                                 <?php echo esc_html( $row->blocked_count ); ?>
                             </td>
                             <td><?php echo esc_html( $row->first_submission_at ); ?></td>
