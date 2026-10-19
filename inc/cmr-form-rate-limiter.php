@@ -383,18 +383,16 @@ function cmr_cf7_disable_submit_if_limit_reached( $content ) {
     $check = cmr_check_form_rate_limit( $form_id, $ip );
 
     if ( ! $check['allowed'] ) {
-        $notice = '<div class="cmr-limit-notice" style="background:#fee2e2; border:1px solid #fca5a5; color:#991b1b; padding:10px 14px; border-radius:8px; font-size:13px; font-weight:600; text-align:center; margin-top:12px; line-height:1.4;">⚠️ You have reached the maximum daily limit of 3 submissions for this form. Please try again after 24 hours.</div>';
-        
-        // Disable input[type="submit"]
+        // Disable input[type="submit"] while keeping the exact original button text
         $content = preg_replace(
             '/<input([^>]*?)type=["\']submit["\']([^>]*?)value=["\']([^"\']*)["\']([^>]*?)>/i',
-            '<input$1type="submit"$2value="Daily Limit Reached (3/3)"$4 disabled="disabled" class="cmr-limit-disabled wpcf7-submit" style="opacity:0.55!important; cursor:not-allowed!important; pointer-events:none!important; background:#9ca3af!important; border-color:#9ca3af!important; filter:grayscale(1)!important;" title="Maximum daily limit reached">' . $notice,
+            '<input$1type="submit"$2value="$3"$4 disabled="disabled" class="cmr-limit-disabled wpcf7-submit" style="opacity:0.55!important; cursor:not-allowed!important; pointer-events:none!important; background:#9ca3af!important; border-color:#9ca3af!important; filter:grayscale(1)!important;">',
             $content
         );
-        // Disable button[type="submit"]
+        // Disable button[type="submit"] while keeping the exact original button text
         $content = preg_replace(
             '/<button([^>]*?)type=["\']submit["\']([^>]*?)>(.*?)<\/button>/i',
-            '<button$1type="submit"$2 disabled="disabled" class="cmr-limit-disabled" style="opacity:0.55!important; cursor:not-allowed!important; pointer-events:none!important; background:#9ca3af!important; border-color:#9ca3af!important; filter:grayscale(1)!important;" title="Maximum daily limit reached">Daily Limit Reached (3/3)</button>' . $notice,
+            '<button$1type="submit"$2 disabled="disabled" class="cmr-limit-disabled" style="opacity:0.55!important; cursor:not-allowed!important; pointer-events:none!important; background:#9ca3af!important; border-color:#9ca3af!important; filter:grayscale(1)!important;">$3</button>',
             $content
         );
     }

@@ -335,20 +335,11 @@ add_action( 'wp_footer', function() {
             submitBtn.style.setProperty('color', '#ffffff', 'important');
             submitBtn.style.setProperty('filter', 'grayscale(1)', 'important');
 
-            if (submitBtn.tagName === 'INPUT') {
-                submitBtn.value = 'Daily Limit Reached (3/3)';
-            } else {
-                submitBtn.innerHTML = 'Daily Limit Reached (3/3)';
-            }
-
-            // Add alert notice below button if not already added
+            // Keep original button text unchanged (only disable and style it)
+            // Remove any notice if present (only button should be disabled)
             var existingNotice = form.querySelector('.cmr-limit-notice');
-            if (!existingNotice) {
-                var notice = document.createElement('div');
-                notice.className = 'cmr-limit-notice';
-                notice.style.cssText = 'background:#fee2e2; border:1px solid #fca5a5; color:#991b1b; padding:10px 14px; border-radius:8px; font-size:13px; font-weight:600; text-align:center; margin-top:12px; line-height:1.4;';
-                notice.innerHTML = '⚠️ ' + (msg || 'You have reached the maximum daily limit of 3 submissions for this form. Please try again after 24 hours.');
-                submitBtn.parentElement.appendChild(notice);
+            if (existingNotice) {
+                existingNotice.remove();
             }
         }
 
