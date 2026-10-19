@@ -451,20 +451,85 @@ function cmr_job_form_record_success() {
 }
 
 // 10. Admin Dashboard UI & CSV Export (Tools -> Form Submissions & Rate Limits)
+// Helper to build SQL WHERE clause for submissions filtering
+function cmr_build_submissions_where_clause( $filter_form, $start_date, $end_date, $search ) {
+    global $wpdb;
+    $clauses = array();
+    $params  = array();
+
+    if ( ! empty( $filter_form ) ) {
+        $clauses[] = "form_id = %s";
+        $params[]  = $filter_form;
+    }
+
+    $valid_start = ! empty( $start_date ) && preg_match( '/^\d{4}-\d{2}-\d{2}$/', $start_date );
+    $valid_end   = ! empty( $end_date ) && preg_match( '/^\d{4}-\d{2}-\d{2}$/', $end_date );
+
+    if ( $valid_start && $valid_end ) {
+        $clauses[] = "submitted_at >= %s AND submitted_at <= %s";
+        $params[]  = $start_date . ' 00:00:00';
+        $params[]  = $end_date . ' 23:59:59';
+    } elseif ( $valid_start ) {
+        // Single date selected - filters that entire day
+        $clauses[] = "submitted_at >= %s AND submitted_at <= %s";
+        $params[]  = $start_date . ' 00:00:00';
+        $params[]  = $start_date . ' 23:59:59';
+    } elseif ( $valid_end ) {
+        $clauses[] = "submitted_at <= %s";
+        $params[]  = $end_date . ' 23:59:59';
+    }
+
+    if ( ! empty( $search ) ) {
+        $like = '%' . $wpdb->esc_like( $search ) . '%';
+        $clauses[] = "(user_name LIKE %s OR user_email LIKE %s OR user_phone LIKE %s OR company_name LIKE %s OR user_message LIKE %s OR ip_address LIKE %s OR form_title LIKE %s)";
+        for ( $i = 0; $i < 7; $i++ ) {
+            $params[] = $like;
+        }
+    }
+
+    if ( empty( $clauses ) ) {
+        return '';
+    }
+
+    $sql = 'WHERE ' . implode( ' AND ', $clauses );
+    if ( ! empty( $params ) ) {
+        $sql = $wpdb->prepare( $sql, $params );
+    }
+    return $sql;
+}
+
+// 10. Admin Dashboard UI & CSV Export (Tools -> Form Submissions & Rate Limits)
 add_action( 'admin_init', 'cmr_handle_submissions_csv_export' );
 function cmr_handle_submissions_csv_export() {
     if ( isset( $_GET['cmr_export_csv'] ) && current_user_can( 'manage_options' ) ) {
         check_admin_referer( 'cmr_export_csv_nonce' );
         global $wpdb;
         $table = $wpdb->prefix . 'cmr_form_submissions';
-        $rows = $wpdb->get_results( "SELECT * FROM {$table} ORDER BY submitted_at DESC" );
+
+        $filter_form = isset( $_GET['filter_form'] ) ? sanitize_text_field( wp_unslash( $_GET['filter_form'] ) ) : '';
+        $start_date  = isset( $_GET['start_date'] ) ? sanitize_text_field( wp_unslash( $_GET['start_date'] ) ) : '';
+        $end_date    = isset( $_GET['end_date'] ) ? sanitize_text_field( wp_unslash( $_GET['end_date'] ) ) : '';
+        $search      = isset( $_GET['s'] ) ? sanitize_text_field( wp_unslash( $_GET['s'] ) ) : '';
+
+        $where_sql = cmr_build_submissions_where_clause( $filter_form, $start_date, $end_date, $search );
+        $rows = $wpdb->get_results( "SELECT * FROM {$table} {$where_sql} ORDER BY submitted_at DESC" );
+
+        $filename_parts = array( 'cmr-submissions' );
+        if ( ! empty( $filter_form ) ) {
+            $filename_parts[] = 'form-' . sanitize_title( $filter_form );
+        }
+        if ( ! empty( $start_date ) ) {
+            $filename_parts[] = $start_date;
+        }
+        $filename = implode( '-', $filename_parts ) . '-' . date( 'Y-m-d' ) . '.csv';
 
         header( 'Content-Type: text/csv; charset=UTF-8' );
-        header( 'Content-Disposition: attachment; filename=cmr-form-submissions-' . date( 'Y-m-d' ) . '.csv' );
+        header( 'Content-Disposition: attachment; filename=' . $filename );
         header( 'Pragma: no-cache' );
         header( 'Expires: 0' );
 
         $out = fopen( 'php://output', 'w' );
+        fputs( $out, "\xEF\xBB\xBF" ); // UTF-8 BOM for Excel compatibility
         fputcsv( $out, array( 'ID', 'Submitted At (IST)', 'Form ID', 'Form Name', 'Full Name', 'Email', 'Phone', 'Company', 'Message', 'IP Address' ) );
 
         foreach ( (array)$rows as $r ) {
@@ -523,7 +588,12 @@ function cmr_render_form_rate_limit_admin_page() {
     $total_blocked = $wpdb->get_var( "SELECT SUM(blocked_count) FROM {$limits_table}" ) ?: 0;
     $total_tracked_ips = $wpdb->get_var( "SELECT COUNT(*) FROM {$limits_table}" ) ?: 0;
 
-    $search = isset( $_GET['s'] ) ? sanitize_text_field( $_GET['s'] ) : '';
+    $filter_form = isset( $_GET['filter_form'] ) ? sanitize_text_field( wp_unslash( $_GET['filter_form'] ) ) : '';
+    $start_date  = isset( $_GET['start_date'] ) ? sanitize_text_field( wp_unslash( $_GET['start_date'] ) ) : '';
+    $end_date    = isset( $_GET['end_date'] ) ? sanitize_text_field( wp_unslash( $_GET['end_date'] ) ) : '';
+    $search      = isset( $_GET['s'] ) ? sanitize_text_field( wp_unslash( $_GET['s'] ) ) : '';
+
+    $has_active_filters = ( ! empty( $filter_form ) || ! empty( $start_date ) || ! empty( $end_date ) || ! empty( $search ) );
     ?>
     <div class="wrap">
         <h1 style="display:flex; align-items:center; gap:10px;">
@@ -561,26 +631,152 @@ function cmr_render_form_rate_limit_admin_page() {
         <?php if ( $active_tab === 'submissions' ) : ?>
             <!-- SUBMISSIONS ARCHIVE TAB -->
             <?php
-            $where_sub = '';
-            if ( $search ) {
-                $where_sub = $wpdb->prepare( "WHERE user_name LIKE %s OR user_email LIKE %s OR user_phone LIKE %s OR form_title LIKE %s OR ip_address LIKE %s", '%' . $search . '%', '%' . $search . '%', '%' . $search . '%', '%' . $search . '%', '%' . $search . '%' );
+            // Build Forms List for Dropdown
+            $known_forms = array(
+                '7935' => '#7935 - Request a Consultation (Popup / Floating Form)',
+                '8573' => '#8573 - Get Expert Insights (Download / Intelligence Form)',
+                '8655' => '#8655 - Start a Conversation (Consultation Form)',
+                '3672' => '#3672 - Contact Us Form',
+                '3770' => '#3770 - Header Consultation Popup',
+                'job_application' => 'Job Application Form',
+            );
+            $db_forms = $wpdb->get_results( "SELECT DISTINCT form_id, form_title FROM {$records_table} WHERE form_id IS NOT NULL AND form_id != '' ORDER BY form_title ASC" );
+            $available_forms = $known_forms;
+            if ( ! empty( $db_forms ) ) {
+                foreach ( $db_forms as $df ) {
+                    $fid = strval( $df->form_id );
+                    $title = $df->form_title ? $df->form_title : 'Form #' . $fid;
+                    if ( ! isset( $available_forms[ $fid ] ) ) {
+                        $available_forms[ $fid ] = '#' . $fid . ' - ' . $title;
+                    }
+                }
             }
-            $leads = $wpdb->get_results( "SELECT * FROM {$records_table} {$where_sub} ORDER BY submitted_at DESC LIMIT 100" );
-            $export_url = wp_nonce_url( admin_url( 'tools.php?page=cmr-form-rate-limits&cmr_export_csv=1' ), 'cmr_export_csv_nonce' );
-            ?>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
-                <form method="get" action="">
-                    <input type="hidden" name="page" value="cmr-form-rate-limits" />
-                    <input type="hidden" name="tab" value="submissions" />
-                    <input type="text" name="s" value="<?php echo esc_attr( $search ); ?>" placeholder="Search Name, Email, Form, Phone..." style="min-width:260px;" />
-                    <input type="submit" class="button" value="Search Leads" />
-                    <?php if ( $search ) : ?>
-                        <a href="<?php echo esc_url( admin_url( 'tools.php?page=cmr-form-rate-limits&tab=submissions' ) ); ?>" class="button">Reset</a>
-                    <?php endif; ?>
-                </form>
 
-                <a href="<?php echo esc_url( $export_url ); ?>" class="button button-primary">
-                    <span class="dashicons dashicons-download" style="vertical-align:middle; margin-top:-2px;"></span> Export to CSV (Excel)
+            $where_sub = cmr_build_submissions_where_clause( $filter_form, $start_date, $end_date, $search );
+            $filtered_count = $wpdb->get_var( "SELECT COUNT(*) FROM {$records_table} {$where_sub}" ) ?: 0;
+            $leads = $wpdb->get_results( "SELECT * FROM {$records_table} {$where_sub} ORDER BY submitted_at DESC LIMIT 200" );
+
+            // Filter-aware Export URL
+            $export_args = array(
+                'page'           => 'cmr-form-rate-limits',
+                'cmr_export_csv' => '1',
+            );
+            if ( ! empty( $filter_form ) ) {
+                $export_args['filter_form'] = $filter_form;
+            }
+            if ( ! empty( $start_date ) ) {
+                $export_args['start_date'] = $start_date;
+            }
+            if ( ! empty( $end_date ) ) {
+                $export_args['end_date'] = $end_date;
+            }
+            if ( ! empty( $search ) ) {
+                $export_args['s'] = $search;
+            }
+            $export_url = wp_nonce_url( add_query_arg( $export_args, admin_url( 'tools.php' ) ), 'cmr_export_csv_nonce' );
+            ?>
+
+            <!-- Advanced Filter Bar (Form + Date + Search) -->
+            <form method="get" action="" style="background:#fff; border:1px solid #ccd0d4; padding:16px 20px; border-radius:6px; margin-bottom:18px; box-shadow:0 1px 3px rgba(0,0,0,0.03);">
+                <input type="hidden" name="page" value="cmr-form-rate-limits" />
+                <input type="hidden" name="tab" value="submissions" />
+
+                <div style="display:flex; flex-wrap:wrap; gap:15px; align-items:flex-end;">
+                    <!-- Form Filter Dropdown -->
+                    <div style="flex:1 1 250px; min-width:220px;">
+                        <label for="cmr_filter_form" style="display:block; font-size:12px; font-weight:600; color:#333; margin-bottom:5px;">
+                            🎯 Select Form:
+                        </label>
+                        <select id="cmr_filter_form" name="filter_form" style="width:100%; height:34px;">
+                            <option value="">— All Forms (Show Everything) —</option>
+                            <?php foreach ( $available_forms as $fid => $fname ) : ?>
+                                <option value="<?php echo esc_attr( $fid ); ?>" <?php selected( $filter_form, strval( $fid ) ); ?>>
+                                    <?php echo esc_html( $fname ); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <!-- Single Date or Start Date -->
+                    <div style="flex:1 1 160px; min-width:150px;">
+                        <label for="cmr_start_date" style="display:block; font-size:12px; font-weight:600; color:#333; margin-bottom:5px;">
+                            📅 Date (Single or From):
+                        </label>
+                        <input type="date" id="cmr_start_date" name="start_date" value="<?php echo esc_attr( $start_date ); ?>" style="width:100%; height:34px;" />
+                    </div>
+
+                    <!-- End Date (Optional range) -->
+                    <div style="flex:1 1 160px; min-width:150px;">
+                        <label for="cmr_end_date" style="display:block; font-size:12px; font-weight:600; color:#333; margin-bottom:5px;">
+                            📅 To Date (Optional Range):
+                        </label>
+                        <input type="date" id="cmr_end_date" name="end_date" value="<?php echo esc_attr( $end_date ); ?>" style="width:100%; height:34px;" />
+                    </div>
+
+                    <!-- Search Input -->
+                    <div style="flex:2 1 220px; min-width:200px;">
+                        <label for="cmr_search" style="display:block; font-size:12px; font-weight:600; color:#333; margin-bottom:5px;">
+                            🔍 Keyword Search:
+                        </label>
+                        <input type="text" id="cmr_search" name="s" value="<?php echo esc_attr( $search ); ?>" placeholder="Name, Email, Phone, Company, IP..." style="width:100%; height:34px;" />
+                    </div>
+
+                    <!-- Filter & Reset Buttons -->
+                    <div style="display:flex; gap:8px;">
+                        <button type="submit" class="button button-primary" style="height:34px; line-height:32px; display:inline-flex; align-items:center; gap:5px; font-weight:600;">
+                            <span class="dashicons dashicons-filter" style="margin-top:-2px;"></span> Filter Records
+                        </button>
+                        <?php if ( $has_active_filters ) : ?>
+                            <a href="<?php echo esc_url( admin_url( 'tools.php?page=cmr-form-rate-limits&tab=submissions' ) ); ?>" class="button" style="height:34px; line-height:32px;">
+                                Reset
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <!-- Active Filter Badges Info -->
+                <?php if ( $has_active_filters ) : ?>
+                    <div style="margin-top:12px; padding-top:10px; border-top:1px dashed #e2e4e7; font-size:12px; color:#555; display:flex; align-items:center; flex-wrap:wrap; gap:8px;">
+                        <strong>Active Filters:</strong>
+                        <?php if ( $filter_form ) : ?>
+                            <span style="background:#e8f0fe; color:#1a73e8; padding:2px 8px; border-radius:12px; font-weight:500;">
+                                Form: <?php echo esc_html( isset( $available_forms[ $filter_form ] ) ? $available_forms[ $filter_form ] : '#' . $filter_form ); ?>
+                            </span>
+                        <?php endif; ?>
+                        <?php if ( $start_date && $end_date ) : ?>
+                            <span style="background:#fce8e6; color:#c5221f; padding:2px 8px; border-radius:12px; font-weight:500;">
+                                Date: <?php echo esc_html( $start_date . ' to ' . $end_date ); ?>
+                            </span>
+                        <?php elseif ( $start_date ) : ?>
+                            <span style="background:#fce8e6; color:#c5221f; padding:2px 8px; border-radius:12px; font-weight:500;">
+                                Single Date: <?php echo esc_html( $start_date ); ?>
+                            </span>
+                        <?php elseif ( $end_date ) : ?>
+                            <span style="background:#fce8e6; color:#c5221f; padding:2px 8px; border-radius:12px; font-weight:500;">
+                                Up to Date: <?php echo esc_html( $end_date ); ?>
+                            </span>
+                        <?php endif; ?>
+                        <?php if ( $search ) : ?>
+                            <span style="background:#e6f4ea; color:#137333; padding:2px 8px; border-radius:12px; font-weight:500;">
+                                Keyword: "<?php echo esc_html( $search ); ?>"
+                            </span>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+            </form>
+
+            <!-- Table Header Info & CSV Export -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:10px;">
+                <div style="font-size:13px; color:#444;">
+                    Showing <strong><?php echo number_format_i18n( count( $leads ) ); ?></strong> of <strong><?php echo number_format_i18n( $filtered_count ); ?></strong> matching submissions
+                    <?php if ( $has_active_filters ) : ?>
+                        <em style="color:#666;">(Filters Applied)</em>
+                    <?php endif; ?>
+                </div>
+
+                <a href="<?php echo esc_url( $export_url ); ?>" class="button button-secondary" style="display:inline-flex; align-items:center; gap:5px;">
+                    <span class="dashicons dashicons-download" style="margin-top:-2px;"></span>
+                    Export <?php echo $has_active_filters ? 'Filtered Data' : 'All Data'; ?> to CSV (Excel)
                 </a>
             </div>
 
