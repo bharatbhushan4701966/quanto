@@ -325,13 +325,19 @@
     font-weight: 500 !important;
     font-family: 'Instrument Sans', sans-serif !important;
     line-height: 1.2 !important;
-    transition: all 0.3s ease !important;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease !important;
     box-sizing: border-box !important;
+    transform: scale(1) !important;
 }
 
 .cmr-explore-all:hover {
     background: #333333 !important;
     color: #ffffff !important;
+    transform: scale(1.05) !important;
+}
+
+.cmr-explore-all:active {
+    transform: scale(0.98) !important;
 }
 
 /* Responsive */
@@ -1214,6 +1220,11 @@ h3.cmr-mc-title {
     margin-left: 6px !important;
     vertical-align: middle !important;
     display: inline-block !important;
+    transition: transform 0.3s ease !important;
+}
+
+.cmr-explore-all:hover .cmr-arrow-icon {
+    transform: translate(2px, -2px) !important;
 }
 
 /* Mobile Horizontal Scroll for cmr_dark_media_coverage tabs */

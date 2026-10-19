@@ -450,20 +450,19 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
             border-bottom-color: #4625A9 !important; 
         }
         .cmr-wwt-card-link::after {
-            content: "";
-            width: 11px;
+            display: none !important;
+        }
+        .cmr-wwt-card-link svg {
+            width: 13px;
             height: 11px;
-            background-color: currentColor;
-            -webkit-mask-image: url('https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg');
-            mask-image: url('https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg');
-            -webkit-mask-repeat: no-repeat;
-            mask-repeat: no-repeat;
-            -webkit-mask-size: contain;
-            mask-size: contain;
-            -webkit-mask-position: center;
-            mask-position: center;
+            fill: currentColor;
             display: inline-block;
-            transition: background-color 0.3s ease;
+            vertical-align: middle;
+            margin-left: 6px;
+            transition: transform 0.3s ease, fill 0.3s ease;
+        }
+        .cmr-wwt-card-link:hover svg {
+            transform: translate(2px, -2px);
         }
 
         .cmr-wwt-menu-item {
@@ -617,7 +616,7 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
                                                     <?php echo esc_html($post['title']); ?>
                                                 </a>
                                             </div>
-                                            <a class="cmr-wwt-card-link" href="<?php echo esc_url($post['link']); ?>">More Details</a>
+                                            <a class="cmr-wwt-card-link" href="<?php echo esc_url($post['link']); ?>">More Details <svg class="cmr-wwt-arrow" xmlns="http://www.w3.org/2000/svg" width="13" height="11" viewBox="0 0 16 14" fill="none"><path d="M2.04895 4.52205V3.54978C2.07104 3.12993 2.4025 2.79848 2.80025 2.79848L11.396 2.77638C11.8159 2.79848 12.1473 3.12993 12.1473 3.52768V12.1455C12.1473 12.5433 11.8159 12.8747 11.396 12.8968H10.4237C10.0039 12.8747 9.67244 12.5433 9.65035 12.1234L9.78293 6.90853L3.44106 13.2504C3.1317 13.5598 2.68976 13.5598 2.3804 13.2504L1.6733 12.5433C1.38603 12.256 1.36394 11.792 1.6733 11.4826L8.01516 5.14077L2.82234 5.29545C2.4025 5.27335 2.04895 4.96399 2.04895 4.52205Z" fill="currentColor"></path></svg></a>
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
@@ -659,7 +658,7 @@ if ( ! function_exists( 'cmr_what_we_think_shortcode' ) ) {
                                                         <?php echo esc_html($post['title']); ?>
                                                     </a>
                                                 </div>
-                                                <a class="cmr-wwt-card-link" href="<?php echo esc_url($post['link']); ?>">More Details</a>
+                                                <a class="cmr-wwt-card-link" href="<?php echo esc_url($post['link']); ?>">More Details <svg class="cmr-wwt-arrow" xmlns="http://www.w3.org/2000/svg" width="13" height="11" viewBox="0 0 16 14" fill="none"><path d="M2.04895 4.52205V3.54978C2.07104 3.12993 2.4025 2.79848 2.80025 2.79848L11.396 2.77638C11.8159 2.79848 12.1473 3.12993 12.1473 3.52768V12.1455C12.1473 12.5433 11.8159 12.8747 11.396 12.8968H10.4237C10.0039 12.8747 9.67244 12.5433 9.65035 12.1234L9.78293 6.90853L3.44106 13.2504C3.1317 13.5598 2.68976 13.5598 2.3804 13.2504L1.6733 12.5433C1.38603 12.256 1.36394 11.792 1.6733 11.4826L8.01516 5.14077L2.82234 5.29545C2.4025 5.27335 2.04895 4.96399 2.04895 4.52205Z" fill="currentColor"></path></svg></a>
                                             </div>
                                         <?php endforeach; ?>
                                     </div>

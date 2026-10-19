@@ -581,18 +581,34 @@ add_action( 'wp_footer', function() {
                 });
             }
 
+            // Helper: Ensure "More Details" links always have the diagonal arrow SVG icon
+            function fixMoreDetailsArrows() {
+                var arrowSvg = '<svg class="cmr-wwt-arrow" xmlns="http://www.w3.org/2000/svg" width="13" height="11" viewBox="0 0 16 14" fill="none" style="display:inline-block; vertical-align:middle; margin-left:6px;"><path d="M2.04895 4.52205V3.54978C2.07104 3.12993 2.4025 2.79848 2.80025 2.79848L11.396 2.77638C11.8159 2.79848 12.1473 3.12993 12.1473 3.52768V12.1455C12.1473 12.5433 11.8159 12.8747 11.396 12.8968H10.4237C10.0039 12.8747 9.67244 12.5433 9.65035 12.1234L9.78293 6.90853L3.44106 13.2504C3.1317 13.5598 2.68976 13.5598 2.3804 13.2504L1.6733 12.5433C1.38603 12.256 1.36394 11.792 1.6733 11.4826L8.01516 5.14077L2.82234 5.29545C2.4025 5.27335 2.04895 4.96399 2.04895 4.52205Z" fill="currentColor"></path></svg>';
+
+                document.querySelectorAll('.cmr-wwt-card-link, .ez-card-link').forEach(function(link) {
+                    if (!link.querySelector('svg')) {
+                        link.insertAdjacentHTML('beforeend', ' ' + arrowSvg);
+                    }
+                });
+            }
+
             initHeroCTAButtons();
             fixSubmitButtonArrows();
+            fixMoreDetailsArrows();
             setTimeout(initHeroCTAButtons, 400);
             setTimeout(fixSubmitButtonArrows, 400);
+            setTimeout(fixMoreDetailsArrows, 400);
             setTimeout(initHeroCTAButtons, 1200);
             setTimeout(fixSubmitButtonArrows, 1200);
+            setTimeout(fixMoreDetailsArrows, 1200);
             setTimeout(fixSubmitButtonArrows, 2500);
+            setTimeout(fixMoreDetailsArrows, 2500);
 
             // MutationObserver to catch dynamically rendered popups/forms
             if (window.MutationObserver) {
                 var observer = new MutationObserver(function() {
                     fixSubmitButtonArrows();
+                    fixMoreDetailsArrows();
                 });
                 observer.observe(document.body, { childList: true, subtree: true });
             }
