@@ -600,7 +600,7 @@ function cmr_render_form_rate_limit_admin_page() {
             <span class="dashicons dashicons-shield" style="font-size:32px; width:32px; height:32px; color:#6241ca;"></span>
             Form Submissions &amp; Rate Limits
         </h1>
-        <p>Website ke saare forms ka complete data database mein yahan store hota hai, aur har form par per-IP 24 ghante mein maximum 3 submissions allow hain.</p>
+        <p>Complete submission data for all website forms is stored here in the database, with a rate limit of maximum 3 submissions per IP address every 24 hours per form.</p>
 
         <!-- Stats Overview Cards -->
         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:15px; margin: 20px 0;">
@@ -798,7 +798,7 @@ function cmr_render_form_rate_limit_admin_page() {
                     <?php if ( empty( $leads ) ) : ?>
                         <tr>
                             <td colspan="9" style="text-align:center; padding:25px; color:#888;">
-                                No form submissions recorded yet. Forms submit hone ke baad yahan live store honge.
+                                No form submissions recorded yet. New submissions will appear here automatically.
                             </td>
                         </tr>
                     <?php else : ?>
