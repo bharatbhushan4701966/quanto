@@ -1040,6 +1040,21 @@ h3.cmr-mc-title {
     margin: 0 0 12px 0;
     letter-spacing: -0.4px;
     max-width: 950px;
+    transition: color 0.3s ease !important;
+}
+
+.cmr-nc-post-title a {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease !important;
+}
+
+.cmr-nc-card:hover .cmr-nc-post-title,
+.cmr-nc-card:hover .cmr-nc-post-title a,
+.cmr-nc-post-title:hover,
+.cmr-nc-post-title a:hover,
+.cmr-nc-post-title:hover a {
+    color: #00D2B9 !important;
 }
 
 .cmr-nc-excerpt {

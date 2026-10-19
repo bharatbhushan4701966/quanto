@@ -11675,6 +11675,11 @@ a.btn-outline * {
 }
 
 /* CMR Featured Card (Dark Background) Hover Color (Cyan #00D2B9 / #00BFBC) */
+.cmr-nc-card:hover .cmr-nc-post-title,
+.cmr-nc-card:hover .cmr-nc-post-title a,
+.cmr-nc-post-title:hover,
+.cmr-nc-post-title a:hover,
+.cmr-nc-post-title:hover a,
 .cmr-card-featured:hover .cmr-card-title,
 .cmr-card-featured:hover .cmr-card-title a,
 .cmr-card-featured .cmr-card-title:hover,

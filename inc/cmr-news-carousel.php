@@ -259,6 +259,21 @@ function cmr_render_news_carousel_shortcode( $atts ) {
         margin: 0 0 12px 0;
         letter-spacing: -0.4px;
         max-width: 950px;
+        transition: color 0.3s ease !important;
+    }
+
+    .cmr-nc-post-title a {
+        color: #ffffff !important;
+        text-decoration: none !important;
+        transition: color 0.3s ease !important;
+    }
+
+    .cmr-nc-card:hover .cmr-nc-post-title,
+    .cmr-nc-card:hover .cmr-nc-post-title a,
+    .cmr-nc-post-title:hover,
+    .cmr-nc-post-title a:hover,
+    .cmr-nc-post-title:hover a {
+        color: #00D2B9 !important;
     }
 
     .cmr-nc-excerpt {
@@ -542,7 +557,11 @@ function cmr_render_news_carousel_shortcode( $atts ) {
                                 </div>
                             </div>
                             
-                            <h3 class="cmr-nc-post-title"><?php the_title(); ?></h3>
+                            <h3 class="cmr-nc-post-title">
+                                <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>">
+                                    <?php the_title(); ?>
+                                </a>
+                            </h3>
                             <div class="cmr-nc-excerpt"><?php echo wp_trim_words( get_the_excerpt(), 20, '...' ); ?></div>
                             
                             <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-nc-read-btn">
