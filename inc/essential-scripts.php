@@ -212,7 +212,7 @@ add_action( 'wp_footer', function() {
     ?>
     <script id="cmr-modal-controller-js">
     (function() {
-        // Replace "CMR Pulse" with "CMR GTM" in modal (text and checkbox value)
+        // Update Modal Headings & Texts
         function updateCMRModalTexts() {
             var modalContainers = document.querySelectorAll(
                 '.elementor-popup-modal, ' +
@@ -224,6 +224,47 @@ add_action( 'wp_footer', function() {
                 '.dialog-widget, ' +
                 '[data-elementor-type="popup"]'
             );
+
+            // 1. Subscriber form heading -> "CMR Connect Subscribe"
+            document.querySelectorAll(
+                '.custom-subscribe-form .elementor-heading-title, ' +
+                '.elementor-7832 .elementor-heading-title, ' +
+                '.elementor-7849 .elementor-heading-title, ' +
+                '[data-elementor-id="7832"] .elementor-heading-title, ' +
+                '[data-elementor-id="7849"] .elementor-heading-title'
+            ).forEach(function(el) {
+                el.textContent = 'CMR Connect Subscribe';
+            });
+            document.querySelectorAll('.elementor-heading-title').forEach(function(el) {
+                var txt = el.textContent.trim().toLowerCase();
+                if (txt === 'subscribe to insights' || txt === 'newsletter subscription') {
+                    el.textContent = 'CMR Connect Subscribe';
+                }
+            });
+
+            // 2. CMR GTM form heading -> "CMR GTM partner with us"
+            document.querySelectorAll(
+                '[data-elementor-id="52978"] .elementor-heading-title, ' +
+                '.elementor-element-112e4d5 .elementor-heading-title, ' +
+                '.elementor-element-112e4d5 h3, .elementor-element-112e4d5 h2'
+            ).forEach(function(el) {
+                el.textContent = 'CMR GTM partner with us';
+            });
+            document.querySelectorAll('.elementor-heading-title').forEach(function(el) {
+                var txt = el.textContent.trim().toLowerCase();
+                if (txt === 'partner with us') {
+                    el.textContent = 'CMR GTM partner with us';
+                }
+            });
+
+            // 3. Talk to Analyst modal heading -> "Request a Consultation"
+            document.querySelectorAll(
+                '.elementor-7637 .elementor-heading-title, ' +
+                '[data-elementor-id="7637"] .elementor-heading-title, ' +
+                '.elementor-element-b034026 .elementor-heading-title'
+            ).forEach(function(el) {
+                el.textContent = 'Request a Consultation';
+            });
 
             modalContainers.forEach(function(modal) {
                 try {

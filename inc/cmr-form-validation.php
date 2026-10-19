@@ -288,30 +288,43 @@ add_action( 'wp_footer', function() {
             return form.getAttribute('data-form-id') || form.id || '';
         }
 
+        function cmrGetRelatedFormIds(formId) {
+            if (formId === '8573' || formId === '7935') {
+                return ['7935', '8573'];
+            }
+            return [formId];
+        }
+
         function cmrIsFormRateLimited(form) {
             if (!form) return false;
             var formId = cmrGetFormId(form);
             if (!formId) return false;
+            var relatedIds = cmrGetRelatedFormIds(formId);
 
             // 1. Check server-provided rate limits (live DB status for this IP)
-            if (window.CMR_RATE_LIMITS && window.CMR_RATE_LIMITS[formId]) {
-                if (window.CMR_RATE_LIMITS[formId].blocked || window.CMR_RATE_LIMITS[formId].count >= 3) {
-                    return true;
+            if (window.CMR_RATE_LIMITS) {
+                for (var i = 0; i < relatedIds.length; i++) {
+                    var rInfo = window.CMR_RATE_LIMITS[relatedIds[i]];
+                    if (rInfo && (rInfo.blocked || rInfo.count >= 3)) {
+                        return true;
+                    }
                 }
             }
 
             // 2. Check localStorage (persists in browser across cached pages for 24h)
             try {
-                var item = localStorage.getItem('cmr_limit_' + formId);
-                if (item) {
-                    var parsed = JSON.parse(item);
-                    var now = Date.now();
-                    if (now - parsed.timestamp < 24 * 3600 * 1000) {
-                        if (parsed.count >= 3) {
-                            return true;
+                for (var j = 0; j < relatedIds.length; j++) {
+                    var item = localStorage.getItem('cmr_limit_' + relatedIds[j]);
+                    if (item) {
+                        var parsed = JSON.parse(item);
+                        var now = Date.now();
+                        if (now - parsed.timestamp < 24 * 3600 * 1000) {
+                            if (parsed.count >= 3) {
+                                return true;
+                            }
+                        } else {
+                            localStorage.removeItem('cmr_limit_' + relatedIds[j]);
                         }
-                    } else {
-                        localStorage.removeItem('cmr_limit_' + formId);
                     }
                 }
             } catch(e) {}
@@ -539,11 +552,14 @@ add_action( 'wp_footer', function() {
                         if (isBlocked) {
                             var fid = cmrGetFormId(form);
                             if (fid) {
-                                try {
-                                    localStorage.setItem('cmr_limit_' + fid, JSON.stringify({ count: 3, timestamp: Date.now() }));
-                                } catch(e) {}
-                                if (!window.CMR_RATE_LIMITS) window.CMR_RATE_LIMITS = {};
-                                window.CMR_RATE_LIMITS[fid] = { count: 3, max: 3, blocked: true };
+                                var relatedIds = cmrGetRelatedFormIds(fid);
+                                relatedIds.forEach(function(rid) {
+                                    try {
+                                        localStorage.setItem('cmr_limit_' + rid, JSON.stringify({ count: 3, timestamp: Date.now() }));
+                                    } catch(e) {}
+                                    if (!window.CMR_RATE_LIMITS) window.CMR_RATE_LIMITS = {};
+                                    window.CMR_RATE_LIMITS[rid] = { count: 3, max: 3, blocked: true };
+                                });
                             }
                             cmrDisableSubmitButton(form, errMsg);
                             return;
@@ -552,26 +568,36 @@ add_action( 'wp_footer', function() {
                         // On successful submission: increment local count (1 -> 2 -> 3)
                         var formId = cmrGetFormId(form);
                         if (formId) {
+                            var relatedIds = cmrGetRelatedFormIds(formId);
                             var curCount = 0;
                             try {
-                                var item = localStorage.getItem('cmr_limit_' + formId);
-                                if (item) {
-                                    var parsed = JSON.parse(item);
-                                    if (Date.now() - parsed.timestamp < 24 * 3600 * 1000) {
-                                        curCount = parsed.count || 0;
+                                relatedIds.forEach(function(rid) {
+                                    var item = localStorage.getItem('cmr_limit_' + rid);
+                                    if (item) {
+                                        var parsed = JSON.parse(item);
+                                        if (Date.now() - parsed.timestamp < 24 * 3600 * 1000) {
+                                            if (parsed.count > curCount) curCount = parsed.count;
+                                        }
                                     }
-                                }
+                                });
                             } catch(e) {}
                             curCount++;
-                            try {
-                                localStorage.setItem('cmr_limit_' + formId, JSON.stringify({ count: curCount, timestamp: Date.now() }));
-                            } catch(e) {}
-                            if (!window.CMR_RATE_LIMITS) window.CMR_RATE_LIMITS = {};
-                            window.CMR_RATE_LIMITS[formId] = { count: curCount, max: 3, blocked: (curCount >= 3) };
+                            relatedIds.forEach(function(rid) {
+                                try {
+                                    localStorage.setItem('cmr_limit_' + rid, JSON.stringify({ count: curCount, timestamp: Date.now() }));
+                                } catch(e) {}
+                                if (!window.CMR_RATE_LIMITS) window.CMR_RATE_LIMITS = {};
+                                window.CMR_RATE_LIMITS[rid] = { count: curCount, max: 3, blocked: (curCount >= 3) };
+                            });
 
                             // If this was the 3rd submission, pre-disable the form so 4th attempt is locked
                             if (curCount >= 3) {
                                 cmrDisableSubmitButton(form);
+                                if (formId === '8573' || formId === '7935') {
+                                    document.querySelectorAll('form[id*="wpcf7-f7935"], form[id*="wpcf7-f8573"], div[data-wpcf7-id="7935"] form, div[data-wpcf7-id="8573"] form').forEach(function(f) {
+                                        cmrDisableSubmitButton(f);
+                                    });
+                                }
                             }
                         }
 

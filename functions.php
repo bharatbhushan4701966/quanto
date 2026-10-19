@@ -6297,14 +6297,24 @@ function cmr_redirect_quarterly_results_to_cmrsl() {
 }
 
 /**
- * Replace "CMR Pulse" with "CMR GTM" in newsletter subscription modal
+ * Modal Headings and Text Updates
+ * 1. Subscriber form heading -> "CMR Connect Subscribe"
+ * 2. CMR GTM form heading -> "CMR GTM partner with us"
+ * 3. Talk to Analyst modal heading -> "Request a Consultation"
  */
 add_filter( 'elementor/frontend/the_content', function( $content ) {
     if ( is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
         return $content;
     }
+    // Subscriber form heading & checkboxes
     if ( strpos( $content, 'custom-subscribe-form' ) !== false || strpos( $content, 'Stay Ahead with CMR' ) !== false || strpos( $content, '7832' ) !== false || strpos( $content, '7849' ) !== false ) {
         $content = str_replace( 'CMR Pulse', 'CMR GTM', $content );
+        $content = str_ireplace( '>Subscribe to Insights<', '>CMR Connect Subscribe<', $content );
+        $content = str_ireplace( 'Subscribe to Insights', 'CMR Connect Subscribe', $content );
+    }
+    // CMR GTM partner with us heading
+    if ( strpos( $content, '52977' ) !== false || strpos( $content, '52978' ) !== false || strpos( $content, 'Partner with us' ) !== false || strpos( $content, 'cmr-gtm' ) !== false ) {
+        $content = str_ireplace( '>Partner with us<', '>CMR GTM partner with us<', $content );
     }
     return $content;
 }, 999 );

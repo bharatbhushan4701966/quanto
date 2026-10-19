@@ -140,6 +140,61 @@ function cmr_check_form_rate_limit( $form_id, $ip ) {
     global $wpdb;
     $table_name = $wpdb->prefix . 'cmr_form_rate_limits';
 
+    // Forms #7935 (modal popup) and #8573 (homepage card) are the exact same consultation form
+    $is_consultation = ( $form_id === '7935' || $form_id === '8573' );
+    if ( $is_consultation ) {
+        $rows = $wpdb->get_results( $wpdb->prepare(
+            "SELECT * FROM {$table_name} WHERE form_id IN ('7935', '8573') AND ip_address = %s",
+            $ip
+        ) );
+
+        if ( empty( $rows ) ) {
+            return array(
+                'allowed'            => true,
+                'current_count'      => 0,
+                'remaining'          => CMR_FORM_RATE_LIMIT_MAX,
+                'blocked_count'      => 0,
+                'is_first_in_window' => true,
+            );
+        }
+
+        $now = current_time( 'timestamp' );
+        $window_seconds = CMR_FORM_RATE_LIMIT_WINDOW_HOURS * 3600;
+        $total_count = 0;
+        $total_blocked = 0;
+        $earliest_first = null;
+
+        foreach ( $rows as $r ) {
+            $first_time = strtotime( $r->first_submission_at );
+            if ( ( $now - $first_time ) < $window_seconds ) {
+                $total_count += intval( $r->submission_count );
+                $total_blocked += intval( $r->blocked_count );
+                if ( $earliest_first === null || $first_time < $earliest_first ) {
+                    $earliest_first = $first_time;
+                }
+            }
+        }
+
+        if ( $earliest_first === null ) {
+            return array(
+                'allowed'            => true,
+                'current_count'      => 0,
+                'remaining'          => CMR_FORM_RATE_LIMIT_MAX,
+                'blocked_count'      => 0,
+                'is_first_in_window' => true,
+            );
+        }
+
+        $is_allowed = ( $total_count < CMR_FORM_RATE_LIMIT_MAX );
+        return array(
+            'allowed'            => $is_allowed,
+            'current_count'      => $total_count,
+            'remaining'          => max( 0, CMR_FORM_RATE_LIMIT_MAX - $total_count ),
+            'blocked_count'      => $total_blocked,
+            'is_first_in_window' => false,
+        );
+    }
+
     $row = $wpdb->get_row( $wpdb->prepare(
         "SELECT * FROM {$table_name} WHERE form_id = %s AND ip_address = %s",
         $form_id,
@@ -435,13 +490,36 @@ function cmr_inject_rate_limits_to_footer() {
     ) );
 
     $limits_data = array();
+    $consultation_count = 0;
+    $consultation_blocked = false;
+
     foreach ( (array)$rows as $r ) {
         $count = intval( $r->submission_count );
-        $limits_data[ (string)$r->form_id ] = array(
-            'count'   => $count,
+        $blocked = ( $count >= CMR_FORM_RATE_LIMIT_MAX || intval( $r->blocked_count ) > 0 );
+        $fid = (string)$r->form_id;
+
+        if ( $fid === '7935' || $fid === '8573' ) {
+            $consultation_count += $count;
+            if ( $blocked || $consultation_count >= CMR_FORM_RATE_LIMIT_MAX ) {
+                $consultation_blocked = true;
+            }
+        } else {
+            $limits_data[ $fid ] = array(
+                'count'   => $count,
+                'max'     => CMR_FORM_RATE_LIMIT_MAX,
+                'blocked' => $blocked,
+            );
+        }
+    }
+
+    if ( $consultation_count > 0 || $consultation_blocked ) {
+        $consultation_entry = array(
+            'count'   => $consultation_count,
             'max'     => CMR_FORM_RATE_LIMIT_MAX,
-            'blocked' => ( $count >= CMR_FORM_RATE_LIMIT_MAX || intval( $r->blocked_count ) > 0 ),
+            'blocked' => ( $consultation_blocked || $consultation_count >= CMR_FORM_RATE_LIMIT_MAX ),
         );
+        $limits_data['7935'] = $consultation_entry;
+        $limits_data['8573'] = $consultation_entry;
     }
     ?>
     <script id="cmr-rate-limits-config">
@@ -539,8 +617,20 @@ function cmr_build_submissions_where_clause( $filter_form, $start_date, $end_dat
     $params  = array();
 
     if ( ! empty( $filter_form ) ) {
-        $clauses[] = "form_id = %s";
-        $params[]  = $filter_form;
+        if ( $filter_form === '7935_8573' || $filter_form === '7935' || $filter_form === '8573' || $filter_form === 'talk' || $filter_form === 'expert insight' ) {
+            $clauses[] = "(form_id IN ('7935', '8573') OR form_title IN ('talk', 'expert insight', 'Request a Consultation', 'Get Expert Insights'))";
+        } elseif ( $filter_form === 'CMR GTM' || $filter_form === '52977' ) {
+            $clauses[] = "(form_id = '52977' OR form_title LIKE '%CMR GTM%')";
+        } elseif ( $filter_form === 'subscribe' || $filter_form === '7961' ) {
+            $clauses[] = "(form_id = '7961' OR form_title LIKE '%subscribe%')";
+        } elseif ( $filter_form === 'get' || $filter_form === '9' ) {
+            $clauses[] = "(form_id = '9' OR form_title = 'get' OR form_title LIKE '%Download Report%')";
+        } elseif ( $filter_form === 'contact us page' || $filter_form === 'contact' ) {
+            $clauses[] = "(form_title LIKE '%contact%')";
+        } else {
+            $clauses[] = "form_id = %s";
+            $params[]  = $filter_form;
+        }
     }
 
     $valid_start = ! empty( $start_date ) && preg_match( '/^\d{4}-\d{2}-\d{2}$/', $start_date );
@@ -712,13 +802,14 @@ function cmr_render_form_rate_limit_admin_page() {
         <?php if ( $active_tab === 'submissions' ) : ?>
             <!-- SUBMISSIONS ARCHIVE TAB -->
             <?php
-            // Build Forms List for Dropdown
+            // Build Forms List for Dropdown - Unify #7935 and #8573 into single option
+            // Build Forms List for Dropdown - Real forms matching website CF7 forms
             $known_forms = array(
-                '7935' => '#7935 - Request a Consultation (Popup / Floating Form)',
-                '8573' => '#8573 - Get Expert Insights (Download / Intelligence Form)',
-                '8655' => '#8655 - Start a Conversation (Consultation Form)',
-                '3672' => '#3672 - Contact Us Form',
-                '3770' => '#3770 - Header Consultation Popup',
+                '7935_8573'       => 'Request a Consultation (Talk to Analyst / Expert Insights)',
+                'CMR GTM'         => 'CMR GTM partner with us',
+                'subscribe'       => 'CMR Connect Subscribe',
+                'get'             => 'Download Report',
+                'contact us page' => 'Contact Us',
                 'job_application' => 'Job Application Form',
             );
             $db_forms = $wpdb->get_results( "SELECT DISTINCT form_id, form_title FROM {$records_table} WHERE form_id IS NOT NULL AND form_id != '' ORDER BY form_title ASC" );
@@ -726,6 +817,16 @@ function cmr_render_form_rate_limit_admin_page() {
             if ( ! empty( $db_forms ) ) {
                 foreach ( $db_forms as $df ) {
                     $fid = strval( $df->form_id );
+                    $ftitle = strval( $df->form_title );
+                    // Skip if already covered in known forms
+                    if ( $fid === '7935' || $fid === '8573' || $fid === '7935_8573' || $ftitle === 'talk' || $ftitle === 'expert insight' ||
+                         $fid === '52977' || stripos( $ftitle, 'CMR GTM' ) !== false ||
+                         $fid === '7961' || stripos( $ftitle, 'subscribe' ) !== false ||
+                         $fid === '9' || stripos( $ftitle, 'get' ) !== false || stripos( $ftitle, 'download' ) !== false ||
+                         stripos( $ftitle, 'contact' ) !== false ||
+                         $fid === 'job_application' ) {
+                        continue;
+                    }
                     $title = $df->form_title ? $df->form_title : 'Form #' . $fid;
                     if ( ! isset( $available_forms[ $fid ] ) ) {
                         $available_forms[ $fid ] = '#' . $fid . ' - ' . $title;
@@ -770,8 +871,15 @@ function cmr_render_form_rate_limit_admin_page() {
                         </label>
                         <select id="cmr_filter_form" name="filter_form" style="width:100%; height:34px;">
                             <option value="">-- All Forms (Show Everything) --</option>
-                            <?php foreach ( $available_forms as $fid => $fname ) : ?>
-                                <option value="<?php echo esc_attr( $fid ); ?>" <?php selected( $filter_form, strval( $fid ) ); ?>>
+                            <?php foreach ( $available_forms as $fid => $fname ) : 
+                                $is_selected = false;
+                                if ( $fid === '7935_8573' ) {
+                                    $is_selected = in_array( $filter_form, array( '7935_8573', '7935', '8573' ), true );
+                                } else {
+                                    $is_selected = ( $filter_form === strval( $fid ) );
+                                }
+                            ?>
+                                <option value="<?php echo esc_attr( $fid ); ?>" <?php echo $is_selected ? 'selected="selected"' : ''; ?>>
                                     <?php echo esc_html( $fname ); ?>
                                 </option>
                             <?php endforeach; ?>
