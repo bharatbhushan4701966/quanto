@@ -230,26 +230,9 @@ add_action( 'wp_footer', function() {
             var prevSuccess = targetParent.querySelector('.cmr-form-success-wrapper');
             if (prevSuccess) prevSuccess.remove();
 
-            // Ensure targetParent and right-side column ancestors expand to 100% height and vertically center
-            var cur = targetParent;
-            while (cur && cur !== document.body) {
-                cur.style.setProperty('display', 'flex', 'important');
-                cur.style.setProperty('flex-direction', 'column', 'important');
-                cur.style.setProperty('justify-content', 'center', 'important');
-                cur.style.setProperty('align-items', 'center', 'important');
-                cur.style.setProperty('height', '100%', 'important');
-                cur.style.setProperty('min-height', '100%', 'important');
-                cur.style.setProperty('flex', '1 1 auto', 'important');
-                if (cur.classList.contains('e-con') || cur.classList.contains('elementor-column') || cur.classList.contains('cmr-modal-body-right')) {
-                    break;
-                }
-                cur = cur.parentElement;
-            }
-
             // Create clean centered Thank You screen
             var successWrapper = document.createElement('div');
             successWrapper.className = 'cmr-form-success-wrapper';
-            successWrapper.style.cssText = 'display:flex !important; flex-direction:column !important; justify-content:center !important; align-items:center !important; text-align:center !important; width:100% !important; height:100% !important; min-height:100% !important; flex:1 1 auto !important; margin:auto 0 !important; padding:40px 20px !important; box-sizing:border-box !important;';
             successWrapper.innerHTML = 
                 '<div class="cmr-form-success-icon">' +
                     '<svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">' +
