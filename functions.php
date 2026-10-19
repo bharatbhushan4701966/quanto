@@ -849,7 +849,77 @@ function cmr_migrate_press_releases_callback() {
 // Global Custom CSS for Menus (Main Header: Normal vs Sticky)
 add_action('wp_head', function() {
     ?>
-    <style>
+    <style id="cmr-header-load-fix">
+        /* 0. Prevent White Header Flash on Homepage Load (Transparent Overlay before scroll) */
+        body.home,
+        body.home-page,
+        body.page-id-14 {
+            background-color: #0b132b !important;
+        }
+
+        body.home header.header,
+        body.home #quanto-header-desktop,
+        body.home .main-header-wrapper,
+        body.home-page header.header,
+        body.home-page #quanto-header-desktop,
+        body.home-page .main-header-wrapper,
+        body.page-id-14 header.header,
+        body.page-id-14 #quanto-header-desktop,
+        body.page-id-14 .main-header-wrapper {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            z-index: 9999 !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            box-shadow: none !important;
+        }
+
+        body.home.admin-bar header.header,
+        body.home.admin-bar #quanto-header-desktop,
+        body.home.admin-bar .main-header-wrapper,
+        body.home-page.admin-bar header.header,
+        body.home-page.admin-bar #quanto-header-desktop,
+        body.home-page.admin-bar .main-header-wrapper,
+        body.page-id-14.admin-bar header.header,
+        body.page-id-14.admin-bar #quanto-header-desktop,
+        body.page-id-14.admin-bar .main-header-wrapper {
+            top: 32px !important;
+        }
+
+        @media (max-width: 782px) {
+            body.home.admin-bar header.header,
+            body.home.admin-bar #quanto-header-desktop,
+            body.home.admin-bar .main-header-wrapper,
+            body.home-page.admin-bar header.header,
+            body.home-page.admin-bar #quanto-header-desktop,
+            body.home-page.admin-bar .main-header-wrapper,
+            body.page-id-14.admin-bar header.header,
+            body.page-id-14.admin-bar #quanto-header-desktop,
+            body.page-id-14.admin-bar .main-header-wrapper {
+                top: 46px !important;
+            }
+        }
+
+        /* Ensure inner header container is strictly transparent before scroll (only turns white on .mas-sticky-header) */
+        body.home .elementor-element-88e448f:not(.mas-sticky-header),
+        body.home .elementor-element-88e448f:not(.mas-sticky-header) > .e-con-inner,
+        body.home-page .elementor-element-88e448f:not(.mas-sticky-header),
+        body.home-page .elementor-element-88e448f:not(.mas-sticky-header) > .e-con-inner,
+        body.page-id-14 .elementor-element-88e448f:not(.mas-sticky-header),
+        body.page-id-14 .elementor-element-88e448f:not(.mas-sticky-header) > .e-con-inner,
+        body.home header .elementor-element-88e448f:not(.mas-sticky-header),
+        body.home header .elementor-element-88e448f:not(.mas-sticky-header) > .e-con-inner,
+        body.home #quanto-header-desktop .elementor-element-88e448f:not(.mas-sticky-header),
+        body.home #quanto-header-desktop .elementor-element-88e448f:not(.mas-sticky-header) > .e-con-inner,
+        body.home .main-header-wrapper .elementor-element-88e448f:not(.mas-sticky-header),
+        body.home .main-header-wrapper .elementor-element-88e448f:not(.mas-sticky-header) > .e-con-inner {
+            background: transparent !important;
+            background-color: transparent !important;
+            box-shadow: none !important;
+        }
+
         /* 1. Normal Header (Blue/Transparent): light white (#d1d1d1) on hover */
         .main-header-wrapper .elementor-nav-menu--main .elementor-item:hover,
         .main-header-wrapper .elementor-nav-menu--main .elementor-item.elementor-item-active,
