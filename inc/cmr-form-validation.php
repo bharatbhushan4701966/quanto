@@ -641,29 +641,24 @@ add_action( 'wp_footer', function() {
     <?php
 });
 
-// Debug reCAPTCHA verification response from Google
-add_filter( 'wpcf7_recaptcha_verify_response', function( $is_human, $response ) {
-    update_option( 'cmr_last_recaptcha_verify', array(
-        'is_human' => $is_human,
-        'response' => $response,
-        'time'     => current_time( 'mysql' ),
-    ) );
-    return $is_human;
-}, 10, 2 );
-
 add_filter( 'wpcf7_feedback_response', function( $response, $result ) {
-    $debug = array(
-        'last_verify' => get_option( 'cmr_last_recaptcha_verify' ),
-    );
+    $debug = array();
     if ( class_exists( 'IQFix_ReCaptcha' ) ) {
         $rc  = IQFix_ReCaptcha::get_instance();
-        $sk  = $rc->get_sitekey();
-        $sec = $rc->get_secret( $sk );
+        $sk  = (string) $rc->get_sitekey();
+        $sec = (string) $rc->get_secret( $sk );
         $debug['plugin_active'] = $rc->is_active();
-        $debug['plugin_sitekey'] = $sk;
-        $debug['plugin_has_secret'] = ! empty( $sec );
-        $debug['plugin_secret_prefix'] = is_string( $sec ) ? substr( $sec, 0, 6 ) . '...' : 'none';
+        $debug['sitekey'] = $sk;
+        $debug['sitekey_len'] = strlen( $sk );
+        $debug['sitekey_suffix'] = substr( $sk, -5 );
+        $debug['secret_len'] = strlen( $sec );
+        $debug['secret_prefix'] = substr( $sec, 0, 7 );
+        $debug['secret_suffix'] = substr( $sec, -5 );
+        $debug['is_same'] = ( $sk === $sec );
+        $all_keys = WPCF7::get_option( 'recaptcha' );
+        $debug['stored_sitekeys'] = is_array( $all_keys ) ? array_keys( $all_keys ) : array();
     }
     $response['cmr_debug'] = $debug;
     return $response;
 }, 10, 2 );
+
