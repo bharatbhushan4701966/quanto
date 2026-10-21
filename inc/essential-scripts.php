@@ -844,11 +844,3 @@ add_action( 'wp_footer', function() {
     </script>
     <?php
 }, 999 );
-
-// Support Google Cloud reCAPTCHA Enterprise keys by mapping api.js to enterprise.js
-add_filter( 'script_loader_src', function( $src, $handle ) {
-    if ( is_string( $src ) && false !== strpos( $src, 'google.com/recaptcha/api.js' ) ) {
-        return str_replace( 'google.com/recaptcha/api.js', 'google.com/recaptcha/enterprise.js', $src );
-    }
-    return $src;
-}, 999, 2 );
