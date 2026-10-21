@@ -3,10 +3,10 @@
  * CMR Universal Email OTP Verification System
  * 
  * Automatically attaches an OTP "Verify Email" workflow to all forms with an email field.
- * - Uniform, identical appearance across ALL forms (popups, consultation, subscribe, footer, career)
- * - Clickable Bootstrap Pill Badge (bg-primary) inside email field when user enters email
- * - Clean, compact OTP box below field with 30s resend timer
- * - On verification, smoothly hides OTP box and displays Bootstrap Pill Badge (bg-success) "✓ Verified Email"
+ * - Attaches directly to input.parentElement with position:relative !important
+ * - Input keeps 100% exact same height, border, radius, font, and styling as all other fields (Name, Phone, etc.)
+ * - Badge sits neatly inside the right side of the input field across ALL modals and forms
+ * - Compact OTP box slides down directly below the field without stretching or distorting the form
  * - Blocks form submission if email is not verified (frontend + backend CF7 validation)
  *
  * @package Quanto
@@ -258,10 +258,10 @@ function cmr_render_email_otp_frontend() {
     $nonce    = wp_create_nonce( 'cmr_otp_nonce' );
     ?>
     <style id="cmr-email-otp-css">
-    /* Universal Field Positioning Context - strictly bound to input width */
-    .cmr-email-field-wrapper,
-    div.cmr-email-field-wrapper,
-    span.cmr-email-field-wrapper {
+    /* Ensure the input's direct parent container is strictly bound */
+    .wpcf7-form-control-wrap,
+    .wpcf7-form-control-wrap[data-name*="email"],
+    .wpcf7-form-control-wrap[data-name*="your-email"] {
         position: relative !important;
         display: block !important;
         width: 100% !important;
@@ -273,12 +273,12 @@ function cmr_render_email_otp_frontend() {
 
     /* Badge container inside the email input (Right-Aligned) */
     .cmr-email-badge-container,
-    .custom-subscribe-form .cmr-email-badge-container,
     .custom-consultation-form .cmr-email-badge-container,
+    .custom-subscribe-form .cmr-email-badge-container,
     .elementor-popup-modal .cmr-email-badge-container,
     .cmr-form .cmr-email-badge-container {
         position: absolute !important;
-        right: 10px !important;
+        right: 8px !important;
         top: 50% !important;
         transform: translateY(-50%) !important;
         z-index: 50 !important;
@@ -286,7 +286,7 @@ function cmr_render_email_otp_frontend() {
         flex-direction: row !important;
         align-items: center !important;
         justify-content: flex-end !important;
-        gap: 5px !important;
+        gap: 4px !important;
         width: auto !important;
         height: auto !important;
         margin: 0 !important;
@@ -295,15 +295,15 @@ function cmr_render_email_otp_frontend() {
         pointer-events: auto !important;
     }
 
-    /* Bootstrap Badges (Insulated from all theme/modal CSS) */
+    /* Bootstrap Badges (Strictly insulated) */
     .cmr-email-badge-container .badge,
-    .custom-subscribe-form .cmr-email-badge-container .badge,
     .custom-consultation-form .cmr-email-badge-container .badge,
+    .custom-subscribe-form .cmr-email-badge-container .badge,
     .elementor-popup-modal .cmr-email-badge-container .badge {
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
-        gap: 4px !important;
+        gap: 3px !important;
         font-family: 'Instrument Sans', sans-serif !important;
         font-size: 11px !important;
         font-weight: 700 !important;
@@ -325,7 +325,7 @@ function cmr_render_email_otp_frontend() {
         text-decoration: none !important;
     }
 
-    /* Unverified "Verify Email" Badge - Bootstrap Primary Style */
+    /* Unverified "Verify Email" Badge */
     .cmr-email-badge-container .cmr-verify-badge {
         background-color: #0d6efd !important;
         background-image: none !important;
@@ -347,7 +347,7 @@ function cmr_render_email_otp_frontend() {
         50% { box-shadow: 0 0 0 5px rgba(220, 53, 69, 0); }
     }
 
-    /* Verified Badge - Bootstrap Success Style */
+    /* Verified Badge */
     .cmr-email-badge-container .cmr-verified-badge {
         background-color: #198754 !important;
         background-image: none !important;
@@ -362,7 +362,7 @@ function cmr_render_email_otp_frontend() {
         stroke-width: 3 !important;
     }
 
-    /* Change Badge - Bootstrap Secondary Style */
+    /* Change Badge */
     .cmr-email-badge-container .cmr-change-badge {
         background-color: #6c757d !important;
         background-image: none !important;
@@ -371,17 +371,17 @@ function cmr_render_email_otp_frontend() {
         height: 20px !important;
         min-height: 20px !important;
         max-height: 20px !important;
-        padding: 0 7px !important;
+        padding: 0 6px !important;
     }
 
     .cmr-email-badge-container .cmr-change-badge:hover {
         background-color: #5c636a !important;
     }
 
-    /* Clean, Compact Bootstrap Card OTP Box (Strictly insulated) */
+    /* Compact OTP Box below field */
     .cmr-otp-box,
-    .custom-subscribe-form .cmr-otp-box,
     .custom-consultation-form .cmr-otp-box,
+    .custom-subscribe-form .cmr-otp-box,
     .elementor-popup-modal .cmr-otp-box {
         display: none;
         width: 100% !important;
@@ -389,7 +389,7 @@ function cmr_render_email_otp_frontend() {
         background: #f8fafc !important;
         border: 1px solid #cfe2ff !important;
         border-radius: 8px !important;
-        padding: 10px 12px !important;
+        padding: 8px 12px !important;
         margin-top: 6px !important;
         margin-bottom: 8px !important;
         box-shadow: 0 2px 6px rgba(13, 110, 253, 0.08) !important;
@@ -403,6 +403,7 @@ function cmr_render_email_otp_frontend() {
     }
 
     .cmr-otp-box .cmr-otp-header-row,
+    .custom-consultation-form .cmr-otp-box .cmr-otp-header-row,
     .custom-subscribe-form .cmr-otp-box .cmr-otp-header-row,
     .elementor-popup-modal .cmr-otp-box .cmr-otp-header-row {
         display: flex !important;
@@ -416,6 +417,7 @@ function cmr_render_email_otp_frontend() {
     }
 
     .cmr-otp-box .cmr-otp-header-row .badge,
+    .custom-consultation-form .cmr-otp-box .cmr-otp-header-row .badge,
     .custom-subscribe-form .cmr-otp-box .cmr-otp-header-row .badge {
         background-color: #cfe2ff !important;
         color: #084298 !important;
@@ -429,6 +431,7 @@ function cmr_render_email_otp_frontend() {
     }
 
     .cmr-otp-box .cmr-otp-controls-row,
+    .custom-consultation-form .cmr-otp-box .cmr-otp-controls-row,
     .custom-subscribe-form .cmr-otp-box .cmr-otp-controls-row,
     .elementor-popup-modal .cmr-otp-box .cmr-otp-controls-row {
         display: flex !important;
@@ -439,11 +442,12 @@ function cmr_render_email_otp_frontend() {
     }
 
     .cmr-otp-box input.cmr-otp-code-input,
+    .custom-consultation-form .cmr-otp-box input.cmr-otp-code-input,
     .custom-subscribe-form .cmr-otp-box input.cmr-otp-code-input,
     .elementor-popup-modal .cmr-otp-box input.cmr-otp-code-input {
-        width: 130px !important;
-        min-width: 130px !important;
-        max-width: 130px !important;
+        width: 125px !important;
+        min-width: 125px !important;
+        max-width: 125px !important;
         height: 32px !important;
         min-height: 32px !important;
         max-height: 32px !important;
@@ -460,7 +464,7 @@ function cmr_render_email_otp_frontend() {
         box-sizing: border-box !important;
         margin: 0 !important;
         display: inline-block !important;
-        flex: 0 0 130px !important;
+        flex: 0 0 125px !important;
     }
 
     .cmr-otp-box input.cmr-otp-code-input:focus {
@@ -480,6 +484,7 @@ function cmr_render_email_otp_frontend() {
     }
 
     .cmr-otp-box .cmr-otp-confirm-btn,
+    .custom-consultation-form .cmr-otp-box .cmr-otp-confirm-btn,
     .custom-subscribe-form .cmr-otp-box .cmr-otp-confirm-btn,
     .elementor-popup-modal .cmr-otp-box .cmr-otp-confirm-btn {
         background-color: #0d6efd !important;
@@ -510,6 +515,7 @@ function cmr_render_email_otp_frontend() {
     }
 
     .cmr-otp-box .cmr-otp-resend-btn,
+    .custom-consultation-form .cmr-otp-box .cmr-otp-resend-btn,
     .custom-subscribe-form .cmr-otp-box .cmr-otp-resend-btn,
     .elementor-popup-modal .cmr-otp-box .cmr-otp-resend-btn {
         background-color: #e9ecef !important;
@@ -588,9 +594,7 @@ function cmr_render_email_otp_frontend() {
         }
 
         function setupEmailOtpField(input) {
-            if (!input || input.getAttribute('data-cmr-otp-ready') === 'true') {
-                return;
-            }
+            if (!input) return;
 
             // Exclude search inputs, coupon inputs, WooCommerce checkout/cart, login
             var form = input.closest('form');
@@ -608,39 +612,40 @@ function cmr_render_email_otp_frontend() {
                 }
             }
 
-            input.setAttribute('data-cmr-otp-ready', 'true');
-
-            // 1. Ensure input is inside a dedicated wrapper with inline !important styles
-            var wrapper = input.parentElement;
-            if (!wrapper || !wrapper.classList.contains('cmr-email-field-wrapper')) {
-                wrapper = document.createElement('div');
-                wrapper.className = 'cmr-email-field-wrapper';
-                wrapper.style.cssText = 'position: relative !important; display: block !important; width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; box-sizing: border-box !important;';
-                input.parentNode.insertBefore(wrapper, input);
-                wrapper.appendChild(input);
-            } else {
-                wrapper.style.cssText = 'position: relative !important; display: block !important; width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; box-sizing: border-box !important;';
+            // 1. Direct parent element (e.g. span.wpcf7-form-control-wrap) is made position:relative !important
+            var parent = input.parentElement;
+            if (parent) {
+                parent.style.setProperty('position', 'relative', 'important');
+                parent.style.setProperty('display', 'block', 'important');
+                parent.style.setProperty('width', '100%', 'important');
+                parent.style.setProperty('max-width', '100%', 'important');
+                parent.style.setProperty('box-sizing', 'border-box', 'important');
             }
 
-            // Also ensure the wrapper's parent container does not collapse
-            if (wrapper.parentElement) {
-                wrapper.parentElement.style.setProperty('position', 'relative', 'important');
-            }
-
-            // 2. Single unified Badge Container inside input
-            var badgeContainer = wrapper.querySelector('.cmr-email-badge-container');
-            if (!badgeContainer) {
+            // 2. Single unified Badge Container appended directly inside parent
+            var badgeContainer = parent ? parent.querySelector('.cmr-email-badge-container') : null;
+            if (!badgeContainer && parent) {
                 badgeContainer = document.createElement('div');
                 badgeContainer.className = 'cmr-email-badge-container';
-                wrapper.appendChild(badgeContainer);
+                parent.appendChild(badgeContainer);
             }
 
-            // 3. Compact Bootstrap Card OTP Box below wrapper
-            var otpBox = wrapper.nextElementSibling;
-            if (!otpBox || !otpBox.classList.contains('cmr-otp-box')) {
+            if (input.getAttribute('data-cmr-otp-ready') === 'true') {
+                if (typeof input._cmrUpdateFieldState === 'function') {
+                    input._cmrUpdateFieldState();
+                }
+                return;
+            }
+
+            input.setAttribute('data-cmr-otp-ready', 'true');
+
+            // 3. Compact Bootstrap Card OTP Box inserted directly after parent
+            var insertTarget = parent.closest('.form-field') || parent;
+            var otpBox = insertTarget.parentElement ? insertTarget.parentElement.querySelector('.cmr-otp-box') : null;
+            if (!otpBox) {
                 otpBox = document.createElement('div');
                 otpBox.className = 'cmr-otp-box';
-                otpBox.style.display = 'none';
+                otpBox.style.setProperty('display', 'none', 'important');
                 otpBox.innerHTML = '' +
                     '<div class="cmr-otp-header-row">' +
                         '<span><span class="badge">OTP Sent</span> Code sent to <strong class="cmr-otp-dest-email"></strong></span>' +
@@ -651,7 +656,12 @@ function cmr_render_email_otp_frontend() {
                         '<span role="button" class="cmr-otp-resend-btn disabled">Resend (30s)</span>' +
                     '</div>' +
                     '<div class="cmr-otp-feedback" style="display:none;"></div>';
-                wrapper.parentNode.insertBefore(otpBox, wrapper.nextSibling);
+
+                if (insertTarget.nextSibling) {
+                    insertTarget.parentNode.insertBefore(otpBox, insertTarget.nextSibling);
+                } else {
+                    insertTarget.parentNode.appendChild(otpBox);
+                }
             }
 
             var otpCodeInput  = otpBox.querySelector('.cmr-otp-code-input');
@@ -698,12 +708,12 @@ function cmr_render_email_otp_frontend() {
                 var email = (input.value || '').trim().toLowerCase();
 
                 // Remove unverified error notice if user is typing
-                var notice = wrapper.parentNode ? wrapper.parentNode.querySelector('.cmr-email-unverified-notice') : null;
+                var notice = insertTarget.parentNode ? insertTarget.parentNode.querySelector('.cmr-email-unverified-notice') : null;
                 if (notice) notice.remove();
 
                 // State 0: Invalid or empty
                 if (!email || !isValidEmail(email)) {
-                    badgeContainer.innerHTML = '';
+                    if (badgeContainer) badgeContainer.innerHTML = '';
                     otpBox.style.setProperty('display', 'none', 'important');
                     input.removeAttribute('data-email-verified');
                     input.readOnly = false;
@@ -716,11 +726,13 @@ function cmr_render_email_otp_frontend() {
                     otpBox.style.setProperty('display', 'none', 'important');
                     input.setAttribute('data-email-verified', 'true');
                     input.readOnly = true;
-                    input.style.setProperty('padding-right', '140px', 'important');
+                    input.style.setProperty('padding-right', '135px', 'important');
 
-                    badgeContainer.innerHTML = '' +
-                        '<span class="badge cmr-verified-badge"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Verified</span>' +
-                        '<span role="button" class="badge cmr-change-badge" title="Change email">Change</span>';
+                    if (badgeContainer) {
+                        badgeContainer.innerHTML = '' +
+                            '<span class="badge cmr-verified-badge"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Verified</span>' +
+                            '<span role="button" class="badge cmr-change-badge" title="Change email">Change</span>';
+                    }
 
                     // Ensure hidden token is set in form
                     var parentForm = input.closest('form');
@@ -742,37 +754,43 @@ function cmr_render_email_otp_frontend() {
                 input.readOnly = false;
                 input.style.setProperty('padding-right', '115px', 'important');
 
-                badgeContainer.innerHTML = '<span role="button" class="badge cmr-verify-badge">✉ Verify Email</span>';
+                if (badgeContainer) {
+                    badgeContainer.innerHTML = '<span role="button" class="badge cmr-verify-badge">✉ Verify Email</span>';
+                }
             }
 
-            input.addEventListener('input', updateFieldState);
-            input.addEventListener('change', updateFieldState);
+            // Bind all input event types to catch manual typing and autofill
+            ['input', 'keyup', 'change', 'focus', 'blur'].forEach(function(evt) {
+                input.addEventListener(evt, updateFieldState);
+            });
 
             // Delegate Click Events on Badge Container
-            badgeContainer.addEventListener('click', function(e) {
-                var target = e.target.closest('.badge');
-                if (!target) return;
+            if (badgeContainer) {
+                badgeContainer.addEventListener('click', function(e) {
+                    var target = e.target.closest('.badge');
+                    if (!target) return;
 
-                // Click "Verify Email"
-                if (target.classList.contains('cmr-verify-badge')) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    triggerSendOtp();
-                }
+                    // Click "Verify Email"
+                    if (target.classList.contains('cmr-verify-badge')) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        triggerSendOtp();
+                    }
 
-                // Click "Change"
-                if (target.classList.contains('cmr-change-badge')) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    var curEmail = (input.value || '').trim().toLowerCase();
-                    delete verifiedEmailTokens[curEmail];
-                    input.readOnly = false;
-                    input.removeAttribute('data-email-verified');
-                    updateFieldState();
-                    input.focus();
-                    input.select();
-                }
-            });
+                    // Click "Change"
+                    if (target.classList.contains('cmr-change-badge')) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        var curEmail = (input.value || '').trim().toLowerCase();
+                        delete verifiedEmailTokens[curEmail];
+                        input.readOnly = false;
+                        input.removeAttribute('data-email-verified');
+                        updateFieldState();
+                        input.focus();
+                        input.select();
+                    }
+                });
+            }
 
             // Action: Send OTP
             function triggerSendOtp() {
@@ -782,7 +800,7 @@ function cmr_render_email_otp_frontend() {
                     return;
                 }
 
-                var vBadge = badgeContainer.querySelector('.cmr-verify-badge');
+                var vBadge = badgeContainer ? badgeContainer.querySelector('.cmr-verify-badge') : null;
                 if (vBadge) {
                     vBadge.textContent = 'Sending...';
                     vBadge.classList.remove('cmr-pulse-attention');
@@ -900,16 +918,19 @@ function cmr_render_email_otp_frontend() {
                 }
             });
 
+            input._cmrUpdateFieldState = updateFieldState;
+
             // Initial check
             updateFieldState();
         }
 
         function initAllEmailOtpFields() {
             var emailFields = document.querySelectorAll(
-                'input[type="email"]:not([data-cmr-otp-ready]), ' +
-                'input[name="your-email"]:not([data-cmr-otp-ready]), ' +
-                'input[name="email-address"]:not([data-cmr-otp-ready]), ' +
-                'input[name="email"]:not([type="hidden"]):not([data-cmr-otp-ready])'
+                'input[type="email"], ' +
+                'input[name="your-email"], ' +
+                'input[name="email-address"], ' +
+                'input.wpcf7-email, ' +
+                'input[name="email"]:not([type="hidden"])'
             );
 
             emailFields.forEach(function(input) {
@@ -919,10 +940,22 @@ function cmr_render_email_otp_frontend() {
 
         document.addEventListener('DOMContentLoaded', initAllEmailOtpFields);
         window.addEventListener('load', initAllEmailOtpFields);
+
+        // Listen for user interaction on any modal/form to guarantee initialization
+        document.addEventListener('focusin', function(e) {
+            var t = e.target;
+            if (t && (t.type === 'email' || (t.name && t.name.indexOf('email') !== -1) || (t.className && t.className.indexOf('wpcf7-email') !== -1))) {
+                setupEmailOtpField(t);
+                if (typeof t._cmrUpdateFieldState === 'function') {
+                    t._cmrUpdateFieldState();
+                }
+            }
+        });
+
         if (typeof jQuery !== 'undefined') {
             jQuery(document).on('elementor/popup/show', function() {
-                setTimeout(initAllEmailOtpFields, 80);
-                setTimeout(initAllEmailOtpFields, 250);
+                setTimeout(initAllEmailOtpFields, 50);
+                setTimeout(initAllEmailOtpFields, 200);
             });
         }
 

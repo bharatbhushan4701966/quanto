@@ -803,6 +803,17 @@ body.modal-open {
     padding: 0 !important;
 }
 
+.wpcf7-form-control-wrap,
+.custom-report-form .wpcf7-form-control-wrap,
+.custom-consultation-form .wpcf7-form-control-wrap,
+.custom-subscribe-form .wpcf7-form-control-wrap,
+.elementor-popup-modal .wpcf7-form-control-wrap,
+.cmr-form .wpcf7-form-control-wrap {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+}
+
 .custom-report-form label,
 .custom-consultation-form label,
 .custom-subscribe-form label,
