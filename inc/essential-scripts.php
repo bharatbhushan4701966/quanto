@@ -301,11 +301,27 @@ add_action( 'wp_footer', function() {
 
                 el.setAttribute('data-cmr-rendered', 'true');
                 try {
-                    grecaptcha.render(el, {
+                    var widgetId = grecaptcha.render(el, {
                         'sitekey': sitekey,
                         'theme': el.getAttribute('data-theme') || 'light',
-                        'size': el.getAttribute('data-size') || 'normal'
+                        'size': el.getAttribute('data-size') || 'normal',
+                        'expired-callback': function() {
+                            try {
+                                if (typeof widgetId !== 'undefined' && widgetId !== null) {
+                                    grecaptcha.reset(widgetId);
+                                } else {
+                                    grecaptcha.reset();
+                                }
+                            } catch(e) {}
+                            var form = el.closest('form');
+                            if (form) {
+                                var ta = form.querySelector('textarea[name="g-recaptcha-response"]');
+                                if (ta) ta.value = '';
+                            }
+                        }
                     });
+                    el.setAttribute('data-widget-id', widgetId);
+                    el._grecaptchaWidgetId = widgetId;
                 } catch(e) {}
             });
         }
@@ -832,6 +848,24 @@ add_action( 'wp_footer', function() {
             if (typeof jQuery !== 'undefined') {
                 jQuery(document).on('elementor/popup/show', function() {
                     setTimeout(cmrInitRecaptchas, 150);
+                    setTimeout(function() {
+                        var popup = document.querySelector('.elementor-popup-modal, .dialog-widget.dialog-type-lightbox');
+                        if (popup) {
+                            var rc = popup.querySelector('.wpcf7-recaptcha, .g-recaptcha');
+                            if (rc) {
+                                var wid = rc.getAttribute('data-widget-id') || rc._grecaptchaWidgetId;
+                                if (typeof grecaptcha !== 'undefined' && typeof grecaptcha.reset === 'function') {
+                                    try {
+                                        if (wid !== null && wid !== undefined) {
+                                            grecaptcha.reset(wid);
+                                        } else {
+                                            grecaptcha.reset();
+                                        }
+                                    } catch(err) {}
+                                }
+                            }
+                        }
+                    }, 250);
                 });
             }
 

@@ -471,10 +471,12 @@ add_action( 'wp_footer', function() {
                     return;
                 }
 
-                // Skip optional fields and coupon codes
+                // Skip optional fields, coupon codes, and reCAPTCHA response elements
                 var inputName = (input.name || '').toLowerCase();
                 var inputId = (input.id || '').toLowerCase();
-                if (inputName === 'coupon_code' || 
+                if (inputName === 'g-recaptcha-response' ||
+                    input.classList.contains('g-recaptcha-response') ||
+                    inputName === 'coupon_code' || 
                     inputId === 'coupon_code' || 
                     input.classList.contains('cmr-coupon-input') || 
                     inputName === 'billing_address_2' || 
@@ -537,14 +539,23 @@ add_action( 'wp_footer', function() {
 
             if (recaptchaContainer || recaptchaResponseEl) {
                 var hasCaptchaSolved = false;
+                var widgetId = recaptchaContainer ? (recaptchaContainer.getAttribute('data-widget-id') || recaptchaContainer._grecaptchaWidgetId) : null;
+
                 if (recaptchaResponseEl && recaptchaResponseEl.value.trim() !== '') {
                     hasCaptchaSolved = true;
                 } else if (typeof grecaptcha !== 'undefined' && typeof grecaptcha.getResponse === 'function') {
                     try {
-                        if (grecaptcha.getResponse().trim() !== '') {
+                        var resp = (widgetId !== null && widgetId !== undefined) ? grecaptcha.getResponse(widgetId) : grecaptcha.getResponse();
+                        if (resp && resp.trim() !== '') {
                             hasCaptchaSolved = true;
                         }
-                    } catch(e) {}
+                    } catch(e) {
+                        try {
+                            if (grecaptcha.getResponse().trim() !== '') {
+                                hasCaptchaSolved = true;
+                            }
+                        } catch(e2) {}
+                    }
                 }
 
                 var visualBox = recaptchaContainer || (recaptchaResponseEl ? recaptchaResponseEl.parentElement : null);
@@ -635,6 +646,27 @@ add_action( 'wp_footer', function() {
                 }, 400);
                 setTimeout(function() { clearInterval(timer); }, 20000);
             }
+        });
+
+        // Auto-reset reCAPTCHA on Contact Form 7 events so user is never stuck with an expired/used token
+        ['wpcf7invalid', 'wpcf7spam', 'wpcf7mailfailed'].forEach(function(evtName) {
+            document.addEventListener(evtName, function(e) {
+                var form = e.target;
+                if (!form) return;
+                var rcEl = form.querySelector('.wpcf7-recaptcha, .g-recaptcha');
+                if (rcEl && typeof grecaptcha !== 'undefined' && typeof grecaptcha.reset === 'function') {
+                    var wid = rcEl.getAttribute('data-widget-id') || rcEl._grecaptchaWidgetId;
+                    try {
+                        if (wid !== null && wid !== undefined) {
+                            grecaptcha.reset(wid);
+                        } else {
+                            grecaptcha.reset();
+                        }
+                    } catch(err) {}
+                }
+                var ta = form.querySelector('textarea[name="g-recaptcha-response"]');
+                if (ta) ta.value = '';
+            });
         });
     })();
     </script>
