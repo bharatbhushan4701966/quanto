@@ -250,11 +250,50 @@ add_action( 'wp_footer', function() {
             }, 2500);
         }
 
+        function cmrRecordSuccessfulSubmission(form) {
+            if (!form) return;
+            var formId = cmrGetFormId(form);
+            if (!formId) return;
+
+            var relatedIds = cmrGetRelatedFormIds(formId);
+            var maxLimit = (typeof window.CMR_RATE_LIMIT_MAX !== 'undefined') ? window.CMR_RATE_LIMIT_MAX : 1;
+            var curCount = 0;
+            try {
+                relatedIds.forEach(function(rid) {
+                    var item = localStorage.getItem('cmr_limit_' + rid);
+                    if (item) {
+                        var parsed = JSON.parse(item);
+                        if (Date.now() - parsed.timestamp < 24 * 3600 * 1000) {
+                            if (parsed.count > curCount) curCount = parsed.count;
+                        }
+                    }
+                });
+            } catch(e) {}
+            curCount++;
+            relatedIds.forEach(function(rid) {
+                try {
+                    localStorage.setItem('cmr_limit_' + rid, JSON.stringify({ count: curCount, timestamp: Date.now() }));
+                } catch(e) {}
+                if (!window.CMR_RATE_LIMITS) window.CMR_RATE_LIMITS = {};
+                window.CMR_RATE_LIMITS[rid] = { count: curCount, max: maxLimit, blocked: (curCount >= maxLimit) };
+            });
+
+            if (curCount >= maxLimit) {
+                cmrDisableSubmitButton(form);
+                if (formId === '8573' || formId === '7935') {
+                    document.querySelectorAll('form[id*="wpcf7-f7935"], form[id*="wpcf7-f8573"], div[data-wpcf7-id="7935"] form, div[data-wpcf7-id="8573"] form').forEach(function(f) {
+                        cmrDisableSubmitButton(f);
+                    });
+                }
+            }
+        }
+
         // Listen for Contact Form 7 native AJAX success event
         document.addEventListener('wpcf7mailsent', function(e) {
             var form = e.target;
             var msg = (e.detail && e.detail.apiResponse && e.detail.apiResponse.message) ? e.detail.apiResponse.message : null;
             if (form) {
+                cmrRecordSuccessfulSubmission(form);
                 showFormSuccessState(form, msg);
             }
         });
@@ -264,10 +303,20 @@ add_action( 'wp_footer', function() {
             jQuery(document).on('submit_success', function(evt, response) {
                 var form = evt.target;
                 if (form) {
+                    cmrRecordSuccessfulSubmission(form);
                     showFormSuccessState(form);
                 }
             });
         }
+
+        // Listen for CF7 validation / spam / limit rejections
+        document.addEventListener('wpcf7invalid', function(e) {
+            var form = e.target;
+            var msg = (e.detail && e.detail.apiResponse && e.detail.apiResponse.message) ? e.detail.apiResponse.message : '';
+            if (form && (msg.toLowerCase().includes('limit') || msg.toLowerCase().includes('24 hours'))) {
+                cmrDisableSubmitButton(form, msg);
+            }
+        });
 
         // Rate Limiter Helpers: Check if form reached daily submission limit (1 per 24 hours) and disable button
         function cmrGetFormId(form) {
@@ -538,176 +587,7 @@ add_action( 'wp_footer', function() {
                 return false;
             }
 
-            // If it's a Contact Form 7 form or Modal Form, handle seamlessly via AJAX to prevent full page reload!
-            if (form.classList.contains('wpcf7-form') || form.closest('.elementor-popup-modal') || form.closest('#cmr-review-modal-box')) {
-                // If it's the review modal or custom job form, let their dedicated handlers process, else AJAX submit:
-                if (!form.id.includes('cmr-job-form') && !form.classList.contains('comment-form')) {
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    var submitBtn = form.querySelector('input[type="submit"], button[type="submit"]');
-                    if (submitBtn) {
-                        if (!submitBtn.getAttribute('data-original-text')) {
-                            submitBtn.setAttribute('data-original-text', submitBtn.tagName === 'INPUT' ? submitBtn.value : submitBtn.innerText);
-                        }
-                        submitBtn.disabled = true;
-                        if (submitBtn.tagName === 'INPUT') submitBtn.value = 'Submitting...';
-                        else submitBtn.innerText = 'Submitting...';
-                    }
-
-                    var actionUrl = form.action || window.location.href;
-                    var formData = new FormData(form);
-
-                    fetch(actionUrl, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
-                    })
-                    .then(function(res) {
-                        return res.text();
-                    })
-                    .then(function(responseBody) {
-                        var isBlocked = false;
-                        var errMsg = '';
-                        var isSuccess = false;
-                        var json = null;
-
-                        try {
-                            json = JSON.parse(responseBody);
-                            if (json.status === 'mail_sent') {
-                                isSuccess = true;
-                            } else {
-                                errMsg = json.message || '';
-                                if (errMsg.toLowerCase().includes('1 submission') || 
-                                    errMsg.toLowerCase().includes('3 submissions') || 
-                                    errMsg.toLowerCase().includes('maximum limit') || 
-                                    errMsg.toLowerCase().includes('24 hours') ||
-                                    (json.cmr_rate_limit && json.cmr_rate_limit.blocked)) {
-                                    isBlocked = true;
-                                }
-                            }
-                        } catch(err) {
-                            if (responseBody.toLowerCase().includes('1 submission') || 
-                                responseBody.toLowerCase().includes('3 submissions') || 
-                                responseBody.toLowerCase().includes('maximum limit')) {
-                                isBlocked = true;
-                            } else if (responseBody.toLowerCase().includes('thank you') || responseBody.toLowerCase().includes('sent successfully')) {
-                                isSuccess = true;
-                            }
-                        }
-
-                        // If blocked: disable submit button immediately & show warning notice
-                        if (isBlocked) {
-                            var fid = cmrGetFormId(form);
-                            var maxLimit = (typeof window.CMR_RATE_LIMIT_MAX !== 'undefined') ? window.CMR_RATE_LIMIT_MAX : 1;
-                            if (fid) {
-                                var relatedIds = cmrGetRelatedFormIds(fid);
-                                relatedIds.forEach(function(rid) {
-                                    try {
-                                        localStorage.setItem('cmr_limit_' + rid, JSON.stringify({ count: maxLimit, timestamp: Date.now() }));
-                                    } catch(e) {}
-                                    if (!window.CMR_RATE_LIMITS) window.CMR_RATE_LIMITS = {};
-                                    window.CMR_RATE_LIMITS[rid] = { count: maxLimit, max: maxLimit, blocked: true };
-                                });
-                            }
-                            cmrDisableSubmitButton(form, errMsg);
-                            return;
-                        }
-
-                        // If submission was rejected (e.g. invalid captcha or validation failed):
-                        if (!isSuccess) {
-                            if (submitBtn) {
-                                submitBtn.disabled = false;
-                                var origText = submitBtn.getAttribute('data-original-text') || 'Submit';
-                                if (submitBtn.tagName === 'INPUT') submitBtn.value = origText;
-                                else submitBtn.innerText = origText;
-                            }
-
-                            var failMsg = errMsg || (json && json.message ? json.message : 'Submission failed. Please check the captcha and required fields.');
-                            var responseOutput = form.querySelector('.wpcf7-response-output');
-                            if (responseOutput) {
-                                responseOutput.innerHTML = failMsg;
-                                responseOutput.style.display = 'block';
-                                responseOutput.classList.remove('wpcf7-mail-sent-ok');
-                                responseOutput.classList.add('wpcf7-validation-errors');
-                                responseOutput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            }
-
-                            // Highlight any invalid fields returned by CF7
-                            if (json && json.invalid_fields && Array.isArray(json.invalid_fields)) {
-                                json.invalid_fields.forEach(function(item) {
-                                    if (item.into) {
-                                        var fieldWrap = form.querySelector(item.into);
-                                        if (fieldWrap) {
-                                            fieldWrap.classList.add('wpcf7-not-valid');
-                                            var inp = fieldWrap.querySelector('input, textarea, select');
-                                            if (inp) inp.classList.add('cmr-input-error');
-                                        }
-                                    }
-                                });
-                            }
-                            return;
-                        }
-
-                        // On successful submission: increment local count
-                        var formId = cmrGetFormId(form);
-                        if (formId) {
-                            var relatedIds = cmrGetRelatedFormIds(formId);
-                            var maxLimit = (typeof window.CMR_RATE_LIMIT_MAX !== 'undefined') ? window.CMR_RATE_LIMIT_MAX : 1;
-                            var curCount = 0;
-                            try {
-                                relatedIds.forEach(function(rid) {
-                                    var item = localStorage.getItem('cmr_limit_' + rid);
-                                    if (item) {
-                                        var parsed = JSON.parse(item);
-                                        if (Date.now() - parsed.timestamp < 24 * 3600 * 1000) {
-                                            if (parsed.count > curCount) curCount = parsed.count;
-                                        }
-                                    }
-                                });
-                            } catch(e) {}
-                            curCount++;
-                            relatedIds.forEach(function(rid) {
-                                try {
-                                    localStorage.setItem('cmr_limit_' + rid, JSON.stringify({ count: curCount, timestamp: Date.now() }));
-                                } catch(e) {}
-                                if (!window.CMR_RATE_LIMITS) window.CMR_RATE_LIMITS = {};
-                                window.CMR_RATE_LIMITS[rid] = { count: curCount, max: maxLimit, blocked: (curCount >= maxLimit) };
-                            });
-
-                            // If daily limit reached, pre-disable the form so next attempt is locked
-                            if (curCount >= maxLimit) {
-                                cmrDisableSubmitButton(form);
-                                if (formId === '8573' || formId === '7935') {
-                                    document.querySelectorAll('form[id*="wpcf7-f7935"], form[id*="wpcf7-f8573"], div[data-wpcf7-id="7935"] form, div[data-wpcf7-id="8573"] form').forEach(function(f) {
-                                        cmrDisableSubmitButton(f);
-                                    });
-                                }
-                            }
-                        }
-
-                        showFormSuccessState(form);
-                    })
-                    .catch(function(err) {
-                        if (submitBtn) {
-                            submitBtn.disabled = false;
-                            var origText = submitBtn.getAttribute('data-original-text') || 'Submit';
-                            if (submitBtn.tagName === 'INPUT') submitBtn.value = origText;
-                            else submitBtn.innerText = origText;
-                        }
-                        var responseOutput = form.querySelector('.wpcf7-response-output');
-                        if (responseOutput) {
-                            responseOutput.innerText = 'Something went wrong. Please check your connection and try again.';
-                            responseOutput.style.display = 'block';
-                            responseOutput.classList.add('wpcf7-validation-errors');
-                        }
-                    });
-
-                    return false;
-                }
-            }
+            // All validation checks passed: Allow native Contact Form 7 or Elementor AJAX to submit!
         }, true);
 
         // Clear error style immediately as user types or checks
