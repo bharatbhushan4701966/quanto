@@ -2,10 +2,10 @@
 /**
  * CMR Universal Email OTP Verification System
  * 
- * Automatically attaches a Bootstrap-style OTP "Verify Email" Badge to all forms with an email field.
+ * Automatically attaches an OTP "Verify Email" workflow to all forms with an email field.
  * - Uniform, identical appearance across ALL forms (popups, consultation, subscribe, footer, career)
- * - Clickable Bootstrap Pill Badge (bg-primary) inside email field when user types email
- * - Clean Bootstrap card OTP box below field with 30s resend timer
+ * - Clickable Bootstrap Pill Badge (bg-primary) inside email field when user enters email
+ * - Clean, compact OTP box below field with 30s resend timer
  * - On verification, smoothly hides OTP box and displays Bootstrap Pill Badge (bg-success) "✓ Verified Email"
  * - Blocks form submission if email is not verified (frontend + backend CF7 validation)
  *
@@ -258,71 +258,69 @@ function cmr_render_email_otp_frontend() {
     $nonce    = wp_create_nonce( 'cmr_otp_nonce' );
     ?>
     <style id="cmr-email-otp-css">
-    /* Universal Field Wrapper */
-    .cmr-email-field-wrapper {
+    /* Universal Field Positioning Context - strictly bound to input width */
+    .cmr-email-field-wrapper,
+    div.cmr-email-field-wrapper,
+    span.cmr-email-field-wrapper {
         position: relative !important;
         display: block !important;
         width: 100% !important;
+        max-width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
-    }
-
-    .cmr-email-field-wrapper input[type="email"] {
-        width: 100% !important;
         box-sizing: border-box !important;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
     }
 
-    /* Padding when badge is active so text never overlaps */
-    .cmr-email-field-wrapper.cmr-state-unverified input[type="email"] {
-        padding-right: 125px !important;
-    }
-
-    .cmr-email-field-wrapper.cmr-state-verified input[type="email"] {
-        padding-right: 155px !important;
-        border-color: #198754 !important;
-        background-color: #f8fff9 !important;
-        color: #0f5132 !important;
-    }
-
-    /* Badge Container inside input (Right-Aligned) */
-    .cmr-email-badge-container {
+    /* Badge container inside the email input (Right-Aligned) */
+    .cmr-email-badge-container,
+    .custom-subscribe-form .cmr-email-badge-container,
+    .custom-consultation-form .cmr-email-badge-container,
+    .elementor-popup-modal .cmr-email-badge-container,
+    .cmr-form .cmr-email-badge-container {
         position: absolute !important;
-        right: 8px !important;
+        right: 10px !important;
         top: 50% !important;
         transform: translateY(-50%) !important;
-        z-index: 25 !important;
+        z-index: 50 !important;
         display: inline-flex !important;
+        flex-direction: row !important;
         align-items: center !important;
+        justify-content: flex-end !important;
         gap: 5px !important;
-        pointer-events: auto !important;
+        width: auto !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
         line-height: 1 !important;
-        white-space: nowrap !important;
+        pointer-events: auto !important;
     }
 
-    /* Bootstrap Pill Badges (Insulated from modal/theme button CSS) */
-    .cmr-email-badge-container .badge {
+    /* Bootstrap Badges (Insulated from all theme/modal CSS) */
+    .cmr-email-badge-container .badge,
+    .custom-subscribe-form .cmr-email-badge-container .badge,
+    .custom-consultation-form .cmr-email-badge-container .badge,
+    .elementor-popup-modal .cmr-email-badge-container .badge {
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
         gap: 4px !important;
-        font-family: inherit !important;
+        font-family: 'Instrument Sans', sans-serif !important;
         font-size: 11px !important;
         font-weight: 700 !important;
-        line-height: 1.2 !important;
-        padding: 5px 11px !important;
+        line-height: 1 !important;
+        height: 24px !important;
+        min-height: 24px !important;
+        max-height: 24px !important;
+        padding: 0 10px !important;
         border-radius: 50rem !important;
         white-space: nowrap !important;
         text-transform: none !important;
         letter-spacing: 0.2px !important;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
         cursor: pointer !important;
-        transition: all 0.2s ease !important;
         border: none !important;
         margin: 0 !important;
         width: auto !important;
-        height: auto !important;
-        min-height: unset !important;
         min-width: unset !important;
         text-decoration: none !important;
     }
@@ -336,8 +334,7 @@ function cmr_render_email_otp_frontend() {
 
     .cmr-email-badge-container .cmr-verify-badge:hover {
         background-color: #0b5ed7 !important;
-        transform: scale(1.04) !important;
-        box-shadow: 0 2px 6px rgba(13, 110, 253, 0.4) !important;
+        transform: scale(1.03) !important;
     }
 
     .cmr-email-badge-container .cmr-verify-badge.cmr-pulse-attention {
@@ -359,8 +356,8 @@ function cmr_render_email_otp_frontend() {
     }
 
     .cmr-email-badge-container .cmr-verified-badge svg {
-        width: 12px !important;
-        height: 12px !important;
+        width: 11px !important;
+        height: 11px !important;
         stroke: #ffffff !important;
         stroke-width: 3 !important;
     }
@@ -371,128 +368,160 @@ function cmr_render_email_otp_frontend() {
         background-image: none !important;
         color: #ffffff !important;
         font-size: 10px !important;
-        padding: 4px 8px !important;
+        height: 20px !important;
+        min-height: 20px !important;
+        max-height: 20px !important;
+        padding: 0 7px !important;
     }
 
     .cmr-email-badge-container .cmr-change-badge:hover {
         background-color: #5c636a !important;
-        transform: scale(1.05) !important;
     }
 
-    /* Compact Bootstrap Card OTP Box */
-    .cmr-otp-box {
-        margin-top: 8px !important;
-        margin-bottom: 12px !important;
-        background-color: #f8fafc !important;
+    /* Clean, Compact Bootstrap Card OTP Box (Strictly insulated) */
+    .cmr-otp-box,
+    .custom-subscribe-form .cmr-otp-box,
+    .custom-consultation-form .cmr-otp-box,
+    .elementor-popup-modal .cmr-otp-box {
+        display: none;
+        width: 100% !important;
+        max-width: 100% !important;
+        background: #f8fafc !important;
         border: 1px solid #cfe2ff !important;
         border-radius: 8px !important;
-        padding: 12px 14px !important;
-        box-shadow: 0 2px 8px rgba(13, 110, 253, 0.08) !important;
-        animation: cmrOtpSlide 0.25s ease-out !important;
-        width: 100% !important;
+        padding: 10px 12px !important;
+        margin-top: 6px !important;
+        margin-bottom: 8px !important;
+        box-shadow: 0 2px 6px rgba(13, 110, 253, 0.08) !important;
         box-sizing: border-box !important;
+        animation: cmrOtpSlide 0.25s ease-out !important;
     }
 
     @keyframes cmrOtpSlide {
-        from { opacity: 0; transform: translateY(-5px); }
+        from { opacity: 0; transform: translateY(-4px); }
         to { opacity: 1; transform: translateY(0); }
     }
 
-    .cmr-otp-header-row {
+    .cmr-otp-box .cmr-otp-header-row,
+    .custom-subscribe-form .cmr-otp-box .cmr-otp-header-row,
+    .elementor-popup-modal .cmr-otp-box .cmr-otp-header-row {
         display: flex !important;
+        flex-direction: row !important;
         align-items: center !important;
         justify-content: space-between !important;
-        margin-bottom: 8px !important;
-        font-size: 12px !important;
+        margin-bottom: 6px !important;
+        font-size: 11.5px !important;
         color: #495057 !important;
+        width: 100% !important;
     }
 
-    .cmr-otp-header-row .badge {
+    .cmr-otp-box .cmr-otp-header-row .badge,
+    .custom-subscribe-form .cmr-otp-box .cmr-otp-header-row .badge {
         background-color: #cfe2ff !important;
         color: #084298 !important;
-        font-size: 10px !important;
+        font-size: 9.5px !important;
         font-weight: 700 !important;
-        padding: 3px 8px !important;
+        padding: 2px 6px !important;
         border-radius: 50rem !important;
         text-transform: uppercase !important;
+        display: inline-block !important;
+        width: auto !important;
     }
 
-    .cmr-otp-controls-row {
+    .cmr-otp-box .cmr-otp-controls-row,
+    .custom-subscribe-form .cmr-otp-box .cmr-otp-controls-row,
+    .elementor-popup-modal .cmr-otp-box .cmr-otp-controls-row {
         display: flex !important;
+        flex-direction: row !important;
         align-items: center !important;
-        gap: 8px !important;
-        flex-wrap: wrap !important;
+        gap: 6px !important;
+        width: 100% !important;
     }
 
-    .cmr-otp-code-input {
+    .cmr-otp-box input.cmr-otp-code-input,
+    .custom-subscribe-form .cmr-otp-box input.cmr-otp-code-input,
+    .elementor-popup-modal .cmr-otp-box input.cmr-otp-code-input {
         width: 130px !important;
-        max-width: 140px !important;
-        height: 36px !important;
-        min-height: 36px !important;
+        min-width: 130px !important;
+        max-width: 130px !important;
+        height: 32px !important;
+        min-height: 32px !important;
+        max-height: 32px !important;
         border: 1.5px solid #ced4da !important;
         border-radius: 6px !important;
         background: #ffffff !important;
-        font-size: 15px !important;
+        font-size: 14px !important;
         font-weight: 700 !important;
-        letter-spacing: 3px !important;
+        letter-spacing: 2px !important;
         text-align: center !important;
         color: #212529 !important;
-        padding: 0 6px !important;
+        padding: 0 4px !important;
         outline: none !important;
         box-sizing: border-box !important;
+        margin: 0 !important;
+        display: inline-block !important;
+        flex: 0 0 130px !important;
     }
 
-    .cmr-otp-code-input:focus {
+    .cmr-otp-box input.cmr-otp-code-input:focus {
         border-color: #0d6efd !important;
-        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15) !important;
+        box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.15) !important;
     }
 
-    .cmr-otp-code-input.cmr-shake {
+    .cmr-otp-box input.cmr-otp-code-input.cmr-shake {
         animation: cmrShake 0.4s ease-in-out !important;
         border-color: #dc3545 !important;
     }
 
     @keyframes cmrShake {
         0%, 100% { transform: translateX(0); }
-        20%, 60% { transform: translateX(-5px); }
-        40%, 80% { transform: translateX(5px); }
+        20%, 60% { transform: translateX(-4px); }
+        40%, 80% { transform: translateX(4px); }
     }
 
-    .cmr-otp-confirm-btn {
+    .cmr-otp-box .cmr-otp-confirm-btn,
+    .custom-subscribe-form .cmr-otp-box .cmr-otp-confirm-btn,
+    .elementor-popup-modal .cmr-otp-box .cmr-otp-confirm-btn {
         background-color: #0d6efd !important;
         background-image: none !important;
         color: #ffffff !important;
-        font-size: 12px !important;
+        font-size: 11px !important;
         font-weight: 700 !important;
-        height: 36px !important;
-        min-height: 36px !important;
-        padding: 0 16px !important;
-        border-radius: 50rem !important;
+        height: 32px !important;
+        min-height: 32px !important;
+        max-height: 32px !important;
+        padding: 0 12px !important;
+        border-radius: 6px !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
         cursor: pointer !important;
         border: none !important;
-        box-shadow: 0 1px 3px rgba(13, 110, 253, 0.3) !important;
+        box-shadow: 0 1px 2px rgba(13, 110, 253, 0.3) !important;
         text-transform: none !important;
         width: auto !important;
         margin: 0 !important;
+        flex: 0 0 auto !important;
+        white-space: nowrap !important;
     }
 
-    .cmr-otp-confirm-btn:hover {
+    .cmr-otp-box .cmr-otp-confirm-btn:hover {
         background-color: #0b5ed7 !important;
     }
 
-    .cmr-otp-resend-btn {
+    .cmr-otp-box .cmr-otp-resend-btn,
+    .custom-subscribe-form .cmr-otp-box .cmr-otp-resend-btn,
+    .elementor-popup-modal .cmr-otp-box .cmr-otp-resend-btn {
         background-color: #e9ecef !important;
         background-image: none !important;
         color: #495057 !important;
-        font-size: 11px !important;
+        font-size: 10.5px !important;
         font-weight: 600 !important;
-        height: 36px !important;
-        min-height: 36px !important;
-        padding: 0 12px !important;
-        border-radius: 50rem !important;
+        height: 32px !important;
+        min-height: 32px !important;
+        max-height: 32px !important;
+        padding: 0 8px !important;
+        border-radius: 6px !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -501,24 +530,21 @@ function cmr_render_email_otp_frontend() {
         text-transform: none !important;
         width: auto !important;
         margin: 0 !important;
+        flex: 0 0 auto !important;
+        white-space: nowrap !important;
     }
 
-    .cmr-otp-resend-btn:hover:not(.disabled) {
-        background-color: #dee2e6 !important;
-        color: #212529 !important;
-    }
-
-    .cmr-otp-resend-btn.disabled {
+    .cmr-otp-box .cmr-otp-resend-btn.disabled {
         opacity: 0.55 !important;
         cursor: not-allowed !important;
     }
 
     .cmr-otp-feedback {
-        font-size: 12px !important;
-        margin-top: 6px !important;
-        padding: 4px 8px !important;
+        font-size: 11.5px !important;
+        margin-top: 5px !important;
+        padding: 3px 6px !important;
         border-radius: 4px !important;
-        line-height: 1.4 !important;
+        line-height: 1.3 !important;
     }
 
     .cmr-otp-feedback.cmr-success {
@@ -584,13 +610,21 @@ function cmr_render_email_otp_frontend() {
 
             input.setAttribute('data-cmr-otp-ready', 'true');
 
-            // 1. Ensure input is inside dedicated wrapper
+            // 1. Ensure input is inside a dedicated wrapper with inline !important styles
             var wrapper = input.parentElement;
             if (!wrapper || !wrapper.classList.contains('cmr-email-field-wrapper')) {
                 wrapper = document.createElement('div');
                 wrapper.className = 'cmr-email-field-wrapper';
+                wrapper.style.cssText = 'position: relative !important; display: block !important; width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; box-sizing: border-box !important;';
                 input.parentNode.insertBefore(wrapper, input);
                 wrapper.appendChild(input);
+            } else {
+                wrapper.style.cssText = 'position: relative !important; display: block !important; width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; box-sizing: border-box !important;';
+            }
+
+            // Also ensure the wrapper's parent container does not collapse
+            if (wrapper.parentElement) {
+                wrapper.parentElement.style.setProperty('position', 'relative', 'important');
             }
 
             // 2. Single unified Badge Container inside input
@@ -609,7 +643,7 @@ function cmr_render_email_otp_frontend() {
                 otpBox.style.display = 'none';
                 otpBox.innerHTML = '' +
                     '<div class="cmr-otp-header-row">' +
-                        '<span><span class="badge">OTP Sent</span> Enter code sent to <strong class="cmr-otp-dest-email"></strong></span>' +
+                        '<span><span class="badge">OTP Sent</span> Code sent to <strong class="cmr-otp-dest-email"></strong></span>' +
                     '</div>' +
                     '<div class="cmr-otp-controls-row">' +
                         '<input type="text" class="cmr-otp-code-input" maxlength="6" inputmode="numeric" placeholder="OTP" autocomplete="one-time-code" />' +
@@ -670,23 +704,22 @@ function cmr_render_email_otp_frontend() {
                 // State 0: Invalid or empty
                 if (!email || !isValidEmail(email)) {
                     badgeContainer.innerHTML = '';
-                    wrapper.classList.remove('cmr-state-unverified', 'cmr-state-verified');
-                    otpBox.style.display = 'none';
+                    otpBox.style.setProperty('display', 'none', 'important');
                     input.removeAttribute('data-email-verified');
                     input.readOnly = false;
+                    input.style.removeProperty('padding-right');
                     return;
                 }
 
                 // State 2: Already Verified
                 if (verifiedEmailTokens[email]) {
-                    wrapper.classList.remove('cmr-state-unverified');
-                    wrapper.classList.add('cmr-state-verified');
-                    otpBox.style.display = 'none';
+                    otpBox.style.setProperty('display', 'none', 'important');
                     input.setAttribute('data-email-verified', 'true');
                     input.readOnly = true;
+                    input.style.setProperty('padding-right', '140px', 'important');
 
                     badgeContainer.innerHTML = '' +
-                        '<span class="badge cmr-verified-badge"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Verified Email</span>' +
+                        '<span class="badge cmr-verified-badge"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Verified</span>' +
                         '<span role="button" class="badge cmr-change-badge" title="Change email">Change</span>';
 
                     // Ensure hidden token is set in form
@@ -705,10 +738,9 @@ function cmr_render_email_otp_frontend() {
                 }
 
                 // State 1: Valid email, NOT verified -> Show "Verify Email" Bootstrap Badge
-                wrapper.classList.add('cmr-state-unverified');
-                wrapper.classList.remove('cmr-state-verified');
                 input.removeAttribute('data-email-verified');
                 input.readOnly = false;
+                input.style.setProperty('padding-right', '115px', 'important');
 
                 badgeContainer.innerHTML = '<span role="button" class="badge cmr-verify-badge">✉ Verify Email</span>';
             }
@@ -770,7 +802,7 @@ function cmr_render_email_otp_frontend() {
                     if (res.success) {
                         if (vBadge) vBadge.textContent = 'OTP Sent';
                         if (otpDestEmail) otpDestEmail.textContent = email;
-                        otpBox.style.display = 'block';
+                        otpBox.style.setProperty('display', 'block', 'important');
                         clearOtpFeedback();
                         showOtpFeedback(res.data.message || 'OTP sent! Please check your email inbox.', 'info');
                         startResendTimer();
@@ -832,7 +864,7 @@ function cmr_render_email_otp_frontend() {
                         showOtpFeedback('✓ ' + (res.data.message || 'Email verified successfully!'), 'success');
 
                         setTimeout(function() {
-                            otpBox.style.display = 'none';
+                            otpBox.style.setProperty('display', 'none', 'important');
                             updateFieldState();
                         }, 600);
                     } else {
