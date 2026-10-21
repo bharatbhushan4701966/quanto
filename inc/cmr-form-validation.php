@@ -505,9 +505,25 @@ add_action( 'wp_footer', function() {
                     if (!checkedRadio) {
                         isInvalid = true;
                     }
-                } else if (type === 'email') {
+                } else if (type === 'email' || input.name === 'your-email' || input.name === 'email' || input.name === 'email-address') {
                     if (!val || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
                         isInvalid = true;
+                    } else if (input.getAttribute('data-email-verified') !== 'true') {
+                        isInvalid = true;
+                        var wrap = input.closest('.cmr-email-field-wrapper, .wpcf7-form-control-wrap, p, div');
+                        if (wrap) {
+                            var existingNotice = wrap.querySelector('.cmr-email-unverified-notice');
+                            if (!existingNotice) {
+                                var notice = document.createElement('span');
+                                notice.className = 'cmr-email-unverified-notice';
+                                notice.textContent = 'Please click "Verify Email" to verify your email before submitting.';
+                                wrap.appendChild(notice);
+                            }
+                            var vBtn = wrap.querySelector('.cmr-verify-email-trigger-btn');
+                            if (vBtn) {
+                                vBtn.classList.add('cmr-pulse-attention');
+                            }
+                        }
                     }
                 } else if (type === 'tel') {
                     if (!val || val.length < 5) {
