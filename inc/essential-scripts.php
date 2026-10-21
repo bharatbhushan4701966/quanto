@@ -214,6 +214,11 @@ add_action( 'wp_footer', function() {
     (function() {
         // Update Modal Headings & Texts
         function updateCMRModalTexts() {
+            // Do not override headings while inside Elementor editor
+            if (document.body && (document.body.classList.contains('elementor-editor-active') || document.body.classList.contains('elementor-editor-preview'))) {
+                return;
+            }
+
             var modalContainers = document.querySelectorAll(
                 '.elementor-popup-modal, ' +
                 '.elementor-7832, .elementor-7849, ' +
@@ -225,28 +230,10 @@ add_action( 'wp_footer', function() {
                 '[data-elementor-type="popup"]'
             );
 
-            // 1. Subscriber form heading -> "CMR Connect Subscribe"
-            document.querySelectorAll(
-                '.custom-subscribe-form .elementor-heading-title, ' +
-                '.elementor-7832 .elementor-heading-title, ' +
-                '.elementor-7849 .elementor-heading-title, ' +
-                '[data-elementor-id="7832"] .elementor-heading-title, ' +
-                '[data-elementor-id="7849"] .elementor-heading-title'
-            ).forEach(function(el) {
-                el.textContent = 'CMR Connect Subscribe';
-            });
-            document.querySelectorAll('.elementor-heading-title').forEach(function(el) {
-                var txt = el.textContent.trim().toLowerCase();
-                if (txt === 'subscribe to insights' || txt === 'newsletter subscription') {
-                    el.textContent = 'CMR Connect Subscribe';
-                }
-            });
-
-            // 2. CMR GTM form heading -> "CMR GTM partner with us"
+            // 1. CMR GTM form heading -> "CMR GTM partner with us" (Only for GTM popups 52978/52977 or explicit "partner with us" text)
             document.querySelectorAll(
                 '[data-elementor-id="52978"] .elementor-heading-title, ' +
-                '.elementor-element-112e4d5 .elementor-heading-title, ' +
-                '.elementor-element-112e4d5 h3, .elementor-element-112e4d5 h2'
+                '[data-elementor-id="52977"] .elementor-heading-title'
             ).forEach(function(el) {
                 el.textContent = 'CMR GTM partner with us';
             });

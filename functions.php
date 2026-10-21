@@ -6306,11 +6306,9 @@ add_filter( 'elementor/frontend/the_content', function( $content ) {
     if ( is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
         return $content;
     }
-    // Subscriber form heading & checkboxes
+    // Subscriber form checkboxes
     if ( strpos( $content, 'custom-subscribe-form' ) !== false || strpos( $content, 'Stay Ahead with CMR' ) !== false || strpos( $content, '7832' ) !== false || strpos( $content, '7849' ) !== false ) {
         $content = str_replace( 'CMR Pulse', 'CMR GTM', $content );
-        $content = str_ireplace( '>Subscribe to Insights<', '>CMR Connect Subscribe<', $content );
-        $content = str_ireplace( 'Subscribe to Insights', 'CMR Connect Subscribe', $content );
     }
     // CMR GTM partner with us heading
     if ( strpos( $content, '52977' ) !== false || strpos( $content, '52978' ) !== false || strpos( $content, 'Partner with us' ) !== false || strpos( $content, 'cmr-gtm' ) !== false ) {
