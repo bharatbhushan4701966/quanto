@@ -481,6 +481,54 @@ add_action( 'wp_footer', function() {
                 }
             });
 
+            // Google reCAPTCHA v2 Validation
+            var recaptchaContainer = form.querySelector('.g-recaptcha, .wpcf7-recaptcha, .elementor-g-recaptcha, [data-name*="recaptcha"]');
+            var recaptchaResponseEl = form.querySelector('textarea[name="g-recaptcha-response"], input[name="g-recaptcha-response"]');
+
+            if (recaptchaContainer || recaptchaResponseEl) {
+                var hasCaptchaSolved = false;
+                if (recaptchaResponseEl && recaptchaResponseEl.value.trim() !== '') {
+                    hasCaptchaSolved = true;
+                } else if (typeof grecaptcha !== 'undefined' && typeof grecaptcha.getResponse === 'function') {
+                    try {
+                        if (grecaptcha.getResponse().trim() !== '') {
+                            hasCaptchaSolved = true;
+                        }
+                    } catch(e) {}
+                }
+
+                var visualBox = recaptchaContainer || (recaptchaResponseEl ? recaptchaResponseEl.parentElement : null);
+                if (!hasCaptchaSolved) {
+                    invalidFields.push(visualBox || recaptchaResponseEl);
+                    if (visualBox) {
+                        visualBox.style.setProperty('outline', '2px solid #ef4444', 'important');
+                        visualBox.style.setProperty('outline-offset', '2px', 'important');
+                        visualBox.style.setProperty('border-radius', '4px', 'important');
+                        visualBox.classList.add('cmr-input-error');
+
+                        var existingNotice = visualBox.parentElement ? visualBox.parentElement.querySelector('.cmr-recaptcha-error-notice') : null;
+                        if (!existingNotice && visualBox.parentElement) {
+                            var notice = document.createElement('div');
+                            notice.className = 'cmr-recaptcha-error-notice';
+                            notice.style.color = '#ef4444';
+                            notice.style.fontSize = '13px';
+                            notice.style.fontWeight = '500';
+                            notice.style.marginTop = '6px';
+                            notice.innerText = 'Please complete the CAPTCHA verification.';
+                            visualBox.parentElement.appendChild(notice);
+                        }
+                    }
+                } else {
+                    if (visualBox) {
+                        visualBox.style.removeProperty('outline');
+                        visualBox.style.removeProperty('outline-offset');
+                        visualBox.classList.remove('cmr-input-error');
+                        var existingNotice = visualBox.parentElement ? visualBox.parentElement.querySelector('.cmr-recaptcha-error-notice') : null;
+                        if (existingNotice) existingNotice.remove();
+                    }
+                }
+            }
+
             if (invalidFields.length > 0) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -489,7 +537,11 @@ add_action( 'wp_footer', function() {
                 }
 
                 var firstInvalid = invalidFields[0];
-                firstInvalid.focus();
+                if (firstInvalid && typeof firstInvalid.focus === 'function' && firstInvalid.tagName !== 'DIV') {
+                    firstInvalid.focus();
+                } else if (firstInvalid && typeof firstInvalid.scrollIntoView === 'function') {
+                    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
 
                 var responseOutput = form.querySelector('.wpcf7-response-output');
                 if (responseOutput) {
@@ -508,6 +560,9 @@ add_action( 'wp_footer', function() {
 
                     var submitBtn = form.querySelector('input[type="submit"], button[type="submit"]');
                     if (submitBtn) {
+                        if (!submitBtn.getAttribute('data-original-text')) {
+                            submitBtn.setAttribute('data-original-text', submitBtn.tagName === 'INPUT' ? submitBtn.value : submitBtn.innerText);
+                        }
                         submitBtn.disabled = true;
                         if (submitBtn.tagName === 'INPUT') submitBtn.value = 'Submitting...';
                         else submitBtn.innerText = 'Submitting...';
@@ -529,10 +584,14 @@ add_action( 'wp_footer', function() {
                     .then(function(responseBody) {
                         var isBlocked = false;
                         var errMsg = '';
+                        var isSuccess = false;
+                        var json = null;
 
                         try {
-                            var json = JSON.parse(responseBody);
-                            if (json.status !== 'mail_sent') {
+                            json = JSON.parse(responseBody);
+                            if (json.status === 'mail_sent') {
+                                isSuccess = true;
+                            } else {
                                 errMsg = json.message || '';
                                 if (errMsg.toLowerCase().includes('3 submissions') || 
                                     errMsg.toLowerCase().includes('maximum limit') || 
@@ -545,6 +604,8 @@ add_action( 'wp_footer', function() {
                             if (responseBody.toLowerCase().includes('3 submissions') || 
                                 responseBody.toLowerCase().includes('maximum limit')) {
                                 isBlocked = true;
+                            } else if (responseBody.toLowerCase().includes('thank you') || responseBody.toLowerCase().includes('sent successfully')) {
+                                isSuccess = true;
                             }
                         }
 
@@ -562,6 +623,41 @@ add_action( 'wp_footer', function() {
                                 });
                             }
                             cmrDisableSubmitButton(form, errMsg);
+                            return;
+                        }
+
+                        // If submission was rejected (e.g. invalid captcha or validation failed):
+                        if (!isSuccess) {
+                            if (submitBtn) {
+                                submitBtn.disabled = false;
+                                var origText = submitBtn.getAttribute('data-original-text') || 'Submit';
+                                if (submitBtn.tagName === 'INPUT') submitBtn.value = origText;
+                                else submitBtn.innerText = origText;
+                            }
+
+                            var failMsg = errMsg || (json && json.message ? json.message : 'Submission failed. Please check the captcha and required fields.');
+                            var responseOutput = form.querySelector('.wpcf7-response-output');
+                            if (responseOutput) {
+                                responseOutput.innerHTML = failMsg;
+                                responseOutput.style.display = 'block';
+                                responseOutput.classList.remove('wpcf7-mail-sent-ok');
+                                responseOutput.classList.add('wpcf7-validation-errors');
+                                responseOutput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+
+                            // Highlight any invalid fields returned by CF7
+                            if (json && json.invalid_fields && Array.isArray(json.invalid_fields)) {
+                                json.invalid_fields.forEach(function(item) {
+                                    if (item.into) {
+                                        var fieldWrap = form.querySelector(item.into);
+                                        if (fieldWrap) {
+                                            fieldWrap.classList.add('wpcf7-not-valid');
+                                            var inp = fieldWrap.querySelector('input, textarea, select');
+                                            if (inp) inp.classList.add('cmr-input-error');
+                                        }
+                                    }
+                                });
+                            }
                             return;
                         }
 
@@ -604,7 +700,18 @@ add_action( 'wp_footer', function() {
                         showFormSuccessState(form);
                     })
                     .catch(function(err) {
-                        showFormSuccessState(form);
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            var origText = submitBtn.getAttribute('data-original-text') || 'Submit';
+                            if (submitBtn.tagName === 'INPUT') submitBtn.value = origText;
+                            else submitBtn.innerText = origText;
+                        }
+                        var responseOutput = form.querySelector('.wpcf7-response-output');
+                        if (responseOutput) {
+                            responseOutput.innerText = 'Something went wrong. Please check your connection and try again.';
+                            responseOutput.style.display = 'block';
+                            responseOutput.classList.add('wpcf7-validation-errors');
+                        }
                     });
 
                     return false;
@@ -633,6 +740,31 @@ add_action( 'wp_footer', function() {
                     var wrap = target.closest('.wpcf7-form-control-wrap');
                     if (wrap) wrap.classList.remove('wpcf7-not-valid');
                 }
+            }
+        });
+
+        // Clear reCAPTCHA error styling once user clicks or interacts with the captcha
+        document.addEventListener('click', function(e) {
+            var target = e.target;
+            var box = target ? target.closest('.g-recaptcha, .wpcf7-recaptcha, .elementor-g-recaptcha, [data-name*="recaptcha"]') : null;
+            if (box) {
+                var timer = setInterval(function() {
+                    var form = box.closest('form');
+                    var ta = form ? form.querySelector('textarea[name="g-recaptcha-response"]') : null;
+                    var solved = (ta && ta.value.trim() !== '');
+                    if (!solved && typeof grecaptcha !== 'undefined' && grecaptcha.getResponse) {
+                        try { solved = (grecaptcha.getResponse().trim() !== ''); } catch(err) {}
+                    }
+                    if (solved) {
+                        box.style.removeProperty('outline');
+                        box.style.removeProperty('outline-offset');
+                        box.classList.remove('cmr-input-error');
+                        var notice = box.parentElement ? box.parentElement.querySelector('.cmr-recaptcha-error-notice') : null;
+                        if (notice) notice.remove();
+                        clearInterval(timer);
+                    }
+                }, 400);
+                setTimeout(function() { clearInterval(timer); }, 20000);
             }
         });
     })();
