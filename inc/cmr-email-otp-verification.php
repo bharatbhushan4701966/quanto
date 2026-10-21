@@ -243,9 +243,16 @@ function cmr_dispatch_otp_email( $to_email, $otp_code ) {
 </body>
 </html>';
 
+    $site_domain  = parse_url( home_url(), PHP_URL_HOST ) ?: 'cmrindia.com';
+    $clean_domain = preg_replace( '/^www\./', '', $site_domain );
+    $default_from = 'no-reply@' . $clean_domain;
+
+    $from_email = apply_filters( 'cmr_otp_from_email', $default_from );
+    $from_name  = apply_filters( 'cmr_otp_from_name', 'CyberMedia Research (CMR)' );
+
     $headers = array(
         'Content-Type: text/html; charset=UTF-8',
-        'From: CyberMedia Research (CMR) <no-reply@cmrindia.com>',
+        'From: ' . $from_name . ' <' . $from_email . '>',
     );
 
     return wp_mail( $to_email, $subject, $body, $headers );
