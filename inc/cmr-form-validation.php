@@ -657,6 +657,18 @@ add_filter( 'wpcf7_feedback_response', function( $response, $result ) {
         $debug['is_same'] = ( $sk === $sec );
         $all_keys = WPCF7::get_option( 'recaptcha' );
         $debug['stored_sitekeys'] = is_array( $all_keys ) ? array_keys( $all_keys ) : array();
+
+        // Direct outbound test to Google siteverify
+        $test_res = wp_safe_remote_post( 'https://www.google.com/recaptcha/api/siteverify', array(
+            'body' => array( 'secret' => $sec, 'response' => 'test' ),
+            'timeout' => 5
+        ) );
+        if ( is_wp_error( $test_res ) ) {
+            $debug['outbound_error'] = $test_res->get_error_message();
+        } else {
+            $debug['outbound_code'] = wp_remote_retrieve_response_code( $test_res );
+            $debug['outbound_body'] = json_decode( wp_remote_retrieve_body( $test_res ), true );
+        }
     }
     $response['cmr_debug'] = $debug;
     return $response;
