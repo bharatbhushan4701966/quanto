@@ -287,43 +287,125 @@ add_action( 'wp_footer', function() {
             });
         }
 
-        // Ensure Google reCAPTCHA v2 widgets inside Elementor Popups are rendered once safely
-        function cmrInitRecaptchas() {
+        /**
+         * reCAPTCHA Timeout Fix:
+         * The plugin's recaptchaCallback renders ALL captchas on page load, including those
+         * inside hidden Elementor popup containers (display:none). Google's API times out
+         * trying to initialize iframes inside zero-size hidden elements.
+         *
+         * Fix: Override recaptchaCallback to temporarily detach hidden-popup captchas from
+         * the DOM before the plugin renders, mark them 'data-cmr-deferred', then re-attach.
+         * They get rendered properly only when the popup opens via cmrInitRecaptchas().
+         */
+        (function cmrPatchRecaptcha() {
+            // This runs in wp_footer priority 999, after footer scripts (priority 20)
+            // so window.recaptchaCallback is already defined by the plugin.
+            var _orig = window.recaptchaCallback;
+            if (typeof _orig !== 'function') return;
+
+            window.recaptchaCallback = function() {
+                // Find captchas inside hidden popup containers
+                var detached = [];
+                var forms = document.getElementsByTagName('form');
+                for (var i = 0; i < forms.length; i++) {
+                    var captchas = forms[i].getElementsByClassName('wpcf7-recaptcha');
+                    // Copy to array since we'll detach elements (live HTMLCollection mutates)
+                    var captchaArr = Array.prototype.slice.call(captchas);
+                    for (var j = 0; j < captchaArr.length; j++) {
+                        var el = captchaArr[j];
+                        if (!el.getAttribute('data-sitekey')) continue;
+                        var popup = el.closest
+                            ? el.closest('.elementor-popup-modal, .dialog-widget, [data-elementor-type="popup"]')
+                            : null;
+                        if (popup) {
+                            var cs = window.getComputedStyle(popup);
+                            if (cs.display === 'none' || popup.classList.contains('dialog-hidden')) {
+                                // Temporarily remove from DOM so the plugin skips it
+                                var placeholder = document.createComment('cmr-recaptcha-deferred');
+                                if (el.parentNode) {
+                                    el.parentNode.insertBefore(placeholder, el);
+                                    el.parentNode.removeChild(el);
+                                    el.setAttribute('data-cmr-deferred', 'true');
+                                    detached.push({ el: el, ph: placeholder });
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Call original: only visible (non-popup) captchas remain in DOM now
+                try { _orig(); } catch(e) {}
+
+                // Re-attach deferred captchas to their original positions
+                for (var k = 0; k < detached.length; k++) {
+                    var item = detached[k];
+                    if (item.ph.parentNode) {
+                        item.ph.parentNode.insertBefore(item.el, item.ph);
+                        item.ph.parentNode.removeChild(item.ph);
+                    }
+                }
+            };
+
+            // Reset our deferred captchas on form submit (plugin only resets its own tracked ones)
+            document.addEventListener('wpcf7submit', function(event) {
+                var s = event.detail && event.detail.status;
+                if (s === 'spam' || s === 'mail_sent' || s === 'mail_failed') {
+                    document.querySelectorAll('.wpcf7-recaptcha[data-cmr-rendered="true"]').forEach(function(rc) {
+                        var wid = rc._grecaptchaWidgetId;
+                        if (typeof grecaptcha !== 'undefined' && wid !== undefined && wid !== null) {
+                            try { grecaptcha.reset(wid); } catch(e) {}
+                        }
+                    });
+                }
+            }, false);
+        })();
+
+        /**
+         * Render deferred reCAPTCHA widgets inside a popup container.
+         * Called after popup becomes visible so Google API can size the iframe correctly.
+         */
+        function cmrInitRecaptchas(container) {
             if (typeof grecaptcha === 'undefined' || typeof grecaptcha.render !== 'function') return;
 
-            var items = document.querySelectorAll('.wpcf7-recaptcha, .g-recaptcha');
+            var scope = container || document;
+            var items = scope.querySelectorAll('.wpcf7-recaptcha');
+
             items.forEach(function(el) {
-                if (el.querySelector('iframe') || el.children.length > 0 || el.getAttribute('data-cmr-rendered') === 'true') {
-                    return;
-                }
+                // Skip if already rendered
+                if (el.getAttribute('data-cmr-rendered') === 'true') return;
+                if (el.querySelector('iframe')) return;
 
                 var sitekey = el.getAttribute('data-sitekey');
                 if (!sitekey) return;
 
                 el.setAttribute('data-cmr-rendered', 'true');
+                el.removeAttribute('data-cmr-deferred');
+
+                var params = {
+                    'sitekey': sitekey,
+                    'type':     el.getAttribute('data-type'),
+                    'size':     el.getAttribute('data-size')  || 'normal',
+                    'theme':    el.getAttribute('data-theme') || 'light',
+                    'align':    el.getAttribute('data-align'),
+                    'badge':    el.getAttribute('data-badge'),
+                    'tabindex': el.getAttribute('data-tabindex')
+                };
+
+                var cb = el.getAttribute('data-callback');
+                if (cb && typeof window[cb] === 'function') params['callback'] = window[cb];
+
+                var ecb = el.getAttribute('data-expired-callback');
+                if (ecb && typeof window[ecb] === 'function') params['expired-callback'] = window[ecb];
+
                 try {
-                    var widgetId = grecaptcha.render(el, {
-                        'sitekey': sitekey,
-                        'theme': el.getAttribute('data-theme') || 'light',
-                        'size': el.getAttribute('data-size') || 'normal',
-                        'expired-callback': function() {
-                            try {
-                                if (typeof widgetId !== 'undefined' && widgetId !== null) {
-                                    grecaptcha.reset(widgetId);
-                                } else {
-                                    grecaptcha.reset();
-                                }
-                            } catch(e) {}
-                            var form = el.closest('form');
-                            if (form) {
-                                var ta = form.querySelector('textarea[name="g-recaptcha-response"]');
-                                if (ta) ta.value = '';
-                            }
-                        }
-                    });
-                    el.setAttribute('data-widget-id', widgetId);
+                    var widgetId = grecaptcha.render(el, params);
                     el._grecaptchaWidgetId = widgetId;
-                } catch(e) {}
+                    el.setAttribute('data-widget-id', widgetId);
+                } catch(e) {
+                    // Render failed — restore deferred state for next popup open
+                    el.removeAttribute('data-cmr-rendered');
+                    el.setAttribute('data-cmr-deferred', 'true');
+                }
             });
         }
 
@@ -847,28 +929,51 @@ add_action( 'wp_footer', function() {
 
             // Hook into Elementor popup show event
             if (typeof jQuery !== 'undefined') {
-                jQuery(document).on('elementor/popup/show', function() {
+                jQuery(document).on('elementor/popup/show', function(evt, popupData) {
                     updateCMRModalTexts();
                     checkActiveModals();
-                    setTimeout(cmrInitRecaptchas, 150);
-                    setTimeout(function() {
-                        var popup = document.querySelector('.elementor-popup-modal, .dialog-widget.dialog-type-lightbox');
-                        if (popup) {
-                            var rc = popup.querySelector('.wpcf7-recaptcha, .g-recaptcha');
-                            if (rc) {
-                                var wid = rc.getAttribute('data-widget-id') || rc._grecaptchaWidgetId;
-                                if (typeof grecaptcha !== 'undefined' && typeof grecaptcha.reset === 'function') {
-                                    try {
-                                        if (wid !== null && wid !== undefined) {
-                                            grecaptcha.reset(wid);
-                                        } else {
-                                            grecaptcha.reset();
-                                        }
-                                    } catch(err) {}
-                                }
+
+                    // Resolve the popup container that just became visible
+                    var popupId = popupData && popupData.id ? popupData.id : null;
+                    var popup = null;
+                    if (popupId) {
+                        popup = document.querySelector('.elementor-popup-modal[data-elementor-id="' + popupId + '"]') ||
+                                document.querySelector('[data-elementor-id="' + popupId + '"]') ||
+                                document.querySelector('.elementor-' + popupId);
+                    }
+                    if (!popup) {
+                        // Fallback: first visible popup
+                        var allPopups = document.querySelectorAll('.elementor-popup-modal, .dialog-widget.dialog-type-lightbox');
+                        for (var pi = 0; pi < allPopups.length; pi++) {
+                            var p = allPopups[pi];
+                            if (p.style.display !== 'none' && window.getComputedStyle(p).display !== 'none') {
+                                popup = p;
+                                break;
                             }
                         }
-                    }, 250);
+                    }
+
+                    // Step 1: Render any deferred (unrendered) captcha in this popup
+                    if (popup) {
+                        setTimeout(function() { cmrInitRecaptchas(popup); }, 150);
+                    }
+
+                    // Step 2: Reset already-rendered captchas so user gets a fresh widget
+                    setTimeout(function() {
+                        var scope = popup || document;
+                        scope.querySelectorAll('.wpcf7-recaptcha[data-cmr-rendered="true"]').forEach(function(rc) {
+                            var wid = rc._grecaptchaWidgetId;
+                            if (typeof grecaptcha !== 'undefined' && typeof grecaptcha.reset === 'function') {
+                                try {
+                                    if (wid !== null && wid !== undefined) {
+                                        grecaptcha.reset(wid);
+                                    } else {
+                                        grecaptcha.reset();
+                                    }
+                                } catch(err) {}
+                            }
+                        });
+                    }, 300);
                 });
             }
 
