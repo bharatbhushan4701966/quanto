@@ -640,3 +640,30 @@ add_action( 'wp_footer', function() {
     </script>
     <?php
 });
+
+// Debug reCAPTCHA verification response from Google
+add_filter( 'wpcf7_recaptcha_verify_response', function( $is_human, $response ) {
+    update_option( 'cmr_last_recaptcha_verify', array(
+        'is_human' => $is_human,
+        'response' => $response,
+        'time'     => current_time( 'mysql' ),
+    ) );
+    return $is_human;
+}, 10, 2 );
+
+add_filter( 'wpcf7_feedback_response', function( $response, $result ) {
+    $debug = array(
+        'last_verify' => get_option( 'cmr_last_recaptcha_verify' ),
+    );
+    if ( class_exists( 'IQFix_ReCaptcha' ) ) {
+        $rc  = IQFix_ReCaptcha::get_instance();
+        $sk  = $rc->get_sitekey();
+        $sec = $rc->get_secret( $sk );
+        $debug['plugin_active'] = $rc->is_active();
+        $debug['plugin_sitekey'] = $sk;
+        $debug['plugin_has_secret'] = ! empty( $sec );
+        $debug['plugin_secret_prefix'] = is_string( $sec ) ? substr( $sec, 0, 6 ) . '...' : 'none';
+    }
+    $response['cmr_debug'] = $debug;
+    return $response;
+}, 10, 2 );
