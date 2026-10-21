@@ -230,19 +230,6 @@ add_action( 'wp_footer', function() {
                 '[data-elementor-type="popup"]'
             );
 
-            // 1. CMR GTM form heading -> "CMR GTM partner with us" (Only for GTM popups 52978/52977 or explicit "partner with us" text)
-            document.querySelectorAll(
-                '[data-elementor-id="52978"] .elementor-heading-title, ' +
-                '[data-elementor-id="52977"] .elementor-heading-title'
-            ).forEach(function(el) {
-                el.textContent = 'CMR GTM partner with us';
-            });
-            document.querySelectorAll('.elementor-heading-title').forEach(function(el) {
-                var txt = el.textContent.trim().toLowerCase();
-                if (txt === 'partner with us') {
-                    el.textContent = 'CMR GTM partner with us';
-                }
-            });
 
             // 3. Talk to Analyst modal heading -> "Request a Consultation"
             document.querySelectorAll(

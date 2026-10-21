@@ -6310,10 +6310,6 @@ add_filter( 'elementor/frontend/the_content', function( $content ) {
     if ( strpos( $content, 'custom-subscribe-form' ) !== false || strpos( $content, 'Stay Ahead with CMR' ) !== false || strpos( $content, '7832' ) !== false || strpos( $content, '7849' ) !== false ) {
         $content = str_replace( 'CMR Pulse', 'CMR GTM', $content );
     }
-    // CMR GTM partner with us heading
-    if ( strpos( $content, '52977' ) !== false || strpos( $content, '52978' ) !== false || strpos( $content, 'Partner with us' ) !== false || strpos( $content, 'cmr-gtm' ) !== false ) {
-        $content = str_ireplace( '>Partner with us<', '>CMR GTM partner with us<', $content );
-    }
     return $content;
 }, 999 );
 
