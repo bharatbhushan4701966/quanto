@@ -505,26 +505,12 @@ add_action( 'wp_footer', function() {
                         visualBox.style.setProperty('outline-offset', '2px', 'important');
                         visualBox.style.setProperty('border-radius', '4px', 'important');
                         visualBox.classList.add('cmr-input-error');
-
-                        var existingNotice = visualBox.parentElement ? visualBox.parentElement.querySelector('.cmr-recaptcha-error-notice') : null;
-                        if (!existingNotice && visualBox.parentElement) {
-                            var notice = document.createElement('div');
-                            notice.className = 'cmr-recaptcha-error-notice';
-                            notice.style.color = '#ef4444';
-                            notice.style.fontSize = '13px';
-                            notice.style.fontWeight = '500';
-                            notice.style.marginTop = '6px';
-                            notice.innerText = 'Please complete the CAPTCHA verification.';
-                            visualBox.parentElement.appendChild(notice);
-                        }
                     }
                 } else {
                     if (visualBox) {
                         visualBox.style.removeProperty('outline');
                         visualBox.style.removeProperty('outline-offset');
                         visualBox.classList.remove('cmr-input-error');
-                        var existingNotice = visualBox.parentElement ? visualBox.parentElement.querySelector('.cmr-recaptcha-error-notice') : null;
-                        if (existingNotice) existingNotice.remove();
                     }
                 }
             }
@@ -759,8 +745,6 @@ add_action( 'wp_footer', function() {
                         box.style.removeProperty('outline');
                         box.style.removeProperty('outline-offset');
                         box.classList.remove('cmr-input-error');
-                        var notice = box.parentElement ? box.parentElement.querySelector('.cmr-recaptcha-error-notice') : null;
-                        if (notice) notice.remove();
                         clearInterval(timer);
                     }
                 }, 400);
