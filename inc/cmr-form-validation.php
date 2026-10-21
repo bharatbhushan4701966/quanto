@@ -519,7 +519,7 @@ add_action( 'wp_footer', function() {
                                 notice.textContent = 'Please click "Verify Email" to verify your email before submitting.';
                                 wrap.appendChild(notice);
                             }
-                            var vBtn = wrap.querySelector('.cmr-verify-email-trigger-btn');
+                            var vBtn = wrap.querySelector('.cmr-verify-badge, .cmr-verify-email-trigger-btn');
                             if (vBtn) {
                                 vBtn.classList.add('cmr-pulse-attention');
                             }

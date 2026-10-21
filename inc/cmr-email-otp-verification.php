@@ -588,15 +588,19 @@ function cmr_render_email_otp_frontend() {
         };
 
         var verifiedEmailTokens = {};
+        var resendIntervals = {};
 
         function isValidEmail(email) {
             return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(email).trim());
         }
 
-        function setupEmailOtpField(input) {
-            if (!input) return;
+        function isEmailField(input) {
+            if (!input || input.tagName !== 'INPUT') return false;
+            var type = (input.type || '').toLowerCase();
+            if (type === 'hidden' || type === 'checkbox' || type === 'radio' || type === 'submit' || type === 'button') {
+                return false;
+            }
 
-            // Exclude search inputs, coupon inputs, WooCommerce checkout/cart, login
             var form = input.closest('form');
             if (form) {
                 var formClass = form.className || '';
@@ -608,357 +612,430 @@ function cmr_render_email_otp_frontend() {
                     formId === 'loginform' ||
                     input.classList.contains('cmr-coupon-input') ||
                     input.name === 'coupon_code') {
-                    return;
+                    return false;
                 }
             }
 
-            // 1. Direct parent element (e.g. span.wpcf7-form-control-wrap) is made position:relative !important
-            var parent = input.parentElement;
-            if (parent) {
-                parent.style.setProperty('position', 'relative', 'important');
-                parent.style.setProperty('display', 'block', 'important');
-                parent.style.setProperty('width', '100%', 'important');
-                parent.style.setProperty('max-width', '100%', 'important');
-                parent.style.setProperty('box-sizing', 'border-box', 'important');
-            }
+            var name = (input.name || '').toLowerCase();
+            var cls = (input.className || '').toLowerCase();
 
-            // 2. Single unified Badge Container appended directly inside parent
-            var badgeContainer = parent ? parent.querySelector('.cmr-email-badge-container') : null;
-            if (!badgeContainer && parent) {
+            return type === 'email' ||
+                   name === 'your-email' ||
+                   name === 'email' ||
+                   name === 'email-address' ||
+                   name.indexOf('email') !== -1 ||
+                   cls.indexOf('wpcf7-email') !== -1;
+        }
+
+        function getOrCreateBadgeContainer(input) {
+            var parent = input.parentElement;
+            if (!parent) return null;
+
+            parent.style.setProperty('position', 'relative', 'important');
+            parent.style.setProperty('display', 'block', 'important');
+            parent.style.setProperty('width', '100%', 'important');
+            parent.style.setProperty('max-width', '100%', 'important');
+            parent.style.setProperty('box-sizing', 'border-box', 'important');
+
+            var badgeContainer = parent.querySelector('.cmr-email-badge-container');
+            if (!badgeContainer) {
                 badgeContainer = document.createElement('div');
                 badgeContainer.className = 'cmr-email-badge-container';
                 parent.appendChild(badgeContainer);
             }
+            return badgeContainer;
+        }
 
-            if (input.getAttribute('data-cmr-otp-ready') === 'true') {
-                if (typeof input._cmrUpdateFieldState === 'function') {
-                    input._cmrUpdateFieldState();
+        function getOrCreateOtpBox(input) {
+            var parent = input.parentElement;
+            if (!parent) return null;
+
+            var insertTarget = input.closest('.form-field, .cmr-input-group, p') || parent;
+            var parentNode = insertTarget.parentNode;
+            if (!parentNode) return null;
+
+            var existing = insertTarget.nextElementSibling;
+            if (existing && existing.classList.contains('cmr-otp-box')) {
+                existing._targetInput = input;
+                return existing;
+            }
+
+            var otpBox = document.createElement('div');
+            otpBox.className = 'cmr-otp-box';
+            otpBox.style.setProperty('display', 'none', 'important');
+            otpBox._targetInput = input;
+            otpBox.innerHTML = '' +
+                '<div class="cmr-otp-header-row">' +
+                    '<span><span class="badge">OTP Sent</span> Code sent to <strong class="cmr-otp-dest-email"></strong></span>' +
+                '</div>' +
+                '<div class="cmr-otp-controls-row">' +
+                    '<input type="text" class="cmr-otp-code-input" maxlength="6" inputmode="numeric" placeholder="OTP" autocomplete="one-time-code" />' +
+                    '<span role="button" class="cmr-otp-confirm-btn">Verify</span>' +
+                    '<span role="button" class="cmr-otp-resend-btn disabled">Resend (30s)</span>' +
+                '</div>' +
+                '<div class="cmr-otp-feedback" style="display:none;"></div>';
+
+            if (insertTarget.nextSibling) {
+                parentNode.insertBefore(otpBox, insertTarget.nextSibling);
+            } else {
+                parentNode.appendChild(otpBox);
+            }
+
+            return otpBox;
+        }
+
+        function showOtpFeedback(otpBox, msg, type) {
+            if (!otpBox) return;
+            var feedback = otpBox.querySelector('.cmr-otp-feedback');
+            if (!feedback) return;
+            feedback.className = 'cmr-otp-feedback cmr-' + type;
+            feedback.textContent = msg;
+            feedback.style.display = 'block';
+        }
+
+        function clearOtpFeedback(otpBox) {
+            if (!otpBox) return;
+            var feedback = otpBox.querySelector('.cmr-otp-feedback');
+            if (!feedback) return;
+            feedback.style.display = 'none';
+            feedback.textContent = '';
+        }
+
+        function startResendTimer(otpBox) {
+            if (!otpBox) return;
+            var resendBtn = otpBox.querySelector('.cmr-otp-resend-btn');
+            if (!resendBtn) return;
+
+            var boxId = otpBox._resendId || (otpBox._resendId = Math.random().toString(36).slice(2));
+            if (resendIntervals[boxId]) clearInterval(resendIntervals[boxId]);
+
+            var seconds = 30;
+            resendBtn.classList.add('disabled');
+            resendBtn.textContent = 'Resend (' + seconds + 's)';
+
+            resendIntervals[boxId] = setInterval(function() {
+                seconds--;
+                if (seconds <= 0) {
+                    clearInterval(resendIntervals[boxId]);
+                    delete resendIntervals[boxId];
+                    resendBtn.classList.remove('disabled');
+                    resendBtn.textContent = 'Resend OTP';
+                } else {
+                    resendBtn.textContent = 'Resend (' + seconds + 's)';
+                }
+            }, 1000);
+        }
+
+        function updateFieldState(input) {
+            if (!isEmailField(input)) return;
+
+            var email = (input.value || '').trim().toLowerCase();
+            var badgeContainer = getOrCreateBadgeContainer(input);
+            var otpBox = getOrCreateOtpBox(input);
+
+            // Remove unverified error notice if user is typing
+            var formField = input.closest('.form-field, .cmr-input-group, p') || input.parentElement;
+            if (formField && formField.parentNode) {
+                var notice = formField.parentNode.querySelector('.cmr-email-unverified-notice');
+                if (notice) notice.remove();
+            }
+
+            // 1. Invalid or empty email
+            if (!email || !isValidEmail(email)) {
+                if (badgeContainer) badgeContainer.innerHTML = '';
+                if (otpBox) otpBox.style.setProperty('display', 'none', 'important');
+                input.removeAttribute('data-email-verified');
+                input.readOnly = false;
+                input.style.removeProperty('padding-right');
+                return;
+            }
+
+            // 2. Already verified email
+            if (verifiedEmailTokens[email]) {
+                if (otpBox) otpBox.style.setProperty('display', 'none', 'important');
+                input.setAttribute('data-email-verified', 'true');
+                input.readOnly = true;
+                input.style.setProperty('padding-right', '135px', 'important');
+
+                if (badgeContainer) {
+                    badgeContainer.innerHTML = '' +
+                        '<span class="badge cmr-verified-badge"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Verified</span>' +
+                        '<span role="button" class="badge cmr-change-badge" title="Change email">Change</span>';
+                }
+
+                var parentForm = input.closest('form');
+                if (parentForm) {
+                    var hiddenToken = parentForm.querySelector('input[name="cmr_email_verified_token"]');
+                    if (!hiddenToken) {
+                        hiddenToken = document.createElement('input');
+                        hiddenToken.type = 'hidden';
+                        hiddenToken.name = 'cmr_email_verified_token';
+                        parentForm.appendChild(hiddenToken);
+                    }
+                    hiddenToken.value = verifiedEmailTokens[email];
                 }
                 return;
             }
 
-            input.setAttribute('data-cmr-otp-ready', 'true');
+            // 3. Valid email, NOT verified -> Show "Verify Email" Bootstrap Badge
+            input.removeAttribute('data-email-verified');
+            input.readOnly = false;
+            input.style.setProperty('padding-right', '115px', 'important');
 
-            // 3. Compact Bootstrap Card OTP Box inserted directly after parent
-            var insertTarget = parent.closest('.form-field') || parent;
-            var otpBox = insertTarget.parentElement ? insertTarget.parentElement.querySelector('.cmr-otp-box') : null;
-            if (!otpBox) {
-                otpBox = document.createElement('div');
-                otpBox.className = 'cmr-otp-box';
-                otpBox.style.setProperty('display', 'none', 'important');
-                otpBox.innerHTML = '' +
-                    '<div class="cmr-otp-header-row">' +
-                        '<span><span class="badge">OTP Sent</span> Code sent to <strong class="cmr-otp-dest-email"></strong></span>' +
-                    '</div>' +
-                    '<div class="cmr-otp-controls-row">' +
-                        '<input type="text" class="cmr-otp-code-input" maxlength="6" inputmode="numeric" placeholder="OTP" autocomplete="one-time-code" />' +
-                        '<span role="button" class="cmr-otp-confirm-btn">Verify</span>' +
-                        '<span role="button" class="cmr-otp-resend-btn disabled">Resend (30s)</span>' +
-                    '</div>' +
-                    '<div class="cmr-otp-feedback" style="display:none;"></div>';
-
-                if (insertTarget.nextSibling) {
-                    insertTarget.parentNode.insertBefore(otpBox, insertTarget.nextSibling);
-                } else {
-                    insertTarget.parentNode.appendChild(otpBox);
-                }
-            }
-
-            var otpCodeInput  = otpBox.querySelector('.cmr-otp-code-input');
-            var otpConfirmBtn = otpBox.querySelector('.cmr-otp-confirm-btn');
-            var otpResendBtn  = otpBox.querySelector('.cmr-otp-resend-btn');
-            var otpFeedback   = otpBox.querySelector('.cmr-otp-feedback');
-            var otpDestEmail  = otpBox.querySelector('.cmr-otp-dest-email');
-
-            var resendInterval = null;
-
-            function showOtpFeedback(msg, type) {
-                if (!otpFeedback) return;
-                otpFeedback.className = 'cmr-otp-feedback cmr-' + type;
-                otpFeedback.textContent = msg;
-                otpFeedback.style.display = 'block';
-            }
-
-            function clearOtpFeedback() {
-                if (!otpFeedback) return;
-                otpFeedback.style.display = 'none';
-                otpFeedback.textContent = '';
-            }
-
-            function startResendTimer() {
-                if (resendInterval) clearInterval(resendInterval);
-                var seconds = 30;
-                otpResendBtn.classList.add('disabled');
-                otpResendBtn.textContent = 'Resend (' + seconds + 's)';
-
-                resendInterval = setInterval(function() {
-                    seconds--;
-                    if (seconds <= 0) {
-                        clearInterval(resendInterval);
-                        otpResendBtn.classList.remove('disabled');
-                        otpResendBtn.textContent = 'Resend OTP';
-                    } else {
-                        otpResendBtn.textContent = 'Resend (' + seconds + 's)';
-                    }
-                }, 1000);
-            }
-
-            // Sync Badge Container State
-            function updateFieldState() {
-                var email = (input.value || '').trim().toLowerCase();
-
-                // Remove unverified error notice if user is typing
-                var notice = insertTarget.parentNode ? insertTarget.parentNode.querySelector('.cmr-email-unverified-notice') : null;
-                if (notice) notice.remove();
-
-                // State 0: Invalid or empty
-                if (!email || !isValidEmail(email)) {
-                    if (badgeContainer) badgeContainer.innerHTML = '';
-                    otpBox.style.setProperty('display', 'none', 'important');
-                    input.removeAttribute('data-email-verified');
-                    input.readOnly = false;
-                    input.style.removeProperty('padding-right');
-                    return;
-                }
-
-                // State 2: Already Verified
-                if (verifiedEmailTokens[email]) {
-                    otpBox.style.setProperty('display', 'none', 'important');
-                    input.setAttribute('data-email-verified', 'true');
-                    input.readOnly = true;
-                    input.style.setProperty('padding-right', '135px', 'important');
-
-                    if (badgeContainer) {
-                        badgeContainer.innerHTML = '' +
-                            '<span class="badge cmr-verified-badge"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Verified</span>' +
-                            '<span role="button" class="badge cmr-change-badge" title="Change email">Change</span>';
-                    }
-
-                    // Ensure hidden token is set in form
-                    var parentForm = input.closest('form');
-                    if (parentForm) {
-                        var hiddenToken = parentForm.querySelector('input[name="cmr_email_verified_token"]');
-                        if (!hiddenToken) {
-                            hiddenToken = document.createElement('input');
-                            hiddenToken.type = 'hidden';
-                            hiddenToken.name = 'cmr_email_verified_token';
-                            parentForm.appendChild(hiddenToken);
-                        }
-                        hiddenToken.value = verifiedEmailTokens[email];
-                    }
-                    return;
-                }
-
-                // State 1: Valid email, NOT verified -> Show "Verify Email" Bootstrap Badge
-                input.removeAttribute('data-email-verified');
-                input.readOnly = false;
-                input.style.setProperty('padding-right', '115px', 'important');
-
-                if (badgeContainer) {
-                    badgeContainer.innerHTML = '<span role="button" class="badge cmr-verify-badge">✉ Verify Email</span>';
-                }
-            }
-
-            // Bind all input event types to catch manual typing and autofill
-            ['input', 'keyup', 'change', 'focus', 'blur'].forEach(function(evt) {
-                input.addEventListener(evt, updateFieldState);
-            });
-
-            // Delegate Click Events on Badge Container
             if (badgeContainer) {
-                badgeContainer.addEventListener('click', function(e) {
-                    var target = e.target.closest('.badge');
-                    if (!target) return;
+                badgeContainer.innerHTML = '<span role="button" class="badge cmr-verify-badge">✉ Verify Email</span>';
+            }
+        }
 
-                    // Click "Verify Email"
-                    if (target.classList.contains('cmr-verify-badge')) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        triggerSendOtp();
-                    }
-
-                    // Click "Change"
-                    if (target.classList.contains('cmr-change-badge')) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        var curEmail = (input.value || '').trim().toLowerCase();
-                        delete verifiedEmailTokens[curEmail];
-                        input.readOnly = false;
-                        input.removeAttribute('data-email-verified');
-                        updateFieldState();
-                        input.focus();
-                        input.select();
-                    }
-                });
+        // Send OTP
+        function triggerSendOtp(input) {
+            if (!input) return;
+            var email = (input.value || '').trim();
+            if (!isValidEmail(email)) {
+                input.focus();
+                return;
             }
 
-            // Action: Send OTP
-            function triggerSendOtp() {
-                var email = (input.value || '').trim();
-                if (!isValidEmail(email)) {
-                    input.focus();
-                    return;
-                }
+            var badgeContainer = getOrCreateBadgeContainer(input);
+            var otpBox = getOrCreateOtpBox(input);
+            var vBadge = badgeContainer ? badgeContainer.querySelector('.cmr-verify-badge') : null;
 
-                var vBadge = badgeContainer ? badgeContainer.querySelector('.cmr-verify-badge') : null;
-                if (vBadge) {
-                    vBadge.textContent = 'Sending...';
-                    vBadge.classList.remove('cmr-pulse-attention');
-                }
+            if (vBadge) {
+                vBadge.textContent = 'Sending...';
+                vBadge.classList.remove('cmr-pulse-attention');
+            }
 
-                var fd = new FormData();
-                fd.append('action', 'cmr_send_email_otp');
-                fd.append('email', email);
-                fd.append('nonce', CMR_OTP_CONFIG.nonce);
+            var fd = new FormData();
+            fd.append('action', 'cmr_send_email_otp');
+            fd.append('email', email);
+            fd.append('nonce', CMR_OTP_CONFIG.nonce);
 
-                fetch(CMR_OTP_CONFIG.ajaxUrl, {
-                    method: 'POST',
-                    body: fd
-                })
-                .then(function(res) { return res.json(); })
-                .then(function(res) {
-                    if (res.success) {
-                        if (vBadge) vBadge.textContent = 'OTP Sent';
-                        if (otpDestEmail) otpDestEmail.textContent = email;
+            fetch(CMR_OTP_CONFIG.ajaxUrl, {
+                method: 'POST',
+                body: fd
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(res) {
+                if (res.success) {
+                    if (vBadge) vBadge.textContent = 'OTP Sent';
+                    if (otpBox) {
+                        var destEmail = otpBox.querySelector('.cmr-otp-dest-email');
+                        if (destEmail) destEmail.textContent = email;
                         otpBox.style.setProperty('display', 'block', 'important');
-                        clearOtpFeedback();
-                        showOtpFeedback(res.data.message || 'OTP sent! Please check your email inbox.', 'info');
-                        startResendTimer();
-                        if (otpCodeInput) {
-                            otpCodeInput.value = '';
-                            otpCodeInput.focus();
+                        clearOtpFeedback(otpBox);
+                        showOtpFeedback(otpBox, res.data.message || 'OTP sent! Please check your email inbox.', 'info');
+                        startResendTimer(otpBox);
+
+                        var codeInp = otpBox.querySelector('.cmr-otp-code-input');
+                        if (codeInp) {
+                            codeInp.value = '';
+                            codeInp.focus();
                         }
-                    } else {
-                        if (vBadge) vBadge.textContent = '✉ Verify Email';
-                        alert(res.data.message || 'Failed to send OTP. Please try again.');
                     }
-                })
-                .catch(function() {
+                } else {
                     if (vBadge) vBadge.textContent = '✉ Verify Email';
-                    alert('Network error while sending OTP. Please try again.');
-                });
+                    alert(res.data.message || 'Failed to send OTP. Please try again.');
+                }
+            })
+            .catch(function() {
+                if (vBadge) vBadge.textContent = '✉ Verify Email';
+                alert('Network error while sending OTP. Please try again.');
+            });
+        }
+
+        // Verify OTP
+        function triggerVerifyOtp(input, otpBox) {
+            if (!input || !otpBox) return;
+            var email = (input.value || '').trim();
+            var codeInp = otpBox.querySelector('.cmr-otp-code-input');
+            var confirmBtn = otpBox.querySelector('.cmr-otp-confirm-btn');
+            var code = codeInp ? (codeInp.value || '').trim() : '';
+
+            if (!code || code.length !== 6) {
+                showOtpFeedback(otpBox, 'Please enter the complete 6-digit OTP code.', 'error');
+                if (codeInp) {
+                    codeInp.classList.add('cmr-shake');
+                    setTimeout(function() { codeInp.classList.remove('cmr-shake'); }, 500);
+                    codeInp.focus();
+                }
+                return;
             }
 
-            // Action: Resend OTP
-            otpResendBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                if (otpResendBtn.classList.contains('disabled')) return;
-                triggerSendOtp();
-            });
+            if (confirmBtn) confirmBtn.textContent = 'Verifying...';
+            clearOtpFeedback(otpBox);
 
-            // Action: Verify OTP
-            function triggerVerifyOtp() {
-                var email = (input.value || '').trim();
-                var code = (otpCodeInput.value || '').trim();
+            var fd = new FormData();
+            fd.append('action', 'cmr_verify_email_otp');
+            fd.append('email', email);
+            fd.append('otp', code);
+            fd.append('nonce', CMR_OTP_CONFIG.nonce);
 
-                if (!code || code.length !== 6) {
-                    showOtpFeedback('Please enter the complete 6-digit OTP code.', 'error');
-                    otpCodeInput.classList.add('cmr-shake');
-                    setTimeout(function() { otpCodeInput.classList.remove('cmr-shake'); }, 500);
-                    otpCodeInput.focus();
-                    return;
-                }
+            fetch(CMR_OTP_CONFIG.ajaxUrl, {
+                method: 'POST',
+                body: fd
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(res) {
+                if (confirmBtn) confirmBtn.textContent = 'Verify';
 
-                otpConfirmBtn.textContent = 'Verifying...';
-                clearOtpFeedback();
+                if (res.success) {
+                    verifiedEmailTokens[email.toLowerCase()] = res.data.token;
+                    showOtpFeedback(otpBox, '✓ ' + (res.data.message || 'Email verified successfully!'), 'success');
 
-                var fd = new FormData();
-                fd.append('action', 'cmr_verify_email_otp');
-                fd.append('email', email);
-                fd.append('otp', code);
-                fd.append('nonce', CMR_OTP_CONFIG.nonce);
-
-                fetch(CMR_OTP_CONFIG.ajaxUrl, {
-                    method: 'POST',
-                    body: fd
-                })
-                .then(function(res) { return res.json(); })
-                .then(function(res) {
-                    otpConfirmBtn.textContent = 'Verify';
-
-                    if (res.success) {
-                        verifiedEmailTokens[email.toLowerCase()] = res.data.token;
-                        showOtpFeedback('✓ ' + (res.data.message || 'Email verified successfully!'), 'success');
-
-                        setTimeout(function() {
-                            otpBox.style.setProperty('display', 'none', 'important');
-                            updateFieldState();
-                        }, 600);
-                    } else {
-                        showOtpFeedback(res.data.message || 'Invalid OTP code. Please try again.', 'error');
-                        otpCodeInput.classList.add('cmr-shake');
-                        setTimeout(function() { otpCodeInput.classList.remove('cmr-shake'); }, 500);
+                    setTimeout(function() {
+                        otpBox.style.setProperty('display', 'none', 'important');
+                        updateFieldState(input);
+                    }, 600);
+                } else {
+                    showOtpFeedback(otpBox, res.data.message || 'Invalid OTP code. Please try again.', 'error');
+                    if (codeInp) {
+                        codeInp.classList.add('cmr-shake');
+                        setTimeout(function() { codeInp.classList.remove('cmr-shake'); }, 500);
                     }
-                })
-                .catch(function() {
-                    otpConfirmBtn.textContent = 'Verify';
-                    showOtpFeedback('Network error. Please try again.', 'error');
-                });
-            }
-
-            otpConfirmBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                triggerVerifyOtp();
-            });
-
-            otpCodeInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    triggerVerifyOtp();
                 }
-            });
-
-            otpCodeInput.addEventListener('input', function() {
-                var val = this.value.replace(/\D/g, '').slice(0, 6);
-                this.value = val;
-                if (val.length === 6) {
-                    triggerVerifyOtp();
-                }
-            });
-
-            input._cmrUpdateFieldState = updateFieldState;
-
-            // Initial check
-            updateFieldState();
-        }
-
-        function initAllEmailOtpFields() {
-            var emailFields = document.querySelectorAll(
-                'input[type="email"], ' +
-                'input[name="your-email"], ' +
-                'input[name="email-address"], ' +
-                'input.wpcf7-email, ' +
-                'input[name="email"]:not([type="hidden"])'
-            );
-
-            emailFields.forEach(function(input) {
-                setupEmailOtpField(input);
+            })
+            .catch(function() {
+                if (confirmBtn) confirmBtn.textContent = 'Verify';
+                showOtpFeedback(otpBox, 'Network error. Please try again.', 'error');
             });
         }
 
-        document.addEventListener('DOMContentLoaded', initAllEmailOtpFields);
-        window.addEventListener('load', initAllEmailOtpFields);
-
-        // Listen for user interaction on any modal/form to guarantee initialization
-        document.addEventListener('focusin', function(e) {
-            var t = e.target;
-            if (t && (t.type === 'email' || (t.name && t.name.indexOf('email') !== -1) || (t.className && t.className.indexOf('wpcf7-email') !== -1))) {
-                setupEmailOtpField(t);
-                if (typeof t._cmrUpdateFieldState === 'function') {
-                    t._cmrUpdateFieldState();
+        // Global Event Delegation for ALL Input & Change Events
+        ['input', 'change', 'keyup', 'focusin'].forEach(function(eventType) {
+            document.addEventListener(eventType, function(e) {
+                var target = e.target;
+                if (isEmailField(target)) {
+                    updateFieldState(target);
                 }
-            }
+            }, true);
         });
 
+        // Global Event Delegation for OTP Code Input numeric limits
+        document.addEventListener('input', function(e) {
+            if (e.target && e.target.classList.contains('cmr-otp-code-input')) {
+                var codeInp = e.target;
+                var val = codeInp.value.replace(/\D/g, '').slice(0, 6);
+                codeInp.value = val;
+                if (val.length === 6) {
+                    var box = codeInp.closest('.cmr-otp-box');
+                    if (box && box._targetInput) {
+                        triggerVerifyOtp(box._targetInput, box);
+                    }
+                }
+            }
+        }, true);
+
+        // Global Event Delegation for Enter key in OTP input
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.target && e.target.classList.contains('cmr-otp-code-input')) {
+                e.preventDefault();
+                var box = e.target.closest('.cmr-otp-box');
+                if (box && box._targetInput) {
+                    triggerVerifyOtp(box._targetInput, box);
+                }
+            }
+        }, true);
+
+        // Global Event Delegation for All Clicks (Verify, Change, Resend, Confirm)
+        document.addEventListener('click', function(e) {
+            // 1. Click "Verify Email" Badge
+            var vBadge = e.target.closest('.cmr-verify-badge');
+            if (vBadge) {
+                e.preventDefault();
+                e.stopPropagation();
+                var badgeWrap = vBadge.closest('.cmr-email-badge-container');
+                var fieldWrap = badgeWrap ? badgeWrap.parentElement : null;
+                var input = fieldWrap ? fieldWrap.querySelector('input') : null;
+                if (input) triggerSendOtp(input);
+                return;
+            }
+
+            // 2. Click "Change" Badge
+            var cBadge = e.target.closest('.cmr-change-badge');
+            if (cBadge) {
+                e.preventDefault();
+                e.stopPropagation();
+                var badgeWrap = cBadge.closest('.cmr-email-badge-container');
+                var fieldWrap = badgeWrap ? badgeWrap.parentElement : null;
+                var input = fieldWrap ? fieldWrap.querySelector('input') : null;
+                if (input) {
+                    var curEmail = (input.value || '').trim().toLowerCase();
+                    delete verifiedEmailTokens[curEmail];
+                    input.readOnly = false;
+                    input.removeAttribute('data-email-verified');
+                    updateFieldState(input);
+                    input.focus();
+                    input.select();
+                }
+                return;
+            }
+
+            // 3. Click "Verify" OTP button inside box
+            var confirmBtn = e.target.closest('.cmr-otp-confirm-btn');
+            if (confirmBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                var box = confirmBtn.closest('.cmr-otp-box');
+                if (box && box._targetInput) {
+                    triggerVerifyOtp(box._targetInput, box);
+                }
+                return;
+            }
+
+            // 4. Click "Resend OTP" button inside box
+            var resendBtn = e.target.closest('.cmr-otp-resend-btn:not(.disabled)');
+            if (resendBtn) {
+                e.preventDefault();
+                e.stopPropagation();
+                var box = resendBtn.closest('.cmr-otp-box');
+                if (box && box._targetInput) {
+                    triggerSendOtp(box._targetInput);
+                }
+                return;
+            }
+        }, true);
+
+        // Universal Scanner to initialize all email inputs in document
+        function initAllEmailOtpFields() {
+            var inputs = document.querySelectorAll(
+                'input[type="email"], ' +
+                'input[name="your-email"], ' +
+                'input[name="email"], ' +
+                'input[name="email-address"], ' +
+                'input.wpcf7-email'
+            );
+
+            inputs.forEach(function(inp) {
+                if (isEmailField(inp)) {
+                    getOrCreateBadgeContainer(inp);
+                    getOrCreateOtpBox(inp);
+                    updateFieldState(inp);
+                }
+            });
+        }
+
+        // Execute immediately
+        initAllEmailOtpFields();
+
+        // Standard Lifecycle Hooks
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initAllEmailOtpFields);
+        }
+        window.addEventListener('load', initAllEmailOtpFields);
+
+        // Elementor Popup Hooks
         if (typeof jQuery !== 'undefined') {
             jQuery(document).on('elementor/popup/show', function() {
                 setTimeout(initAllEmailOtpFields, 50);
-                setTimeout(initAllEmailOtpFields, 200);
+                setTimeout(initAllEmailOtpFields, 250);
+                setTimeout(initAllEmailOtpFields, 600);
             });
         }
 
+        // Periodic Sync: Every 1.5s ensures even dynamically injected popups/AJAX forms are synced
+        setInterval(initAllEmailOtpFields, 1500);
+
+        // MutationObserver for dynamic DOM insertions
         if (window.MutationObserver) {
             var observer = new MutationObserver(function() {
                 initAllEmailOtpFields();
