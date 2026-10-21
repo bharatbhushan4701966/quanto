@@ -2,13 +2,12 @@
 /**
  * CMR Universal Email OTP Verification System
  * 
- * Automatically attaches an OTP "Verify Email" workflow to all forms with an email field.
- * - Shows "Verify Email" button when user enters email
- * - Sends 6-digit OTP via clean CyberMedia Research branded HTML email
- * - Displays inline OTP input below email field
- * - On verification, hides OTP input and displays "Verified Email" badge in the email field
- * - Blocks form submission if email is not verified
- * - Backend validation via Contact Form 7 filter & helper functions
+ * Automatically attaches a Bootstrap-style OTP "Verify Email" Badge to all forms with an email field.
+ * - Uniform, identical appearance across ALL forms (popups, consultation, subscribe, footer, career)
+ * - Clickable Bootstrap Pill Badge (bg-primary) inside email field when user types email
+ * - Clean Bootstrap card OTP box below field with 30s resend timer
+ * - On verification, smoothly hides OTP box and displays Bootstrap Pill Badge (bg-success) "✓ Verified Email"
+ * - Blocks form submission if email is not verified (frontend + backend CF7 validation)
  *
  * @package Quanto
  */
@@ -198,36 +197,27 @@ function cmr_dispatch_otp_email( $to_email, $otp_code ) {
         <tr>
             <td align="center">
                 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width: 520px; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06); border: 1px solid #e2e8f0;">
-                    
-                    <!-- Header -->
                     <tr>
                         <td style="background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); padding: 32px 30px; text-align: center;">
                             <h1 style="margin: 0; color: #ffffff; font-size: 22px; font-weight: 700; letter-spacing: -0.3px;">CyberMedia Research (CMR)</h1>
                             <p style="margin: 6px 0 0 0; color: #93c5fd; font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">Email Verification</p>
                         </td>
                     </tr>
-
-                    <!-- Content -->
                     <tr>
                         <td style="padding: 35px 35px 25px 35px;">
                             <p style="margin: 0 0 16px 0; font-size: 16px; line-height: 24px; color: #334155;">Hello,</p>
                             <p style="margin: 0 0 25px 0; font-size: 15px; line-height: 24px; color: #475569;">
                                 Please use the following One-Time Password (OTP) to verify your email address on <strong>' . esc_html( $site_name ) . '</strong>:
                             </p>
-
-                            <!-- OTP Box -->
                             <div style="text-align: center; margin: 30px 0; padding: 22px; background: #f8fafc; border: 2px dashed #0284c7; border-radius: 10px;">
                                 <div style="font-size: 34px; font-weight: 800; letter-spacing: 8px; color: #0284c7; font-family: Consolas, Monaco, monospace; display: inline-block;">' . esc_html( $otp_code ) . '</div>
                                 <div style="margin-top: 10px; font-size: 12px; color: #64748b; font-weight: 500;">Valid for 10 minutes</div>
                             </div>
-
                             <p style="margin: 25px 0 0 0; font-size: 14px; line-height: 22px; color: #64748b;">
                                 If you did not request this verification code, please disregard this email. Your account remains completely secure.
                             </p>
                         </td>
                     </tr>
-
-                    <!-- Footer -->
                     <tr>
                         <td style="background-color: #f8fafc; padding: 22px 35px; border-top: 1px solid #e2e8f0; text-align: center;">
                             <p style="margin: 0; font-size: 12px; line-height: 18px; color: #94a3b8;">
@@ -235,7 +225,6 @@ function cmr_dispatch_otp_email( $to_email, $otp_code ) {
                             </p>
                         </td>
                     </tr>
-
                 </table>
             </td>
         </tr>
@@ -259,7 +248,7 @@ function cmr_dispatch_otp_email( $to_email, $otp_code ) {
 }
 
 // =========================================================================
-// 4. Frontend Styles & JavaScript Controller
+// 4. Frontend Bootstrap Badge Styles & Controller
 // =========================================================================
 
 add_action( 'wp_footer', 'cmr_render_email_otp_frontend', 995 );
@@ -269,11 +258,13 @@ function cmr_render_email_otp_frontend() {
     $nonce    = wp_create_nonce( 'cmr_otp_nonce' );
     ?>
     <style id="cmr-email-otp-css">
-    /* Email Field Wrapper & Verify Button */
+    /* Universal Field Wrapper */
     .cmr-email-field-wrapper {
         position: relative !important;
         display: block !important;
         width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     .cmr-email-field-wrapper input[type="email"] {
@@ -282,157 +273,151 @@ function cmr_render_email_otp_frontend() {
         transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
     }
 
-    .cmr-email-field-wrapper.cmr-has-verify-btn input[type="email"] {
-        padding-right: 110px !important;
+    /* Padding when badge is active so text never overlaps */
+    .cmr-email-field-wrapper.cmr-state-unverified input[type="email"] {
+        padding-right: 125px !important;
     }
 
-    .cmr-email-field-wrapper.cmr-is-verified input[type="email"] {
-        padding-right: 135px !important;
-        border-color: #10b981 !important;
-        background-color: #f0fdf4 !important;
-        color: #065f46 !important;
+    .cmr-email-field-wrapper.cmr-state-verified input[type="email"] {
+        padding-right: 155px !important;
+        border-color: #198754 !important;
+        background-color: #f8fff9 !important;
+        color: #0f5132 !important;
     }
 
-    /* "Verify Email" Button Inside Input */
-    .cmr-verify-email-trigger-btn {
+    /* Badge Container inside input (Right-Aligned) */
+    .cmr-email-badge-container {
         position: absolute !important;
-        right: 6px !important;
+        right: 8px !important;
         top: 50% !important;
         transform: translateY(-50%) !important;
-        z-index: 10 !important;
-        background: #0284c7 !important;
-        color: #ffffff !important;
-        border: none !important;
-        border-radius: 6px !important;
-        padding: 6px 12px !important;
-        font-size: 11px !important;
-        font-weight: 700 !important;
-        letter-spacing: 0.3px !important;
-        line-height: 1.2 !important;
-        cursor: pointer !important;
+        z-index: 25 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 5px !important;
+        pointer-events: auto !important;
+        line-height: 1 !important;
+        white-space: nowrap !important;
+    }
+
+    /* Bootstrap Pill Badges (Insulated from modal/theme button CSS) */
+    .cmr-email-badge-container .badge {
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
         gap: 4px !important;
-        box-shadow: 0 1px 3px rgba(2, 132, 199, 0.3) !important;
-        transition: all 0.2s ease !important;
-        white-space: nowrap !important;
-        outline: none !important;
-        height: auto !important;
-        min-height: 28px !important;
-        margin: 0 !important;
-    }
-
-    .cmr-verify-email-trigger-btn:hover {
-        background: #0369a1 !important;
-        box-shadow: 0 2px 6px rgba(2, 132, 199, 0.45) !important;
-        transform: translateY(-50%) scale(1.02) !important;
-    }
-
-    .cmr-verify-email-trigger-btn:active {
-        transform: translateY(-50%) scale(0.98) !important;
-    }
-
-    .cmr-verify-email-trigger-btn:disabled {
-        opacity: 0.65 !important;
-        cursor: not-allowed !important;
-        transform: translateY(-50%) !important;
-    }
-
-    .cmr-verify-email-trigger-btn.cmr-pulse-attention {
-        animation: cmrBtnPulse 1.2s infinite !important;
-        background: #dc2626 !important;
-    }
-
-    @keyframes cmrBtnPulse {
-        0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
-        50% { box-shadow: 0 0 0 6px rgba(220, 38, 38, 0); }
-    }
-
-    /* "Verified Email" Badge Inside Input */
-    .cmr-email-verified-badge {
-        position: absolute !important;
-        right: 6px !important;
-        top: 50% !important;
-        transform: translateY(-50%) !important;
-        z-index: 10 !important;
-        background: #ecfdf5 !important;
-        color: #059669 !important;
-        border: 1px solid #a7f3d0 !important;
-        border-radius: 6px !important;
-        padding: 4px 8px !important;
+        font-family: inherit !important;
         font-size: 11px !important;
         font-weight: 700 !important;
         line-height: 1.2 !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 5px !important;
+        padding: 5px 11px !important;
+        border-radius: 50rem !important;
         white-space: nowrap !important;
-        box-shadow: 0 1px 2px rgba(16, 185, 129, 0.15) !important;
+        text-transform: none !important;
+        letter-spacing: 0.2px !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+        border: none !important;
+        margin: 0 !important;
+        width: auto !important;
+        height: auto !important;
+        min-height: unset !important;
+        min-width: unset !important;
+        text-decoration: none !important;
     }
 
-    .cmr-email-verified-badge svg {
-        width: 13px !important;
-        height: 13px !important;
-        stroke: #059669 !important;
+    /* Unverified "Verify Email" Badge - Bootstrap Primary Style */
+    .cmr-email-badge-container .cmr-verify-badge {
+        background-color: #0d6efd !important;
+        background-image: none !important;
+        color: #ffffff !important;
+    }
+
+    .cmr-email-badge-container .cmr-verify-badge:hover {
+        background-color: #0b5ed7 !important;
+        transform: scale(1.04) !important;
+        box-shadow: 0 2px 6px rgba(13, 110, 253, 0.4) !important;
+    }
+
+    .cmr-email-badge-container .cmr-verify-badge.cmr-pulse-attention {
+        animation: cmrBadgePulse 1.2s infinite !important;
+        background-color: #dc3545 !important;
+    }
+
+    @keyframes cmrBadgePulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
+        50% { box-shadow: 0 0 0 5px rgba(220, 53, 69, 0); }
+    }
+
+    /* Verified Badge - Bootstrap Success Style */
+    .cmr-email-badge-container .cmr-verified-badge {
+        background-color: #198754 !important;
+        background-image: none !important;
+        color: #ffffff !important;
+        cursor: default !important;
+    }
+
+    .cmr-email-badge-container .cmr-verified-badge svg {
+        width: 12px !important;
+        height: 12px !important;
+        stroke: #ffffff !important;
         stroke-width: 3 !important;
     }
 
-    .cmr-email-change-btn {
-        background: none !important;
-        border: none !important;
-        padding: 0 !important;
-        margin-left: 4px !important;
+    /* Change Badge - Bootstrap Secondary Style */
+    .cmr-email-badge-container .cmr-change-badge {
+        background-color: #6c757d !important;
+        background-image: none !important;
+        color: #ffffff !important;
         font-size: 10px !important;
-        color: #64748b !important;
-        text-decoration: underline !important;
-        cursor: pointer !important;
-        line-height: 1 !important;
+        padding: 4px 8px !important;
     }
 
-    .cmr-email-change-btn:hover {
-        color: #0f172a !important;
+    .cmr-email-badge-container .cmr-change-badge:hover {
+        background-color: #5c636a !important;
+        transform: scale(1.05) !important;
     }
 
-    /* OTP Container Box Below Email Field */
+    /* Compact Bootstrap Card OTP Box */
     .cmr-otp-box {
         margin-top: 8px !important;
         margin-bottom: 12px !important;
-        background: #f8fafc !important;
-        border: 1px solid #bfdbfe !important;
+        background-color: #f8fafc !important;
+        border: 1px solid #cfe2ff !important;
         border-radius: 8px !important;
         padding: 12px 14px !important;
-        box-shadow: 0 2px 8px rgba(2, 132, 199, 0.08) !important;
-        animation: cmrSlideDown 0.25s ease-out !important;
+        box-shadow: 0 2px 8px rgba(13, 110, 253, 0.08) !important;
+        animation: cmrOtpSlide 0.25s ease-out !important;
+        width: 100% !important;
         box-sizing: border-box !important;
     }
 
-    @keyframes cmrSlideDown {
-        from { opacity: 0; transform: translateY(-6px); }
+    @keyframes cmrOtpSlide {
+        from { opacity: 0; transform: translateY(-5px); }
         to { opacity: 1; transform: translateY(0); }
     }
 
-    .cmr-otp-box-inner {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 8px !important;
-    }
-
-    .cmr-otp-box-title {
+    .cmr-otp-header-row {
         display: flex !important;
         align-items: center !important;
-        gap: 6px !important;
+        justify-content: space-between !important;
+        margin-bottom: 8px !important;
         font-size: 12px !important;
-        color: #334155 !important;
-        line-height: 1.4 !important;
+        color: #495057 !important;
     }
 
-    .cmr-otp-box-title strong {
-        color: #0284c7 !important;
+    .cmr-otp-header-row .badge {
+        background-color: #cfe2ff !important;
+        color: #084298 !important;
+        font-size: 10px !important;
         font-weight: 700 !important;
+        padding: 3px 8px !important;
+        border-radius: 50rem !important;
+        text-transform: uppercase !important;
     }
 
-    .cmr-otp-input-row {
+    .cmr-otp-controls-row {
         display: flex !important;
         align-items: center !important;
         gap: 8px !important;
@@ -440,118 +425,123 @@ function cmr_render_email_otp_frontend() {
     }
 
     .cmr-otp-code-input {
-        flex: 1 1 140px !important;
-        max-width: 170px !important;
-        height: 38px !important;
-        border: 1.5px solid #cbd5e1 !important;
+        width: 130px !important;
+        max-width: 140px !important;
+        height: 36px !important;
+        min-height: 36px !important;
+        border: 1.5px solid #ced4da !important;
         border-radius: 6px !important;
         background: #ffffff !important;
-        font-size: 16px !important;
+        font-size: 15px !important;
         font-weight: 700 !important;
-        letter-spacing: 4px !important;
+        letter-spacing: 3px !important;
         text-align: center !important;
-        color: #0f172a !important;
-        padding: 0 8px !important;
+        color: #212529 !important;
+        padding: 0 6px !important;
         outline: none !important;
         box-sizing: border-box !important;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
     }
 
     .cmr-otp-code-input:focus {
-        border-color: #0284c7 !important;
-        box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15) !important;
+        border-color: #0d6efd !important;
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15) !important;
     }
 
     .cmr-otp-code-input.cmr-shake {
         animation: cmrShake 0.4s ease-in-out !important;
-        border-color: #ef4444 !important;
+        border-color: #dc3545 !important;
     }
 
     @keyframes cmrShake {
         0%, 100% { transform: translateX(0); }
-        20%, 60% { transform: translateX(-6px); }
-        40%, 80% { transform: translateX(6px); }
+        20%, 60% { transform: translateX(-5px); }
+        40%, 80% { transform: translateX(5px); }
     }
 
     .cmr-otp-confirm-btn {
-        background: #0284c7 !important;
+        background-color: #0d6efd !important;
+        background-image: none !important;
         color: #ffffff !important;
-        border: none !important;
-        border-radius: 6px !important;
-        height: 38px !important;
-        padding: 0 16px !important;
         font-size: 12px !important;
         font-weight: 700 !important;
-        cursor: pointer !important;
-        transition: all 0.2s ease !important;
-        white-space: nowrap !important;
+        height: 36px !important;
+        min-height: 36px !important;
+        padding: 0 16px !important;
+        border-radius: 50rem !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
+        cursor: pointer !important;
+        border: none !important;
+        box-shadow: 0 1px 3px rgba(13, 110, 253, 0.3) !important;
+        text-transform: none !important;
+        width: auto !important;
+        margin: 0 !important;
     }
 
     .cmr-otp-confirm-btn:hover {
-        background: #0369a1 !important;
-    }
-
-    .cmr-otp-confirm-btn:disabled {
-        opacity: 0.6 !important;
-        cursor: not-allowed !important;
+        background-color: #0b5ed7 !important;
     }
 
     .cmr-otp-resend-btn {
-        background: none !important;
-        border: none !important;
-        color: #64748b !important;
+        background-color: #e9ecef !important;
+        background-image: none !important;
+        color: #495057 !important;
         font-size: 11px !important;
         font-weight: 600 !important;
+        height: 36px !important;
+        min-height: 36px !important;
+        padding: 0 12px !important;
+        border-radius: 50rem !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
         cursor: pointer !important;
-        padding: 0 6px !important;
-        height: 38px !important;
-        text-decoration: underline !important;
-        white-space: nowrap !important;
+        border: 1px solid #ced4da !important;
+        text-transform: none !important;
+        width: auto !important;
+        margin: 0 !important;
     }
 
-    .cmr-otp-resend-btn:hover:not(:disabled) {
-        color: #0284c7 !important;
+    .cmr-otp-resend-btn:hover:not(.disabled) {
+        background-color: #dee2e6 !important;
+        color: #212529 !important;
     }
 
-    .cmr-otp-resend-btn:disabled {
+    .cmr-otp-resend-btn.disabled {
         opacity: 0.55 !important;
         cursor: not-allowed !important;
-        text-decoration: none !important;
     }
 
     .cmr-otp-feedback {
-        font-size: 11px !important;
-        line-height: 1.4 !important;
-        margin-top: 2px !important;
+        font-size: 12px !important;
+        margin-top: 6px !important;
         padding: 4px 8px !important;
         border-radius: 4px !important;
+        line-height: 1.4 !important;
     }
 
     .cmr-otp-feedback.cmr-success {
-        color: #059669 !important;
-        background: #ecfdf5 !important;
-        border: 1px solid #a7f3d0 !important;
+        color: #0f5132 !important;
+        background-color: #d1e7dd !important;
+        border: 1px solid #badbcc !important;
     }
 
     .cmr-otp-feedback.cmr-error {
-        color: #dc2626 !important;
-        background: #fef2f2 !important;
-        border: 1px solid #fecaca !important;
+        color: #842029 !important;
+        background-color: #f8d7da !important;
+        border: 1px solid #f5c2c7 !important;
     }
 
     .cmr-otp-feedback.cmr-info {
-        color: #0369a1 !important;
-        background: #f0f9ff !important;
-        border: 1px solid #bae6fd !important;
+        color: #084298 !important;
+        background-color: #cff4fc !important;
+        border: 1px solid #b6effb !important;
     }
 
-    /* Unverified Notice Prompt */
     .cmr-email-unverified-notice {
         font-size: 12px !important;
-        color: #ef4444 !important;
+        color: #dc3545 !important;
         font-weight: 600 !important;
         margin-top: 4px !important;
         display: block !important;
@@ -565,20 +555,18 @@ function cmr_render_email_otp_frontend() {
             nonce: <?php echo wp_json_encode( $nonce ); ?>
         };
 
-        // Cache of verified emails in this user session
         var verifiedEmailTokens = {};
 
         function isValidEmail(email) {
             return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(email).trim());
         }
 
-        // Initialize OTP UI on an email input
         function setupEmailOtpField(input) {
             if (!input || input.getAttribute('data-cmr-otp-ready') === 'true') {
                 return;
             }
 
-            // Exclude search inputs, coupon inputs, login/register forms
+            // Exclude search inputs, coupon inputs, WooCommerce checkout/cart, login
             var form = input.closest('form');
             if (form) {
                 var formClass = form.className || '';
@@ -596,7 +584,7 @@ function cmr_render_email_otp_frontend() {
 
             input.setAttribute('data-cmr-otp-ready', 'true');
 
-            // 1. Ensure input is inside a dedicated wrapper
+            // 1. Ensure input is inside dedicated wrapper
             var wrapper = input.parentElement;
             if (!wrapper || !wrapper.classList.contains('cmr-email-field-wrapper')) {
                 wrapper = document.createElement('div');
@@ -605,56 +593,38 @@ function cmr_render_email_otp_frontend() {
                 wrapper.appendChild(input);
             }
 
-            // 2. Create "Verify Email" button
-            var verifyBtn = wrapper.querySelector('.cmr-verify-email-trigger-btn');
-            if (!verifyBtn) {
-                verifyBtn = document.createElement('button');
-                verifyBtn.type = 'button';
-                verifyBtn.className = 'cmr-verify-email-trigger-btn';
-                verifyBtn.style.display = 'none';
-                verifyBtn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Verify Email';
-                wrapper.appendChild(verifyBtn);
+            // 2. Single unified Badge Container inside input
+            var badgeContainer = wrapper.querySelector('.cmr-email-badge-container');
+            if (!badgeContainer) {
+                badgeContainer = document.createElement('div');
+                badgeContainer.className = 'cmr-email-badge-container';
+                wrapper.appendChild(badgeContainer);
             }
 
-            // 3. Create "Verified Email" badge
-            var verifiedBadge = wrapper.querySelector('.cmr-email-verified-badge');
-            if (!verifiedBadge) {
-                verifiedBadge = document.createElement('span');
-                verifiedBadge.className = 'cmr-email-verified-badge';
-                verifiedBadge.style.display = 'none';
-                verifiedBadge.innerHTML = '<svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Verified Email <button type="button" class="cmr-email-change-btn" title="Change email">Change</button>';
-                wrapper.appendChild(verifiedBadge);
-            }
-
-            // 4. Create OTP input box below wrapper
+            // 3. Compact Bootstrap Card OTP Box below wrapper
             var otpBox = wrapper.nextElementSibling;
             if (!otpBox || !otpBox.classList.contains('cmr-otp-box')) {
                 otpBox = document.createElement('div');
                 otpBox.className = 'cmr-otp-box';
                 otpBox.style.display = 'none';
                 otpBox.innerHTML = '' +
-                    '<div class="cmr-otp-box-inner">' +
-                        '<div class="cmr-otp-box-title">' +
-                            '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>' +
-                            '<span>Verification code sent to <strong class="cmr-otp-dest-email"></strong></span>' +
-                        '</div>' +
-                        '<div class="cmr-otp-input-row">' +
-                            '<input type="text" class="cmr-otp-code-input" maxlength="6" inputmode="numeric" pattern="[0-9]*" placeholder="Enter OTP" autocomplete="one-time-code" />' +
-                            '<button type="button" class="cmr-otp-confirm-btn">Verify</button>' +
-                            '<button type="button" class="cmr-otp-resend-btn" disabled>Resend in <span class="cmr-otp-timer">30</span>s</button>' +
-                        '</div>' +
-                        '<div class="cmr-otp-feedback" style="display:none;"></div>' +
-                    '</div>';
+                    '<div class="cmr-otp-header-row">' +
+                        '<span><span class="badge">OTP Sent</span> Enter code sent to <strong class="cmr-otp-dest-email"></strong></span>' +
+                    '</div>' +
+                    '<div class="cmr-otp-controls-row">' +
+                        '<input type="text" class="cmr-otp-code-input" maxlength="6" inputmode="numeric" placeholder="OTP" autocomplete="one-time-code" />' +
+                        '<span role="button" class="cmr-otp-confirm-btn">Verify</span>' +
+                        '<span role="button" class="cmr-otp-resend-btn disabled">Resend (30s)</span>' +
+                    '</div>' +
+                    '<div class="cmr-otp-feedback" style="display:none;"></div>';
                 wrapper.parentNode.insertBefore(otpBox, wrapper.nextSibling);
             }
 
-            var otpCodeInput   = otpBox.querySelector('.cmr-otp-code-input');
-            var otpConfirmBtn  = otpBox.querySelector('.cmr-otp-confirm-btn');
-            var otpResendBtn   = otpBox.querySelector('.cmr-otp-resend-btn');
-            var otpTimerSpan   = otpBox.querySelector('.cmr-otp-timer');
-            var otpFeedback    = otpBox.querySelector('.cmr-otp-feedback');
-            var otpDestEmail   = otpBox.querySelector('.cmr-otp-dest-email');
-            var changeEmailBtn = verifiedBadge.querySelector('.cmr-email-change-btn');
+            var otpCodeInput  = otpBox.querySelector('.cmr-otp-code-input');
+            var otpConfirmBtn = otpBox.querySelector('.cmr-otp-confirm-btn');
+            var otpResendBtn  = otpBox.querySelector('.cmr-otp-resend-btn');
+            var otpFeedback   = otpBox.querySelector('.cmr-otp-feedback');
+            var otpDestEmail  = otpBox.querySelector('.cmr-otp-dest-email');
 
             var resendInterval = null;
 
@@ -674,50 +644,50 @@ function cmr_render_email_otp_frontend() {
             function startResendTimer() {
                 if (resendInterval) clearInterval(resendInterval);
                 var seconds = 30;
-                otpResendBtn.disabled = true;
-                otpResendBtn.innerHTML = 'Resend in <span class="cmr-otp-timer">' + seconds + '</span>s';
+                otpResendBtn.classList.add('disabled');
+                otpResendBtn.textContent = 'Resend (' + seconds + 's)';
 
                 resendInterval = setInterval(function() {
                     seconds--;
                     if (seconds <= 0) {
                         clearInterval(resendInterval);
-                        otpResendBtn.disabled = false;
+                        otpResendBtn.classList.remove('disabled');
                         otpResendBtn.textContent = 'Resend OTP';
                     } else {
-                        var tSpan = otpResendBtn.querySelector('.cmr-otp-timer');
-                        if (tSpan) tSpan.textContent = seconds;
+                        otpResendBtn.textContent = 'Resend (' + seconds + 's)';
                     }
                 }, 1000);
             }
 
-            // Sync visual UI state based on value and verified cache
+            // Sync Badge Container State
             function updateFieldState() {
                 var email = (input.value || '').trim().toLowerCase();
 
-                // Clear unverified notice if user is typing
+                // Remove unverified error notice if user is typing
                 var notice = wrapper.parentNode ? wrapper.parentNode.querySelector('.cmr-email-unverified-notice') : null;
                 if (notice) notice.remove();
 
+                // State 0: Invalid or empty
                 if (!email || !isValidEmail(email)) {
-                    verifyBtn.style.display = 'none';
-                    verifiedBadge.style.display = 'none';
-                    wrapper.classList.remove('cmr-has-verify-btn');
-                    wrapper.classList.remove('cmr-is-verified');
+                    badgeContainer.innerHTML = '';
+                    wrapper.classList.remove('cmr-state-unverified', 'cmr-state-verified');
                     otpBox.style.display = 'none';
                     input.removeAttribute('data-email-verified');
                     input.readOnly = false;
                     return;
                 }
 
-                // If email is already verified in this session
+                // State 2: Already Verified
                 if (verifiedEmailTokens[email]) {
-                    verifyBtn.style.display = 'none';
-                    verifiedBadge.style.display = 'inline-flex';
-                    wrapper.classList.remove('cmr-has-verify-btn');
-                    wrapper.classList.add('cmr-is-verified');
+                    wrapper.classList.remove('cmr-state-unverified');
+                    wrapper.classList.add('cmr-state-verified');
                     otpBox.style.display = 'none';
                     input.setAttribute('data-email-verified', 'true');
                     input.readOnly = true;
+
+                    badgeContainer.innerHTML = '' +
+                        '<span class="badge cmr-verified-badge"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Verified Email</span>' +
+                        '<span role="button" class="badge cmr-change-badge" title="Change email">Change</span>';
 
                     // Ensure hidden token is set in form
                     var parentForm = input.closest('form');
@@ -734,24 +704,45 @@ function cmr_render_email_otp_frontend() {
                     return;
                 }
 
-                // Email is valid but NOT verified yet -> Show "Verify Email" button
-                verifyBtn.style.display = 'inline-flex';
-                verifyBtn.disabled = false;
-                verifyBtn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Verify Email';
-                verifiedBadge.style.display = 'none';
-                wrapper.classList.add('cmr-has-verify-btn');
-                wrapper.classList.remove('cmr-is-verified');
+                // State 1: Valid email, NOT verified -> Show "Verify Email" Bootstrap Badge
+                wrapper.classList.add('cmr-state-unverified');
+                wrapper.classList.remove('cmr-state-verified');
                 input.removeAttribute('data-email-verified');
                 input.readOnly = false;
+
+                badgeContainer.innerHTML = '<span role="button" class="badge cmr-verify-badge">✉ Verify Email</span>';
             }
 
             input.addEventListener('input', updateFieldState);
             input.addEventListener('change', updateFieldState);
-            input.addEventListener('focus', function() {
-                verifyBtn.classList.remove('cmr-pulse-attention');
+
+            // Delegate Click Events on Badge Container
+            badgeContainer.addEventListener('click', function(e) {
+                var target = e.target.closest('.badge');
+                if (!target) return;
+
+                // Click "Verify Email"
+                if (target.classList.contains('cmr-verify-badge')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    triggerSendOtp();
+                }
+
+                // Click "Change"
+                if (target.classList.contains('cmr-change-badge')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    var curEmail = (input.value || '').trim().toLowerCase();
+                    delete verifiedEmailTokens[curEmail];
+                    input.readOnly = false;
+                    input.removeAttribute('data-email-verified');
+                    updateFieldState();
+                    input.focus();
+                    input.select();
+                }
             });
 
-            // Action: Click "Verify Email" -> Send OTP
+            // Action: Send OTP
             function triggerSendOtp() {
                 var email = (input.value || '').trim();
                 if (!isValidEmail(email)) {
@@ -759,9 +750,11 @@ function cmr_render_email_otp_frontend() {
                     return;
                 }
 
-                verifyBtn.disabled = true;
-                verifyBtn.textContent = 'Sending OTP...';
-                verifyBtn.classList.remove('cmr-pulse-attention');
+                var vBadge = badgeContainer.querySelector('.cmr-verify-badge');
+                if (vBadge) {
+                    vBadge.textContent = 'Sending...';
+                    vBadge.classList.remove('cmr-pulse-attention');
+                }
 
                 var fd = new FormData();
                 fd.append('action', 'cmr_send_email_otp');
@@ -775,7 +768,7 @@ function cmr_render_email_otp_frontend() {
                 .then(function(res) { return res.json(); })
                 .then(function(res) {
                     if (res.success) {
-                        verifyBtn.textContent = 'OTP Sent';
+                        if (vBadge) vBadge.textContent = 'OTP Sent';
                         if (otpDestEmail) otpDestEmail.textContent = email;
                         otpBox.style.display = 'block';
                         clearOtpFeedback();
@@ -786,32 +779,25 @@ function cmr_render_email_otp_frontend() {
                             otpCodeInput.focus();
                         }
                     } else {
-                        verifyBtn.disabled = false;
-                        verifyBtn.textContent = 'Verify Email';
+                        if (vBadge) vBadge.textContent = '✉ Verify Email';
                         alert(res.data.message || 'Failed to send OTP. Please try again.');
                     }
                 })
                 .catch(function() {
-                    verifyBtn.disabled = false;
-                    verifyBtn.textContent = 'Verify Email';
+                    if (vBadge) vBadge.textContent = '✉ Verify Email';
                     alert('Network error while sending OTP. Please try again.');
                 });
             }
 
-            verifyBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                triggerSendOtp();
-            });
-
-            // Action: Click "Resend OTP"
+            // Action: Resend OTP
             otpResendBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
+                if (otpResendBtn.classList.contains('disabled')) return;
                 triggerSendOtp();
             });
 
-            // Action: Click "Verify" OTP button
+            // Action: Verify OTP
             function triggerVerifyOtp() {
                 var email = (input.value || '').trim();
                 var code = (otpCodeInput.value || '').trim();
@@ -824,7 +810,6 @@ function cmr_render_email_otp_frontend() {
                     return;
                 }
 
-                otpConfirmBtn.disabled = true;
                 otpConfirmBtn.textContent = 'Verifying...';
                 clearOtpFeedback();
 
@@ -840,19 +825,16 @@ function cmr_render_email_otp_frontend() {
                 })
                 .then(function(res) { return res.json(); })
                 .then(function(res) {
-                    otpConfirmBtn.disabled = false;
                     otpConfirmBtn.textContent = 'Verify';
 
                     if (res.success) {
-                        // Store verified token in cache
                         verifiedEmailTokens[email.toLowerCase()] = res.data.token;
-
                         showOtpFeedback('✓ ' + (res.data.message || 'Email verified successfully!'), 'success');
 
                         setTimeout(function() {
                             otpBox.style.display = 'none';
                             updateFieldState();
-                        }, 700);
+                        }, 600);
                     } else {
                         showOtpFeedback(res.data.message || 'Invalid OTP code. Please try again.', 'error');
                         otpCodeInput.classList.add('cmr-shake');
@@ -860,7 +842,6 @@ function cmr_render_email_otp_frontend() {
                     }
                 })
                 .catch(function() {
-                    otpConfirmBtn.disabled = false;
                     otpConfirmBtn.textContent = 'Verify';
                     showOtpFeedback('Network error. Please try again.', 'error');
                 });
@@ -872,7 +853,6 @@ function cmr_render_email_otp_frontend() {
                 triggerVerifyOtp();
             });
 
-            // Allow pressing Enter in OTP input to trigger verify
             otpCodeInput.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter') {
                     e.preventDefault();
@@ -880,7 +860,6 @@ function cmr_render_email_otp_frontend() {
                 }
             });
 
-            // Auto-verify if user enters 6 digits
             otpCodeInput.addEventListener('input', function() {
                 var val = this.value.replace(/\D/g, '').slice(0, 6);
                 this.value = val;
@@ -889,24 +868,10 @@ function cmr_render_email_otp_frontend() {
                 }
             });
 
-            // Action: Click "Change" -> reset verification to enter a new email
-            changeEmailBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                var curEmail = (input.value || '').trim().toLowerCase();
-                delete verifiedEmailTokens[curEmail];
-                input.readOnly = false;
-                input.removeAttribute('data-email-verified');
-                updateFieldState();
-                input.focus();
-                input.select();
-            });
-
-            // Initial state check
+            // Initial check
             updateFieldState();
         }
 
-        // Scan page and bind OTP controls to all email fields
         function initAllEmailOtpFields() {
             var emailFields = document.querySelectorAll(
                 'input[type="email"]:not([data-cmr-otp-ready]), ' +
@@ -920,17 +885,15 @@ function cmr_render_email_otp_frontend() {
             });
         }
 
-        // Initialize on DOM load and dynamic popup events
         document.addEventListener('DOMContentLoaded', initAllEmailOtpFields);
         window.addEventListener('load', initAllEmailOtpFields);
         if (typeof jQuery !== 'undefined') {
             jQuery(document).on('elementor/popup/show', function() {
-                setTimeout(initAllEmailOtpFields, 100);
-                setTimeout(initAllEmailOtpFields, 300);
+                setTimeout(initAllEmailOtpFields, 80);
+                setTimeout(initAllEmailOtpFields, 250);
             });
         }
 
-        // MutationObserver to catch dynamically injected popups/forms
         if (window.MutationObserver) {
             var observer = new MutationObserver(function() {
                 initAllEmailOtpFields();
