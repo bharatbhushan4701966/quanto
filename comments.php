@@ -16,6 +16,11 @@
         return;
     }
 
+    // Disable comments and reviews on standard blog posts
+    if ( get_post_type() === 'post' ) {
+        return;
+    }
+
 
     if ( get_post_type() === 'cmr_news' ) {
         // Compute ratings

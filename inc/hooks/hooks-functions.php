@@ -1939,6 +1939,11 @@
 
         function quanto_blog_details_comments_cb( ) {
 
+            // Disable comments and reviews on standard blog posts
+            if ( get_post_type() === 'post' ) {
+                return;
+            }
+
             if ( ! comments_open() ) {
 
                 echo '<div class="blog-comment-area">';
