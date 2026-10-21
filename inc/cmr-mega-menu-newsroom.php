@@ -340,24 +340,36 @@ function cmr_inject_newsroom_mega_menu() {
             if (!megaMenuTemplate) return;
 
             function injectMegaMenu() {
+                var found = false;
                 var navLinks = document.querySelectorAll('.menu-item > a, .elementor-item');
                 navLinks.forEach(function(link) {
                     var text = link.innerText.trim().toLowerCase();
                     if (text === 'newsroom' || text === 'news room') {
                         var parentLi = link.closest('li, .menu-item');
-                        if (parentLi && !parentLi.classList.contains('cmr-has-mega-menu-newsroom')) {
-                            parentLi.classList.add('cmr-has-mega-menu-newsroom');
-                            var wrapperOuter = document.createElement('div');
-                            wrapperOuter.className = 'cmr-mmn-wrapper-outer';
-                            Array.from(megaMenuTemplate.childNodes).forEach(function(node) { wrapperOuter.appendChild(node.cloneNode(true)); });
-                            parentLi.appendChild(wrapperOuter);
+                        if (parentLi) {
+                            if (!parentLi.classList.contains('cmr-has-mega-menu-newsroom')) {
+                                parentLi.classList.add('cmr-has-mega-menu-newsroom');
+                                var wrapperOuter = document.createElement('div');
+                                wrapperOuter.className = 'cmr-mmn-wrapper-outer';
+                                Array.from(megaMenuTemplate.childNodes).forEach(function(node) { wrapperOuter.appendChild(node.cloneNode(true)); });
+                                parentLi.appendChild(wrapperOuter);
+                            }
+                            found = true;
                         }
                     }
                 });
+                return found;
             }
 
-            injectMegaMenu();
-            setInterval(injectMegaMenu, 1000);
+            if (!injectMegaMenu()) {
+                var mmAttempts = 0;
+                var mmTimer = setInterval(function() {
+                    mmAttempts++;
+                    if (injectMegaMenu() || mmAttempts >= 8) {
+                        clearInterval(mmTimer);
+                    }
+                }, 500);
+            }
 
             document.addEventListener('click', function(e) {
                 if (window.innerWidth <= 1024) {

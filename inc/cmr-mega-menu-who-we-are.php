@@ -381,21 +381,33 @@ function cmr_inject_who_we_are_mega_menu() {
             if (!megaMenuTemplate) return;
 
             function injectMegaMenu() {
+                var found = false;
                 var navLinks = document.querySelectorAll('.menu-item > a, .elementor-item');
                 navLinks.forEach(function(link) {
                     var text = link.innerText.trim().toLowerCase();
                     if (text === 'who we are') {
                         var parentLi = link.closest('li, .menu-item');
-                        if (parentLi && !parentLi.classList.contains('cmr-has-mega-menu')) {
-                            parentLi.classList.add('cmr-has-mega-menu');
-                            Array.from(megaMenuTemplate.childNodes).forEach(function(node) { parentLi.appendChild(node.cloneNode(true)); });
+                        if (parentLi) {
+                            if (!parentLi.classList.contains('cmr-has-mega-menu')) {
+                                parentLi.classList.add('cmr-has-mega-menu');
+                                Array.from(megaMenuTemplate.childNodes).forEach(function(node) { parentLi.appendChild(node.cloneNode(true)); });
+                            }
+                            found = true;
                         }
                     }
                 });
+                return found;
             }
 
-            injectMegaMenu();
-            setInterval(injectMegaMenu, 1000);
+            if (!injectMegaMenu()) {
+                var mmAttempts = 0;
+                var mmTimer = setInterval(function() {
+                    mmAttempts++;
+                    if (injectMegaMenu() || mmAttempts >= 8) {
+                        clearInterval(mmTimer);
+                    }
+                }, 500);
+            }
 
             document.addEventListener('click', function(e) {
                 if (window.innerWidth <= 1024) {

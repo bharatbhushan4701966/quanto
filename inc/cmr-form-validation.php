@@ -432,7 +432,9 @@ add_action( 'wp_footer', function() {
 
         document.addEventListener('DOMContentLoaded', initFormValidation);
         window.addEventListener('load', initFormValidation);
-        setInterval(initFormValidation, 1500);
+        if (typeof jQuery !== 'undefined') {
+            jQuery(document).on('elementor/popup/show', initFormValidation);
+        }
 
         // Pre-Submit Validation & AJAX Submission Listener
         document.addEventListener('submit', function(e) {
@@ -672,33 +674,4 @@ add_action( 'wp_footer', function() {
     </script>
     <?php
 });
-
-add_filter( 'wpcf7_recaptcha_verify_response', function( $is_human, $response ) {
-    update_option( 'cmr_last_recaptcha_verify', array(
-        'is_human'        => $is_human,
-        'google_response' => $response,
-        'time'            => current_time( 'mysql' ),
-    ) );
-    return $is_human;
-}, 10, 2 );
-
-add_filter( 'wpcf7_feedback_response', function( $response, $result ) {
-    $debug = array();
-    $debug['last_google_verify'] = get_option( 'cmr_last_recaptcha_verify' );
-    if ( class_exists( 'IQFix_ReCaptcha' ) ) {
-        $rc  = IQFix_ReCaptcha::get_instance();
-        $sk  = (string) $rc->get_sitekey();
-        $sec = (string) $rc->get_secret( $sk );
-        $debug['plugin_active'] = $rc->is_active();
-        $debug['sitekey'] = $sk;
-        $debug['sitekey_len'] = strlen( $sk );
-        $debug['sitekey_suffix'] = substr( $sk, -5 );
-        $debug['secret_len'] = strlen( $sec );
-        $debug['secret_prefix'] = substr( $sec, 0, 7 );
-        $debug['secret_suffix'] = substr( $sec, -5 );
-        $debug['is_same'] = ( $sk === $sec );
-    }
-    $response['cmr_debug'] = $debug;
-    return $response;
-}, 10, 2 );
 

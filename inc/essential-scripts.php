@@ -17,10 +17,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function quanto_essential_scripts() {
 
+	$quanto_theme_ver     = wp_get_theme()->get( 'Version' ) ?: '1.0.8';
 	$quanto_style_path    = get_stylesheet_directory() . '/style.css';
-	$quanto_style_version = file_exists( $quanto_style_path ) ? filemtime( $quanto_style_path ) : wp_get_theme()->get( 'Version' );
+	$quanto_style_version = file_exists( $quanto_style_path ) ? filemtime( $quanto_style_path ) : $quanto_theme_ver;
 	wp_enqueue_style( 'quanto-style', get_stylesheet_uri(), array(), $quanto_style_version );
-    wp_enqueue_style( 'cmr-mobile-menu-css', get_theme_file_uri( '/assets/css/cmr-mobile-menu.css' ), array(), time() );
+    wp_enqueue_style( 'cmr-mobile-menu-css', get_theme_file_uri( '/assets/css/cmr-mobile-menu.css' ), array(), $quanto_theme_ver );
 
     // google font
     wp_enqueue_style( 'quanto-fonts', quanto_google_fonts() ,array(), wp_get_theme()->get( 'Version' ) );
@@ -38,13 +39,13 @@ function quanto_essential_scripts() {
     wp_enqueue_style( 'bootstrap-icons-style', get_theme_file_uri( '/assets/css/bootstrap-icons.min.css' ), array(), '1.11.3' );
 
     // magnific popup Style
-    wp_enqueue_style( 'magnific-popup-style', get_theme_file_uri( '/assets/css/magnific-popup.css' ), array(), time() );
+    wp_enqueue_style( 'magnific-popup-style', get_theme_file_uri( '/assets/css/magnific-popup.css' ), array(), $quanto_theme_ver );
 
     // meanmenu min Style
     wp_enqueue_style( 'meanmenu-min-style', get_theme_file_uri( '/assets/css/meanmenu.min.css' ), array(), '2.0.7' );
 
     // odometer Style
-    wp_enqueue_style( 'odometer-style', get_theme_file_uri( '/assets/css/odometer.css' ), array(), time() );
+    wp_enqueue_style( 'odometer-style', get_theme_file_uri( '/assets/css/odometer.css' ), array(), $quanto_theme_ver );
 
     // swiper bundle min Style
     wp_enqueue_style( 'swiper-bundle-min-style', get_theme_file_uri( '/assets/css/swiper-bundle.min.css' ), array(), '7.0.8' );
@@ -53,19 +54,19 @@ function quanto_essential_scripts() {
     wp_enqueue_style( 'quanto-core-style', get_theme_file_uri( '/assets/css/core.css' ), array(), '1.0' );
 
     // quanto app style
-    wp_enqueue_style( 'quanto-main-style', get_theme_file_uri('/assets/css/style.css') ,array(), time() );
-    wp_enqueue_style( 'quanto-blog-style', get_theme_file_uri('/assets/css/blog-default.css') ,array(), time() );
+    wp_enqueue_style( 'quanto-main-style', get_theme_file_uri('/assets/css/style.css') ,array(), $quanto_theme_ver );
+    wp_enqueue_style( 'quanto-blog-style', get_theme_file_uri('/assets/css/blog-default.css') ,array(), $quanto_theme_ver );
     
     // CMR News Style
-    wp_enqueue_style( 'cmr-news-style', get_theme_file_uri('/assets/css/cmr-news.css') ,array(), time() );
+    wp_enqueue_style( 'cmr-news-style', get_theme_file_uri('/assets/css/cmr-news.css') ,array(), $quanto_theme_ver );
     
     // CMR Common Modal Styles
-    wp_enqueue_style( 'cmr-modal-style', get_theme_file_uri('/assets/css/cmr-modal.css'), array(), time() );
-    wp_enqueue_style( 'cmr-checkout-block', get_theme_file_uri('/assets/css/cmr-checkout-block.css') ,array(), time() );
-    wp_register_style( 'cmr-latest-insights', get_theme_file_uri('/assets/css/cmr-latest-insights.css'), array(), time() );
-    wp_enqueue_style( 'cmr-industry-intelligence', get_theme_file_uri('/assets/css/cmr-industry-intelligence.css'), array(), time() );
-    wp_register_style( 'cmr-explore-sectors', get_theme_file_uri('/assets/css/cmr-explore-sectors.css'), array(), time() );
-    wp_register_style( 'cmr-stay-updated', get_theme_file_uri('/assets/css/cmr-stay-updated.css'), array(), time() );
+    wp_enqueue_style( 'cmr-modal-style', get_theme_file_uri('/assets/css/cmr-modal.css'), array(), $quanto_theme_ver );
+    wp_enqueue_style( 'cmr-checkout-block', get_theme_file_uri('/assets/css/cmr-checkout-block.css') ,array(), $quanto_theme_ver );
+    wp_register_style( 'cmr-latest-insights', get_theme_file_uri('/assets/css/cmr-latest-insights.css'), array(), $quanto_theme_ver );
+    wp_enqueue_style( 'cmr-industry-intelligence', get_theme_file_uri('/assets/css/cmr-industry-intelligence.css'), array(), $quanto_theme_ver );
+    wp_register_style( 'cmr-explore-sectors', get_theme_file_uri('/assets/css/cmr-explore-sectors.css'), array(), $quanto_theme_ver );
+    wp_register_style( 'cmr-stay-updated', get_theme_file_uri('/assets/css/cmr-stay-updated.css'), array(), $quanto_theme_ver );
 
     // Enqueue homepage Elementor CSS anywhere we inject homepage Elementor sections,
     // including WooCommerce product pages rendered via custom template helpers.
@@ -160,10 +161,10 @@ function quanto_essential_scripts() {
 
     // Odometer JS
     wp_enqueue_script( 'odometer-min-script', get_theme_file_uri( '/assets/js/odometer.min.js' ), array( 'jquery' ), '0.4.8', true );
-    wp_enqueue_script( 'viewport-jquery-script', get_theme_file_uri( '/assets/js/viewport.jquery.js' ), array('jquery'), time(), true );
+    wp_enqueue_script( 'viewport-jquery-script', get_theme_file_uri( '/assets/js/viewport.jquery.js' ), array('jquery'), $quanto_theme_ver, true );
 
     // Meanmenu JS
-    wp_enqueue_script( 'jquery-meanmenu', get_theme_file_uri( '/assets/js/jquery.meanmenu.min.js' ), array('jquery'), time(), true );
+    wp_enqueue_script( 'jquery-meanmenu', get_theme_file_uri( '/assets/js/jquery.meanmenu.min.js' ), array('jquery'), $quanto_theme_ver, true );
 
     //  gsap JS 
     wp_enqueue_script( 'gsap-script', get_theme_file_uri( '/assets/js/gsap.js' ), array( 'jquery' ), '3.11.4', true );
@@ -173,7 +174,7 @@ function quanto_essential_scripts() {
     wp_enqueue_script( 'gsap-split-text-script', get_theme_file_uri( '/assets/js/gsap-split-text.js' ), array( 'jquery' ), '3.11.2', true );
 
     // main script
-    wp_enqueue_script( 'quanto-main-script', get_theme_file_uri( '/assets/js/main.js' ), array('jquery'), time(), true );
+    wp_enqueue_script( 'quanto-main-script', get_theme_file_uri( '/assets/js/main.js' ), array('jquery'), $quanto_theme_ver, true );
     
     // comment reply
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -847,6 +848,8 @@ add_action( 'wp_footer', function() {
             // Hook into Elementor popup show event
             if (typeof jQuery !== 'undefined') {
                 jQuery(document).on('elementor/popup/show', function() {
+                    updateCMRModalTexts();
+                    checkActiveModals();
                     setTimeout(cmrInitRecaptchas, 150);
                     setTimeout(function() {
                         var popup = document.querySelector('.elementor-popup-modal, .dialog-widget.dialog-type-lightbox');
@@ -869,10 +872,10 @@ add_action( 'wp_footer', function() {
                 });
             }
 
-            if (window.MutationObserver) {
-                var modalObserver = new MutationObserver(scheduleCMRModalUpdate);
-                modalObserver.observe(document.body, { childList: true, subtree: true });
-            }
+            window.addEventListener('load', function() {
+                updateCMRModalTexts();
+                checkActiveModals();
+            });
         });
     })();
     </script>
