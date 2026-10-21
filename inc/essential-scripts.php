@@ -286,17 +286,20 @@ add_action( 'wp_footer', function() {
             });
         }
 
-        // Ensure Google reCAPTCHA v2 widgets inside Elementor Popups are rendered
+        // Ensure Google reCAPTCHA v2 widgets inside Elementor Popups are rendered once safely
         function cmrInitRecaptchas() {
             if (typeof grecaptcha === 'undefined' || typeof grecaptcha.render !== 'function') return;
 
             var items = document.querySelectorAll('.wpcf7-recaptcha, .g-recaptcha');
             items.forEach(function(el) {
-                if (el.querySelector('iframe')) return;
+                if (el.querySelector('iframe') || el.children.length > 0 || el.getAttribute('data-cmr-rendered') === 'true') {
+                    return;
+                }
 
-                var sitekey = el.getAttribute('data-sitekey') || '6Lf5pvYtAAAAAEeM1xD1xrrL_cCD_i_OXwT7l9ln';
+                var sitekey = el.getAttribute('data-sitekey');
                 if (!sitekey) return;
 
+                el.setAttribute('data-cmr-rendered', 'true');
                 try {
                     grecaptcha.render(el, {
                         'sitekey': sitekey,
@@ -310,7 +313,6 @@ add_action( 'wp_footer', function() {
         // Universal modal scroll lock checker (Event-driven, 0 CPU overhead)
         function checkActiveModals() {
             updateCMRModalTexts();
-            cmrInitRecaptchas();
             var active = false;
 
             // Elementor Popups
@@ -825,25 +827,16 @@ add_action( 'wp_footer', function() {
 
             checkActiveModals();
             updateCMRModalTexts();
-            cmrInitRecaptchas();
 
-            // Hook into Elementor popup show event and periodic interval
+            // Hook into Elementor popup show event
             if (typeof jQuery !== 'undefined') {
                 jQuery(document).on('elementor/popup/show', function() {
-                    setTimeout(cmrInitRecaptchas, 80);
-                    setTimeout(cmrInitRecaptchas, 350);
+                    setTimeout(cmrInitRecaptchas, 150);
                 });
             }
-            document.addEventListener('click', function() {
-                setTimeout(cmrInitRecaptchas, 150);
-            });
-            setInterval(cmrInitRecaptchas, 1000);
 
             if (window.MutationObserver) {
-                var modalObserver = new MutationObserver(function() {
-                    scheduleCMRModalUpdate();
-                    cmrInitRecaptchas();
-                });
+                var modalObserver = new MutationObserver(scheduleCMRModalUpdate);
                 modalObserver.observe(document.body, { childList: true, subtree: true });
             }
         });
