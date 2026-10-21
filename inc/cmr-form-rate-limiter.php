@@ -4,8 +4,8 @@
  * 
  * Features:
  * 1. Dedicated Database Storage for EVERY form submission (Name, Email, Phone, Company, Message, All Fields JSON, IP, Date/Time).
- * 2. Per-form IP Rate Limiter (Max 3 submissions per IP per form within 24 hours).
- * 3. 4th submission automatically rejected and logged.
+ * 2. Per-form IP Rate Limiter (Max 1 submission per IP per form within 24 hours).
+ * 3. 2nd submission automatically rejected and logged.
  * 4. Admin Dashboard under Tools -> Form Submissions & Rate Limits with CSV Export.
  */
 
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'CMR_FORM_RATE_LIMIT_MAX', 3 );
+define( 'CMR_FORM_RATE_LIMIT_MAX', 1 );
 define( 'CMR_FORM_RATE_LIMIT_WINDOW_HOURS', 24 );
 
 // 1. Initialize Database Tables
@@ -379,7 +379,7 @@ function cmr_cf7_rate_limit_validator( $result, $tags ) {
 
         cmr_record_blocked_submission( $form_id, $form_title, $ip, $user_name, $user_email, $user_phone );
 
-        $error_msg = 'You have reached the maximum limit of 3 submissions for this form in 24 hours. Please try again tomorrow.';
+        $error_msg = 'You have reached the maximum limit of 1 submission for this form in 24 hours. Please try again tomorrow.';
 
         if ( ! empty( $tags ) && is_array( $tags ) && isset( $tags[0] ) ) {
             $result->invalidate( $tags[0], $error_msg );
@@ -549,7 +549,7 @@ function cmr_elementor_rate_limit_validator( $record, $ajax_handler ) {
 
         cmr_record_blocked_submission( $form_id, $form_title, $ip, $user_name, $user_email, $user_phone );
 
-        $ajax_handler->add_error_message( 'You have reached the maximum limit of 3 submissions for this form in 24 hours. Please try again tomorrow.' );
+        $ajax_handler->add_error_message( 'You have reached the maximum limit of 1 submission for this form in 24 hours. Please try again tomorrow.' );
         $ajax_handler->is_success = false;
     }
 }
@@ -771,7 +771,7 @@ function cmr_render_form_rate_limit_admin_page() {
             <span class="dashicons dashicons-shield" style="font-size:32px; width:32px; height:32px; color:#6241ca;"></span>
             Form Submissions &amp; Rate Limits
         </h1>
-        <p>Complete submission data for all website forms is stored here in the database, with a rate limit of maximum 3 submissions per IP address every 24 hours per form.</p>
+        <p>Complete submission data for all website forms is stored here in the database, with a rate limit of maximum 1 submission per IP address every 24 hours per form.</p>
 
         <!-- Stats Overview Cards -->
         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:15px; margin: 20px 0;">
@@ -784,7 +784,7 @@ function cmr_render_form_rate_limit_admin_page() {
                 <div style="font-size:26px; font-weight:700; color:#111; margin-top:5px;"><?php echo number_format_i18n( $total_tracked_ips ); ?></div>
             </div>
             <div style="background:#fff; border-left:4px solid #d63638; padding:15px 20px; box-shadow:0 1px 3px rgba(0,0,0,0.05); border-radius:4px;">
-                <div style="font-size:12px; color:#666; text-transform:uppercase; font-weight:600;">Blocked Attempts (4th+)</div>
+                <div style="font-size:12px; color:#666; text-transform:uppercase; font-weight:600;">Blocked Attempts (2nd+)</div>
                 <div style="font-size:26px; font-weight:700; color:#d63638; margin-top:5px;"><?php echo number_format_i18n( $total_blocked ); ?></div>
             </div>
         </div>
@@ -795,7 +795,7 @@ function cmr_render_form_rate_limit_admin_page() {
                 <span class="dashicons dashicons-list-view" style="vertical-align:text-bottom; margin-right:5px;"></span>Form Submissions Log (Database Entries)
             </a>
             <a href="<?php echo esc_url( admin_url( 'tools.php?page=cmr-form-rate-limits&tab=limits' ) ); ?>" class="nav-tab <?php echo $active_tab === 'limits' ? 'nav-tab-active' : ''; ?>">
-                <span class="dashicons dashicons-shield" style="vertical-align:text-bottom; margin-right:5px;"></span>IP Rate Limits &amp; Blocked IPs (Max 3 / 24h)
+                <span class="dashicons dashicons-shield" style="vertical-align:text-bottom; margin-right:5px;"></span>IP Rate Limits &amp; Blocked IPs (Max 1 / 24h)
             </a>
         </h2>
 

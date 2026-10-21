@@ -98,9 +98,9 @@ add_action('wp_ajax_nopriv_cmr_submit_application', 'cmr_handle_job_application_
 add_action('wp_ajax_cmr_submit_application', 'cmr_handle_job_application_submit');
 
 function cmr_handle_job_application_submit() {
-    // 24-hour rate limit check: Max 3 submissions per IP
+    // 24-hour rate limit check: Max 1 submission per IP
     if ( function_exists( 'cmr_job_form_check_rate_limit' ) && ! cmr_job_form_check_rate_limit() ) {
-        wp_send_json_error( array( 'message' => 'You have reached the maximum limit of 3 submissions for this form in 24 hours. Please try again tomorrow.' ) );
+        wp_send_json_error( array( 'message' => 'You have reached the maximum limit of 1 submission for this form in 24 hours. Please try again tomorrow.' ) );
         wp_die();
     }
 
