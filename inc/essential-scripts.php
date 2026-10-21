@@ -286,9 +286,31 @@ add_action( 'wp_footer', function() {
             });
         }
 
+        // Ensure Google reCAPTCHA v2 widgets inside Elementor Popups are rendered
+        function cmrInitRecaptchas() {
+            if (typeof grecaptcha === 'undefined' || typeof grecaptcha.render !== 'function') return;
+
+            var items = document.querySelectorAll('.wpcf7-recaptcha, .g-recaptcha');
+            items.forEach(function(el) {
+                if (el.querySelector('iframe')) return;
+
+                var sitekey = el.getAttribute('data-sitekey') || '6Lf5pvYtAAAAAEeM1xD1xrrL_cCD_i_OXwT7l9ln';
+                if (!sitekey) return;
+
+                try {
+                    grecaptcha.render(el, {
+                        'sitekey': sitekey,
+                        'theme': el.getAttribute('data-theme') || 'light',
+                        'size': el.getAttribute('data-size') || 'normal'
+                    });
+                } catch(e) {}
+            });
+        }
+
         // Universal modal scroll lock checker (Event-driven, 0 CPU overhead)
         function checkActiveModals() {
             updateCMRModalTexts();
+            cmrInitRecaptchas();
             var active = false;
 
             // Elementor Popups
@@ -803,9 +825,25 @@ add_action( 'wp_footer', function() {
 
             checkActiveModals();
             updateCMRModalTexts();
+            cmrInitRecaptchas();
+
+            // Hook into Elementor popup show event and periodic interval
+            if (typeof jQuery !== 'undefined') {
+                jQuery(document).on('elementor/popup/show', function() {
+                    setTimeout(cmrInitRecaptchas, 80);
+                    setTimeout(cmrInitRecaptchas, 350);
+                });
+            }
+            document.addEventListener('click', function() {
+                setTimeout(cmrInitRecaptchas, 150);
+            });
+            setInterval(cmrInitRecaptchas, 1000);
 
             if (window.MutationObserver) {
-                var modalObserver = new MutationObserver(scheduleCMRModalUpdate);
+                var modalObserver = new MutationObserver(function() {
+                    scheduleCMRModalUpdate();
+                    cmrInitRecaptchas();
+                });
                 modalObserver.observe(document.body, { childList: true, subtree: true });
             }
         });

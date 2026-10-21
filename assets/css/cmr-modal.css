@@ -909,6 +909,24 @@ textarea.cmr-input-error {
     box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.18) !important;
 }
 
+/* reCAPTCHA in popups & forms */
+.wpcf7-recaptcha,
+.g-recaptcha,
+.wpcf7-form-control-wrap.recaptcha,
+.wpcf7-form-control-wrap[data-name*="recaptcha"] {
+    min-height: 78px !important;
+    display: block !important;
+    margin: 12px 0 16px 0 !important;
+    clear: both !important;
+}
+
+.wpcf7-recaptcha iframe,
+.g-recaptcha iframe {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
 .cmr-req-star {
     color: #ef4444 !important;
     font-weight: 700 !important;
