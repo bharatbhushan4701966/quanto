@@ -631,11 +631,13 @@ function cmr_render_email_otp_frontend() {
             var parent = input.parentElement;
             if (!parent) return null;
 
-            parent.style.setProperty('position', 'relative', 'important');
-            parent.style.setProperty('display', 'block', 'important');
-            parent.style.setProperty('width', '100%', 'important');
-            parent.style.setProperty('max-width', '100%', 'important');
-            parent.style.setProperty('box-sizing', 'border-box', 'important');
+            if (parent.style.position !== 'relative') {
+                parent.style.setProperty('position', 'relative', 'important');
+                parent.style.setProperty('display', 'block', 'important');
+                parent.style.setProperty('width', '100%', 'important');
+                parent.style.setProperty('max-width', '100%', 'important');
+                parent.style.setProperty('box-sizing', 'border-box', 'important');
+            }
 
             var badgeContainer = parent.querySelector('.cmr-email-badge-container');
             if (!badgeContainer) {
@@ -658,6 +660,12 @@ function cmr_render_email_otp_frontend() {
             if (existing && existing.classList.contains('cmr-otp-box')) {
                 existing._targetInput = input;
                 return existing;
+            }
+
+            var inParent = parentNode.querySelector('.cmr-otp-box');
+            if (inParent) {
+                inParent._targetInput = input;
+                return inParent;
             }
 
             var otpBox = document.createElement('div');
@@ -742,9 +750,13 @@ function cmr_render_email_otp_frontend() {
 
             // 1. Invalid or empty email
             if (!email || !isValidEmail(email)) {
-                if (badgeContainer) badgeContainer.innerHTML = '';
+                if (badgeContainer && badgeContainer.innerHTML !== '') {
+                    badgeContainer.innerHTML = '';
+                }
                 if (otpBox) otpBox.style.setProperty('display', 'none', 'important');
-                input.removeAttribute('data-email-verified');
+                if (input.hasAttribute('data-email-verified')) {
+                    input.removeAttribute('data-email-verified');
+                }
                 input.readOnly = false;
                 input.style.removeProperty('padding-right');
                 return;
@@ -757,7 +769,7 @@ function cmr_render_email_otp_frontend() {
                 input.readOnly = true;
                 input.style.setProperty('padding-right', '135px', 'important');
 
-                if (badgeContainer) {
+                if (badgeContainer && !badgeContainer.querySelector('.cmr-verified-badge')) {
                     badgeContainer.innerHTML = '' +
                         '<span class="badge cmr-verified-badge"><svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg> Verified</span>' +
                         '<span role="button" class="badge cmr-change-badge" title="Change email">Change</span>';
@@ -778,11 +790,13 @@ function cmr_render_email_otp_frontend() {
             }
 
             // 3. Valid email, NOT verified -> Show "Verify Email" Bootstrap Badge
-            input.removeAttribute('data-email-verified');
+            if (input.hasAttribute('data-email-verified')) {
+                input.removeAttribute('data-email-verified');
+            }
             input.readOnly = false;
             input.style.setProperty('padding-right', '115px', 'important');
 
-            if (badgeContainer) {
+            if (badgeContainer && !badgeContainer.querySelector('.cmr-verify-badge')) {
                 badgeContainer.innerHTML = '<span role="button" class="badge cmr-verify-badge">✉ Verify Email</span>';
             }
         }
@@ -900,8 +914,8 @@ function cmr_render_email_otp_frontend() {
             });
         }
 
-        // Global Event Delegation for ALL Input & Change Events
-        ['input', 'change', 'keyup', 'focusin'].forEach(function(eventType) {
+        // Global Event Delegation for ALL Input & Change Events (NO focusin)
+        ['input', 'change', 'keyup'].forEach(function(eventType) {
             document.addEventListener(eventType, function(e) {
                 var target = e.target;
                 if (isEmailField(target)) {
@@ -1005,42 +1019,29 @@ function cmr_render_email_otp_frontend() {
                 'input.wpcf7-email'
             );
 
-            inputs.forEach(function(inp) {
+            for (var i = 0; i < inputs.length; i++) {
+                var inp = inputs[i];
                 if (isEmailField(inp)) {
                     getOrCreateBadgeContainer(inp);
                     getOrCreateOtpBox(inp);
                     updateFieldState(inp);
                 }
-            });
+            }
         }
 
-        // Execute immediately
-        initAllEmailOtpFields();
-
-        // Standard Lifecycle Hooks
+        // Run once on load
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initAllEmailOtpFields);
+        } else {
+            initAllEmailOtpFields();
         }
         window.addEventListener('load', initAllEmailOtpFields);
 
-        // Elementor Popup Hooks
+        // Run when Elementor popups open
         if (typeof jQuery !== 'undefined') {
             jQuery(document).on('elementor/popup/show', function() {
-                setTimeout(initAllEmailOtpFields, 50);
-                setTimeout(initAllEmailOtpFields, 250);
-                setTimeout(initAllEmailOtpFields, 600);
+                setTimeout(initAllEmailOtpFields, 60);
             });
-        }
-
-        // Periodic Sync: Every 1.5s ensures even dynamically injected popups/AJAX forms are synced
-        setInterval(initAllEmailOtpFields, 1500);
-
-        // MutationObserver for dynamic DOM insertions
-        if (window.MutationObserver) {
-            var observer = new MutationObserver(function() {
-                initAllEmailOtpFields();
-            });
-            observer.observe(document.body, { childList: true, subtree: true });
         }
     })();
     </script>
