@@ -882,6 +882,41 @@ function cmr_render_form_rate_limit_admin_page() {
             </div>
         </div>
 
+        <style>
+        .tablenav-pages .page-numbers {
+            display: inline-block;
+            min-width: 28px;
+            height: 28px;
+            line-height: 26px;
+            text-align: center;
+            padding: 0 6px;
+            margin: 0 2px;
+            border: 1px solid #c3c4c7;
+            background: #f6f7f7;
+            color: #2c3338;
+            text-decoration: none;
+            border-radius: 3px;
+            font-size: 13px;
+            box-sizing: border-box;
+            vertical-align: middle;
+        }
+        .tablenav-pages .page-numbers.current {
+            background: #6241ca;
+            color: #fff;
+            border-color: #6241ca;
+            font-weight: 600;
+        }
+        .tablenav-pages .page-numbers:hover:not(.current) {
+            background: #f0f0f1;
+            border-color: #8c8f94;
+            color: #1d2327;
+        }
+        .tablenav-pages .page-numbers.dots {
+            border: none;
+            background: transparent;
+        }
+        </style>
+
         <!-- Navigation Tabs -->
         <h2 class="nav-tab-wrapper" style="margin-bottom:15px;">
             <a href="<?php echo esc_url( admin_url( 'tools.php?page=cmr-form-rate-limits&tab=submissions' ) ); ?>" class="nav-tab <?php echo $active_tab === 'submissions' ? 'nav-tab-active' : ''; ?>">
@@ -1222,35 +1257,6 @@ function cmr_render_form_rate_limit_admin_page() {
                 'current'   => $current_page,
             ) );
             ?>
-
-            <style>
-            .tablenav-pages .page-numbers {
-                display: inline-block;
-                min-width: 28px;
-                height: 28px;
-                line-height: 26px;
-                text-align: center;
-                padding: 0 6px;
-                margin: 0 2px;
-                border: 1px solid #c3c4c7;
-                background: #f6f7f7;
-                color: #2c3338;
-                text-decoration: none;
-                border-radius: 3px;
-                font-size: 13px;
-            }
-            .tablenav-pages .page-numbers.current {
-                background: #6241ca;
-                color: #fff;
-                border-color: #6241ca;
-                font-weight: 600;
-            }
-            .tablenav-pages .page-numbers:hover:not(.current) {
-                background: #f0f0f1;
-                border-color: #8c8f94;
-                color: #1d2327;
-            }
-            </style>
 
             <!-- Search & Status Filter Bar for Limits -->
             <form method="get" action="" style="background:#fff; border:1px solid #ccd0d4; padding:14px 18px; border-radius:6px; margin-bottom:15px; box-shadow:0 1px 3px rgba(0,0,0,0.03);">

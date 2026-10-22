@@ -281,8 +281,8 @@ add_action( 'wp_footer', function() {
                         '<polyline points="20 6 9 17 4 12"></polyline>' +
                     '</svg>' +
                 '</div>' +
-                '<h3>Thank You!</h3>' +
-                '<p>' + cf7Msg + '</p>';
+                '<h3 class="cmr-success-title" style="letter-spacing:0.8px!important; word-spacing:4px!important; font-size:26px!important; font-weight:700!important; margin:0 0 12px 0!important; color:#111827!important; line-height:1.3!important; text-align:center!important; font-family:\'Instrument Sans\', sans-serif!important;">Thank You!</h3>' +
+                '<p class="cmr-success-desc" style="letter-spacing:0.2px!important; font-size:14.5px!important; line-height:1.6!important; color:#4b5563!important; margin:0 auto!important; text-align:center!important; font-family:\'Instrument Sans\', sans-serif!important; max-width:340px!important;">' + cf7Msg + '</p>';
 
             targetParent.appendChild(successWrapper);
 
