@@ -4127,11 +4127,58 @@ foreach ( $all_builder_types as $btype ) {
 // Trigger pre-warming when any WordPress cache is flushed
 add_action( 'wp_cache_flush', 'cmr_prewarm_elementor_caches' );
 
-// Scheduled Hourly Cache Pre-warming (prevents morning CSS breaks)
+// Custom 3-Hour cron interval schedule
+add_filter( 'cron_schedules', function( $schedules ) {
+    if ( ! isset( $schedules['every_three_hours'] ) ) {
+        $schedules['every_three_hours'] = array(
+            'interval' => 3 * HOUR_IN_SECONDS,
+            'display'  => 'Every 3 Hours',
+        );
+    }
+    return $schedules;
+} );
+
+// Scheduled 3-Hour Cache Pre-warming (Internal server cron)
+if ( ! wp_next_scheduled( 'cmr_scheduled_cache_prewarm_3h' ) ) {
+    wp_schedule_event( time(), 'every_three_hours', 'cmr_scheduled_cache_prewarm_3h' );
+}
+add_action( 'cmr_scheduled_cache_prewarm_3h', 'cmr_prewarm_elementor_caches' );
+
+// Also keep hourly fallback check
 if ( ! wp_next_scheduled( 'cmr_scheduled_cache_prewarm' ) ) {
     wp_schedule_event( time(), 'hourly', 'cmr_scheduled_cache_prewarm' );
 }
 add_action( 'cmr_scheduled_cache_prewarm', 'cmr_prewarm_elementor_caches' );
+
+// =========================================================================
+// 100% Automatic Server Pre-warm (Runs every 3 hours automatically on server)
+// Requires ZERO manual cPanel setup and ZERO external cron configuration!
+// =========================================================================
+add_action( 'init', function() {
+    // Avoid running inside AJAX or REST requests
+    if ( ( defined( 'DOING_AJAX' ) && DOING_AJAX ) || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
+        return;
+    }
+
+    // Check if 3 hours have elapsed since last automatic prewarm
+    if ( false === get_transient( 'cmr_auto_prewarm_3h_timer' ) ) {
+        // Set transient lock for 3 hours
+        set_transient( 'cmr_auto_prewarm_3h_timer', time(), 3 * HOUR_IN_SECONDS );
+
+        // Run non-blocking on shutdown so visitor page speed is NEVER slowed down
+        add_action( 'shutdown', function() {
+            if ( function_exists( 'fastcgi_finish_request' ) ) {
+                @fastcgi_finish_request(); // Flushes all HTML to visitor immediately
+            }
+            if ( function_exists( 'cmr_prewarm_elementor_caches' ) ) {
+                cmr_prewarm_elementor_caches();
+            }
+            $log_file = get_template_directory() . '/prewarm-cron.log';
+            $log_entry = sprintf( "[%s] Auto 3-Hour Server Prewarm Executed (Zero-config)\n", date( 'Y-m-d H:i:s' ) );
+            @file_put_contents( $log_file, $log_entry, FILE_APPEND | LOCK_EX );
+        } );
+    }
+} );
 
 // Direct webhook / URL trigger to pre-warm on demand: https://cmrindia.com/?cmr_prewarm_now=1&key=cmr_secure_2026
 add_action( 'init', function() {
