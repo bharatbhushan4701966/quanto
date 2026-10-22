@@ -96,10 +96,39 @@ function cmr_get_client_ip_address() {
     return '0.0.0.0';
 }
 
+// Helper: Get clean user-facing form name (e.g. form #7935 'talk' -> 'Talk to Analyst')
+function cmr_get_formatted_form_title( $form_id, $form_title = '' ) {
+    $fid = (string) $form_id;
+    $title_lower = strtolower( trim( (string) $form_title ) );
+
+    if ( $fid === '7935' || $title_lower === 'talk' ) {
+        return 'Talk to Analyst';
+    }
+    if ( $fid === '8573' || $title_lower === 'expert insight' ) {
+        return 'Expert Insight';
+    }
+    if ( $fid === '7961' || $title_lower === 'subscribe' ) {
+        return 'Subscribe';
+    }
+    if ( $fid === '52977' || $title_lower === 'cmr gtm' ) {
+        return 'CMR GTM';
+    }
+    if ( $fid === '22206' || $title_lower === 'contact us page' ) {
+        return 'Contact Us Page';
+    }
+
+    if ( ! empty( $form_title ) ) {
+        return $form_title;
+    }
+
+    return 'Form #' . $fid;
+}
+
 // 3. Save Complete Form Submission to Database (Archive Table)
 function cmr_save_full_form_submission( $form_id, $form_title, $fields, $ip ) {
     global $wpdb;
     $table = $wpdb->prefix . 'cmr_form_submissions';
+    $form_title = cmr_get_formatted_form_title( $form_id, $form_title );
 
     $name = $fields['your-name'] ?? $fields['name'] ?? $fields['full_name'] ?? $fields['first_name'] ?? '';
     $email = $fields['your-email'] ?? $fields['email'] ?? $fields['work_email'] ?? '';
@@ -253,6 +282,7 @@ function cmr_record_blocked_submission( $form_id, $form_title, $ip, $user_name =
     global $wpdb;
     $table_name = $wpdb->prefix . 'cmr_form_rate_limits';
     $now = current_time( 'mysql' );
+    $form_title = cmr_get_formatted_form_title( $form_id, $form_title );
 
     $wpdb->query( $wpdb->prepare(
         "INSERT INTO {$table_name} (form_id, form_title, ip_address, user_name, user_email, user_phone, submission_count, blocked_count, first_submission_at, last_submission_at, status)
@@ -291,6 +321,7 @@ function cmr_record_successful_submission( $form_id, $form_title, $ip, $user_nam
     global $wpdb;
     $table_name = $wpdb->prefix . 'cmr_form_rate_limits';
     $now = current_time( 'mysql' );
+    $form_title = cmr_get_formatted_form_title( $form_id, $form_title );
     $check = cmr_check_form_rate_limit( $form_id, $ip );
 
     if ( $check['is_first_in_window'] ) {
@@ -617,8 +648,8 @@ function cmr_build_submissions_where_clause( $filter_form, $start_date, $end_dat
     $params  = array();
 
     if ( ! empty( $filter_form ) ) {
-        if ( $filter_form === '7935_8573' || $filter_form === '7935' || $filter_form === '8573' || $filter_form === 'talk' || $filter_form === 'expert insight' ) {
-            $clauses[] = "(form_id IN ('7935', '8573') OR form_title IN ('talk', 'expert insight', 'Request a Consultation', 'Get Expert Insights'))";
+        if ( $filter_form === '7935_8573' || $filter_form === '7935' || $filter_form === '8573' || $filter_form === 'talk' || $filter_form === 'expert insight' || stripos( $filter_form, 'analyst' ) !== false ) {
+            $clauses[] = "(form_id IN ('7935', '8573') OR form_title IN ('talk', 'expert insight', 'Request a Consultation', 'Get Expert Insights', 'Talk to Analyst', 'Expert Insight'))";
         } elseif ( $filter_form === 'CMR GTM' || $filter_form === '52977' ) {
             $clauses[] = "(form_id = '52977' OR form_title LIKE '%CMR GTM%')";
         } elseif ( $filter_form === 'subscribe' || $filter_form === '7961' ) {
@@ -708,7 +739,7 @@ function cmr_handle_submissions_csv_export() {
                 $r->id,
                 $r->submitted_at,
                 $r->form_id,
-                $r->form_title,
+                cmr_get_formatted_form_title( $r->form_id, $r->form_title ),
                 $r->user_name,
                 $r->user_email,
                 $r->user_phone,
@@ -752,6 +783,14 @@ function cmr_render_form_rate_limit_admin_page() {
         check_admin_referer( 'cmr_delete_submission_' . intval( $_GET['id'] ) );
         $wpdb->delete( $records_table, array( 'id' => intval( $_GET['id'] ) ) );
         echo '<div class="notice notice-success is-dismissible"><p>Submission record deleted successfully.</p></div>';
+    }
+
+    // Auto-sync historical form names: update 'talk' to 'Talk to Analyst'
+    static $titles_synced = false;
+    if ( ! $titles_synced ) {
+        $titles_synced = true;
+        $wpdb->query( "UPDATE {$limits_table} SET form_title = 'Talk to Analyst' WHERE form_id = '7935' OR LOWER(form_title) = 'talk'" );
+        $wpdb->query( "UPDATE {$records_table} SET form_title = 'Talk to Analyst' WHERE form_id = '7935' OR LOWER(form_title) = 'talk'" );
     }
 
     // Stats
@@ -998,7 +1037,7 @@ function cmr_render_form_rate_limit_admin_page() {
                                 <td><strong>#<?php echo esc_html( $lead->id ); ?></strong></td>
                                 <td><?php echo esc_html( $lead->submitted_at ); ?></td>
                                 <td>
-                                    <strong><?php echo esc_html( $lead->form_title ?: 'Form #' . $lead->form_id ); ?></strong>
+                                    <strong><?php echo esc_html( cmr_get_formatted_form_title( $lead->form_id, $lead->form_title ) ); ?></strong>
                                     <div style="font-size:11px; color:#888;">ID: #<?php echo esc_html( $lead->form_id ); ?></div>
                                 </td>
                                 <td><strong><?php echo esc_html( $lead->user_name ?: 'N/A' ); ?></strong></td>
@@ -1061,7 +1100,7 @@ function cmr_render_form_rate_limit_admin_page() {
                         ?>
                             <tr>
                                 <td><strong>#<?php echo esc_html( $row->form_id ); ?></strong></td>
-                                <td><?php echo esc_html( $row->form_title ?: 'Form #' . $row->form_id ); ?></td>
+                                <td><strong><?php echo esc_html( cmr_get_formatted_form_title( $row->form_id, $row->form_title ) ); ?></strong></td>
                                 <td>
                                     <?php if ( $row->user_name || $row->user_email ) : ?>
                                         <strong><?php echo esc_html( $row->user_name ?: 'N/A' ); ?></strong><br>
