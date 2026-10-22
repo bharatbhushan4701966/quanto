@@ -280,6 +280,28 @@ add_action( 'wp_footer', function() {
             }
         }
 
+        // Cookie persistence helpers for 24h form rate limits
+        function cmrSetCookie(name, val, hours) {
+            var expires = "";
+            if (hours) {
+                var date = new Date();
+                date.setTime(date.getTime() + (hours * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + encodeURIComponent(val || "") + expires + "; path=/; SameSite=Lax";
+        }
+
+        function cmrGetCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
+            }
+            return null;
+        }
+
         function cmrRecordSuccessfulSubmission(form) {
             if (!form) return;
             var formId = cmrGetFormId(form);
@@ -290,32 +312,38 @@ add_action( 'wp_footer', function() {
             var curCount = 0;
             try {
                 relatedIds.forEach(function(rid) {
-                    var item = localStorage.getItem('cmr_limit_' + rid);
+                    var item = localStorage.getItem('cmr_limit_' + rid) || cmrGetCookie('cmr_limit_' + rid);
                     if (item) {
-                        var parsed = JSON.parse(item);
-                        if (Date.now() - parsed.timestamp < 24 * 3600 * 1000) {
-                            if (parsed.count > curCount) curCount = parsed.count;
+                        try {
+                            var parsed = JSON.parse(item);
+                            if (Date.now() - (parsed.timestamp || 0) < 24 * 3600 * 1000) {
+                                if (parsed.count > curCount) curCount = parsed.count;
+                            }
+                        } catch(err) {
+                            curCount = 1;
                         }
                     }
                 });
             } catch(e) {}
             curCount++;
+            var payload = JSON.stringify({ count: curCount, timestamp: Date.now() });
             relatedIds.forEach(function(rid) {
                 try {
-                    localStorage.setItem('cmr_limit_' + rid, JSON.stringify({ count: curCount, timestamp: Date.now() }));
+                    localStorage.setItem('cmr_limit_' + rid, payload);
+                    sessionStorage.setItem('cmr_limit_' + rid, '1');
+                    cmrSetCookie('cmr_limit_' + rid, payload, 24);
                 } catch(e) {}
                 if (!window.CMR_RATE_LIMITS) window.CMR_RATE_LIMITS = {};
-                window.CMR_RATE_LIMITS[rid] = { count: curCount, max: maxLimit, blocked: (curCount >= maxLimit) };
+                window.CMR_RATE_LIMITS[rid] = { count: curCount, max: maxLimit, blocked: true };
             });
 
-            if (curCount >= maxLimit) {
-                cmrDisableSubmitButton(form);
-                if (formId === '8573' || formId === '7935') {
-                    document.querySelectorAll('form[id*="wpcf7-f7935"], form[id*="wpcf7-f8573"], div[data-wpcf7-id="7935"] form, div[data-wpcf7-id="8573"] form').forEach(function(f) {
-                        cmrDisableSubmitButton(f);
-                    });
-                }
-            }
+            // Permanently disable submit button on current form and any related instances
+            cmrDisableSubmitButton(form);
+            relatedIds.forEach(function(rid) {
+                document.querySelectorAll('form[id*="wpcf7-f' + rid + '"], div[data-wpcf7-id="' + rid + '"] form').forEach(function(f) {
+                    cmrDisableSubmitButton(f);
+                });
+            });
         }
 
         // Listen for Contact Form 7 native AJAX success event
@@ -343,7 +371,7 @@ add_action( 'wp_footer', function() {
         document.addEventListener('wpcf7invalid', function(e) {
             var form = e.target;
             var msg = (e.detail && e.detail.apiResponse && e.detail.apiResponse.message) ? e.detail.apiResponse.message : '';
-            if (form && (msg.toLowerCase().includes('limit') || msg.toLowerCase().includes('24 hours'))) {
+            if (form && (msg.toLowerCase().includes('limit') || msg.toLowerCase().includes('24 hours') || msg.toLowerCase().includes('tomorrow'))) {
                 cmrDisableSubmitButton(form, msg);
             }
         });
@@ -391,7 +419,23 @@ add_action( 'wp_footer', function() {
                 }
             }
 
-            // 2. Check localStorage (persists in browser across cached pages for 24h)
+            // 2. Check Cookie (persists across cached pages and modals)
+            for (var k = 0; k < relatedIds.length; k++) {
+                if (cmrGetCookie('cmr_limit_' + relatedIds[k])) {
+                    return true;
+                }
+            }
+
+            // 3. Check sessionStorage
+            try {
+                for (var s = 0; s < relatedIds.length; s++) {
+                    if (sessionStorage.getItem('cmr_limit_' + relatedIds[s])) {
+                        return true;
+                    }
+                }
+            } catch(e) {}
+
+            // 4. Check localStorage (persists in browser across cached pages for 24h)
             try {
                 for (var j = 0; j < relatedIds.length; j++) {
                     var item = localStorage.getItem('cmr_limit_' + relatedIds[j]);
@@ -414,7 +458,7 @@ add_action( 'wp_footer', function() {
 
         function cmrDisableSubmitButton(form, msg) {
             if (!form) return;
-            var submitBtn = form.querySelector('input[type="submit"], button[type="submit"]');
+            var submitBtn = form.querySelector('input[type="submit"], button[type="submit"], .wpcf7-submit');
             if (!submitBtn) return;
 
             submitBtn.disabled = true;
@@ -422,14 +466,23 @@ add_action( 'wp_footer', function() {
             submitBtn.classList.add('cmr-limit-disabled');
             submitBtn.style.setProperty('opacity', '0.55', 'important');
             submitBtn.style.setProperty('cursor', 'not-allowed', 'important');
-            submitBtn.style.setProperty('pointer-events', 'none', 'important');
+            submitBtn.style.setProperty('pointer-events', 'auto', 'important');
             submitBtn.style.setProperty('background', '#9ca3af', 'important');
+            submitBtn.style.setProperty('background-color', '#9ca3af', 'important');
+            submitBtn.style.setProperty('background-image', 'none', 'important');
             submitBtn.style.setProperty('border-color', '#9ca3af', 'important');
             submitBtn.style.setProperty('color', '#ffffff', 'important');
             submitBtn.style.setProperty('filter', 'grayscale(1)', 'important');
+            submitBtn.style.setProperty('box-shadow', 'none', 'important');
+            submitBtn.style.setProperty('transform', 'none', 'important');
 
-            // Keep original button text unchanged (only disable and style it)
-            // Remove any notice if present (only button should be disabled)
+            // Set cursor: not-allowed on parent wrap so the blocked cursor shows everywhere over the button
+            var wrap = submitBtn.closest('.wpcf7-submit-wrap, .cmr-submit-wrap, p, .elementor-button-wrapper');
+            if (wrap) {
+                wrap.style.setProperty('cursor', 'not-allowed', 'important');
+            }
+
+            // Remove any notice if present
             var existingNotice = form.querySelector('.cmr-limit-notice');
             if (existingNotice) {
                 existingNotice.remove();
@@ -727,22 +780,44 @@ add_action( 'wp_footer', function() {
                         return res.json();
                     })
                     .then(function(data) {
-                        var isRateLimited = data && data.message && (
-                            data.message.toLowerCase().indexOf('limit') !== -1 ||
-                            data.message.toLowerCase().indexOf('24 hours') !== -1 ||
-                            data.message.toLowerCase().indexOf('tomorrow') !== -1
+                        var isRateLimited = data && (
+                            (data.message && (
+                                data.message.toLowerCase().indexOf('limit') !== -1 ||
+                                data.message.toLowerCase().indexOf('24 hours') !== -1 ||
+                                data.message.toLowerCase().indexOf('tomorrow') !== -1
+                            )) ||
+                            (data.cmr_rate_limit && data.cmr_rate_limit.blocked)
                         );
 
-                        if (data && (data.status === 'mail_sent' || isRateLimited)) {
-                            // Submission accepted OR rate limit already logged in backend:
-                            // Form must clear, form must hide, and Thank You screen displayed!
+                        if (isRateLimited) {
+                            // User is repeating submission / blocked by rate limiter:
+                            // DO NOT show Thank You message!
+                            // Permanently disable submit button and block cursor.
+                            form.removeAttribute('data-cmr-submitting');
+                            restoreButton();
+                            cmrRecordSuccessfulSubmission(form);
+                            cmrDisableSubmitButton(form);
+
+                            var respOut = form.querySelector('.wpcf7-response-output');
+                            if (respOut) {
+                                respOut.style.display = 'block';
+                                respOut.className = 'wpcf7-response-output wpcf7-validation-errors';
+                                respOut.textContent = data.message || 'You have reached the maximum limit of 1 submission for this form in 24 hours. Please try again tomorrow.';
+                            }
+                            return;
+                        }
+
+                        if (data && data.status === 'mail_sent') {
+                            // First time submission:
+                            // Reset form fields, disable button with blocked cursor, and SHOW THANK YOU MESSAGE!
                             form.removeAttribute('data-cmr-submitting');
                             cmrRecordSuccessfulSubmission(form);
                             cmrDisableSubmitButton(form);
+                            try { form.reset(); } catch(e) {}
                             try {
                                 form.dispatchEvent(new CustomEvent('wpcf7mailsent', { bubbles: true, detail: { apiResponse: data } }));
                             } catch(ev) {}
-                            showFormSuccessState(form, data.status === 'mail_sent' ? data.message : null);
+                            showFormSuccessState(form, data.message);
                         } else if (data && (data.status === 'validation_failed' || data.status === 'spam' || data.status === 'mail_failed')) {
                             restoreButton();
                             var respOut = form.querySelector('.wpcf7-response-output');
@@ -754,10 +829,7 @@ add_action( 'wp_footer', function() {
                                 alert(data.message || 'Submission failed. Please check the fields and try again.');
                             }
                         } else {
-                            form.removeAttribute('data-cmr-submitting');
-                            cmrRecordSuccessfulSubmission(form);
-                            cmrDisableSubmitButton(form);
-                            showFormSuccessState(form, data ? data.message : null);
+                            restoreButton();
                         }
                     })
                     .catch(function(err) {
@@ -774,6 +846,7 @@ add_action( 'wp_footer', function() {
                             form.removeAttribute('data-cmr-submitting');
                             cmrRecordSuccessfulSubmission(form);
                             cmrDisableSubmitButton(form);
+                            try { form.reset(); } catch(e) {}
                             showFormSuccessState(form);
                         })
                         .catch(function() {
@@ -782,6 +855,25 @@ add_action( 'wp_footer', function() {
                         });
                     });
 
+                    return false;
+                }
+            }
+        }, true);
+
+        // Intercept clicks on disabled or rate-limited buttons to ensure cursor is blocked and no submit triggers
+        document.addEventListener('click', function(e) {
+            var btn = e.target ? e.target.closest('input[type="submit"], button[type="submit"], .wpcf7-submit') : null;
+            if (btn) {
+                var form = btn.closest('form');
+                if (btn.disabled || btn.classList.contains('cmr-limit-disabled') || (form && cmrIsFormRateLimited(form))) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (e.stopImmediatePropagation) {
+                        e.stopImmediatePropagation();
+                    }
+                    if (form) {
+                        cmrDisableSubmitButton(form);
+                    }
                     return false;
                 }
             }

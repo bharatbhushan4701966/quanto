@@ -441,13 +441,13 @@ function cmr_cf7_disable_submit_if_limit_reached( $content ) {
         // Disable input[type="submit"] while keeping the exact original button text
         $content = preg_replace(
             '/<input([^>]*?)type=["\']submit["\']([^>]*?)value=["\']([^"\']*)["\']([^>]*?)>/i',
-            '<input$1type="submit"$2value="$3"$4 disabled="disabled" class="cmr-limit-disabled wpcf7-submit" style="opacity:0.55!important; cursor:not-allowed!important; pointer-events:none!important; background:#9ca3af!important; border-color:#9ca3af!important; filter:grayscale(1)!important;">',
+            '<input$1type="submit"$2value="$3"$4 disabled="disabled" class="cmr-limit-disabled wpcf7-submit" style="opacity:0.55!important; cursor:not-allowed!important; pointer-events:auto!important; background:#9ca3af!important; border-color:#9ca3af!important; filter:grayscale(1)!important;">',
             $content
         );
         // Disable button[type="submit"] while keeping the exact original button text
         $content = preg_replace(
             '/<button([^>]*?)type=["\']submit["\']([^>]*?)>(.*?)<\/button>/i',
-            '<button$1type="submit"$2 disabled="disabled" class="cmr-limit-disabled" style="opacity:0.55!important; cursor:not-allowed!important; pointer-events:none!important; background:#9ca3af!important; border-color:#9ca3af!important; filter:grayscale(1)!important;">$3</button>',
+            '<button$1type="submit"$2 disabled="disabled" class="cmr-limit-disabled" style="opacity:0.55!important; cursor:not-allowed!important; pointer-events:auto!important; background:#9ca3af!important; border-color:#9ca3af!important; filter:grayscale(1)!important;">$3</button>',
             $content
         );
     }

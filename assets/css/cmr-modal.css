@@ -1040,14 +1040,58 @@ textarea.cmr-input-error {
     display: none !important;
 }
 
-/* Disabled Submit Button for Rate-Limited Forms */
+/* Disabled Submit Button for Rate-Limited Forms & Repeated Submissions */
 .cmr-limit-disabled,
 input[type="submit"].cmr-limit-disabled,
-button[type="submit"].cmr-limit-disabled {
+button[type="submit"].cmr-limit-disabled,
+.wpcf7-submit.cmr-limit-disabled,
+.elementor-popup-modal input[type="submit"].cmr-limit-disabled,
+.elementor-popup-modal button[type="submit"].cmr-limit-disabled,
+.elementor-popup-modal .wpcf7-submit.cmr-limit-disabled,
+.custom-subscribe-form input[type="submit"].cmr-limit-disabled,
+.custom-subscribe-form button[type="submit"].cmr-limit-disabled,
+.custom-report-form input[type="submit"].cmr-limit-disabled,
+.custom-consultation-form input[type="submit"].cmr-limit-disabled,
+.cmr-form input[type="submit"].cmr-limit-disabled,
+.cmr-form button[type="submit"].cmr-limit-disabled,
+input[type="submit"]:disabled,
+button[type="submit"]:disabled,
+.wpcf7-submit:disabled {
     opacity: 0.55 !important;
     cursor: not-allowed !important;
-    pointer-events: none !important;
+    pointer-events: auto !important;
+    background: #9ca3af !important;
     background-color: #9ca3af !important;
+    background-image: none !important;
+    border-color: #9ca3af !important;
+    color: #ffffff !important;
+    filter: grayscale(1) !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.cmr-limit-disabled:hover,
+input[type="submit"].cmr-limit-disabled:hover,
+button[type="submit"].cmr-limit-disabled:hover,
+.wpcf7-submit.cmr-limit-disabled:hover,
+.elementor-popup-modal input[type="submit"].cmr-limit-disabled:hover,
+.elementor-popup-modal button[type="submit"].cmr-limit-disabled:hover,
+.elementor-popup-modal .wpcf7-submit.cmr-limit-disabled:hover,
+.custom-subscribe-form input[type="submit"].cmr-limit-disabled:hover,
+.custom-subscribe-form button[type="submit"].cmr-limit-disabled:hover,
+.custom-report-form input[type="submit"].cmr-limit-disabled:hover,
+.custom-consultation-form input[type="submit"].cmr-limit-disabled:hover,
+.cmr-form input[type="submit"].cmr-limit-disabled:hover,
+.cmr-form button[type="submit"].cmr-limit-disabled:hover,
+input[type="submit"]:disabled:hover,
+button[type="submit"]:disabled:hover,
+.wpcf7-submit:disabled:hover {
+    opacity: 0.55 !important;
+    cursor: not-allowed !important;
+    pointer-events: auto !important;
+    background: #9ca3af !important;
+    background-color: #9ca3af !important;
+    background-image: none !important;
     border-color: #9ca3af !important;
     color: #ffffff !important;
     filter: grayscale(1) !important;
