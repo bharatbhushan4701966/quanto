@@ -52,7 +52,7 @@ do_action( 'woocommerce_before_cart' ); ?>
                                 // Author / Category
                                 $author = get_post_meta( $product_id, 'product_author', true );
                                 if ( ! $author ) {
-                                    $author = 'CyberMedia Research (CMR)';
+                                    $author = 'Cyber Media Research (CMR)';
                                 }
                                 echo '<div class="cart-product-author">' . esc_html( $author ) . '</div>';
 

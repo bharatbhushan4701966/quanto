@@ -230,11 +230,11 @@ add_action( 'wp_footer', function() {
             }
 
             // Target the modal column or form container
-            var modalColumn = form.closest('.elementor-element-a26a79a, .cmr-modal-right, .cmr-modal-form-wrapper');
+            var modalColumn = form.closest('.elementor-element-5609af6, .elementor-element-49c9d22, .elementor-element-a26a79a, .elementor-element-2123f86, .cmr-modal-right, .cmr-modal-form-wrapper');
             if (!modalColumn) {
                 var popupModal = form.closest('.elementor-popup-modal, .dialog-widget-content');
                 if (popupModal) {
-                    modalColumn = form.closest('.e-con.e-child, .elementor-column') || popupModal;
+                    modalColumn = form.closest('.e-con:not(.elementor-element-fc8da81):not(.elementor-element-5f053ae):not(.elementor-element-2f9a6aa):not(.elementor-element-3d97663), .elementor-column') || form.parentElement;
                 }
             }
 
@@ -742,10 +742,23 @@ add_action( 'wp_footer', function() {
                         } else {
                             submitBtn.innerText = loadingText;
                         }
+
+                        // Add spinning indicator element
+                        var btnWrap = submitBtn.closest('.wpcf7-submit-wrap, .cmr-submit-wrap, p, .elementor-button-wrapper, .wpcf7-form-control-wrap') || submitBtn.parentElement;
+                        if (btnWrap) {
+                            btnWrap.style.position = 'relative';
+                            var oldSpin = btnWrap.querySelector('.cmr-btn-spinner-icon');
+                            if (oldSpin) oldSpin.remove();
+                            var spinEl = document.createElement('span');
+                            spinEl.className = 'cmr-btn-spinner-icon';
+                            btnWrap.appendChild(spinEl);
+                        }
                     }
 
                     function restoreButton() {
                         form.removeAttribute('data-cmr-submitting');
+                        var spin = form.querySelector('.cmr-btn-spinner-icon');
+                        if (spin) spin.remove();
                         if (!submitBtn) return;
                         submitBtn.disabled = false;
                         submitBtn.style.removeProperty('pointer-events');
@@ -780,19 +793,35 @@ add_action( 'wp_footer', function() {
                         return res.json();
                     })
                     .then(function(data) {
-                        var isRateLimited = data && (
-                            (data.message && (
-                                data.message.toLowerCase().indexOf('limit') !== -1 ||
-                                data.message.toLowerCase().indexOf('24 hours') !== -1 ||
-                                data.message.toLowerCase().indexOf('tomorrow') !== -1
-                            )) ||
-                            (data.cmr_rate_limit && data.cmr_rate_limit.blocked)
+                        var spin = form.querySelector('.cmr-btn-spinner-icon');
+                        if (spin) spin.remove();
+
+                        // 1. FIRST PRIORITY: Successful submission! Always show Thank You screen!
+                        if (data && data.status === 'mail_sent') {
+                            form.removeAttribute('data-cmr-submitting');
+                            cmrRecordSuccessfulSubmission(form);
+                            cmrDisableSubmitButton(form);
+                            try { form.reset(); } catch(e) {}
+                            try {
+                                form.dispatchEvent(new CustomEvent('wpcf7mailsent', { bubbles: true, detail: { apiResponse: data } }));
+                            } catch(ev) {}
+                            showFormSuccessState(form, data.message);
+                            return;
+                        }
+
+                        // 2. SECOND PRIORITY: Check if rejected by daily rate limit (repeat attempt)
+                        var isRateLimited = (
+                            data && (data.status === 'validation_failed' || data.status === 'spam' || data.status === 'mail_failed') && (
+                                (data.message && (
+                                    data.message.toLowerCase().indexOf('limit') !== -1 ||
+                                    data.message.toLowerCase().indexOf('24 hours') !== -1 ||
+                                    data.message.toLowerCase().indexOf('tomorrow') !== -1
+                                )) ||
+                                (data.cmr_rate_limit && data.cmr_rate_limit.blocked)
+                            )
                         );
 
                         if (isRateLimited) {
-                            // User is repeating submission / blocked by rate limiter:
-                            // DO NOT show Thank You message!
-                            // Permanently disable submit button and block cursor.
                             form.removeAttribute('data-cmr-submitting');
                             restoreButton();
                             cmrRecordSuccessfulSubmission(form);
@@ -807,18 +836,8 @@ add_action( 'wp_footer', function() {
                             return;
                         }
 
-                        if (data && data.status === 'mail_sent') {
-                            // First time submission:
-                            // Reset form fields, disable button with blocked cursor, and SHOW THANK YOU MESSAGE!
-                            form.removeAttribute('data-cmr-submitting');
-                            cmrRecordSuccessfulSubmission(form);
-                            cmrDisableSubmitButton(form);
-                            try { form.reset(); } catch(e) {}
-                            try {
-                                form.dispatchEvent(new CustomEvent('wpcf7mailsent', { bubbles: true, detail: { apiResponse: data } }));
-                            } catch(ev) {}
-                            showFormSuccessState(form, data.message);
-                        } else if (data && (data.status === 'validation_failed' || data.status === 'spam' || data.status === 'mail_failed')) {
+                        // 3. OTHER ERRORS (validation failed, field errors)
+                        if (data && (data.status === 'validation_failed' || data.status === 'spam' || data.status === 'mail_failed')) {
                             restoreButton();
                             var respOut = form.querySelector('.wpcf7-response-output');
                             if (respOut) {

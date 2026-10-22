@@ -607,7 +607,7 @@ function cmr_get_cart_html() {
                                 </div>
                                 <div class="cmr-ci-details">
                                     <div class="cmr-ci-title"><?php echo wp_kses_post( $product_name ); ?></div>
-                                    <div class="cmr-ci-brand">CyberMedia Research (CMR)</div>
+                                    <div class="cmr-ci-brand">Cyber Media Research (CMR)</div>
                                     <?php if ( $sku ) : ?>
                                         <div class="cmr-ci-sku"><span>SKU:</span> <?php echo esc_html( $sku ); ?></div>
                                     <?php endif; ?>

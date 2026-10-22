@@ -80,7 +80,7 @@ if ( post_password_required() ) {
 					$author = $product->get_attribute( 'author' );
 				}
 				if ( ! $author ) {
-					$author = 'CyberMedia Research (CMR)';
+					$author = 'Cyber Media Research (CMR)';
 				}
 				echo esc_html( $author );
 				?>

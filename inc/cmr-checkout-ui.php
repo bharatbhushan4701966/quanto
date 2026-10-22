@@ -348,7 +348,7 @@ function cmr_checkout_ui_shortcode( $atts ) {
                         <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/image-10.jpg" alt="Report" class="cmr-order-image">
                         <div class="cmr-order-details">
                             <div class="cmr-order-title">Navigating Digital Supply Chain Transformation: Key Insights</div>
-                            <div class="cmr-order-publisher">CyberMedia Research (CMR)</div>
+                            <div class="cmr-order-publisher">Cyber Media Research (CMR)</div>
                         </div>
                     </div>
 

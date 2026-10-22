@@ -58,7 +58,7 @@ function cmr_render_media_contacts_shortcode( $atts ) {
 
         <div class="cmr-media-testimonial-card">
             <blockquote>
-                “ In an era defined by rapid transitions, CyberMedia Research (CMR) provided us with the definitive roadmap we needed. Their deep-dive insights into the evolving EV ecosystem, coupled with high-fidelity market penetration data, transformed how we evaluated regional demand.
+                “ In an era defined by rapid transitions, Cyber Media Research (CMR) provided us with the definitive roadmap we needed. Their deep-dive insights into the evolving EV ecosystem, coupled with high-fidelity market penetration data, transformed how we evaluated regional demand.
             </blockquote>
             <div class="cmr-media-testimonial-divider"></div>
             <div class="cmr-media-testimonial-author">

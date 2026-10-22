@@ -28,7 +28,7 @@ defined( 'ABSPATH' ) || exit;
                         $author_id = get_post_field( 'post_author', $_product->get_id() );
                         $author_name = $author_id ? get_the_author_meta( 'display_name', $author_id ) : '';
                         if ( ! $author_name || $author_name === 'admin' ) {
-                            echo 'CyberMedia Research (CMR)';
+                            echo 'Cyber Media Research (CMR)';
                         } else {
                             echo esc_html( $author_name );
                         }

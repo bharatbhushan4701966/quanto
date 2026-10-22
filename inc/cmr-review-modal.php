@@ -206,7 +206,7 @@ add_action('wp_footer', function() {
             <?php endif; ?>
             <div class="cmr-rmpi-details">
                 <h3><?php echo esc_html(get_the_title()); ?></h3>
-                <p class="cmr-rpub">CyberMedia Research (CMR)</p>
+                <p class="cmr-rpub">Cyber Media Research (CMR)</p>
                 <p class="cmr-rsku"><span>SKU: </span><?php echo esc_html($product->get_sku()); ?></p>
             </div>
         </div>

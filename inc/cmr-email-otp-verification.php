@@ -180,9 +180,9 @@ function cmr_cf7_enforce_email_otp_verified( $result, $tag ) {
 // =========================================================================
 
 function cmr_dispatch_otp_email( $to_email, $otp_code ) {
-    $subject = 'Your Verification Code: ' . $otp_code . ' - CyberMedia Research';
+    $subject = 'Your Verification Code: ' . $otp_code . ' - Cyber Media Research';
 
-    $site_name = get_bloginfo( 'name' ) ?: 'CyberMedia Research (CMR)';
+    $site_name = get_bloginfo( 'name' ) ?: 'Cyber Media Research (CMR)';
     $site_url  = home_url( '/' );
 
     $body = '<!DOCTYPE html>
@@ -199,7 +199,7 @@ function cmr_dispatch_otp_email( $to_email, $otp_code ) {
                 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width: 520px; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06); border: 1px solid #e2e8f0;">
                     <tr>
                         <td style="background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); padding: 32px 30px; text-align: center;">
-                            <h1 style="margin: 0; color: #ffffff; font-size: 22px; font-weight: 700; letter-spacing: -0.3px;">CyberMedia Research (CMR)</h1>
+                            <h1 style="margin: 0; color: #ffffff; font-size: 22px; font-weight: 700; letter-spacing: -0.3px;">Cyber Media Research (CMR)</h1>
                             <p style="margin: 6px 0 0 0; color: #93c5fd; font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">Email Verification</p>
                         </td>
                     </tr>
@@ -221,7 +221,7 @@ function cmr_dispatch_otp_email( $to_email, $otp_code ) {
                     <tr>
                         <td style="background-color: #f8fafc; padding: 22px 35px; border-top: 1px solid #e2e8f0; text-align: center;">
                             <p style="margin: 0; font-size: 12px; line-height: 18px; color: #94a3b8;">
-                                &copy; ' . date( 'Y' ) . ' <a href="' . esc_url( $site_url ) . '" style="color: #0284c7; text-decoration: none;">CyberMedia Research &amp; Services Ltd.</a> All rights reserved.
+                                &copy; ' . date( 'Y' ) . ' <a href="' . esc_url( $site_url ) . '" style="color: #0284c7; text-decoration: none;">Cyber Media Research &amp; Services Ltd.</a> All rights reserved.
                             </p>
                         </td>
                     </tr>
@@ -237,7 +237,7 @@ function cmr_dispatch_otp_email( $to_email, $otp_code ) {
     $default_from = 'no-reply@' . $clean_domain;
 
     $from_email = apply_filters( 'cmr_otp_from_email', $default_from );
-    $from_name  = apply_filters( 'cmr_otp_from_name', 'CyberMedia Research (CMR)' );
+    $from_name  = apply_filters( 'cmr_otp_from_name', 'Cyber Media Research (CMR)' );
 
     $headers = array(
         'Content-Type: text/html; charset=UTF-8',

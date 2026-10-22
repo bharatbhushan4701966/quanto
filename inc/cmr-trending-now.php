@@ -324,7 +324,7 @@ if ( ! function_exists( 'cmr_trending_now_shortcode' ) ) {
                                     ?>
                                     <span>(<?php echo $count; ?>)</span>
                                 </div>
-                                <div class="cmr-tn-brand">CyberMedia Research (CMR)</div>
+                                <div class="cmr-tn-brand">Cyber Media Research (CMR)</div>
                                 <div class="cmr-tn-price">
                                     <?php echo $product->get_price_html(); ?>
                                 </div>

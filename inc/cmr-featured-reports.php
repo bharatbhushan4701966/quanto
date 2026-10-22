@@ -434,7 +434,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                                 ?>
                                 <span>(<?php echo $count; ?>)</span>
                             </div>
-                            <div class="cmr-fr-brand">CyberMedia Research (CMR)</div>
+                            <div class="cmr-fr-brand">Cyber Media Research (CMR)</div>
                             <div class="cmr-fr-large-footer">
                                 <?php if ( $product->get_price_html() ) : ?>
                                     <div class="cmr-fr-large-price"><?php echo $product->get_price_html(); ?></div>
@@ -493,7 +493,7 @@ if ( ! function_exists( 'cmr_featured_reports_shortcode' ) ) {
                                         ?>
                                         <span>(<?php echo $count; ?>)</span>
                                     </div>
-                                    <div class="cmr-fr-brand">CyberMedia Research (CMR)</div>
+                                    <div class="cmr-fr-brand">Cyber Media Research (CMR)</div>
                                     <div class="cmr-fr-price">
                                         <?php echo $product->get_price_html(); ?>
                                     </div>

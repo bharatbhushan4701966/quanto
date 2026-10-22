@@ -2,7 +2,7 @@
 /**
  * CMR Email Configuration
  * Respects all custom email IDs configured inside Contact Form 7 settings.
- * Ensures clean From Name "CyberMedia Research (CMR)" and Indian Standard Time (IST).
+ * Ensures clean From Name "Cyber Media Research (CMR)" and Indian Standard Time (IST).
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 add_filter( 'wp_mail_from_name', 'cmr_custom_wp_mail_from_name', 999 );
 function cmr_custom_wp_mail_from_name( $original_name ) {
     if ( empty( $original_name ) || $original_name === 'WordPress' || $original_name === 'Quanto Careers' || stripos( $original_name, 'Staging' ) !== false ) {
-        return 'CyberMedia Research (CMR)';
+        return 'Cyber Media Research (CMR)';
     }
     return $original_name;
 }
@@ -21,16 +21,16 @@ function cmr_custom_wp_mail_from_name( $original_name ) {
 // 2. Clean up sender display name in Contact Form 7 and auto-resolve tag mismatches (full-name vs your-name, email-address vs your-email)
 add_filter( 'wpcf7_mail_components', 'cmr_clean_cf7_mail_headers', 999, 3 );
 function cmr_clean_cf7_mail_headers( $components, $form, $mail ) {
-    // If sender has "Staging - cmrindia.com" or "WordPress", replace the name portion with "CyberMedia Research (CMR)"
+    // If sender has "Staging - cmrindia.com" or "WordPress", replace the name portion with "Cyber Media Research (CMR)"
     // but keep the exact email ID configured in your form
     if ( ! empty( $components['sender'] ) ) {
         if ( stripos( $components['sender'], 'Staging' ) !== false || stripos( $components['sender'], 'WordPress' ) !== false ) {
-            $components['sender'] = preg_replace( '/^.*<([^>]+)>/', 'CyberMedia Research (CMR) <$1>', $components['sender'] );
+            $components['sender'] = preg_replace( '/^.*<([^>]+)>/', 'Cyber Media Research (CMR) <$1>', $components['sender'] );
         }
     }
 
     if ( ! empty( $components['additional_headers'] ) ) {
-        $components['additional_headers'] = str_ireplace( 'Staging - cmrindia.com', 'CyberMedia Research (CMR)', $components['additional_headers'] );
+        $components['additional_headers'] = str_ireplace( 'Staging - cmrindia.com', 'Cyber Media Research (CMR)', $components['additional_headers'] );
     }
 
     // Auto-resolve field tags from submission data (fixes Mail (2) failed recipient)
@@ -96,5 +96,47 @@ function cmr_enforce_site_timezone() {
         update_option( 'gmt_offset', '5.5' );
     }
 }
+
+// 4. Universal Site Branding Filters: Replace "CyberMedia" with "Cyber Media" (keeps URLs and emails intact)
+function cmr_format_cyber_media_text( $text ) {
+    if ( empty( $text ) || ! is_string( $text ) ) {
+        return $text;
+    }
+    return preg_replace( '/(?<![\/@\.a-zA-Z0-9_-])CyberMedia(?!\.(co|com|in|org|net|io))/i', 'Cyber Media', $text );
+}
+
+add_filter( 'option_blogname', 'cmr_format_cyber_media_text', 999 );
+add_filter( 'bloginfo', function( $output, $show ) {
+    if ( $show === 'name' || $show === 'description' ) {
+        return cmr_format_cyber_media_text( $output );
+    }
+    return $output;
+}, 999, 2 );
+
+add_filter( 'document_title_parts', function( $title_parts ) {
+    if ( isset( $title_parts['site'] ) ) {
+        $title_parts['site'] = cmr_format_cyber_media_text( $title_parts['site'] );
+    }
+    if ( isset( $title_parts['title'] ) ) {
+        $title_parts['title'] = cmr_format_cyber_media_text( $title_parts['title'] );
+    }
+    return $title_parts;
+}, 999 );
+
+add_filter( 'wp_title', 'cmr_format_cyber_media_text', 999 );
+add_filter( 'the_title', 'cmr_format_cyber_media_text', 999 );
+
+// 5. Universal Frontend Filter for Website Content (Pages, Footers, Headers, Elementor Widgets)
+add_action( 'template_redirect', function() {
+    if ( is_admin() || wp_doing_ajax() ) {
+        return;
+    }
+    ob_start( function( $buffer ) {
+        if ( ! $buffer ) {
+            return $buffer;
+        }
+        return preg_replace( '/(?<![\/@\.a-zA-Z0-9_-])CyberMedia(?!\.(co|com|in|org|net|io))/i', 'Cyber Media', $buffer );
+    } );
+} );
 
 
