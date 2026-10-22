@@ -209,15 +209,23 @@ add_action( 'wp_footer', function() {
                 cf7Msg = 'Your request has been successfully submitted.<br>Our team will review your details and get back to you shortly.';
             }
 
-            // Target the form container (e.g. .custom-subscribe-form or right side container)
-            var container = form.closest('.custom-subscribe-form, .custom-report-form, .custom-consultation-form, .cmr-modal-form-wrapper, .wpcf7') || form.parentElement;
+            // Target the modal column or form container
+            var modalColumn = form.closest('.elementor-element-a26a79a, .cmr-modal-right, .cmr-modal-form-wrapper');
+            if (!modalColumn) {
+                var popupModal = form.closest('.elementor-popup-modal, .dialog-widget-content');
+                if (popupModal) {
+                    modalColumn = form.closest('.e-con.e-child, .elementor-column') || popupModal;
+                }
+            }
+
+            var container = modalColumn || form.closest('.custom-subscribe-form, .custom-report-form, .custom-consultation-form, .cmr-modal-form-wrapper, .wpcf7') || form.parentElement;
 
             // Hide the form itself
             form.style.setProperty('display', 'none', 'important');
 
-            // Hide all siblings inside the form container
+            // Hide all siblings/widgets inside the container (e.g. heading "Subscribe to Insights", icon list "No spam...", etc.)
             if (container && container !== form) {
-                var siblings = container.querySelectorAll('h1, h2, h3, h4, p, label, .subscription-heading, .subscription-options, .sub-desc, .privacy-check, .wpcf7-response-output');
+                var siblings = container.querySelectorAll('h1, h2, h3, h4, p, label, .elementor-widget-heading, .elementor-widget-icon-list, .subscription-heading, .subscription-options, .sub-desc, .privacy-check, .wpcf7-response-output');
                 siblings.forEach(function(el) {
                     if (!el.closest('.cmr-form-success-wrapper')) {
                         el.style.setProperty('display', 'none', 'important');
@@ -616,7 +624,119 @@ add_action( 'wp_footer', function() {
                 return false;
             }
 
-            // All validation checks passed: Allow native Contact Form 7 or Elementor AJAX to submit!
+            // All validation checks passed!
+            // Intercept Contact Form 7 / Modal forms to handle seamlessly via AJAX:
+            // Prevents full page reload and prevents URL from appending #wpcf7-...
+            if (form.classList.contains('wpcf7-form') || form.querySelector('input[name="_wpcf7"]') || form.closest('.elementor-popup-modal') || form.closest('.custom-subscribe-form')) {
+                // If it's the review modal or custom job form, let their dedicated handlers process:
+                if (!form.id.includes('cmr-job-form') && !form.classList.contains('comment-form')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (e.stopImmediatePropagation) {
+                        e.stopImmediatePropagation();
+                    }
+
+                    // 1. Submit Button Feedback & Loading Animation
+                    var submitBtn = form.querySelector('input[type="submit"], button[type="submit"]');
+                    if (submitBtn) {
+                        var origVal = submitBtn.value || submitBtn.innerText || 'Submit';
+                        submitBtn.setAttribute('data-original-val', origVal);
+                        submitBtn.classList.add('cmr-btn-submitting');
+                        submitBtn.disabled = true;
+
+                        var lower = origVal.toLowerCase();
+                        var loadingText = 'Submitting...';
+                        if (lower.indexOf('subscri') !== -1) {
+                            loadingText = 'Subscribing...';
+                        } else if (lower.indexOf('report') !== -1 || lower.indexOf('download') !== -1) {
+                            loadingText = 'Processing...';
+                        }
+
+                        if (submitBtn.tagName === 'INPUT') {
+                            submitBtn.value = loadingText;
+                        } else {
+                            submitBtn.innerText = loadingText;
+                        }
+                    }
+
+                    function restoreButton() {
+                        if (!submitBtn) return;
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('cmr-btn-submitting');
+                        var orig = submitBtn.getAttribute('data-original-val');
+                        if (orig) {
+                            if (submitBtn.tagName === 'INPUT') submitBtn.value = orig;
+                            else submitBtn.innerText = orig;
+                        }
+                    }
+
+                    // 2. Build Submission Payload
+                    var formData = new FormData(form);
+                    var formId = cmrGetFormId(form);
+
+                    // 3. Submit via Contact Form 7 REST API
+                    var restUrl = (window.wpcf7 && window.wpcf7.api && window.wpcf7.api.root) ?
+                        (window.wpcf7.api.root + window.wpcf7.api.namespace + '/contact-forms/' + formId + '/feedback') :
+                        ('/wp-json/contact-form-7/v1/contact-forms/' + formId + '/feedback');
+
+                    fetch(restUrl, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(function(res) {
+                        if (!res.ok) {
+                            throw new Error('HTTP ' + res.status);
+                        }
+                        return res.json();
+                    })
+                    .then(function(data) {
+                        if (data && data.status === 'mail_sent') {
+                            try {
+                                form.dispatchEvent(new CustomEvent('wpcf7mailsent', { bubbles: true, detail: { apiResponse: data } }));
+                            } catch(ev) {}
+                            cmrRecordSuccessfulSubmission(form);
+                            showFormSuccessState(form, data.message);
+                        } else if (data && (data.status === 'validation_failed' || data.status === 'spam' || data.status === 'mail_failed')) {
+                            restoreButton();
+                            var respOut = form.querySelector('.wpcf7-response-output');
+                            if (respOut) {
+                                respOut.style.display = 'block';
+                                respOut.className = 'wpcf7-response-output wpcf7-validation-errors';
+                                respOut.textContent = data.message || 'Submission failed. Please check the fields and try again.';
+                            } else {
+                                alert(data.message || 'Submission failed. Please check the fields and try again.');
+                            }
+                        } else {
+                            cmrRecordSuccessfulSubmission(form);
+                            showFormSuccessState(form, data ? data.message : null);
+                        }
+                    })
+                    .catch(function(err) {
+                        // Fallback: Submit to form.action via AJAX without page reload
+                        var actionUrl = form.action || window.location.href;
+                        fetch(actionUrl, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        })
+                        .then(function() {
+                            cmrRecordSuccessfulSubmission(form);
+                            showFormSuccessState(form);
+                        })
+                        .catch(function() {
+                            restoreButton();
+                            alert('Network error while submitting. Please check your internet connection.');
+                        });
+                    });
+
+                    return false;
+                }
+            }
         }, true);
 
         // Clear error style immediately as user types or checks
@@ -686,6 +806,15 @@ add_action( 'wp_footer', function() {
                 if (ta) ta.value = '';
             });
         });
+        // Clean up URL hash if page had #wpcf7-... left over from previous standard submits
+        function cmrCleanUrlHash() {
+            if (window.location.hash && window.location.hash.indexOf('wpcf7-') !== -1) {
+                if (window.history && window.history.replaceState) {
+                    window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
+                }
+            }
+        }
+        cmrCleanUrlHash();
     })();
     </script>
     <?php

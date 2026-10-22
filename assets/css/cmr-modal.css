@@ -1133,6 +1133,39 @@ input[value="Get Expert Insights"]:hover {
     opacity: 0.95 !important;
 }
 
+/* Submit Button Active (Click Feedback) */
+.custom-report-form input[type="submit"]:active,
+.custom-consultation-form input[type="submit"]:active,
+.custom-subscribe-form input[type="submit"]:active,
+.custom-subscribe-form button[type="submit"]:active,
+.elementor-popup-modal input[type="submit"]:active,
+.elementor-popup-modal button[type="submit"]:active,
+.cmr-form input[type="submit"]:active,
+.cmr-form button[type="submit"]:active,
+.wpcf7-submit:active {
+    transform: scale(0.97) !important;
+    filter: brightness(0.92) !important;
+}
+
+/* Submitting Loading Animation State */
+input[type="submit"].cmr-btn-submitting,
+button[type="submit"].cmr-btn-submitting,
+.wpcf7-submit.cmr-btn-submitting {
+    pointer-events: none !important;
+    cursor: wait !important;
+    opacity: 0.92 !important;
+    background: linear-gradient(90deg, #6A42E5 0%, #8b5cf6 30%, #a78bfa 50%, #8b5cf6 70%, #6A42E5 100%) !important;
+    background-size: 250% 100% !important;
+    animation: cmrBtnLoadingGradient 1.2s ease infinite !important;
+    box-shadow: 0 4px 18px rgba(106, 66, 229, 0.45) !important;
+    transform: scale(0.99) !important;
+}
+
+@keyframes cmrBtnLoadingGradient {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 250% 50%; }
+}
+
 /* Privacy & Terms Checkbox */
 .custom-report-form .privacy-check,
 .custom-consultation-form .privacy-check,

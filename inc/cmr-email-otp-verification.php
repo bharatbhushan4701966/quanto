@@ -847,7 +847,7 @@ function cmr_render_email_otp_frontend() {
             input.style.setProperty('padding-right', '115px', 'important');
 
             if (badgeContainer && !badgeContainer.querySelector('.cmr-verify-badge')) {
-                badgeContainer.innerHTML = '<span role="button" class="badge cmr-verify-badge">✉ Verify Email</span>';
+                badgeContainer.innerHTML = '<span role="button" class="badge cmr-verify-badge">Verify Email</span>';
             }
         }
 
@@ -899,12 +899,12 @@ function cmr_render_email_otp_frontend() {
                         }
                     }
                 } else {
-                    if (vBadge) vBadge.textContent = '✉ Verify Email';
+                    if (vBadge) vBadge.textContent = 'Verify Email';
                     alert(res.data.message || 'Failed to send OTP. Please try again.');
                 }
             })
             .catch(function() {
-                if (vBadge) vBadge.textContent = '✉ Verify Email';
+                if (vBadge) vBadge.textContent = 'Verify Email';
                 alert('Network error while sending OTP. Please try again.');
             });
         }
