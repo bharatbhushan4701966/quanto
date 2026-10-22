@@ -185,6 +185,20 @@ add_action( 'wp_footer', function() {
             if (crOverlay) crOverlay.classList.remove('cmr-open');
             var crModal = document.getElementById('cmr-review-modal');
             if (crModal) crModal.style.display = 'none';
+
+            // Reset modal containers so reopened forms show properly if unblocked
+            document.querySelectorAll('form[data-cmr-success-shown]').forEach(function(f) {
+                f.removeAttribute('data-cmr-success-shown');
+                f.style.removeProperty('display');
+                var c = f.closest('.elementor-element-5609af6, .elementor-element-49c9d22, .elementor-element-a26a79a, .elementor-element-2123f86, .cmr-modal-right, .cmr-modal-form-wrapper') || f.parentElement;
+                if (c) {
+                    var s = c.querySelector('.cmr-form-success-wrapper');
+                    if (s) s.remove();
+                    c.querySelectorAll('h1, h2, h3, h4, p, label, .elementor-widget-heading, .elementor-widget-icon-list, .subscription-heading, .subscription-options, .sub-desc, .privacy-check').forEach(function(el) {
+                        el.style.removeProperty('display');
+                    });
+                }
+            });
         };
 
         // Render Success State inside Modal / Form Container (Clears form, hides form & headings, shows clean Thank You card)
@@ -402,6 +416,35 @@ add_action( 'wp_footer', function() {
             return [formId];
         }
 
+        function cmrClearClientLimit(formId) {
+            if (!formId) return;
+            var related = cmrGetRelatedFormIds(formId);
+            related.forEach(function(rid) {
+                document.cookie = 'cmr_limit_' + rid + '=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Lax';
+                try {
+                    localStorage.removeItem('cmr_limit_' + rid);
+                    sessionStorage.removeItem('cmr_limit_' + rid);
+                } catch(e) {}
+            });
+        }
+
+        function cmrSyncClientRateLimitsWithServer() {
+            if (!window.CMR_RATE_LIMITS || typeof window.CMR_RATE_LIMITS !== 'object') return;
+            try {
+                Object.keys(localStorage).forEach(function(k) {
+                    if (k.indexOf('cmr_limit_') === 0) {
+                        var fid = k.replace('cmr_limit_', '');
+                        var sInfo = window.CMR_RATE_LIMITS[fid];
+                        if (!sInfo || !sInfo.blocked) {
+                            localStorage.removeItem(k);
+                            try { sessionStorage.removeItem(k); } catch(e) {}
+                            document.cookie = k + '=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Lax';
+                        }
+                    }
+                });
+            } catch(e) {}
+        }
+
         function cmrIsFormRateLimited(form) {
             if (!form) return false;
             var formId = cmrGetFormId(form);
@@ -409,24 +452,33 @@ add_action( 'wp_footer', function() {
             var relatedIds = cmrGetRelatedFormIds(formId);
             var maxLimit = (typeof window.CMR_RATE_LIMIT_MAX !== 'undefined') ? window.CMR_RATE_LIMIT_MAX : 1;
 
-            // 1. Check server-provided rate limits (live DB status for this IP)
-            if (window.CMR_RATE_LIMITS) {
+            // 1. Authoritative Server Check (Live DB status for this IP)
+            // If window.CMR_RATE_LIMITS is provided by the server, it is the single source of truth.
+            if (window.CMR_RATE_LIMITS && typeof window.CMR_RATE_LIMITS === 'object') {
+                var isBlockedOnServer = false;
                 for (var i = 0; i < relatedIds.length; i++) {
                     var rInfo = window.CMR_RATE_LIMITS[relatedIds[i]];
                     if (rInfo && (rInfo.blocked || rInfo.count >= maxLimit)) {
-                        return true;
+                        isBlockedOnServer = true;
+                        break;
                     }
+                }
+                if (isBlockedOnServer) {
+                    return true;
+                } else {
+                    // Server confirms NOT blocked (e.g. was reset by admin in wp-admin).
+                    // Immediately purge stale cookies/localStorage so reset works instantly!
+                    cmrClearClientLimit(formId);
+                    return false;
                 }
             }
 
-            // 2. Check Cookie (persists across cached pages and modals)
+            // 2. Offline / Fallback check (only if window.CMR_RATE_LIMITS is missing)
             for (var k = 0; k < relatedIds.length; k++) {
                 if (cmrGetCookie('cmr_limit_' + relatedIds[k])) {
                     return true;
                 }
             }
-
-            // 3. Check sessionStorage
             try {
                 for (var s = 0; s < relatedIds.length; s++) {
                     if (sessionStorage.getItem('cmr_limit_' + relatedIds[s])) {
@@ -434,8 +486,6 @@ add_action( 'wp_footer', function() {
                     }
                 }
             } catch(e) {}
-
-            // 4. Check localStorage (persists in browser across cached pages for 24h)
             try {
                 for (var j = 0; j < relatedIds.length; j++) {
                     var item = localStorage.getItem('cmr_limit_' + relatedIds[j]);
@@ -454,6 +504,32 @@ add_action( 'wp_footer', function() {
             } catch(e) {}
 
             return false;
+        }
+
+        function cmrEnableSubmitButton(form) {
+            if (!form) return;
+            var submitBtn = form.querySelector('input[type="submit"], button[type="submit"], .wpcf7-submit');
+            if (!submitBtn) return;
+            submitBtn.disabled = false;
+            submitBtn.removeAttribute('disabled');
+            submitBtn.classList.remove('cmr-limit-disabled');
+            submitBtn.style.removeProperty('opacity');
+            submitBtn.style.removeProperty('cursor');
+            submitBtn.style.removeProperty('pointer-events');
+            submitBtn.style.removeProperty('background');
+            submitBtn.style.removeProperty('background-color');
+            submitBtn.style.removeProperty('background-image');
+            submitBtn.style.removeProperty('border-color');
+            submitBtn.style.removeProperty('color');
+            submitBtn.style.removeProperty('filter');
+            submitBtn.style.removeProperty('box-shadow');
+            submitBtn.style.removeProperty('transform');
+            var wrap = submitBtn.closest('.wpcf7-submit-wrap, .cmr-submit-wrap, p, .elementor-button-wrapper');
+            if (wrap) {
+                wrap.style.removeProperty('cursor');
+            }
+            var notice = form.querySelector('.cmr-limit-notice');
+            if (notice) notice.remove();
         }
 
         function cmrDisableSubmitButton(form, msg) {
@@ -490,6 +566,7 @@ add_action( 'wp_footer', function() {
         }
 
         function cmrCheckAndApplyRateLimits() {
+            cmrSyncClientRateLimitsWithServer();
             var forms = document.querySelectorAll(
                 'form.wpcf7-form, ' +
                 '.elementor-popup-modal form, ' +
@@ -502,6 +579,8 @@ add_action( 'wp_footer', function() {
             forms.forEach(function(form) {
                 if (cmrIsFormRateLimited(form)) {
                     cmrDisableSubmitButton(form);
+                } else {
+                    cmrEnableSubmitButton(form);
                 }
             });
         }
@@ -796,8 +875,39 @@ add_action( 'wp_footer', function() {
                         var spin = form.querySelector('.cmr-btn-spinner-icon');
                         if (spin) spin.remove();
 
+                        // Check if rejected by daily rate limit (2nd+ attempt by same IP within 24h)
+                        var isRateLimitRejected = (
+                            data && (
+                                (data.cmr_rate_limit && data.cmr_rate_limit.was_rejected) ||
+                                (data.message && (
+                                    data.message.toLowerCase().indexOf('maximum limit of 1 submission') !== -1 ||
+                                    data.message.toLowerCase().indexOf('reached the maximum limit') !== -1 ||
+                                    (data.message.toLowerCase().indexOf('limit') !== -1 && data.message.toLowerCase().indexOf('24 hours') !== -1)
+                                ))
+                            )
+                        );
+
+                        if (isRateLimitRejected) {
+                            form.removeAttribute('data-cmr-submitting');
+                            restoreButton();
+                            cmrRecordSuccessfulSubmission(form);
+                            cmrDisableSubmitButton(form);
+
+                            var respOut = form.querySelector('.wpcf7-response-output');
+                            var limitMsg = data.message || 'You have reached the maximum daily limit of 1 submission for this form. Please try again after 24 hours.';
+                            if (respOut) {
+                                respOut.style.display = 'block';
+                                respOut.className = 'wpcf7-response-output wpcf7-validation-errors';
+                                respOut.textContent = limitMsg;
+                            } else {
+                                alert(limitMsg);
+                            }
+                            return;
+                        }
+
                         // 1. FIRST PRIORITY: Successful submission! Always show Thank You screen!
-                        if (data && data.status === 'mail_sent') {
+                        // In CF7, mail_failed can happen due to local host transport even though lead was stored in DB.
+                        if (data && (data.status === 'mail_sent' || data.status === 'mail_failed')) {
                             form.removeAttribute('data-cmr-submitting');
                             cmrRecordSuccessfulSubmission(form);
                             cmrDisableSubmitButton(form);
@@ -809,46 +919,15 @@ add_action( 'wp_footer', function() {
                             return;
                         }
 
-                        // 2. SECOND PRIORITY: Check if rejected by daily rate limit (repeat attempt)
-                        var isRateLimited = (
-                            data && (data.status === 'validation_failed' || data.status === 'spam' || data.status === 'mail_failed') && (
-                                (data.message && (
-                                    data.message.toLowerCase().indexOf('limit') !== -1 ||
-                                    data.message.toLowerCase().indexOf('24 hours') !== -1 ||
-                                    data.message.toLowerCase().indexOf('tomorrow') !== -1
-                                )) ||
-                                (data.cmr_rate_limit && data.cmr_rate_limit.blocked)
-                            )
-                        );
-
-                        if (isRateLimited) {
-                            form.removeAttribute('data-cmr-submitting');
-                            restoreButton();
-                            cmrRecordSuccessfulSubmission(form);
-                            cmrDisableSubmitButton(form);
-
-                            var respOut = form.querySelector('.wpcf7-response-output');
-                            if (respOut) {
-                                respOut.style.display = 'block';
-                                respOut.className = 'wpcf7-response-output wpcf7-validation-errors';
-                                respOut.textContent = data.message || 'You have reached the maximum limit of 1 submission for this form in 24 hours. Please try again tomorrow.';
-                            }
-                            return;
-                        }
-
-                        // 3. OTHER ERRORS (validation failed, field errors)
-                        if (data && (data.status === 'validation_failed' || data.status === 'spam' || data.status === 'mail_failed')) {
-                            restoreButton();
-                            var respOut = form.querySelector('.wpcf7-response-output');
-                            if (respOut) {
-                                respOut.style.display = 'block';
-                                respOut.className = 'wpcf7-response-output wpcf7-validation-errors';
-                                respOut.textContent = data.message || 'Submission failed. Please check the fields and try again.';
-                            } else {
-                                alert(data.message || 'Submission failed. Please check the fields and try again.');
-                            }
+                        // 2. OTHER ERRORS (validation failed, field errors)
+                        restoreButton();
+                        var respOut = form.querySelector('.wpcf7-response-output');
+                        if (respOut) {
+                            respOut.style.display = 'block';
+                            respOut.className = 'wpcf7-response-output wpcf7-validation-errors';
+                            respOut.textContent = (data && data.message) ? data.message : 'Submission failed. Please check the required fields and try again.';
                         } else {
-                            restoreButton();
+                            alert((data && data.message) ? data.message : 'Submission failed. Please check the required fields and try again.');
                         }
                     })
                     .catch(function(err) {

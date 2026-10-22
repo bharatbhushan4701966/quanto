@@ -399,6 +399,7 @@ function cmr_cf7_rate_limit_validator( $result, $tags ) {
     $check = cmr_check_form_rate_limit( $form_id, $ip );
 
     if ( ! $check['allowed'] ) {
+        $GLOBALS['cmr_rate_limit_rejected_' . $form_id] = true;
         $submission = class_exists( 'WPCF7_Submission' ) ? WPCF7_Submission::get_instance() : null;
         $user_name = ''; $user_email = ''; $user_phone = '';
         if ( $submission ) {
@@ -494,11 +495,13 @@ function cmr_cf7_append_rate_limit_info( $response, $result ) {
         $form_id = (string) $contact_form->id();
         $ip = cmr_get_client_ip_address();
         $check = cmr_check_form_rate_limit( $form_id, $ip );
+        $was_rejected = ! empty( $GLOBALS['cmr_rate_limit_rejected_' . $form_id] );
         $response['cmr_rate_limit'] = array(
-            'form_id' => $form_id,
-            'count'   => $check['current_count'],
-            'max'     => CMR_FORM_RATE_LIMIT_MAX,
-            'blocked' => ( $check['current_count'] >= CMR_FORM_RATE_LIMIT_MAX ),
+            'form_id'      => $form_id,
+            'count'        => $check['current_count'],
+            'max'          => CMR_FORM_RATE_LIMIT_MAX,
+            'blocked'      => ( $check['current_count'] >= CMR_FORM_RATE_LIMIT_MAX ),
+            'was_rejected' => $was_rejected,
         );
     }
     return $response;
@@ -771,11 +774,62 @@ function cmr_render_form_rate_limit_admin_page() {
 
     $active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'submissions';
 
-    // Handle Manual Reset Action
+    // Handle Manual Reset Single Form/IP Action
     if ( isset( $_GET['action'] ) && $_GET['action'] === 'reset_ip' && isset( $_GET['id'] ) ) {
         check_admin_referer( 'cmr_reset_rate_limit_' . intval( $_GET['id'] ) );
-        $wpdb->delete( $limits_table, array( 'id' => intval( $_GET['id'] ) ) );
-        echo '<div class="notice notice-success is-dismissible"><p>Rate limit reset successfully for the selected IP and form.</p></div>';
+        $target_row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$limits_table} WHERE id = %d", intval( $_GET['id'] ) ) );
+        if ( $target_row ) {
+            $reset_ip = $target_row->ip_address;
+            $reset_fid = $target_row->form_id;
+
+            // Delete for this IP and form (including consultation paired forms 7935 and 8573)
+            if ( $reset_fid === '7935' || $reset_fid === '8573' ) {
+                $wpdb->query( $wpdb->prepare( "DELETE FROM {$limits_table} WHERE ip_address = %s AND form_id IN ('7935', '8573')", $reset_ip ) );
+            } else {
+                $wpdb->query( $wpdb->prepare( "DELETE FROM {$limits_table} WHERE ip_address = %s AND form_id = %s", $reset_ip, $reset_fid ) );
+            }
+
+            // Expire cookies if resetting from current testing IP
+            if ( function_exists( 'cmr_get_client_ip_address' ) && cmr_get_client_ip_address() === $reset_ip ) {
+                foreach ( $_COOKIE as $c_name => $c_val ) {
+                    if ( strpos( $c_name, 'cmr_limit_' ) === 0 ) {
+                        setcookie( $c_name, '', time() - 3600, '/' );
+                    }
+                }
+            }
+        } else {
+            $wpdb->delete( $limits_table, array( 'id' => intval( $_GET['id'] ) ) );
+        }
+
+        echo '<div class="notice notice-success is-dismissible"><p>Rate limit reset successfully for the selected form and IP (' . esc_html( $target_row ? $target_row->ip_address : '' ) . ').</p></div>';
+        echo '<script>
+        try {
+            Object.keys(localStorage).forEach(function(k) { if (k.indexOf("cmr_limit_") === 0) localStorage.removeItem(k); });
+            Object.keys(sessionStorage).forEach(function(k) { if (k.indexOf("cmr_limit_") === 0) sessionStorage.removeItem(k); });
+        } catch(e) {}
+        </script>';
+    }
+
+    // Handle Manual Reset ALL Forms for IP Action
+    if ( isset( $_GET['action'] ) && $_GET['action'] === 'reset_ip_all' && isset( $_GET['ip'] ) ) {
+        $ip_to_reset = sanitize_text_field( wp_unslash( $_GET['ip'] ) );
+        check_admin_referer( 'cmr_reset_ip_all_' . $ip_to_reset );
+        $wpdb->delete( $limits_table, array( 'ip_address' => $ip_to_reset ) );
+
+        if ( function_exists( 'cmr_get_client_ip_address' ) && cmr_get_client_ip_address() === $ip_to_reset ) {
+            foreach ( $_COOKIE as $c_name => $c_val ) {
+                if ( strpos( $c_name, 'cmr_limit_' ) === 0 ) {
+                    setcookie( $c_name, '', time() - 3600, '/' );
+                }
+            }
+        }
+        echo '<div class="notice notice-success is-dismissible"><p>All form rate limits reset successfully for IP: <strong>' . esc_html( $ip_to_reset ) . '</strong>.</p></div>';
+        echo '<script>
+        try {
+            Object.keys(localStorage).forEach(function(k) { if (k.indexOf("cmr_limit_") === 0) localStorage.removeItem(k); });
+            Object.keys(sessionStorage).forEach(function(k) { if (k.indexOf("cmr_limit_") === 0) sessionStorage.removeItem(k); });
+        } catch(e) {}
+        </script>';
     }
 
     // Handle Delete Single Lead Record
@@ -1064,12 +1118,140 @@ function cmr_render_form_rate_limit_admin_page() {
         <?php else : ?>
             <!-- RATE LIMITS & BLOCKED IPS TAB -->
             <?php
-            $where_limit = '';
-            if ( $search ) {
-                $where_limit = $wpdb->prepare( "WHERE ip_address LIKE %s OR form_id LIKE %s OR form_title LIKE %s OR user_name LIKE %s", '%' . $search . '%', '%' . $search . '%', '%' . $search . '%', '%' . $search . '%' );
+            $search_limit  = isset( $_GET['s'] ) ? sanitize_text_field( wp_unslash( $_GET['s'] ) ) : '';
+            $status_filter = isset( $_GET['status_filter'] ) ? sanitize_text_field( wp_unslash( $_GET['status_filter'] ) ) : '';
+
+            $where_clauses = array();
+            $where_params  = array();
+
+            if ( ! empty( $search_limit ) ) {
+                $like = '%' . $wpdb->esc_like( $search_limit ) . '%';
+                $where_clauses[] = "(ip_address LIKE %s OR form_id LIKE %s OR form_title LIKE %s OR user_name LIKE %s OR user_email LIKE %s)";
+                for ( $i = 0; $i < 5; $i++ ) {
+                    $where_params[] = $like;
+                }
             }
-            $logs = $wpdb->get_results( "SELECT * FROM {$limits_table} {$where_limit} ORDER BY last_submission_at DESC LIMIT 100" );
+
+            if ( $status_filter === 'blocked' ) {
+                $where_clauses[] = "(status = 'blocked' OR blocked_count > 0)";
+            } elseif ( $status_filter === 'limit_reached' ) {
+                $where_clauses[] = "(submission_count >= " . CMR_FORM_RATE_LIMIT_MAX . " AND blocked_count = 0)";
+            } elseif ( $status_filter === 'allowed' ) {
+                $where_clauses[] = "(submission_count < " . CMR_FORM_RATE_LIMIT_MAX . " AND blocked_count = 0)";
+            }
+
+            $where_sql = '';
+            if ( ! empty( $where_clauses ) ) {
+                $where_sql = 'WHERE ' . implode( ' AND ', $where_clauses );
+                if ( ! empty( $where_params ) ) {
+                    $where_sql = $wpdb->prepare( $where_sql, $where_params );
+                }
+            }
+
+            // Pagination Settings
+            $per_page = 20;
+            $current_page = max( 1, isset( $_GET['paged'] ) ? intval( $_GET['paged'] ) : 1 );
+            $total_records = intval( $wpdb->get_var( "SELECT COUNT(*) FROM {$limits_table} {$where_sql}" ) ?: 0 );
+            $total_pages = max( 1, ceil( $total_records / $per_page ) );
+
+            if ( $current_page > $total_pages ) {
+                $current_page = $total_pages;
+            }
+            $offset = ( $current_page - 1 ) * $per_page;
+
+            if ( ! empty( $where_sql ) ) {
+                $logs = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$limits_table} {$where_sql} ORDER BY last_submission_at DESC LIMIT %d OFFSET %d", $per_page, $offset ) );
+            } else {
+                $logs = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$limits_table} ORDER BY last_submission_at DESC LIMIT %d OFFSET %d", $per_page, $offset ) );
+            }
+
+            // Generate Pagination Links
+            $page_links = paginate_links( array(
+                'base'      => add_query_arg( 'paged', '%#%' ),
+                'format'    => '',
+                'prev_text' => '&laquo; Prev',
+                'next_text' => 'Next &raquo;',
+                'total'     => $total_pages,
+                'current'   => $current_page,
+            ) );
             ?>
+
+            <style>
+            .tablenav-pages .page-numbers {
+                display: inline-block;
+                min-width: 28px;
+                height: 28px;
+                line-height: 26px;
+                text-align: center;
+                padding: 0 6px;
+                margin: 0 2px;
+                border: 1px solid #c3c4c7;
+                background: #f6f7f7;
+                color: #2c3338;
+                text-decoration: none;
+                border-radius: 3px;
+                font-size: 13px;
+            }
+            .tablenav-pages .page-numbers.current {
+                background: #6241ca;
+                color: #fff;
+                border-color: #6241ca;
+                font-weight: 600;
+            }
+            .tablenav-pages .page-numbers:hover:not(.current) {
+                background: #f0f0f1;
+                border-color: #8c8f94;
+                color: #1d2327;
+            }
+            </style>
+
+            <!-- Search & Status Filter Bar for Limits -->
+            <form method="get" action="" style="background:#fff; border:1px solid #ccd0d4; padding:14px 18px; border-radius:6px; margin-bottom:15px; box-shadow:0 1px 3px rgba(0,0,0,0.03);">
+                <input type="hidden" name="page" value="cmr-form-rate-limits" />
+                <input type="hidden" name="tab" value="limits" />
+
+                <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:flex-end;">
+                    <div>
+                        <label style="display:block; font-size:12px; font-weight:600; margin-bottom:4px; color:#333;">Search IP / Submitter / Form:</label>
+                        <input type="search" name="s" value="<?php echo esc_attr( $search_limit ); ?>" placeholder="e.g. 192.168.1.1 or CMR GTM..." style="width:260px; height:32px;" />
+                    </div>
+
+                    <div>
+                        <label style="display:block; font-size:12px; font-weight:600; margin-bottom:4px; color:#333;">Filter Status:</label>
+                        <select name="status_filter" style="height:32px;">
+                            <option value="">All Statuses</option>
+                            <option value="blocked" <?php selected( $status_filter, 'blocked' ); ?>>Blocked Only (2nd+ attempts)</option>
+                            <option value="limit_reached" <?php selected( $status_filter, 'limit_reached' ); ?>>Limit Reached (1/1)</option>
+                            <option value="allowed" <?php selected( $status_filter, 'allowed' ); ?>>Allowed (0/1)</option>
+                        </select>
+                    </div>
+
+                    <div style="display:flex; gap:6px;">
+                        <button type="submit" class="button button-primary">Filter</button>
+                        <?php if ( ! empty( $search_limit ) || ! empty( $status_filter ) ) : ?>
+                            <a href="<?php echo esc_url( admin_url( 'tools.php?page=cmr-form-rate-limits&tab=limits' ) ); ?>" class="button button-secondary">Reset</a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Top Tablenav & Pagination Info -->
+            <div class="tablenav top" style="margin: 10px 0 12px 0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                <div style="font-size:13px; color:#444;">
+                    Showing <strong><?php echo number_format_i18n( $total_records > 0 ? ( $offset + 1 ) : 0 ); ?>&ndash;<?php echo number_format_i18n( min( $total_records, $offset + count( $logs ) ) ); ?></strong> of <strong><?php echo number_format_i18n( $total_records ); ?></strong> IP rate limit records (Page <?php echo $current_page; ?> of <?php echo $total_pages; ?>)
+                    <?php if ( ! empty( $search_limit ) || ! empty( $status_filter ) ) : ?>
+                        <em style="color:#666;">(Filters Applied)</em>
+                    <?php endif; ?>
+                </div>
+
+                <?php if ( $total_pages > 1 ) : ?>
+                    <div class="tablenav-pages">
+                        <span class="displaying-num" style="margin-right:8px; color:#666;"><?php echo number_format_i18n( $total_records ); ?> items</span>
+                        <?php echo $page_links; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+
             <table class="wp-list-table widefat fixed striped">
                 <thead>
                     <tr>
@@ -1082,21 +1264,24 @@ function cmr_render_form_rate_limit_admin_page() {
                         <th>First Submit (IST)</th>
                         <th>Last Attempt (IST)</th>
                         <th style="width:140px;">Status</th>
-                        <th style="width:80px; text-align:center;">Action</th>
+                        <th style="width:140px; text-align:center;">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if ( empty( $logs ) ) : ?>
                         <tr>
-                            <td colspan="10" style="text-align:center; padding:20px; color:#888;">No rate limit tracking records yet.</td>
+                            <td colspan="10" style="text-align:center; padding:25px; color:#888;">
+                                No rate limit tracking records found matching your criteria.
+                            </td>
                         </tr>
                     <?php else : ?>
                         <?php foreach ( $logs as $row ) : 
                             $is_blocked = ( $row->status === 'blocked' || $row->blocked_count > 0 );
                             $sub_count = intval( $row->submission_count );
-                            $badge_color = $is_blocked ? '#d63638' : ( $sub_count >= 3 ? '#dba617' : '#00a32a' );
-                            $badge_text = $is_blocked ? 'Blocked (4th+)' : ( $sub_count >= 3 ? 'Limit Reached (3/3)' : 'Allowed (' . $sub_count . '/3)' );
+                            $badge_color = $is_blocked ? '#d63638' : ( $sub_count >= CMR_FORM_RATE_LIMIT_MAX ? '#dba617' : '#00a32a' );
+                            $badge_text = $is_blocked ? 'Blocked (2nd+)' : ( $sub_count >= CMR_FORM_RATE_LIMIT_MAX ? 'Limit Reached (' . $sub_count . '/' . CMR_FORM_RATE_LIMIT_MAX . ')' : 'Allowed (' . $sub_count . '/' . CMR_FORM_RATE_LIMIT_MAX . ')' );
                             $reset_url = wp_nonce_url( admin_url( 'tools.php?page=cmr-form-rate-limits&tab=limits&action=reset_ip&id=' . $row->id ), 'cmr_reset_rate_limit_' . $row->id );
+                            $reset_all_url = wp_nonce_url( admin_url( 'tools.php?page=cmr-form-rate-limits&tab=limits&action=reset_ip_all&ip=' . urlencode( $row->ip_address ) ), 'cmr_reset_ip_all_' . $row->ip_address );
                         ?>
                             <tr>
                                 <td><strong>#<?php echo esc_html( $row->form_id ); ?></strong></td>
@@ -1121,14 +1306,28 @@ function cmr_render_form_rate_limit_admin_page() {
                                         <?php echo esc_html( $badge_text ); ?>
                                     </span>
                                 </td>
-                                <td style="text-align:center;">
-                                    <a href="<?php echo esc_url( $reset_url ); ?>" class="button button-small" onclick="return confirm('Reset count for this IP on this form?');">Reset</a>
+                                <td style="text-align:center; white-space:nowrap;">
+                                    <a href="<?php echo esc_url( $reset_url ); ?>" class="button button-small" onclick="return confirm('Reset limit for this IP on this form?');">Reset</a>
+                                    <a href="<?php echo esc_url( $reset_all_url ); ?>" class="button button-small" style="margin-left:4px;" title="Reset all form limits for this IP" onclick="return confirm('Reset ALL form limits for IP <?php echo esc_js( $row->ip_address ); ?>?');">Reset All</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </tbody>
             </table>
+
+            <!-- Bottom Pagination -->
+            <?php if ( $total_pages > 1 ) : ?>
+                <div class="tablenav bottom" style="margin: 12px 0; display:flex; justify-content:space-between; align-items:center;">
+                    <div style="font-size:12px; color:#666;">
+                        Showing page <strong><?php echo $current_page; ?></strong> of <strong><?php echo $total_pages; ?></strong>
+                    </div>
+                    <div class="tablenav-pages">
+                        <span class="displaying-num" style="margin-right:8px; color:#666;"><?php echo number_format_i18n( $total_records ); ?> items</span>
+                        <?php echo $page_links; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
     </div>
     <?php
