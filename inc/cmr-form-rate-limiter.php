@@ -928,8 +928,33 @@ function cmr_render_form_rate_limit_admin_page() {
             }
 
             $where_sub = cmr_build_submissions_where_clause( $filter_form, $start_date, $end_date, $search );
-            $filtered_count = $wpdb->get_var( "SELECT COUNT(*) FROM {$records_table} {$where_sub}" ) ?: 0;
-            $leads = $wpdb->get_results( "SELECT * FROM {$records_table} {$where_sub} ORDER BY submitted_at DESC LIMIT 200" );
+            $filtered_count = intval( $wpdb->get_var( "SELECT COUNT(*) FROM {$records_table} {$where_sub}" ) ?: 0 );
+
+            // Submissions Pagination Settings (20 records per page)
+            $sub_per_page = 20;
+            $sub_current_page = max( 1, isset( $_GET['paged'] ) ? intval( $_GET['paged'] ) : 1 );
+            $sub_total_pages = max( 1, ceil( $filtered_count / $sub_per_page ) );
+
+            if ( $sub_current_page > $sub_total_pages ) {
+                $sub_current_page = $sub_total_pages;
+            }
+            $sub_offset = ( $sub_current_page - 1 ) * $sub_per_page;
+
+            if ( ! empty( $where_sub ) ) {
+                $leads = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$records_table} {$where_sub} ORDER BY submitted_at DESC LIMIT %d OFFSET %d", $sub_per_page, $sub_offset ) );
+            } else {
+                $leads = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$records_table} ORDER BY submitted_at DESC LIMIT %d OFFSET %d", $sub_per_page, $sub_offset ) );
+            }
+
+            // Generate Submissions Pagination Links
+            $sub_page_links = paginate_links( array(
+                'base'      => add_query_arg( 'paged', '%#%' ),
+                'format'    => '',
+                'prev_text' => '&laquo; Prev',
+                'next_text' => 'Next &raquo;',
+                'total'     => $sub_total_pages,
+                'current'   => $sub_current_page,
+            ) );
 
             // Filter-aware Export URL
             $export_args = array(
@@ -1047,19 +1072,28 @@ function cmr_render_form_rate_limit_admin_page() {
                 <?php endif; ?>
             </form>
 
-            <!-- Table Header Info & CSV Export -->
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:10px;">
+            <!-- Table Header Info, Pagination & CSV Export -->
+            <div class="tablenav top" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:10px;">
                 <div style="font-size:13px; color:#444;">
-                    Showing <strong><?php echo number_format_i18n( count( $leads ) ); ?></strong> of <strong><?php echo number_format_i18n( $filtered_count ); ?></strong> matching submissions
+                    Showing <strong><?php echo number_format_i18n( $filtered_count > 0 ? ( $sub_offset + 1 ) : 0 ); ?>&ndash;<?php echo number_format_i18n( min( $filtered_count, $sub_offset + count( $leads ) ) ); ?></strong> of <strong><?php echo number_format_i18n( $filtered_count ); ?></strong> matching submissions (Page <?php echo $sub_current_page; ?> of <?php echo $sub_total_pages; ?>)
                     <?php if ( $has_active_filters ) : ?>
                         <em style="color:#666;">(Filters Applied)</em>
                     <?php endif; ?>
                 </div>
 
-                <a href="<?php echo esc_url( $export_url ); ?>" class="button button-secondary" style="display:inline-flex; align-items:center; gap:5px;">
-                    <span class="dashicons dashicons-download" style="margin-top:-2px;"></span>
-                    Export <?php echo $has_active_filters ? 'Filtered Data' : 'All Data'; ?> to CSV (Excel)
-                </a>
+                <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                    <?php if ( $sub_total_pages > 1 ) : ?>
+                        <div class="tablenav-pages">
+                            <span class="displaying-num" style="margin-right:6px; color:#666;"><?php echo number_format_i18n( $filtered_count ); ?> items</span>
+                            <?php echo $sub_page_links; ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <a href="<?php echo esc_url( $export_url ); ?>" class="button button-secondary" style="display:inline-flex; align-items:center; gap:5px;">
+                        <span class="dashicons dashicons-download" style="margin-top:-2px;"></span>
+                        Export <?php echo $has_active_filters ? 'Filtered Data' : 'All Data'; ?> to CSV (Excel)
+                    </a>
+                </div>
             </div>
 
             <table class="wp-list-table widefat fixed striped">
@@ -1114,6 +1148,19 @@ function cmr_render_form_rate_limit_admin_page() {
                     <?php endif; ?>
                 </tbody>
             </table>
+
+            <!-- Bottom Pagination for Submissions -->
+            <?php if ( $sub_total_pages > 1 ) : ?>
+                <div class="tablenav bottom" style="margin: 14px 0; display:flex; justify-content:space-between; align-items:center;">
+                    <div style="font-size:12px; color:#666;">
+                        Showing page <strong><?php echo $sub_current_page; ?></strong> of <strong><?php echo $sub_total_pages; ?></strong>
+                    </div>
+                    <div class="tablenav-pages">
+                        <span class="displaying-num" style="margin-right:8px; color:#666;"><?php echo number_format_i18n( $filtered_count ); ?> items</span>
+                        <?php echo $sub_page_links; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
 
         <?php else : ?>
             <!-- RATE LIMITS & BLOCKED IPS TAB -->
