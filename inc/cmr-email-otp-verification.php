@@ -111,10 +111,10 @@ function cmr_verify_email_otp_ajax() {
     // OTP is valid! Delete OTP transient and set verified token
     delete_transient( $transient_key );
 
-    // Generate secure verification token valid for 2 hours
+    // Generate secure verification token valid for 30 minutes (single-use upon form submission)
     $token = wp_hash( strtolower( $email ) . '|' . wp_salt( 'auth' ) . '|' . date( 'Ymd' ) );
     $verified_key = 'cmr_ver_' . md5( strtolower( $email ) );
-    set_transient( $verified_key, $token, 2 * HOUR_IN_SECONDS );
+    set_transient( $verified_key, $token, 30 * MINUTE_IN_SECONDS );
 
     wp_send_json_success( array(
         'message' => 'Email verified successfully!',
@@ -147,7 +147,7 @@ function cmr_is_email_verified( $email, $token = '' ) {
 }
 
 // =========================================================================
-// 2. Contact Form 7 Backend Validation Filter
+// 2. Contact Form 7 Backend Validation Filter & Single-Use Consumption
 // =========================================================================
 
 add_filter( 'wpcf7_validate_email', 'cmr_cf7_enforce_email_otp_verified', 30, 2 );
@@ -173,6 +173,70 @@ function cmr_cf7_enforce_email_otp_verified( $result, $tag ) {
     }
 
     return $result;
+}
+
+/**
+ * Helper to extract email from CF7 posted data
+ */
+function cmr_extract_email_from_cf7_posted( $posted ) {
+    if ( empty( $posted ) || ! is_array( $posted ) ) {
+        return '';
+    }
+    foreach ( array( 'your-email', 'email', 'email-address' ) as $key ) {
+        if ( ! empty( $posted[ $key ] ) && is_email( $posted[ $key ] ) ) {
+            return sanitize_email( $posted[ $key ] );
+        }
+    }
+    foreach ( $posted as $key => $val ) {
+        if ( is_string( $val ) && is_email( $val ) ) {
+            return sanitize_email( $val );
+        }
+    }
+    return '';
+}
+
+/**
+ * Invalidate / consume verified email OTP token once the form submission is processed
+ */
+add_action( 'wpcf7_before_send_mail', 'cmr_cf7_consume_email_otp_token', 20, 3 );
+function cmr_cf7_consume_email_otp_token( $contact_form, &$abort, $submission ) {
+    if ( ! $submission ) {
+        return;
+    }
+    $posted = $submission->get_posted_data();
+    $email  = cmr_extract_email_from_cf7_posted( $posted );
+    if ( ! empty( $email ) ) {
+        delete_transient( 'cmr_ver_' . md5( strtolower( $email ) ) );
+    }
+}
+
+add_action( 'wpcf7_submit', 'cmr_cf7_consume_email_otp_token_on_submit', 20, 2 );
+function cmr_cf7_consume_email_otp_token_on_submit( $contact_form, $result ) {
+    $status = is_array( $result ) && isset( $result['status'] ) ? $result['status'] : '';
+    if ( in_array( $status, array( 'mail_sent', 'mail_failed' ), true ) ) {
+        $submission = class_exists( 'WPCF7_Submission' ) ? WPCF7_Submission::get_instance() : null;
+        if ( $submission ) {
+            $posted = $submission->get_posted_data();
+            $email  = cmr_extract_email_from_cf7_posted( $posted );
+            if ( ! empty( $email ) ) {
+                delete_transient( 'cmr_ver_' . md5( strtolower( $email ) ) );
+            }
+        }
+    }
+}
+
+/**
+ * AJAX endpoint to immediately consume / invalidate verified email status
+ */
+add_action( 'wp_ajax_cmr_consume_verified_email', 'cmr_ajax_consume_verified_email' );
+add_action( 'wp_ajax_nopriv_cmr_consume_verified_email', 'cmr_ajax_consume_verified_email' );
+function cmr_ajax_consume_verified_email() {
+    $email = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+    if ( ! empty( $email ) ) {
+        delete_transient( 'cmr_ver_' . md5( strtolower( $email ) ) );
+        wp_send_json_success( array( 'message' => 'Token consumed successfully.' ) );
+    }
+    wp_send_json_error( array( 'message' => 'Invalid email address.' ) );
 }
 
 // =========================================================================
@@ -832,8 +896,8 @@ function cmr_render_email_otp_frontend() {
                 return;
             }
 
-            // 2. Already verified email
-            if (verifiedEmailTokens[email]) {
+            // 2. Already verified email for this specific input
+            if (input._cmrVerifiedEmail === email && input._cmrVerifiedToken) {
                 if (otpBox) otpBox.style.setProperty('display', 'none', 'important');
                 input.setAttribute('data-email-verified', 'true');
                 input.readOnly = true;
@@ -854,7 +918,7 @@ function cmr_render_email_otp_frontend() {
                         hiddenToken.name = 'cmr_email_verified_token';
                         parentForm.appendChild(hiddenToken);
                     }
-                    hiddenToken.value = verifiedEmailTokens[email];
+                    hiddenToken.value = input._cmrVerifiedToken;
                 }
                 return;
             }
@@ -965,7 +1029,10 @@ function cmr_render_email_otp_frontend() {
                 if (confirmBtn) confirmBtn.textContent = 'Verify';
 
                 if (res.success) {
-                    verifiedEmailTokens[email.toLowerCase()] = res.data.token;
+                    var cleanEmail = email.toLowerCase();
+                    input._cmrVerifiedEmail = cleanEmail;
+                    input._cmrVerifiedToken = res.data.token;
+                    verifiedEmailTokens[cleanEmail] = res.data.token;
                     showOtpFeedback(otpBox, '✓ ' + (res.data.message || 'Email verified successfully!'), 'success');
 
                     setTimeout(function() {
@@ -1055,8 +1122,27 @@ function cmr_render_email_otp_frontend() {
                 if (input) {
                     var curEmail = (input.value || '').trim().toLowerCase();
                     delete verifiedEmailTokens[curEmail];
+                    delete input._cmrVerifiedEmail;
+                    delete input._cmrVerifiedToken;
                     input.readOnly = false;
                     input.removeAttribute('data-email-verified');
+
+                    var parentForm = input.closest('form');
+                    if (parentForm) {
+                        var hToken = parentForm.querySelector('input[name="cmr_email_verified_token"]');
+                        if (hToken) hToken.remove();
+                    }
+
+                    if (curEmail) {
+                        try {
+                            var fd = new FormData();
+                            fd.append('action', 'cmr_consume_verified_email');
+                            fd.append('email', curEmail);
+                            fd.append('nonce', CMR_OTP_CONFIG.nonce);
+                            fetch(CMR_OTP_CONFIG.ajaxUrl, { method: 'POST', body: fd });
+                        } catch(err) {}
+                    }
+
                     updateFieldState(input);
                     input.focus();
                     input.select();
@@ -1088,6 +1174,65 @@ function cmr_render_email_otp_frontend() {
                 return;
             }
         }, true);
+
+        // Global Helper: Invalidate / Expire OTP verification status across page & server
+        window.cmrInvalidateVerifiedEmail = function(email) {
+            var targetEmail = email ? String(email).trim().toLowerCase() : '';
+
+            if (targetEmail) {
+                delete verifiedEmailTokens[targetEmail];
+            } else {
+                verifiedEmailTokens = {};
+            }
+
+            // Immediately call backend to invalidate transient on server
+            try {
+                var fd = new FormData();
+                fd.append('action', 'cmr_consume_verified_email');
+                if (targetEmail) fd.append('email', targetEmail);
+                fd.append('nonce', CMR_OTP_CONFIG.nonce);
+                fetch(CMR_OTP_CONFIG.ajaxUrl, { method: 'POST', body: fd });
+            } catch(e) {}
+
+            // Reset all email inputs matching this email (or all if targetEmail is empty)
+            var inputs = document.querySelectorAll('input');
+            inputs.forEach(function(inp) {
+                if (isEmailField(inp)) {
+                    var val = (inp.value || '').trim().toLowerCase();
+                    if (!targetEmail || val === targetEmail || inp._cmrVerifiedEmail === targetEmail) {
+                        delete inp._cmrVerifiedEmail;
+                        delete inp._cmrVerifiedToken;
+                        inp.removeAttribute('data-email-verified');
+                        inp.readOnly = false;
+                        inp.style.removeProperty('padding-right');
+
+                        var parentForm = inp.closest('form');
+                        if (parentForm) {
+                            var hToken = parentForm.querySelector('input[name="cmr_email_verified_token"]');
+                            if (hToken) hToken.remove();
+                        }
+
+                        var bc = parentForm ? parentForm.querySelector('.cmr-email-badge-container') : null;
+                        if (bc) bc.innerHTML = '';
+
+                        var ob = parentForm ? parentForm.querySelector('.cmr-otp-box') : null;
+                        if (ob) ob.style.setProperty('display', 'none', 'important');
+
+                        updateFieldState(inp);
+                    }
+                }
+            });
+        };
+
+        // Listen for CF7 native successful submission to immediately expire verified status
+        document.addEventListener('wpcf7mailsent', function(e) {
+            var form = e.target;
+            if (form) {
+                var emailInp = form.querySelector('input[type="email"], input[name*="email"], input.wpcf7-email');
+                var emailVal = emailInp ? (emailInp.value || '').trim().toLowerCase() : '';
+                window.cmrInvalidateVerifiedEmail(emailVal);
+            }
+        });
 
         // Universal Scanner to initialize all email inputs in document
         function initAllEmailOtpFields() {

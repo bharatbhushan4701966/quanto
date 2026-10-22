@@ -205,6 +205,18 @@ add_action( 'wp_footer', function() {
         function showFormSuccessState(form, customMsg) {
             if (!form) return;
 
+            // Invalidate / expire OTP verification token for this email immediately across all forms & server
+            try {
+                var submittedEmail = '';
+                var emailInp = form.querySelector('input[type="email"], input[name*="email"], input.wpcf7-email');
+                if (emailInp && emailInp.value) {
+                    submittedEmail = emailInp.value.trim().toLowerCase();
+                }
+                if (window.cmrInvalidateVerifiedEmail) {
+                    window.cmrInvalidateVerifiedEmail(submittedEmail);
+                }
+            } catch(e) {}
+
             // 1. Clear all form inputs, textareas, selects, and email OTP verification badges
             try {
                 form.reset();
@@ -909,6 +921,10 @@ add_action( 'wp_footer', function() {
                         // In CF7, mail_failed can happen due to local host transport even though lead was stored in DB.
                         if (data && (data.status === 'mail_sent' || data.status === 'mail_failed')) {
                             form.removeAttribute('data-cmr-submitting');
+                            var submittedEmail = (formData.get('your-email') || formData.get('email') || '').toString().trim().toLowerCase();
+                            if (window.cmrInvalidateVerifiedEmail) {
+                                window.cmrInvalidateVerifiedEmail(submittedEmail);
+                            }
                             cmrRecordSuccessfulSubmission(form);
                             cmrDisableSubmitButton(form);
                             try { form.reset(); } catch(e) {}
@@ -942,6 +958,10 @@ add_action( 'wp_footer', function() {
                         })
                         .then(function() {
                             form.removeAttribute('data-cmr-submitting');
+                            var submittedEmail = (formData.get('your-email') || formData.get('email') || '').toString().trim().toLowerCase();
+                            if (window.cmrInvalidateVerifiedEmail) {
+                                window.cmrInvalidateVerifiedEmail(submittedEmail);
+                            }
                             cmrRecordSuccessfulSubmission(form);
                             cmrDisableSubmitButton(form);
                             try { form.reset(); } catch(e) {}
