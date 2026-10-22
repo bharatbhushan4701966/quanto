@@ -9,8 +9,9 @@ if ( isset( $_GET['fix_downloads'] ) && current_user_can( 'manage_options' ) ) {
             $updated = false;
             if ( is_array( $files ) ) {
                 foreach ( $files as $id => $file ) {
-                    if ( strpos( $file['file'], 'https://cmrindia.com' ) !== false ) {
-                        $files[$id]['file'] = str_replace( 'https://cmrindia.com', 'https://qai8358l95-staging.onrocket.site', $file['file'] );
+                    if ( strpos( $file['file'], 'qai8358l95-staging.onrocket.site' ) !== false ) {
+                        $files[$id]['file'] = str_replace( 'https://qai8358l95-staging.onrocket.site', 'https://cmrindia.com', $file['file'] );
+                        $files[$id]['file'] = str_replace( 'http://qai8358l95-staging.onrocket.site', 'https://cmrindia.com', $files[$id]['file'] );
                         $updated = true;
                     }
                 }
@@ -20,7 +21,7 @@ if ( isset( $_GET['fix_downloads'] ) && current_user_can( 'manage_options' ) ) {
                 }
             }
         }
-        wp_die( "Updated $count products successfully! The downloadable links have been replaced from cmrindia.com to qai8358l95-staging.onrocket.site." );
+        wp_die( "Updated $count products successfully! The downloadable links have been replaced from staging to cmrindia.com." );
     });
 }
 ?>

@@ -1,7 +1,7 @@
 <?php
 // Find missing posts by comparing REST APIs
 $live_url = "https://cmrindia.com/wp-json/wp/v2/posts";
-$staging_url = "https://qai8358l95-staging.onrocket.site/wp-json/wp/v2/posts";
+$staging_url = "https://cmrindia.com/wp-json/wp/v2/posts";
 
 echo "Checking total pages on live...\n";
 $headers = get_headers($live_url, 1);
@@ -40,6 +40,6 @@ foreach($missing as $slug) {
     echo "Missing: $slug\n";
     // Sync it!
     echo "Syncing $slug...\n";
-    $res = file_get_contents("https://qai8358l95-staging.onrocket.site/wp-json/cmr/v1/sync-posts?per_page=1"); 
+    $res = file_get_contents("https://cmrindia.com/wp-json/cmr/v1/sync-posts?per_page=1"); 
     // This doesn't sync by slug, but it's an idea.
 }

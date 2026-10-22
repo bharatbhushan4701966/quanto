@@ -132,27 +132,27 @@ if ( post_password_required() ) {
 				<div class="payment-icons">
 					<!-- Apple Pay -->
 					<div class="payment-icon" title="Apple Pay">
-						<img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/ApplePay.svg" alt="Apple Pay" width="38" height="24" />
+						<img src="https://cmrindia.com/wp-content/uploads/2026/05/ApplePay.svg" alt="Apple Pay" width="38" height="24" />
 					</div>
 					<!-- Google Pay -->
 					<div class="payment-icon" title="Google Pay">
-						<img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/GooglePay.svg" alt="Google Pay" width="38" height="24" />
+						<img src="https://cmrindia.com/wp-content/uploads/2026/05/GooglePay.svg" alt="Google Pay" width="38" height="24" />
 					</div>
 					<!-- Mastercard -->
 					<div class="payment-icon" title="Mastercard">
-						<img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/Mastercard.svg" alt="Mastercard" width="38" height="24" />
+						<img src="https://cmrindia.com/wp-content/uploads/2026/05/Mastercard.svg" alt="Mastercard" width="38" height="24" />
 					</div>
 					<!-- American Express -->
 					<div class="payment-icon" title="American Express">
-						<img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/Amex.svg" alt="American Express" width="38" height="24" />
+						<img src="https://cmrindia.com/wp-content/uploads/2026/05/Amex.svg" alt="American Express" width="38" height="24" />
 					</div>
 					<!-- PayPal -->
 					<div class="payment-icon" title="PayPal">
-						<img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/PayPal.svg" alt="PayPal" width="38" height="24" />
+						<img src="https://cmrindia.com/wp-content/uploads/2026/05/PayPal.svg" alt="PayPal" width="38" height="24" />
 					</div>
 					<!-- Visa -->
 					<div class="payment-icon" title="Visa">
-						<img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/Visa.svg" alt="Visa" width="38" height="24" />
+						<img src="https://cmrindia.com/wp-content/uploads/2026/05/Visa.svg" alt="Visa" width="38" height="24" />
 					</div>
 				</div>
 			</div>

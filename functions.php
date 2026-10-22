@@ -545,7 +545,7 @@ function cmr_market_updates_shortcode($atts) {
                     <span class="elementor-button-content-wrapper" style="width: 100%; display: flex; align-items: center; justify-content: center;">
                         <span class="elementor-button-text" style="margin-right: 6px; font-size: 14px; font-weight: 600 !important; color: #111 !important; line-height: 1; white-space: nowrap;">View all</span>
                         <span class="elementor-button-icon" style="display: flex; align-items: center;">
-                            <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg" alt="Icon" width="16" height="14" style="object-fit: contain;">
+                            <img src="https://cmrindia.com/wp-content/uploads/2026/04/Symbol-1.svg" alt="Icon" width="16" height="14" style="object-fit: contain;">
                         </span>
                     </span>
                 </a>
@@ -3637,7 +3637,7 @@ if ( ! function_exists( 'cmr_get_thumbnail_with_fallback' ) ) {
             return $thumbnail_url;
         }
 
-        $fallback_img = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
+        $fallback_img = 'https://cmrindia.com/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
 
         // 2. Check if there's a custom media URL and try to fetch og:image
         $media_url = get_post_meta($post_id, '_cmr_media_url', true);
@@ -3717,7 +3717,7 @@ function cmr_bulk_update_woo_downloads() {
         if (!function_exists('wc_get_products')) { die('WooCommerce not active.'); }
         $products = wc_get_products(['limit' => -1]);
         $count = 0;
-        $base_url = isset($_GET['base_url']) ? esc_url_raw($_GET['base_url']) : 'https://qai8358l95-staging.onrocket.site/report/';
+        $base_url = isset($_GET['base_url']) ? esc_url_raw($_GET['base_url']) : 'https://cmrindia.com/report/';
         foreach ($products as $product) {
             $slug = $product->get_slug();
             // Assumes file is named as {product_slug}.pdf in the /report/ directory
@@ -3799,10 +3799,10 @@ function cmr_bulk_replace_domain_woo_downloads() {
             if ($downloads) {
                 foreach ($downloads as $download_id => $file) {
                     $old_url = $file->get_file();
-                    if (strpos($old_url, 'cmrindia.com') !== false) {
+                    if (strpos($old_url, 'qai8358l95-staging.onrocket.site') !== false) {
                         $new_url = str_replace(
-                            ['https://cmrindia.com', 'http://cmrindia.com'], 
-                            'https://qai8358l95-staging.onrocket.site', 
+                            ['https://qai8358l95-staging.onrocket.site', 'http://qai8358l95-staging.onrocket.site'], 
+                            'https://cmrindia.com', 
                             $old_url
                         );
                         $file->set_file($new_url);
@@ -3818,7 +3818,7 @@ function cmr_bulk_replace_domain_woo_downloads() {
             }
         }
         
-        die("Successfully updated domains from cmrindia.com to qai8358l95-staging in $count WooCommerce products.");
+        die("Successfully updated domains from staging to cmrindia.com in $count WooCommerce products.");
     }
 }
 

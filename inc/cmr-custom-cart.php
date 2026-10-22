@@ -566,7 +566,7 @@ function cmr_get_cart_html() {
             <i class="fa-solid fa-cart-shopping" style="font-size: 48px; color: #d1d5db; margin-bottom: 20px;"></i>
             <h2 style="font-size: 24px; font-weight: 600; margin-bottom: 15px;">Your cart is currently empty!</h2>
             <p style="color: #6b7280; margin-bottom: 30px;">Browse our latest reports and add them to your cart.</p>
-            <a href="https://qai8358l95-staging.onrocket.site/research-reports/" style="display: inline-block; background: #4b23a0; color: #fff; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 600;">Back to reports</a>
+            <a href="https://cmrindia.com/research-reports/" style="display: inline-block; background: #4b23a0; color: #fff; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 600;">Back to reports</a>
         </div>
         <?php
         return ob_get_clean();
@@ -744,7 +744,7 @@ function cmr_get_cart_html() {
                     <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" style="height:24px;">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg" alt="Amex" style="height:24px;">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" style="height:24px;">
-                    <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/Visa.svg" alt="Visa" style="height:24px;">
+                    <img src="https://cmrindia.com/wp-content/uploads/2026/05/Visa.svg" alt="Visa" style="height:24px;">
                 </div>
             </div>
 

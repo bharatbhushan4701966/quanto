@@ -100,11 +100,11 @@ function cmr_smb_tabs_shortcode( $atts ) {
                     <?php 
                     $icon_url = '';
                     if ( $term->name == 'CMR In News' ) {
-                        $icon_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/airdrop.svg';
+                        $icon_url = 'https://cmrindia.com/wp-content/uploads/2026/05/airdrop.svg';
                     } elseif ( $term->name == 'Media Releases' ) {
-                        $icon_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/Frame.svg';
+                        $icon_url = 'https://cmrindia.com/wp-content/uploads/2026/05/Frame.svg';
                     } elseif ( $term->name == 'Quarterly Results' ) {
-                        $icon_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/quterly.svg';
+                        $icon_url = 'https://cmrindia.com/wp-content/uploads/2026/05/quterly.svg';
                     }
                     if ( $icon_url ) {
                         echo '<span class="cmr-tab-icon" style="-webkit-mask-image: url(' . esc_url($icon_url) . '); mask-image: url(' . esc_url($icon_url) . ');"></span> ';
@@ -223,7 +223,7 @@ function cmr_smb_tabs_shortcode( $atts ) {
                                                         <span class="cmr-category-tag">&mdash; Media Releases</span>
                                                     </div>
                                                     <h3 class="cmr-card-title"><?php the_title(); ?></h3>
-                                                    <?php $arrow_url = $is_who_we_serve ? 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg' : 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg'; ?>
+                                                    <?php $arrow_url = $is_who_we_serve ? 'https://cmrindia.com/wp-content/uploads/2026/04/Symbol.svg' : 'https://cmrindia.com/wp-content/uploads/2026/04/Symbol-1.svg'; ?>
                                                     <span class="cmr-read-coverage">More Details <img src="<?php echo esc_url($arrow_url); ?>" class="cmr-arrow-icon" alt="Arrow"></span>
                                                 </div>
                                             </a>
@@ -245,7 +245,7 @@ function cmr_smb_tabs_shortcode( $atts ) {
                                                         <span class="cmr-category-tag">&mdash; Media Releases</span>
                                                     </div>
                                                     <h3 class="cmr-card-title"><?php the_title(); ?></h3>
-                                                    <?php $arrow_url = $is_who_we_serve ? 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg' : 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg'; ?>
+                                                    <?php $arrow_url = $is_who_we_serve ? 'https://cmrindia.com/wp-content/uploads/2026/04/Symbol.svg' : 'https://cmrindia.com/wp-content/uploads/2026/04/Symbol-1.svg'; ?>
                                                     <span class="cmr-read-coverage">More Details <img src="<?php echo esc_url($arrow_url); ?>" class="cmr-arrow-icon" alt="Arrow"></span>
                                                 </div>
                                             </a>
@@ -292,7 +292,7 @@ function cmr_smb_tabs_shortcode( $atts ) {
                                                 </div>
                                                 <h3 class="cmr-card-title"><?php the_title(); ?></h3>
                                                 <?php
-                                                $arrow_url = $is_who_we_serve ? 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg' : 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg';
+                                                $arrow_url = $is_who_we_serve ? 'https://cmrindia.com/wp-content/uploads/2026/04/Symbol.svg' : 'https://cmrindia.com/wp-content/uploads/2026/04/Symbol-1.svg';
                                                 ?>
                                                 <span class="cmr-read-coverage">Read Coverage <img src="<?php echo esc_url($arrow_url); ?>" class="cmr-arrow-icon" alt="Arrow"></span>
                                             </div>

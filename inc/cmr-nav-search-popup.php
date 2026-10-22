@@ -415,7 +415,7 @@ function cmr_nav_search_shortcode($atts = array()) {
 
                     <form role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>" class="cmr-custom-popup-form">
                         <div class="cat-icon">
-                            <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/cmrlogo-with-oly-c.svg" alt="CMR Logo" style="max-height: 24px;">
+                            <img src="https://cmrindia.com/wp-content/uploads/2026/06/cmrlogo-with-oly-c.svg" alt="CMR Logo" style="max-height: 24px;">
                         </div>
 
                         <input name="s" required value="<?php echo esc_html( get_search_query() ); ?>" type="search" placeholder="Type here..." autocomplete="off">

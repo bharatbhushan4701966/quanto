@@ -5,8 +5,8 @@ add_shortcode('cmr_hero_banner', 'cmr_hero_banner_shortcode');
 
 function cmr_hero_banner_shortcode($atts) {
     $atts = shortcode_atts( array(
-        'slider_1' => 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/10/CMR-Lead-Slider-1.jpg-2.jpeg',
-        'slider_2' => 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/10/CMR-Lead-Slider-2.jpg-1.jpeg',
+        'slider_1' => 'https://cmrindia.com/wp-content/uploads/2026/10/CMR-Lead-Slider-1.jpg-2.jpeg',
+        'slider_2' => 'https://cmrindia.com/wp-content/uploads/2026/10/CMR-Lead-Slider-2.jpg-1.jpeg',
     ), $atts );
     ob_start();
     ?>
@@ -475,13 +475,13 @@ function cmr_hero_banner_shortcode($atts) {
         <a href="<?php echo esc_url( home_url( '/research-reports/' ) ); ?>" class="btn-primary">
           Get Report
           <img class="hero-arrow-button-white"
-               src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg">
+               src="https://cmrindia.com/wp-content/uploads/2026/04/Symbol-1.svg">
         </a>
 
         <a href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6Ijc2MzciLCJ0b2dnbGUiOmZhbHNlfQ%3D%3D" class="btn-outline open-popup" data-popup-id="7637">
           Connect with us
           <img class="hero-arrow-button"
-               src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg">
+               src="https://cmrindia.com/wp-content/uploads/2026/04/Symbol.svg">
         </a>
       </div>
 

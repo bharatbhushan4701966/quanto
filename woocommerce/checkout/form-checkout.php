@@ -475,22 +475,22 @@ if ( WC()->cart && ! WC()->cart->is_empty() ) {
                 <p class="cmr-trust-label">Guaranteed safe checkout</p>
                 <div class="cmr-trust-icons">
                     <div class="cmr-icon-pill">
-                        <img decoding="async" src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/ApplePay.svg" alt="Apple Pay">
+                        <img decoding="async" src="https://cmrindia.com/wp-content/uploads/2026/05/ApplePay.svg" alt="Apple Pay">
                     </div>
                     <div class="cmr-icon-pill">
-                        <img decoding="async" src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/GooglePay.svg" alt="Google Pay">
+                        <img decoding="async" src="https://cmrindia.com/wp-content/uploads/2026/05/GooglePay.svg" alt="Google Pay">
                     </div>
                     <div class="cmr-icon-pill">
-                        <img decoding="async" src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/Mastercard.svg" alt="Mastercard">
+                        <img decoding="async" src="https://cmrindia.com/wp-content/uploads/2026/05/Mastercard.svg" alt="Mastercard">
                     </div>
                     <div class="cmr-icon-pill">
-                        <img decoding="async" src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/Amex.svg" alt="Amex">
+                        <img decoding="async" src="https://cmrindia.com/wp-content/uploads/2026/05/Amex.svg" alt="Amex">
                     </div>
                     <div class="cmr-icon-pill">
-                        <img decoding="async" src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/PayPal.svg" alt="PayPal">
+                        <img decoding="async" src="https://cmrindia.com/wp-content/uploads/2026/05/PayPal.svg" alt="PayPal">
                     </div>
                     <div class="cmr-icon-pill">
-                        <img decoding="async" src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/Visa.svg" alt="Visa">
+                        <img decoding="async" src="https://cmrindia.com/wp-content/uploads/2026/05/Visa.svg" alt="Visa">
                     </div>
                 </div>
             </div>

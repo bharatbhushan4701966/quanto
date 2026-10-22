@@ -415,7 +415,7 @@ get_header();
         <h1 class="cmr-cat-title">&quot;<?php echo esc_html( $cat_name ); ?>&quot;</h1>
         <form role="search" method="get" class="cmr-cat-search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
             <div class="cmr-cat-search-icon-left">
-                <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/cmrlogo-with-oly-c.svg" alt="CMR Logo" style="width: 24px; height: auto;">
+                <img src="https://cmrindia.com/wp-content/uploads/2026/06/cmrlogo-with-oly-c.svg" alt="CMR Logo" style="width: 24px; height: auto;">
             </div>
             <input type="search" class="cmr-cat-search-field" placeholder="Search..." value="<?php echo get_search_query(); ?>" name="s" />
             <?php if ( $current_cat ) : ?>

@@ -299,7 +299,7 @@ function cmr_mega_menu_what_we_think_shortcode($atts) {
                 $price_display = $price ? '$' . $price : '$450';
                 $thumbnail_url = get_the_post_thumbnail_url( $product->ID, 'medium' );
                 if ( ! $thumbnail_url ) {
-                    $thumbnail_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
+                    $thumbnail_url = 'https://cmrindia.com/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg';
                 }
             ?>
             <a href="<?php echo esc_url(get_permalink($product->ID)); ?>" class="cmr-mmt-report-card">
@@ -323,7 +323,7 @@ function cmr_mega_menu_what_we_think_shortcode($atts) {
             <?php else : ?>
             <a href="#" class="cmr-mmt-report-card">
                 <div class="cmr-mmt-report-img">
-                    <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg" alt="Report">
+                    <img src="https://cmrindia.com/wp-content/uploads/2026/06/Why-Chipsets-are-the-New-Frontier-in-Smartphones1.jpg" alt="Report">
                 </div>
                 <div class="cmr-mmt-report-content">
                     <div class="cmr-mmt-report-cat">IT & Telecom</div>

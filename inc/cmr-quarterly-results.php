@@ -492,7 +492,7 @@ if ( ! function_exists( 'cmr_quarterly_results_shortcode' ) ) {
                             <div class="cmr-qr-ceo-img-wrap">
                                 <div class="cmr-qr-ceo-img-bg"></div>
                                 <div class="cmr-qr-ceo-img">
-                                    <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/06/Group-1000005376.png" alt="Thomas George">
+                                    <img src="https://cmrindia.com/wp-content/uploads/2026/06/Group-1000005376.png" alt="Thomas George">
                                 </div>
                             </div>
                         </div>

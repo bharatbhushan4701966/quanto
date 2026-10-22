@@ -615,12 +615,12 @@ function cmr_news_tabs_shortcode( $atts ) {
                     $display_name = $term->name;
                     
                     if ( $term->slug === 'cmr-in-news' || $term->name == 'CMR In News' ) {
-                        $icon_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/airdrop.svg';
+                        $icon_url = 'https://cmrindia.com/wp-content/uploads/2026/05/airdrop.svg';
                     } elseif ( $term->slug === 'media-releases' || $term->slug === 'press-releases' || $term->name == 'Media Releases' || $term->name == 'Press Releases' ) {
-                        $icon_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/Frame.svg';
+                        $icon_url = 'https://cmrindia.com/wp-content/uploads/2026/05/Frame.svg';
                         $display_name = 'Media Releases';
                     } elseif ( $term->slug === 'quarterly-results' || $term->name == 'Quarterly Results' ) {
-                        $icon_url = 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/05/quterly.svg';
+                        $icon_url = 'https://cmrindia.com/wp-content/uploads/2026/05/quterly.svg';
                     }
                     
                     if ( $icon_url ) {
@@ -802,7 +802,7 @@ function cmr_news_tabs_shortcode( $atts ) {
                                                 </div>
                                                 <h3 class="cmr-card-title"><?php the_title(); ?></h3>
                                                 <?php
-                                                $arrow_url = $is_who_we_serve ? 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg' : 'https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg';
+                                                $arrow_url = $is_who_we_serve ? 'https://cmrindia.com/wp-content/uploads/2026/04/Symbol.svg' : 'https://cmrindia.com/wp-content/uploads/2026/04/Symbol-1.svg';
                                                 $btn_text = 'Read Coverage';
                                                 ?>
                                                 <span class="cmr-read-coverage"><?php echo esc_html($btn_text); ?> <img src="<?php echo esc_url($arrow_url); ?>" class="cmr-arrow-icon" alt="Arrow"></span>
@@ -822,7 +822,7 @@ function cmr_news_tabs_shortcode( $atts ) {
                     </div>
                     
                     <div class="cmr-news-footer">
-                        <a href="<?php echo esc_url( home_url( '/cmr-news/' ) ); ?>" class="cmr-explore-all">Explore All <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol.svg" class="cmr-arrow-icon" alt="Arrow"></a>
+                        <a href="<?php echo esc_url( home_url( '/cmr-news/' ) ); ?>" class="cmr-explore-all">Explore All <img src="https://cmrindia.com/wp-content/uploads/2026/04/Symbol.svg" class="cmr-arrow-icon" alt="Arrow"></a>
                     </div>
                 </div>
             <?php 

@@ -269,7 +269,7 @@ while ($run_pages < $max_pages_per_run) {
         $content = preg_replace('/ sizes=[\'"][^\'"]+[\'"]/i', '', $content);
 
         // Replace live domain with staging domain in content (for normal text links)
-        $content = str_replace('https://cmrindia.com', 'https://qai8358l95-staging.onrocket.site', $content);
+        $content = str_replace('https://cmrindia.com', 'https://cmrindia.com', $content);
 
         if ($existing_id) {
             cmr_log("Updating existing post: " . $post['title']['rendered']);

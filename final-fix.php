@@ -9,7 +9,7 @@ if (!current_user_can('administrator')) {
 global $wpdb;
 
 echo "<h2>Starting Final URL Structure Fix</h2>";
-echo "<p>Target structure: <strong>https://qai8358l95-staging.onrocket.site/report/filename.pdf</strong></p>";
+echo "<p>Target structure: <strong>https://cmrindia.com/report/filename.pdf</strong></p>";
 
 $targets = array(
     'wp-content/uploads/report',      // If emergency-fix was run

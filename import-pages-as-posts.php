@@ -219,7 +219,7 @@ while ($run_pages < $max_pages_per_run) {
 
         $content = preg_replace('/ srcset=[\'"][^\'"]+[\'"]/i', '', $content);
         $content = preg_replace('/ sizes=[\'"][^\'"]+[\'"]/i', '', $content);
-        $content = str_replace('https://cmrindia.com', 'https://qai8358l95-staging.onrocket.site', $content);
+        $content = str_replace('https://cmrindia.com', 'https://cmrindia.com', $content);
 
         // Figure out categories (if the page had any on the live site)
         $local_cats = array();

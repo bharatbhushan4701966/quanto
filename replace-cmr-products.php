@@ -10,9 +10,9 @@ global $wpdb;
 
 echo "<h2>Starting Domain Replacement for Products</h2>";
 
-$old_url = 'https://cmrindia.com';
-$old_url2 = 'http://cmrindia.com';
-$new_url = 'https://qai8358l95-staging.onrocket.site';
+$old_url = 'https://qai8358l95-staging.onrocket.site';
+$old_url2 = 'http://qai8358l95-staging.onrocket.site';
+$new_url = 'https://cmrindia.com';
 $new_url_noslash = rtrim($new_url, '/'); // Ensure no trailing slash issues
 
 echo "<p>Replacing: <strong>$old_url</strong> and <strong>$old_url2</strong><br>";

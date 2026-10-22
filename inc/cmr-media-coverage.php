@@ -781,7 +781,7 @@ function cmr_ajax_filter_media_coverage() {
                             <?php if ( has_excerpt() ) : ?>
                                 <p class="cmr-mc-excerpt"><?php echo wp_trim_words( get_the_excerpt(), 25 ); ?></p>
                             <?php endif; ?>
-                            <span class="cmr-mc-read-coverage">View Coverage <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg" class="cmr-mc-arrow" alt=""></span>
+                            <span class="cmr-mc-read-coverage">View Coverage <img src="https://cmrindia.com/wp-content/uploads/2026/04/Symbol-1.svg" class="cmr-mc-arrow" alt=""></span>
                         </div>
                     </a>
                 </div>
@@ -813,7 +813,7 @@ function cmr_ajax_filter_media_coverage() {
                                 </div>
                             </div>
                             <h3 class="cmr-mc-title" style="text-align: left !important;"><?php the_title(); ?></h3>
-                            <span class="cmr-mc-read-coverage">View Coverage <img src="https://qai8358l95-staging.onrocket.site/wp-content/uploads/2026/04/Symbol-1.svg" class="cmr-mc-arrow" alt=""></span>
+                            <span class="cmr-mc-read-coverage">View Coverage <img src="https://cmrindia.com/wp-content/uploads/2026/04/Symbol-1.svg" class="cmr-mc-arrow" alt=""></span>
                         </div>
                     </a>
                 </div>
