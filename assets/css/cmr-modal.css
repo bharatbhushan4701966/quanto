@@ -814,6 +814,31 @@ body.modal-open {
     width: 100% !important;
 }
 
+/* Email Verification Badge Alignment */
+.cmr-email-badge-container {
+    position: absolute !important;
+    right: 14px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 50 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+    pointer-events: auto !important;
+}
+
+.cmr-email-unverified-notice {
+    font-size: 12px !important;
+    color: #dc3545 !important;
+    font-weight: 600 !important;
+    margin-top: 4px !important;
+    display: block !important;
+    line-height: 1.3 !important;
+}
+
 .custom-report-form label,
 .custom-consultation-form label,
 .custom-subscribe-form label,

@@ -278,7 +278,7 @@ function cmr_render_email_otp_frontend() {
     .elementor-popup-modal .cmr-email-badge-container,
     .cmr-form .cmr-email-badge-container {
         position: absolute !important;
-        right: 8px !important;
+        right: 14px !important;
         top: 50% !important;
         transform: translateY(-50%) !important;
         z-index: 50 !important;
@@ -672,6 +672,20 @@ function cmr_render_email_otp_frontend() {
                    cls.indexOf('wpcf7-email') !== -1;
         }
 
+        function positionBadgeContainer(input, badgeContainer) {
+            if (!input || !badgeContainer) return;
+            var h = input.offsetHeight;
+            var t = input.offsetTop;
+            if (h > 0) {
+                var centerTop = t + (h / 2);
+                badgeContainer.style.setProperty('top', centerTop + 'px', 'important');
+                badgeContainer.style.setProperty('transform', 'translateY(-50%)', 'important');
+            } else {
+                badgeContainer.style.setProperty('top', '50%', 'important');
+                badgeContainer.style.setProperty('transform', 'translateY(-50%)', 'important');
+            }
+        }
+
         function getOrCreateBadgeContainer(input) {
             var parent = input.parentElement;
             if (!parent) return null;
@@ -690,6 +704,7 @@ function cmr_render_email_otp_frontend() {
                 badgeContainer.className = 'cmr-email-badge-container';
                 parent.appendChild(badgeContainer);
             }
+            positionBadgeContainer(input, badgeContainer);
             return badgeContainer;
         }
 
@@ -794,9 +809,14 @@ function cmr_render_email_otp_frontend() {
             // Remove unverified error notice if user is typing
             var formField = input.closest('.form-field, .cmr-input-group, p') || input.parentElement;
             if (formField && formField.parentNode) {
-                var notice = formField.parentNode.querySelector('.cmr-email-unverified-notice');
-                if (notice) notice.remove();
+                var notices = formField.parentNode.querySelectorAll('.cmr-email-unverified-notice');
+                notices.forEach(function(n) { n.remove(); });
             }
+            if (input.parentElement) {
+                var innerNotices = input.parentElement.querySelectorAll('.cmr-email-unverified-notice');
+                innerNotices.forEach(function(n) { n.remove(); });
+            }
+            positionBadgeContainer(input, badgeContainer);
 
             // 1. Invalid or empty email
             if (!email || !isValidEmail(email)) {

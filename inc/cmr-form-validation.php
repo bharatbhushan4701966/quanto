@@ -187,9 +187,29 @@ add_action( 'wp_footer', function() {
             if (crModal) crModal.style.display = 'none';
         };
 
-        // Render Success State inside Modal (Hides form & headings completely, shows clean Thank You card, auto-closes in 2.5s)
+        // Render Success State inside Modal / Form Container (Clears form, hides form & headings, shows clean Thank You card)
         function showFormSuccessState(form, customMsg) {
             if (!form) return;
+
+            // 1. Clear all form inputs, textareas, selects, and email OTP verification badges
+            try {
+                form.reset();
+                form.querySelectorAll('input, textarea, select').forEach(function(inp) {
+                    if (inp.type !== 'submit' && inp.type !== 'button' && inp.type !== 'hidden') {
+                        inp.value = '';
+                    }
+                    inp.removeAttribute('data-email-verified');
+                    inp.readOnly = false;
+                    inp.style.removeProperty('padding-right');
+                    inp.classList.remove('cmr-input-error');
+                });
+                form.querySelectorAll('.cmr-email-badge-container').forEach(function(bc) {
+                    bc.innerHTML = '';
+                });
+                form.querySelectorAll('.cmr-email-unverified-notice').forEach(function(n) {
+                    n.remove();
+                });
+            } catch(e) {}
 
             // Prevent duplicate firing
             if (form.getAttribute('data-cmr-success-shown') === 'true') {
@@ -205,7 +225,7 @@ add_action( 'wp_footer', function() {
                 }
             }
 
-            if (!cf7Msg || cf7Msg === 'Please fill in all required fields before submitting.' || cf7Msg.indexOf('Validation error') !== -1 || cf7Msg.length < 5) {
+            if (!cf7Msg || cf7Msg === 'Please fill in all required fields before submitting.' || cf7Msg.indexOf('Validation error') !== -1 || cf7Msg.length < 5 || cf7Msg.toLowerCase().indexOf('limit') !== -1) {
                 cf7Msg = 'Your request has been successfully submitted.<br>Our team will review your details and get back to you shortly.';
             }
 
@@ -218,7 +238,7 @@ add_action( 'wp_footer', function() {
                 }
             }
 
-            var container = modalColumn || form.closest('.custom-subscribe-form, .custom-report-form, .custom-consultation-form, .cmr-modal-form-wrapper, .wpcf7') || form.parentElement;
+            var container = modalColumn || form.closest('.custom-subscribe-form, .custom-report-form, .custom-consultation-form, .cmr-modal-form-wrapper, .wpcf7, .cmr-form') || form.parentElement;
 
             // Hide the form itself
             form.style.setProperty('display', 'none', 'important');
@@ -252,10 +272,12 @@ add_action( 'wp_footer', function() {
 
             targetParent.appendChild(successWrapper);
 
-            // Auto-close modal after 2.5 seconds (2500ms)
-            setTimeout(function() {
-                cmrCloseModalAndReset();
-            }, 2500);
+            // If inside a popup modal, auto-close after 2.5 seconds (2500ms)
+            if (form.closest('.elementor-popup-modal, .dialog-widget, #cmr-review-modal')) {
+                setTimeout(function() {
+                    cmrCloseModalAndReset();
+                }, 2500);
+            }
         }
 
         function cmrRecordSuccessfulSubmission(form) {
@@ -518,19 +540,22 @@ add_action( 'wp_footer', function() {
                         isInvalid = true;
                     } else if (input.getAttribute('data-email-verified') !== 'true') {
                         isInvalid = true;
-                        var wrap = input.closest('.cmr-email-field-wrapper, .wpcf7-form-control-wrap, p, div');
-                        if (wrap) {
-                            var existingNotice = wrap.querySelector('.cmr-email-unverified-notice');
-                            if (!existingNotice) {
-                                var notice = document.createElement('span');
-                                notice.className = 'cmr-email-unverified-notice';
-                                notice.textContent = 'Please click "Verify Email" to verify your email before submitting.';
-                                wrap.appendChild(notice);
+                        var controlWrap = input.closest('.cmr-email-field-wrapper, .wpcf7-form-control-wrap') || input;
+                        var fieldContainer = input.closest('.form-field, .cmr-input-group, p') || controlWrap.parentElement;
+                        var existingNotice = fieldContainer ? fieldContainer.querySelector('.cmr-email-unverified-notice') : null;
+                        if (!existingNotice) {
+                            var notice = document.createElement('span');
+                            notice.className = 'cmr-email-unverified-notice';
+                            notice.textContent = 'Please click "Verify Email" to verify your email before submitting.';
+                            if (controlWrap.nextSibling) {
+                                controlWrap.parentNode.insertBefore(notice, controlWrap.nextSibling);
+                            } else {
+                                controlWrap.parentNode.appendChild(notice);
                             }
-                            var vBtn = wrap.querySelector('.cmr-verify-badge, .cmr-verify-email-trigger-btn');
-                            if (vBtn) {
-                                vBtn.classList.add('cmr-pulse-attention');
-                            }
+                        }
+                        var vBtn = (controlWrap.parentElement || input.parentElement).querySelector('.cmr-verify-badge, .cmr-verify-email-trigger-btn');
+                        if (vBtn) {
+                            vBtn.classList.add('cmr-pulse-attention');
                         }
                     }
                 } else if (type === 'tel') {
@@ -636,6 +661,12 @@ add_action( 'wp_footer', function() {
                         e.stopImmediatePropagation();
                     }
 
+                    // Check submission lock to prevent double/multiple clicks while request is running
+                    if (form.getAttribute('data-cmr-submitting') === 'true') {
+                        return false;
+                    }
+                    form.setAttribute('data-cmr-submitting', 'true');
+
                     // 1. Submit Button Feedback & Loading Animation
                     var submitBtn = form.querySelector('input[type="submit"], button[type="submit"]');
                     if (submitBtn) {
@@ -643,6 +674,7 @@ add_action( 'wp_footer', function() {
                         submitBtn.setAttribute('data-original-val', origVal);
                         submitBtn.classList.add('cmr-btn-submitting');
                         submitBtn.disabled = true;
+                        submitBtn.style.setProperty('pointer-events', 'none', 'important');
 
                         var lower = origVal.toLowerCase();
                         var loadingText = 'Submitting...';
@@ -660,8 +692,10 @@ add_action( 'wp_footer', function() {
                     }
 
                     function restoreButton() {
+                        form.removeAttribute('data-cmr-submitting');
                         if (!submitBtn) return;
                         submitBtn.disabled = false;
+                        submitBtn.style.removeProperty('pointer-events');
                         submitBtn.classList.remove('cmr-btn-submitting');
                         var orig = submitBtn.getAttribute('data-original-val');
                         if (orig) {
@@ -693,12 +727,22 @@ add_action( 'wp_footer', function() {
                         return res.json();
                     })
                     .then(function(data) {
-                        if (data && data.status === 'mail_sent') {
+                        var isRateLimited = data && data.message && (
+                            data.message.toLowerCase().indexOf('limit') !== -1 ||
+                            data.message.toLowerCase().indexOf('24 hours') !== -1 ||
+                            data.message.toLowerCase().indexOf('tomorrow') !== -1
+                        );
+
+                        if (data && (data.status === 'mail_sent' || isRateLimited)) {
+                            // Submission accepted OR rate limit already logged in backend:
+                            // Form must clear, form must hide, and Thank You screen displayed!
+                            form.removeAttribute('data-cmr-submitting');
+                            cmrRecordSuccessfulSubmission(form);
+                            cmrDisableSubmitButton(form);
                             try {
                                 form.dispatchEvent(new CustomEvent('wpcf7mailsent', { bubbles: true, detail: { apiResponse: data } }));
                             } catch(ev) {}
-                            cmrRecordSuccessfulSubmission(form);
-                            showFormSuccessState(form, data.message);
+                            showFormSuccessState(form, data.status === 'mail_sent' ? data.message : null);
                         } else if (data && (data.status === 'validation_failed' || data.status === 'spam' || data.status === 'mail_failed')) {
                             restoreButton();
                             var respOut = form.querySelector('.wpcf7-response-output');
@@ -710,7 +754,9 @@ add_action( 'wp_footer', function() {
                                 alert(data.message || 'Submission failed. Please check the fields and try again.');
                             }
                         } else {
+                            form.removeAttribute('data-cmr-submitting');
                             cmrRecordSuccessfulSubmission(form);
+                            cmrDisableSubmitButton(form);
                             showFormSuccessState(form, data ? data.message : null);
                         }
                     })
@@ -725,7 +771,9 @@ add_action( 'wp_footer', function() {
                             }
                         })
                         .then(function() {
+                            form.removeAttribute('data-cmr-submitting');
                             cmrRecordSuccessfulSubmission(form);
+                            cmrDisableSubmitButton(form);
                             showFormSuccessState(form);
                         })
                         .catch(function() {
