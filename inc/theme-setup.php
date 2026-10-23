@@ -111,6 +111,17 @@ function quanto_custom_loop_add_to_cart_text() {
 }
 
 /**
+ * Change WooCommerce embed "Buy now" button text to "Download now"
+ */
+add_filter( 'gettext', 'cmr_change_woo_embed_buy_text', 20, 3 );
+function cmr_change_woo_embed_buy_text( $translated, $text, $domain ) {
+	if ( $domain === 'woocommerce' && strtolower( $text ) === 'buy now' ) {
+		return __( 'Download now', 'quanto' );
+	}
+	return $translated;
+}
+
+/**
  * Redirect to Cart page after adding to cart from the loop (Download Report button)
  */
 add_filter( 'woocommerce_loop_add_to_cart_args', 'quanto_remove_ajax_add_to_cart_class', 10, 2 );
