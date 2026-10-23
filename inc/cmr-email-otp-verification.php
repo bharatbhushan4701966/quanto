@@ -240,29 +240,6 @@ function cmr_ajax_consume_verified_email() {
 }
 
 // =========================================================================
-// 2.1 WooCommerce Customer Registration Backend Validation Filter
-// =========================================================================
-
-add_filter( 'woocommerce_process_registration_errors', 'cmr_wc_enforce_email_otp_registration', 30, 4 );
-function cmr_wc_enforce_email_otp_registration( $errors, $username, $password, $email ) {
-    $email = strtolower( trim( sanitize_email( $email ) ) );
-    if ( empty( $email ) ) {
-        return $errors;
-    }
-    if ( ! cmr_is_email_verified( $email ) ) {
-        $errors->add( 'cmr_email_unverified', __( 'Please verify your email address using the OTP verification code first.', 'quanto' ) );
-    }
-    return $errors;
-}
-
-add_action( 'woocommerce_created_customer', 'cmr_wc_consume_email_otp_registration', 20, 3 );
-function cmr_wc_consume_email_otp_registration( $customer_id, $new_customer_data, $password_generated ) {
-    if ( ! empty( $new_customer_data['user_email'] ) ) {
-        delete_transient( 'cmr_ver_' . md5( strtolower( $new_customer_data['user_email'] ) ) );
-    }
-}
-
-// =========================================================================
 // 3. Branded HTML Email Dispatcher
 // =========================================================================
 
@@ -745,13 +722,12 @@ function cmr_render_email_otp_frontend() {
                 return false;
             }
 
-            // Explicitly match Create Account / Sign Up registration email field!
-            if (name === 'xoo_el_reg_email' || id === 'xoo_el_reg_email' || input.closest('.xoo_el_reg_email_cont') || input.closest('.xoo-el-form-register') || input.closest('[data-section="register"]')) {
-                return true;
-            }
-
-            // Exclude login and lost-password inputs
-            if (name === 'xoo-el-username' || name === 'user_login' || name === 'log' || name === 'username') {
+            // Skip xoo-el, account registration, and login inputs completely
+            if (name.indexOf('xoo') !== -1 || 
+                name === 'user_login' || 
+                name === 'log' || 
+                name === 'username' ||
+                input.closest('.xoo-el-container, .xoo-el-form-container, .xoo-el-wrap, .xoo-el-section, .woocommerce-account, .woocommerce-checkout, .woocommerce-cart, .cmr-checkout-wrap')) {
                 return false;
             }
 
@@ -763,11 +739,16 @@ function cmr_render_email_otp_frontend() {
                     form.getAttribute('role') === 'search' ||
                     formClass.indexOf('woocommerce-checkout') !== -1 ||
                     formClass.indexOf('woocommerce-cart') !== -1 ||
+                    formClass.indexOf('woocommerce-form') !== -1 ||
+                    formClass.indexOf('woocommerce-account') !== -1 ||
+                    formClass.indexOf('xoo-el') !== -1 ||
+                    formClass.indexOf('xoo-aff') !== -1 ||
                     formClass.indexOf('checkout') !== -1 ||
-                    formClass.indexOf('xoo-el-form-login') !== -1 ||
-                    formClass.indexOf('xoo-el-form-lostpw') !== -1 ||
+                    form.querySelector('input[name="_xoo_el_form"], input[name^="xoo_el_"]') ||
                     formId === 'loginform' ||
-                    formId === 'lostpasswordform') {
+                    formId === 'registerform' ||
+                    formId === 'lostpasswordform' ||
+                    formId === 'customer_login') {
                     return false;
                 }
             }
@@ -1273,57 +1254,6 @@ function cmr_render_email_otp_frontend() {
             });
         };
 
-        // Intercept Easy Login Registration form submission to require OTP verification
-        document.addEventListener('submit', function(e) {
-            var form = e.target;
-            if (!form || !form.classList || !form.classList.contains('xoo-el-form-register')) return;
-
-            var emailInp = form.querySelector('input[name="xoo_el_reg_email"], input[type="email"]');
-            if (!emailInp) return;
-
-            var emailVal = (emailInp.value || '').trim();
-            if (!emailVal || !isValidEmail(emailVal)) {
-                return;
-            }
-
-            if (emailInp.getAttribute('data-email-verified') !== 'true') {
-                e.preventDefault();
-                e.stopPropagation();
-                if (e.stopImmediatePropagation) {
-                    e.stopImmediatePropagation();
-                }
-
-                var controlWrap = emailInp.closest('.xoo-aff-input-group, .cmr-email-field-wrapper') || emailInp;
-                var fieldContainer = emailInp.closest('.xoo-aff-group, .form-field, p') || controlWrap.parentElement;
-                var existingNotice = fieldContainer ? fieldContainer.querySelector('.cmr-email-unverified-notice') : null;
-                if (!existingNotice) {
-                    var notice = document.createElement('span');
-                    notice.className = 'cmr-email-unverified-notice';
-                    notice.textContent = 'Please click "Verify Email" to verify your email before submitting.';
-                    if (controlWrap.nextSibling) {
-                        controlWrap.parentNode.insertBefore(notice, controlWrap.nextSibling);
-                    } else {
-                        controlWrap.parentNode.appendChild(notice);
-                    }
-                }
-
-                var vBtn = (controlWrap || fieldContainer).querySelector('.cmr-verify-badge');
-                if (vBtn) {
-                    vBtn.classList.add('cmr-pulse-attention');
-                }
-
-                var otpBox = getOrCreateOtpBox(emailInp);
-                if (otpBox && otpBox.style.display !== 'none') {
-                    var codeInp = otpBox.querySelector('.cmr-otp-code-input');
-                    if (codeInp) codeInp.focus();
-                } else {
-                    triggerSendOtp(emailInp, false);
-                }
-
-                return false;
-            }
-        }, true);
-
         // Listen for CF7 native successful submission to immediately expire verified status
         document.addEventListener('wpcf7mailsent', function(e) {
             var form = e.target;
@@ -1338,7 +1268,6 @@ function cmr_render_email_otp_frontend() {
         function initAllEmailOtpFields() {
             var inputs = document.querySelectorAll(
                 'input[type="email"], ' +
-                'input[name="xoo_el_reg_email"], ' +
                 'input[name="your-email"], ' +
                 'input[name="email"], ' +
                 'input[name="email-address"], ' +

@@ -56,6 +56,11 @@ add_action( 'wp_footer', function() {
             );
 
             forms.forEach(function(form) {
+                var formClass = form.className || '';
+                if (formClass.indexOf('xoo-el') !== -1 || formClass.indexOf('xoo-aff') !== -1 || formClass.indexOf('woocommerce') !== -1 || form.closest('.xoo-el-container, .woocommerce-account')) {
+                    return;
+                }
+
                 var inputs = form.querySelectorAll(
                     'input[type="text"], ' +
                     'input[type="email"], ' +
@@ -116,6 +121,11 @@ add_action( 'wp_footer', function() {
             );
 
             forms.forEach(function(form) {
+                var formClass = form.className || '';
+                if (formClass.indexOf('xoo-el') !== -1 || formClass.indexOf('xoo-aff') !== -1 || formClass.indexOf('woocommerce') !== -1 || form.closest('.xoo-el-container, .woocommerce-account')) {
+                    return;
+                }
+
                 // 1. Process all labels
                 var labels = form.querySelectorAll('label');
                 labels.forEach(function(label) {
@@ -589,6 +599,11 @@ add_action( 'wp_footer', function() {
                 '.cmr-modal-form-wrapper form'
             );
             forms.forEach(function(form) {
+                var formClass = form.className || '';
+                if (formClass.indexOf('xoo-el') !== -1 || formClass.indexOf('xoo-aff') !== -1 || formClass.indexOf('woocommerce') !== -1 || form.closest('.xoo-el-container, .woocommerce-account')) {
+                    return;
+                }
+
                 if (cmrIsFormRateLimited(form)) {
                     cmrDisableSubmitButton(form);
                 } else {
@@ -615,7 +630,7 @@ add_action( 'wp_footer', function() {
             var form = e.target;
             if (!form || form.tagName !== 'FORM') return;
 
-            // Exclude search forms, WooCommerce forms (Checkout, Cart, Account, Login, Register), and Xoo-el forms
+            // Exclude search forms, WooCommerce forms (Checkout, Cart, Account, Login, Register), and Easy Login (xoo-el) forms
             var formClass = (form.className || '');
             var formId = (form.id || '');
             if (formClass.indexOf('search') !== -1 || 
@@ -691,24 +706,29 @@ add_action( 'wp_footer', function() {
                 } else if (type === 'email' || input.name === 'your-email' || input.name === 'email' || input.name === 'email-address') {
                     if (!val || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
                         isInvalid = true;
-                    } else if (input.getAttribute('data-email-verified') !== 'true') {
-                        isInvalid = true;
+                    } else {
                         var controlWrap = input.closest('.cmr-email-field-wrapper, .wpcf7-form-control-wrap') || input;
                         var fieldContainer = input.closest('.form-field, .cmr-input-group, p') || controlWrap.parentElement;
-                        var existingNotice = fieldContainer ? fieldContainer.querySelector('.cmr-email-unverified-notice') : null;
-                        if (!existingNotice) {
-                            var notice = document.createElement('span');
-                            notice.className = 'cmr-email-unverified-notice';
-                            notice.textContent = 'Please click "Verify Email" to verify your email before submitting.';
-                            if (controlWrap.nextSibling) {
-                                controlWrap.parentNode.insertBefore(notice, controlWrap.nextSibling);
-                            } else {
-                                controlWrap.parentNode.appendChild(notice);
+                        var vBtn = fieldContainer ? fieldContainer.querySelector('.cmr-verify-badge, .cmr-verify-email-trigger-btn') : (controlWrap.parentElement || input.parentElement).querySelector('.cmr-verify-badge, .cmr-verify-email-trigger-btn');
+                        var formHasOtp = form.querySelector('.cmr-verify-badge, .cmr-otp-box, .cmr-email-badge-container');
+
+                        // Only enforce email OTP verification if OTP verification badge/module is attached to this input/form
+                        if ((vBtn || formHasOtp) && input.getAttribute('data-email-verified') !== 'true') {
+                            isInvalid = true;
+                            var existingNotice = fieldContainer ? fieldContainer.querySelector('.cmr-email-unverified-notice') : null;
+                            if (!existingNotice) {
+                                var notice = document.createElement('span');
+                                notice.className = 'cmr-email-unverified-notice';
+                                notice.textContent = 'Please click "Verify Email" to verify your email before submitting.';
+                                if (controlWrap.nextSibling) {
+                                    controlWrap.parentNode.insertBefore(notice, controlWrap.nextSibling);
+                                } else {
+                                    controlWrap.parentNode.appendChild(notice);
+                                }
                             }
-                        }
-                        var vBtn = (controlWrap.parentElement || input.parentElement).querySelector('.cmr-verify-badge, .cmr-verify-email-trigger-btn');
-                        if (vBtn) {
-                            vBtn.classList.add('cmr-pulse-attention');
+                            if (vBtn) {
+                                vBtn.classList.add('cmr-pulse-attention');
+                            }
                         }
                     }
                 } else if (type === 'tel') {
