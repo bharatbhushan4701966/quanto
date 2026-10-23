@@ -615,16 +615,25 @@ add_action( 'wp_footer', function() {
             var form = e.target;
             if (!form || form.tagName !== 'FORM') return;
 
-            // Exclude search forms and WooCommerce forms (Checkout, Cart, Account, Login)
-            if (form.classList.contains('search-form') || 
+            // Exclude search forms, WooCommerce forms (Checkout, Cart, Account, Login, Register), and Xoo-el forms
+            var formClass = (form.className || '');
+            var formId = (form.id || '');
+            if (formClass.indexOf('search') !== -1 || 
                 form.getAttribute('role') === 'search' ||
-                form.classList.contains('woocommerce-checkout') ||
-                form.classList.contains('woocommerce-cart-form') ||
-                form.classList.contains('woocommerce-form-login') ||
-                form.classList.contains('woocommerce-form-register') ||
-                form.classList.contains('checkout') ||
-                form.closest('.woocommerce-checkout') ||
-                form.closest('.cmr-checkout-wrap')) return;
+                formClass.indexOf('woocommerce-checkout') !== -1 ||
+                formClass.indexOf('woocommerce-cart') !== -1 ||
+                formClass.indexOf('woocommerce-form') !== -1 ||
+                formClass.indexOf('woocommerce-account') !== -1 ||
+                formClass.indexOf('woocommerce-ResetPassword') !== -1 ||
+                formClass.indexOf('xoo-el') !== -1 ||
+                formClass.indexOf('xoo-aff') !== -1 ||
+                formClass.indexOf('checkout') !== -1 ||
+                form.closest('.xoo-el-container, .xoo-el-form-container, .xoo-el-wrap, .xoo-el-section, .woocommerce-account, .woocommerce-checkout, .woocommerce-cart, .cmr-checkout-wrap') ||
+                form.querySelector('input[name="_xoo_el_form"], input[name^="xoo_el_"]') ||
+                formId === 'loginform' ||
+                formId === 'registerform' ||
+                formId === 'lostpasswordform' ||
+                formId === 'customer_login') return;
 
             // Block submission if 24h limit reached
             if (cmrIsFormRateLimited(form)) {

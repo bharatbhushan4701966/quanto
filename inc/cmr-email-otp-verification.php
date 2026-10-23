@@ -240,6 +240,29 @@ function cmr_ajax_consume_verified_email() {
 }
 
 // =========================================================================
+// 2.1 WooCommerce Customer Registration Backend Validation Filter
+// =========================================================================
+
+add_filter( 'woocommerce_process_registration_errors', 'cmr_wc_enforce_email_otp_registration', 30, 4 );
+function cmr_wc_enforce_email_otp_registration( $errors, $username, $password, $email ) {
+    $email = strtolower( trim( sanitize_email( $email ) ) );
+    if ( empty( $email ) ) {
+        return $errors;
+    }
+    if ( ! cmr_is_email_verified( $email ) ) {
+        $errors->add( 'cmr_email_unverified', __( 'Please verify your email address using the OTP verification code first.', 'quanto' ) );
+    }
+    return $errors;
+}
+
+add_action( 'woocommerce_created_customer', 'cmr_wc_consume_email_otp_registration', 20, 3 );
+function cmr_wc_consume_email_otp_registration( $customer_id, $new_customer_data, $password_generated ) {
+    if ( ! empty( $new_customer_data['user_email'] ) ) {
+        delete_transient( 'cmr_ver_' . md5( strtolower( $new_customer_data['user_email'] ) ) );
+    }
+}
+
+// =========================================================================
 // 3. Branded HTML Email Dispatcher
 // =========================================================================
 
@@ -325,7 +348,9 @@ function cmr_render_email_otp_frontend() {
     /* Ensure the input's direct parent container is strictly bound */
     .wpcf7-form-control-wrap,
     .wpcf7-form-control-wrap[data-name*="email"],
-    .wpcf7-form-control-wrap[data-name*="your-email"] {
+    .wpcf7-form-control-wrap[data-name*="your-email"],
+    .xoo-aff-input-group,
+    .xoo-aff-cont-email .xoo-aff-input-group {
         position: relative !important;
         display: block !important;
         width: 100% !important;
@@ -337,6 +362,7 @@ function cmr_render_email_otp_frontend() {
 
     /* Badge container inside the email input (Right-Aligned) */
     .cmr-email-badge-container,
+    .xoo-aff-input-group .cmr-email-badge-container,
     .custom-consultation-form .cmr-email-badge-container,
     .custom-subscribe-form .cmr-email-badge-container,
     .elementor-popup-modal .cmr-email-badge-container,
@@ -444,6 +470,7 @@ function cmr_render_email_otp_frontend() {
 
     /* Premium Compact OTP Box below field */
     .cmr-otp-box,
+    .xoo-el-fields-cont .cmr-otp-box,
     .custom-consultation-form .cmr-otp-box,
     .custom-subscribe-form .cmr-otp-box,
     .elementor-popup-modal .cmr-otp-box {
@@ -710,22 +737,41 @@ function cmr_render_email_otp_frontend() {
                 return false;
             }
 
+            var name = (input.name || '').toLowerCase();
+            var id = (input.id || '').toLowerCase();
+
+            // Skip coupon inputs and search
+            if (name === 'coupon_code' || id === 'coupon_code' || input.classList.contains('cmr-coupon-input') || input.closest('.cmr-promo-box, .cmr-coupon-form')) {
+                return false;
+            }
+
+            // Explicitly match Create Account / Sign Up registration email field!
+            if (name === 'xoo_el_reg_email' || id === 'xoo_el_reg_email' || input.closest('.xoo_el_reg_email_cont') || input.closest('.xoo-el-form-register') || input.closest('[data-section="register"]')) {
+                return true;
+            }
+
+            // Exclude login and lost-password inputs
+            if (name === 'xoo-el-username' || name === 'user_login' || name === 'log' || name === 'username') {
+                return false;
+            }
+
             var form = input.closest('form');
             if (form) {
                 var formClass = form.className || '';
                 var formId = form.id || '';
                 if (formClass.indexOf('search') !== -1 ||
+                    form.getAttribute('role') === 'search' ||
                     formClass.indexOf('woocommerce-checkout') !== -1 ||
                     formClass.indexOf('woocommerce-cart') !== -1 ||
-                    formClass.indexOf('xoo-el') !== -1 ||
+                    formClass.indexOf('checkout') !== -1 ||
+                    formClass.indexOf('xoo-el-form-login') !== -1 ||
+                    formClass.indexOf('xoo-el-form-lostpw') !== -1 ||
                     formId === 'loginform' ||
-                    input.classList.contains('cmr-coupon-input') ||
-                    input.name === 'coupon_code') {
+                    formId === 'lostpasswordform') {
                     return false;
                 }
             }
 
-            var name = (input.name || '').toLowerCase();
             var cls = (input.className || '').toLowerCase();
 
             return type === 'email' ||
@@ -738,6 +784,7 @@ function cmr_render_email_otp_frontend() {
 
         function positionBadgeContainer(input, badgeContainer) {
             if (!input || !badgeContainer) return;
+            badgeContainer._targetInput = input;
             var h = input.offsetHeight;
             var t = input.offsetTop;
             if (h > 0) {
@@ -768,6 +815,7 @@ function cmr_render_email_otp_frontend() {
                 badgeContainer.className = 'cmr-email-badge-container';
                 parent.appendChild(badgeContainer);
             }
+            badgeContainer._targetInput = input;
             positionBadgeContainer(input, badgeContainer);
             return badgeContainer;
         }
@@ -776,9 +824,10 @@ function cmr_render_email_otp_frontend() {
             var parent = input.parentElement;
             if (!parent) return null;
 
+            // In xoo-el, input is inside .xoo-aff-group (.xoo_el_reg_email_cont)
             // In CF7, input can be in <p><label>...</label></p> or just <label>...</label>
-            // We MUST ensure the OTP box is inserted AFTER the outer form field or <label>, NEVER inside <label>
-            var insertTarget = input.closest('.form-field, .cmr-input-group, p') || input.closest('label') || parent;
+            // We MUST ensure the OTP box is inserted AFTER the outer form field row, NEVER inside an input group
+            var insertTarget = input.closest('.xoo-aff-group, .form-field, .cmr-input-group, p') || input.closest('label') || parent;
             var parentNode = insertTarget.parentNode;
             if (!parentNode) return null;
 
@@ -1098,7 +1147,7 @@ function cmr_render_email_otp_frontend() {
                 e.stopPropagation();
                 var badgeWrap = vBadge.closest('.cmr-email-badge-container');
                 var fieldWrap = badgeWrap ? badgeWrap.parentElement : null;
-                var input = fieldWrap ? fieldWrap.querySelector('input') : null;
+                var input = (badgeWrap && badgeWrap._targetInput) || (fieldWrap ? fieldWrap.querySelector('input') : null);
                 if (input) {
                     var otpBox = getOrCreateOtpBox(input);
                     if (otpBox && otpBox.style.display !== 'none') {
@@ -1118,7 +1167,7 @@ function cmr_render_email_otp_frontend() {
                 e.stopPropagation();
                 var badgeWrap = cBadge.closest('.cmr-email-badge-container');
                 var fieldWrap = badgeWrap ? badgeWrap.parentElement : null;
-                var input = fieldWrap ? fieldWrap.querySelector('input') : null;
+                var input = (badgeWrap && badgeWrap._targetInput) || (fieldWrap ? fieldWrap.querySelector('input') : null);
                 if (input) {
                     var curEmail = (input.value || '').trim().toLowerCase();
                     delete verifiedEmailTokens[curEmail];
@@ -1224,6 +1273,57 @@ function cmr_render_email_otp_frontend() {
             });
         };
 
+        // Intercept Easy Login Registration form submission to require OTP verification
+        document.addEventListener('submit', function(e) {
+            var form = e.target;
+            if (!form || !form.classList || !form.classList.contains('xoo-el-form-register')) return;
+
+            var emailInp = form.querySelector('input[name="xoo_el_reg_email"], input[type="email"]');
+            if (!emailInp) return;
+
+            var emailVal = (emailInp.value || '').trim();
+            if (!emailVal || !isValidEmail(emailVal)) {
+                return;
+            }
+
+            if (emailInp.getAttribute('data-email-verified') !== 'true') {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.stopImmediatePropagation) {
+                    e.stopImmediatePropagation();
+                }
+
+                var controlWrap = emailInp.closest('.xoo-aff-input-group, .cmr-email-field-wrapper') || emailInp;
+                var fieldContainer = emailInp.closest('.xoo-aff-group, .form-field, p') || controlWrap.parentElement;
+                var existingNotice = fieldContainer ? fieldContainer.querySelector('.cmr-email-unverified-notice') : null;
+                if (!existingNotice) {
+                    var notice = document.createElement('span');
+                    notice.className = 'cmr-email-unverified-notice';
+                    notice.textContent = 'Please click "Verify Email" to verify your email before submitting.';
+                    if (controlWrap.nextSibling) {
+                        controlWrap.parentNode.insertBefore(notice, controlWrap.nextSibling);
+                    } else {
+                        controlWrap.parentNode.appendChild(notice);
+                    }
+                }
+
+                var vBtn = (controlWrap || fieldContainer).querySelector('.cmr-verify-badge');
+                if (vBtn) {
+                    vBtn.classList.add('cmr-pulse-attention');
+                }
+
+                var otpBox = getOrCreateOtpBox(emailInp);
+                if (otpBox && otpBox.style.display !== 'none') {
+                    var codeInp = otpBox.querySelector('.cmr-otp-code-input');
+                    if (codeInp) codeInp.focus();
+                } else {
+                    triggerSendOtp(emailInp, false);
+                }
+
+                return false;
+            }
+        }, true);
+
         // Listen for CF7 native successful submission to immediately expire verified status
         document.addEventListener('wpcf7mailsent', function(e) {
             var form = e.target;
@@ -1238,6 +1338,7 @@ function cmr_render_email_otp_frontend() {
         function initAllEmailOtpFields() {
             var inputs = document.querySelectorAll(
                 'input[type="email"], ' +
+                'input[name="xoo_el_reg_email"], ' +
                 'input[name="your-email"], ' +
                 'input[name="email"], ' +
                 'input[name="email-address"], ' +
@@ -1262,12 +1363,21 @@ function cmr_render_email_otp_frontend() {
         }
         window.addEventListener('load', initAllEmailOtpFields);
 
-        // Run when Elementor popups open
+        // Run when Elementor popups open or Easy Login popups/tabs open
         if (typeof jQuery !== 'undefined') {
             jQuery(document).on('elementor/popup/show', function() {
                 setTimeout(initAllEmailOtpFields, 60);
             });
+            jQuery(document).on('xoo_el_popup_opened xoo_el_form_rendered xoo_el_tab_changed', function() {
+                setTimeout(initAllEmailOtpFields, 50);
+            });
         }
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.xoo-el-reg-tgr, .xoo-el-login-tgr, [data-tab="register"], a[href*="my-account"]')) {
+                setTimeout(initAllEmailOtpFields, 60);
+                setTimeout(initAllEmailOtpFields, 200);
+            }
+        });
     })();
     </script>
     <?php
