@@ -459,7 +459,7 @@ get_header();
                 $thumbnail_url = get_the_post_thumbnail_url( $post_id, 'large' );
                 $placeholder   = 'https://via.placeholder.com/800x450?text=' . rawurlencode( get_the_title() );
                 $img           = $thumbnail_url ?: $placeholder;
-                $excerpt       = wp_trim_words( get_the_excerpt() ?: get_the_content(), 18, '...' );
+                $excerpt       = function_exists( 'quanto_get_clean_post_excerpt' ) ? quanto_get_clean_post_excerpt( $post_id, 18 ) : wp_trim_words( get_the_excerpt( $post_id ) ?: get_the_content(), 18, '...' );
                 $word_count    = str_word_count( strip_tags( get_the_content() ) );
                 $read_time     = max( 1, ceil( $word_count / 200 ) );
                 $terms         = get_the_terms( $post_id, 'category' );
