@@ -2288,9 +2288,11 @@ if ( ! function_exists( 'quanto_get_clean_post_excerpt' ) ) {
 
         $excerpt = '';
 
-        // 1. If explicit post_excerpt exists and does NOT contain bullet points or stale SSD text
+        // 1. If explicit post_excerpt exists, make sure it is not stale June 29 SSD text or bullet text
         if ( ! empty( $raw_excerpt ) ) {
-            if ( stripos( $raw_excerpt, 'consumer SSD market' ) === false || stripos( $title, 'SSD' ) !== false ) {
+            // Reject if it mentions June 29 when the post title/content does not match June 29
+            $is_stale_june_ssd = ( stripos( $raw_excerpt, 'June 29' ) !== false && stripos( $title, 'June 29' ) === false );
+            if ( ! $is_stale_june_ssd && ( stripos( $raw_excerpt, 'consumer SSD market' ) === false || stripos( $title, 'SSD' ) !== false ) ) {
                 if ( ! $is_bullet_text( $raw_excerpt ) && stripos( $raw_excerpt, '<li' ) === false ) {
                     $excerpt = wp_trim_words( wp_strip_all_tags( $raw_excerpt ), $word_limit, '...' );
                 }
