@@ -2339,3 +2339,37 @@ if ( ! function_exists( 'quanto_get_clean_post_excerpt' ) ) {
     }
 }
 
+// Global Filter for Elementor Post Loop Grid, Archive Loop, and the_excerpt() calls
+add_filter( 'get_the_excerpt', 'quanto_filter_clean_the_excerpt', 99, 2 );
+function quanto_filter_clean_the_excerpt( $post_excerpt, $post = null ) {
+    if ( is_admin() && ! wp_doing_ajax() ) {
+        return $post_excerpt;
+    }
+
+    $post_id = 0;
+    if ( is_object( $post ) && isset( $post->ID ) ) {
+        $post_id = $post->ID;
+    } elseif ( is_numeric( $post ) && $post > 0 ) {
+        $post_id = intval( $post );
+    } else {
+        $post_id = get_the_ID();
+    }
+
+    if ( ! $post_id ) {
+        return $post_excerpt;
+    }
+
+    // Only filter standard posts and cmr_news
+    $post_type = get_post_type( $post_id );
+    if ( ! in_array( $post_type, array( 'post', 'cmr_news' ), true ) ) {
+        return $post_excerpt;
+    }
+
+    $clean = quanto_get_clean_post_excerpt( $post_id, 18 );
+    if ( ! empty( $clean ) ) {
+        return $clean;
+    }
+
+    return $post_excerpt;
+}
+
