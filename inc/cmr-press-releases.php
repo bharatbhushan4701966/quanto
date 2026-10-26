@@ -322,7 +322,22 @@ function cmr_render_press_releases_shortcode( $atts ) {
                                 Press Release | <?php echo get_the_date('d M Y'); ?>
                             </div>
                             <h3 class="cmr-pr-card-title"><?php the_title(); ?></h3>
-                            <div class="cmr-pr-card-excerpt"><?php echo wp_trim_words( get_the_excerpt(), 20 ); ?></div>
+                            <?php
+                            $pr_excerpt = get_the_excerpt( $post_id );
+                            if ( empty( $pr_excerpt ) ) {
+                                $pr_content = get_post_field( 'post_content', $post_id );
+                                if ( ! empty( $pr_content ) ) {
+                                    if ( preg_match( '/<p\b[^>]*>(.*?)<\/p>/is', $pr_content, $matches ) ) {
+                                        $pr_excerpt = wp_strip_all_tags( $matches[1] );
+                                    }
+                                    if ( empty( $pr_excerpt ) ) {
+                                        $pr_excerpt = wp_strip_all_tags( strip_shortcodes( $pr_content ) );
+                                    }
+                                }
+                            }
+                            $pr_excerpt_trimmed = wp_trim_words( $pr_excerpt, 20, '...' );
+                            ?>
+                            <div class="cmr-pr-card-excerpt"><?php echo esc_html( $pr_excerpt_trimmed ); ?></div>
                             <a href="<?php echo esc_url( $link ); ?>" target="<?php echo esc_attr( $target ); ?>" class="cmr-pr-read-btn">
                                 Read Coverage 
                                 <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
