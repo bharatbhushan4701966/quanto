@@ -51,6 +51,7 @@ function cmr_media_releases_general_shortcode( $atts ) {
             
             $post_id = get_the_ID();
             $title = get_the_title();
+            $link = get_permalink();
             $title_key = trim(mb_strtolower($title));
             if ( in_array($title_key, $seen_titles) ) {
                 continue;
@@ -577,7 +578,9 @@ function cmr_media_releases_general_shortcode( $atts ) {
                     mainTime.textContent = data.read_time;
                     mainTitle.innerHTML = data.title;
                     mainExcerpt.innerHTML = data.excerpt;
-                    mainLink.href = data.link;
+                    if (mainLink && data.link) {
+                        mainLink.href = data.link;
+                    }
                     
                     mainImg.style.opacity = 1;
                 }, 200);
