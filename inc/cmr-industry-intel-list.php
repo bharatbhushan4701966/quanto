@@ -471,30 +471,7 @@ if ( ! function_exists( 'cmr_industry_intel_list_shortcode' ) ) {
                             <div class="cmr-intel-list-excerpt">
                                 <?php 
                                 $p_id = $insight_post->ID;
-                                $excerpt = '';
-                                $raw_excerpt = get_post_field( 'post_excerpt', $p_id );
-                                if ( ! empty( $raw_excerpt ) ) {
-                                    if ( stripos( $raw_excerpt, 'consumer SSD market' ) === false || stripos( $post_title, 'SSD' ) !== false ) {
-                                        $excerpt = wp_trim_words( wp_strip_all_tags( $raw_excerpt ), 18, '...' );
-                                    }
-                                }
-                                if ( empty( $excerpt ) ) {
-                                    if ( ! empty( $content ) ) {
-                                        if ( preg_match( '/<p\b[^>]*>(.*?)<\/p>/is', $content, $matches ) ) {
-                                            $p_text = wp_strip_all_tags( $matches[1] );
-                                            if ( ! empty( $p_text ) ) {
-                                                $excerpt = wp_trim_words( $p_text, 18, '...' );
-                                            }
-                                        }
-                                        if ( empty( $excerpt ) ) {
-                                            $clean_p = wp_strip_all_tags( strip_shortcodes( $content ) );
-                                            $excerpt = wp_trim_words( $clean_p, 18, '...' );
-                                        }
-                                    }
-                                }
-                                if ( empty( $excerpt ) ) {
-                                    $excerpt = wp_trim_words( get_the_excerpt( $p_id ), 18, '...' );
-                                }
+                                $excerpt = function_exists( 'quanto_get_clean_post_excerpt' ) ? quanto_get_clean_post_excerpt( $p_id, 18 ) : wp_trim_words( get_the_excerpt( $p_id ), 18, '...' );
                                 echo wp_kses_post( $excerpt ); 
                                 ?>
                             </div>
@@ -748,30 +725,7 @@ function cmr_industry_intel_list_load_more_ajax() {
             $read_time = ceil( $word_count / 200 );
             if ($read_time < 1) $read_time = 1;
             $p_id = $insight_post->ID;
-            $excerpt = '';
-            $raw_excerpt = get_post_field( 'post_excerpt', $p_id );
-            if ( ! empty( $raw_excerpt ) ) {
-                if ( stripos( $raw_excerpt, 'consumer SSD market' ) === false || stripos( $post_title, 'SSD' ) !== false ) {
-                    $excerpt = wp_trim_words( wp_strip_all_tags( $raw_excerpt ), 18, '...' );
-                }
-            }
-            if ( empty( $excerpt ) ) {
-                if ( ! empty( $content ) ) {
-                    if ( preg_match( '/<p\b[^>]*>(.*?)<\/p>/is', $content, $matches ) ) {
-                        $p_text = wp_strip_all_tags( $matches[1] );
-                        if ( ! empty( $p_text ) ) {
-                            $excerpt = wp_trim_words( $p_text, 18, '...' );
-                        }
-                    }
-                    if ( empty( $excerpt ) ) {
-                        $clean_p = wp_strip_all_tags( strip_shortcodes( $content ) );
-                        $excerpt = wp_trim_words( $clean_p, 18, '...' );
-                    }
-                }
-            }
-            if ( empty( $excerpt ) ) {
-                $excerpt = wp_trim_words( get_the_excerpt( $p_id ), 18, '...' );
-            }
+            $excerpt = function_exists( 'quanto_get_clean_post_excerpt' ) ? quanto_get_clean_post_excerpt( $p_id, 18 ) : wp_trim_words( get_the_excerpt( $p_id ), 18, '...' );
             ?>
             <div class="cmr-intel-list-item">
                 <div class="cmr-intel-list-img">

@@ -218,31 +218,7 @@
                         if ( ( function_exists( 'quanto_is_press_release' ) && quanto_is_press_release() ) || get_post_type() === 'cmr_news' ) {
 
                             $active_post_id = get_the_ID();
-                            $active_excerpt = '';
-
-                            // 1. Check for manual/explicit post excerpt for the active post ID
-                            $raw_excerpt = get_post_field( 'post_excerpt', $active_post_id );
-                            if ( ! empty( $raw_excerpt ) ) {
-                                $active_excerpt = wp_kses_post( $raw_excerpt );
-                            }
-
-                            // 2. If no explicit excerpt, extract teaser snippet dynamically from active post content
-                            if ( empty( $active_excerpt ) ) {
-                                $active_content = get_post_field( 'post_content', $active_post_id );
-                                if ( ! empty( $active_content ) ) {
-                                    // Check if the content has an initial paragraph block
-                                    if ( preg_match( '/<p\b[^>]*>(.*?)<\/p>/is', $active_content, $matches ) ) {
-                                        $p_text = wp_strip_all_tags( $matches[1] );
-                                        if ( ! empty( $p_text ) ) {
-                                            $active_excerpt = wp_trim_words( $p_text, 35, '...' );
-                                        }
-                                    }
-                                    if ( empty( $active_excerpt ) ) {
-                                        $clean_content = wp_strip_all_tags( strip_shortcodes( $active_content ) );
-                                        $active_excerpt = wp_trim_words( $clean_content, 35, '...' );
-                                    }
-                                }
-                            }
+                            $active_excerpt = function_exists( 'quanto_get_clean_post_excerpt' ) ? quanto_get_clean_post_excerpt( $active_post_id, 35 ) : '';
 
                             if ( ! empty( $active_excerpt ) ) {
 

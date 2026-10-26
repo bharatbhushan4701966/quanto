@@ -152,30 +152,7 @@ if ( ! function_exists( 'cmr_marketing_services_shortcode' ) ) {
                                 <div class="intel-excerpt">
                                     <?php 
                                     $p_id = $insight_post->ID;
-                                    $excerpt = '';
-                                    $raw_excerpt = get_post_field( 'post_excerpt', $p_id );
-                                    if ( ! empty( $raw_excerpt ) ) {
-                                        if ( stripos( $raw_excerpt, 'consumer SSD market' ) === false || stripos( $post_title, 'SSD' ) !== false ) {
-                                            $excerpt = wp_trim_words( wp_strip_all_tags( $raw_excerpt ), 15, '...' );
-                                        }
-                                    }
-                                    if ( empty( $excerpt ) ) {
-                                        if ( ! empty( $content ) ) {
-                                            if ( preg_match( '/<p\b[^>]*>(.*?)<\/p>/is', $content, $matches ) ) {
-                                                $p_text = wp_strip_all_tags( $matches[1] );
-                                                if ( ! empty( $p_text ) ) {
-                                                    $excerpt = wp_trim_words( $p_text, 15, '...' );
-                                                }
-                                            }
-                                            if ( empty( $excerpt ) ) {
-                                                $clean_p = wp_strip_all_tags( strip_shortcodes( $content ) );
-                                                $excerpt = wp_trim_words( $clean_p, 15, '...' );
-                                            }
-                                        }
-                                    }
-                                    if ( empty( $excerpt ) ) {
-                                        $excerpt = wp_trim_words( get_the_excerpt( $p_id ), 15, '...' );
-                                    }
+                                    $excerpt = function_exists( 'quanto_get_clean_post_excerpt' ) ? quanto_get_clean_post_excerpt( $p_id, 15 ) : wp_trim_words( get_the_excerpt( $p_id ), 15, '...' );
                                     echo wp_kses_post( $excerpt ); 
                                     ?>
                                 </div>

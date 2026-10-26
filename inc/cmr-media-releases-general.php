@@ -58,31 +58,7 @@ function cmr_media_releases_general_shortcode( $atts ) {
             }
             $seen_titles[] = $title_key;
 
-            $excerpt = '';
-            $raw_excerpt = get_post_field( 'post_excerpt', $post_id );
-            if ( ! empty( $raw_excerpt ) ) {
-                if ( stripos( $raw_excerpt, 'consumer SSD market' ) === false || stripos( $title, 'SSD' ) !== false ) {
-                    $excerpt = wp_trim_words( wp_strip_all_tags( $raw_excerpt ), 20, '...' );
-                }
-            }
-            if ( empty( $excerpt ) ) {
-                $p_content = get_post_field( 'post_content', $post_id );
-                if ( ! empty( $p_content ) ) {
-                    if ( preg_match( '/<p\b[^>]*>(.*?)<\/p>/is', $p_content, $matches ) ) {
-                        $p_text = wp_strip_all_tags( $matches[1] );
-                        if ( ! empty( $p_text ) ) {
-                            $excerpt = wp_trim_words( $p_text, 20, '...' );
-                        }
-                    }
-                    if ( empty( $excerpt ) ) {
-                        $clean_p = wp_strip_all_tags( strip_shortcodes( $p_content ) );
-                        $excerpt = wp_trim_words( $clean_p, 20, '...' );
-                    }
-                }
-            }
-            if ( empty( $excerpt ) ) {
-                $excerpt = wp_trim_words( get_the_excerpt( $post_id ), 20, '...' );
-            }
+            $excerpt = function_exists( 'quanto_get_clean_post_excerpt' ) ? quanto_get_clean_post_excerpt( $post_id, 20 ) : wp_trim_words( get_the_excerpt( $post_id ), 20, '...' );
             $bg_image = get_the_post_thumbnail_url( $post_id, 'full' );
 
             // Estimate read time (rough calculation based on word count)

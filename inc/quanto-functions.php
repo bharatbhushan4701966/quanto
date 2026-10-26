@@ -2260,3 +2260,82 @@ if ( ! function_exists( 'quanto_is_press_release' ) ) {
 
 }
 
+if ( ! function_exists( 'quanto_get_clean_post_excerpt' ) ) {
+    /**
+     * Get clean excerpt starting from real paragraph content, skipping bullet lists (ul/ol/li) and bullet glyphs.
+     */
+    function quanto_get_clean_post_excerpt( $post_id, $word_limit = 18 ) {
+        $post = get_post( $post_id );
+        if ( ! $post ) {
+            return '';
+        }
+
+        $title = $post->post_title;
+        $raw_content = $post->post_content;
+        $raw_excerpt = $post->post_excerpt;
+
+        // Helper to check if a text string looks like bullet points or starts with bullet glyphs
+        $is_bullet_text = function( $str ) {
+            $trimmed = trim( $str );
+            if ( preg_match( '/^[\x{2022}\x{2023}\x{25E6}\x{2043}\x{2219}\-–—*•\d+\.]/u', $trimmed ) ) {
+                return true;
+            }
+            if ( strpos( $trimmed, '•' ) !== false || strpos( $trimmed, '&bull;' ) !== false ) {
+                return true;
+            }
+            return false;
+        };
+
+        $excerpt = '';
+
+        // 1. If explicit post_excerpt exists and does NOT contain bullet points or stale SSD text
+        if ( ! empty( $raw_excerpt ) ) {
+            if ( stripos( $raw_excerpt, 'consumer SSD market' ) === false || stripos( $title, 'SSD' ) !== false ) {
+                if ( ! $is_bullet_text( $raw_excerpt ) && stripos( $raw_excerpt, '<li' ) === false ) {
+                    $excerpt = wp_trim_words( wp_strip_all_tags( $raw_excerpt ), $word_limit, '...' );
+                }
+            }
+        }
+
+        // 2. Extract starting from actual paragraph <p> in post_content (skipping lists and shortcodes)
+        if ( empty( $excerpt ) && ! empty( $raw_content ) ) {
+            // Remove <ul...</ul> and <ol...</ol> completely so bullets are never picked up
+            $content_no_lists = preg_replace( '/<(ul|ol)\b[^>]*>.*?<\/\1>/is', '', $raw_content );
+
+            // Match all <p> tags
+            if ( preg_match_all( '/<p\b[^>]*>(.*?)<\/p>/is', $content_no_lists, $p_matches ) ) {
+                foreach ( $p_matches[1] as $p_inner ) {
+                    $clean_p = wp_strip_all_tags( $p_inner );
+                    $clean_p = trim( preg_replace( '/^[\x{2022}\x{2023}\x{25E6}\x{2043}\x{2219}\-–—*•\s]+/u', '', $clean_p ) );
+                    // Must have meaningful length and not be another bullet line
+                    if ( mb_strlen( $clean_p ) > 20 && ! $is_bullet_text( $clean_p ) ) {
+                        $excerpt = wp_trim_words( $clean_p, $word_limit, '...' );
+                        break;
+                    }
+                }
+            }
+
+            // Fallback: strip shortcodes and lists, clean tags
+            if ( empty( $excerpt ) ) {
+                $clean_all = wp_strip_all_tags( strip_shortcodes( $content_no_lists ) );
+                // Strip any leading bullet characters or dots
+                $clean_all = trim( preg_replace( '/^[\x{2022}\x{2023}\x{25E6}\x{2043}\x{2219}\-–—*•\s]+/u', '', $clean_all ) );
+                if ( ! empty( $clean_all ) ) {
+                    $excerpt = wp_trim_words( $clean_all, $word_limit, '...' );
+                }
+            }
+        }
+
+        // 3. Fallback to native get_the_excerpt($post_id)
+        if ( empty( $excerpt ) ) {
+            $native = wp_strip_all_tags( get_the_excerpt( $post_id ) );
+            if ( ! empty( $native ) && ( stripos( $native, 'consumer SSD market' ) === false || stripos( $title, 'SSD' ) !== false ) ) {
+                $native = trim( preg_replace( '/^[\x{2022}\x{2023}\x{25E6}\x{2043}\x{2219}\-–—*•\s]+/u', '', $native ) );
+                $excerpt = wp_trim_words( $native, $word_limit, '...' );
+            }
+        }
+
+        return $excerpt;
+    }
+}
+
